@@ -23,8 +23,13 @@ jobs:
     name: Build & Tests
     uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@53112058f174beec924c627f07793b7b62f2a93a
     with:
+      disablePublish: true
       dotnet-logging: ${{ inputs.dotnet-logging | 'minimal' }}
       dotnet-version: |
+        6.x
         7.x
-      solution: ###SOLUTION###
+        8.x
+      dotnet-quality: preview
+      enableSonarQube: true
+      solution: ./NetEvolve.HealthChecks.sln
     secrets: inherit
