@@ -1,0 +1,10 @@
+<Project>
+
+  <PropertyGroup>
+    <DirEngineering>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'eng'))</DirEngineering>
+    <DirEngineeringSettings>$([MSBuild]::NormalizeDirectory('$(DirEngineering)', 'settings'))</DirEngineeringSettings>
+  </PropertyGroup>
+
+  <Import Project="$(DirEngineeringSettings)sln.solution.props" />
+
+</Project>

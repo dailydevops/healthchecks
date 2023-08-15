@@ -1,0 +1,7 @@
+<Project>
+
+  <Import Project="$(DirEngineeringSettings)sln.build.targets" />
+  <Import Project="$(DirEngineeringSettings)src.build.targets" Condition=" !$(IsTestableProject) " />
+  <Import Project="$(DirEngineeringSettings)tests.build.targets" Condition=" $(IsTestableProject) " />
+
+</Project>

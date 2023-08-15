@@ -1,0 +1,78 @@
+# EditorConfig is awesome: https://EditorConfig.org
+# top-most EditorConfig file
+root = true
+
+# DO NOT CHANGE SETTINGS IN THIS FILE. PLEASE CREATE PULL REQUEST IN REPOSITORY `dotnet-engineering`.
+
+# Don't use tabs for indentation.
+[*]
+insert_final_newline = true
+indent_style = space
+trim_trailing_whitespace = true
+charset = utf-8
+end_of_line = lf
+
+# Code files
+[*.{cs,csx,vb,vbx}]
+indent_size = 4
+insert_final_newline = true
+charset = utf-8-bom
+
+# Razor and cshtml files
+# UTF-8-BOM is set as default, as all official template files use UTF-8-BOM
+# See https://github.com/dotnet/aspnetcore/pull/23502 and https://github.com/dotnet/aspnetcore/issues/22753
+[*.{razor,cshtml}]
+charset = utf-8-bom
+
+# Generated code
+[*{_AssemblyInfo.cs,.notsupported.cs,.generated.cs}]
+generated_code = true
+
+# XML project files
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj,nativeproj,locproj}]
+indent_size = 2
+
+# Xml build files
+[*.builds]
+indent_size = 2
+
+# Xml files
+[*.{xml,stylecop,resx,ruleset}]
+indent_size = 2
+
+# XML config files
+[*.{props,targets,ruleset,config,nuspec,vsixmanifest,vsct}]
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# Powershell files
+[*.ps1]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+indent_size = 2
+
+# Commandline scripts
+[*.{cmd,bat}]
+end_of_line = crlf
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+# Visual Studio Solution Files
+[*.sln]
+indent_style = tab
+
+[*.{received,verified}.txt]
+insert_final_newline = false
+trim_trailing_whitespace = false
