@@ -31,5 +31,5 @@ jobs:
         8.x
       dotnet-quality: preview
       enableSonarQube: true
-      solution: ./NetEvolve.HealthChecks.sln
+      solution: ./HealthChecks.sln
     secrets: inherit

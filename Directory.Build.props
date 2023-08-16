@@ -9,4 +9,12 @@
   <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" !$(IsTestableProject) " />
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" $(IsTestableProject) " />
 
+  <Import Condition=" !$(IsTestableProject) "
+          Project="src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems"
+          Label="Shared" />
+
+  <ItemGroup Condition=" !$(IsTestableProject) ">
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
 </Project>
