@@ -1,8 +1,12 @@
 ﻿namespace NetEvolve.Extensions.Tasks.Tests.Unit;
 
+using NetEvolve.Extensions.XUnit;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
+[UnitTest]
+[ExcludeFromCodeCoverage]
 public class ValueTaskOfTExtensionsTests
 {
     [Fact]
