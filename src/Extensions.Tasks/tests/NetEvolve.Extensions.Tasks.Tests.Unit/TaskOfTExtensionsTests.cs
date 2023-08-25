@@ -19,7 +19,8 @@ public class TaskOfTExtensionsTests
             .ThrowsAsync<ArgumentNullException>(
                 "todo",
                 async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false)
-            ).ConfigureAwait(false);
+            )
+            .ConfigureAwait(false);
     }
 
     [Fact]
@@ -27,7 +28,9 @@ public class TaskOfTExtensionsTests
     {
         var timeoutInMilliseconds = 50;
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
         Assert.True(isValid);
         Assert.Equal(1, result);
 
@@ -43,7 +46,9 @@ public class TaskOfTExtensionsTests
     {
         var timeoutInMilliseconds = 20;
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
         Assert.False(isValid);
         Assert.Equal(1, result);
 

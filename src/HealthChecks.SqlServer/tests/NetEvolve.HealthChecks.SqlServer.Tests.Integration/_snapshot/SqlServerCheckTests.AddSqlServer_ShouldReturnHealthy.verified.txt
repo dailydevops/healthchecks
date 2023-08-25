@@ -1,0 +1,14 @@
+﻿{
+  status: Healthy,
+  results: [
+    {
+      name: SqlServerTestContainerHealthy,
+      status: Healthy,
+      description: null,
+      tags: [
+        self,
+        readiness
+      ]
+    }
+  ]
+}

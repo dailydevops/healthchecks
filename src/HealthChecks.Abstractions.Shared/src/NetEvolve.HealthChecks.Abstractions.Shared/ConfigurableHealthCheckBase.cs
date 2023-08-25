@@ -12,12 +12,10 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
     where TConfiguration : class
 {
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
-    private readonly string _configurationNamePrefix;
 
-    public ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor, string configurationNamePrefix = "")
+    public ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
     {
         _optionsMonitor = optionsMonitor;
-        _configurationNamePrefix = configurationNamePrefix;
     }
 
     public async Task<HealthCheckResult> CheckHealthAsync(
@@ -26,15 +24,7 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
     )
     {
         var configurationName = context.Registration.Name;
-        if (!string.IsNullOrWhiteSpace(_configurationNamePrefix))
-        {
-            configurationName = $"{_configurationNamePrefix}{configurationName}";
-        }
         var result = await InternalAsync(context, configurationName, cancellationToken).ConfigureAwait(false);
-
-        var data = (Dictionary<string, object>)result.Data;
-        _ = data.TryAdd("Type", GetType().Name);
-        _ = data.TryAdd("ConfigurationName", configurationName);
 
         return result;
 
@@ -46,8 +36,8 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
                 if (options is null)
                 {
                     return new HealthCheckResult(
-                        context.Registration.FailureStatus,
-                        description: $"Missing configuration for '{configurationName}'"
+                        HealthStatus.Unhealthy,
+                        description: $"{configurationName}: Missing configuration"
                     );
                 }
 

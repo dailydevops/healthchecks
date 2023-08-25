@@ -8,15 +8,14 @@ using NetEvolve.HealthChecks.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal sealed class SqlServerHealthCheck
-    : ConfigurableHealthCheckBase<SqlServerHealthCheckOptions>
+internal sealed class SqlServerCheck : ConfigurableHealthCheckBase<SqlServerCheckOptions>
 {
-    public SqlServerHealthCheck(IOptionsMonitor<SqlServerHealthCheckOptions> optionsMonitor)
+    public SqlServerCheck(IOptionsMonitor<SqlServerCheckOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        SqlServerHealthCheckOptions options,
+        SqlServerCheckOptions options,
         HealthCheckContext context,
         CancellationToken cancellationToken
     )
@@ -34,14 +33,9 @@ internal sealed class SqlServerHealthCheck
                     .WithTimeoutAsync(options.Timeout, cancellationToken)
                     .ConfigureAwait(false);
 
-                if (isHealthy && (int)result == 1)
-                {
-                    return HealthCheckResult.Healthy();
-                }
-                else
-                {
-                    return HealthCheckResult.Degraded();
-                }
+                return isHealthy && (int)result == 1
+                    ? HealthCheckResult.Healthy()
+                    : HealthCheckResult.Degraded();
             }
         }
     }

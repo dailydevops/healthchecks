@@ -9,12 +9,31 @@
   <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" !$(IsTestableProject) " />
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" $(IsTestableProject) " />
 
+  <PropertyGroup Label="General settings for all projects">
+
+  </PropertyGroup>
+
+  <PropertyGroup Label="Settings for non test projects" Condition=" !$(IsTestableProject) ">
+    <Title>$(MSBuildProjectName)</Title>
+    <PackageProjectUrl>https://github.com/dailydevops/healthchecks</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Settings for test projects">
+
+  </PropertyGroup>
+
   <Import Condition=" !$(IsTestableProject) "
           Project="src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems"
           Label="Shared" />
 
+  <Import Condition=" $(MSBuildProjectName.Contains('.Tests.Integration')) "
+          Project="src\HealthChecks\tests\NetEvolve.HealthChecks.Tests.Shared\NetEvolve.HealthChecks.Tests.Shared.projitems"
+          Label="Shared" />
+
+
   <ItemGroup Condition=" !$(IsTestableProject) ">
-      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

@@ -14,7 +14,9 @@ public class ValueTaskOfTExtensionsTests
     {
         var timeoutInMilliseconds = 50;
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
         Assert.True(isValid);
         Assert.Equal(1, result);
 
@@ -30,7 +32,9 @@ public class ValueTaskOfTExtensionsTests
     {
         var timeoutInMilliseconds = 20;
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
         Assert.False(isValid);
         Assert.Equal(1, result);
 
