@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Dependabot Auto Merge
-        uses: ahmadnassri/action-dependabot-auto-merge@v2.3.1
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.6.6
         with:
           target: minor
           github-token: ${{ secrets.DEPENDABOT }}
