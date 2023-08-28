@@ -2,31 +2,16 @@ name: Auto Merge Minor Upgrades
 
 on:
   pull_request:
-  
+
 jobs:
   dependabot:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
-    
+
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.6.0
+      - name: Dependabot Auto Merge
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.3.1
         with:
+          target: minor
           github-token: ${{ secrets.DEPENDABOT }}
-
-      - name: Approve Minor PR
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
-        run: |
-          gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.DEPENDABOT }}
-
-      - name: Enable auto-merge for Dependabot Pull Request
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
-        run: gh pr merge --auto --squash "$PR_URL" --subject "$PR_MESSAGE [skip ci]"
-        env:
-          PR_MESSAGE: ${{ github.event.pull_request.title }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.DEPENDABOT }}
+          command: squash and merge
