@@ -7,10 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Extensions.Tasks\src\NetEvolve.Extensions.Tasks\NetEvolve.Extensions.Tasks.csproj" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
 
 </Project>
