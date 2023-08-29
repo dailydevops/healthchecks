@@ -5,4 +5,8 @@
     <DefineConstants>USE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Arguments" />
+  </ItemGroup>
+
 </Project>
