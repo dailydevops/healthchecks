@@ -10,18 +10,14 @@ using System.Threading.Tasks;
 
 internal sealed class ApplicationReadinessCheck : HealthCheckBase
 {
-    private readonly IHostApplicationLifetime _lifetime;
-
     private bool _applicationReady;
 
     public ApplicationReadinessCheck(IHostApplicationLifetime lifetime)
     {
         Argument.ThrowIfNull(lifetime);
 
-        _lifetime = lifetime;
-
-        _ = _lifetime.ApplicationStarted.Register(OnStarted);
-        _ = _lifetime.ApplicationStopping.Register(OnStopped);
+        _ = lifetime.ApplicationStarted.Register(OnStarted);
+        _ = lifetime.ApplicationStopping.Register(OnStopped);
     }
 
     protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
