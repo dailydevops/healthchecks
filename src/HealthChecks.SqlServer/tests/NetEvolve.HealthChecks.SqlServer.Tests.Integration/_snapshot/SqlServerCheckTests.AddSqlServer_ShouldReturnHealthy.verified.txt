@@ -6,8 +6,8 @@
       status: Healthy,
       description: null,
       tags: [
-        self,
-        readiness
+        sqlserver,
+        database
       ]
     }
   ]

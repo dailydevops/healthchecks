@@ -2,9 +2,8 @@
 namespace NetEvolve.HealthChecks.Abstractions;
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-
+using NetEvolve.Arguments;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,27 +14,30 @@ internal abstract class HealthCheckBase : IHealthCheck
         CancellationToken cancellationToken = default
     )
     {
+        Argument.ThrowIfNull(context);
+
         var configurationName = context.Registration.Name;
-        var result = await InternalAsync(configurationName, context, cancellationToken).ConfigureAwait(false);
+        var failureStatus = context.Registration.FailureStatus;
+        var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
 
         return result;
+    }
 
-        async ValueTask<HealthCheckResult> InternalAsync(string configurationName, HealthCheckContext context, CancellationToken cancellationToken)
+    private async ValueTask<HealthCheckResult> InternalAsync(string configurationName, HealthStatus failureStatus, CancellationToken cancellationToken)
+    {
+        try
         {
-            try
-            {
-                return await ExecuteHealthCheckAsync(configurationName, context, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                return HealthCheckResult.Unhealthy(exception: ex);
-            }
+            return await ExecuteHealthCheckAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Unexpected error.", exception: ex);
         }
     }
 
     protected abstract ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthCheckContext context,
+        HealthStatus failureStatus,
         CancellationToken cancellationToken
     );
 }

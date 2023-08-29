@@ -3,8 +3,8 @@ namespace NetEvolve.HealthChecks.Abstractions;
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using NetEvolve.Arguments;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,52 +14,53 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
     public ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
-    {
-        _optionsMonitor = optionsMonitor;
-    }
+        => _optionsMonitor = optionsMonitor;
 
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default
     )
     {
+        Argument.ThrowIfNull(context);
+
         var configurationName = context.Registration.Name;
-        var result = await InternalAsync(context, configurationName, cancellationToken).ConfigureAwait(false);
+        var failureStatus = context.Registration.FailureStatus;
+        var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
 
         return result;
+    }
 
-        async Task<HealthCheckResult> InternalAsync(HealthCheckContext context, string configurationName, CancellationToken cancellationToken)
+    private async Task<HealthCheckResult> InternalAsync(string configurationName, HealthStatus failureStatus, CancellationToken cancellationToken)
+    {
+        try
         {
-            try
+            var options = _optionsMonitor.Get(configurationName);
+            if (options is null)
             {
-                var options = _optionsMonitor.Get(configurationName);
-                if (options is null)
-                {
-                    return new HealthCheckResult(
-                        HealthStatus.Unhealthy,
-                        description: $"{configurationName}: Missing configuration"
-                    );
-                }
+                return new HealthCheckResult(
+                    HealthStatus.Unhealthy,
+                    description: $"{configurationName}: Missing configuration"
+                );
+            }
 
-                return await ExecuteHealthCheckAsync(
-                        configurationName,
-                        options,
-                        context,
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                return new HealthCheckResult(context.Registration.FailureStatus, exception: ex);
-            }
+            return await ExecuteHealthCheckAsync(
+                    configurationName,
+                    failureStatus,
+                    options,
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Unexpected error.", exception: ex);
         }
     }
 
     protected abstract ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+        HealthStatus failureStatus,
         TConfiguration options,
-        HealthCheckContext context,
         CancellationToken cancellationToken
     );
 }

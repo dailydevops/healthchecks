@@ -1,13 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>$(_TargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
+
+    <Description>Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.</Description>
+    <PackageTags>$(PackageTags);sqlserver;mssql;legacy</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NetEvolve.Arguments" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
     <PackageReference Include="System.Data.SqlClient" />
   </ItemGroup>
+
+  <Import Project="$(SolutionDir)\src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems" Label="Shared" />
 
 </Project>

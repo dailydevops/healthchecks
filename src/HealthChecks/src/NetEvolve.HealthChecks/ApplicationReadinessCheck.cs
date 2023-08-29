@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using NetEvolve.Arguments;
 using NetEvolve.HealthChecks.Abstractions;
 using System;
 using System.Threading;
@@ -15,7 +16,7 @@ internal sealed class ApplicationReadinessCheck : HealthCheckBase
 
     public ApplicationReadinessCheck(IHostApplicationLifetime lifetime)
     {
-        ArgumentNullException.ThrowIfNull(lifetime);
+        Argument.ThrowIfNull(lifetime);
 
         _lifetime = lifetime;
 
@@ -25,7 +26,7 @@ internal sealed class ApplicationReadinessCheck : HealthCheckBase
 
     protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthCheckContext context,
+        HealthStatus failureStatus,
         CancellationToken cancellationToken
     )
     {

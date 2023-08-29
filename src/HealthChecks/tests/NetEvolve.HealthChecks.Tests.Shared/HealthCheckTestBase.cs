@@ -22,11 +22,12 @@ public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
 
-    protected async ValueTask RunAndVerify(Action<IHealthChecksBuilder> healthChecks)
+    protected async ValueTask RunAndVerify(Action<IHealthChecksBuilder> healthChecks, Action<IServiceCollection>? config = null)
     {
         var builder = new WebHostBuilder()
             .ConfigureServices(services =>
             {
+                config?.Invoke(services);
                 var healthChecksBuilder = services.AddHealthChecks();
                 healthChecks?.Invoke(healthChecksBuilder);
             })
@@ -113,6 +114,7 @@ public abstract class HealthCheckTestBase
 
         writer.WriteEndObject();
     }
+
     [SuppressMessage("Performance", "CA1851:Possible multiple enumerations of 'IEnumerable' collection", Justification = "As designed.")]
     private static void WriteTags(Utf8JsonWriter writer, IEnumerable<string> tags)
     {

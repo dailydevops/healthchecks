@@ -17,13 +17,11 @@ jobs:
     name: Build & Tests
     uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@main
     with:
+      disablePublish: ${{ env.NE_NUGET_PUBLISH == 'true' }}
       enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}
-      dotnet-version: |
-        6.x
-        7.x
-        8.x
-      dotnet-quality: preview
-      dotnet-testfilter: "'UnitTest','IntegrationTest'"
+      dotnet-version: ${{ env.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ env.NE_DOTNET_QUALITY }}
+      dotnet-testfilter: ${{ env.NE_DOTNET_TESTFILTER }}
       solution: ./src/HealthChecks.SqlServer/HealthChecks.SqlServer.slnf
     secrets: inherit

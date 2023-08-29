@@ -1,12 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>$(_TargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
+
+    <Description>Contains general application HealthChecks.</Description>
+    <PackageTags>$(PackageTags);application;self;readiness</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NetEvolve.Arguments" />
   </ItemGroup>
+
+  <Import Project="$(SolutionDir)\src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems" Label="Shared" />
 
 </Project>

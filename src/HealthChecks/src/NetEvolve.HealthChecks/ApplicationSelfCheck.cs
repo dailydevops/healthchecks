@@ -9,7 +9,7 @@ internal sealed class ApplicationSelfCheck : HealthCheckBase
 {
     protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthCheckContext context,
+        HealthStatus failureStatus,
         CancellationToken cancellationToken
     )
     {

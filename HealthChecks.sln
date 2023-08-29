@@ -111,6 +111,10 @@ Global
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems*{62fb0b38-060d-46bc-840d-fd225acb775e}*SharedItemsImports = 5
 		src\HealthChecks\tests\NetEvolve.HealthChecks.Tests.Shared\NetEvolve.HealthChecks.Tests.Shared.projitems*{a460f166-5bf9-4817-9a7b-eefaa6eaaa08}*SharedItemsImports = 13
+		src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems*{e56d2a0b-607e-4860-aec5-4d9ae2cc61b5}*SharedItemsImports = 5
+		src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems*{ee7a3a3c-487f-44c1-a301-3df40716f2e2}*SharedItemsImports = 13
+		src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems*{f7ff815a-110e-454c-9d0c-b4ab297e4c3e}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

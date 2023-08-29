@@ -16,8 +16,8 @@ internal sealed class SqlServerHealthCheck
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+        HealthStatus failureStatus,
         SqlServerHealthCheckOptions options,
-        HealthCheckContext context,
         CancellationToken cancellationToken
     )
     {
