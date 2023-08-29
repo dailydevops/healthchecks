@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "..\\..\\HealthChecks.sln",
+    "projects": [
+      "src\\HealthChecks.SqlServer.Legacy\\src\\NetEvolve.HealthChecks.SqlServer.Legacy\\NetEvolve.HealthChecks.SqlServer.Legacy.csproj",
+      "src\\HealthChecks.SqlServer.Legacy\\tests\\NetEvolve.HealthChecks.SqlServer.Legacy.Tests.Integration\\NetEvolve.HealthChecks.SqlServer.Legacy.Tests.Integration.csproj",
+      "src\\HealthChecks.SqlServer.Legacy\\tests\\NetEvolve.HealthChecks.SqlServer.Legacy.Tests.Unit\\NetEvolve.HealthChecks.SqlServer.Legacy.Tests.Unit.csproj"
+    ]
+  }
+}
