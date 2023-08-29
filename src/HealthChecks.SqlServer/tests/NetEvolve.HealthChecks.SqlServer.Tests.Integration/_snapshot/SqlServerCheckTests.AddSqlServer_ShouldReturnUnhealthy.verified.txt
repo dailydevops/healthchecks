@@ -1,0 +1,14 @@
+﻿{
+  status: Degraded,
+  results: [
+    {
+      name: SqlServerTestContainerUnhealthy,
+      status: Degraded,
+      description: SqlServerTestContainerUnhealthy: Degraded,
+      tags: [
+        sqlserver,
+        database
+      ]
+    }
+  ]
+}

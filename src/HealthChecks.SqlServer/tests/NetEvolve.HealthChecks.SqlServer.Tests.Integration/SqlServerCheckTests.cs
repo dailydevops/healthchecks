@@ -29,17 +29,34 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
             .ConfigureAwait(false);
 
     [Fact]
-    public async Task AddSqlServer_Timeout_ShouldReturnUnhealthy() =>
+    public async Task AddSqlServer_ShouldReturnDegraded() =>
         await RunAndVerify(healthChecks =>
-            {
-                _ = healthChecks.AddSqlServer(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                        options.Timeout = 0;
-                    }
-                );
-            })
+        {
+            _ = healthChecks.AddSqlServer(
+                "TestContainerDegraded",
+                options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.200';";
+                    options.Timeout = 0;
+                }
+            );
+        })
+            .ConfigureAwait(false);
+
+    [Fact]
+    public async Task AddSqlServer_ShouldReturnUnhealthy() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddSqlServer(
+                "TestContainerUnhealthy",
+                options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Command = "SELECT 1; THROW 51000, 'This is a test.', 1;";
+                    options.Timeout = 0;
+                }
+            );
+        })
             .ConfigureAwait(false);
 }
