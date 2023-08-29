@@ -17,7 +17,7 @@ public static class DependencyInjectionExtensions
     /// Add a health check for the SQL Server database.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="SqlServerHealthCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="SqlServerCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -28,7 +28,7 @@ public static class DependencyInjectionExtensions
     public static IHealthChecksBuilder AddSqlServer(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
-        Action<SqlServerHealthCheckOptions>? options = null,
+        Action<SqlServerOptions>? options = null,
         params string[] tags
     )
     {
@@ -40,19 +40,23 @@ public static class DependencyInjectionExtensions
         {
             _ = builder.Services
                 .AddSingleton<SqlServerCheckMarker>()
-                .AddSingleton<SqlServerHealthCheck>();
+                .AddSingleton<SqlServerCheck>()
+                .ConfigureOptions<SqlServerOptionsConfigure>();
         }
 
         var internalName = name.EnsureStartsWith("SqlServer", StringComparison.OrdinalIgnoreCase);
 
-        if (builder.IsNameAlreadyUsed<SqlServerHealthCheck>(internalName))
+        if (builder.IsNameAlreadyUsed<SqlServerCheck>(internalName))
         {
             throw new ArgumentException($"Name `{name}` already in use.", name, null);
         }
 
-        _ = builder.Services.Configure(internalName, options ?? (x => { }));
+        if (options is not null)
+        {
+            _ = builder.Services.Configure(internalName, options);
+        }
 
-        return builder.AddCheck<SqlServerHealthCheck>(
+        return builder.AddCheck<SqlServerCheck>(
             internalName,
             HealthStatus.Unhealthy,
             new[] { "sqlserver", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)

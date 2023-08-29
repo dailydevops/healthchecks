@@ -9,15 +9,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal sealed class SqlServerHealthCheck
-    : ConfigurableHealthCheckBase<SqlServerHealthCheckOptions>
+internal sealed class SqlServerCheck : ConfigurableHealthCheckBase<SqlServerOptions>
 {
     /// <summary>
     /// The default sql command.
     /// </summary>
     public const string DefaultCommand = "SELECT 1;";
 
-    public SqlServerHealthCheck(IOptionsMonitor<SqlServerHealthCheckOptions> optionsMonitor)
+    public SqlServerCheck(IOptionsMonitor<SqlServerOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
     [SuppressMessage(
@@ -28,7 +27,7 @@ internal sealed class SqlServerHealthCheck
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
-        SqlServerHealthCheckOptions options,
+        SqlServerOptions options,
         CancellationToken cancellationToken
     )
     {
@@ -38,16 +37,14 @@ internal sealed class SqlServerHealthCheck
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = string.IsNullOrWhiteSpace(options.Command)
-                    ? DefaultCommand
-                    : options.Command;
+                command.CommandText = options.Command;
 
-                var (isHealthy, result) = await command
+                var (isHealthy, _) = await command
                     .ExecuteScalarAsync(cancellationToken)
                     .WithTimeoutAsync(options.Timeout, cancellationToken)
                     .ConfigureAwait(false);
 
-                return isHealthy && (int)result == 1
+                return isHealthy
                     ? HealthCheckResult.Healthy($"{name}: Healthy")
                     : HealthCheckResult.Degraded($"{name}: Degraded");
             }

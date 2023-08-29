@@ -1,10 +1,9 @@
-﻿#if USE_CONFIGURABLE_HEALTHCHECK || USE_HEALTHCHECK
+﻿#if USE_CONFIGURABLE_HEALTHCHECK
 namespace NetEvolve.HealthChecks.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using System.Linq;
 
 internal static partial class IHealthChecksBuilderExtensions
 {
