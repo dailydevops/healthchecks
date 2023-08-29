@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.SqlServer;
+﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

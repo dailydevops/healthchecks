@@ -1,7 +1,8 @@
-﻿namespace NetEvolve.HealthChecks.SqlServer.Tests.Unit;
+﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy.Tests.Unit;
 
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
+using NetEvolve.HealthChecks.SqlServer.Legacy;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
