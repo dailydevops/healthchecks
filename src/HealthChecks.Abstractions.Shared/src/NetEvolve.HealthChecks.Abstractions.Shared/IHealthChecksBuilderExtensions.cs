@@ -20,7 +20,18 @@ internal static partial class IHealthChecksBuilderExtensions
             {
                 var registrations = options.Value.Registrations;
 
-                return registrations.Any(x => x.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase) && x.Factory(scope.ServiceProvider) is T);
+                foreach (var registration in registrations)
+                {
+                    if (registration.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        var healthCheck = registration.Factory(scope.ServiceProvider);
+
+                        if (healthCheck is T)
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
 
             return false;

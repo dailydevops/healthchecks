@@ -84,6 +84,7 @@ public abstract class HealthCheckTestBase
                     writer.WriteString("name", key);
                     writer.WriteString("status", value.Status.ToString());
                     writer.WriteString("description", value.Description);
+                    WriteException(writer, value.Exception);
                     WriteData(writer, value.Data);
                     WriteTags(writer, value.Tags);
                     writer.WriteEndObject();
@@ -95,6 +96,33 @@ public abstract class HealthCheckTestBase
 
             return context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
+    }
+
+    private static void WriteException(Utf8JsonWriter writer, Exception? exception)
+    {
+        if (exception is null)
+        {
+            return;
+        }
+
+        writer.WriteStartObject("exception");
+        writer.WriteString("message", exception.Message);
+        writer.WriteString("type", exception.GetType().FullName);
+        if (exception.InnerException is not null)
+        {
+            writer.WriteStartArray("innerExceptions");
+            var inner = exception.InnerException;
+            do
+            {
+                writer.WriteStartObject();
+                writer.WriteString("message", inner.Message);
+                writer.WriteString("type", inner.GetType().Name);
+                writer.WriteEndObject();
+                inner = inner.InnerException;
+            } while (inner is not null);
+            writer.WriteEndArray();
+        }
+        writer.WriteEndObject();
     }
 
     private static void WriteData(Utf8JsonWriter writer, IReadOnlyDictionary<string, object> data)

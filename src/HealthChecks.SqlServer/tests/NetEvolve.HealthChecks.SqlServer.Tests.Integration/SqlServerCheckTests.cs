@@ -53,8 +53,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                 options =>
                 {
                     options.ConnectionString = _database.GetConnectionString();
-                    options.Command = "SELECT 1; THROW 51000, 'This is a test.', 1;";
-                    options.Timeout = 0;
+                    options.Command = "RAISERROR('This is a test.',16,1)";
                 }
             );
         })

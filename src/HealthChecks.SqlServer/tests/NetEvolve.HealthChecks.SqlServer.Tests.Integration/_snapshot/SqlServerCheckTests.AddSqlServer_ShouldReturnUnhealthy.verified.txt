@@ -1,14 +1,18 @@
 ﻿{
-  status: Degraded,
   results: [
     {
+      description: SqlServerTestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: This is a test.,
+        type: Microsoft.Data.SqlClient.SqlException
+      },
       name: SqlServerTestContainerUnhealthy,
-      status: Degraded,
-      description: SqlServerTestContainerUnhealthy: Degraded,
+      status: Unhealthy,
       tags: [
         sqlserver,
         database
       ]
     }
-  ]
+  ],
+  status: Unhealthy
 }

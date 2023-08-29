@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)HealthCheckTestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <None Include="$(MSBuildThisFileDirectory)/_snapshot/**/*.verified.txt" />
   </ItemGroup>
 </Project>
