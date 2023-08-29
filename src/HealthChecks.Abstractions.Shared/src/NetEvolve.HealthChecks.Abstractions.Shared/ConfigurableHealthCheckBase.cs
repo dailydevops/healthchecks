@@ -13,7 +13,7 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
 {
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
-    public ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
+    protected ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
         => _optionsMonitor = optionsMonitor;
 
     public async Task<HealthCheckResult> CheckHealthAsync(
