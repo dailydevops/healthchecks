@@ -1,11 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks;
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using NetEvolve.HealthChecks.Abstractions;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 internal sealed class ApplicationReadinessCheck : HealthCheckBase
 {

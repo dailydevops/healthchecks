@@ -1,4 +1,4 @@
-name: CI - SqlServer
+name: CI - SqlServer.Legacy
 
 on:
   push:
