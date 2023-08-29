@@ -6,20 +6,14 @@ on:
     paths:
       - src/HealthChecks.Abstractions.Shared/**/*
       - src/HealthChecks.SqlServer.Legacy/**/*
-  pull_request:
-    branches: [ main ]
-    paths:
-      - src/HealthChecks.Abstractions.Shared/**/*
-      - src/HealthChecks.SqlServer.Legacy/**/*
 
 jobs:
   all:
     name: Build & Tests
     uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@main
     with:
-      disableCodeQL: true
       disablePublish: ${{ vars.NE_NUGET_PUBLISH == 'false' }}
-      enableSonarQube: ${{ vars.NE_DOTNET_SONAR == 'true' }}
+      enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
