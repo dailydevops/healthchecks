@@ -60,7 +60,8 @@ public abstract class HealthCheckTestBase
         var shortName = projectName[(projectName.IndexOf(".", StringComparison.OrdinalIgnoreCase) + 1)..];
         shortName = shortName[..shortName.IndexOf(".Tests.", StringComparison.OrdinalIgnoreCase)];
 
-        return Path.Combine(directory, shortName, "Tests", projectName, "_snapshot");
+        var snapshotDirectory = Path.Combine(directory, shortName, "Tests", projectName, "_snapshot");
+        return Path.GetFullPath(snapshotDirectory);
     }
 
     private static Task WriteResponse(HttpContext context, HealthReport report)
