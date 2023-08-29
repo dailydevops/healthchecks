@@ -18,5 +18,6 @@ public class SqlServerOptions
     /// <summary>
     /// The sql command to execute against the SQL Server database.
     /// </summary>
+    /// <remarks>For internal use only.</remarks>
     internal string Command { get; set; } = SqlServerCheck.DefaultCommand;
 }

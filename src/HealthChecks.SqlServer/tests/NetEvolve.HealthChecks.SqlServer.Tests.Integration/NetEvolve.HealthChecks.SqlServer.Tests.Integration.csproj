@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_snapshot\" />
+  </ItemGroup>
+
 </Project>

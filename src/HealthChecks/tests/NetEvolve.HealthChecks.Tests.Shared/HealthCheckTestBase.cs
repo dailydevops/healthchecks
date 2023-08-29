@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
@@ -22,12 +23,16 @@ public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
 
-    protected async ValueTask RunAndVerify(Action<IHealthChecksBuilder> healthChecks, Action<IServiceCollection>? config = null)
+    protected async ValueTask RunAndVerify(Action<IHealthChecksBuilder> healthChecks, Action<IConfigurationBuilder>? config = null, Action<IServiceCollection>? serviceBuilder = null)
     {
         var builder = new WebHostBuilder()
+            .ConfigureAppConfiguration((_, configBuilder) =>
+            {
+                config?.Invoke(configBuilder);
+            })
             .ConfigureServices(services =>
             {
-                config?.Invoke(services);
+                serviceBuilder?.Invoke(services);
                 var healthChecksBuilder = services.AddHealthChecks();
                 healthChecks?.Invoke(healthChecksBuilder);
             })

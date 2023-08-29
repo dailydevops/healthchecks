@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: SqlServerTestContainerHealthy: Healthy,
+      name: SqlServerTestContainerHealthy,
+      status: Healthy,
+      tags: [
+        sqlserver,
+        database
+      ]
+    }
+  ],
+  status: Healthy
+}
