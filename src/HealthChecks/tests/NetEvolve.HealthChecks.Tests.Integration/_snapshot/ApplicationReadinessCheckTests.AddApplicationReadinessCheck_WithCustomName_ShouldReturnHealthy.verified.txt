@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: ApplicationReadiness: Unhealthy,
+      name: ApplicationReadiness,
+      status: Unhealthy,
+      tags: [
+        self,
+        readiness
+      ]
+    }
+  ],
+  status: Unhealthy
+}

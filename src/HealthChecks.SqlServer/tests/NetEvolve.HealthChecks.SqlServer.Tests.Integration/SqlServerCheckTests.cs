@@ -3,6 +3,7 @@
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Tests;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -28,6 +29,24 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     }
                 );
             })
+            .ConfigureAwait(false);
+
+    [Fact]
+    public async Task AddSqlServer_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
+        _ = await Assert
+            .ThrowsAsync<ArgumentException>(
+                "name",
+                async () =>
+                {
+                    await RunAndVerify(healthChecks =>
+                        {
+                            _ = healthChecks
+                                .AddSqlServer("TestContainerHealthy")
+                                .AddSqlServer("TestContainerHealthy");
+                        })
+                        .ConfigureAwait(false);
+                }
+            )
             .ConfigureAwait(false);
 
     [Fact]

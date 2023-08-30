@@ -45,9 +45,9 @@ public static class DependencyInjectionExtensions
 
         var internalName = name.EnsureStartsWith("SqlServer", StringComparison.OrdinalIgnoreCase);
 
-        if (builder.IsNameAlreadyUsed<SqlServerLegacyCheck>(internalName))
+        if (builder.IsNameAlreadyUsed(internalName))
         {
-            throw new ArgumentException($"Name `{name}` already in use.", name, null);
+            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)

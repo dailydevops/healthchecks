@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 internal static partial class IHealthChecksBuilderExtensions
 {
-    public static bool IsNameAlreadyUsed<T>(this IHealthChecksBuilder builder, string name) where T : IHealthCheck
+    public static bool IsNameAlreadyUsed(this IHealthChecksBuilder builder, string name)
     {
         var serviceProvider = builder.Services.BuildServiceProvider();
 
@@ -23,12 +23,7 @@ internal static partial class IHealthChecksBuilderExtensions
                 {
                     if (registration.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
                     {
-                        var healthCheck = registration.Factory(scope.ServiceProvider);
-
-                        if (healthCheck is T)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }

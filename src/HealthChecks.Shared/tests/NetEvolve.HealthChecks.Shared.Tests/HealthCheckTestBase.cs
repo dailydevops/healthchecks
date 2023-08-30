@@ -1,4 +1,4 @@
-﻿// #define AUTO_VERIFY
+﻿#define AUTO_VERIFY
 
 namespace NetEvolve.HealthChecks.Tests;
 
@@ -25,7 +25,12 @@ public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
 
-    protected async ValueTask RunAndVerify(Action<IHealthChecksBuilder> healthChecks, Action<IConfigurationBuilder>? config = null, Action<IServiceCollection>? serviceBuilder = null)
+    protected async ValueTask RunAndVerify(
+        Action<IHealthChecksBuilder> healthChecks,
+        Action<IConfigurationBuilder>? config = null,
+        Action<IServiceCollection>? serviceBuilder = null,
+        Action<TestServer>? serverConfiguration = null
+    )
     {
         var builder = new WebHostBuilder()
             .ConfigureAppConfiguration((_, configBuilder) =>
@@ -49,10 +54,12 @@ public abstract class HealthCheckTestBase
         using (var server = new TestServer(builder))
         {
             var client = server.CreateClient();
+
+            serverConfiguration?.Invoke(server);
+
             var response = await client
                 .GetAsync(new Uri(HealthCheckPath, UriKind.Relative))
                 .ConfigureAwait(false);
-
             var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
 
