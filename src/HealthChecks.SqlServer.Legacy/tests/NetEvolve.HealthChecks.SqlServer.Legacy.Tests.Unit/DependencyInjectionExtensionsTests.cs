@@ -86,6 +86,6 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddSqlServerLegacy(name).AddSqlServerLegacy(name);
 
         // Assert
-        _ = Assert.Throws<ArgumentException>(name, Act);
+        _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 }

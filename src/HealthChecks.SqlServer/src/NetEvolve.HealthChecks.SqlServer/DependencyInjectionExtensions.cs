@@ -47,7 +47,7 @@ public static class DependencyInjectionExtensions
 
         if (builder.IsNameAlreadyUsed<SqlServerCheck>(internalName))
         {
-            throw new ArgumentException($"Name `{name}` already in use.", name, null);
+            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
