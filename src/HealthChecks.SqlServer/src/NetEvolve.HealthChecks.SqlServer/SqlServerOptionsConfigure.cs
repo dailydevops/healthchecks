@@ -25,8 +25,13 @@ internal sealed class SqlServerOptionsConfigure
 
     public void Configure(SqlServerOptions options) => Configure(Options.DefaultName, options);
 
-    public void PostConfigure(string name, SqlServerOptions options)
+    public void PostConfigure(string? name, SqlServerOptions options)
     {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(options.Command))
         {
             options.Command = SqlServerCheck.DefaultCommand;
