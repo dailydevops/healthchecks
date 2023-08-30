@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ConfigurableHealthCheckBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HealthCheckBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHealthChecksBuilderExtensions.HealthChecks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHealthChecksBuilderExtensions.ConfigurableHealthChecks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IHealthChecksBuilderExtensions.cs" />
   </ItemGroup>
 </Project>

@@ -7,33 +7,34 @@ using System.Threading;
 
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class SqlServerOptionsConfigure
-    : IConfigureNamedOptions<SqlServerOptions>,
-        IPostConfigureOptions<SqlServerOptions>,
-        IValidateOptions<SqlServerOptions>
+internal sealed class SqlServerLegacyOptionsConfigure
+    : IConfigureNamedOptions<SqlServerLegacyOptions>,
+        IPostConfigureOptions<SqlServerLegacyOptions>,
+        IValidateOptions<SqlServerLegacyOptions>
 {
     private readonly IConfiguration _configuration;
 
-    public SqlServerOptionsConfigure(IConfiguration configuration) =>
+    public SqlServerLegacyOptionsConfigure(IConfiguration configuration) =>
         _configuration = configuration;
 
-    public void Configure(string? name, SqlServerOptions options)
+    public void Configure(string? name, SqlServerLegacyOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:{name}", options);
     }
 
-    public void Configure(SqlServerOptions options) => Configure(Options.DefaultName, options);
+    public void Configure(SqlServerLegacyOptions options) =>
+        Configure(Options.DefaultName, options);
 
-    public void PostConfigure(string name, SqlServerOptions options)
+    public void PostConfigure(string name, SqlServerLegacyOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = SqlServerCheck.DefaultCommand;
+            options.Command = SqlServerLegacyCheck.DefaultCommand;
         }
     }
 
-    public ValidateOptionsResult Validate(string? name, SqlServerOptions options)
+    public ValidateOptionsResult Validate(string? name, SqlServerLegacyOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

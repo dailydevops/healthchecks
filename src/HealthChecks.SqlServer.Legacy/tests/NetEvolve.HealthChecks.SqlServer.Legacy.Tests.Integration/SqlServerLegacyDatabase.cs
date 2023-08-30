@@ -6,11 +6,9 @@ using Testcontainers.MsSql;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
-public sealed class SqlServerDatabase : IAsyncLifetime
+public sealed class SqlServerLegacyDatabase : IAsyncLifetime
 {
-    private readonly MsSqlContainer _database = new MsSqlBuilder()
-        .WithPassword("P4ssw0rd!")
-        .Build();
+    private readonly MsSqlContainer _database = new MsSqlBuilder().Build();
 
     public string GetConnectionString() => _database.GetConnectionString();
 

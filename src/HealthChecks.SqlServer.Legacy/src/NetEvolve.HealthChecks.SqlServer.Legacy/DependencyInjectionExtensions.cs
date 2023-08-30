@@ -17,7 +17,7 @@ public static class DependencyInjectionExtensions
     /// Add a health check for the SQL Server database.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="SqlServerCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="SqlServerLegacyCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -28,7 +28,7 @@ public static class DependencyInjectionExtensions
     public static IHealthChecksBuilder AddSqlServerLegacy(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
-        Action<SqlServerOptions>? options = null,
+        Action<SqlServerLegacyOptions>? options = null,
         params string[] tags
     )
     {
@@ -36,17 +36,17 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNullOrWhiteSpace(name);
         Argument.ThrowIfNull(tags);
 
-        if (!builder.Services.Any(x => x.ServiceType == typeof(SqlServerCheckMarker)))
+        if (!builder.IsServiceTypeRegistered<SqlServerLegacyCheckMarker>())
         {
             _ = builder.Services
-                .AddSingleton<SqlServerCheckMarker>()
-                .AddSingleton<SqlServerCheck>()
-                .ConfigureOptions<SqlServerOptionsConfigure>();
+                .AddSingleton<SqlServerLegacyCheckMarker>()
+                .AddSingleton<SqlServerLegacyCheck>()
+                .ConfigureOptions<SqlServerLegacyOptionsConfigure>();
         }
 
         var internalName = name.EnsureStartsWith("SqlServer", StringComparison.OrdinalIgnoreCase);
 
-        if (builder.IsNameAlreadyUsed<SqlServerCheck>(internalName))
+        if (builder.IsNameAlreadyUsed<SqlServerLegacyCheck>(internalName))
         {
             throw new ArgumentException($"Name `{name}` already in use.", name, null);
         }
@@ -56,12 +56,12 @@ public static class DependencyInjectionExtensions
             _ = builder.Services.Configure(internalName, options);
         }
 
-        return builder.AddCheck<SqlServerCheck>(
+        return builder.AddCheck<SqlServerLegacyCheck>(
             internalName,
             HealthStatus.Unhealthy,
             new[] { "sqlserver", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
-    private sealed class SqlServerCheckMarker { }
+    private sealed class SqlServerLegacyCheckMarker { }
 }

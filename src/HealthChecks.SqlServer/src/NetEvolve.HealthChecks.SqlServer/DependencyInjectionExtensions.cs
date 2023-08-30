@@ -36,7 +36,7 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNullOrEmpty(name);
         Argument.ThrowIfNull(tags);
 
-        if (!builder.Services.Any(x => x.ServiceType == typeof(SqlServerCheckMarker)))
+        if (!builder.IsServiceTypeRegistered<SqlServerCheckMarker>())
         {
             _ = builder.Services
                 .AddSingleton<SqlServerCheckMarker>()

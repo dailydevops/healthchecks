@@ -10,11 +10,11 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerDatabase>
+public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlServerLegacyDatabase>
 {
-    private readonly SqlServerDatabase _database;
+    private readonly SqlServerLegacyDatabase _database;
 
-    public SqlServerCheckTests(SqlServerDatabase database) => _database = database;
+    public SqlServerLegacyCheckTests(SqlServerLegacyDatabase database) => _database = database;
 
     [Fact]
     public async Task AddSqlServer_UseOptions_ShouldReturnHealthy() =>

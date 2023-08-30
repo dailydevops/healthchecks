@@ -8,9 +8,7 @@ using Xunit;
 [ExcludeFromCodeCoverage]
 public sealed class SqlServerDatabase : IAsyncLifetime
 {
-    private readonly MsSqlContainer _database = new MsSqlBuilder()
-        .WithPassword("P4ssw0rd!")
-        .Build();
+    private readonly MsSqlContainer _database = new MsSqlBuilder().Build();
 
     public string GetConnectionString() => _database.GetConnectionString();
 

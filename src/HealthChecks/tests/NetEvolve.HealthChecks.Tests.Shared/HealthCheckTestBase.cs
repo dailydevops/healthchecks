@@ -1,4 +1,6 @@
-﻿namespace NetEvolve.HealthChecks.Tests;
+﻿// #define AUTO_VERIFY
+
+namespace NetEvolve.HealthChecks.Tests;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -54,7 +56,13 @@ public abstract class HealthCheckTestBase
             var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
 
-            _ = await Verifier.Verify(content).UseDirectory(GetProjectDirectory());
+            _ = await Verifier
+                .Verify(content)
+                .UseDirectory(GetProjectDirectory())
+#if AUTO_VERIFY
+                .AutoVerify()
+#endif
+                ;
         }
     }
 

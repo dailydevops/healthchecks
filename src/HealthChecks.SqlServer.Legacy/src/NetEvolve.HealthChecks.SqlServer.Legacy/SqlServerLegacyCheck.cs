@@ -9,14 +9,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal sealed class SqlServerCheck : ConfigurableHealthCheckBase<SqlServerOptions>
+internal sealed class SqlServerLegacyCheck : ConfigurableHealthCheckBase<SqlServerLegacyOptions>
 {
     /// <summary>
     /// The default sql command.
     /// </summary>
     public const string DefaultCommand = "SELECT 1;";
 
-    public SqlServerCheck(IOptionsMonitor<SqlServerOptions> optionsMonitor)
+    public SqlServerLegacyCheck(IOptionsMonitor<SqlServerLegacyOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
     [SuppressMessage(
@@ -27,7 +27,7 @@ internal sealed class SqlServerCheck : ConfigurableHealthCheckBase<SqlServerOpti
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
-        SqlServerOptions options,
+        SqlServerLegacyOptions options,
         CancellationToken cancellationToken
     )
     {

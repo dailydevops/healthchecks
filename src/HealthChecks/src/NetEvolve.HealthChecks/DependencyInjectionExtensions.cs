@@ -3,6 +3,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
+using NetEvolve.HealthChecks.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -27,7 +28,7 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNull(builder);
         Argument.ThrowIfNull(tags);
 
-        if (builder.Services.Any(x => x.ServiceType == typeof(ApplicationReadinessCheckMarker)))
+        if (builder.IsServiceTypeRegistered<ApplicationReadinessCheckMarker>())
         {
             return builder;
         }
@@ -57,7 +58,7 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNull(builder);
         Argument.ThrowIfNull(tags);
 
-        if (builder.Services.Any(x => x.ServiceType == typeof(ApplicationSelfCheckMarker)))
+        if (builder.IsServiceTypeRegistered<ApplicationSelfCheckMarker>())
         {
             return builder;
         }
