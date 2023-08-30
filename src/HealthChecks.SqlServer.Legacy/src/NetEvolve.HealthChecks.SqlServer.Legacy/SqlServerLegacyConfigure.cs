@@ -25,7 +25,7 @@ internal sealed class SqlServerLegacyConfigure
     public void Configure(SqlServerLegacyOptions options) =>
         Configure(Options.DefaultName, options);
 
-    public void PostConfigure(string name, SqlServerLegacyOptions options)
+    public void PostConfigure(string? name, SqlServerLegacyOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
