@@ -1,4 +1,4 @@
-﻿#define AUTO_VERIFY
+﻿// #define AUTO_VERIFY
 
 namespace NetEvolve.HealthChecks.Tests;
 

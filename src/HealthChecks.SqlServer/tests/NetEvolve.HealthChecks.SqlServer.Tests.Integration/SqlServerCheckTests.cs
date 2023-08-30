@@ -122,4 +122,44 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                 }
             )
             .ConfigureAwait(false);
+
+    [Fact]
+    public async Task AddSqlServer_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+        await RunAndVerify(
+                healthChecks =>
+                {
+                    _ = healthChecks.AddSqlServer("TestNoValues");
+                },
+                config =>
+                {
+                    var values = new Dictionary<string, string?>
+                    {
+                        { "HealthChecks:SqlServerTestNoValues:ConnectionString", "" }
+                    };
+                    _ = config.AddInMemoryCollection(values);
+                }
+            )
+            .ConfigureAwait(false);
+
+    [Fact]
+    public async Task AddSqlServer_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+        await RunAndVerify(
+                healthChecks =>
+                {
+                    _ = healthChecks.AddSqlServer("TestNoValues");
+                },
+                config =>
+                {
+                    var values = new Dictionary<string, string?>
+                    {
+                        {
+                            "HealthChecks:SqlServerTestNoValues:ConnectionString",
+                            _database.GetConnectionString()
+                        },
+                        { "HealthChecks:SqlServerTestNoValues:Timeout", "-2" }
+                    };
+                    _ = config.AddInMemoryCollection(values);
+                }
+            )
+            .ConfigureAwait(false);
 }

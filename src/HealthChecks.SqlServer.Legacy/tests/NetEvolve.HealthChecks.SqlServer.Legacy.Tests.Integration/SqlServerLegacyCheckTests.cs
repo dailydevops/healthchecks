@@ -122,4 +122,44 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                 }
             )
             .ConfigureAwait(false);
+
+    [Fact]
+    public async Task AddSqlServerLegacy_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+        await RunAndVerify(
+                healthChecks =>
+                {
+                    _ = healthChecks.AddSqlServerLegacy("TestNoValues");
+                },
+                config =>
+                {
+                    var values = new Dictionary<string, string?>
+                    {
+                        { "HealthChecks:SqlServerTestNoValues:ConnectionString", "" }
+                    };
+                    _ = config.AddInMemoryCollection(values);
+                }
+            )
+            .ConfigureAwait(false);
+
+    [Fact]
+    public async Task AddSqlServerLegacy_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+        await RunAndVerify(
+                healthChecks =>
+                {
+                    _ = healthChecks.AddSqlServerLegacy("TestNoValues");
+                },
+                config =>
+                {
+                    var values = new Dictionary<string, string?>
+                    {
+                        {
+                            "HealthChecks:SqlServerTestNoValues:ConnectionString",
+                            _database.GetConnectionString()
+                        },
+                        { "HealthChecks:SqlServerTestNoValues:Timeout", "-2" }
+                    };
+                    _ = config.AddInMemoryCollection(values);
+                }
+            )
+            .ConfigureAwait(false);
 }
