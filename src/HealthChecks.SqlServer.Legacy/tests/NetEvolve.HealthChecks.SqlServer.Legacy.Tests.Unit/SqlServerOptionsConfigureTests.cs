@@ -16,7 +16,7 @@ public sealed class SqlServerOptionsConfigureTests
     {
         // Arrange
         var options = new SqlServerLegacyOptions();
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = default(string);
 
         // Act
@@ -31,7 +31,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = default(SqlServerLegacyOptions);
 
@@ -47,7 +47,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerLegacyOptions();
 
@@ -63,7 +63,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerLegacyOptions { ConnectionString = "Test", Timeout = -2 };
 
@@ -79,7 +79,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentCommandNull_SetDefaultCommand()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerLegacyOptions { ConnectionString = "Test" };
 
@@ -95,7 +95,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void PostConfigure_WhenArgumentCommandEmpty_SetDefaultCommand()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerLegacyOptions
         {
@@ -114,7 +114,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = default(string);
         var options = new SqlServerLegacyOptions();
 
@@ -129,7 +129,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new SqlServerLegacyOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var options = new SqlServerLegacyOptions();
 
         // Act

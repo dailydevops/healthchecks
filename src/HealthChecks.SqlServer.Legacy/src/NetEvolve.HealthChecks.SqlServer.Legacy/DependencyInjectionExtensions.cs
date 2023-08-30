@@ -41,7 +41,7 @@ public static class DependencyInjectionExtensions
             _ = builder.Services
                 .AddSingleton<SqlServerLegacyCheckMarker>()
                 .AddSingleton<SqlServerLegacyCheck>()
-                .ConfigureOptions<SqlServerLegacyOptionsConfigure>();
+                .ConfigureOptions<SqlServerLegacyConfigure>();
         }
 
         var internalName = name.EnsureStartsWith("SqlServer", StringComparison.OrdinalIgnoreCase);

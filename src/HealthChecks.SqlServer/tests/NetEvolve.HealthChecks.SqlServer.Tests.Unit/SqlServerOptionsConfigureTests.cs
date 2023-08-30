@@ -15,7 +15,7 @@ public sealed class SqlServerOptionsConfigureTests
     {
         // Arrange
         var options = new SqlServerOptions();
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = default(string);
 
         // Act
@@ -30,7 +30,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = default(SqlServerOptions);
 
@@ -46,7 +46,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerOptions();
 
@@ -62,7 +62,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerOptions { ConnectionString = "Test", Timeout = -2 };
 
@@ -78,7 +78,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Validate_WhenArgumentCommandNull_SetDefaultCommand()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerOptions { ConnectionString = "Test" };
 
@@ -94,7 +94,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void PostConfigure_WhenArgumentCommandEmpty_SetDefaultCommand()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
         var options = new SqlServerOptions { ConnectionString = "Test", Command = string.Empty };
 
@@ -109,7 +109,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var name = default(string);
         var options = new SqlServerOptions();
 
@@ -124,7 +124,7 @@ public sealed class SqlServerOptionsConfigureTests
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new SqlServerOptionsConfigure(new ConfigurationBuilder().Build());
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
         var options = new SqlServerOptions();
 
         // Act

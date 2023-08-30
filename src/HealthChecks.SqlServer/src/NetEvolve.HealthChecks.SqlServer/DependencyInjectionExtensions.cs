@@ -41,7 +41,7 @@ public static class DependencyInjectionExtensions
             _ = builder.Services
                 .AddSingleton<SqlServerCheckMarker>()
                 .AddSingleton<SqlServerCheck>()
-                .ConfigureOptions<SqlServerOptionsConfigure>();
+                .ConfigureOptions<SqlServerConfigure>();
         }
 
         var internalName = name.EnsureStartsWith("SqlServer", StringComparison.OrdinalIgnoreCase);

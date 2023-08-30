@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy;
+﻿namespace NetEvolve.HealthChecks.SqlServer;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -7,26 +7,24 @@ using System.Threading;
 
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class SqlServerLegacyOptionsConfigure
-    : IConfigureNamedOptions<SqlServerLegacyOptions>,
-        IPostConfigureOptions<SqlServerLegacyOptions>,
-        IValidateOptions<SqlServerLegacyOptions>
+internal sealed class SqlServerConfigure
+    : IConfigureNamedOptions<SqlServerOptions>,
+        IPostConfigureOptions<SqlServerOptions>,
+        IValidateOptions<SqlServerOptions>
 {
     private readonly IConfiguration _configuration;
 
-    public SqlServerLegacyOptionsConfigure(IConfiguration configuration) =>
-        _configuration = configuration;
+    public SqlServerConfigure(IConfiguration configuration) => _configuration = configuration;
 
-    public void Configure(string? name, SqlServerLegacyOptions options)
+    public void Configure(string? name, SqlServerOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:{name}", options);
     }
 
-    public void Configure(SqlServerLegacyOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(SqlServerOptions options) => Configure(Options.DefaultName, options);
 
-    public void PostConfigure(string name, SqlServerLegacyOptions options)
+    public void PostConfigure(string? name, SqlServerOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -35,11 +33,11 @@ internal sealed class SqlServerLegacyOptionsConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = SqlServerLegacyCheck.DefaultCommand;
+            options.Command = SqlServerCheck.DefaultCommand;
         }
     }
 
-    public ValidateOptionsResult Validate(string? name, SqlServerLegacyOptions options)
+    public ValidateOptionsResult Validate(string? name, SqlServerOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
