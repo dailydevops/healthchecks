@@ -24,11 +24,6 @@
     <NoWarn>$(NoWarn);CS8604</NoWarn>
   </PropertyGroup>
 
-  <Import Condition=" $(MSBuildProjectName.Contains('.Tests.Integration')) "
-          Project="src\HealthChecks\tests\NetEvolve.HealthChecks.Tests.Shared\NetEvolve.HealthChecks.Tests.Shared.projitems"
-          Label="Shared" />
-
-
   <ItemGroup Condition=" !$(IsTestableProject) ">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>

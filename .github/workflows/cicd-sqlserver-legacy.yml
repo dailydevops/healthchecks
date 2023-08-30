@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - src/HealthChecks.Abstractions.Shared/**/*
+      - src/HealthChecks.Shared/**/*
       - src/HealthChecks.SqlServer.Legacy/**/*
 
 jobs:

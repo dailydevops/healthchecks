@@ -15,6 +15,6 @@
     <PackageReference Include="System.Data.SqlClient" />
   </ItemGroup>
 
-  <Import Project="$(SolutionDir)\src\HealthChecks.Abstractions.Shared\src\NetEvolve.HealthChecks.Abstractions.Shared\NetEvolve.HealthChecks.Abstractions.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
 
 </Project>

@@ -25,4 +25,6 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\..\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems" Label="Shared" />
+
 </Project>

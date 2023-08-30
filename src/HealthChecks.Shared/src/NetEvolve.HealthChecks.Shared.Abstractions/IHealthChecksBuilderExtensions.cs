@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Abstractions;
+﻿namespace NetEvolve.HealthChecks;
 
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;

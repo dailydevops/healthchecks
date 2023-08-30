@@ -1,5 +1,5 @@
 ﻿#if USE_CONFIGURABLE_HEALTHCHECK
-namespace NetEvolve.HealthChecks.Abstractions;
+namespace NetEvolve.HealthChecks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
