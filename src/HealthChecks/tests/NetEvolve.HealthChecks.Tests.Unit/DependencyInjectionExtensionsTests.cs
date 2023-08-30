@@ -12,8 +12,8 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-[UnitTest]
 [ExcludeFromCodeCoverage]
+[UnitTest]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]

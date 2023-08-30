@@ -3,7 +3,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
-using NetEvolve.HealthChecks.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
