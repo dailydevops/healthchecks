@@ -1,5 +1,6 @@
 <Project>
   <Import Project="$(DirEngineeringSettings)sln.packages.props" />
+  <Import Project="$(MSBuildThisFileDirectory)Local.packages.props" Condition=" Exists('$(MSBuildThisFileDirectory)Local.packages.props') "/>
   <ItemGroup>
     <GlobalPackageReference Include="CSharpier.MSBuild" Version="0.25.0" />
     <GlobalPackageReference Include="GitVersion.MsBuild" Version="5.12.0" />
