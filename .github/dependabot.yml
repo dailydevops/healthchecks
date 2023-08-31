@@ -23,19 +23,21 @@ updates:
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 20
-    groups:
-      coverlet:
-        patterns:
-          - "coverlet*"
-      testcontainers:
-        patterns:
-          - "testcontainers*"
-      verify:
-        patterns:
-          - "verify*"
-      xunit:
-        patterns:
-          - "xunit*"
+    # groups:
+    #   coverlet:
+    #     patterns:
+    #       - "coverlet*"
+    #   testcontainers:
+    #     patterns:
+    #       - "testcontainers*"
+    #   verify:
+    #     patterns:
+    #       - "verify*"
+    #   xunit:
+    #     patterns:
+    #       - "xunit*"
+    #     exclude-patterns:
+    #       - "xunit.runner.visualstudio"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
