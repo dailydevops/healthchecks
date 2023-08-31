@@ -12,7 +12,7 @@
 This is a mono repository for several NuGet packages based on the [Microsoft.Extensions.Diagnostics.HealthChecks](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.HealthChecks) package. The main goal of this repository is to provide a set of health checks for different services and frameworks, which are fully configurable either via code or configuration.
 
 ## What is the difference between this repository and the [AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks) repository?
-The main difference is that we try to focus on delivering packages, which are fully configurable via code or configuration. This means that you can configure the health checks in your `Startup.cs` file or in your `appsettings.json` file, or any other configuration provider.
+The main difference is that we try to focus on delivering packages, which are fully configurable via code and configuration. This means that you can configure the health checks in your `Program.cs` file or in your `appsettings.json` file, or any other configuration provider.
 
 ## Available NuGet packages
 <!--- start packages -->

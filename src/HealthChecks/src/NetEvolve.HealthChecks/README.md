@@ -6,7 +6,7 @@
 This package contains additional health checks for the [Microsoft.Extensions.Diagnostics.HealthChecks](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.HealthChecks/) package.
 Primarily for testing the healthiness of the own application, like application service is started or stopped.
 
-:bulb: This package is build for .NET 6.0, .NET 7.0 and .NET 8.0 and is fully compatible with the .NET Standard 2.0.
+:bulb: This package is available for .NET 6.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project.You can do this by using the NuGet package manager or by using the dotnet CLI.
