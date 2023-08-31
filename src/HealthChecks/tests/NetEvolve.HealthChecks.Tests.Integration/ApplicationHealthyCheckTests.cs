@@ -9,7 +9,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-public class ApplicationSelfCheckTests : HealthCheckTestBase
+public class ApplicationHealthyCheckTests : HealthCheckTestBase
 {
     [Fact]
     public async Task AddApplicationHealthy_ShouldReturnHealthy() =>

@@ -11,7 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-public class ApplicationReadinessCheckTests : HealthCheckTestBase
+public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Fact]
     public async Task AddApplicationReady_ShouldReturnHealthy() =>

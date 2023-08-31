@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: ApplicationReadiness: Healthy,
-      name: ApplicationReadiness,
+      description: ApplicationReady: Healthy,
+      name: ApplicationReady,
       status: Healthy,
       tags: [
         self,
