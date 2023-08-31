@@ -1,11 +1,11 @@
-name: CI - SqlServer.Legacy
+name: "Package: NetEvolve.HealthChecks"
 
 on:
   push:
     branches: [ main ]
     paths:
       - src/HealthChecks.Shared/**/*
-      - src/HealthChecks.SqlServer.Legacy/**/*
+      - src/HealthChecks/**/*
 
 jobs:
   all:
@@ -18,5 +18,5 @@ jobs:
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
       dotnet-testfilter: ${{ vars.NE_DOTNET_TESTFILTER }}
-      solution: ./src/HealthChecks.SqlServer.Legacy/HealthChecks.SqlServer.Legacy.slnf
+      solution: ./src/HealthChecks/HealthChecks.slnf
     secrets: inherit
