@@ -1,4 +1,4 @@
-﻿#if USE_CONFIGURABLE_HEALTHCHECK
+﻿#if USE_CONFIGURABLE_HEALTHCHECK || USE_SQL_HEALTHCHECK
 namespace NetEvolve.HealthChecks;
 
 using Microsoft.Extensions.DependencyInjection;

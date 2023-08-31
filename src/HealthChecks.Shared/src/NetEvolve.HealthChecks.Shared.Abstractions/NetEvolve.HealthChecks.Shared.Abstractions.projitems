@@ -14,5 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IHealthChecksBuilderExtensions.HealthChecks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IHealthChecksBuilderExtensions.ConfigurableHealthChecks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IHealthChecksBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISqlCheckOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SqlCheckBase.cs" />
   </ItemGroup>
 </Project>

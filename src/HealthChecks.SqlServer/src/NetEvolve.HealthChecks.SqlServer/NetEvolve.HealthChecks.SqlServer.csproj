@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
+    <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.</Description>
     <PackageTags>$(PackageTags);sqlserver;mssql</PackageTags>
