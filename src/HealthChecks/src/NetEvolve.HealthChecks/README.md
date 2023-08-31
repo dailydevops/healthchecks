@@ -26,13 +26,6 @@ var builder = services.AddHealthChecks();
 builder.AddApplicationHealthy();
 ```
 
-:bulb: You can always provide tags to all health checks, for grouping or filtering.
-
-```csharp
-var builder = services.AddHealthChecks();
-    builder.AddApplicationHealthy("ping", "pong", ...);
-```
-
 ## Health Check - Application Ready
 This health check is used to check the readiness of the application. It returns `Unhealthy` until the `IHostApplicationLifetime` triggers the `ApplicationStarted` event, then it returns `Healthy`. It returns `Healthy` until the `IHostApplicationLifetim`e triggers the `ApplicationStopping` event, after which it returns `Unhealthy`.
 
