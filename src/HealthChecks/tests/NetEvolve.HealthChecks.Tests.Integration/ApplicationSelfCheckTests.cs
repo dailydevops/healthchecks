@@ -12,10 +12,10 @@ using Xunit;
 public class ApplicationSelfCheckTests : HealthCheckTestBase
 {
     [Fact]
-    public async Task AddApplicationSelfCheck_ShouldReturnHealthy() =>
+    public async Task AddApplicationHealthy_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
             {
-                _ = healthChecks.AddApplicationSelfCheck();
+                _ = healthChecks.AddApplicationHealthy();
             })
             .ConfigureAwait(false);
 }

@@ -19,7 +19,7 @@ public static class DependencyInjectionExtensions
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddApplicationReadinessCheck(
+    public static IHealthChecksBuilder AddApplicationReady(
         [NotNull] this IHealthChecksBuilder builder,
         params string[] tags
     )
@@ -27,16 +27,16 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNull(builder);
         Argument.ThrowIfNull(tags);
 
-        if (builder.IsServiceTypeRegistered<ApplicationReadinessCheckMarker>())
+        if (builder.IsServiceTypeRegistered<ApplicationReadyCheckMarker>())
         {
             return builder;
         }
 
         _ = builder.Services
-            .AddSingleton<ApplicationReadinessCheckMarker>()
-            .AddSingleton<ApplicationReadinessCheck>();
-        return builder.AddCheck<ApplicationReadinessCheck>(
-            "ApplicationReadiness",
+            .AddSingleton<ApplicationReadyCheckMarker>()
+            .AddSingleton<ApplicationReadyCheck>();
+        return builder.AddCheck<ApplicationReadyCheck>(
+            "ApplicationReady",
             HealthStatus.Unhealthy,
             new[] { "self", "readiness" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
@@ -49,7 +49,7 @@ public static class DependencyInjectionExtensions
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddApplicationSelfCheck(
+    public static IHealthChecksBuilder AddApplicationHealthy(
         [NotNull] this IHealthChecksBuilder builder,
         params string[] tags
     )
@@ -57,22 +57,22 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNull(builder);
         Argument.ThrowIfNull(tags);
 
-        if (builder.IsServiceTypeRegistered<ApplicationSelfCheckMarker>())
+        if (builder.IsServiceTypeRegistered<ApplicationHealthyCheckMarker>())
         {
             return builder;
         }
 
         _ = builder.Services
-            .AddSingleton<ApplicationSelfCheckMarker>()
-            .AddSingleton<ApplicationSelfCheck>();
-        return builder.AddCheck<ApplicationSelfCheck>(
-            "ApplicationSelf",
+            .AddSingleton<ApplicationHealthyCheckMarker>()
+            .AddSingleton<ApplicationHealthyCheck>();
+        return builder.AddCheck<ApplicationHealthyCheck>(
+            "ApplicationHealthy",
             HealthStatus.Unhealthy,
             new[] { "self" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
-    private sealed class ApplicationReadinessCheckMarker { }
+    private sealed class ApplicationReadyCheckMarker { }
 
-    private sealed class ApplicationSelfCheckMarker { }
+    private sealed class ApplicationHealthyCheckMarker { }
 }

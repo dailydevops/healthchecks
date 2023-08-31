@@ -18,7 +18,7 @@ public sealed class ApplicationReadinessCheckTests
     {
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
-        var sut = new ApplicationReadinessCheck(lifetime);
+        var sut = new ApplicationReadyCheck(lifetime);
 
         // Act
         async Task Act() => await sut.CheckHealthAsync(null!).ConfigureAwait(false);
@@ -32,7 +32,7 @@ public sealed class ApplicationReadinessCheckTests
     {
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
-        var sut = new ApplicationReadinessCheck(lifetime);
+        var sut = new ApplicationReadyCheck(lifetime);
         var cancellationToken = new CancellationToken();
         var context = new HealthCheckContext
         {
@@ -52,7 +52,7 @@ public sealed class ApplicationReadinessCheckTests
     {
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
-        var sut = new ApplicationReadinessCheck(lifetime);
+        var sut = new ApplicationReadyCheck(lifetime);
         var cancellationToken = new CancellationToken(true);
         var context = new HealthCheckContext
         {
@@ -71,7 +71,7 @@ public sealed class ApplicationReadinessCheckTests
     {
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
-        var sut = new ApplicationReadinessCheck(lifetime);
+        var sut = new ApplicationReadyCheck(lifetime);
         var cancellationToken = new CancellationToken();
         var context = new HealthCheckContext
         {

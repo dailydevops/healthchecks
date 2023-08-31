@@ -14,19 +14,19 @@ using Xunit;
 public class ApplicationReadinessCheckTests : HealthCheckTestBase
 {
     [Fact]
-    public async Task AddApplicationReadinessCheck_ShouldReturnHealthy() =>
+    public async Task AddApplicationReady_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
             {
-                _ = healthChecks.AddApplicationReadinessCheck();
+                _ = healthChecks.AddApplicationReady();
             })
             .ConfigureAwait(false);
 
     [Fact]
-    public async Task AddApplicationReadinessCheck_WithCustomName_ShouldReturnHealthy() =>
+    public async Task AddApplicationReady_WithCustomName_ShouldReturnHealthy() =>
         await RunAndVerify(
                 healthChecks =>
                 {
-                    _ = healthChecks.AddApplicationReadinessCheck();
+                    _ = healthChecks.AddApplicationReady();
                 },
                 serverConfiguration: server =>
                 {

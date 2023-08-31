@@ -7,11 +7,11 @@ using NetEvolve.HealthChecks.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal sealed class ApplicationReadinessCheck : HealthCheckBase
+internal sealed class ApplicationReadyCheck : HealthCheckBase
 {
     private bool _applicationReady;
 
-    public ApplicationReadinessCheck(IHostApplicationLifetime lifetime)
+    public ApplicationReadyCheck(IHostApplicationLifetime lifetime)
     {
         Argument.ThrowIfNull(lifetime);
 

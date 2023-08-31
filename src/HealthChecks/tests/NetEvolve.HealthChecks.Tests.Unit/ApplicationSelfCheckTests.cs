@@ -16,7 +16,7 @@ public sealed class ApplicationSelfCheckTests
     public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException()
     {
         // Arrange
-        var sut = new ApplicationSelfCheck();
+        var sut = new ApplicationHealthyCheck();
 
         // Act
         async Task Act() => await sut.CheckHealthAsync(null!).ConfigureAwait(false);
@@ -29,7 +29,7 @@ public sealed class ApplicationSelfCheckTests
     public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy()
     {
         // Arrange
-        var sut = new ApplicationSelfCheck();
+        var sut = new ApplicationHealthyCheck();
         var cancellationToken = new CancellationToken();
         var context = new HealthCheckContext
         {
@@ -47,7 +47,7 @@ public sealed class ApplicationSelfCheckTests
     public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy()
     {
         // Arrange
-        var sut = new ApplicationSelfCheck();
+        var sut = new ApplicationHealthyCheck();
         var cancellationToken = new CancellationToken(true);
         var context = new HealthCheckContext
         {

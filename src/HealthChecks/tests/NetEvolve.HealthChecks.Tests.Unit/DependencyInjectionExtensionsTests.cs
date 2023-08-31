@@ -20,7 +20,7 @@ public class DependencyInjectionExtensionsTests
     public void AddApplicationReadinessCheck_ParamBuilderNull_ArgumentNullException() =>
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => DependencyInjectionExtensions.AddApplicationReadinessCheck(null!, tags: null!)
+            () => DependencyInjectionExtensions.AddApplicationReady(null!, tags: null!)
         );
 
     [Fact]
@@ -31,7 +31,7 @@ public class DependencyInjectionExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "tags",
-            () => DependencyInjectionExtensions.AddApplicationReadinessCheck(builder, tags: null!)
+            () => DependencyInjectionExtensions.AddApplicationReady(builder, tags: null!)
         );
     }
 
@@ -42,8 +42,8 @@ public class DependencyInjectionExtensionsTests
         _ = services
             .AddSingleton<IHostApplicationLifetime, TestHostApplicationLifeTime>()
             .AddHealthChecks()
-            .AddApplicationReadinessCheck("self", "healthy")
-            .AddApplicationReadinessCheck();
+            .AddApplicationReady("self", "healthy")
+            .AddApplicationReady();
 
         var serviceProvider = services.BuildServiceProvider();
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>()!;
@@ -54,7 +54,7 @@ public class DependencyInjectionExtensionsTests
 
         Assert.Equal(3, check.Tags.Count);
         Assert.Equal("ApplicationReadiness", check.Name);
-        _ = Assert.IsType<ApplicationReadinessCheck>(check.Factory(serviceProvider));
+        _ = Assert.IsType<ApplicationReadyCheck>(check.Factory(serviceProvider));
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class DependencyInjectionExtensionsTests
 
         Assert.Equal(2, check.Tags.Count);
         Assert.Equal("ApplicationSelf", check.Name);
-        _ = Assert.IsType<ApplicationSelfCheck>(check.Factory(serviceProvider));
+        _ = Assert.IsType<ApplicationHealthyCheck>(check.Factory(serviceProvider));
     }
 
     [ExcludeFromCodeCoverage]

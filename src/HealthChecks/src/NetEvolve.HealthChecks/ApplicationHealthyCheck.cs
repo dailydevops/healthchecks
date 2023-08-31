@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal sealed class ApplicationSelfCheck : HealthCheckBase
+internal sealed class ApplicationHealthyCheck : HealthCheckBase
 {
     protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
