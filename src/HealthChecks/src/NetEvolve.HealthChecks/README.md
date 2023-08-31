@@ -34,9 +34,7 @@ var builder = services.AddHealthChecks();
 ```
 
 ## Health Check - Application Ready
-This health check is used to check the readiness of the application.
-It will return `Unhealthy` until the `IHostApplicationLifetime` triggers the `ApplicationStarted` event, after that it will return `Healthy`.
-Until the `IHostApplicationLifetime` triggers the `ApplicationStopping` event, after that it will return `Unhealthy`.
+This health check is used to check the readiness of the application. It returns `Unhealthy` until the `IHostApplicationLifetime` triggers the `ApplicationStarted` event, then it returns `Healthy`. It returns `Healthy` until the `IHostApplicationLifetim`e triggers the `ApplicationStopping` event, after which it returns `Unhealthy`.
 
 ### Usage
 This healthcheck does not require any configuration, it will automatically registered as `ApplicationReady` health check.
