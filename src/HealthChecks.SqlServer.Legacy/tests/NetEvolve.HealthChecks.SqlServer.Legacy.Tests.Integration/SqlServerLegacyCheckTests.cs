@@ -59,7 +59,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     {
                         options.ConnectionString = _database.GetConnectionString();
                         options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
-                        options.Timeout = 1;
+                        options.Timeout = 0;
                     }
                 );
             })
