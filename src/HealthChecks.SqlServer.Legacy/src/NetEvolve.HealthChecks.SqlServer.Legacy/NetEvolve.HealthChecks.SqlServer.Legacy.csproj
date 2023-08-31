@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(_TargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.</Description>
