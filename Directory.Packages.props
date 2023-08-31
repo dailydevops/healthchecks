@@ -16,8 +16,8 @@
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.0-preview.7.23375.9" Condition=" '$(TargetFramework)' == 'net8.0' " />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-    <PackageVersion Include="NetEvolve.Arguments" Version="1.0.6" />
-    <PackageVersion Include="NetEvolve.Extensions.Strings" Version="1.1.0" />
+    <PackageVersion Include="NetEvolve.Arguments" Version="1.0.8" />
+    <PackageVersion Include="NetEvolve.Extensions.Strings" Version="1.2.2" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.0.3" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.70" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.8.5" />
