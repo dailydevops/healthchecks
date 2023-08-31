@@ -19,7 +19,7 @@
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.8" />
     <PackageVersion Include="NetEvolve.Extensions.Strings" Version="1.2.2" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.0" />
-    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.70" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.74" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageVersion Include="Testcontainers.MsSql" Version="3.4.0" />
     <PackageVersion Include="Verify.Xunit" Version="21.0.0" />
