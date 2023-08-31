@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: ApplicationReady: Healthy,
+      name: ApplicationReady,
+      status: Healthy,
+      tags: [
+        self,
+        readiness
+      ]
+    }
+  ],
+  status: Healthy
+}

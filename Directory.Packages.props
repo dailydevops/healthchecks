@@ -1,7 +1,5 @@
 <Project>
-
   <Import Project="$(DirEngineeringSettings)sln.packages.props" />
-
   <ItemGroup>
     <GlobalPackageReference Include="CSharpier.MSBuild" Version="0.25.0" />
     <GlobalPackageReference Include="GitVersion.MsBuild" Version="5.12.0" />
@@ -10,16 +8,24 @@
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="6.0.21" Condition=" '$(TargetFramework)' == 'net6.0' " />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="7.0.10" Condition=" '$(TargetFramework)' == 'net7.0' " />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.0-preview.7.23375.9" Condition=" '$(TargetFramework)' == 'net8.0' " />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageVersion Include="NetEvolve.Arguments" Version="1.0.8" />
+    <PackageVersion Include="NetEvolve.Extensions.Strings" Version="1.2.2" />
+    <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.0" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.70" />
+    <PackageVersion Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageVersion Include="Testcontainers.MsSql" Version="3.4.0" />
     <PackageVersion Include="Verify.Xunit" Version="21.0.0" />
     <PackageVersion Include="xunit" Version="2.5.0" />
     <PackageVersion Include="xunit.core" Version="2.5.0" />
     <PackageVersion Include="xunit.runner.console" Version="2.5.0" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
   </ItemGroup>
-
 </Project>

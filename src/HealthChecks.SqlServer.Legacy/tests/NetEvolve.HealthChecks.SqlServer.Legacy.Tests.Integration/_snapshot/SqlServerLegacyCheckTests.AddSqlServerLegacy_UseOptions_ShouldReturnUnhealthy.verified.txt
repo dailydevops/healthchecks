@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: SqlServerTestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: This is a test.,
+        type: System.Data.SqlClient.SqlException
+      },
+      name: SqlServerTestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        sqlserver,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}

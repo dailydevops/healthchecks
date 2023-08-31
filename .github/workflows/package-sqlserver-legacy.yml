@@ -1,33 +1,22 @@
-name: Build & Tests
+name: "Package: NetEvolve.HealthChecks.SqlServer.Legacy"
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      dotnet-logging:
-        required: true
-        type: choice
-        default: minimal
-        options:
-          - quiet
-          - minimal
-          - normal
-          - detailed
-          - diagnostic
+    paths:
+      - src/HealthChecks.Shared/**/*
+      - src/HealthChecks.SqlServer.Legacy/**/*
 
 jobs:
   all:
     name: Build & Tests
     uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@main
     with:
-      disablePublish: false
+      disablePublish: ${{ vars.NE_NUGET_PUBLISH == 'false' }}
       enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
       dotnet-testfilter: ${{ vars.NE_DOTNET_TESTFILTER }}
-      solution: ./HealthChecks.sln
+      solution: ./src/HealthChecks.SqlServer.Legacy/HealthChecks.SqlServer.Legacy.slnf
     secrets: inherit

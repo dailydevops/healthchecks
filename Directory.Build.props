@@ -9,4 +9,24 @@
   <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" !$(IsTestableProject) " />
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" $(IsTestableProject) " />
 
+  <PropertyGroup Label="General settings for all projects">
+    <_ProjectTargetFrameworks>net6.0;net7.0;net8.0</_ProjectTargetFrameworks>
+    <_TestTargetFrameworks>net6.0;net7.0;net8.0</_TestTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Settings for non test projects" Condition=" !$(IsTestableProject) ">
+    <Title>$(MSBuildProjectName)</Title>
+    <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dailydevops/healthchecks</PackageProjectUrl>
+    <PackageTags>healthcheck;diagnostics;</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Settings for test projects" Condition=" $(IsTestableProject) ">
+    <NoWarn>$(NoWarn);CS8604</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" !$(IsTestableProject) ">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
 </Project>
