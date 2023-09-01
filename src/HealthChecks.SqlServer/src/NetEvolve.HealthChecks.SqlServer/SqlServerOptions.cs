@@ -1,9 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer;
 
+using NetEvolve.HealthChecks.Abstractions;
+
 /// <summary>
 /// Options for <see cref="SqlServerCheck"/>
 /// </summary>
-public class SqlServerOptions
+public class SqlServerOptions : ISqlCheckOptions
 {
     /// <summary>
     /// The connection string for the SQL Server database to check.
@@ -19,5 +21,5 @@ public class SqlServerOptions
     /// The sql command to execute against the SQL Server database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    internal string Command { get; set; } = SqlServerCheck.DefaultCommand;
+    public string Command { get; internal set; } = SqlServerCheck.DefaultCommand;
 }

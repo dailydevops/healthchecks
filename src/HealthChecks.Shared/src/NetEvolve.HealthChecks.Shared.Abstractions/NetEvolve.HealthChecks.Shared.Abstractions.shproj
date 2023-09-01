@@ -17,6 +17,8 @@
     <Compile Include="IHealthChecksBuilderExtensions.ConfigurableHealthChecks.cs" />
     <Compile Include="IHealthChecksBuilderExtensions.cs" />
     <Compile Include="IHealthChecksBuilderExtensions.HealthChecks.cs" />
+    <Compile Include="ISqlCheckOptions.cs" />
+    <Compile Include="SqlCheckBase.cs" />
   </ItemGroup>
   <Import Project="NetEvolve.HealthChecks.Abstractions.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />

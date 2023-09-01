@@ -1,9 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy;
 
+using NetEvolve.HealthChecks.Abstractions;
+
 /// <summary>
 /// Options for <see cref="SqlServerLegacyCheck"/>
 /// </summary>
-public class SqlServerLegacyOptions
+public class SqlServerLegacyOptions : ISqlCheckOptions
 {
     /// <summary>
     /// The connection string for the SQL Server database to check.
@@ -19,5 +21,5 @@ public class SqlServerLegacyOptions
     /// The sql command to execute against the SQL Server database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    internal string Command { get; set; } = SqlServerLegacyCheck.DefaultCommand;
+    public string Command { get; internal set; } = SqlServerLegacyCheck.DefaultCommand;
 }

@@ -1,4 +1,4 @@
-﻿#if USE_CONFIGURABLE_HEALTHCHECK
+﻿#if USE_CONFIGURABLE_HEALTHCHECK || USE_SQL_HEALTHCHECK
 namespace NetEvolve.HealthChecks.Abstractions;
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
