@@ -3,26 +3,77 @@ namespace NetEvolve.HealthChecks.Abstractions;
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using NetEvolve.Arguments;
 using NetEvolve.Extensions.Tasks;
+using System;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal abstract class SqlCheckBase<TConfiguration> : ConfigurableHealthCheckBase<TConfiguration>
+internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class, ISqlCheckOptions
 {
+    private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
+
     protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
-        : base(optionsMonitor) { }
+        => _optionsMonitor = optionsMonitor;
+    public async Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default
+    )
+    {
+        Argument.ThrowIfNull(context);
+
+        var configurationName = context.Registration.Name;
+        var failureStatus = context.Registration.FailureStatus;
+
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return new HealthCheckResult(
+                failureStatus,
+                description: $"{configurationName}: Cancellation requested"
+                );
+        }
+
+        var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
+
+        return result;
+    }
+
+    private async Task<HealthCheckResult> InternalAsync(string configurationName, HealthStatus failureStatus, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var options = _optionsMonitor.Get(configurationName);
+            if (options is null)
+            {
+                return new HealthCheckResult(
+                    HealthStatus.Unhealthy,
+                    description: $"{configurationName}: Missing configuration"
+                );
+            }
+
+            return await ExecuteHealthCheckAsync(
+                    configurationName,
+                    options,
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Unexpected error.", exception: ex);
+        }
+    }
 
     [SuppressMessage(
         "Security",
         "CA2100:Review SQL queries for security vulnerabilities",
         Justification = "As designed."
     )]
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthStatus failureStatus,
         TConfiguration options,
         CancellationToken cancellationToken
     )

@@ -1,4 +1,4 @@
-﻿#if USE_CONFIGURABLE_HEALTHCHECK || USE_SQL_HEALTHCHECK
+﻿#if USE_CONFIGURABLE_HEALTHCHECK
 namespace NetEvolve.HealthChecks.Abstractions;
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -25,6 +25,15 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
 
         var configurationName = context.Registration.Name;
         var failureStatus = context.Registration.FailureStatus;
+
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return new HealthCheckResult(
+                failureStatus,
+                description: $"{configurationName}: Cancellation requested"
+                );
+        }
+
         var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
 
         return result;
