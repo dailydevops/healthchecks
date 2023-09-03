@@ -5,21 +5,14 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="SqlServerCheck"/>
 /// </summary>
-public class SqlServerOptions : ISqlCheckOptions
+public sealed class SqlServerOptions : ISqlCheckOptions
 {
-    /// <summary>
-    /// The connection string for the SQL Server database to check.
-    /// </summary>
+    /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;
 
-    /// <summary>
-    /// The timeout to use when connecting and executing tasks against SQL Server database.
-    /// </summary>
+    /// <inheritdoc cref="ISqlCheckOptions.Timeout"/>
     public int Timeout { get; set; } = 100;
 
-    /// <summary>
-    /// The sql command to execute against the SQL Server database.
-    /// </summary>
-    /// <remarks>For internal use only.</remarks>
+    /// <inheritdoc cref="ISqlCheckOptions.Command"/>
     public string Command { get; internal set; } = SqlServerCheck.DefaultCommand;
 }
