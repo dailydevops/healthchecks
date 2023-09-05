@@ -62,5 +62,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed class SqlServerCheckMarker { }
+    private sealed partial class SqlServerCheckMarker { }
 }
