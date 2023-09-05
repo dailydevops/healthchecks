@@ -4,6 +4,8 @@ namespace NetEvolve.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using System;
+using System.Linq;
 
 internal static partial class IHealthChecksBuilderExtensions
 {
@@ -19,13 +21,7 @@ internal static partial class IHealthChecksBuilderExtensions
             {
                 var registrations = options.Value.Registrations;
 
-                foreach (var registration in registrations)
-                {
-                    if (registration.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
+                return registrations.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             }
 
             return false;
