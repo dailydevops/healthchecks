@@ -1,13 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Tests.Unit;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.XUnit;
+using NSubstitute;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,10 +18,8 @@ public sealed class SqlServerCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IHealthCheck, SqlServerCheck>().AddOptions();
-        var provider = services.BuildServiceProvider();
-        var check = provider.GetRequiredService<IHealthCheck>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerOptions>>();
+        var check = new SqlServerCheck(optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!).ConfigureAwait(false);
@@ -33,17 +29,15 @@ public sealed class SqlServerCheckTests
     }
 
     [Fact]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldBeUnhealthy()
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IHealthCheck, SqlServerCheck>().AddOptions();
-        var provider = services.BuildServiceProvider();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerOptions>>();
+        var check = new SqlServerCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", provider.GetRequiredService<IHealthCheck>(), null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null)
         };
-        var check = provider.GetRequiredService<IHealthCheck>();
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -51,6 +45,25 @@ public sealed class SqlServerCheckTests
 
         // Assert
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("Test: Cancellation requested", result.Description);
+        Assert.Equal("Test: Cancellation requested.", result.Description);
+    }
+
+    [Fact]
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
+    {
+        // Arrange
+        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerOptions>>();
+        var check = new SqlServerCheck(optionsMonitor);
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration("Test", check, null, null)
+        };
+
+        // Act
+        var result = await check.CheckHealthAsync(context).ConfigureAwait(false);
+
+        // Assert
+        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        Assert.Equal("Test: Missing configuration.", result.Description);
     }
 }

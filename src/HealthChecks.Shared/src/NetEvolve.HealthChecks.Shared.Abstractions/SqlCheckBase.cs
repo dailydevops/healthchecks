@@ -32,7 +32,7 @@ internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
         {
             return new HealthCheckResult(
                 failureStatus,
-                description: $"{configurationName}: Cancellation requested"
+                description: $"{configurationName}: Cancellation requested."
                 );
         }
 
@@ -50,7 +50,7 @@ internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
             {
                 return new HealthCheckResult(
                     HealthStatus.Unhealthy,
-                    description: $"{configurationName}: Missing configuration"
+                    description: $"{configurationName}: Missing configuration."
                 );
             }
 

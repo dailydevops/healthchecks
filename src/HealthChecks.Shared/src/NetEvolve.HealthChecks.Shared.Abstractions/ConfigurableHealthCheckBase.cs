@@ -30,7 +30,7 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
         {
             return new HealthCheckResult(
                 failureStatus,
-                description: $"{configurationName}: Cancellation requested"
+                description: $"{configurationName}: Cancellation requested."
                 );
         }
 
@@ -48,7 +48,7 @@ internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthChe
             {
                 return new HealthCheckResult(
                     HealthStatus.Unhealthy,
-                    description: $"{configurationName}: Missing configuration"
+                    description: $"{configurationName}: Missing configuration."
                 );
             }
 
