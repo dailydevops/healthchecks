@@ -19,7 +19,7 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.8" />
     <PackageVersion Include="NetEvolve.Extensions.Strings" Version="1.2.2" />
-    <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.0" />
+    <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.4" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.74" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.8.5" />
