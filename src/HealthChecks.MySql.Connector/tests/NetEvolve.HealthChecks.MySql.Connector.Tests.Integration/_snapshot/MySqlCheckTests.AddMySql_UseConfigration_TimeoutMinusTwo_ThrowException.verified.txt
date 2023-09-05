@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: MySqlTestNoValues: Unexpected error.,
+      exception: {
+        message: The timeout cannot be less than infinite (-1).,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: MySqlTestNoValues,
+      status: Unhealthy,
+      tags: [
+        mysql,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
