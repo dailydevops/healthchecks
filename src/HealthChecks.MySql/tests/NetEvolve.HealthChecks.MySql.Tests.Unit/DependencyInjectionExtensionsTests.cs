@@ -1,8 +1,9 @@
-﻿namespace NetEvolve.HealthChecks.SqlServer.Tests.Unit;
+﻿namespace NetEvolve.HealthChecks.MySql.Tests.Unit;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.XUnit;
+using NetEvolve.HealthChecks.MySql;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -12,20 +13,20 @@ using Xunit;
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
-    public void AddSqlServer_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddMySql_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddSqlServer("Test");
+        void Act() => _ = builder.AddMySql("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
-    public void AddSqlServer_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddMySql_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -34,14 +35,14 @@ public class DependencyInjectionExtensionsTests
         var name = default(string);
 
         // Act
-        void Act() => _ = builder.AddSqlServer(name);
+        void Act() => _ = builder.AddMySql(name);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
-    public void AddSqlServer_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddMySql_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -50,14 +51,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddSqlServer(name);
+        void Act() => _ = builder.AddMySql(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
-    public void AddSqlServer_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddMySql_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -66,14 +67,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddSqlServer("Test", tags: tags);
+        void Act() => _ = builder.AddMySql("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Fact]
-    public void AddSqlServer_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddMySql_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -82,7 +83,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() => _ = builder.AddSqlServer(name).AddSqlServer(name);
+        void Act() => _ = builder.AddMySql(name).AddMySql(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

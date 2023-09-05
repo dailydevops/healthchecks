@@ -9,7 +9,7 @@ The main purpose is to check if the SQL Server is available and if the database 
 :bulb: This package is available for .NET 6.0 and later.
 
 ## Installation
-To use this package, you need to add the package to your project.You can do this by using the NuGet package manager or by using the dotnet CLI.
+To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell
 dotnet add package NetEvolve.HealthChecks.SqlServer
 ```
@@ -37,6 +37,11 @@ Therefor you can use two different approaches. In both approaches you have to pr
 | `SqlServerTest` | `SqlServerTest`        |
 
 :heavy_exclamation_mark: The configuration of this package is compatible with the [NetEvolve.HealthChecks.SqlServer.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/) package.
+
+### Parameters
+- `name`: The name of the health check. Please be aware that the name is prefixed by "SqlServer" in the health check. The prefixed Name will be used to identify the configuration object.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `tags`: The tags for the health check. The tags `sqlserver` and `database` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
 The first one is to use the configuration based approach. This approach is recommended if you have multiple SQL Server instances to check.

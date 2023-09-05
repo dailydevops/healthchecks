@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: MySqlTestContainerHealthy: Healthy,
+      name: MySqlTestContainerHealthy,
+      status: Healthy,
+      tags: [
+        mysql,
+        database
+      ]
+    }
+  ],
+  status: Healthy
+}

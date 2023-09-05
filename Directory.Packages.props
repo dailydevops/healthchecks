@@ -17,6 +17,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.0-preview.7.23375.9" Condition=" '$(TargetFramework)' == 'net8.0' " />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageVersion Include="MySql.Data" Version="8.1.0" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.8" />
     <PackageVersion Include="NetEvolve.Extensions.Strings" Version="1.2.2" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.6" />
@@ -24,6 +25,7 @@
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageVersion Include="Testcontainers.MsSql" Version="3.5.0" />
+    <PackageVersion Include="Testcontainers.MySql" Version="3.5.0" />
     <PackageVersion Include="Verify.Xunit" Version="21.1.1" />
     <PackageVersion Include="xunit" Version="2.5.0" />
     <PackageVersion Include="xunit.core" Version="2.5.0" />

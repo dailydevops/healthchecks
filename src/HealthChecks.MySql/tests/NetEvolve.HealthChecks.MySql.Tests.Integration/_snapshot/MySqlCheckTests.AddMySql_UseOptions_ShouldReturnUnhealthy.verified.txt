@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: MySqlTestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: This is a test.,
+        type: MySql.Data.MySqlClient.MySqlException
+      },
+      name: MySqlTestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        mysql,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
