@@ -106,6 +106,22 @@ public sealed class SqlServerOptionsConfigureTests
     }
 
     [Fact]
+    public void PostConfigure_WhenNameIsNull_DoNothing()
+    {
+        // Arrange
+        var configure = new SqlServerConfigure(new ConfigurationBuilder().Build());
+        var name = default(string);
+        var options = new SqlServerOptions { ConnectionString = "Test", Command = string.Empty };
+
+        // Act
+        configure.PostConfigure(name, options);
+
+        // Assert
+        Assert.Equal("Test", options.ConnectionString);
+        Assert.Equal(string.Empty, options.Command);
+    }
+
+    [Fact]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
