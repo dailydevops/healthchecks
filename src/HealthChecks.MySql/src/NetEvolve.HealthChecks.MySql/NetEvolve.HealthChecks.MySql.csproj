@@ -4,8 +4,8 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
-    <Description>Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.</Description>
-    <PackageTags>$(PackageTags);sqlserver;mssql</PackageTags>
+    <Description>Contains HealthChecks for MySql, based on `MySql.Data`.</Description>
+    <PackageTags>$(PackageTags);mysql;</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
