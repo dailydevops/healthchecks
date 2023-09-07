@@ -10,7 +10,7 @@ public sealed class MySqlDatabase : IAsyncLifetime
 {
     private readonly MySqlContainer _database = new MySqlBuilder().Build();
 
-    public string GetConnectionString() => _database.GetConnectionString();
+    public string ConnectionString => _database.GetConnectionString();
 
     public async Task DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 

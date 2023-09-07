@@ -25,7 +25,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                     }
                 );
             })
@@ -57,7 +57,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                         options.Command = "SELECT 1; DO SLEEP(1);";
                         options.Timeout = 0;
                     }
@@ -73,7 +73,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                         options.Command = "SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'This is a test.';";
                     }
                 );
@@ -93,7 +93,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     {
                         {
                             "HealthChecks:MySqlTestContainerHealthy:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         }
                     };
                     _ = config.AddInMemoryCollection(values);
@@ -114,7 +114,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     {
                         {
                             "HealthChecks:MySqlTestContainerDegraded:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         },
                         { "HealthChecks:MySqlTestContainerDegraded:Timeout", "0" }
                     };
@@ -154,7 +154,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     {
                         {
                             "HealthChecks:MySqlTestNoValues:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         },
                         { "HealthChecks:MySqlTestNoValues:Timeout", "-2" }
                     };

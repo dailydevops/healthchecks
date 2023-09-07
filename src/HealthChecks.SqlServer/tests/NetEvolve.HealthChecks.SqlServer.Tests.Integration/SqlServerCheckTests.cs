@@ -25,7 +25,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                     }
                 );
             })
@@ -57,7 +57,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                         options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
                         options.Timeout = 0;
                     }
@@ -73,7 +73,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                         options.Command = "RAISERROR('This is a test.',16,1)";
                     }
                 );
@@ -93,7 +93,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     {
                         {
                             "HealthChecks:SqlServerTestContainerHealthy:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         }
                     };
                     _ = config.AddInMemoryCollection(values);
@@ -114,7 +114,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     {
                         {
                             "HealthChecks:SqlServerTestContainerDegraded:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         },
                         { "HealthChecks:SqlServerTestContainerDegraded:Timeout", "0" }
                     };
@@ -154,7 +154,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                     {
                         {
                             "HealthChecks:SqlServerTestNoValues:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         },
                         { "HealthChecks:SqlServerTestNoValues:Timeout", "-2" }
                     };
