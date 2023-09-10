@@ -11,6 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture("en-US")]
 public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabase>
 {
     private readonly OracleDatabase _database;
