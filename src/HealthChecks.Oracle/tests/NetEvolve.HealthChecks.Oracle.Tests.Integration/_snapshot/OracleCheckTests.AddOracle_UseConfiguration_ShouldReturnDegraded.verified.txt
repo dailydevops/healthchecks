@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: OracleTestContainerDegraded: Degraded,
+      name: OracleTestContainerDegraded,
+      status: Degraded,
+      tags: [
+        oracle,
+        database
+      ]
+    }
+  ],
+  status: Degraded
+}

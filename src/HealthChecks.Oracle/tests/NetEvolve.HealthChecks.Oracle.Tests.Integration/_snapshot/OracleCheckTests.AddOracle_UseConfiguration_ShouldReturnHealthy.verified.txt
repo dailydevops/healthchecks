@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: OracleTestContainerHealthy: Healthy,
+      name: OracleTestContainerHealthy,
+      status: Healthy,
+      tags: [
+        oracle,
+        database
+      ]
+    }
+  ],
+  status: Healthy
+}
