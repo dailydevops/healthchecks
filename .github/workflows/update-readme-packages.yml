@@ -31,15 +31,3 @@ jobs:
         title: 'docs: Update nuget packages in README.md'
         body: |
           This pull request updates the nuget packages in the README.md file.
-
-    - name: Approve PR
-      if: steps.pr.outputs.pull-request-number != ''
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh pr review ${{ steps.pr.outputs.pull-request-url }} --approve
-
-    - name: Merge PR
-      if: steps.pr.outputs.pull-request-number != ''
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: "gh pr merge --squash --admin --delete-branch ${{ steps.pr.outputs.pull-request-number }} --subject 'docs: Update nuget packages in README.md [skip ci]'"
