@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: PostgreSqlTestContainerHealthy: Healthy,
+      name: PostgreSqlTestContainerHealthy,
+      status: Healthy,
+      tags: [
+        postgresql,
+        database
+      ]
+    }
+  ],
+  status: Healthy
+}

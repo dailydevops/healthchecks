@@ -1,0 +1,21 @@
+﻿{
+  results: [
+    {
+      description: PostgreSqlTestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message:
+42601: syntax error at end of input
+
+POSITION: 15,
+        type: Npgsql.PostgresException
+      },
+      name: PostgreSqlTestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        postgresql,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}

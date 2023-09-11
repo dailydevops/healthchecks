@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "..\\..\\HealthChecks.sln",
+    "projects": [
+      "src\\HealthChecks.Npgsql\\src\\NetEvolve.HealthChecks.Npgsql\\NetEvolve.HealthChecks.Npgsql.csproj",
+      "src\\HealthChecks.Npgsql\\tests\\NetEvolve.HealthChecks.Npgsql.Tests.Integration\\NetEvolve.HealthChecks.Npgsql.Tests.Integration.csproj",
+      "src\\HealthChecks.Npgsql\\tests\\NetEvolve.HealthChecks.Npgsql.Tests.Unit\\NetEvolve.HealthChecks.Npgsql.Tests.Unit.csproj"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: PostgreSqlTestNoValues: Unexpected error.,
+      exception: {
+        message: The timeout cannot be less than infinite (-1).,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: PostgreSqlTestNoValues,
+      status: Unhealthy,
+      tags: [
+        postgresql,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
