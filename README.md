@@ -17,10 +17,10 @@ This is a mono repository for several NuGet packages based on the [Microsoft.Ext
 The main difference is that we try to focus on delivering packages, which are fully configurable via code and configuration. This means that you can configure the health checks in your `Program.cs` file or in your `appsettings.json` file, or any other configuration provider.
 
 ## Available NuGet packages
-<!--- start packages -->
-| Package Name | NuGet | Description |
-|--------------|-------|-------------|
-<!--- end packages -->
+<!-- packages:start -->
+| Package Name | Current Version | Downloads | Description |
+|--------------|:----------------|:----------|-------------|
+<!-- packages:end -->
 
 ## Supported .NET version
 We try to support the latest LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)), as well as the latest preview version of .NET. We will try to support each framework version for at least 3 years, but we can't guarantee it. This depends on the support of related NuGet packages and the .NET platform itself.

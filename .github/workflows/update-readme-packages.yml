@@ -1,0 +1,39 @@
+name: Update packages in README.md
+
+on:
+  schedule:
+    # Run every day at 4:21 AM UTC
+    # https://crontab.guru/#21_4_*_*_*
+    - cron: '21 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Update packages in README.md
+      run: |
+        ./scripts/update-readme.ps1
+      shell: pwsh
+
+    - name: Create Pull Request
+      id: pr
+      uses: peter-evans/create-pull-request@v5.0.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'docs: Update nuget packages in README.md'
+        title: 'docs: Update nuget packages in README.md'
+        body: |
+          This pull request updates the nuget packages in the README.md file.
+
+    - name: Merge PR
+      if: steps.pr.outputs.pull-request-number != ''
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: "gh pr merge --squash --admin --delete-branch ${{ steps.pr.outputs.pull-request-number }} --subject 'docs: Update nuget packages in README.md [skip ci]'"
