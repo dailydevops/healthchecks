@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: MySqlTestContainerDegraded: Degraded,
+      name: MySqlTestContainerDegraded,
+      status: Degraded,
+      tags: [
+        mysql,
+        database
+      ]
+    }
+  ],
+  status: Degraded
+}

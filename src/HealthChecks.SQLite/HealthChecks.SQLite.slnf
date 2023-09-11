@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "..\\..\\HealthChecks.sln",
+    "projects": [
+      "src\\HealthChecks.SQLite\\src\\NetEvolve.HealthChecks.SQLite\\NetEvolve.HealthChecks.SQLite.csproj",
+      "src\\HealthChecks.SQLite\\tests\\NetEvolve.HealthChecks.SQLite.Tests.Integration\\NetEvolve.HealthChecks.SQLite.Tests.Integration.csproj",
+      "src\\HealthChecks.SQLite\\tests\\NetEvolve.HealthChecks.SQLite.Tests.Unit\\NetEvolve.HealthChecks.SQLite.Tests.Unit.csproj"
+    ]
+  }
+}

@@ -12,6 +12,7 @@ jobs:
     name: Build & Tests
     uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@main
     with:
+      disableCodeQL: true
       disablePublish: ${{ vars.NE_NUGET_PUBLISH == 'false' }}
       enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}

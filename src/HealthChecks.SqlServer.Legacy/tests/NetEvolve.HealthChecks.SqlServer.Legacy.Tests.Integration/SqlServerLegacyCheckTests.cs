@@ -11,6 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture]
 public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlServerLegacyDatabase>
 {
     private readonly SqlServerLegacyDatabase _database;
@@ -25,7 +26,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                     }
                 );
             })
@@ -57,7 +58,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                         options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
                         options.Timeout = 0;
                     }
@@ -73,7 +74,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.ConnectionString = _database.ConnectionString;
                         options.Command = "RAISERROR('This is a test.',16,1)";
                     }
                 );
@@ -93,7 +94,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     {
                         {
                             "HealthChecks:SqlServerTestContainerHealthy:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         }
                     };
                     _ = config.AddInMemoryCollection(values);
@@ -114,7 +115,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     {
                         {
                             "HealthChecks:SqlServerTestContainerDegraded:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         },
                         { "HealthChecks:SqlServerTestContainerDegraded:Timeout", "0" }
                     };
@@ -154,7 +155,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
                     {
                         {
                             "HealthChecks:SqlServerTestNoValues:ConnectionString",
-                            _database.GetConnectionString()
+                            _database.ConnectionString
                         },
                         { "HealthChecks:SqlServerTestNoValues:Timeout", "-2" }
                     };

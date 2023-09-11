@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: PostgreSqlTestContainerDegraded: Degraded,
+      name: PostgreSqlTestContainerDegraded,
+      status: Degraded,
+      tags: [
+        postgresql,
+        database
+      ]
+    }
+  ],
+  status: Degraded
+}

@@ -9,6 +9,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture]
 public class ApplicationHealthyCheckTests : HealthCheckTestBase
 {
     [Fact]

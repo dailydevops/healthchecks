@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: OracleTestNoValues: Unexpected error.,
+      exception: {
+        message: The timeout cannot be less than infinite (-1).,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: OracleTestNoValues,
+      status: Unhealthy,
+      tags: [
+        oracle,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}

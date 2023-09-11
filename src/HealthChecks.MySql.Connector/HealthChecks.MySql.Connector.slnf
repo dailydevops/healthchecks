@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "..\\..\\HealthChecks.sln",
+    "projects": [
+      "src\\HealthChecks.MySql.Connector\\src\\NetEvolve.HealthChecks.MySql.Connector\\NetEvolve.HealthChecks.MySql.Connector.csproj",
+      "src\\HealthChecks.MySql.Connector\\tests\\NetEvolve.HealthChecks.MySql.Connector.Tests.Integration\\NetEvolve.HealthChecks.MySql.Connector.Tests.Integration.csproj",
+      "src\\HealthChecks.MySql.Connector\\tests\\NetEvolve.HealthChecks.MySql.Connector.Tests.Unit\\NetEvolve.HealthChecks.MySql.Connector.Tests.Unit.csproj"
+    ]
+  }
+}

@@ -3,7 +3,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
-using NetEvolve.HealthChecks.Abstractions;
 using System.Threading;
 
 using static Microsoft.Extensions.Options.ValidateOptionsResult;

@@ -7,8 +7,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-using static NetEvolve.HealthChecks.SqlServer.DependencyInjectionExtensions;
-
 [ExcludeFromCodeCoverage]
 [UnitTest]
 public class DependencyInjectionExtensionsTests
