@@ -3,8 +3,16 @@ name: Build & Tests
 on:
   push:
     branches: [ main ]
+    paths:
+      - eng/**/*
+      - src/**/*
+      - Directory.*.*
   pull_request:
     branches: [ main ]
+    paths:
+      - eng/**/*
+      - src/**/*
+      - Directory.*.*
   workflow_dispatch:
     inputs:
       dotnet-logging:
