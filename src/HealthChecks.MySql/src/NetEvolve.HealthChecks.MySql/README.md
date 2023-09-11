@@ -25,7 +25,7 @@ using NetEvolve.HealthChecks.MySql;
 ```
 Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
 
-:heavy_exclamation_mark: Please be aware that the name is prefixed by "MySql" in the health check. The prefixed Name will be used to identify the configuration object.
+:heavy_exclamation_mark: Please be aware that the name is prefixed by `MySql` in the health check. The prefixed Name will be used to identify the configuration object.
 
 **Examples:**
 
@@ -38,7 +38,7 @@ Therefor you can use two different approaches. In both approaches you have to pr
 :heavy_exclamation_mark: The configuration of this package is compatible with the [NetEvolve.HealthChecks.MySql.Connector](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/) package.
 
 ### Parameters
-- `name`: The name of the health check. Please be aware that the name is prefixed by "MySql" in the health check. The prefixed Name will be used to identify the configuration object.
+- `name`: The name of the health check. Please be aware that the name is prefixed by `MySql` in the health check. The prefixed Name will be used to identify the configuration object.
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
 - `tags`: The tags for the health check. The tags `mysql` and `database` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
