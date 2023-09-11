@@ -11,6 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture]
 public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlServerLegacyDatabase>
 {
     private readonly SqlServerLegacyDatabase _database;

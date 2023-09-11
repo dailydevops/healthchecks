@@ -11,6 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture]
 public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
 {
     private readonly MySqlDatabase _database;

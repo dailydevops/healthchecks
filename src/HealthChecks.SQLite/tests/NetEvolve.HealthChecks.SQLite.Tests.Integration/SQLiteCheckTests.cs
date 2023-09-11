@@ -12,6 +12,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture]
 public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabase>
 {
     private readonly SQLiteDatabase _database;
