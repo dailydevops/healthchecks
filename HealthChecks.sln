@@ -78,6 +78,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Npgs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Oracle", "src\HealthChecks.Oracle\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj", "{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob", "src\HealthChecks.Azure.Blob\src\NetEvolve.HealthChecks.Azure.Blob\NetEvolve.HealthChecks.Azure.Blob.csproj", "{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob.Tests.Unit", "src\HealthChecks.Azure.Blob\tests\NetEvolve.HealthChecks.Azure.Blob.Tests.Unit\NetEvolve.HealthChecks.Azure.Blob.Tests.Unit.csproj", "{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob.Tests.Integration", "src\HealthChecks.Azure.Blob\tests\NetEvolve.HealthChecks.Azure.Blob.Tests.Integration\NetEvolve.HealthChecks.Azure.Blob.Tests.Integration.csproj", "{D8FBA848-5938-477B-AFA7-B62134FD2D63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +186,18 @@ Global
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,6 +229,9 @@ Global
 		{96611D86-20D4-49CD-BAFA-DE2EFA70B332} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 		{D9311883-0694-4453-A1F3-11A442D4EA8E} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
+		{F68AF846-B484-4BE2-84DE-E9E8ABE612B0} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
+		{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
+		{D8FBA848-5938-477B-AFA7-B62134FD2D63} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
@@ -228,9 +249,11 @@ Global
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{ab541295-3a2d-4c4d-a2dd-8259590f0d12}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{c037fc9f-258e-4492-95be-bf1f419cdff1}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{c566eb67-a22b-4332-bdd5-8de05810853f}*SharedItemsImports = 5
+		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{d8fba848-5938-477b-afa7-b62134fd2d63}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{d9311883-0694-4453-a1f3-11a442d4ea8e}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{e56d2a0b-607e-4860-aec5-4d9ae2cc61b5}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{f13da83a-4e30-4f22-8ec8-142a33401fe3}*SharedItemsImports = 5
+		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{f68af846-b484-4be2-84de-e9e8abe612b0}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{f7ff815a-110e-454c-9d0c-b4ab297e4c3e}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

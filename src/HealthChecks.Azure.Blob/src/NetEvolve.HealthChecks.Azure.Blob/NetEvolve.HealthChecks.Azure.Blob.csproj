@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
+
+    <Description>Contains HealthChecks for Azure Blob Storage.</Description>
+    <PackageTags>$(PackageTags);azure;storage;blob;</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="NetEvolve.Arguments" />
+    <PackageReference Include="NetEvolve.Extensions.Strings" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+    <PackageReference Include="Polyfill">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
+
+</Project>
