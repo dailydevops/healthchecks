@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Settings for test projects" Condition=" $(IsTestableProject) ">
-    <NoWarn>$(NoWarn);CS8604</NoWarn>
+    <NoWarn>$(NoWarn);CS8604;CA2007;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup Condition=" !$(IsTestableProject) ">
