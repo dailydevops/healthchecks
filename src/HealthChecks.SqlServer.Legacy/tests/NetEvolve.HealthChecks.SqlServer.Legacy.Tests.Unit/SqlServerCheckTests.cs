@@ -22,10 +22,10 @@ public sealed class SqlServerCheckTests
         var check = new SqlServerLegacyCheck(optionsMonitor);
 
         // Act
-        async Task Act() => _ = await check.CheckHealthAsync(null!).ConfigureAwait(false);
+        async Task Act() => _ = await check.CheckHealthAsync(null!);
 
         // Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act).ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public sealed class SqlServerCheckTests
         var cancellationToken = new CancellationToken(true);
 
         // Act
-        var result = await check.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
@@ -60,7 +60,7 @@ public sealed class SqlServerCheckTests
         };
 
         // Act
-        var result = await check.CheckHealthAsync(context).ConfigureAwait(false);
+        var result = await check.CheckHealthAsync(context);
 
         // Assert
         Assert.Equal(HealthStatus.Unhealthy, result.Status);

@@ -15,8 +15,7 @@ public class ApplicationHealthyCheckTests : HealthCheckTestBase
     [Fact]
     public async Task AddApplicationHealthy_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
-            {
-                _ = healthChecks.AddApplicationHealthy();
-            })
-            .ConfigureAwait(false);
+        {
+            _ = healthChecks.AddApplicationHealthy();
+        });
 }
