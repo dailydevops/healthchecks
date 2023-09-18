@@ -116,7 +116,11 @@ public sealed class SqlServerOptionsConfigureTests
         // Arrange
         var configure = new SqlServerLegacyConfigure(new ConfigurationBuilder().Build());
         var name = default(string);
-        var options = new SqlServerLegacyOptions { ConnectionString = "Test", Command = string.Empty };
+        var options = new SqlServerLegacyOptions
+        {
+            ConnectionString = "Test",
+            Command = string.Empty
+        };
 
         // Act
         configure.PostConfigure(name, options);

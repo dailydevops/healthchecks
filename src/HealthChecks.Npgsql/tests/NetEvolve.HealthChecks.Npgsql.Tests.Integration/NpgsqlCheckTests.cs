@@ -21,145 +21,135 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
     [Fact]
     public async Task AddPostgreSql_UseOptions_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                    }
-                );
-            })
-            .ConfigureAwait(false);
+        {
+            _ = healthChecks.AddPostgreSql(
+                "TestContainerHealthy",
+                options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                }
+            );
+        });
 
     [Fact]
     public async Task AddPostgreSql_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert
-            .ThrowsAsync<ArgumentException>(
-                "name",
-                async () =>
+        _ = await Assert.ThrowsAsync<ArgumentException>(
+            "name",
+            async () =>
+            {
+                await RunAndVerify(healthChecks =>
                 {
-                    await RunAndVerify(healthChecks =>
-                        {
-                            _ = healthChecks
-                                .AddPostgreSql("TestContainerHealthy")
-                                .AddPostgreSql("TestContainerHealthy");
-                        })
-                        .ConfigureAwait(false);
-                }
-            )
-            .ConfigureAwait(false);
+                    _ = healthChecks
+                        .AddPostgreSql("TestContainerHealthy")
+                        .AddPostgreSql("TestContainerHealthy");
+                });
+            }
+        );
 
     [Fact]
     public async Task AddPostgreSql_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
-            })
-            .ConfigureAwait(false);
+        {
+            _ = healthChecks.AddPostgreSql(
+                "TestContainerDegraded",
+                options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = 0;
+                }
+            );
+        });
 
     [Fact]
     public async Task AddPostgreSql_UseOptions_ShouldReturnUnhealthy() =>
         await RunAndVerify(healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1 = `1`";
-                    }
-                );
-            })
-            .ConfigureAwait(false);
+        {
+            _ = healthChecks.AddPostgreSql(
+                "TestContainerUnhealthy",
+                options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1 = `1`";
+                }
+            );
+        });
 
     [Fact]
     public async Task AddPostgreSql_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-                healthChecks =>
+            healthChecks =>
+            {
+                _ = healthChecks.AddPostgreSql("TestContainerHealthy");
+            },
+            config =>
+            {
+                var values = new Dictionary<string, string?>
                 {
-                    _ = healthChecks.AddPostgreSql("TestContainerHealthy");
-                },
-                config =>
-                {
-                    var values = new Dictionary<string, string?>
                     {
-                        {
-                            "HealthChecks:PostgreSqlTestContainerHealthy:ConnectionString",
-                            _database.ConnectionString
-                        }
-                    };
-                    _ = config.AddInMemoryCollection(values);
-                }
-            )
-            .ConfigureAwait(false);
+                        "HealthChecks:PostgreSqlTestContainerHealthy:ConnectionString",
+                        _database.ConnectionString
+                    }
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
 
     [Fact]
     public async Task AddPostgreSql_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-                healthChecks =>
+            healthChecks =>
+            {
+                _ = healthChecks.AddPostgreSql("TestContainerDegraded");
+            },
+            config =>
+            {
+                var values = new Dictionary<string, string?>
                 {
-                    _ = healthChecks.AddPostgreSql("TestContainerDegraded");
-                },
-                config =>
-                {
-                    var values = new Dictionary<string, string?>
                     {
-                        {
-                            "HealthChecks:PostgreSqlTestContainerDegraded:ConnectionString",
-                            _database.ConnectionString
-                        },
-                        { "HealthChecks:PostgreSqlTestContainerDegraded:Timeout", "0" }
-                    };
-                    _ = config.AddInMemoryCollection(values);
-                }
-            )
-            .ConfigureAwait(false);
+                        "HealthChecks:PostgreSqlTestContainerDegraded:ConnectionString",
+                        _database.ConnectionString
+                    },
+                    { "HealthChecks:PostgreSqlTestContainerDegraded:Timeout", "0" }
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
 
     [Fact]
     public async Task AddPostgreSql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-                healthChecks =>
+            healthChecks =>
+            {
+                _ = healthChecks.AddPostgreSql("TestNoValues");
+            },
+            config =>
+            {
+                var values = new Dictionary<string, string?>
                 {
-                    _ = healthChecks.AddPostgreSql("TestNoValues");
-                },
-                config =>
-                {
-                    var values = new Dictionary<string, string?>
-                    {
-                        { "HealthChecks:PostgreSqlTestNoValues:ConnectionString", "" }
-                    };
-                    _ = config.AddInMemoryCollection(values);
-                }
-            )
-            .ConfigureAwait(false);
+                    { "HealthChecks:PostgreSqlTestNoValues:ConnectionString", "" }
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
 
     [Fact]
     public async Task AddPostgreSql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-                healthChecks =>
+            healthChecks =>
+            {
+                _ = healthChecks.AddPostgreSql("TestNoValues");
+            },
+            config =>
+            {
+                var values = new Dictionary<string, string?>
                 {
-                    _ = healthChecks.AddPostgreSql("TestNoValues");
-                },
-                config =>
-                {
-                    var values = new Dictionary<string, string?>
                     {
-                        {
-                            "HealthChecks:PostgreSqlTestNoValues:ConnectionString",
-                            _database.ConnectionString
-                        },
-                        { "HealthChecks:PostgreSqlTestNoValues:Timeout", "-2" }
-                    };
-                    _ = config.AddInMemoryCollection(values);
-                }
-            )
-            .ConfigureAwait(false);
+                        "HealthChecks:PostgreSqlTestNoValues:ConnectionString",
+                        _database.ConnectionString
+                    },
+                    { "HealthChecks:PostgreSqlTestNoValues:Timeout", "-2" }
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
 }

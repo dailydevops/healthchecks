@@ -16,23 +16,21 @@ public class ApplicationReadyCheckTests : HealthCheckTestBase
     [Fact]
     public async Task AddApplicationReady_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
-            {
-                _ = healthChecks.AddApplicationReady();
-            })
-            .ConfigureAwait(false);
+        {
+            _ = healthChecks.AddApplicationReady();
+        });
 
     [Fact]
     public async Task AddApplicationReady_WithCustomName_ShouldReturnHealthy() =>
         await RunAndVerify(
-                healthChecks =>
-                {
-                    _ = healthChecks.AddApplicationReady();
-                },
-                serverConfiguration: server =>
-                {
-                    var lifetime = server.Services.GetRequiredService<IHostApplicationLifetime>();
-                    lifetime.StopApplication();
-                }
-            )
-            .ConfigureAwait(false);
+            healthChecks =>
+            {
+                _ = healthChecks.AddApplicationReady();
+            },
+            serverConfiguration: server =>
+            {
+                var lifetime = server.Services.GetRequiredService<IHostApplicationLifetime>();
+                lifetime.StopApplication();
+            }
+        );
 }

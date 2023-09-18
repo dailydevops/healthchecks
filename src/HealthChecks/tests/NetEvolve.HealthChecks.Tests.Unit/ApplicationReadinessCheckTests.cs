@@ -21,10 +21,10 @@ public sealed class ApplicationReadinessCheckTests
         var sut = new ApplicationReadyCheck(lifetime);
 
         // Act
-        async Task Act() => await sut.CheckHealthAsync(null!).ConfigureAwait(false);
+        async Task Act() => await sut.CheckHealthAsync(null!);
 
         // Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act).ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public sealed class ApplicationReadinessCheckTests
 
         // Act
         lifetime.StartApplication();
-        var result = await sut.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        var result = await sut.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         Assert.Equal(HealthStatus.Healthy, result.Status);
@@ -60,7 +60,7 @@ public sealed class ApplicationReadinessCheckTests
         };
 
         // Act
-        var result = await sut.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        var result = await sut.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
@@ -82,11 +82,11 @@ public sealed class ApplicationReadinessCheckTests
         lifetime.StartApplication();
 
         // Assert
-        var result = await sut.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        var result = await sut.CheckHealthAsync(context, cancellationToken);
         Assert.Equal(HealthStatus.Healthy, result.Status);
 
         lifetime.StopApplication();
-        result = await sut.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        result = await sut.CheckHealthAsync(context, cancellationToken);
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
     }
 

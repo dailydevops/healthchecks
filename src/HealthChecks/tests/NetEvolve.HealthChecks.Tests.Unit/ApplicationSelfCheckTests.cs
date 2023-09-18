@@ -19,10 +19,10 @@ public sealed class ApplicationSelfCheckTests
         var sut = new ApplicationHealthyCheck();
 
         // Act
-        async Task Act() => await sut.CheckHealthAsync(null!).ConfigureAwait(false);
+        async Task Act() => await sut.CheckHealthAsync(null!);
 
         // Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act).ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public sealed class ApplicationSelfCheckTests
         };
 
         // Act
-        var result = await sut.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        var result = await sut.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         Assert.Equal(HealthStatus.Healthy, result.Status);
@@ -55,7 +55,7 @@ public sealed class ApplicationSelfCheckTests
         };
 
         // Act
-        var result = await sut.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
+        var result = await sut.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
