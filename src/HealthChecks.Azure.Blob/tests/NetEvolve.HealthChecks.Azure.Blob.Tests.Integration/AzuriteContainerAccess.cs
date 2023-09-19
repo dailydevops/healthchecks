@@ -14,8 +14,6 @@ public sealed class AzuriteContainerAccess : IAsyncLifetime
         .Build();
 
     public string ConnectionString => _container.GetConnectionString();
-    public string ConnectionStringHttps =>
-        _container.GetConnectionString().Replace("http", "https", StringComparison.Ordinal);
 
     public string BlobEndpoint =>
         new UriBuilder(
