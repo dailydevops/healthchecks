@@ -78,6 +78,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Npgs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Oracle", "src\HealthChecks.Oracle\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj", "{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Dapr", "src\HealthChecks.Dapr\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj", "{233AEF0E-B0CE-4865-9FE3-7A7B7A623619}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Dapr.Tests.Unit", "src\HealthChecks.Dapr\tests\NetEvolve.HealthChecks.Dapr.Tests.Unit\NetEvolve.HealthChecks.Dapr.Tests.Unit.csproj", "{DC2247E7-EDFE-4B9A-A303-42A2B915B80B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Dapr.Tests.Integration", "src\HealthChecks.Dapr\tests\NetEvolve.HealthChecks.Dapr.Tests.Integration\NetEvolve.HealthChecks.Dapr.Tests.Integration.csproj", "{11938D3C-C80B-42CA-973A-433F1A5F2B7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +186,18 @@ Global
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{233AEF0E-B0CE-4865-9FE3-7A7B7A623619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{233AEF0E-B0CE-4865-9FE3-7A7B7A623619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{233AEF0E-B0CE-4865-9FE3-7A7B7A623619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{233AEF0E-B0CE-4865-9FE3-7A7B7A623619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2247E7-EDFE-4B9A-A303-42A2B915B80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2247E7-EDFE-4B9A-A303-42A2B915B80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2247E7-EDFE-4B9A-A303-42A2B915B80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2247E7-EDFE-4B9A-A303-42A2B915B80B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11938D3C-C80B-42CA-973A-433F1A5F2B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11938D3C-C80B-42CA-973A-433F1A5F2B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11938D3C-C80B-42CA-973A-433F1A5F2B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11938D3C-C80B-42CA-973A-433F1A5F2B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,11 +229,15 @@ Global
 		{96611D86-20D4-49CD-BAFA-DE2EFA70B332} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 		{D9311883-0694-4453-A1F3-11A442D4EA8E} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 		{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
+		{233AEF0E-B0CE-4865-9FE3-7A7B7A623619} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
+		{DC2247E7-EDFE-4B9A-A303-42A2B915B80B} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
+		{11938D3C-C80B-42CA-973A-433F1A5F2B7A} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{233aef0e-b0ce-4865-9fe3-7a7b7a623619}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{2bcf52de-b106-4608-b838-702b637f5a12}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{5abd02d9-d9bb-4303-be2f-dffd2d30e2fd}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{5c013a07-27a0-4b85-897e-3eed2212c737}*SharedItemsImports = 5

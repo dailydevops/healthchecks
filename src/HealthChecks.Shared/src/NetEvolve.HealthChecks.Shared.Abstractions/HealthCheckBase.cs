@@ -16,22 +16,24 @@ internal abstract class HealthCheckBase : IHealthCheck
     {
         Argument.ThrowIfNull(context);
 
-        var configurationName = context.Registration.Name;
+        var name = context.Registration.Name;
         var failureStatus = context.Registration.FailureStatus;
-        var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
 
-        return result;
-    }
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return new HealthCheckResult(
+                failureStatus,
+                description: $"{name}: Cancellation requested."
+                );
+        }
 
-    private async ValueTask<HealthCheckResult> InternalAsync(string configurationName, HealthStatus failureStatus, CancellationToken cancellationToken)
-    {
         try
         {
-            return await ExecuteHealthCheckAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
+            return await ExecuteHealthCheckAsync(name, failureStatus, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Unexpected error.", exception: ex);
+            return new HealthCheckResult(failureStatus, description: $"{name}: Unexpected error.", exception: ex);
         }
     }
 

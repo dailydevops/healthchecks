@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
+    <PackageVersion Include="Dapr.Client" Version="1.11.0" />
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="6.0.21" Condition=" '$(TargetFramework)' == 'net6.0' " />
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="7.0.10" Condition=" '$(TargetFramework)' == 'net7.0' " />
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.0-preview.7.23375.9" Condition=" '$(TargetFramework)' == 'net8.0' " />

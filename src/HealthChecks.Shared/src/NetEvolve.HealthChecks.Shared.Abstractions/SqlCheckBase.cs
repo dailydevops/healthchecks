@@ -36,65 +36,51 @@ internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
                 );
         }
 
-        var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
-
-        return result;
+        return await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
     }
 
-    private async Task<HealthCheckResult> InternalAsync(string configurationName, HealthStatus failureStatus, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var options = _optionsMonitor.Get(configurationName);
-            if (options is null)
-            {
-                return new HealthCheckResult(
-                    HealthStatus.Unhealthy,
-                    description: $"{configurationName}: Missing configuration."
-                );
-            }
-
-            return await ExecuteHealthCheckAsync(
-                    configurationName,
-                    options,
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Unexpected error.", exception: ex);
-        }
-    }
 
     [SuppressMessage(
         "Security",
         "CA2100:Review SQL queries for security vulnerabilities",
         Justification = "As designed."
     )]
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
-        string name,
-        TConfiguration options,
-        CancellationToken cancellationToken
-    )
+    private async Task<HealthCheckResult> InternalAsync(string name, HealthStatus failureStatus, CancellationToken cancellationToken)
     {
-        using (var connection = CreateConnection(options.ConnectionString))
+        try
         {
-            await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
-
-            using (var command = connection.CreateCommand())
+            var options = _optionsMonitor.Get(name);
+            if (options is null)
             {
-                command.CommandText = options.Command;
-
-                var (isHealthy, _) = await command
-                    .ExecuteScalarAsync(cancellationToken)
-                    .WithTimeoutAsync(options.Timeout, cancellationToken)
-                    .ConfigureAwait(false);
-
-                return isHealthy
-                    ? HealthCheckResult.Healthy($"{name}: Healthy")
-                    : HealthCheckResult.Degraded($"{name}: Degraded");
+                return new HealthCheckResult(
+                    HealthStatus.Unhealthy,
+                    description: $"{name}: Missing configuration."
+                );
             }
+
+
+            using (var connection = CreateConnection(options.ConnectionString))
+            {
+                await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = options.Command;
+
+                    var (isHealthy, _) = await command
+                        .ExecuteScalarAsync(cancellationToken)
+                        .WithTimeoutAsync(options.Timeout, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return isHealthy
+                        ? HealthCheckResult.Healthy($"{name}: Healthy")
+                        : HealthCheckResult.Degraded($"{name}: Degraded");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return new HealthCheckResult(failureStatus, description: $"{name}: Unexpected error.", exception: ex);
         }
     }
 
