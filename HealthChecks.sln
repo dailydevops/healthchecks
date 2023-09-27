@@ -84,6 +84,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob.Tests.Integration", "src\HealthChecks.Azure.Blob\tests\NetEvolve.HealthChecks.Azure.Blob.Tests.Integration\NetEvolve.HealthChecks.Azure.Blob.Tests.Integration.csproj", "{D8FBA848-5938-477B-AFA7-B62134FD2D63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Queue", "src\HealthChecks.Azure.Queue\src\NetEvolve.HealthChecks.Azure.Queue\NetEvolve.HealthChecks.Azure.Queue.csproj", "{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Queue.Tests.Unit", "src\HealthChecks.Azure.Queue\tests\NetEvolve.HealthChecks.Azure.Queue.Tests.Unit\NetEvolve.HealthChecks.Azure.Queue.Tests.Unit.csproj", "{3A6C7B50-072D-4860-919F-491CDC6F90F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Queue.Tests.Integration", "src\HealthChecks.Azure.Queue\tests\NetEvolve.HealthChecks.Azure.Queue.Tests.Integration\NetEvolve.HealthChecks.Azure.Queue.Tests.Integration.csproj", "{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Table", "src\HealthChecks.Azure.Table\src\NetEvolve.HealthChecks.Azure.Table\NetEvolve.HealthChecks.Azure.Table.csproj", "{465F2206-EB2C-40C3-97FB-19181B088BD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Table.Tests.Unit", "src\HealthChecks.Azure.Table\tests\NetEvolve.HealthChecks.Azure.Table.Tests.Unit\NetEvolve.HealthChecks.Azure.Table.Tests.Unit.csproj", "{08D31996-556D-48E6-AD5F-226597F12DE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Table.Tests.Integration", "src\HealthChecks.Azure.Table\tests\NetEvolve.HealthChecks.Azure.Table.Tests.Integration\NetEvolve.HealthChecks.Azure.Table.Tests.Integration.csproj", "{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,6 +210,30 @@ Global
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6C7B50-072D-4860-919F-491CDC6F90F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6C7B50-072D-4860-919F-491CDC6F90F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6C7B50-072D-4860-919F-491CDC6F90F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6C7B50-072D-4860-919F-491CDC6F90F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{465F2206-EB2C-40C3-97FB-19181B088BD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{465F2206-EB2C-40C3-97FB-19181B088BD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{465F2206-EB2C-40C3-97FB-19181B088BD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{465F2206-EB2C-40C3-97FB-19181B088BD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08D31996-556D-48E6-AD5F-226597F12DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D31996-556D-48E6-AD5F-226597F12DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D31996-556D-48E6-AD5F-226597F12DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D31996-556D-48E6-AD5F-226597F12DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +268,12 @@ Global
 		{F68AF846-B484-4BE2-84DE-E9E8ABE612B0} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
 		{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
+		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
+		{3A6C7B50-072D-4860-919F-491CDC6F90F3} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
+		{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
+		{465F2206-EB2C-40C3-97FB-19181B088BD0} = {76FEDF93-AF59-4391-932A-C31CB68FE314}
+		{08D31996-556D-48E6-AD5F-226597F12DE5} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
+		{E6FA7809-D423-4A2B-B8E7-3BBE66A89564} = {3C540C7F-642A-4505-9BE5-DA52A7CE227F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
