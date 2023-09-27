@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: AzureBlobAvailabilityTestContainerHealthy: Healthy,
+      name: AzureBlobAvailabilityTestContainerHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

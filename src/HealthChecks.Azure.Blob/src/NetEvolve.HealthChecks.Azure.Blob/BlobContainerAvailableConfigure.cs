@@ -82,7 +82,7 @@ internal sealed class BlobContainerAvailableConfigure
                 mode == ClientCreationMode.DefaultAzureCredentials
                 || mode == ClientCreationMode.SharedKey
                 || mode == ClientCreationMode.AzureSasCredential
-            ) && string.IsNullOrWhiteSpace(options.ServiceUri)
+            ) && options.ServiceUri is null
         )
         {
             return Fail(

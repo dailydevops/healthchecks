@@ -1,7 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Blob.Tests.Integration;
 
+using global::Azure.Storage.Blobs;
+using global::Azure.Storage.Sas;
+using Microsoft.Extensions.Azure;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Tests;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,17 +15,65 @@ using Xunit;
 [SetCulture]
 public class BlobContainerAvailableHealthCheckHttpTests
     : HealthCheckTestBase,
-        IClassFixture<AzuriteContainerAccess>
+        IClassFixture<AzuriteHttpAccess>
 {
-    private const string AccountName = "devstoreaccount1";
+    private readonly AzuriteHttpAccess _container;
+    private readonly Uri _accountSasUri;
 
-    private const string SharedAccessToken =
-        "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
-
-    private readonly AzuriteContainerAccess _container;
-
-    public BlobContainerAvailableHealthCheckHttpTests(AzuriteContainerAccess container) =>
+    public BlobContainerAvailableHealthCheckHttpTests(AzuriteHttpAccess container)
+    {
         _container = container;
+
+        var client = new BlobServiceClient(_container.ConnectionString);
+        _accountSasUri = client.GenerateAccountSasUri(
+            AccountSasPermissions.All,
+            DateTimeOffset.UtcNow.AddDays(1),
+            AccountSasResourceTypes.All
+        );
+    }
+
+    [Fact]
+    public async Task AddAzureBlobAvailability_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureBlobAvailability(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                    }
+                );
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(
+                    clients => _ = clients.AddBlobServiceClient(_container.ConnectionString)
+                );
+            }
+        );
+
+    [Fact]
+    public async Task AddAzureBlobAvailability_UseOptions_ModeServiceProvider_ShouldReturnDegraded() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureBlobAvailability(
+                    "TestContainerDegraded",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Timeout = 0;
+                    }
+                );
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(
+                    clients => _ = clients.AddBlobServiceClient(_container.ConnectionString)
+                );
+            }
+        );
 
     [Fact]
     public async Task AddAzureBlobAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
@@ -38,6 +90,21 @@ public class BlobContainerAvailableHealthCheckHttpTests
         });
 
     [Fact]
+    public async Task AddAzureBlobAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddAzureBlobAvailability(
+                "TestContainerDegraded",
+                options =>
+                {
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.Timeout = 0;
+                }
+            );
+        });
+
+    [Fact]
     public async Task AddAzureBlobAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
         {
@@ -45,10 +112,58 @@ public class BlobContainerAvailableHealthCheckHttpTests
                 "TestContainerHealthy",
                 options =>
                 {
-                    options.AccountName = AccountName;
+                    options.AccountKey = AzuriteHttpAccess.AccountKey;
+                    options.AccountName = AzuriteHttpAccess.AccountName;
                     options.Mode = ClientCreationMode.SharedKey;
                     options.ServiceUri = _container.BlobEndpoint;
-                    options.SharedAccessToken = SharedAccessToken;
+                }
+            );
+        });
+
+    [Fact]
+    public async Task AddAzureBlobAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddAzureBlobAvailability(
+                "TestContainerDegraded",
+                options =>
+                {
+                    options.AccountKey = AzuriteHttpAccess.AccountKey;
+                    options.AccountName = AzuriteHttpAccess.AccountName;
+                    options.Mode = ClientCreationMode.SharedKey;
+                    options.ServiceUri = _container.BlobEndpoint;
+                    options.Timeout = 0;
+                }
+            );
+        });
+
+    [Fact]
+    public async Task AddAzureBlobAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddAzureBlobAvailability(
+                "TestContainerHealthy",
+                options =>
+                {
+                    options.Mode = ClientCreationMode.AzureSasCredential;
+                    options.SasUri = _accountSasUri;
+                    options.ServiceUri = _container.BlobEndpoint;
+                }
+            );
+        });
+
+    [Fact]
+    public async Task AddAzureBlobAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddAzureBlobAvailability(
+                "TestContainerDegraded",
+                options =>
+                {
+                    options.Mode = ClientCreationMode.AzureSasCredential;
+                    options.SasUri = _accountSasUri;
+                    options.ServiceUri = _container.BlobEndpoint;
+                    options.Timeout = 0;
                 }
             );
         });

@@ -20,9 +20,9 @@ public sealed class BlobContainerAvailableOptions
         "CA1056:URI-like properties should not be strings",
         Justification = "As designed."
     )]
-    public string? ServiceUri { get; set; }
+    public Uri? ServiceUri { get; set; }
     public string? AccountName { get; set; }
-    public string? SharedAccessToken { get; set; }
+    public string? AccountKey { get; set; }
 
     [SuppressMessage(
         "Design",
@@ -30,4 +30,5 @@ public sealed class BlobContainerAvailableOptions
         Justification = "As designed."
     )]
     public Action<BlobClientOptions>? ConfigureClientOptions { internal get; set; }
+    public Uri? SasUri { get; set; }
 }

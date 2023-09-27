@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Blob;
 
 using global::Azure;
+using global::Azure.Core;
 using global::Azure.Identity;
 using global::Azure.Storage;
 using global::Azure.Storage.Blobs;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 internal sealed class BlobContainerAvailableHealthCheck
     : ConfigurableHealthCheckBase<BlobContainerAvailableOptions>
 {
-    private ConcurrentDictionary<string, BlobServiceClient>? _blobServiceClients;
+    private static ConcurrentDictionary<string, BlobServiceClient>? _blobServiceClients;
     private readonly IServiceProvider _serviceProvider;
 
     public BlobContainerAvailableHealthCheck(
@@ -34,7 +35,7 @@ internal sealed class BlobContainerAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var blobClient = GetBlobServiceClient(name, options);
+        var blobClient = GetBlobServiceClient(name, options, _serviceProvider);
 
         var blobTask = blobClient
             .GetBlobContainersAsync(cancellationToken: cancellationToken)
@@ -51,14 +52,15 @@ internal sealed class BlobContainerAvailableHealthCheck
             : HealthCheckResult.Degraded($"{name}: Degraded");
     }
 
-    private BlobServiceClient GetBlobServiceClient(
+    private static BlobServiceClient GetBlobServiceClient(
         string name,
-        BlobContainerAvailableOptions options
+        BlobContainerAvailableOptions options,
+        IServiceProvider serviceProvider
     )
     {
         if (options.Mode == ClientCreationMode.ServiceProvider)
         {
-            return _serviceProvider.GetRequiredService<BlobServiceClient>();
+            return serviceProvider.GetRequiredService<BlobServiceClient>();
         }
 
         if (_blobServiceClients is null)
@@ -68,10 +70,16 @@ internal sealed class BlobContainerAvailableHealthCheck
             );
         }
 
-        return _blobServiceClients.GetOrAdd(name, _ => CreateBlobServiceClient(options));
+        return _blobServiceClients.GetOrAdd(
+            name,
+            _ => CreateBlobServiceClient(options, serviceProvider)
+        );
     }
 
-    private static BlobServiceClient CreateBlobServiceClient(BlobContainerAvailableOptions options)
+    private static BlobServiceClient CreateBlobServiceClient(
+        BlobContainerAvailableOptions options,
+        IServiceProvider serviceProvider
+    )
     {
         BlobClientOptions? clientOptions = null;
         if (options.ConfigureClientOptions is not null)
@@ -84,9 +92,9 @@ internal sealed class BlobContainerAvailableHealthCheck
         {
             case ClientCreationMode.DefaultAzureCredentials:
             {
-                var serviceUri = new Uri(options.ServiceUri!, UriKind.Absolute);
-                var tokenCredential = new DefaultAzureCredential();
-                return new BlobServiceClient(serviceUri, tokenCredential, clientOptions);
+                var tokenCredential =
+                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                return new BlobServiceClient(options.ServiceUri, tokenCredential, clientOptions);
             }
             case ClientCreationMode.ConnectionString:
             {
@@ -94,18 +102,20 @@ internal sealed class BlobContainerAvailableHealthCheck
             }
             case ClientCreationMode.SharedKey:
             {
-                var serviceUri = new Uri(options.ServiceUri!, UriKind.Absolute);
                 var sharedKeyCredential = new StorageSharedKeyCredential(
                     options.AccountName,
-                    options.SharedAccessToken
+                    options.AccountKey
                 );
-                return new BlobServiceClient(serviceUri, sharedKeyCredential, clientOptions);
+                return new BlobServiceClient(
+                    options.ServiceUri,
+                    sharedKeyCredential,
+                    clientOptions
+                );
             }
             case ClientCreationMode.AzureSasCredential:
             {
-                var serviceUri = new Uri(options.ServiceUri!, UriKind.Absolute);
-                var azureSasCredential = new AzureSasCredential(options.SharedAccessToken!);
-                return new BlobServiceClient(serviceUri, azureSasCredential, clientOptions);
+                var azureSasCredential = new AzureSasCredential(options.SasUri!.Query);
+                return new BlobServiceClient(options.ServiceUri, azureSasCredential, clientOptions);
             }
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");

@@ -26,13 +26,13 @@ public enum ClientCreationMode
 
     /// <summary>
     /// The <see cref="BlobServiceClient"/> is created using the <see cref="BlobContainerAvailableOptions.AccountName"/>
-    /// and <see cref="BlobContainerAvailableOptions.SharedAccessToken"/>. As well as the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
+    /// and <see cref="BlobContainerAvailableOptions.AccountKey"/>. As well as the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
     /// </summary>
     SharedKey = 3,
 
     /// <summary>
     /// The <see cref="BlobServiceClient"/> is created using the <see cref="BlobContainerAvailableOptions.AccountName"/>
-    /// and <see cref="BlobContainerAvailableOptions.Signature"/>. As well as the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
+    /// and <see cref="BlobContainerAvailableOptions.SasUri"/>. As well as the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
     /// </summary>
     AzureSasCredential = 4
 }

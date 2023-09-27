@@ -21,10 +21,6 @@
     <PackageTags>healthcheck;diagnostics;</PackageTags>
   </PropertyGroup>
 
-  <PropertyGroup Label="Settings for test projects" Condition=" $(IsTestableProject) ">
-    <NoWarn>$(NoWarn);CS8604;CA2007;</NoWarn>
-  </PropertyGroup>
-
   <ItemGroup Condition=" !$(IsTestableProject) ">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
