@@ -11,6 +11,9 @@
 *.sln.docstates
 *.bak
 
+# Certification files
+*.pem
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
