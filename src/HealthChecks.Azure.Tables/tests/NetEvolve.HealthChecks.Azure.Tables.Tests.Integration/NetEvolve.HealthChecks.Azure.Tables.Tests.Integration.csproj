@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="coverlet.msbuild" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NetEvolve.Extensions.XUnit" />
+    <PackageReference Include="Verify.Xunit" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\GitHub\testcontainers-dotnet\src\Testcontainers.Azurite\Testcontainers.Azurite.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\..\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems" Label="Shared" />
+
+  <Target Name="GenerateTestCertificatePreBuild" BeforeTargets="PreBuildEvent">
+    <Exec ContinueOnError="true" Command="mkcert" StandardOutputImportance="low" StandardErrorImportance="low">
+      <Output TaskParameter="ExitCode" PropertyName="InstalledMkCert" />
+    </Exec>
+
+    <PropertyGroup>
+      <IsInstalledMkCert>false</IsInstalledMkCert>
+      <IsInstalledMkCert Condition=" '$(InstalledMkCert)' == '0' ">true</IsInstalledMkCert>
+    </PropertyGroup>
+
+    <Error Condition=" '$(IsInstalledMkCert)' != 'true' " Text="mkcert not available. Please install mkcert and run `mkcert -install`." />
+
+    <MakeDir Directories="$(ProjectDir)cert" />
+    <Exec
+      Condition=" '$(IsInstalledMkCert)' == 'true' and !Exists('$(ProjectDir)cert\127.0.0.1.pem') "
+      Command="mkcert 127.0.0.1"
+      WorkingDirectory="$(ProjectDir)cert"
+      StandardOutputImportance="low"
+      StandardErrorImportance="low" />
+  </Target>
+
+</Project>

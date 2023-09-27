@@ -78,23 +78,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Npgs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Oracle", "src\HealthChecks.Oracle\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj", "{75F93B8E-07FB-4517-B7B9-ADF2EF57D3F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob", "src\HealthChecks.Azure.Blob\src\NetEvolve.HealthChecks.Azure.Blob\NetEvolve.HealthChecks.Azure.Blob.csproj", "{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blobs", "src\HealthChecks.Azure.Blobs\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj", "{F68AF846-B484-4BE2-84DE-E9E8ABE612B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob.Tests.Unit", "src\HealthChecks.Azure.Blob\tests\NetEvolve.HealthChecks.Azure.Blob.Tests.Unit\NetEvolve.HealthChecks.Azure.Blob.Tests.Unit.csproj", "{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blobs.Tests.Unit", "src\HealthChecks.Azure.Blobs\tests\NetEvolve.HealthChecks.Azure.Blobs.Tests.Unit\NetEvolve.HealthChecks.Azure.Blobs.Tests.Unit.csproj", "{EE34C72C-799E-4392-8F23-3D2F7FB1A4A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blob.Tests.Integration", "src\HealthChecks.Azure.Blob\tests\NetEvolve.HealthChecks.Azure.Blob.Tests.Integration\NetEvolve.HealthChecks.Azure.Blob.Tests.Integration.csproj", "{D8FBA848-5938-477B-AFA7-B62134FD2D63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Blobs.Tests.Integration", "src\HealthChecks.Azure.Blobs\tests\NetEvolve.HealthChecks.Azure.Blobs.Tests.Integration\NetEvolve.HealthChecks.Azure.Blobs.Tests.Integration.csproj", "{D8FBA848-5938-477B-AFA7-B62134FD2D63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Queue", "src\HealthChecks.Azure.Queue\src\NetEvolve.HealthChecks.Azure.Queue\NetEvolve.HealthChecks.Azure.Queue.csproj", "{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testcontainers.Azurite", "..\..\GitHub\testcontainers-dotnet\src\Testcontainers.Azurite\Testcontainers.Azurite.csproj", "{052887DE-9957-4217-A11C-427DC5F553BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Queue.Tests.Unit", "src\HealthChecks.Azure.Queue\tests\NetEvolve.HealthChecks.Azure.Queue.Tests.Unit\NetEvolve.HealthChecks.Azure.Queue.Tests.Unit.csproj", "{3A6C7B50-072D-4860-919F-491CDC6F90F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testcontainers", "..\..\GitHub\testcontainers-dotnet\src\Testcontainers\Testcontainers.csproj", "{4E4DB2B8-BE58-4E69-96D7-12809F9A83DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Queue.Tests.Integration", "src\HealthChecks.Azure.Queue\tests\NetEvolve.HealthChecks.Azure.Queue.Tests.Integration\NetEvolve.HealthChecks.Azure.Queue.Tests.Integration.csproj", "{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Queues", "src\HealthChecks.Azure.Queues\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj", "{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Table", "src\HealthChecks.Azure.Table\src\NetEvolve.HealthChecks.Azure.Table\NetEvolve.HealthChecks.Azure.Table.csproj", "{465F2206-EB2C-40C3-97FB-19181B088BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Queues.Tests.Unit", "src\HealthChecks.Azure.Queues\tests\NetEvolve.HealthChecks.Azure.Queues.Tests.Unit\NetEvolve.HealthChecks.Azure.Queues.Tests.Unit.csproj", "{3A6C7B50-072D-4860-919F-491CDC6F90F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Table.Tests.Unit", "src\HealthChecks.Azure.Table\tests\NetEvolve.HealthChecks.Azure.Table.Tests.Unit\NetEvolve.HealthChecks.Azure.Table.Tests.Unit.csproj", "{08D31996-556D-48E6-AD5F-226597F12DE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Queues.Tests.Integration", "src\HealthChecks.Azure.Queues\tests\NetEvolve.HealthChecks.Azure.Queues.Tests.Integration\NetEvolve.HealthChecks.Azure.Queues.Tests.Integration.csproj", "{DCBC9804-FA08-4B5A-AE24-760A54CF9BC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Table.Tests.Integration", "src\HealthChecks.Azure.Table\tests\NetEvolve.HealthChecks.Azure.Table.Tests.Integration\NetEvolve.HealthChecks.Azure.Table.Tests.Integration.csproj", "{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Tables", "src\HealthChecks.Azure.Tables\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj", "{465F2206-EB2C-40C3-97FB-19181B088BD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Tables.Tests.Unit", "src\HealthChecks.Azure.Tables\tests\NetEvolve.HealthChecks.Azure.Tables.Tests.Unit\NetEvolve.HealthChecks.Azure.Tables.Tests.Unit.csproj", "{08D31996-556D-48E6-AD5F-226597F12DE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azure.Tables.Tests.Integration", "src\HealthChecks.Azure.Tables\tests\NetEvolve.HealthChecks.Azure.Tables.Tests.Integration\NetEvolve.HealthChecks.Azure.Tables.Tests.Integration.csproj", "{E6FA7809-D423-4A2B-B8E7-3BBE66A89564}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -210,6 +214,14 @@ Global
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FBA848-5938-477B-AFA7-B62134FD2D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{052887DE-9957-4217-A11C-427DC5F553BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052887DE-9957-4217-A11C-427DC5F553BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052887DE-9957-4217-A11C-427DC5F553BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{052887DE-9957-4217-A11C-427DC5F553BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E4DB2B8-BE58-4E69-96D7-12809F9A83DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4DB2B8-BE58-4E69-96D7-12809F9A83DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4DB2B8-BE58-4E69-96D7-12809F9A83DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4DB2B8-BE58-4E69-96D7-12809F9A83DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F628B2F-3DB8-4CB9-BB25-B830C1B12051}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -280,6 +292,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{2bcf52de-b106-4608-b838-702b637f5a12}*SharedItemsImports = 5
+		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{465f2206-eb2c-40c3-97fb-19181b088bd0}*SharedItemsImports = 5
+		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{4f628b2f-3db8-4cb9-bb25-b830c1b12051}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{5abd02d9-d9bb-4303-be2f-dffd2d30e2fd}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{5c013a07-27a0-4b85-897e-3eed2212c737}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{62fb0b38-060d-46bc-840d-fd225acb775e}*SharedItemsImports = 5
@@ -293,7 +307,9 @@ Global
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{c566eb67-a22b-4332-bdd5-8de05810853f}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{d8fba848-5938-477b-afa7-b62134fd2d63}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{d9311883-0694-4453-a1f3-11a442d4ea8e}*SharedItemsImports = 5
+		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{dcbc9804-fa08-4b5a-ae24-760a54cf9bc4}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{e56d2a0b-607e-4860-aec5-4d9ae2cc61b5}*SharedItemsImports = 5
+		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{e6fa7809-d423-4a2b-b8e7-3bbe66a89564}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{f13da83a-4e30-4f22-8ec8-142a33401fe3}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{f68af846-b484-4be2-84de-e9e8abe612b0}*SharedItemsImports = 5
 		src\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems*{f7ff815a-110e-454c-9d0c-b4ab297e4c3e}*SharedItemsImports = 5
