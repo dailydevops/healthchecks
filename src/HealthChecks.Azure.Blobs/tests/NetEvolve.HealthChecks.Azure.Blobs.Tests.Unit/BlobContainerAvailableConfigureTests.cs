@@ -54,11 +54,21 @@ public sealed class BlobContainerAvailableConfigureTests
             // Mode: DefaultAzureCredentials
             {
                 false,
-                "The service url cannot be null or whitspace when using `DefaultAzureCredentials` mode.",
+                "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
                 new BlobContainerAvailableOptions
                 {
                     Mode = ClientCreationMode.DefaultAzureCredentials
+                }
+            },
+            {
+                false,
+                "The service url must be an absolute url when using `DefaultAzureCredentials` mode.",
+                "name",
+                new BlobContainerAvailableOptions
+                {
+                    Mode = ClientCreationMode.DefaultAzureCredentials,
+                    ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
             },
             // Mode: ConnectionString
@@ -81,16 +91,46 @@ public sealed class BlobContainerAvailableConfigureTests
             // Mode: SharedKey
             {
                 false,
-                "The service url cannot be null or whitspace when using `SharedKey` mode.",
+                "The service url cannot be null when using `SharedKey` mode.",
                 "name",
                 new BlobContainerAvailableOptions { Mode = ClientCreationMode.SharedKey }
+            },
+            {
+                false,
+                "The service url must be an absolute url when using `SharedKey` mode.",
+                "name",
+                new BlobContainerAvailableOptions
+                {
+                    Mode = ClientCreationMode.SharedKey,
+                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                }
             },
             // Mode: AzureSasCredential
             {
                 false,
-                "The service url cannot be null or whitspace when using `AzureSasCredential` mode.",
+                "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
                 new BlobContainerAvailableOptions { Mode = ClientCreationMode.AzureSasCredential }
+            },
+            {
+                false,
+                "The service url must be an absolute url when using `AzureSasCredential` mode.",
+                "name",
+                new BlobContainerAvailableOptions
+                {
+                    Mode = ClientCreationMode.AzureSasCredential,
+                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                }
+            },
+            {
+                false,
+                "The sas query token cannot be null or whitespace when using `AzureSasCredential` mode.",
+                "name",
+                new BlobContainerAvailableOptions
+                {
+                    Mode = ClientCreationMode.AzureSasCredential,
+                    ServiceUri = new Uri("https://absolute", UriKind.Absolute)
+                }
             }
         };
 

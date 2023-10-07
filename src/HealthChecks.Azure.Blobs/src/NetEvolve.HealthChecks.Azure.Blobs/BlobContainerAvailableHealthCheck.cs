@@ -114,8 +114,14 @@ internal sealed class BlobContainerAvailableHealthCheck
             }
             case ClientCreationMode.AzureSasCredential:
             {
-                var azureSasCredential = new AzureSasCredential(options.SasUri!.Query);
-                return new BlobServiceClient(options.ServiceUri, azureSasCredential, clientOptions);
+                var blobUriBuilder = new BlobUriBuilder(options.ServiceUri) { Sas = null };
+                var azureSasCredential = new AzureSasCredential(options.ServiceUri!.Query);
+
+                return new BlobServiceClient(
+                    blobUriBuilder.ToUri(),
+                    azureSasCredential,
+                    clientOptions
+                );
             }
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");

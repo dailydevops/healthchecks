@@ -31,8 +31,7 @@ public enum ClientCreationMode
     SharedKey = 3,
 
     /// <summary>
-    /// The <see cref="BlobServiceClient"/> is created using the <see cref="BlobContainerAvailableOptions.AccountName"/>
-    /// and <see cref="BlobContainerAvailableOptions.SasUri"/>. As well as the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
+    /// The <see cref="BlobServiceClient"/> is created using the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
     /// </summary>
     AzureSasCredential = 4
 }

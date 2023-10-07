@@ -146,8 +146,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
                 options =>
                 {
                     options.Mode = ClientCreationMode.AzureSasCredential;
-                    options.SasUri = _accountSasUri;
-                    options.ServiceUri = _container.BlobEndpoint;
+                    options.ServiceUri = _accountSasUri;
                 }
             );
         });
@@ -161,8 +160,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
                 options =>
                 {
                     options.Mode = ClientCreationMode.AzureSasCredential;
-                    options.SasUri = _accountSasUri;
-                    options.ServiceUri = _container.BlobEndpoint;
+                    options.ServiceUri = _accountSasUri;
                     options.Timeout = 0;
                 }
             );

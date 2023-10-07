@@ -15,11 +15,6 @@ public sealed class BlobContainerAvailableOptions
     public ClientCreationMode Mode { get; set; }
     public int Timeout { get; set; } = 100;
 
-    [SuppressMessage(
-        "Design",
-        "CA1056:URI-like properties should not be strings",
-        Justification = "As designed."
-    )]
     public Uri? ServiceUri { get; set; }
     public string? AccountName { get; set; }
     public string? AccountKey { get; set; }
@@ -30,5 +25,4 @@ public sealed class BlobContainerAvailableOptions
         Justification = "As designed."
     )]
     public Action<BlobClientOptions>? ConfigureClientOptions { internal get; set; }
-    public Uri? SasUri { get; set; }
 }
