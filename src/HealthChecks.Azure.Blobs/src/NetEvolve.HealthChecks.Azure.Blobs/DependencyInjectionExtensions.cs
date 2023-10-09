@@ -42,23 +42,18 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<BlobContainerAvailableConfigure>();
         }
 
-        var internalName = name.EnsureStartsWith(
-            "AzureBlobAvailability",
-            StringComparison.OrdinalIgnoreCase
-        );
-
-        if (builder.IsNameAlreadyUsed(internalName))
+        if (builder.IsNameAlreadyUsed(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
         {
-            _ = builder.Services.Configure(internalName, options);
+            _ = builder.Services.Configure(name, options);
         }
 
         return builder.AddCheck<BlobContainerAvailableHealthCheck>(
-            internalName,
+            name,
             HealthStatus.Unhealthy,
             tags
         );
