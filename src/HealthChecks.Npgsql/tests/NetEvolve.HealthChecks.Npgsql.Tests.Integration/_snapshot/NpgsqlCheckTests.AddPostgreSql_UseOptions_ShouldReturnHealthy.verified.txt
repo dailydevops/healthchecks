@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: PostgreSqlTestContainerHealthy: Healthy,
-      name: PostgreSqlTestContainerHealthy,
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
       status: Healthy,
       tags: [
         postgresql,

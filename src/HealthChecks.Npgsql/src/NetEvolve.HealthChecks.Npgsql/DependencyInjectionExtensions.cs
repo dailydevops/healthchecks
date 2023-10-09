@@ -43,20 +43,18 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<NpgsqlConfigure>();
         }
 
-        var internalName = name.EnsureStartsWith("PostgreSql", StringComparison.OrdinalIgnoreCase);
-
-        if (builder.IsNameAlreadyUsed(internalName))
+        if (builder.IsNameAlreadyUsed(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
         {
-            _ = builder.Services.Configure(internalName, options);
+            _ = builder.Services.Configure(name, options);
         }
 
         return builder.AddCheck<NpgsqlCheck>(
-            internalName,
+            name,
             HealthStatus.Unhealthy,
             new[] { "postgresql", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );

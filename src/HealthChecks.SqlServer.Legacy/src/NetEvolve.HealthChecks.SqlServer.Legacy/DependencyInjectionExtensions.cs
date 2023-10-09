@@ -43,20 +43,18 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SqlServerLegacyConfigure>();
         }
 
-        var internalName = name.EnsureStartsWith("SqlServer", StringComparison.OrdinalIgnoreCase);
-
-        if (builder.IsNameAlreadyUsed(internalName))
+        if (builder.IsNameAlreadyUsed(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
         {
-            _ = builder.Services.Configure(internalName, options);
+            _ = builder.Services.Configure(name, options);
         }
 
         return builder.AddCheck<SqlServerLegacyCheck>(
-            internalName,
+            name,
             HealthStatus.Unhealthy,
             new[] { "sqlserver", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );

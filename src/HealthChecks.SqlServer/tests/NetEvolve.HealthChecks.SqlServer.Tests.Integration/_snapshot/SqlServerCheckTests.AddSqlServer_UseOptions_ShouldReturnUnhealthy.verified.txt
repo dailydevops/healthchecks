@@ -1,12 +1,12 @@
 ﻿{
   results: [
     {
-      description: SqlServerTestContainerUnhealthy: Unexpected error.,
+      description: TestContainerUnhealthy: Unexpected error.,
       exception: {
         message: This is a test.,
         type: Microsoft.Data.SqlClient.SqlException
       },
-      name: SqlServerTestContainerUnhealthy,
+      name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
         sqlserver,

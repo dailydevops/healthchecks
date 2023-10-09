@@ -9,7 +9,7 @@ Primarily for testing the healthiness of the own application, like application s
 :bulb: This package is available for .NET 6.0 and later.
 
 ## Installation
-To use this package, you need to add the package to your project.You can do this by using the NuGet package manager or by using the dotnet CLI.
+To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 
 ```powershell
 dotnet add package NetEvolve.HealthChecks

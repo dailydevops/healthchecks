@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 *.bak
+*- [Bb]ackup.*
 
 # Certification files
 *.pem
@@ -356,9 +357,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-# Local configurations for Visual Studio / MSBuild
-Local.props
-Local.*.props
-Local.targets
-Local.*.targets
