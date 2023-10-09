@@ -19,7 +19,7 @@ internal sealed class SqlServerConfigure
     public void Configure(string? name, SqlServerOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:{name}", options);
+        _configuration.Bind($"HealthChecks:SqlServer:{name}", options);
     }
 
     public void Configure(SqlServerOptions options) => Configure(Options.DefaultName, options);

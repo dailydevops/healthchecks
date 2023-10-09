@@ -1,12 +1,12 @@
 {
   results: [
     {
-      description: SqlServerTestNoValues: Unexpected error.,
+      description: TestNoValues: Unexpected error.,
       exception: {
         message: The timeout cannot be less than infinite (-1).,
         type: Microsoft.Extensions.Options.OptionsValidationException
       },
-      name: SqlServerTestNoValues,
+      name: TestNoValues,
       status: Unhealthy,
       tags: [
         sqlserver,

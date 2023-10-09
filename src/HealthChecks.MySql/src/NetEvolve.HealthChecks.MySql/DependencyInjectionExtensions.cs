@@ -43,20 +43,18 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<MySqlConfigure>();
         }
 
-        var internalName = name.EnsureStartsWith("MySql", StringComparison.OrdinalIgnoreCase);
-
-        if (builder.IsNameAlreadyUsed(internalName))
+        if (builder.IsNameAlreadyUsed(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
         {
-            _ = builder.Services.Configure(internalName, options);
+            _ = builder.Services.Configure(name, options);
         }
 
         return builder.AddCheck<MySqlCheck>(
-            internalName,
+            name,
             HealthStatus.Unhealthy,
             new[] { "mysql", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );

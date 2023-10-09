@@ -19,7 +19,7 @@ internal sealed class SQLiteConfigure
     public void Configure(string? name, SQLiteOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:{name}", options);
+        _configuration.Bind($"HealthChecks:SQLite:{name}", options);
     }
 
     public void Configure(SQLiteOptions options) => Configure(Options.DefaultName, options);

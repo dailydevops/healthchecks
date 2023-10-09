@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 *.bak
+*- [Bb]ackup.*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -353,4 +354,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-Local.*.props

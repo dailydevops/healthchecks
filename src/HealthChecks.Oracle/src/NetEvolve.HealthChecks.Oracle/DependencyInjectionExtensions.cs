@@ -43,20 +43,18 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<OracleConfigure>();
         }
 
-        var internalName = name.EnsureStartsWith("Oracle", StringComparison.OrdinalIgnoreCase);
-
-        if (builder.IsNameAlreadyUsed(internalName))
+        if (builder.IsNameAlreadyUsed(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
         {
-            _ = builder.Services.Configure(internalName, options);
+            _ = builder.Services.Configure(name, options);
         }
 
         return builder.AddCheck<OracleCheck>(
-            internalName,
+            name,
             HealthStatus.Unhealthy,
             new[] { "oracle", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );

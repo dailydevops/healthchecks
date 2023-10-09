@@ -19,7 +19,7 @@ internal sealed class SqlServerLegacyConfigure
     public void Configure(string? name, SqlServerLegacyOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:{name}", options);
+        _configuration.Bind($"HealthChecks:SqlServer:{name}", options);
     }
 
     public void Configure(SqlServerLegacyOptions options) =>

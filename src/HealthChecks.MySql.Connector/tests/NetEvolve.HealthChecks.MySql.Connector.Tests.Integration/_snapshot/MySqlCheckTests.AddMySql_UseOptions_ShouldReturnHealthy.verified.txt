@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: MySqlTestContainerHealthy: Healthy,
-      name: MySqlTestContainerHealthy,
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
       status: Healthy,
       tags: [
         mysql,

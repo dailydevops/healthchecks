@@ -87,7 +87,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:SqlServerTestContainerHealthy:ConnectionString",
+                        "HealthChecks:SqlServer:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
                     }
                 };
@@ -107,10 +107,10 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:SqlServerTestContainerDegraded:ConnectionString",
+                        "HealthChecks:SqlServer:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SqlServerTestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:SqlServer:TestContainerDegraded:Timeout", "0" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -127,7 +127,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:SqlServerTestNoValues:ConnectionString", "" }
+                    { "HealthChecks:SqlServer:TestNoValues:ConnectionString", "" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -145,10 +145,10 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:SqlServerTestNoValues:ConnectionString",
+                        "HealthChecks:SqlServer:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SqlServerTestNoValues:Timeout", "-2" }
+                    { "HealthChecks:SqlServer:TestNoValues:Timeout", "-2" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }

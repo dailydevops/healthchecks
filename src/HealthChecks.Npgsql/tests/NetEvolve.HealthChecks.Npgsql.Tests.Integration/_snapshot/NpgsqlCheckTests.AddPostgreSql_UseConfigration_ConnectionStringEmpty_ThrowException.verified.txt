@@ -1,12 +1,12 @@
 ﻿{
   results: [
     {
-      description: PostgreSqlTestNoValues: Unexpected error.,
+      description: TestNoValues: Unexpected error.,
       exception: {
         message: The connection string cannot be null or whitespace.,
         type: Microsoft.Extensions.Options.OptionsValidationException
       },
-      name: PostgreSqlTestNoValues,
+      name: TestNoValues,
       status: Unhealthy,
       tags: [
         postgresql,
