@@ -43,20 +43,18 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SQLiteConfigure>();
         }
 
-        var internalName = name.EnsureStartsWith("SQLite", StringComparison.OrdinalIgnoreCase);
-
-        if (builder.IsNameAlreadyUsed(internalName))
+        if (builder.IsNameAlreadyUsed(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
 
         if (options is not null)
         {
-            _ = builder.Services.Configure(internalName, options);
+            _ = builder.Services.Configure(name, options);
         }
 
         return builder.AddCheck<SQLiteCheck>(
-            internalName,
+            name,
             HealthStatus.Unhealthy,
             new[] { "sqlserver", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
         );

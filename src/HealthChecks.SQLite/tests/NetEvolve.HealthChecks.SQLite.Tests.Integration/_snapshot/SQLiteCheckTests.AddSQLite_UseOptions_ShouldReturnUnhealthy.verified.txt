@@ -1,12 +1,12 @@
 ﻿{
   results: [
     {
-      description: SQLiteTestContainerUnhealthy: Unexpected error.,
+      description: TestContainerUnhealthy: Unexpected error.,
       exception: {
         message: SQLite Error 1: 'no such column: 1'.,
         type: Microsoft.Data.Sqlite.SqliteException
       },
-      name: SQLiteTestContainerUnhealthy,
+      name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
         sqlserver,

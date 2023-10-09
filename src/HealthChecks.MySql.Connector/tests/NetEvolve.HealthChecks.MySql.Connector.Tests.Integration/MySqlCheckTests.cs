@@ -88,7 +88,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:MySqlTestContainerHealthy:ConnectionString",
+                        "HealthChecks:MySql:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
                     }
                 };
@@ -108,10 +108,10 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:MySqlTestContainerDegraded:ConnectionString",
+                        "HealthChecks:MySql:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:MySqlTestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:MySql:TestContainerDegraded:Timeout", "0" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -128,7 +128,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:MySqlTestNoValues:ConnectionString", "" }
+                    { "HealthChecks:MySql:TestNoValues:ConnectionString", "" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -146,10 +146,10 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:MySqlTestNoValues:ConnectionString",
+                        "HealthChecks:MySql:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:MySqlTestNoValues:Timeout", "-2" }
+                    { "HealthChecks:MySql:TestNoValues:Timeout", "-2" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }

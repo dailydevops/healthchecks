@@ -88,7 +88,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:SQLiteTestContainerHealthy:ConnectionString",
+                        "HealthChecks:SQLite:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
                     }
                 };
@@ -108,10 +108,10 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:SQLiteTestContainerDegraded:ConnectionString",
+                        "HealthChecks:SQLite:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SQLiteTestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:SQLite:TestContainerDegraded:Timeout", "0" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -128,7 +128,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:SQLiteTestNoValues:ConnectionString", "" }
+                    { "HealthChecks:SQLite:TestNoValues:ConnectionString", "" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -146,10 +146,10 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:SQLiteTestNoValues:ConnectionString",
+                        "HealthChecks:SQLite:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SQLiteTestNoValues:Timeout", "-2" }
+                    { "HealthChecks:SQLite:TestNoValues:Timeout", "-2" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
