@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: SQLiteTestContainerDegraded: Degraded,
-      name: SQLiteTestContainerDegraded,
+      description: TestContainerDegraded: Degraded,
+      name: TestContainerDegraded,
       status: Degraded,
       tags: [
         sqlserver,

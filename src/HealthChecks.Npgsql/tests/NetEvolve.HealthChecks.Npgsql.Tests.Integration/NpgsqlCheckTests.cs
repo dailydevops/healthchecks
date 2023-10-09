@@ -86,7 +86,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:PostgreSqlTestContainerHealthy:ConnectionString",
+                        "HealthChecks:PostgreSql:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
                     }
                 };
@@ -106,10 +106,10 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:PostgreSqlTestContainerDegraded:ConnectionString",
+                        "HealthChecks:PostgreSql:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:PostgreSqlTestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:PostgreSql:TestContainerDegraded:Timeout", "0" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -126,7 +126,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:PostgreSqlTestNoValues:ConnectionString", "" }
+                    { "HealthChecks:PostgreSql:TestNoValues:ConnectionString", "" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -144,10 +144,10 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:PostgreSqlTestNoValues:ConnectionString",
+                        "HealthChecks:PostgreSql:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:PostgreSqlTestNoValues:Timeout", "-2" }
+                    { "HealthChecks:PostgreSql:TestNoValues:Timeout", "-2" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }

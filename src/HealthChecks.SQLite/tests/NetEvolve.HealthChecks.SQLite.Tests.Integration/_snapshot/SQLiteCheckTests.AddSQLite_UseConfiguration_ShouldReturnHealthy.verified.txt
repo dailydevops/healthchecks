@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: SQLiteTestContainerHealthy: Healthy,
-      name: SQLiteTestContainerHealthy,
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
       status: Healthy,
       tags: [
         sqlserver,

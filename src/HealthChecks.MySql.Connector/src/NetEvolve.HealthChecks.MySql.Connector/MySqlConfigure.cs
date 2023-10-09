@@ -19,7 +19,7 @@ internal sealed class MySqlConfigure
     public void Configure(string? name, MySqlOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:{name}", options);
+        _configuration.Bind($"HealthChecks:MySql:{name}", options);
     }
 
     public void Configure(MySqlOptions options) => Configure(Options.DefaultName, options);

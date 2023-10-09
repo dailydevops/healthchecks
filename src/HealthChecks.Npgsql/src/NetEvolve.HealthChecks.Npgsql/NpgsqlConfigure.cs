@@ -19,7 +19,7 @@ internal sealed class NpgsqlConfigure
     public void Configure(string? name, NpgsqlOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:{name}", options);
+        _configuration.Bind($"HealthChecks:PostgreSql:{name}", options);
     }
 
     public void Configure(NpgsqlOptions options) => Configure(Options.DefaultName, options);

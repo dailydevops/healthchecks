@@ -1,7 +1,7 @@
 ﻿{
   results: [
     {
-      description: PostgreSqlTestContainerUnhealthy: Unexpected error.,
+      description: TestContainerUnhealthy: Unexpected error.,
       exception: {
         message:
 42601: syntax error at end of input
@@ -9,7 +9,7 @@
 POSITION: 15,
         type: Npgsql.PostgresException
       },
-      name: PostgreSqlTestContainerUnhealthy,
+      name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
         postgresql,

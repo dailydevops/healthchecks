@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: OracleTestContainerHealthy: Healthy,
-      name: OracleTestContainerHealthy,
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
       status: Healthy,
       tags: [
         oracle,

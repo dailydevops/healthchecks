@@ -12,6 +12,7 @@
   <PropertyGroup Label="General settings for all projects">
     <_ProjectTargetFrameworks>net6.0;net7.0;net8.0</_ProjectTargetFrameworks>
     <_TestTargetFrameworks>net6.0;net7.0;net8.0</_TestTargetFrameworks>
+    <_TestTargetFrameworks Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">net8.0</_TestTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Label="Settings for non test projects" Condition=" !$(IsTestableProject) ">

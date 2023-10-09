@@ -86,7 +86,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:OracleTestContainerHealthy:ConnectionString",
+                        "HealthChecks:Oracle:TestContainerHealthy:ConnectionString",
                         _database.GetConnectionString()
                     }
                 };
@@ -106,10 +106,10 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:OracleTestContainerDegraded:ConnectionString",
+                        "HealthChecks:Oracle:TestContainerDegraded:ConnectionString",
                         _database.GetConnectionString()
                     },
-                    { "HealthChecks:OracleTestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:Oracle:TestContainerDegraded:Timeout", "0" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -126,7 +126,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:OracleTestNoValues:ConnectionString", "" }
+                    { "HealthChecks:Oracle:TestNoValues:ConnectionString", "" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -144,10 +144,10 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
                 var values = new Dictionary<string, string?>
                 {
                     {
-                        "HealthChecks:OracleTestNoValues:ConnectionString",
+                        "HealthChecks:Oracle:TestNoValues:ConnectionString",
                         _database.GetConnectionString()
                     },
-                    { "HealthChecks:OracleTestNoValues:Timeout", "-2" }
+                    { "HealthChecks:Oracle:TestNoValues:Timeout", "-2" }
                 };
                 _ = config.AddInMemoryCollection(values);
             }
