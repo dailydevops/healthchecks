@@ -6,8 +6,6 @@ template: |
 
   $CHANGES
 
-  Thanks again to $CONTRIBUTORS! 🎉
-
 include-labels:
   - breaking change
   - enhancement
