@@ -1,7 +1,7 @@
 <Project>
   <Import Project="$(DirEngineeringSettings)sln.packages.props" />
   <ItemGroup>
-    <GlobalPackageReference Include="CSharpier.MSBuild" Version="0.25.0" />
+    <GlobalPackageReference Include="CSharpier.MSBuild" Version="0.26.1" />
     <GlobalPackageReference Include="GitVersion.MsBuild" Version="5.12.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.4" />
