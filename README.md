@@ -36,7 +36,7 @@ We try to support the latest LTS and STS versions of .NET ([.NET Support Policy]
 
 | .NET Version |       Supported        |              Until               |
 |--------------|:----------------------:|:--------------------------------:|
-| .NET 6.0     | :heavy_check_mark: Yes | :exclamation: Earliest Dec. 2024 |
+| .NET 6.0     | :heavy_check_mark: Yes | :exclamation: Dec. 2024          |
 | .NET 7.0     | :heavy_check_mark: Yes |                                  |
 | .NET 8.0     | :heavy_check_mark: Yes |                                  |
 
