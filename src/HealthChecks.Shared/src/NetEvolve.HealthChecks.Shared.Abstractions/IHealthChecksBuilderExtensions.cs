@@ -1,7 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks;
 
-using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 internal static partial class IHealthChecksBuilderExtensions
 {

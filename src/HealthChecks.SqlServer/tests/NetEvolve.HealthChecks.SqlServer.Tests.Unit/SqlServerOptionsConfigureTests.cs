@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Tests.Unit;
 
-using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using Xunit;
 
 [ExcludeFromCodeCoverage]

@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer;
 
+using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using System.Data.Common;
 
 internal sealed class SqlServerCheck : SqlCheckBase<SqlServerOptions>
 {

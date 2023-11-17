@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy;
 
-using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
 using System.Data.Common;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Options;
+using NetEvolve.HealthChecks.Abstractions;
 
 internal sealed class SqlServerLegacyCheck : SqlCheckBase<SqlServerLegacyOptions>
 {

@@ -1,15 +1,15 @@
 ﻿#if USE_SQL_HEALTHCHECK
 namespace NetEvolve.HealthChecks.Abstractions;
 
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
-using NetEvolve.Extensions.Tasks;
 using System;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using NetEvolve.Arguments;
+using NetEvolve.Extensions.Tasks;
 
 internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class, ISqlCheckOptions

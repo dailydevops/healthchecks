@@ -1,11 +1,11 @@
 ﻿#if USE_CONFIGURABLE_HEALTHCHECK || USE_SQL_HEALTHCHECK
 namespace NetEvolve.HealthChecks;
 
+using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using System;
-using System.Linq;
 
 internal static partial class IHealthChecksBuilderExtensions
 {

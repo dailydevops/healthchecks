@@ -1,10 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration;
 
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks;
 using NetEvolve.HealthChecks.Tests;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using Xunit;
 
 [IntegrationTest]
