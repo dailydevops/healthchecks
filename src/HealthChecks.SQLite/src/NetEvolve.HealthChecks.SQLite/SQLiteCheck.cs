@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.SQLite;
 
+using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using System.Data.Common;
 
 internal sealed class SQLiteCheck : SqlCheckBase<SQLiteOptions>
 {

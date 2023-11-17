@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Npgsql;
 
+using System.Data.Common;
 using global::Npgsql;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using System.Data.Common;
 
 internal sealed class NpgsqlCheck : SqlCheckBase<NpgsqlOptions>
 {

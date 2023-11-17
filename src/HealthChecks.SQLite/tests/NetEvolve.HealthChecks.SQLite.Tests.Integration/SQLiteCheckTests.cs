@@ -1,13 +1,13 @@
 ﻿namespace NetEvolve.HealthChecks.SQLite.Tests.Integration;
 
-using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
-using NetEvolve.HealthChecks.SQLite;
-using NetEvolve.HealthChecks.Tests;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
+using NetEvolve.HealthChecks.SQLite;
+using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
 [IntegrationTest]

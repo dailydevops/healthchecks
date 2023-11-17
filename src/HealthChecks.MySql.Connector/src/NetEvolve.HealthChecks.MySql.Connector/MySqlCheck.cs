@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.MySql.Connector;
 
+using System.Data.Common;
 using Microsoft.Extensions.Options;
 using MySqlConnector;
 using NetEvolve.HealthChecks.Abstractions;
-using System.Data.Common;
 
 internal sealed class MySqlCheck : SqlCheckBase<MySqlOptions>
 {

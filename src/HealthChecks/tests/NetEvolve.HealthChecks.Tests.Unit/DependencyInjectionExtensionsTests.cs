@@ -1,15 +1,15 @@
 ﻿namespace NetEvolve.Extensions.Tasks.Tests.Unit;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
 using Xunit;
 
 [ExcludeFromCodeCoverage]

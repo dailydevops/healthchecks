@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Oracle;
 
+using System.Data.Common;
 using global::Oracle.ManagedDataAccess.Client;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using System.Data.Common;
 
 internal sealed class OracleCheck : SqlCheckBase<OracleOptions>
 {

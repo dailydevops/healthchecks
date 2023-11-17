@@ -1,11 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Arguments;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
@@ -32,7 +32,8 @@ public static class DependencyInjectionExtensions
             return builder;
         }
 
-        _ = builder.Services
+        _ = builder
+            .Services
             .AddSingleton<ApplicationReadyCheckMarker>()
             .AddSingleton<ApplicationReadyCheck>();
         return builder.AddCheck<ApplicationReadyCheck>(
@@ -62,7 +63,8 @@ public static class DependencyInjectionExtensions
             return builder;
         }
 
-        _ = builder.Services
+        _ = builder
+            .Services
             .AddSingleton<ApplicationHealthyCheckMarker>()
             .AddSingleton<ApplicationHealthyCheck>();
         return builder.AddCheck<ApplicationHealthyCheck>(
