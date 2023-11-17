@@ -1,12 +1,12 @@
 ﻿#if USE_CONFIGURABLE_HEALTHCHECK
 namespace NetEvolve.HealthChecks.Abstractions;
 
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using NetEvolve.Arguments;
 
 internal abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class
