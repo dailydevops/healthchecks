@@ -17,7 +17,9 @@ This is a mono repository for several NuGet packages based on the [Microsoft.Ext
 The main difference is that we try to focus on providing packages that are fully configurable via code or configuration. This means that you can configure the health checks in your `Program.cs` file, or in your `appsettings.json` file, or in any other configuration provider. In some cases, we provide the same healthcheck for a service with an alternative implementation. For example, we provide a healthcheck for MySql that is based on `MySql.Data` and one that is based on `MySqlConnector`. This allows you to choose the implementation that best suits your needs or fits your existing dependencies.
 In addition, we try to support the latest LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)) as well as the latest preview version of .NET for at least 3 years, but we **can't guarantee** this. This depends on the support of related NuGet packages and the .NET platform itself. See the [Supported .NET Version](#supported-net-version) section for more details.
 
-## Available NuGet packages
+## NuGet packages
+The following table lists all currently available NuGet packages. For more details about the packages, please visit the corresponding NuGet page.
+
 <!-- packages:start -->
 | Package Name | Current Version | Downloads | Description |
 |--------------|:----------------|:----------|-------------|
@@ -30,6 +32,17 @@ In addition, we try to support the latest LTS and STS versions of .NET ([.NET Su
 | **[NetEvolve.HealthChecks.SqlServer](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer) | *Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.* |
 | **[NetEvolve.HealthChecks.SqlServer.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy) | *Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.* |
 <!-- packages:end -->
+
+### Package naming explanation
+The package names are based on the following naming schema - `NetEvolve.HealthChecks.<GroupName?>.<ServiceName>`
+
+The `GroupName` is optional and is used to group related services. For example, all azure platform services are grouped under `Azure`. The `ServiceName` is the name of the service for which the health check is provided. For example, `SqlServer` or `MySql`.
+
+The following table lists all planned and used groups. We will add more groups maybe in the future, if the demand is there.
+- Apache
+- AWS
+- Azure
+- GCP
 
 ## Supported .NET version
 We try to support the latest LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)), as well as the latest preview version of .NET. We will try to support each framework version for at least 3 years, but we can't guarantee it. This depends on the support of related NuGet packages and the .NET platform itself.
