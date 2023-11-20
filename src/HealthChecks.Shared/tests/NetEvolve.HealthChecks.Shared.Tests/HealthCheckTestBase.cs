@@ -77,7 +77,7 @@ public abstract class HealthCheckTestBase
     {
         var directory = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "..");
         var projectName = GetType().Assembly.GetName().Name!;
-        var shortName = projectName[(projectName.IndexOf(".", StringComparison.OrdinalIgnoreCase) + 1)..];
+        var shortName = projectName[(projectName.IndexOf('.', StringComparison.OrdinalIgnoreCase) + 1)..];
         shortName = shortName[..shortName.IndexOf(".Tests.", StringComparison.OrdinalIgnoreCase)];
 
         var snapshotDirectory = Path.Combine(directory, shortName, "tests", projectName, "_snapshot");

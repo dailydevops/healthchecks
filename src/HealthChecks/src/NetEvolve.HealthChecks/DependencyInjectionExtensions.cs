@@ -12,6 +12,9 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
+    private static readonly string[] _defaultTagsReadiness = new[] { "self", "readiness" };
+    private static readonly string[] _defaultTagsHealthy = new[] { "self" };
+
     /// <summary>
     /// Add a health check for the application readiness.
     /// </summary>
@@ -39,7 +42,7 @@ public static class DependencyInjectionExtensions
         return builder.AddCheck<ApplicationReadyCheck>(
             "ApplicationReady",
             HealthStatus.Unhealthy,
-            new[] { "self", "readiness" }.Union(tags, StringComparer.OrdinalIgnoreCase)
+            _defaultTagsReadiness.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
@@ -70,7 +73,7 @@ public static class DependencyInjectionExtensions
         return builder.AddCheck<ApplicationHealthyCheck>(
             "ApplicationHealthy",
             HealthStatus.Unhealthy,
-            new[] { "self" }.Union(tags, StringComparer.OrdinalIgnoreCase)
+            _defaultTagsHealthy.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 

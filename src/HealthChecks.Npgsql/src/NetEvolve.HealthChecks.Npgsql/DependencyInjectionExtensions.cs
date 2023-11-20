@@ -12,6 +12,8 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
+    private static readonly string[] _defaultTags = new[] { "postgresql", "database" };
+
     /// <summary>
     /// Add a health check for the MySql database.
     /// </summary>
@@ -57,7 +59,7 @@ public static class DependencyInjectionExtensions
         return builder.AddCheck<NpgsqlCheck>(
             name,
             HealthStatus.Unhealthy,
-            new[] { "postgresql", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
+            _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
