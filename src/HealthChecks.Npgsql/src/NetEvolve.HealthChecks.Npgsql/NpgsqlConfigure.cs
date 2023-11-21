@@ -1,10 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Npgsql;
 
+using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
-using System.Threading;
-
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class NpgsqlConfigure

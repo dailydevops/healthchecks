@@ -2,14 +2,6 @@
 
 namespace NetEvolve.HealthChecks.Tests;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -18,6 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using VerifyXunit;
 
 [UsesVerify]
@@ -77,7 +77,7 @@ public abstract class HealthCheckTestBase
     {
         var directory = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "..");
         var projectName = GetType().Assembly.GetName().Name!;
-        var shortName = projectName[(projectName.IndexOf(".", StringComparison.OrdinalIgnoreCase) + 1)..];
+        var shortName = projectName[(projectName.IndexOf('.', StringComparison.OrdinalIgnoreCase) + 1)..];
         shortName = shortName[..shortName.IndexOf(".Tests.", StringComparison.OrdinalIgnoreCase)];
 
         var snapshotDirectory = Path.Combine(directory, shortName, "tests", projectName, "_snapshot");

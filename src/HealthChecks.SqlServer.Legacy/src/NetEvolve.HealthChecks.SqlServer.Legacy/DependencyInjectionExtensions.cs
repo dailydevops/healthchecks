@@ -1,17 +1,19 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Arguments;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
 /// </summary>
 public static class DependencyInjectionExtensions
 {
+    private static readonly string[] _defaultTags = new[] { "sqlserver", "database" };
+
     /// <summary>
     /// Add a health check for the SQL Server database.
     /// </summary>
@@ -37,13 +39,14 @@ public static class DependencyInjectionExtensions
 
         if (!builder.IsServiceTypeRegistered<SqlServerLegacyCheckMarker>())
         {
-            _ = builder.Services
+            _ = builder
+                .Services
                 .AddSingleton<SqlServerLegacyCheckMarker>()
                 .AddSingleton<SqlServerLegacyCheck>()
                 .ConfigureOptions<SqlServerLegacyConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed(name))
+        if (builder.IsNameAlreadyUsed<SqlServerLegacyCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
@@ -56,7 +59,7 @@ public static class DependencyInjectionExtensions
         return builder.AddCheck<SqlServerLegacyCheck>(
             name,
             HealthStatus.Unhealthy,
-            new[] { "sqlserver", "database" }.Union(tags, StringComparer.OrdinalIgnoreCase)
+            _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 

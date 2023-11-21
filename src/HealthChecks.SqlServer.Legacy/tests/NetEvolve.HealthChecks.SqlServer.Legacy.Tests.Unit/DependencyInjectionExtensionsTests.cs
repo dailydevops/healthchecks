@@ -1,11 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy.Tests.Unit;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
