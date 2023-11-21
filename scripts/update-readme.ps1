@@ -23,7 +23,6 @@ function Get-Packages {
 
   $result = @'
 
-<center>
 <table>
   <thead>
     <tr>
@@ -62,7 +61,6 @@ function Get-Packages {
   $result += @'
   </tbody>
 </table>
-</center>
 
 '@
 

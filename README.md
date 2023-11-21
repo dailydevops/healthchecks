@@ -21,7 +21,6 @@ In addition, we try to support the latest LTS and STS versions of .NET ([.NET Su
 The following table lists all currently available NuGet packages. For more details about the packages, please visit the corresponding NuGet page.
 
 <!-- packages:start -->
-<center>
 <table>
   <thead>
     <tr>
@@ -97,7 +96,6 @@ The following table lists all currently available NuGet packages. For more detai
     </tr>
   </tbody>
 </table>
-</center>
 <!-- packages:end -->
 
 ### Package naming explanation
