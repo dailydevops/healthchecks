@@ -21,16 +21,81 @@ In addition, we try to support the latest LTS and STS versions of .NET ([.NET Su
 The following table lists all currently available NuGet packages. For more details about the packages, please visit the corresponding NuGet page.
 
 <!-- packages:start -->
-| Package Name | Current Version | Downloads | Description |
-|--------------|:----------------|:----------|-------------|
-| **[NetEvolve.HealthChecks](https://www.nuget.org/packages/NetEvolve.HealthChecks/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks) | *Contains general application HealthChecks.* |
-| **[NetEvolve.HealthChecks.MySql](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql) | *Contains HealthChecks for MySql, based on `MySql.Data`.* |
-| **[NetEvolve.HealthChecks.MySql.Connector](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector) | *Contains HealthChecks for MySql, based on `MySqlConnector`.* |
-| **[NetEvolve.HealthChecks.Npgsql](https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql) | *Contains HealthChecks for PostgreSQL, based on `Npgsql`.* |
-| **[NetEvolve.HealthChecks.Oracle](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle) | *Contains HealthChecks for Oracle Databases.* |
-| **[NetEvolve.HealthChecks.SQLite](https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite) | *Contains HealthChecks for SQLite.* |
-| **[NetEvolve.HealthChecks.SqlServer](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer) | *Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.* |
-| **[NetEvolve.HealthChecks.SqlServer.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/)** | [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy) | [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy) | *Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.* |
+<table>
+  <thead>
+    <tr>
+      <td>Package Name</td>
+      <td>Current Version</td>
+      <td>Downloads</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><b>NetEvolve.HealthChecks</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains general application HealthChecks.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><b>NetEvolve.HealthChecks.MySql</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for MySql, based on `MySql.Data`.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><b>NetEvolve.HealthChecks.MySql.Connector</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for MySql, based on `MySqlConnector`.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><b>NetEvolve.HealthChecks.Npgsql</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for PostgreSQL, based on `Npgsql`.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><b>NetEvolve.HealthChecks.Oracle</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for Oracle Databases.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><b>NetEvolve.HealthChecks.SQLite</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for SQLite.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><b>NetEvolve.HealthChecks.SqlServer</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.</i></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><b>NetEvolve.HealthChecks.SqlServer.Legacy</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.</i></td>
+    </tr>
+  </tbody>
+</table>
 <!-- packages:end -->
 
 ### Package naming explanation
