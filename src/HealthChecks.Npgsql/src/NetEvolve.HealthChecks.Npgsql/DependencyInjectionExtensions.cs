@@ -46,7 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<NpgsqlConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed(name))
+        if (builder.IsNameAlreadyUsed<NpgsqlCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }

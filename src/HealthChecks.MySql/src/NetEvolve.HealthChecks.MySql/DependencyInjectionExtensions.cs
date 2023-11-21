@@ -46,7 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<MySqlConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed(name))
+        if (builder.IsNameAlreadyUsed<MySqlCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }

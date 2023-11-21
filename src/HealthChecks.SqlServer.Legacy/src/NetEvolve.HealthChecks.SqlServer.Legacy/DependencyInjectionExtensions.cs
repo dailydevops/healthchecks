@@ -46,7 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SqlServerLegacyConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed(name))
+        if (builder.IsNameAlreadyUsed<SqlServerLegacyCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }

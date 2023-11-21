@@ -2,6 +2,7 @@
 namespace NetEvolve.HealthChecks;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -9,7 +10,8 @@ using Microsoft.Extensions.Options;
 
 internal static partial class IHealthChecksBuilderExtensions
 {
-    public static bool IsNameAlreadyUsed(this IHealthChecksBuilder builder, string name)
+    public static bool IsNameAlreadyUsed<T>(this IHealthChecksBuilder builder, string name)
+        where T : IHealthCheck
     {
         var serviceProvider = builder.Services.BuildServiceProvider();
 
@@ -17,14 +19,13 @@ internal static partial class IHealthChecksBuilderExtensions
         {
             var options = scope.ServiceProvider.GetService<IOptions<HealthCheckServiceOptions>>();
 
-            if (options?.Value is not null)
-            {
-                var registrations = options.Value.Registrations;
+            return options?.Value?.Registrations
+                    is ICollection<HealthCheckRegistration> registrations
+                && registrations.Any(IsNameAlreadyUsedForServiceType);
 
-                return registrations.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            }
-
-            return false;
+            bool IsNameAlreadyUsedForServiceType(HealthCheckRegistration registration) =>
+                                    registration.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                                    && registration.Factory(scope.ServiceProvider).GetType() == typeof(T);
         }
     }
 }
