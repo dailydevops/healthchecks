@@ -36,7 +36,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains general application HealthChecks.</i></sub></td>
+      <td colspan=3><sub><sup>Contains general application HealthChecks.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><b>NetEvolve.HealthChecks.MySql</b></a></td>
@@ -44,7 +44,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for MySql, based on `MySql.Data`.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for MySql, based on `MySql.Data`.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><b>NetEvolve.HealthChecks.MySql.Connector</b></a></td>
@@ -52,7 +52,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for MySql, based on `MySqlConnector`.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for MySql, based on `MySqlConnector`.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><b>NetEvolve.HealthChecks.Npgsql</b></a></td>
@@ -60,7 +60,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for PostgreSQL, based on `Npgsql`.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for PostgreSQL, based on `Npgsql`.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><b>NetEvolve.HealthChecks.Oracle</b></a></td>
@@ -68,7 +68,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for Oracle Databases.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for Oracle Databases.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><b>NetEvolve.HealthChecks.SQLite</b></a></td>
@@ -76,7 +76,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for SQLite.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for SQLite.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><b>NetEvolve.HealthChecks.SqlServer</b></a></td>
@@ -84,7 +84,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for Microsoft SqlServer, based on `Microsoft.Data.SqlClient`.</sup></sub></td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><b>NetEvolve.HealthChecks.SqlServer.Legacy</b></a></td>
@@ -92,7 +92,7 @@ The following table lists all currently available NuGet packages. For more detai
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.</i></sub></td>
+      <td colspan=3><sub><sup>Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.</sup></sub></td>
     </tr>
   </tbody>
 </table>

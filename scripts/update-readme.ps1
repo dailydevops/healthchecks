@@ -52,7 +52,7 @@ function Get-Packages {
       <td><a href="https://www.nuget.org/packages/$($package.id)/"><img src="https://img.shields.io/nuget/dt/$($package.id)?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><sub><i>$($description)</i></sub></td>
+      <td colspan=3><sub><sup>$($description)</sup></sub></td>
     </tr>
 
 "@
