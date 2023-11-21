@@ -23,8 +23,15 @@ function Get-Packages {
 
   $result = @'
 
-| Package Name | Current Version | Downloads | Description |
-|--------------|:----------------|:----------|-------------|
+<table>
+  <thead>
+    <tr>
+      <td>Package Name</td>
+      <td>Current Version</td>
+      <td>Downloads</td>
+    </tr>
+  </thead>
+  <tbody>
 
 '@
 
@@ -33,18 +40,29 @@ function Get-Packages {
       continue
     }
 
-    $result += "| **[$($package.title)](https://www.nuget.org/packages/$($package.id)/)** "
-    $result += "| [![Nuget](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)](https://www.nuget.org/packages/$($package.id)) "
-    $result += "| [![Nuget](https://img.shields.io/nuget/dt/$($package.id)?logo=nuget)](https://www.nuget.org/packages/$($package.id)) "
-    if (![string]::IsNullOrWhiteSpace($package.summary)) {
-      $result += "| *$($package.summary)* "
-    } elseif (![string]::IsNullOrWhiteSpace($package.description)) {
-      $result += "| *$($package.description)* "
-    } else {
-      $result += "| - "
+    $description = $package.summary;
+    if ([string]::IsNullOrWhiteSpace($description)) {
+      $description = $package.description;
     }
-    $result += "|`r`n"
+
+    $result += @"
+    <tr>
+      <td><a href="https://www.nuget.org/packages/$($package.id)/"><b>$($package.title)</b></a></td>
+      <td><a href="https://www.nuget.org/packages/$($package.id)/"><img src="https://img.shields.io/nuget/v/$($package.id)?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/$($package.id)/"><img src="https://img.shields.io/nuget/dt/$($package.id)?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3><i>$($description)</i></td>
+    </tr>
+
+"@
   }
+
+  $result += @'
+  </tbody>
+</table>
+
+'@
 
   return $result
 }
