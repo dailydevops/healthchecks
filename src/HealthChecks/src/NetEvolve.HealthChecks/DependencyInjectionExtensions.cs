@@ -1,17 +1,20 @@
 ﻿namespace NetEvolve.HealthChecks;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Arguments;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
 /// </summary>
 public static class DependencyInjectionExtensions
 {
+    private static readonly string[] _defaultTagsReadiness = new[] { "self", "readiness" };
+    private static readonly string[] _defaultTagsHealthy = new[] { "self" };
+
     /// <summary>
     /// Add a health check for the application readiness.
     /// </summary>
@@ -32,13 +35,14 @@ public static class DependencyInjectionExtensions
             return builder;
         }
 
-        _ = builder.Services
+        _ = builder
+            .Services
             .AddSingleton<ApplicationReadyCheckMarker>()
             .AddSingleton<ApplicationReadyCheck>();
         return builder.AddCheck<ApplicationReadyCheck>(
             "ApplicationReady",
             HealthStatus.Unhealthy,
-            new[] { "self", "readiness" }.Union(tags, StringComparer.OrdinalIgnoreCase)
+            _defaultTagsReadiness.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
@@ -62,13 +66,14 @@ public static class DependencyInjectionExtensions
             return builder;
         }
 
-        _ = builder.Services
+        _ = builder
+            .Services
             .AddSingleton<ApplicationHealthyCheckMarker>()
             .AddSingleton<ApplicationHealthyCheck>();
         return builder.AddCheck<ApplicationHealthyCheck>(
             "ApplicationHealthy",
             HealthStatus.Unhealthy,
-            new[] { "self" }.Union(tags, StringComparer.OrdinalIgnoreCase)
+            _defaultTagsHealthy.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 

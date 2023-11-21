@@ -1,13 +1,13 @@
 ﻿namespace NetEvolve.HealthChecks.SQLite.Tests.Unit;
 
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
-using NSubstitute;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using NetEvolve.Extensions.XUnit;
+using NSubstitute;
 using Xunit;
 
 [ExcludeFromCodeCoverage]

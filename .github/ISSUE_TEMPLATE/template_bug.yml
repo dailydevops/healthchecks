@@ -1,0 +1,37 @@
+name: 🐞 Bug
+description: Submit a bug report
+title: "bug: <replace with a short description>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Before submitting a `bug`, please make sure there is no existing issue for the one you encountered.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: input
+    attributes:
+      label: Package & package version
+      description: Which package and version does this bug affect?
+      placeholder: e.g. NetEvolve.Example 1.2.3
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
+      placeholder: The more details we have, the better we can reproduce the problem and fix it.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+      placeholder: The more details we have, the better we can reproduce the problem and fix it.
+    validations:
+      required: false
