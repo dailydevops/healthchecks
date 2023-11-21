@@ -23,7 +23,8 @@ function Get-Packages {
 
   $result = @'
 
-<table style="margin: 0 auto;">
+<center>
+<table>
   <thead>
     <tr>
       <td><b>Package Name</b></td>
@@ -52,7 +53,7 @@ function Get-Packages {
       <td><a href="https://www.nuget.org/packages/$($package.id)/"><img src="https://img.shields.io/nuget/dt/$($package.id)?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
-      <td colspan=3><small><i>$($description)</i></small></td>
+      <td colspan=3><sub><i>$($description)</i></sub></td>
     </tr>
 
 "@
@@ -61,6 +62,7 @@ function Get-Packages {
   $result += @'
   </tbody>
 </table>
+</center>
 
 '@
 
