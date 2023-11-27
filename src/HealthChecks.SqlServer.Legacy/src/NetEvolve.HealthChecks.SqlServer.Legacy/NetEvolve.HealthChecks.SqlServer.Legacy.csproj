@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
-    <Description>Contains HealthChecks for Microsoft SqlServer, based on `System.Data.SqlClient`.</Description>
+    <Description>Contains HealthChecks for Microsoft SqlServer, based on the nuget package `System.Data.SqlClient`.</Description>
     <PackageTags>$(PackageTags);sqlserver;mssql;legacy</PackageTags>
   </PropertyGroup>
 

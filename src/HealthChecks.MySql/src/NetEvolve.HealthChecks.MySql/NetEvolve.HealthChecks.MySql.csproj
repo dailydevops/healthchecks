@@ -4,7 +4,7 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
-    <Description>Contains HealthChecks for MySql, based on `MySql.Data`.</Description>
+    <Description>Contains HealthChecks for MySql, based on the nuget package `MySql.Data`.</Description>
     <PackageTags>$(PackageTags);mysql;</PackageTags>
   </PropertyGroup>
 

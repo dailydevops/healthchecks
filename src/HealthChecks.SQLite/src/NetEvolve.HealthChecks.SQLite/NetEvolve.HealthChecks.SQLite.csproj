@@ -4,7 +4,7 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
-    <Description>Contains HealthChecks for SQLite.</Description>
+    <Description>Contains HealthChecks for SQLite, based on the nuget package `Microsoft.Data.Sqlite`.</Description>
     <PackageTags>$(PackageTags);sqlite</PackageTags>
   </PropertyGroup>
 

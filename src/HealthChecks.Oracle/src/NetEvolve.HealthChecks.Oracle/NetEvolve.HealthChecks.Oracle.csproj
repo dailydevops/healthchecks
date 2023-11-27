@@ -4,7 +4,7 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
-    <Description>Contains HealthChecks for Oracle Databases.</Description>
+    <Description>Contains HealthChecks for Oracle Databases, based on the nuget package `Oracle.ManagedDataAccess.Core`.</Description>
     <PackageTags>$(PackageTags);oracle</PackageTags>
   </PropertyGroup>
 
