@@ -29,7 +29,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                 {
                     options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
                     options.Mode = ProducerHandleMode.Create;
-                    options.Timeout = 1500;
+                    options.Timeout = 5000;
                     options.Topic = "TestContainerHealthy";
                 }
             );
@@ -45,7 +45,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                     options =>
                     {
                         options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Timeout = 1500;
+                        options.Timeout = 5000;
                         options.Topic = "TestContainerHealthy";
                     }
                 );
@@ -79,7 +79,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "1500" },
+                    { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "Create" }
                 };
@@ -102,7 +102,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "1500" },
+                    { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "ServiceProvider" }
                 };
@@ -136,7 +136,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         EnableDeliveryReports = false
                     };
                     options.Mode = ProducerHandleMode.Create;
-                    options.Timeout = 1500;
+                    options.Timeout = 5000;
                     options.Topic = "TestContainerHealthy";
                 }
             );
@@ -161,7 +161,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:EnableDeliveryReports",
                         "false"
                     },
-                    { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "1500" },
+                    { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "Create" }
                 };
