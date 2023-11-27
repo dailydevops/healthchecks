@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealty: Unhealthy,
+      name: TestContainerUnhealty,
+      status: Unhealthy,
+      tags: [
+        redpanda,
+        message-queue
+      ]
+    }
+  ],
+  status: Unhealthy
+}
