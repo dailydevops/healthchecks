@@ -142,7 +142,8 @@ public sealed class SqlServerOptionsConfigureTests
         void Act() => configure.Configure(name, options);
 
         // Assert
-        _ = Assert.Throws<ArgumentNullException>("name", Act);
+        var ex = Assert.Throws<ArgumentNullException>("name", Act);
+        Assert.Equal("Value cannot be null. (Parameter 'name')", ex.Message);
     }
 
     [Fact]
@@ -156,6 +157,7 @@ public sealed class SqlServerOptionsConfigureTests
         void Act() => configure.Configure(options);
 
         // Assert
-        _ = Assert.Throws<ArgumentException>("name", Act);
+        var ex = Assert.Throws<ArgumentException>("name", Act);
+        Assert.Equal("The value cannot be an empty string or composed entirely of whitespace. (Parameter 'name')", ex.Message);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.Extensions.Tasks.Tests.Unit;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -17,11 +17,16 @@ using Xunit;
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
-    public void AddApplicationReadinessCheck_ParamBuilderNull_ArgumentNullException() =>
-        _ = Assert.Throws<ArgumentNullException>(
+    public void AddApplicationReadinessCheck_ParamBuilderNull_ArgumentNullException()
+    {
+        IHealthChecksBuilder builder = null!;
+
+        var ex = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => DependencyInjectionExtensions.AddApplicationReady(null!, tags: null!)
+            () => builder.AddApplicationReady(tags: null!)
         );
+        Assert.Equal("Value cannot be null. (Parameter 'builder')", ex.Message);
+    }
 
     [Fact]
     public void AddApplicationReadinessCheck_ParamTagsNull_ArgumentNullException()
@@ -29,10 +34,11 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
-        _ = Assert.Throws<ArgumentNullException>(
+        var ex = Assert.Throws<ArgumentNullException>(
             "tags",
-            () => DependencyInjectionExtensions.AddApplicationReady(builder, tags: null!)
+            () => builder.AddApplicationReady(tags: null!)
         );
+        Assert.Equal("Value cannot be null. (Parameter 'tags')", ex.Message);
     }
 
     [Fact]
@@ -58,11 +64,16 @@ public class DependencyInjectionExtensionsTests
     }
 
     [Fact]
-    public void AddApplicationHealthy_ParamBuilderNull_ArgumentNullException() =>
-        _ = Assert.Throws<ArgumentNullException>(
+    public void AddApplicationHealthy_ParamBuilderNull_ArgumentNullException()
+    {
+        IHealthChecksBuilder builder = null!;
+
+        var ex = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => DependencyInjectionExtensions.AddApplicationHealthy(null!, tags: null!)
+            () => builder.AddApplicationHealthy(tags: null!)
         );
+        Assert.Equal("Value cannot be null. (Parameter 'builder')", ex.Message);
+    }
 
     [Fact]
     public void AddApplicationHealthy_ParamTagsNull_ArgumentNullException()
@@ -70,10 +81,11 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
-        _ = Assert.Throws<ArgumentNullException>(
+        var ex = Assert.Throws<ArgumentNullException>(
             "tags",
-            () => DependencyInjectionExtensions.AddApplicationHealthy(builder, tags: null!)
+            () => builder.AddApplicationHealthy(tags: null!)
         );
+        Assert.Equal("Value cannot be null. (Parameter 'tags')", ex.Message);
     }
 
     [Fact]

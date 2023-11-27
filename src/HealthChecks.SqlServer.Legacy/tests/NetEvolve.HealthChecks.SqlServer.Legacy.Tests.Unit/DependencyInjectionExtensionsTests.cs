@@ -22,7 +22,8 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddSqlServerLegacy("Test");
 
         // Assert
-        _ = Assert.Throws<ArgumentNullException>("builder", Act);
+        var ex = Assert.Throws<ArgumentNullException>("builder", Act);
+        Assert.Equal("Value cannot be null. (Parameter 'builder')", ex.Message);
     }
 
     [Fact]
@@ -38,7 +39,8 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddSqlServerLegacy(name);
 
         // Assert
-        _ = Assert.Throws<ArgumentNullException>("name", Act);
+        var ex = Assert.Throws<ArgumentNullException>("name", Act);
+        Assert.Equal("Value cannot be null. (Parameter 'name')", ex.Message);
     }
 
     [Fact]
@@ -54,7 +56,8 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddSqlServerLegacy(name);
 
         // Assert
-        _ = Assert.Throws<ArgumentException>("name", Act);
+        var ex = Assert.Throws<ArgumentException>("name", Act);
+        Assert.Equal("The value cannot be an empty string or composed entirely of whitespace. (Parameter 'name')", ex.Message);
     }
 
     [Fact]
@@ -70,7 +73,8 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddSqlServerLegacy("Test", tags: tags);
 
         // Assert
-        _ = Assert.Throws<ArgumentNullException>("tags", Act);
+        var ex = Assert.Throws<ArgumentNullException>("tags", Act);
+        Assert.Equal("Value cannot be null. (Parameter 'tags')", ex.Message);
     }
 
     [Fact]
@@ -86,6 +90,7 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddSqlServerLegacy(name).AddSqlServerLegacy(name);
 
         // Assert
-        _ = Assert.Throws<ArgumentException>(nameof(name), Act);
+        var ex = Assert.Throws<ArgumentException>(nameof(name), Act);
+        Assert.StartsWith("Name `Test` already in use.", ex.Message, StringComparison.Ordinal);
     }
 }
