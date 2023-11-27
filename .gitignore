@@ -12,6 +12,9 @@
 *.bak
 *- [Bb]ackup.*
 
+# Certification files
+*.pem
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
