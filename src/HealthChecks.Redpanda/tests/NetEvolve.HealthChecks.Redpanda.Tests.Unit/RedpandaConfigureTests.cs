@@ -74,4 +74,18 @@ public sealed class RedpandaConfigureTests
         var ex = Assert.Throws<ArgumentNullException>("name", Act);
         Assert.Equal("Value cannot be null. (Parameter 'name')", ex.Message);
     }
+
+    [Fact]
+    public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    {
+        // Arrange
+        var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
+        var options = new RedpandaOptions();
+
+        // Act
+        void Act() => configure.Configure(options);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>("name", Act);
+    }
 }
