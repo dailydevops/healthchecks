@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.Extensions.Tasks.Tests.Unit;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -31,7 +31,7 @@ public class DependencyInjectionExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "tags",
-            () => DependencyInjectionExtensions.AddApplicationReady(builder, tags: null!)
+            () => builder.AddApplicationReady(tags: null!)
         );
     }
 
@@ -72,7 +72,7 @@ public class DependencyInjectionExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "tags",
-            () => DependencyInjectionExtensions.AddApplicationHealthy(builder, tags: null!)
+            () => builder.AddApplicationHealthy(tags: null!)
         );
     }
 

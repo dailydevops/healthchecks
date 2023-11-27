@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.SQLite.Tests.Unit;
+﻿namespace NetEvolve.HealthChecks.Oracle.Tests.Unit;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
