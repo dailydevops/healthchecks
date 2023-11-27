@@ -149,6 +149,9 @@ public sealed class OracleConfigureTests
 
         // Assert
         var ex = Assert.Throws<ArgumentException>("name", Act);
-        Assert.Equal("The value cannot be an empty string or composed entirely of whitespace. (Parameter 'name')", ex.Message);
+        Assert.Equal(
+            "The value cannot be an empty string or composed entirely of whitespace. (Parameter 'name')",
+            ex.Message
+        );
     }
 }
