@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <Import Project="$(DirEngineeringSettings)sln.build.props" />
-  <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" !$(IsTestableProject) " />
-  <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" $(IsTestableProject) " />
+  <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" '$(IsTestableProject)' == 'false' " />
+  <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" '$(IsTestableProject)' == 'true' " />
 
   <PropertyGroup Label="General settings for all projects">
     <_ProjectTargetFrameworks>net6.0;net7.0;net8.0</_ProjectTargetFrameworks>
@@ -15,18 +15,18 @@
     <_TestTargetFrameworks Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">net8.0</_TestTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Label="Settings for non test projects" Condition=" !$(IsTestableProject) ">
+  <PropertyGroup Label="Settings for non test projects" Condition=" '$(IsTestableProject)' == 'false' ">
     <Title>$(MSBuildProjectName)</Title>
     <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/healthchecks</PackageProjectUrl>
     <PackageTags>healthcheck;diagnostics;</PackageTags>
   </PropertyGroup>
 
-  <PropertyGroup Label="Settings for test projects" Condition=" $(IsTestableProject) ">
+  <PropertyGroup Label="Settings for test projects" Condition=" '$(IsTestableProject)' == 'true' ">
     <NoWarn>$(NoWarn);CS8604;CA2007;</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup Condition=" !$(IsTestableProject) ">
+  <ItemGroup Condition=" '$(IsTestableProject)' == 'false' ">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
