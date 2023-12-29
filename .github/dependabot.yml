@@ -13,6 +13,7 @@ updates:
       prefix: "build(ci)"
     labels:
       - "dependency-actions"
+    open-pull-requests-limit: 20
 
   - package-ecosystem: "nuget"
     directory: "/"
@@ -23,21 +24,21 @@ updates:
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 20
-    # groups:
-    #   coverlet:
-    #     patterns:
-    #       - "coverlet*"
-    #   testcontainers:
-    #     patterns:
-    #       - "testcontainers*"
-    #   verify:
-    #     patterns:
-    #       - "verify*"
-    #   xunit:
-    #     patterns:
-    #       - "xunit*"
-    #     exclude-patterns:
-    #       - "xunit.runner.visualstudio"
+    groups:
+      coverlet:
+        patterns:
+          - "coverlet*"
+      testcontainers:
+        patterns:
+          - "testcontainers*"
+      verify:
+        patterns:
+          - "verify*"
+      xunit:
+        patterns:
+          - "xunit*"
+        exclude-patterns:
+          - "xunit.runner.visualstudio"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
@@ -47,3 +48,4 @@ updates:
       prefix: "build(mods)"
     labels:
       - "dependency-gitmodule"
+    open-pull-requests-limit: 20
