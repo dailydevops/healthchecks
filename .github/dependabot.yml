@@ -38,6 +38,15 @@ updates:
         patterns:
           - "xunit"
           - "xunit*"
+      nunit:
+        patterns:
+          - "nunit"
+          - "NUnit3TestAdapter"
+          - "NUnit.Analyzers"
+      testplatform:
+        patterns:
+          - "microsoft.testplatform"
+          - "Microsoft.NET.Test.Sdk"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
