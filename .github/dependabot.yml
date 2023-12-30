@@ -36,9 +36,8 @@ updates:
           - "verify*"
       xunit:
         patterns:
+          - "xunit"
           - "xunit*"
-        exclude-patterns:
-          - "xunit.runner.visualstudio"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
