@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<NpgsqlCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<NpgsqlCheckMarker>()
+                .Services.AddSingleton<NpgsqlCheckMarker>()
                 .AddSingleton<NpgsqlCheck>()
                 .ConfigureOptions<NpgsqlConfigure>();
         }

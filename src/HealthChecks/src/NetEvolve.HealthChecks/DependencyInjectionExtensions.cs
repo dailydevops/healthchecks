@@ -36,8 +36,7 @@ public static class DependencyInjectionExtensions
         }
 
         _ = builder
-            .Services
-            .AddSingleton<ApplicationReadyCheckMarker>()
+            .Services.AddSingleton<ApplicationReadyCheckMarker>()
             .AddSingleton<ApplicationReadyCheck>();
         return builder.AddCheck<ApplicationReadyCheck>(
             "ApplicationReady",
@@ -67,8 +66,7 @@ public static class DependencyInjectionExtensions
         }
 
         _ = builder
-            .Services
-            .AddSingleton<ApplicationHealthyCheckMarker>()
+            .Services.AddSingleton<ApplicationHealthyCheckMarker>()
             .AddSingleton<ApplicationHealthyCheck>();
         return builder.AddCheck<ApplicationHealthyCheck>(
             "ApplicationHealthy",

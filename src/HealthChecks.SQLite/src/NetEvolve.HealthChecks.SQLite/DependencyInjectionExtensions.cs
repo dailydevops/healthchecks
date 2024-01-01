@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<SQLiteCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<SQLiteCheckMarker>()
+                .Services.AddSingleton<SQLiteCheckMarker>()
                 .AddSingleton<SQLiteCheck>()
                 .ConfigureOptions<SQLiteConfigure>();
         }
