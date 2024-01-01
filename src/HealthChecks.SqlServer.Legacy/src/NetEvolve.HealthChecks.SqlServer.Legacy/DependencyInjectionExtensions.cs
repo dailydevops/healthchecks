@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<SqlServerLegacyCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<SqlServerLegacyCheckMarker>()
+                .Services.AddSingleton<SqlServerLegacyCheckMarker>()
                 .AddSingleton<SqlServerLegacyCheck>()
                 .ConfigureOptions<SqlServerLegacyConfigure>();
         }

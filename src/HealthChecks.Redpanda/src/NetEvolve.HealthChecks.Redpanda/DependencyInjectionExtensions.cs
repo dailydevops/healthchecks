@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<RedpandaCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<RedpandaCheckMarker>()
+                .Services.AddSingleton<RedpandaCheckMarker>()
                 .AddSingleton<RedpandaCheck>()
                 .ConfigureOptions<RedpandaConfigure>();
         }

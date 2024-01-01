@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<MySqlCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<MySqlCheckMarker>()
+                .Services.AddSingleton<MySqlCheckMarker>()
                 .AddSingleton<MySqlCheck>()
                 .ConfigureOptions<MySqlConfigure>();
         }

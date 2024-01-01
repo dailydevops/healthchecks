@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<KafkaCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<KafkaCheckMarker>()
+                .Services.AddSingleton<KafkaCheckMarker>()
                 .AddSingleton<KafkaCheck>()
                 .ConfigureOptions<KafkaConfigure>();
         }

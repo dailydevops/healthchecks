@@ -40,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<OracleCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<OracleCheckMarker>()
+                .Services.AddSingleton<OracleCheckMarker>()
                 .AddSingleton<OracleCheck>()
                 .ConfigureOptions<OracleConfigure>();
         }
