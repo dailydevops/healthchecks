@@ -48,3 +48,7 @@ updates:
     labels:
       - "dependency-gitmodule"
     open-pull-requests-limit: 20
+    groups:
+      submodules:
+        patterns:
+          - "*"
