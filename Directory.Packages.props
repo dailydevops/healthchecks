@@ -47,6 +47,7 @@
     <PackageVersion Include="Testcontainers.MySql" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.Oracle" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="3.8.0" />
+    <PackageVersion Include="Testcontainers.Redis" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.Redpanda" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.SqlEdge" Version="3.8.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.10.6" />
