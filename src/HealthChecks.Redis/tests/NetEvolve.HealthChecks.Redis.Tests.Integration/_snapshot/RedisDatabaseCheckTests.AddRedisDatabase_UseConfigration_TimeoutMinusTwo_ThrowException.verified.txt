@@ -1,0 +1,17 @@
+﻿{
+  results: [
+    {
+      description: TestNoValues: Unexpected error.,
+      exception: {
+        message: The property Timeout cannot be less than -1.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: TestNoValues,
+      status: Unhealthy,
+      tags: [
+        redis
+      ]
+    }
+  ],
+  status: Unhealthy
+}
