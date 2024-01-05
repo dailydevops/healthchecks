@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Apache.Kafka.Tests.Integration;
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -73,7 +74,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
@@ -96,7 +97,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
@@ -151,7 +152,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
@@ -223,7 +224,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Kafka:TestContainerDegraded:Configuration:BootstrapServers",
@@ -246,7 +247,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Kafka:TestContainerDegraded:Configuration:BootstrapServers",
@@ -301,7 +302,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Kafka:TestContainerDegraded:Configuration:BootstrapServers",

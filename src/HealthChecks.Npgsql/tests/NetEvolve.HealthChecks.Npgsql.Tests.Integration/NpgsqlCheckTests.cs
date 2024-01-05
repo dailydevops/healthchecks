@@ -83,7 +83,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:PostgreSql:TestContainerHealthy:ConnectionString",
@@ -103,7 +103,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:PostgreSql:TestContainerDegraded:ConnectionString",
@@ -124,7 +124,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:PostgreSql:TestNoValues:ConnectionString", "" }
                 };
@@ -141,7 +141,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:PostgreSql:TestNoValues:ConnectionString",

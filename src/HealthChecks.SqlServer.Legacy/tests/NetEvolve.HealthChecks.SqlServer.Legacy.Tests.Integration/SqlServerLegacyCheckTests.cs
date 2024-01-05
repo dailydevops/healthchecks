@@ -84,7 +84,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:SqlServer:TestContainerHealthy:ConnectionString",
@@ -104,7 +104,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:SqlServer:TestContainerDegraded:ConnectionString",
@@ -125,7 +125,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:SqlServer:TestNoValues:ConnectionString", "" }
                 };
@@ -142,7 +142,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:SqlServer:TestNoValues:ConnectionString",

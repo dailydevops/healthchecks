@@ -85,7 +85,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:SQLite:TestContainerHealthy:ConnectionString",
@@ -105,7 +105,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:SQLite:TestContainerDegraded:ConnectionString",
@@ -126,7 +126,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:SQLite:TestNoValues:ConnectionString", "" }
                 };
@@ -143,7 +143,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:SQLite:TestNoValues:ConnectionString",

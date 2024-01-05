@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Redpanda.Tests.Integration;
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -74,7 +75,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:RedPanda:TestContainerHealthy:Configuration:BootstrapServers",
@@ -97,7 +98,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:RedPanda:TestContainerHealthy:Configuration:BootstrapServers",
@@ -152,7 +153,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:RedPanda:TestContainerHealthy:Configuration:BootstrapServers",
@@ -224,7 +225,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:RedPanda:TestContainerDegraded:Configuration:BootstrapServers",
@@ -250,7 +251,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:RedPanda:TestContainerDegraded:Configuration:BootstrapServers",
@@ -308,7 +309,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:RedPanda:TestContainerDegraded:Configuration:BootstrapServers",
