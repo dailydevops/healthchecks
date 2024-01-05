@@ -69,7 +69,7 @@ public abstract class HealthCheckTestBase
 #if AUTO_VERIFY
                 .AutoVerify()
 #endif
-                ;
+                .ConfigureAwait(true);
         }
     }
 
@@ -114,7 +114,7 @@ public abstract class HealthCheckTestBase
                 writer.WriteEndObject();
             }
 
-            return context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()));
+            return context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()), cancellationToken: context.RequestAborted);
         }
     }
 

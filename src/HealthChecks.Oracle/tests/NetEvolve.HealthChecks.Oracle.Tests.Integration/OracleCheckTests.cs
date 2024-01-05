@@ -83,7 +83,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Oracle:TestContainerHealthy:ConnectionString",
@@ -103,7 +103,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Oracle:TestContainerDegraded:ConnectionString",
@@ -124,7 +124,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Oracle:TestNoValues:ConnectionString", "" }
                 };
@@ -141,7 +141,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             },
             config =>
             {
-                var values = new Dictionary<string, string?>
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     {
                         "HealthChecks:Oracle:TestNoValues:ConnectionString",
