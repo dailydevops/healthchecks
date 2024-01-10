@@ -34,7 +34,7 @@
     <PackageVersion Include="Testcontainers.Kafka" Version="3.6.0" />
     <PackageVersion Include="Testcontainers.MsSql" Version="3.7.0" />
     <PackageVersion Include="Testcontainers.MySql" Version="3.7.0" />
-    <PackageVersion Include="Testcontainers.Oracle" Version="3.6.0" />
+    <PackageVersion Include="Testcontainers.Oracle" Version="3.7.0" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="3.7.0" />
     <PackageVersion Include="Testcontainers.Redpanda" Version="3.7.0" />
     <PackageVersion Include="Verify.Xunit" Version="22.11.5" />
