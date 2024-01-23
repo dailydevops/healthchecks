@@ -23,7 +23,7 @@
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageVersion Include="MySql.Data" Version="8.2.0" />
-    <PackageVersion Include="MySqlConnector" Version="2.3.3" />
+    <PackageVersion Include="MySqlConnector" Version="2.3.5" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.88" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.74" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.194" />
