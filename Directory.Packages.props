@@ -10,7 +10,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14" />
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.17.0.82934" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.18.0.83559" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
