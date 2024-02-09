@@ -20,7 +20,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using VerifyXunit;
 
-[UsesVerify]
 public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
