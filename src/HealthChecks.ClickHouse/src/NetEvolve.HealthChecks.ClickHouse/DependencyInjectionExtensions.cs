@@ -33,9 +33,9 @@ public static class DependencyInjectionExtensions
         params string[] tags
     )
     {
-        Argument.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(builder);
         Argument.ThrowIfNullOrEmpty(name);
-        Argument.ThrowIfNull(tags);
+        ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<ClickHouseCheckMarker>())
         {

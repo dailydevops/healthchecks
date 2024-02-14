@@ -27,8 +27,8 @@ public static class DependencyInjectionExtensions
         params string[] tags
     )
     {
-        Argument.ThrowIfNull(builder);
-        Argument.ThrowIfNull(tags);
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(tags);
 
         if (builder.IsServiceTypeRegistered<ApplicationReadyCheckMarker>())
         {
@@ -57,8 +57,8 @@ public static class DependencyInjectionExtensions
         params string[] tags
     )
     {
-        Argument.ThrowIfNull(builder);
-        Argument.ThrowIfNull(tags);
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(tags);
 
         if (builder.IsServiceTypeRegistered<ApplicationHealthyCheckMarker>())
         {

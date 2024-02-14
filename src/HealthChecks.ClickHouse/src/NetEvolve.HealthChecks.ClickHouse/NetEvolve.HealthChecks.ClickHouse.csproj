@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="ClickHouse.Client" />
-    <PackageReference Include="NetEvolve.Arguments" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
 

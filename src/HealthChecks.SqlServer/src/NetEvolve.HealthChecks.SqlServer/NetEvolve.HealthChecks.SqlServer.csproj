@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" />
-    <PackageReference Include="NetEvolve.Arguments" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
 

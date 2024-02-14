@@ -26,7 +26,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
         CancellationToken cancellationToken = default
     )
     {
-        Argument.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(context);
 
         var configurationName = context.Registration.Name;
         var failureStatus = context.Registration.FailureStatus;

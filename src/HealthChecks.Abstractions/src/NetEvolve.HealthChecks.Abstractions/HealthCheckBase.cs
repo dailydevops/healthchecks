@@ -11,14 +11,13 @@ using NetEvolve.Arguments;
 /// </summary>
 public abstract class HealthCheckBase : IHealthCheck
 {
-
     /// <inheritdoc/>
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default
     )
     {
-        Argument.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(context);
 
         var configurationName = context.Registration.Name;
         var failureStatus = context.Registration.FailureStatus;

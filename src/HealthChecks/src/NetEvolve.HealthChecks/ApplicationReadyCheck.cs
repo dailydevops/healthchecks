@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks;
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -13,7 +14,7 @@ internal sealed class ApplicationReadyCheck : HealthCheckBase
 
     public ApplicationReadyCheck(IHostApplicationLifetime lifetime)
     {
-        Argument.ThrowIfNull(lifetime);
+        ArgumentNullException.ThrowIfNull(lifetime);
 
         _ = lifetime.ApplicationStarted.Register(OnStarted);
         _ = lifetime.ApplicationStopping.Register(OnStopped);
