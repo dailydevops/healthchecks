@@ -39,12 +39,28 @@ The following table lists all currently available NuGet packages. For more detai
       <td colspan=3>Contains general application HealthChecks.</td>
     </tr>
     <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/"><b>NetEvolve.HealthChecks.Abstractions</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Abstractions?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Abstractions?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains abstract implementations for the `NetEvolve.HealthChecks`.</td>
+    </tr>
+    <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/"><b>NetEvolve.HealthChecks.Apache.Kafka</b></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget" alt="Nuget"></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget" alt="Nuget"></a></td>
     </tr>
     <tr>
       <td colspan=3>Contains HealthChecks for Apache Kafka, based on the NuGet package `Confluent.Kafka`.</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><b>NetEvolve.HealthChecks.ClickHouse</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ClickHouse?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for ClickHouse, based on the nuget package `ClickHouse.Client`.</td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><b>NetEvolve.HealthChecks.MySql</b></a></td>
@@ -85,6 +101,14 @@ The following table lists all currently available NuGet packages. For more detai
     </tr>
     <tr>
       <td colspan=3>Contains HealthChecks for Redpanda, based on the NuGet package `Confluent.Kafka`. This is a temporary measure; if a dedicated Redpanda client is provided in the future, we will use it immediately.</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/"><b>NetEvolve.HealthChecks.SqlEdge</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlEdge?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlEdge?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for SqlEdge, based on the nuget package `Microsoft.Data.SqlClient`.</td>
     </tr>
     <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><b>NetEvolve.HealthChecks.SQLite</b></a></td>
