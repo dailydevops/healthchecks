@@ -10,14 +10,20 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using NetEvolve.Extensions.Tasks;
 
+/// <summary>
+/// Configurable implementation of <see cref="IHealthCheck"/> with focus on <see cref="DbConnection"/> based implementations.
+/// </summary>
+/// <typeparam name="TConfiguration"></typeparam>
 public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class, ISqlCheckOptions
 {
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
+    /// <inheritdoc/>
     protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) =>
         _optionsMonitor = optionsMonitor;
 
+    /// <inheritdoc/>
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default
@@ -103,5 +109,9 @@ public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
         }
     }
 
+    /// <summary>
+    /// Create a new instance of <see cref="DbConnection"/> based on the given <paramref name="connectionString"/>.
+    /// </summary>
+    /// <param name="connectionString">The connection string.</param>
     protected abstract DbConnection CreateConnection(string connectionString);
 }

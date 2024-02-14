@@ -7,14 +7,20 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 
+/// <summary>
+/// Configurable implementation of <see cref="IHealthCheck"/>.
+/// </summary>
+/// <typeparam name="TConfiguration">Type of Configuration</typeparam>
 public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class
 {
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
+    /// <inheritdoc/>
     protected ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) =>
         _optionsMonitor = optionsMonitor;
 
+    /// <inheritdoc/>
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default
@@ -74,6 +80,13 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
         }
     }
 
+    /// <summary>
+    /// Abstract method that executes the necessary business logic of each implementation.
+    /// </summary>
+    /// <param name="name">Configuration Name</param>
+    /// <param name="failureStatus">Configured <see cref="HealthStatus"/> in case of failure.</param>
+    /// <param name="options">Configuration object of <typeparamref name="TConfiguration"/>.</param>
+    /// <param name="cancellationToken">Cancellation Token</param>
     protected abstract ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,

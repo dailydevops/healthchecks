@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
 
+/// <summary>
+/// Non-configurable standard implementation of <see cref="IHealthCheck"/>.
+/// </summary>
 public abstract class HealthCheckBase : IHealthCheck
 {
+
+    /// <inheritdoc/>
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default
@@ -48,6 +53,12 @@ public abstract class HealthCheckBase : IHealthCheck
         }
     }
 
+    /// <summary>
+    /// Abstract method that executes the necessary business logic of each implementation.
+    /// </summary>
+    /// <param name="name">Configuration Name</param>
+    /// <param name="failureStatus">Configured <see cref="HealthStatus"/> in case of failure.</param>
+    /// <param name="cancellationToken">Cancellation Token</param>
     protected abstract ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
