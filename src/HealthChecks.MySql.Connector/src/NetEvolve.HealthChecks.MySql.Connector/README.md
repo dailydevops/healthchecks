@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.MySql.Connector
 
-![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)
-![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)
+[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/)
+[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/)
 
 This package provides a health check for MySql databases, based on the [MySqlConnector](https://www.nuget.org/packages/MySqlConnector/) package. The main purpose is to check if the database is available and if the database is online.
 

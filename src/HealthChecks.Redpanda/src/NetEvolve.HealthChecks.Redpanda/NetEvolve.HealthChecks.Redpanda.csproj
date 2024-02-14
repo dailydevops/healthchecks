@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for Redpanda, based on the NuGet package `Confluent.Kafka`. This is a temporary measure; if a dedicated Redpanda client is provided in the future, we will use it immediately.</Description>
     <PackageTags>$(PackageTags);redpanda;</PackageTags>
@@ -10,10 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" />
-    <PackageReference Include="NetEvolve.Arguments" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
 
-  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\HealthChecks.Abstractions\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
 
 </Project>

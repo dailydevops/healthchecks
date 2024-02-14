@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+
+    <Description>Contains abstract implementations for the `NetEvolve.HealthChecks`.</Description>
+    <PackageTags>$(PackageTags);abstractions;</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Arguments" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+
+</Project>

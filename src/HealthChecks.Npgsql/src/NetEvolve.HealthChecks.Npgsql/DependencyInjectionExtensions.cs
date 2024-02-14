@@ -12,7 +12,7 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = new[] { "postgresql", "database" };
+    private static readonly string[] _defaultTags = ["postgresql", "database"];
 
     /// <summary>
     /// Add a health check for the MySql database.
@@ -33,9 +33,9 @@ public static class DependencyInjectionExtensions
         params string[] tags
     )
     {
-        Argument.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(builder);
         Argument.ThrowIfNullOrEmpty(name);
-        Argument.ThrowIfNull(tags);
+        ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<NpgsqlCheckMarker>())
         {

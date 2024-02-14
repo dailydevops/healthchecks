@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.SQLite
 
-![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget)
-![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?logo=nuget)
+[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/)
+[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/)
 
 This package provides a health check for SQLite databases, based on the [Microsoft.Data.Sqlite](https://www.nuget.org/packages/Microsoft.Data.Sqlite/) package.
 The main purpose is to check if the SQLite database is available and if the database is online.

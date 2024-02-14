@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Npgsql
 
-![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget)
-![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?logo=nuget)
+[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/)
+[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/)
 
 This package provides a health check for Npgsql databases, based on the [Npgsql](https://www.nuget.org/packages/Npgsql/) package.
 The main purpose is to check if the Npgsql database is available and if the database is online.

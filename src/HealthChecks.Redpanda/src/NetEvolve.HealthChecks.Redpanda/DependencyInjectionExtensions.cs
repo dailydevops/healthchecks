@@ -12,7 +12,7 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = new[] { "redpanda", "message-queue" };
+    private static readonly string[] _defaultTags = ["redpanda", "message-queue"];
 
     /// <summary>
     /// Add a health check for Redpanda.
@@ -33,9 +33,9 @@ public static class DependencyInjectionExtensions
         params string[] tags
     )
     {
-        Argument.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(builder);
         Argument.ThrowIfNullOrEmpty(name);
-        Argument.ThrowIfNull(tags);
+        ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<RedpandaCheckMarker>())
         {

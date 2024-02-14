@@ -1,10 +1,9 @@
-﻿#if USE_SQL_HEALTHCHECK
-namespace NetEvolve.HealthChecks.Abstractions;
+﻿namespace NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
 /// General options for <see cref="SqlCheckBase{TConfiguration}"/>.
 /// </summary>
-internal interface ISqlCheckOptions
+public interface ISqlCheckOptions
 {
     /// <summary>
     /// The connection string for the database to check.
@@ -22,4 +21,3 @@ internal interface ISqlCheckOptions
     /// <remarks>For internal use only.</remarks>
     string Command { get; }
 }
-#endif

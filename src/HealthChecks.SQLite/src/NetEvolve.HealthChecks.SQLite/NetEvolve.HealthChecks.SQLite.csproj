@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for SQLite, based on the nuget package `Microsoft.Data.Sqlite`.</Description>
     <PackageTags>$(PackageTags);sqlite</PackageTags>
@@ -10,14 +9,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" />
-    <PackageReference Include="NetEvolve.Arguments" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\HealthChecks.Abstractions\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <RuntimeHostConfigurationOption Include="System.Runtime.Loader.UseRidGraph" Value="true" />
   </ItemGroup>
-
-  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
 
 </Project>
