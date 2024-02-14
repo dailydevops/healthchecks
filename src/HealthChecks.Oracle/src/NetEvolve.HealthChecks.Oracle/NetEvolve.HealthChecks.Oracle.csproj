@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for Oracle Databases, based on the nuget package `Oracle.ManagedDataAccess.Core`.</Description>
     <PackageTags>$(PackageTags);oracle</PackageTags>
@@ -14,6 +13,8 @@
     <PackageReference Include="Oracle.ManagedDataAccess.Core" />
   </ItemGroup>
 
-  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\HealthChecks.Abstractions\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
 
 </Project>

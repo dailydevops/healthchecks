@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>USE_SQL_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for MySql, based on the nuget package `MySqlConnector`.</Description>
     <PackageTags>$(PackageTags);mysql;</PackageTags>
@@ -14,6 +13,8 @@
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
 
-  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\HealthChecks.Abstractions\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
 
 </Project>

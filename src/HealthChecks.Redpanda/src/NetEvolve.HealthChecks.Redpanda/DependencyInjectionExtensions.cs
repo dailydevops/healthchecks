@@ -12,7 +12,7 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = new[] { "redpanda", "message-queue" };
+    private static readonly string[] _defaultTags = ["redpanda", "message-queue"];
 
     /// <summary>
     /// Add a health check for Redpanda.

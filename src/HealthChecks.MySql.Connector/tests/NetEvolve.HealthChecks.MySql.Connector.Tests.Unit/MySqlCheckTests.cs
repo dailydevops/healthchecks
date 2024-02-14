@@ -22,7 +22,7 @@ public sealed class MySqlCheckTests
         var check = new MySqlCheck(optionsMonitor);
 
         // Act
-        async Task Act() => _ = await check.CheckHealthAsync(null!);
+        async Task Act() => _ = await check.CheckHealthAsync(null!, default);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);

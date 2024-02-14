@@ -12,7 +12,7 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = new[] { "sqlserver", "database" };
+    private static readonly string[] _defaultTags = ["sqlserver", "database"];
 
     /// <summary>
     /// Add a health check for the SQL Server database.

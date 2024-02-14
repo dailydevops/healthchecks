@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks
 
-![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget)
-![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?logo=nuget)
+[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks/)
+[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks/)
 
 This package contains additional health checks for the [Microsoft.Extensions.Diagnostics.HealthChecks](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.HealthChecks/) package.
 Primarily for testing the healthiness of the own application, like application service is started or stopped.

@@ -12,8 +12,8 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTagsReadiness = new[] { "self", "readiness" };
-    private static readonly string[] _defaultTagsHealthy = new[] { "self" };
+    private static readonly string[] _defaultTagsReadiness = ["self", "readiness"];
+    private static readonly string[] _defaultTagsHealthy = ["self"];
 
     /// <summary>
     /// Add a health check for the application readiness.

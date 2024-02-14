@@ -12,7 +12,7 @@ using NetEvolve.Arguments;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = new[] { "oracle", "database" };
+    private static readonly string[] _defaultTags = ["oracle", "database"];
 
     /// <summary>
     /// Add a health check for the MySql database.

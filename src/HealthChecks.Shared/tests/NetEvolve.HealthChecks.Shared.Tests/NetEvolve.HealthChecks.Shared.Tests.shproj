@@ -9,7 +9,6 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.Common.props" />
   <PropertyGroup />
   <ItemGroup>
-    <Compile Include="HealthCheckBase.cs" />
     <Compile Include="HealthCheckTestBase.cs" />
     <Compile Include="ModuleInitializer.cs" />
   </ItemGroup>

@@ -23,7 +23,7 @@ public sealed class OracleCheckTests
         var check = new OracleCheck(optionsMonitor);
 
         // Act
-        async Task Act() => _ = await check.CheckHealthAsync(null!);
+        async Task Act() => _ = await check.CheckHealthAsync(null!, default);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);

@@ -24,7 +24,7 @@ public sealed class RedpandaCheckTests
         var check = new RedpandaCheck(serviceProvider, optionsMonitor);
 
         // Act
-        async Task Act() => _ = await check.CheckHealthAsync(null!);
+        async Task Act() => _ = await check.CheckHealthAsync(null!, default);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);

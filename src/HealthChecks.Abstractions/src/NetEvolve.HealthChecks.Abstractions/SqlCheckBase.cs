@@ -1,5 +1,4 @@
-﻿#if USE_SQL_HEALTHCHECK
-namespace NetEvolve.HealthChecks.Abstractions;
+﻿namespace NetEvolve.HealthChecks.Abstractions;
 
 using System;
 using System.Data.Common;
@@ -11,13 +10,14 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using NetEvolve.Extensions.Tasks;
 
-internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
+public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class, ISqlCheckOptions
 {
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
-    protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
-        => _optionsMonitor = optionsMonitor;
+    protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) =>
+        _optionsMonitor = optionsMonitor;
+
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default
@@ -33,15 +33,20 @@ internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
             return new HealthCheckResult(
                 failureStatus,
                 description: $"{configurationName}: Cancellation requested."
-                );
+            );
         }
 
-        var result = await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
+        var result = await InternalAsync(configurationName, failureStatus, cancellationToken)
+            .ConfigureAwait(false);
 
         return result;
     }
 
-    private async Task<HealthCheckResult> InternalAsync(string configurationName, HealthStatus failureStatus, CancellationToken cancellationToken)
+    private async Task<HealthCheckResult> InternalAsync(
+        string configurationName,
+        HealthStatus failureStatus,
+        CancellationToken cancellationToken
+    )
     {
         try
         {
@@ -54,16 +59,16 @@ internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
                 );
             }
 
-            return await ExecuteHealthCheckAsync(
-                    configurationName,
-                    options,
-                    cancellationToken
-                )
+            return await ExecuteHealthCheckAsync(configurationName, options, cancellationToken)
                 .ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Unexpected error.", exception: ex);
+            return new HealthCheckResult(
+                failureStatus,
+                description: $"{configurationName}: Unexpected error.",
+                exception: ex
+            );
         }
     }
 
@@ -100,4 +105,3 @@ internal abstract class SqlCheckBase<TConfiguration> : IHealthCheck
 
     protected abstract DbConnection CreateConnection(string connectionString);
 }
-#endif
