@@ -14,7 +14,7 @@ To use this package, you need to add the package to your project. You can do thi
 dotnet add package NetEvolve.HealthChecks.ClickHouse
 ```
 
-## Health Check - ClickHouseLegacy Liveness
+## Health Check - ClickHouse Liveness
 The health check is a liveness check. It checks if the ClickHouse is available and if the database is online.
 If the query needs longer than the configured timeout, the health check will return `Degraded`.
 If the query fails, for whatever reason, the health check will return `Unhealthy`.
@@ -25,8 +25,6 @@ After adding the package, you need to import the namespace and add the health ch
 using NetEvolve.HealthChecks.ClickHouse;
 ```
 Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
-
-:heavy_exclamation_mark: The configuration of this package is compatible with the [NetEvolve.HealthChecks.ClickHouse.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse.Legacy/) package.
 
 ### Parameters
 - `name`: The name of the health check. The name will be used to identify the configuration object.
