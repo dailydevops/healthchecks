@@ -1,6 +1,5 @@
-﻿namespace NetEvolve.HealthChecks.Azure.Blobs.Tests.Integration;
+﻿namespace NetEvolve.HealthChecks.Azure.Tests.Integration;
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testcontainers.Azurite;

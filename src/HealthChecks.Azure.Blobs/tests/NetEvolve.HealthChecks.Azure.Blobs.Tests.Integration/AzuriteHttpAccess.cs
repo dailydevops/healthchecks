@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Azure.Blobs.Tests.Integration;
+﻿namespace NetEvolve.HealthChecks.Azure.Tests.Integration;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -7,7 +7,7 @@ using Testcontainers.Azurite;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
-public sealed class AzuriteHttpAccess : IAsyncLifetime
+public sealed class AzuriteHttpAccess : IAsyncLifetime, IAsyncDisposable
 {
     public const string AccountName = "testaccount1";
     public const string AccountKey = "SGVsbG8gV29ybGQ=";
@@ -25,4 +25,7 @@ public sealed class AzuriteHttpAccess : IAsyncLifetime
     public async Task DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
+
+    async ValueTask IAsyncDisposable.DisposeAsync() =>
+        await _container.DisposeAsync().ConfigureAwait(false);
 }

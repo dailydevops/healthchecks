@@ -5,15 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using global::Azure.Storage.Blobs;
 
 /// <summary>
-/// Options for the <see cref="BlobContainerAvailableHealthCheck"/>.
+/// Options for the <see cref="BlobServiceAvailableHealthCheck"/>.
 /// </summary>
-public sealed class BlobContainerAvailableOptions
+public sealed class BlobServiceAvailableOptions
 {
     public string? ConnectionString { get; set; }
     public ClientCreationMode Mode { get; set; }
     public int Timeout { get; set; } = 100;
-
-    public string? ContainerName { get; set; }
 
     public Uri? ServiceUri { get; set; }
     public string? AccountName { get; set; }
