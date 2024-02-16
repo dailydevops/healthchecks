@@ -16,22 +16,22 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class BlobContainerAvailableHealthCheck
-    : ConfigurableHealthCheckBase<BlobContainerAvailableOptions>
+internal sealed class BlobServiceAvailableHealthCheck
+    : ConfigurableHealthCheckBase<BlobServiceAvailableOptions>
 {
     private static ConcurrentDictionary<string, BlobServiceClient>? _blobServiceClients;
     private readonly IServiceProvider _serviceProvider;
 
-    public BlobContainerAvailableHealthCheck(
+    public BlobServiceAvailableHealthCheck(
         IServiceProvider serviceProvider,
-        IOptionsMonitor<BlobContainerAvailableOptions> optionsMonitor
+        IOptionsMonitor<BlobServiceAvailableOptions> optionsMonitor
     )
         : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
-        BlobContainerAvailableOptions options,
+        BlobServiceAvailableOptions options,
         CancellationToken cancellationToken
     )
     {
@@ -47,29 +47,14 @@ internal sealed class BlobContainerAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        var container = blobClient.GetBlobContainerClient(options.ContainerName);
-
-        var containerExists = await container.ExistsAsync(cancellationToken).ConfigureAwait(false);
-        if (!containerExists)
-        {
-            return HealthCheckResult.Unhealthy(
-                $"{name}: Container `{options.ContainerName}` does not exist."
-            );
-        }
-
-        (var containerInTime, _) = await container
-            .GetPropertiesAsync(cancellationToken: cancellationToken)
-            .WithTimeoutAsync(options.Timeout, cancellationToken)
-            .ConfigureAwait(false);
-
-        return (isValid && result && containerInTime)
+        return (isValid && result)
             ? HealthCheckResult.Healthy($"{name}: Healthy")
             : HealthCheckResult.Degraded($"{name}: Degraded");
     }
 
     private static BlobServiceClient GetBlobServiceClient(
         string name,
-        BlobContainerAvailableOptions options,
+        BlobServiceAvailableOptions options,
         IServiceProvider serviceProvider
     )
     {
@@ -92,7 +77,7 @@ internal sealed class BlobContainerAvailableHealthCheck
     }
 
     private static BlobServiceClient CreateBlobServiceClient(
-        BlobContainerAvailableOptions options,
+        BlobServiceAvailableOptions options,
         IServiceProvider serviceProvider
     )
     {

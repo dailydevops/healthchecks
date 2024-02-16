@@ -13,6 +13,21 @@ using Xunit;
 [UnitTest]
 public sealed class BlobContainerAvailableConfigureTests
 {
+    [Fact]
+    public void Configue_OnlyOptions_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new BlobContainerAvailableConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new BlobContainerAvailableOptions();
+
+        // Act / Assert
+        _ = Assert.Throws<ArgumentException>("name", () => configure.Configure(options));
+    }
+
     [Theory]
     [MemberData(nameof(GetValidateTestCases))]
     public void Validate_Theory_Expected(
@@ -57,16 +72,30 @@ public sealed class BlobContainerAvailableConfigureTests
             },
             {
                 false,
+                "The container name cannot be null or whitespace.",
+                "name",
+                new BlobContainerAvailableOptions()
+            },
+            {
+                false,
                 "The mode `13` is not supported.",
                 "name",
-                new BlobContainerAvailableOptions { Mode = (ClientCreationMode)13 }
+                new BlobContainerAvailableOptions
+                {
+                    Mode = (ClientCreationMode)13,
+                    ContainerName = "test"
+                }
             },
             // Mode: ServiceProvider
             {
                 false,
                 $"No service of type `{nameof(BlobServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new BlobContainerAvailableOptions { Mode = ClientCreationMode.ServiceProvider }
+                new BlobContainerAvailableOptions
+                {
+                    Mode = ClientCreationMode.ServiceProvider,
+                    ContainerName = "test"
+                }
             },
             // Mode: DefaultAzureCredentials
             {
@@ -75,7 +104,8 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
-                    Mode = ClientCreationMode.DefaultAzureCredentials
+                    Mode = ClientCreationMode.DefaultAzureCredentials,
+                    ContainerName = "test"
                 }
             },
             {
@@ -84,6 +114,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
@@ -94,6 +125,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute)
                 }
@@ -103,7 +135,11 @@ public sealed class BlobContainerAvailableConfigureTests
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
-                new BlobContainerAvailableOptions { Mode = ClientCreationMode.ConnectionString }
+                new BlobContainerAvailableOptions
+                {
+                    ContainerName = "test",
+                    Mode = ClientCreationMode.ConnectionString
+                }
             },
             {
                 true,
@@ -111,6 +147,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.ConnectionString,
                     ConnectionString = "connectionString"
                 }
@@ -120,7 +157,11 @@ public sealed class BlobContainerAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
-                new BlobContainerAvailableOptions { Mode = ClientCreationMode.SharedKey }
+                new BlobContainerAvailableOptions
+                {
+                    ContainerName = "test",
+                    Mode = ClientCreationMode.SharedKey
+                }
             },
             {
                 false,
@@ -128,6 +169,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.SharedKey,
                     ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
@@ -138,6 +180,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = null
@@ -149,6 +192,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
@@ -161,6 +205,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
@@ -172,7 +217,11 @@ public sealed class BlobContainerAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
-                new BlobContainerAvailableOptions { Mode = ClientCreationMode.AzureSasCredential }
+                new BlobContainerAvailableOptions
+                {
+                    ContainerName = "test",
+                    Mode = ClientCreationMode.AzureSasCredential
+                }
             },
             {
                 false,
@@ -180,6 +229,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
@@ -190,6 +240,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute", UriKind.Absolute)
                 }
@@ -200,6 +251,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions
                 {
+                    ContainerName = "test",
                     Mode = ClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute)
                 }

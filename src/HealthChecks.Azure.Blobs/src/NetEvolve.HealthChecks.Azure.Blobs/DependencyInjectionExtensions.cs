@@ -12,9 +12,9 @@ using NetEvolve.Arguments;
 public static class DependencyInjectionExtensions
 {
     /// <summary>
-    /// Adds a health check for the Azure Blob Storage, to check the availability of this service.
+    /// Adds a health check for the Azure Blob Storage, to check the availability of a named blob container.
     /// </summary>
-    /// <param name="builder">The <see cref="IHealthChecksBuilder"/>. This is prefixed internally with `AzureBlobAvailability` if not already present.</param>
+    /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="BlobContainerAvailableHealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
@@ -23,7 +23,7 @@ public static class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddAzureBlobAvailability(
+    public static IHealthChecksBuilder AddBlobContainerAvailability(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
         Action<BlobContainerAvailableOptions>? options = null,
@@ -34,10 +34,10 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
-        if (!builder.IsServiceTypeRegistered<AzureBlobCheckMarker>())
+        if (!builder.IsServiceTypeRegistered<AzureBlobContainerCheckMarker>())
         {
             _ = builder
-                .Services.AddSingleton<AzureBlobCheckMarker>()
+                .Services.AddSingleton<AzureBlobContainerCheckMarker>()
                 .AddSingleton<BlobContainerAvailableHealthCheck>()
                 .ConfigureOptions<BlobContainerAvailableConfigure>();
         }
@@ -59,5 +59,55 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class AzureBlobCheckMarker { }
+    /// <summary>
+    /// Adds a health check for the Azure Blob Storage, to check the availability of the blob service.
+    /// </summary>
+    /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
+    /// <param name="name">The name of the <see cref="BlobServiceAvailableHealthCheck"/>.</param>
+    /// <param name="options">An optional action to configure.</param>
+    /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="name"/> is <see langword="null" />.</exception>
+    /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
+    /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
+    public static IHealthChecksBuilder AddBlobServiceAvailability(
+        [NotNull] this IHealthChecksBuilder builder,
+        [NotNull] string name,
+        Action<BlobServiceAvailableOptions>? options = null,
+        params string[] tags
+    )
+    {
+        ArgumentNullException.ThrowIfNull(builder);
+        Argument.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(tags);
+
+        if (!builder.IsServiceTypeRegistered<AzureBlobServiceCheckMarker>())
+        {
+            _ = builder
+                .Services.AddSingleton<AzureBlobServiceCheckMarker>()
+                .AddSingleton<BlobServiceAvailableHealthCheck>()
+                .ConfigureOptions<BlobServiceAvailableConfigure>();
+        }
+
+        if (builder.IsNameAlreadyUsed<BlobServiceAvailableHealthCheck>(name))
+        {
+            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
+        }
+
+        if (options is not null)
+        {
+            _ = builder.Services.Configure(name, options);
+        }
+
+        return builder.AddCheck<BlobServiceAvailableHealthCheck>(
+            name,
+            HealthStatus.Unhealthy,
+            tags
+        );
+    }
+
+    private sealed partial class AzureBlobContainerCheckMarker { }
+
+    private sealed partial class AzureBlobServiceCheckMarker { }
 }

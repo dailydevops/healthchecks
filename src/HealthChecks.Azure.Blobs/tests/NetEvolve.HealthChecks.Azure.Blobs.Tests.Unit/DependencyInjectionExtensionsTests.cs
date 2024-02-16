@@ -12,20 +12,20 @@ using Xunit;
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
-    public void AddAzureBlobAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddAddBlobContainerAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddAzureBlobAvailability("Test");
+        void Act() => _ = builder.AddBlobContainerAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
-    public void AddAzureBlobAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddAddBlobContainerAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -34,14 +34,14 @@ public class DependencyInjectionExtensionsTests
         var name = default(string);
 
         // Act
-        void Act() => _ = builder.AddAzureBlobAvailability(name);
+        void Act() => _ = builder.AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
-    public void AddAzureBlobAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddAddBlobContainerAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -50,14 +50,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddAzureBlobAvailability(name);
+        void Act() => _ = builder.AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
-    public void AddAzureBlobAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddAddBlobContainerAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -66,14 +66,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddAzureBlobAvailability("Test", tags: tags);
+        void Act() => _ = builder.AddBlobContainerAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Fact]
-    public void AddAzureBlobAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddAddBlobContainerAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -83,7 +83,9 @@ public class DependencyInjectionExtensionsTests
 
         // Act
         void Act() =>
-            _ = builder.AddAzureBlobAvailability(name, x => { }).AddAzureBlobAvailability(name);
+            _ = builder
+                .AddBlobContainerAvailability(name, x => { })
+                .AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

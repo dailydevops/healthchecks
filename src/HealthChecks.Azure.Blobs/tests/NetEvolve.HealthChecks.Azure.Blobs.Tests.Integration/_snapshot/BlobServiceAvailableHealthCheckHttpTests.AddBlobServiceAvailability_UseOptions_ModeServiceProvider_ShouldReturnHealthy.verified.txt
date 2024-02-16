@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

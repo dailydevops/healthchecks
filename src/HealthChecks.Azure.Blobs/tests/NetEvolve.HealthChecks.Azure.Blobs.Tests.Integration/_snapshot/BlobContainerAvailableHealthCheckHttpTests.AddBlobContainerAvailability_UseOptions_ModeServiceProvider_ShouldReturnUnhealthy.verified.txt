@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDoesNotExists: Container `notexists` does not exist.,
+      name: TestContainerDoesNotExists,
+      status: Unhealthy
+    }
+  ],
+  status: Unhealthy
+}

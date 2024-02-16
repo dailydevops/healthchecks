@@ -9,14 +9,14 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class BlobContainerAvailableConfigure
-    : IConfigureNamedOptions<BlobContainerAvailableOptions>,
-        IValidateOptions<BlobContainerAvailableOptions>
+internal sealed class BlobServiceAvailableConfigure
+    : IConfigureNamedOptions<BlobServiceAvailableOptions>,
+        IValidateOptions<BlobServiceAvailableOptions>
 {
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public BlobContainerAvailableConfigure(
+    public BlobServiceAvailableConfigure(
         IConfiguration configuration,
         IServiceProvider serviceProvider
     )
@@ -25,16 +25,16 @@ internal sealed class BlobContainerAvailableConfigure
         _serviceProvider = serviceProvider;
     }
 
-    public void Configure(string? name, BlobContainerAvailableOptions options)
+    public void Configure(string? name, BlobServiceAvailableOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:AddBlobContainerAvailability:{name}", options);
+        _configuration.Bind($"HealthChecks:AddBlobServiceAvailability:{name}", options);
     }
 
-    public void Configure(BlobContainerAvailableOptions options) =>
+    public void Configure(BlobServiceAvailableOptions options) =>
         Configure(Options.DefaultName, options);
 
-    public ValidateOptionsResult Validate(string? name, BlobContainerAvailableOptions options)
+    public ValidateOptionsResult Validate(string? name, BlobServiceAvailableOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -49,11 +49,6 @@ internal sealed class BlobContainerAvailableConfigure
         if (options.Timeout < Timeout.Infinite)
         {
             return Fail("The timeout cannot be less than infinite (-1).");
-        }
-
-        if (string.IsNullOrWhiteSpace(options.ContainerName))
-        {
-            return Fail("The container name cannot be null or whitespace.");
         }
 
         var mode = options.Mode;
@@ -71,7 +66,7 @@ internal sealed class BlobContainerAvailableConfigure
     }
 
     private static ValidateOptionsResult ValidateModeAzureSasCredential(
-        BlobContainerAvailableOptions options
+        BlobServiceAvailableOptions options
     )
     {
         if (options.ServiceUri is null)
@@ -98,9 +93,7 @@ internal sealed class BlobContainerAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeSharedKey(
-        BlobContainerAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeSharedKey(BlobServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -134,7 +127,7 @@ internal sealed class BlobContainerAvailableConfigure
     }
 
     private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(
-        BlobContainerAvailableOptions options
+        BlobServiceAvailableOptions options
     )
     {
         if (options.ServiceUri is null)
@@ -155,7 +148,7 @@ internal sealed class BlobContainerAvailableConfigure
     }
 
     private static ValidateOptionsResult ValidateModeConnectionString(
-        BlobContainerAvailableOptions options
+        BlobServiceAvailableOptions options
     )
     {
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
