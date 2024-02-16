@@ -13,7 +13,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-[SetCulture]
+[SetCulture("en-US")]
 public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 {
     private readonly KafkaDatabase _database;
