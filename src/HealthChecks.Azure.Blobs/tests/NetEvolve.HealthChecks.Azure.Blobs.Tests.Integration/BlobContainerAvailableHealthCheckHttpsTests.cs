@@ -14,8 +14,9 @@ using Xunit;
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
 [SetCulture("en-US")]
-[Collection(nameof(HttpsAccessCollectionFixture))]
-public class BlobContainerAvailableHealthCheckHttpsTests : HealthCheckTestBase
+public class BlobContainerAvailableHealthCheckHttpsTests
+    : HealthCheckTestBase,
+        IClassFixture<AzuriteHttpsAccess>
 {
     private readonly AzuriteHttpsAccess _container;
     private readonly Uri _accountSasUri;
@@ -50,6 +51,32 @@ public class BlobContainerAvailableHealthCheckHttpsTests : HealthCheckTestBase
                     {
                         options.ContainerName = "test";
                         options.Mode = ClientCreationMode.ServiceProvider;
+                    }
+                );
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients =>
+                    _ = clients.AddBlobServiceClient(_container.ConnectionString)
+                );
+            }
+        );
+
+    [Fact]
+    public async Task AddBlobContainerAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddBlobContainerAvailability(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.ContainerName = "test";
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.ConfigureClientOptions = clientOptions =>
+                        {
+                            clientOptions.Retry.MaxRetries = 0;
+                        };
                     }
                 );
             },
