@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDegraded: Degraded,
+      name: TestContainerDegraded,
+      status: Degraded
+    }
+  ],
+  status: Degraded
+}
