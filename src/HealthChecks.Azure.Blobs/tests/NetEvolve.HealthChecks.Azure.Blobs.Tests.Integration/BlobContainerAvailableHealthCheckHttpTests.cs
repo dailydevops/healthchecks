@@ -15,7 +15,6 @@ using Xunit;
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
 [SetCulture("en-US")]
-[Collection(nameof(HttpAccessCollectionFixture))]
 public class BlobContainerAvailableHealthCheckHttpTests
     : HealthCheckTestBase,
         IClassFixture<AzuriteHttpAccess>
@@ -100,6 +99,32 @@ public class BlobContainerAvailableHealthCheckHttpTests
                         options.ContainerName = "notexists";
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.Timeout = 0;
+                    }
+                );
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients =>
+                    _ = clients.AddBlobServiceClient(_container.ConnectionString)
+                );
+            }
+        );
+
+    [Fact]
+    public async Task AddBlobContainerAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddBlobContainerAvailability(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.ContainerName = "test";
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.ConfigureClientOptions = clientOptions =>
+                        {
+                            clientOptions.Retry.MaxRetries = 0;
+                        };
                     }
                 );
             },
