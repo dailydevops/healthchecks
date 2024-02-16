@@ -11,7 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-[SetCulture]
+[SetCulture("en-US")]
 public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabase>
 {
     private readonly NpgsqlDatabase _database;

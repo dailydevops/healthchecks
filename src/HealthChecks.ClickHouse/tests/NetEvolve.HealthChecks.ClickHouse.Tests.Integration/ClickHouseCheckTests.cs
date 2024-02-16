@@ -11,7 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-[SetCulture]
+[SetCulture("en-US")]
 public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHouseDatabase>
 {
     private readonly ClickHouseDatabase _database;

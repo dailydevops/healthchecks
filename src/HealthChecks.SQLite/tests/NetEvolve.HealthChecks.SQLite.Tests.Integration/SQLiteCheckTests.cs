@@ -12,7 +12,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-[SetCulture]
+[SetCulture("en-US")]
 public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabase>
 {
     private readonly SQLiteDatabase _database;

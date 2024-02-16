@@ -11,7 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-[SetCulture]
+[SetCulture("en-US")]
 public class SqlEdgeCheckTests : HealthCheckTestBase, IClassFixture<SqlEdgeDatabase>
 {
     private readonly SqlEdgeDatabase _database;

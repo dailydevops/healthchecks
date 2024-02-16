@@ -14,7 +14,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
-[SetCulture]
+[SetCulture("en-US")]
 public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDatabase>
 {
     private readonly RedpandaDatabase _database;

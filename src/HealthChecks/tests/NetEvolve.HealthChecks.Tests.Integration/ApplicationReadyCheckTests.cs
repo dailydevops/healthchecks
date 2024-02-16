@@ -11,6 +11,7 @@ using Xunit;
 
 [IntegrationTest]
 [ExcludeFromCodeCoverage]
+[SetCulture("en-US")]
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Fact]
