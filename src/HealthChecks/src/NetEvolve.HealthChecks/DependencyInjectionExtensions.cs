@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
