@@ -63,6 +63,14 @@ The following table lists all currently available NuGet packages. For more detai
       <td colspan=3>Contains HealthChecks for ClickHouse, based on the nuget package `ClickHouse.Client`.</td>
     </tr>
     <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/"><b>NetEvolve.HealthChecks.Dapr</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Dapr?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for Dapr, based on the nuget package `Dapr.Client`.</td>
+    </tr>
+    <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><b>NetEvolve.HealthChecks.MySql</b></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
