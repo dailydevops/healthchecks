@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 
 /// <summary>
 /// Non-configurable standard implementation of <see cref="IHealthCheck"/>.
