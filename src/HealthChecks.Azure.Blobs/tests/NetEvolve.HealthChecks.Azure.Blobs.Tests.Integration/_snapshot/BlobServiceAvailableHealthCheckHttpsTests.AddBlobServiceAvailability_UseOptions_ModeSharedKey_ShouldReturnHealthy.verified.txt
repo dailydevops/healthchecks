@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: ServiceHttpsSharedKeyHealthy: Healthy,
+      name: ServiceHttpsSharedKeyHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

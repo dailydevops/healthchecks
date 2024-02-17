@@ -9,11 +9,16 @@ using Xunit;
 [ExcludeFromCodeCoverage]
 public sealed class AzuriteHttpAccess : IAsyncLifetime, IAsyncDisposable
 {
-    public const string AccountName = "testaccount1";
-    public const string AccountKey = "SGVsbG8gV29ybGQ=";
+    // TODO: Change when Testcontainers is supporting this
+    //public const string AccountName = "testaccount1";
+    //public const string AccountKey = "SGVsbG8gV29ybGQ=";
+    public const string AccountName = "devstoreaccount1";
+    public const string AccountKey =
+        "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
 
     private readonly AzuriteContainer _container = new AzuriteBuilder()
-    //.WithAccountCredentials(AccountName, AccountKey)
+    // TODO: Change when Testcontainers is supporting this
+    // .WithAccountCredentials(AccountName, AccountKey)
     .Build();
 
     public string ConnectionString => _container.GetConnectionString();

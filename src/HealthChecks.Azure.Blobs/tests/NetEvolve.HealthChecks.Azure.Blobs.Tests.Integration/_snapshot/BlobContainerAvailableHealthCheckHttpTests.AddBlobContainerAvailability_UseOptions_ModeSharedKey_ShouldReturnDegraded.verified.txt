@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: BlobHttpSharedKeyDegraded: Degraded,
+      name: BlobHttpSharedKeyDegraded,
+      status: Degraded
+    }
+  ],
+  status: Degraded
+}
