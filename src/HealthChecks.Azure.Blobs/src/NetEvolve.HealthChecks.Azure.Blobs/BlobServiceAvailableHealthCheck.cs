@@ -91,17 +91,12 @@ internal sealed class BlobServiceAvailableHealthCheck
         switch (options.Mode)
         {
             case ClientCreationMode.DefaultAzureCredentials:
-            {
                 var tokenCredential =
                     serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new BlobServiceClient(options.ServiceUri, tokenCredential, clientOptions);
-            }
             case ClientCreationMode.ConnectionString:
-            {
                 return new BlobServiceClient(options.ConnectionString, clientOptions);
-            }
             case ClientCreationMode.SharedKey:
-            {
                 var sharedKeyCredential = new StorageSharedKeyCredential(
                     options.AccountName,
                     options.AccountKey
@@ -111,9 +106,7 @@ internal sealed class BlobServiceAvailableHealthCheck
                     sharedKeyCredential,
                     clientOptions
                 );
-            }
             case ClientCreationMode.AzureSasCredential:
-            {
                 var blobUriBuilder = new BlobUriBuilder(options.ServiceUri) { Sas = null };
                 var azureSasCredential = new AzureSasCredential(options.ServiceUri!.Query);
 
@@ -122,7 +115,6 @@ internal sealed class BlobServiceAvailableHealthCheck
                     azureSasCredential,
                     clientOptions
                 );
-            }
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }
