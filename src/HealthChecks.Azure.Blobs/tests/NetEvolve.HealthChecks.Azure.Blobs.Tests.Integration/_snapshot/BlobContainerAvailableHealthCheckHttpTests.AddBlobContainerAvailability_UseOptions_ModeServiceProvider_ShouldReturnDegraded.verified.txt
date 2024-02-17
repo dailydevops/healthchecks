@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: TestContainerDegraded: Degraded,
-      name: TestContainerDegraded,
+      description: BlobHttpServiceProviderDegraded: Degraded,
+      name: BlobHttpServiceProviderDegraded,
       status: Degraded
     }
   ],

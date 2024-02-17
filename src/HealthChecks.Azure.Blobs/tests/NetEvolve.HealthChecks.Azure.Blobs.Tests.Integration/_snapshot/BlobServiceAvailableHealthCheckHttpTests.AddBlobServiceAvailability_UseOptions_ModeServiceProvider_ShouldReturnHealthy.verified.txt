@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: TestContainerHealthy: Healthy,
-      name: TestContainerHealthy,
+      description: ServiceHttpServiceProviderHealthy: Healthy,
+      name: ServiceHttpServiceProviderHealthy,
       status: Healthy
     }
   ],
