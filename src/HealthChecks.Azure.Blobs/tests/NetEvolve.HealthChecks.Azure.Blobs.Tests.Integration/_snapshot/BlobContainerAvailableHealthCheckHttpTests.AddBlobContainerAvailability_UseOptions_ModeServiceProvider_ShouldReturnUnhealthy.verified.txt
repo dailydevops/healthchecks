@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: TestContainerDoesNotExists: Container `notexists` does not exist.,
-      name: TestContainerDoesNotExists,
+      description: BlobHttpServiceProviderNotExistsUnhealthy: Container `notexists` does not exist.,
+      name: BlobHttpServiceProviderNotExistsUnhealthy,
       status: Unhealthy
     }
   ],

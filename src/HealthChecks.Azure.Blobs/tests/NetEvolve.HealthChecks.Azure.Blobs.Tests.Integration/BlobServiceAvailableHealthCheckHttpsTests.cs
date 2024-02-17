@@ -39,7 +39,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobServiceAvailability(
-                    "TestContainerHealthy",
+                    "ServiceHttpsServiceProviderHealthy",
                     options =>
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
@@ -60,7 +60,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobServiceAvailability(
-                    "TestContainerDegraded",
+                    "ServiceHttpsServiceProviderDegraded",
                     options =>
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
@@ -82,7 +82,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobServiceAvailability(
-                    "TestContainerHealthy",
+                    "ServiceHttpsServiceProviderWithConfigurationHealthy",
                     options =>
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
@@ -106,7 +106,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobServiceAvailability(
-                "TestContainerHealthy",
+                "ServiceHttpsConnectionStringHealthy",
                 options =>
                 {
                     options.ConnectionString = _container.ConnectionString;
@@ -120,7 +120,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobServiceAvailability(
-                "TestContainerDegraded",
+                "ServiceHttpsConnectionStringDegraded",
                 options =>
                 {
                     options.ConnectionString = _container.ConnectionString;
@@ -135,7 +135,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
     //    await RunAndVerify(healthChecks =>
     //    {
     //        _ = healthChecks.AddBlobServiceAvailability(
-    //            "TestContainerHealthy",
+    //            "ServiceHttpsSharedKeyHealthy",
     //            options =>
     //            {
     //                options.AccountKey = AzuriteHttpAccess.AccountKey;
@@ -151,7 +151,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
     //    await RunAndVerify(healthChecks =>
     //    {
     //        _ = healthChecks.AddBlobServiceAvailability(
-    //            "TestContainerDegraded",
+    //            "ServiceHttpsSharedKeyDegraded",
     //            options =>
     //            {
     //                options.AccountKey = AzuriteHttpAccess.AccountKey;
@@ -168,7 +168,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobServiceAvailability(
-                "TestContainerHealthy",
+                "ServiceHttpsAzureSasCredentialHealthy",
                 options =>
                 {
                     options.Mode = ClientCreationMode.AzureSasCredential;
@@ -182,7 +182,7 @@ public class BlobServiceAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobServiceAvailability(
-                "TestContainerDegraded",
+                "ServiceHttpsAzureSasCredentialDegraded",
                 options =>
                 {
                     options.Mode = ClientCreationMode.AzureSasCredential;

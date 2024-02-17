@@ -46,7 +46,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobContainerAvailability(
-                    "TestContainerHealthy",
+                    "BlobHttpsServiceProviderHealthy",
                     options =>
                     {
                         options.ContainerName = "test";
@@ -68,7 +68,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobContainerAvailability(
-                    "TestContainerHealthy",
+                    "BlobHttpsServiceProviderWithConfigurationHealthy",
                     options =>
                     {
                         options.ContainerName = "test";
@@ -94,7 +94,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobContainerAvailability(
-                    "TestContainerDegraded",
+                    "BlobHttpsServiceProviderDegraded",
                     options =>
                     {
                         options.ContainerName = "test";
@@ -117,7 +117,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
             healthChecks =>
             {
                 _ = healthChecks.AddBlobContainerAvailability(
-                    "TestContainerDoesNotExists",
+                    "BlobHttpsServiceProviderNotExistsUnhealty",
                     options =>
                     {
                         options.ContainerName = "notexists";
@@ -139,7 +139,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobContainerAvailability(
-                "TestContainerHealthy",
+                "BlobHttpsConnectionStringHealthy",
                 options =>
                 {
                     options.ContainerName = "test";
@@ -154,7 +154,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobContainerAvailability(
-                "TestContainerDegraded",
+                "BlobHttpsConnectionStringDegraded",
                 options =>
                 {
                     options.ContainerName = "test";
@@ -170,7 +170,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
     //    await RunAndVerify(healthChecks =>
     //    {
     //        _ = healthChecks.AddBlobContainerAvailability(
-    //            "TestContainerHealthy",
+    //            "BlobHttpsSharedKeyHealthy",
     //            options =>
     //            {
     //                options.ContainerName = "test";
@@ -187,7 +187,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
     //    await RunAndVerify(healthChecks =>
     //    {
     //        _ = healthChecks.AddBlobContainerAvailability(
-    //            "TestContainerDegraded",
+    //            "BlobHttpsSharedKeyDegraded",
     //            options =>
     //            {
     //                options.ContainerName = "test";
@@ -205,7 +205,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobContainerAvailability(
-                "TestContainerHealthy",
+                "BlobHttpsAzureSasCredentialHealthy",
                 options =>
                 {
                     options.ContainerName = "test";
@@ -220,7 +220,7 @@ public class BlobContainerAvailableHealthCheckHttpsTests
         await RunAndVerify(healthChecks =>
         {
             _ = healthChecks.AddBlobContainerAvailability(
-                "TestContainerDegraded",
+                "BlobHttpsAzureSasCredentialDegraded",
                 options =>
                 {
                     options.ContainerName = "test";
