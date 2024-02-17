@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: ServiceHttpsSharedKeyDegraded: Degraded,
+      name: ServiceHttpsSharedKeyDegraded,
+      status: Degraded
+    }
+  ],
+  status: Degraded
+}

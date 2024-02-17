@@ -22,11 +22,15 @@ public class BlobServiceAvailableHealthCheckHttpTests
     private readonly AzuriteHttpAccess _container;
     private readonly Uri _accountSasUri;
 
+    // TODO: Remove when TestContainers is providing this settíng
+    private readonly Uri _uriBlobStorage;
+
     public BlobServiceAvailableHealthCheckHttpTests(AzuriteHttpAccess container)
     {
         _container = container;
 
         var client = new BlobServiceClient(_container.ConnectionString);
+        _uriBlobStorage = client.Uri;
 
         _accountSasUri = client.GenerateAccountSasUri(
             AccountSasPermissions.All,
@@ -132,38 +136,46 @@ public class BlobServiceAvailableHealthCheckHttpTests
             );
         });
 
-    //[Fact]
-    //public async Task AddBlobServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
-    //    await RunAndVerify(healthChecks =>
-    //    {
-    //        _ = healthChecks.AddBlobServiceAvailability(
-    //            "ServiceHttpSharedKeyHealthy",
-    //            options =>
-    //            {
-    //                options.AccountKey = AzuriteHttpAccess.AccountKey;
-    //                options.AccountName = AzuriteHttpAccess.AccountName;
-    //                options.Mode = ClientCreationMode.SharedKey;
-    //                options.ServiceUri = _container.BlobEndpoint;
-    //            }
-    //        );
-    //    });
+    [Fact]
+    public async Task AddBlobServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddBlobServiceAvailability(
+                "ServiceHttpSharedKeyHealthy",
+                options =>
+                {
+                    options.AccountKey = AzuriteHttpAccess.AccountKey;
+                    options.AccountName = AzuriteHttpAccess.AccountName;
+                    options.Mode = ClientCreationMode.SharedKey;
+                    // TODO: Change when TestContainers is providing this settíng
+                    // options.ServiceUri = _container.BlobEndpoint;
+                    options.ServiceUri = _uriBlobStorage;
+                    options.ConfigureClientOptions = clientOptions =>
+                    {
+                        clientOptions.Retry.MaxRetries = 0;
+                    };
+                }
+            );
+        });
 
-    //[Fact]
-    //public async Task AddBlobServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
-    //    await RunAndVerify(healthChecks =>
-    //    {
-    //        _ = healthChecks.AddBlobServiceAvailability(
-    //            "ServiceHttpSharedKeyDegraded",
-    //            options =>
-    //            {
-    //                options.AccountKey = AzuriteHttpAccess.AccountKey;
-    //                options.AccountName = AzuriteHttpAccess.AccountName;
-    //                options.Mode = ClientCreationMode.SharedKey;
-    //                options.ServiceUri = _container.BlobEndpoint;
-    //                options.Timeout = 0;
-    //            }
-    //        );
-    //    });
+    [Fact]
+    public async Task AddBlobServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddBlobServiceAvailability(
+                "ServiceHttpSharedKeyDegraded",
+                options =>
+                {
+                    options.AccountKey = AzuriteHttpAccess.AccountKey;
+                    options.AccountName = AzuriteHttpAccess.AccountName;
+                    options.Mode = ClientCreationMode.SharedKey;
+                    options.Timeout = 0;
+                    // TODO: Change when TestContainers is providing this settíng
+                    // options.ServiceUri = _container.BlobEndpoint;
+                    options.ServiceUri = _uriBlobStorage;
+                }
+            );
+        });
 
     [Fact]
     public async Task AddBlobServiceAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>

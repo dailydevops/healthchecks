@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: BlobHttpsSharedKeyHealthy: Healthy,
+      name: BlobHttpsSharedKeyHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}
