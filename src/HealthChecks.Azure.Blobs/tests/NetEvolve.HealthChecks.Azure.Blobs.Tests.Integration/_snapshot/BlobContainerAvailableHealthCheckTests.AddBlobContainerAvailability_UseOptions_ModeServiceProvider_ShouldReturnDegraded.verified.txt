@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: BlobServiceProviderDegraded: Degraded,
+      name: BlobServiceProviderDegraded,
+      status: Degraded
+    }
+  ],
+  status: Degraded
+}

@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: ServiceServiceProviderHealthy: Healthy,
+      name: ServiceServiceProviderHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}
