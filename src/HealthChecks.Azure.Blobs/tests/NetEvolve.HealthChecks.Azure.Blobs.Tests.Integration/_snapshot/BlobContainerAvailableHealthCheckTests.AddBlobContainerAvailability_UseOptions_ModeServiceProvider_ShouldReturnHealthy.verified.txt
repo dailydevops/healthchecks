@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: BlobServiceProviderHealthy: Healthy,
+      name: BlobServiceProviderHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}
