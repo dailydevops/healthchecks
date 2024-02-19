@@ -19,7 +19,7 @@
     <Title>$(MSBuildProjectName)</Title>
     <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/healthchecks</PackageProjectUrl>
-    <PackageTags>healthcheck;diagnostics;</PackageTags>
+    <PackageTags>healthcheck;healthchecks;health;diagnostics;</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Label="Settings for test projects" Condition=" '$(IsTestableProject)' == 'true' ">
