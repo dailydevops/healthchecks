@@ -15,5 +15,7 @@ internal interface IBlobOptions
 
     ClientCreationMode Mode { get; }
 
-    Action<BlobClientOptions>? ConfigureClientOptions { get; set; }
+    Action<BlobClientOptions>? ConfigureClientOptions { get; }
+
+    int Timeout { get; }
 }

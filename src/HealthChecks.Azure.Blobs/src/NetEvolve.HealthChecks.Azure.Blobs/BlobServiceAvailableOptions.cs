@@ -8,10 +8,14 @@ using global::Azure.Storage.Blobs;
 /// </summary>
 public sealed class BlobServiceAvailableOptions : IBlobOptions
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets or sets the connection string.
+    /// </summary>
     public string? ConnectionString { get; set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets or sets the mode to create the client.
+    /// </summary>
     public ClientCreationMode Mode { get; set; }
 
     /// <summary>
@@ -19,15 +23,23 @@ public sealed class BlobServiceAvailableOptions : IBlobOptions
     /// </summary>
     public int Timeout { get; set; } = 100;
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets or sets the service uri.
+    /// </summary>
     public Uri? ServiceUri { get; set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets or sets the account name.
+    /// </summary>
     public string? AccountName { get; set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets or sets the account key.
+    /// </summary>
     public string? AccountKey { get; set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets or sets the lambda to configure the <see cref="BlobClientOptions"/>.
+    /// </summary>
     public Action<BlobClientOptions>? ConfigureClientOptions { get; set; }
 }

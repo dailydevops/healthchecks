@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
+using NetEvolve.HealthChecks.Abstractions;
 
 internal sealed class BlobServiceAvailableHealthCheck
-    : BlobHealthCheckBase<BlobServiceAvailableOptions>
+    : ConfigurableHealthCheckBase<BlobServiceAvailableOptions>
 {
+    private readonly IServiceProvider _serviceProvider;
+
     public BlobServiceAvailableHealthCheck(
         IServiceProvider serviceProvider,
         IOptionsMonitor<BlobServiceAvailableOptions> optionsMonitor
     )
-        : base(serviceProvider, optionsMonitor) { }
+        : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
@@ -23,7 +26,7 @@ internal sealed class BlobServiceAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var blobClient = GetBlobServiceClient(name, options, _serviceProvider);
+        var blobClient = ClientCreation.GetBlobServiceClient(name, options, _serviceProvider);
 
         var blobTask = blobClient
             .GetBlobContainersAsync(cancellationToken: cancellationToken)
