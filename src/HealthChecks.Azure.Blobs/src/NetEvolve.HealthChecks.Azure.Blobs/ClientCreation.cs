@@ -9,27 +9,17 @@ using global::Azure.Identity;
 using global::Azure.Storage;
 using global::Azure.Storage.Blobs;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
 
-internal abstract class BlobHealthCheckBase<TOptions> : ConfigurableHealthCheckBase<TOptions>
-    where TOptions : class, IBlobOptions
+internal static class ClientCreation
 {
-    protected readonly IServiceProvider _serviceProvider;
     private static ConcurrentDictionary<string, BlobServiceClient>? _blobServiceClients;
 
-    /// <inheritdoc/>
-    protected BlobHealthCheckBase(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<TOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    internal static BlobServiceClient GetBlobServiceClient(
+    internal static BlobServiceClient GetBlobServiceClient<TOptions>(
         string name,
         TOptions options,
         IServiceProvider serviceProvider
     )
+        where TOptions : class, IBlobOptions
     {
         if (options.Mode == ClientCreationMode.ServiceProvider)
         {
@@ -49,10 +39,11 @@ internal abstract class BlobHealthCheckBase<TOptions> : ConfigurableHealthCheckB
         );
     }
 
-    internal static BlobServiceClient CreateBlobServiceClient(
+    internal static BlobServiceClient CreateBlobServiceClient<TOptions>(
         TOptions options,
         IServiceProvider serviceProvider
     )
+        where TOptions : class, IBlobOptions
     {
         BlobClientOptions? clientOptions = null;
         if (options.ConfigureClientOptions is not null)

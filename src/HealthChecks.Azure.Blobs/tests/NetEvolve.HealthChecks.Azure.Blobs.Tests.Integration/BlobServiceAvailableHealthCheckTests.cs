@@ -21,8 +21,6 @@ public class BlobServiceAvailableHealthCheckTests
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _accountSasUri;
-
-    // TODO: Remove when TestContainers is providing this settíng
     private readonly Uri _uriBlobStorage;
 
     public BlobServiceAvailableHealthCheckTests(AzuriteAccess container)
@@ -147,8 +145,6 @@ public class BlobServiceAvailableHealthCheckTests
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = ClientCreationMode.SharedKey;
-                    // TODO: Change when TestContainers is providing this settíng
-                    // options.ServiceUri = _container.BlobEndpoint;
                     options.ServiceUri = _uriBlobStorage;
                     options.ConfigureClientOptions = clientOptions =>
                     {
@@ -170,8 +166,6 @@ public class BlobServiceAvailableHealthCheckTests
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = ClientCreationMode.SharedKey;
                     options.Timeout = 0;
-                    // TODO: Change when TestContainers is providing this settíng
-                    // options.ServiceUri = _container.BlobEndpoint;
                     options.ServiceUri = _uriBlobStorage;
                 }
             );
