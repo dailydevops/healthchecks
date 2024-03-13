@@ -22,7 +22,7 @@
     <PackageVersion Update="Microsoft.AspNetCore.TestHost" Version="7.0.16" Condition=" '$(TargetFramework)' == 'net7.0' " />
     <PackageVersion Update="Microsoft.AspNetCore.TestHost" Version="6.0.27" Condition=" '$(TargetFramework)' == 'net6.0' " />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.5" />
-    <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.2" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.3" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageVersion Include="MySql.Data" Version="8.3.0" />
     <PackageVersion Include="MySqlConnector" Version="2.3.5" />
