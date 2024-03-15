@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: BlobConnectionStringHealthy: Healthy,
+      name: BlobConnectionStringHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

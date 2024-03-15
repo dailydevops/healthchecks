@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: BlobServiceProviderNotExistsUnhealthy: Container `notexists` does not exist.,
+      name: BlobServiceProviderNotExistsUnhealthy,
+      status: Unhealthy
+    }
+  ],
+  status: Unhealthy
+}

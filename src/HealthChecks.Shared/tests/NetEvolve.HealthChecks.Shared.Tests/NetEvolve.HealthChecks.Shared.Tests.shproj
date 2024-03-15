@@ -10,6 +10,7 @@
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="HealthCheckTestBase.cs" />
+    <Compile Include="Internals.cs" />
     <Compile Include="ModuleInitializer.cs" />
   </ItemGroup>
   <Import Project="NetEvolve.HealthChecks.Tests.Shared.projitems" Label="Shared" />
