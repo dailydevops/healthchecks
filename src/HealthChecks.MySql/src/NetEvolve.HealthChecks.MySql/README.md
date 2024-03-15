@@ -28,7 +28,7 @@ Therefor you can use two different approaches. In both approaches you have to pr
 :heavy_exclamation_mark: The configuration of this package is compatible with the [NetEvolve.HealthChecks.MySql.Connector](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/) package.
 
 ### Parameters
-- `name`: The name of the health check. The name will be used to identify the configuration object.
+- `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
 - `tags`: The tags for the health check. The tags `mysql` and `database` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 

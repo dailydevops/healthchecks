@@ -14,7 +14,7 @@ param (
   # Parameter help description
   [Parameter(Mandatory = $false)]
   [String]
-  $Framework = 'net7.0',
+  $Framework = 'net8.0',
 
   # Parameter help description
   [Parameter(Mandatory = $false)]
