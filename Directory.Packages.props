@@ -27,7 +27,7 @@
     <PackageVersion Include="MySql.Data" Version="8.3.0" />
     <PackageVersion Include="MySqlConnector" Version="2.3.6" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.123" />
-    <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.110" />
+    <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.1.128" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.0.13" />
     <PackageVersion Include="Npgsql" Version="8.0.2" />
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
