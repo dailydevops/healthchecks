@@ -2,7 +2,7 @@
 param (
 )
 Write-Output "Updating submodules ..."
-git submodule update --init --recursive --remote | Out-Null
+git submodule update --recursive --remote | Out-Null
 
 . .\eng\scripts\update-solution.ps1
 
