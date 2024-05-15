@@ -24,20 +24,20 @@ updates:
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 50
-    groups:
-      coverlet:
-        patterns:
-          - "coverlet*"
-      testcontainers:
-        patterns:
-          - "testcontainers*"
-      verify:
-        patterns:
-          - "verify*"
-      xunit:
-        patterns:
-          - "xunit"
-          - "xunit*"
+    #groups:
+    #  coverlet:
+    #    patterns:
+    #      - "coverlet*"
+    #  testcontainers:
+    #    patterns:
+    #      - "testcontainers*"
+    #  verify:
+    #    patterns:
+    #      - "verify*"
+    #  xunit:
+    #    patterns:
+    #      - "xunit"
+    #      - "xunit*"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
