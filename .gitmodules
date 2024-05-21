@@ -1,4 +1,4 @@
 [submodule "eng"]
 	path = eng
 	url = https://github.com/dailydevops/dotnet-engineering.git
-    update = merge
+	update = rebase
