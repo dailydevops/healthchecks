@@ -3,6 +3,9 @@
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
+# Every time I update this file without changing the content, I increment this counter.
+# Counter: 12
+
 version: 2
 updates:
   - package-ecosystem: "github-actions"
@@ -24,24 +27,24 @@ updates:
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 50
-    # groups:
-    #  coverlet:
-    #    patterns:
-    #      - "coverlet*"
-    #  nunit:
-    #    patterns:
-    #      - "nunit"
-    #      - "nunit*"
-    #  testcontainers:
-    #    patterns:
-    #      - "testcontainers*"
-    #  verify:
-    #    patterns:
-    #      - "verify*"
-    #  xunit:
-    #    patterns:
-    #      - "xunit"
-    #      - "xunit*"
+    groups:
+     coverlet:
+       patterns:
+         - "coverlet*"
+     nunit:
+       patterns:
+         - "nunit"
+         - "nunit*"
+     testcontainers:
+       patterns:
+         - "testcontainers*"
+     verify:
+       patterns:
+         - "verify*"
+     xunit:
+       patterns:
+         - "xunit"
+         - "xunit*"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
@@ -52,10 +55,10 @@ updates:
     labels:
       - "dependency-gitmodule"
     open-pull-requests-limit: 50
-    # groups:
-    #   submodules:
-    #     patterns:
-    #       - "*"
+    groups:
+      submodules:
+        patterns:
+          - "*"
 
   - package-ecosystem: "devcontainers"
     directory: "/"
