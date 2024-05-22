@@ -16,7 +16,7 @@ public sealed class BlobServiceAvailableOptions : IBlobOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public ClientCreationMode Mode { get; set; }
+    public BlobClientCreationMode Mode { get; set; }
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds for executing the healthcheck.

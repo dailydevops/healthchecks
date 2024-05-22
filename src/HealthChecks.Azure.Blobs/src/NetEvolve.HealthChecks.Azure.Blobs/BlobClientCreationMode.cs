@@ -7,7 +7,7 @@ using global::Azure.Storage.Blobs;
 /// <summary>
 /// Describes the mode used to create the <see cref="BlobServiceClient"/>.
 /// </summary>
-public enum ClientCreationMode
+public enum BlobClientCreationMode
 {
     /// <summary>
     /// The default mode. The <see cref="BlobServiceClient"/> is loading the preregistered instance from the <see cref="IServiceProvider"/>.

@@ -74,14 +74,14 @@ public sealed class BlobServiceAvailableConfigureTests
                 false,
                 "The mode `13` is not supported.",
                 "name",
-                new BlobServiceAvailableOptions { Mode = (ClientCreationMode)13 }
+                new BlobServiceAvailableOptions { Mode = (BlobClientCreationMode)13 }
             },
             // Mode: ServiceProvider
             {
                 false,
                 $"No service of type `{nameof(BlobServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new BlobServiceAvailableOptions { Mode = ClientCreationMode.ServiceProvider }
+                new BlobServiceAvailableOptions { Mode = BlobClientCreationMode.ServiceProvider }
             },
             // Mode: DefaultAzureCredentials
             {
@@ -90,7 +90,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.DefaultAzureCredentials
+                    Mode = BlobClientCreationMode.DefaultAzureCredentials
                 }
             },
             {
@@ -99,7 +99,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.DefaultAzureCredentials,
+                    Mode = BlobClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
             },
@@ -109,7 +109,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.DefaultAzureCredentials,
+                    Mode = BlobClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute)
                 }
             },
@@ -118,7 +118,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
-                new BlobServiceAvailableOptions { Mode = ClientCreationMode.ConnectionString }
+                new BlobServiceAvailableOptions { Mode = BlobClientCreationMode.ConnectionString }
             },
             {
                 true,
@@ -126,7 +126,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.ConnectionString,
+                    Mode = BlobClientCreationMode.ConnectionString,
                     ConnectionString = "connectionString"
                 }
             },
@@ -135,7 +135,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
-                new BlobServiceAvailableOptions { Mode = ClientCreationMode.SharedKey }
+                new BlobServiceAvailableOptions { Mode = BlobClientCreationMode.SharedKey }
             },
             {
                 false,
@@ -143,7 +143,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.SharedKey,
+                    Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
             },
@@ -153,7 +153,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.SharedKey,
+                    Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = null
                 }
@@ -164,7 +164,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.SharedKey,
+                    Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
                     AccountKey = null
@@ -176,7 +176,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.SharedKey,
+                    Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
                     AccountKey = "test"
@@ -187,7 +187,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
-                new BlobServiceAvailableOptions { Mode = ClientCreationMode.AzureSasCredential }
+                new BlobServiceAvailableOptions { Mode = BlobClientCreationMode.AzureSasCredential }
             },
             {
                 false,
@@ -195,7 +195,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.AzureSasCredential,
+                    Mode = BlobClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("/relative", UriKind.Relative)
                 }
             },
@@ -205,7 +205,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.AzureSasCredential,
+                    Mode = BlobClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute", UriKind.Absolute)
                 }
             },
@@ -215,7 +215,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 "name",
                 new BlobServiceAvailableOptions
                 {
-                    Mode = ClientCreationMode.AzureSasCredential,
+                    Mode = BlobClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute)
                 }
             }

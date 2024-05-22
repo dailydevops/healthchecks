@@ -13,7 +13,7 @@ public class ClientCreationTests
     [Fact]
     public void CreateBlobServiceClient_InvalidMode_ThrowUnreachableException()
     {
-        var options = new BlobContainerAvailableOptions { Mode = (ClientCreationMode)13 };
+        var options = new BlobContainerAvailableOptions { Mode = (BlobClientCreationMode)13 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         _ = Assert.Throws<UnreachableException>(

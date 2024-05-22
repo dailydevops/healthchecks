@@ -13,7 +13,7 @@ internal interface IBlobOptions
 
     string? AccountKey { get; }
 
-    ClientCreationMode Mode { get; }
+    BlobClientCreationMode Mode { get; }
 
     Action<BlobClientOptions>? ConfigureClientOptions { get; }
 

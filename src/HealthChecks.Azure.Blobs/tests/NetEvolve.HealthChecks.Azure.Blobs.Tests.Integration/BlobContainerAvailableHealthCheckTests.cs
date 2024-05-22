@@ -54,7 +54,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options =>
                     {
                         options.ContainerName = "test";
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                     }
                 );
             },
@@ -76,7 +76,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options =>
                     {
                         options.ContainerName = "test";
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.Timeout = 0;
                     }
                 );
@@ -99,7 +99,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options =>
                     {
                         options.ContainerName = "notexists";
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.Timeout = 0;
                     }
                 );
@@ -122,7 +122,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options =>
                     {
                         options.ContainerName = "test";
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
                         {
                             clientOptions.Retry.MaxRetries = 0;
@@ -148,7 +148,7 @@ public class BlobContainerAvailableHealthCheckTests
                 {
                     options.ContainerName = "test";
                     options.ConnectionString = _container.ConnectionString;
-                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.Mode = BlobClientCreationMode.ConnectionString;
                 }
             );
         });
@@ -163,7 +163,7 @@ public class BlobContainerAvailableHealthCheckTests
                 {
                     options.ContainerName = "test";
                     options.ConnectionString = _container.ConnectionString;
-                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.Mode = BlobClientCreationMode.ConnectionString;
                     options.Timeout = 0;
                 }
             );
@@ -180,7 +180,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options.ContainerName = "test";
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = ClientCreationMode.SharedKey;
+                    options.Mode = BlobClientCreationMode.SharedKey;
                     options.ServiceUri = _uriBlobStorage;
                     options.ConfigureClientOptions = clientOptions =>
                     {
@@ -201,7 +201,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options.ContainerName = "test";
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = ClientCreationMode.SharedKey;
+                    options.Mode = BlobClientCreationMode.SharedKey;
                     options.Timeout = 0;
                     options.ServiceUri = _uriBlobStorage;
                 }
@@ -217,7 +217,7 @@ public class BlobContainerAvailableHealthCheckTests
                 options =>
                 {
                     options.ContainerName = "test";
-                    options.Mode = ClientCreationMode.AzureSasCredential;
+                    options.Mode = BlobClientCreationMode.AzureSasCredential;
                     options.ServiceUri = _accountSasUri;
                 }
             );
@@ -232,7 +232,7 @@ public class BlobContainerAvailableHealthCheckTests
                 options =>
                 {
                     options.ContainerName = "test";
-                    options.Mode = ClientCreationMode.AzureSasCredential;
+                    options.Mode = BlobClientCreationMode.AzureSasCredential;
                     options.ServiceUri = _accountSasUri;
                     options.Timeout = 0;
                 }

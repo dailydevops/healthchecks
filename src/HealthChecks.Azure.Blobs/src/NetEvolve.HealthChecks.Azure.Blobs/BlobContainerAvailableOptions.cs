@@ -16,7 +16,7 @@ public sealed class BlobContainerAvailableOptions : IBlobOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public ClientCreationMode Mode { get; set; }
+    public BlobClientCreationMode Mode { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.

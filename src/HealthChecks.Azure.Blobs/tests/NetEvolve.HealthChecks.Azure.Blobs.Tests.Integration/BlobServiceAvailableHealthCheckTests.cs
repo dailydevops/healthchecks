@@ -46,7 +46,7 @@ public class BlobServiceAvailableHealthCheckTests
                     "ServiceServiceProviderHealthy",
                     options =>
                     {
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                     }
                 );
             },
@@ -67,7 +67,7 @@ public class BlobServiceAvailableHealthCheckTests
                     "ServiceServiceProviderWithConfigurationHealthy",
                     options =>
                     {
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
                         {
                             clientOptions.Retry.MaxRetries = 0;
@@ -92,7 +92,7 @@ public class BlobServiceAvailableHealthCheckTests
                     "ServiceServiceProviderDegraded",
                     options =>
                     {
-                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.Timeout = 0;
                     }
                 );
@@ -114,7 +114,7 @@ public class BlobServiceAvailableHealthCheckTests
                 options =>
                 {
                     options.ConnectionString = _container.ConnectionString;
-                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.Mode = BlobClientCreationMode.ConnectionString;
                 }
             );
         });
@@ -128,7 +128,7 @@ public class BlobServiceAvailableHealthCheckTests
                 options =>
                 {
                     options.ConnectionString = _container.ConnectionString;
-                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.Mode = BlobClientCreationMode.ConnectionString;
                     options.Timeout = 0;
                 }
             );
@@ -144,7 +144,7 @@ public class BlobServiceAvailableHealthCheckTests
                 {
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = ClientCreationMode.SharedKey;
+                    options.Mode = BlobClientCreationMode.SharedKey;
                     options.ServiceUri = _uriBlobStorage;
                     options.ConfigureClientOptions = clientOptions =>
                     {
@@ -164,7 +164,7 @@ public class BlobServiceAvailableHealthCheckTests
                 {
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = ClientCreationMode.SharedKey;
+                    options.Mode = BlobClientCreationMode.SharedKey;
                     options.Timeout = 0;
                     options.ServiceUri = _uriBlobStorage;
                 }
@@ -179,7 +179,7 @@ public class BlobServiceAvailableHealthCheckTests
                 "ServiceAzureSasCredentialHealthy",
                 options =>
                 {
-                    options.Mode = ClientCreationMode.AzureSasCredential;
+                    options.Mode = BlobClientCreationMode.AzureSasCredential;
                     options.ServiceUri = _accountSasUri;
                 }
             );
@@ -193,7 +193,7 @@ public class BlobServiceAvailableHealthCheckTests
                 "ServiceAzureSasCredentialDegraded",
                 options =>
                 {
-                    options.Mode = ClientCreationMode.AzureSasCredential;
+                    options.Mode = BlobClientCreationMode.AzureSasCredential;
                     options.ServiceUri = _accountSasUri;
                     options.Timeout = 0;
                 }

@@ -60,12 +60,12 @@ internal sealed class BlobContainerAvailableConfigure
 
         return options.Mode switch
         {
-            ClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
-            ClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            ClientCreationMode.DefaultAzureCredentials
+            BlobClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
+            BlobClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
+            BlobClientCreationMode.DefaultAzureCredentials
                 => ValidateModeDefaultAzureCredentials(options),
-            ClientCreationMode.SharedKey => ValidateModeSharedKey(options),
-            ClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
+            BlobClientCreationMode.SharedKey => ValidateModeSharedKey(options),
+            BlobClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),
         };
     }
@@ -77,21 +77,21 @@ internal sealed class BlobContainerAvailableConfigure
         if (options.ServiceUri is null)
         {
             return Fail(
-                $"The service url cannot be null when using `{nameof(ClientCreationMode.AzureSasCredential)}` mode."
+                $"The service url cannot be null when using `{nameof(BlobClientCreationMode.AzureSasCredential)}` mode."
             );
         }
 
         if (!options.ServiceUri.IsAbsoluteUri)
         {
             return Fail(
-                $"The service url must be an absolute url when using `{nameof(ClientCreationMode.AzureSasCredential)}` mode."
+                $"The service url must be an absolute url when using `{nameof(BlobClientCreationMode.AzureSasCredential)}` mode."
             );
         }
 
         if (string.IsNullOrWhiteSpace(options.ServiceUri.Query))
         {
             return Fail(
-                $"The sas query token cannot be null or whitespace when using `{nameof(ClientCreationMode.AzureSasCredential)}` mode."
+                $"The sas query token cannot be null or whitespace when using `{nameof(BlobClientCreationMode.AzureSasCredential)}` mode."
             );
         }
 
@@ -105,28 +105,28 @@ internal sealed class BlobContainerAvailableConfigure
         if (options.ServiceUri is null)
         {
             return Fail(
-                $"The service url cannot be null when using `{nameof(ClientCreationMode.SharedKey)}` mode."
+                $"The service url cannot be null when using `{nameof(BlobClientCreationMode.SharedKey)}` mode."
             );
         }
 
         if (!options.ServiceUri.IsAbsoluteUri)
         {
             return Fail(
-                $"The service url must be an absolute url when using `{nameof(ClientCreationMode.SharedKey)}` mode."
+                $"The service url must be an absolute url when using `{nameof(BlobClientCreationMode.SharedKey)}` mode."
             );
         }
 
         if (string.IsNullOrWhiteSpace(options.AccountName))
         {
             return Fail(
-                $"The account name cannot be null or whitespace when using `{nameof(ClientCreationMode.SharedKey)}` mode."
+                $"The account name cannot be null or whitespace when using `{nameof(BlobClientCreationMode.SharedKey)}` mode."
             );
         }
 
         if (string.IsNullOrWhiteSpace(options.AccountKey))
         {
             return Fail(
-                $"The account key cannot be null or whitespace when using `{nameof(ClientCreationMode.SharedKey)}` mode."
+                $"The account key cannot be null or whitespace when using `{nameof(BlobClientCreationMode.SharedKey)}` mode."
             );
         }
 
@@ -140,14 +140,14 @@ internal sealed class BlobContainerAvailableConfigure
         if (options.ServiceUri is null)
         {
             return Fail(
-                $"The service url cannot be null when using `{nameof(ClientCreationMode.DefaultAzureCredentials)}` mode."
+                $"The service url cannot be null when using `{nameof(BlobClientCreationMode.DefaultAzureCredentials)}` mode."
             );
         }
 
         if (!options.ServiceUri.IsAbsoluteUri)
         {
             return Fail(
-                $"The service url must be an absolute url when using `{nameof(ClientCreationMode.DefaultAzureCredentials)}` mode."
+                $"The service url must be an absolute url when using `{nameof(BlobClientCreationMode.DefaultAzureCredentials)}` mode."
             );
         }
 
@@ -161,7 +161,7 @@ internal sealed class BlobContainerAvailableConfigure
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {
             return Fail(
-                $"The connection string cannot be null or whitespace when using `{nameof(ClientCreationMode.ConnectionString)}` mode."
+                $"The connection string cannot be null or whitespace when using `{nameof(BlobClientCreationMode.ConnectionString)}` mode."
             );
         }
 
