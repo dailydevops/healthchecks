@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: BlobServiceProviderDegraded: Degraded,
+      name: BlobServiceProviderDegraded,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
+    }
+  ],
+  status: Degraded
+}

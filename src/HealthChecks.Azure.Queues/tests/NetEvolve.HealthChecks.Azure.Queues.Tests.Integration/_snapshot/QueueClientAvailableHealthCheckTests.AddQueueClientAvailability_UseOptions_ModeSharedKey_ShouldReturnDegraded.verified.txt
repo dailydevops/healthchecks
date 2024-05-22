@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: QueueSharedKeyDegraded: Degraded,
+      name: QueueSharedKeyDegraded,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        queue
+      ]
+    }
+  ],
+  status: Degraded
+}

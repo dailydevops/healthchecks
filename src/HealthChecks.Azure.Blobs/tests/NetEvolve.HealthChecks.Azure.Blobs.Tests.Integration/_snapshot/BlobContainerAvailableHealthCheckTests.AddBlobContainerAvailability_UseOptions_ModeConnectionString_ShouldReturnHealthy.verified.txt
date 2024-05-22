@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: BlobConnectionStringHealthy: Healthy,
+      name: BlobConnectionStringHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
+    }
+  ],
+  status: Healthy
+}

@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: BlobServiceProviderWithConfigurationHealthy: Healthy,
+      name: BlobServiceProviderWithConfigurationHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
+    }
+  ],
+  status: Healthy
+}

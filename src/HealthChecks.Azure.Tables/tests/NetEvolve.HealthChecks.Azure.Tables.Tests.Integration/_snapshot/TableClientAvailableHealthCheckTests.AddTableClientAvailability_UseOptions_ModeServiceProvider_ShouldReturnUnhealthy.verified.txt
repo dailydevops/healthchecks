@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: TableServiceProviderNotExistsUnhealthy: Unexpected error.,
+      exception: {
+        message: null,
+        type: Azure.RequestFailedException
+      },
+      name: TableServiceProviderNotExistsUnhealthy,
+      status: Unhealthy,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Unhealthy
+}

@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks;
+﻿namespace NetEvolve.HealthChecks.Abstractions;
 
 using System;
 using System.Collections.Generic;

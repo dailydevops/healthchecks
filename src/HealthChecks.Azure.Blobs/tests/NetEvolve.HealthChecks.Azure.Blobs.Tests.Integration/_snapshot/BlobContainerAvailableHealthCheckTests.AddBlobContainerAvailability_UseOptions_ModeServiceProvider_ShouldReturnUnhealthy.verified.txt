@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: BlobServiceProviderNotExistsUnhealthy: Container `notexists` does not exist.,
+      name: BlobServiceProviderNotExistsUnhealthy,
+      status: Unhealthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
+    }
+  ],
+  status: Unhealthy
+}

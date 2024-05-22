@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: BlobSharedKeyHealthy: Healthy,
+      name: BlobSharedKeyHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
+    }
+  ],
+  status: Healthy
+}
