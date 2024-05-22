@@ -3,7 +3,12 @@
     {
       description: BlobSharedKeyHealthy: Healthy,
       name: BlobSharedKeyHealthy,
-      status: Healthy
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Healthy

@@ -71,7 +71,7 @@ public sealed class QueueClientAvailableConfigureTests
             },
             {
                 false,
-                "The container name cannot be null or whitespace.",
+                "The queue name cannot be null or whitespace.",
                 "name",
                 new QueueClientAvailableOptions()
             },

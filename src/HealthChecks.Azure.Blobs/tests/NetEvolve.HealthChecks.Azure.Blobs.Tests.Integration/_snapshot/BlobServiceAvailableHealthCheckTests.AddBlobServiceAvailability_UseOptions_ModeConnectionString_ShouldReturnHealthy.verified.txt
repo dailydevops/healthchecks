@@ -3,7 +3,12 @@
     {
       description: ServiceConnectionStringHealthy: Healthy,
       name: ServiceConnectionStringHealthy,
-      status: Healthy
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Healthy

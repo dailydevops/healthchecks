@@ -3,7 +3,12 @@
     {
       description: BlobServiceProviderWithConfigurationHealthy: Healthy,
       name: BlobServiceProviderWithConfigurationHealthy,
-      status: Healthy
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Healthy

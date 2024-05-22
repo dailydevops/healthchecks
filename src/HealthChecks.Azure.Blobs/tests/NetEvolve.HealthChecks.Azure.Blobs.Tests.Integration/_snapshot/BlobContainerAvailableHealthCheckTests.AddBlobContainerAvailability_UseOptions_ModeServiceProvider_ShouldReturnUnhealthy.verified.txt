@@ -3,7 +3,12 @@
     {
       description: BlobServiceProviderNotExistsUnhealthy: Container `notexists` does not exist.,
       name: BlobServiceProviderNotExistsUnhealthy,
-      status: Unhealthy
+      status: Unhealthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Unhealthy

@@ -3,7 +3,12 @@
     {
       description: ServiceServiceProviderDegraded: Degraded,
       name: ServiceServiceProviderDegraded,
-      status: Degraded
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        queue
+      ]
     }
   ],
   status: Degraded

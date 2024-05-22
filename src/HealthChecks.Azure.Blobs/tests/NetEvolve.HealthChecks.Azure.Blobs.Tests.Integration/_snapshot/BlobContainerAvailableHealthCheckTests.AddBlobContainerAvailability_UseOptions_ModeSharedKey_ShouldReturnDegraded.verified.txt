@@ -3,7 +3,12 @@
     {
       description: BlobSharedKeyDegraded: Degraded,
       name: BlobSharedKeyDegraded,
-      status: Degraded
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Degraded

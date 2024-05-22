@@ -3,7 +3,12 @@
     {
       description: QueueServiceProviderHealthy: Healthy,
       name: QueueServiceProviderHealthy,
-      status: Healthy
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        queue
+      ]
     }
   ],
   status: Healthy

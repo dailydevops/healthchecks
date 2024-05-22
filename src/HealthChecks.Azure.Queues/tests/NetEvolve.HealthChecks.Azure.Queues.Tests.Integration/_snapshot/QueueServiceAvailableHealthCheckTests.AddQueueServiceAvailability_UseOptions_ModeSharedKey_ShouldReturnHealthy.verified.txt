@@ -3,7 +3,12 @@
     {
       description: ServiceSharedKeyHealthy: Healthy,
       name: ServiceSharedKeyHealthy,
-      status: Healthy
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        queue
+      ]
     }
   ],
   status: Healthy

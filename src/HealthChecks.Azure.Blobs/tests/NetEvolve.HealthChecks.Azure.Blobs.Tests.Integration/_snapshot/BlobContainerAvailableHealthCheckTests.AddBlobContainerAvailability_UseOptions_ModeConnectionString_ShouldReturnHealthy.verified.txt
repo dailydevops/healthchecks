@@ -3,7 +3,12 @@
     {
       description: BlobConnectionStringHealthy: Healthy,
       name: BlobConnectionStringHealthy,
-      status: Healthy
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Healthy

@@ -3,7 +3,12 @@
     {
       description: ServiceConnectionStringDegraded: Degraded,
       name: ServiceConnectionStringDegraded,
-      status: Degraded
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Degraded

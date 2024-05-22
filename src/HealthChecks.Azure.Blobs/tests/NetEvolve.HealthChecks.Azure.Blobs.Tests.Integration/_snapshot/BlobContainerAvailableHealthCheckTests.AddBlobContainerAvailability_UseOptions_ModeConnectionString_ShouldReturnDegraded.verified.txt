@@ -3,7 +3,12 @@
     {
       description: BlobConnectionStringDegraded: Degraded,
       name: BlobConnectionStringDegraded,
-      status: Degraded
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        blob
+      ]
     }
   ],
   status: Degraded
