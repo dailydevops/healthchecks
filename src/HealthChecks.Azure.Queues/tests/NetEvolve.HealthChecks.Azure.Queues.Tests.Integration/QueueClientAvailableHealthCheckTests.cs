@@ -34,11 +34,11 @@ public class QueueClientAvailableHealthCheckTests
             AccountSasResourceTypes.All
         );
 
-        var containerClient = client.GetQueueClient("test");
+        var queueClient = client.GetQueueClient("test");
 
-        if (!containerClient.Exists())
+        if (!queueClient.Exists())
         {
-            _ = containerClient.Create();
+            _ = queueClient.Create();
         }
     }
 
