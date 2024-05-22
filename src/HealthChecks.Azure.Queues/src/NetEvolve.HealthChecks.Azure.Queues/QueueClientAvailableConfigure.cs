@@ -51,7 +51,7 @@ internal sealed class QueueClientAvailableConfigure
             return Fail("The timeout cannot be less than infinite (-1).");
         }
 
-        if (string.IsNullOrWhiteSpace(options.ContainerName))
+        if (string.IsNullOrWhiteSpace(options.QueueName))
         {
             return Fail("The container name cannot be null or whitespace.");
         }

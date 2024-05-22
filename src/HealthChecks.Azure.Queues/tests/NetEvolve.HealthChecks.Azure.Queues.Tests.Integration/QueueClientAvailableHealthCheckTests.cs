@@ -51,7 +51,7 @@ public class QueueClientAvailableHealthCheckTests
                     "QueueServiceProviderHealthy",
                     options =>
                     {
-                        options.ContainerName = "test";
+                        options.QueueName = "test";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                     }
                 );
@@ -73,7 +73,7 @@ public class QueueClientAvailableHealthCheckTests
                     "QueueServiceProviderDegraded",
                     options =>
                     {
-                        options.ContainerName = "test";
+                        options.QueueName = "test";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                         options.Timeout = 0;
                     }
@@ -96,7 +96,7 @@ public class QueueClientAvailableHealthCheckTests
                     "QueueServiceProviderNotExistsUnhealthy",
                     options =>
                     {
-                        options.ContainerName = "notexists";
+                        options.QueueName = "notexists";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                         options.Timeout = 0;
                     }
@@ -119,7 +119,7 @@ public class QueueClientAvailableHealthCheckTests
                     "QueueServiceProviderWithConfigurationHealthy",
                     options =>
                     {
-                        options.ContainerName = "test";
+                        options.QueueName = "test";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
                         {
@@ -144,7 +144,7 @@ public class QueueClientAvailableHealthCheckTests
                 "QueueConnectionStringHealthy",
                 options =>
                 {
-                    options.ContainerName = "test";
+                    options.QueueName = "test";
                     options.ConnectionString = _container.ConnectionString;
                     options.Mode = QueueClientCreationMode.ConnectionString;
                 }
@@ -159,7 +159,7 @@ public class QueueClientAvailableHealthCheckTests
                 "QueueConnectionStringDegraded",
                 options =>
                 {
-                    options.ContainerName = "test";
+                    options.QueueName = "test";
                     options.ConnectionString = _container.ConnectionString;
                     options.Mode = QueueClientCreationMode.ConnectionString;
                     options.Timeout = 0;
@@ -175,7 +175,7 @@ public class QueueClientAvailableHealthCheckTests
                 "QueueSharedKeyHealthy",
                 options =>
                 {
-                    options.ContainerName = "test";
+                    options.QueueName = "test";
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = QueueClientCreationMode.SharedKey;
@@ -196,7 +196,7 @@ public class QueueClientAvailableHealthCheckTests
                 "QueueSharedKeyDegraded",
                 options =>
                 {
-                    options.ContainerName = "test";
+                    options.QueueName = "test";
                     options.AccountKey = AzuriteAccess.AccountKey;
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = QueueClientCreationMode.SharedKey;
@@ -214,7 +214,7 @@ public class QueueClientAvailableHealthCheckTests
                 "QueueAzureSasCredentialHealthy",
                 options =>
                 {
-                    options.ContainerName = "test";
+                    options.QueueName = "test";
                     options.Mode = QueueClientCreationMode.AzureSasCredential;
                     options.ServiceUri = _accountSasUri;
                 }
@@ -229,7 +229,7 @@ public class QueueClientAvailableHealthCheckTests
                 "QueueAzureSasCredentialDegraded",
                 options =>
                 {
-                    options.ContainerName = "test";
+                    options.QueueName = "test";
                     options.Mode = QueueClientCreationMode.AzureSasCredential;
                     options.ServiceUri = _accountSasUri;
                     options.Timeout = 0;

@@ -26,7 +26,7 @@ public sealed class QueueClientAvailableOptions : IQueueOptions
     /// <summary>
     /// Gets or sets the name of the container.
     /// </summary>
-    public string? ContainerName { get; set; }
+    public string? QueueName { get; set; }
 
     /// <summary>
     /// Gets or sets the service uri.

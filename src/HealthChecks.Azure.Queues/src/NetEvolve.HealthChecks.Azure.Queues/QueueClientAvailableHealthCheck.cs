@@ -38,13 +38,13 @@ internal sealed class QueueClientAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        var container = queueClient.GetQueueClient(options.ContainerName);
+        var container = queueClient.GetQueueClient(options.QueueName);
 
         var containerExists = await container.ExistsAsync(cancellationToken).ConfigureAwait(false);
         if (!containerExists)
         {
             return HealthCheckResult.Unhealthy(
-                $"{name}: Container `{options.ContainerName}` does not exist."
+                $"{name}: Container `{options.QueueName}` does not exist."
             );
         }
 
