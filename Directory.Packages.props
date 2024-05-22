@@ -13,7 +13,7 @@
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.25.0.90414" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="ClickHouse.Client" Version="7.2.2" />
+    <PackageVersion Include="ClickHouse.Client" Version="7.5.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
