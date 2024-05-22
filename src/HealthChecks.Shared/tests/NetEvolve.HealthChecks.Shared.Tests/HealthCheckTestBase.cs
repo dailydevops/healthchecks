@@ -63,7 +63,7 @@ public abstract class HealthCheckTestBase
             var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
 
-            if (clearJToken is not  null)
+            if (clearJToken is not null)
             {
                 content = clearJToken.Invoke(content);
             }
