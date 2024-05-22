@@ -14,7 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="ClickHouse.Client" Version="7.5.0" />
-    <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
+    <PackageVersion Include="Confluent.Kafka" Version="2.4.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="Dapr.Client" Version="1.13.1" />
