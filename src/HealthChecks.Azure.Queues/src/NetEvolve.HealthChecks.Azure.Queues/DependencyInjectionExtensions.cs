@@ -16,7 +16,7 @@ public static class DependencyInjectionExtensions
     private static readonly string[] _defaultTags = ["storage", "azure", "queue"];
 
     /// <summary>
-    /// Adds a health check for the Azure Queue Storage, to check the availability of a named queue container.
+    /// Adds a health check for the Azure Queue Storage, to check the availability of a named queue.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="QueueClientAvailableHealthCheck"/>.</param>
@@ -38,10 +38,10 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
-        if (!builder.IsServiceTypeRegistered<AzureQueueContainerCheckMarker>())
+        if (!builder.IsServiceTypeRegistered<AzureQueueClientCheckMarker>())
         {
             _ = builder
-                .Services.AddSingleton<AzureQueueContainerCheckMarker>()
+                .Services.AddSingleton<AzureQueueClientCheckMarker>()
                 .AddSingleton<QueueClientAvailableHealthCheck>()
                 .ConfigureOptions<QueueClientAvailableConfigure>();
         }
@@ -111,7 +111,7 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class AzureQueueContainerCheckMarker { }
+    private sealed partial class AzureQueueClientCheckMarker { }
 
     private sealed partial class AzureQueueServiceCheckMarker { }
 }

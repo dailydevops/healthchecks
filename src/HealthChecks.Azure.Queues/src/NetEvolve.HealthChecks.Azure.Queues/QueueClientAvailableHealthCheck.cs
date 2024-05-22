@@ -38,22 +38,22 @@ internal sealed class QueueClientAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        var container = queueClient.GetQueueClient(options.QueueName);
+        var queue = queueClient.GetQueueClient(options.QueueName);
 
-        var containerExists = await container.ExistsAsync(cancellationToken).ConfigureAwait(false);
-        if (!containerExists)
+        var queueExists = await queue.ExistsAsync(cancellationToken).ConfigureAwait(false);
+        if (!queueExists)
         {
             return HealthCheckResult.Unhealthy(
-                $"{name}: Container `{options.QueueName}` does not exist."
+                $"{name}: Queue `{options.QueueName}` does not exist."
             );
         }
 
-        (var containerInTime, _) = await container
+        (var queueInTime, _) = await queue
             .GetPropertiesAsync(cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return isValid && result && containerInTime
+        return isValid && result && queueInTime
             ? HealthCheckResult.Healthy($"{name}: Healthy")
             : HealthCheckResult.Degraded($"{name}: Degraded");
     }

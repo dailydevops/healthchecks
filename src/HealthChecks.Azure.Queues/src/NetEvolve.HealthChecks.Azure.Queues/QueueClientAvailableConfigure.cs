@@ -53,7 +53,7 @@ internal sealed class QueueClientAvailableConfigure
 
         if (string.IsNullOrWhiteSpace(options.QueueName))
         {
-            return Fail("The container name cannot be null or whitespace.");
+            return Fail("The queue name cannot be null or whitespace.");
         }
 
         var mode = options.Mode;

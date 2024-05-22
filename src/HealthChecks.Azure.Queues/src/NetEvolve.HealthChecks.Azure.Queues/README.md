@@ -44,7 +44,7 @@ The configuration looks like this:
     "AzureQueueClient": {
       "<name>": {
         "ConnectionString": "<connection-string>", // required
-        "ContainerName": "<container-name>", // required
+        "QueueName": "<queue-name>", // required
         ..., // other configuration
         "Timeout": "<timeout>" // optional, default is 100 milliseconds
       }
@@ -61,7 +61,7 @@ var builder = services.AddHealthChecks();
 builder.AddAzureQueueClient("<name>", options =>
 {
     options.ConnectionString = "<connection-string>";
-    options.ContainerName = "<container-name>";
+    options.QueueName = "<queue-name>";
     ...
     options.Timeout = "<timeout>";
 });

@@ -24,7 +24,7 @@ public sealed class QueueClientAvailableOptions : IQueueOptions
     public int Timeout { get; set; } = 100;
 
     /// <summary>
-    /// Gets or sets the name of the container.
+    /// Gets or sets the name of the queue.
     /// </summary>
     public string? QueueName { get; set; }
 
