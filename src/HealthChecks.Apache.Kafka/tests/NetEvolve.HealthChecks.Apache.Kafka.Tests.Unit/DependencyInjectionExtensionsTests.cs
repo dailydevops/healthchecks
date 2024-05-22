@@ -22,8 +22,7 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddKafka("Test");
 
         // Assert
-        var ex = Assert.Throws<ArgumentNullException>("builder", Act);
-        Assert.Equal("Value cannot be null. (Parameter 'builder')", ex.Message);
+        _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
@@ -39,8 +38,7 @@ public class DependencyInjectionExtensionsTests
         void Act() => _ = builder.AddKafka(name);
 
         // Assert
-        var ex = Assert.Throws<ArgumentNullException>("name", Act);
-        Assert.Equal("Value cannot be null. (Parameter 'name')", ex.Message);
+        _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]

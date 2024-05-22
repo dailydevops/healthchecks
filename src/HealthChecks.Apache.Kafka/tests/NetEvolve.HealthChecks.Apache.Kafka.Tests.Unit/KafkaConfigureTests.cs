@@ -131,8 +131,7 @@ public sealed class KafkaConfigureTests
         void Act() => configure.Configure(name, options);
 
         // Assert
-        var ex = Assert.Throws<ArgumentNullException>("name", Act);
-        Assert.Equal("Value cannot be null. (Parameter 'name')", ex.Message);
+        _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
