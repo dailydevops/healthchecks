@@ -14,6 +14,8 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "build(ci)"
+      prefix-development: "build(ci)"
+      include: scope
     labels:
       - "dependency-actions"
     open-pull-requests-limit: 50
@@ -24,6 +26,9 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "build(deps)"
+      # Workaround for bug https://github.com/dependabot/dependabot-core/issues/9784. Block can be removed once it's fixed
+      prefix-development: "build(deps)"
+      include: scope
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 50
@@ -52,6 +57,9 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "build(mods)"
+      # Workaround for bug https://github.com/dependabot/dependabot-core/issues/9784. Block can be removed once it's fixed
+      prefix-development: "build(mods)"
+      include: scope
     labels:
       - "dependency-gitmodule"
     open-pull-requests-limit: 50
@@ -66,6 +74,9 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "build(dev)"
+      # Workaround for bug https://github.com/dependabot/dependabot-core/issues/9784. Block can be removed once it's fixed
+      prefix-development: "build(dev)"
+      include: scope
     labels:
       - "dependency-devcontainers"
     open-pull-requests-limit: 50
