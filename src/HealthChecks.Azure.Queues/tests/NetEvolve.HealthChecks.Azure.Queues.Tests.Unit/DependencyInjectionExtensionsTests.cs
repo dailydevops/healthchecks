@@ -83,9 +83,7 @@ public class DependencyInjectionExtensionsTests
 
         // Act
         void Act() =>
-            _ = builder
-                .AddQueueClientAvailability(name, x => { })
-                .AddQueueClientAvailability(name);
+            _ = builder.AddQueueClientAvailability(name, x => { }).AddQueueClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

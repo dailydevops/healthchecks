@@ -98,9 +98,7 @@ internal sealed class QueueClientAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeSharedKey(
-        QueueClientAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeSharedKey(QueueClientAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
