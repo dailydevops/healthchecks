@@ -28,7 +28,7 @@ internal sealed class BlobContainerAvailableConfigure
     public void Configure(string? name, BlobContainerAvailableOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:AddBlobContainerAvailability:{name}", options);
+        _configuration.Bind($"HealthChecks:AzureBlobContainer:{name}", options);
     }
 
     public void Configure(BlobContainerAvailableOptions options) =>

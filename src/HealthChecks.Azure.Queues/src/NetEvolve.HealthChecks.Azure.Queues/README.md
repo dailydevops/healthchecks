@@ -1,25 +1,25 @@
-# NetEvolve.HealthChecks.Azure.Blobs
+# NetEvolve.HealthChecks.Azure.Queues
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
+[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
+[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
 
-This package provides a health check for Azure Blobs, based on the [Azure.Storage.Blobs](https://www.nuget.org/packages/Azure.Storage.Blobs/) package. The main purpose is to check that the Azure Blob Service and the Storage Container is reachable and that the client can connect to it.
+This package provides a health check for Azure Queues, based on the [Azure.Storage.Queues](https://www.nuget.org/packages/Azure.Storage.Queues/) package. The main purpose is to check that the Azure Queue Service is reachable and that the client can connect to it.
 
 :bulb: This package is available for .NET 6.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell
-dotnet add package NetEvolve.HealthChecks.Azure.Blobs
+dotnet add package NetEvolve.HealthChecks.Azure.Queues
 ```
 
-## Health Check - Azure Blob Container Availability
-The health check is a liveness check. It will check that the Azure Blob Service and the Storage Container is reachable and that the client can connect to it. If the service or the container needs longer than the configured timeout to respond, the health check will return `Degraded`. If the service or the container is not reachable, the health check will return `Unhealthy`.
+## Health Check - Azure Queue Client Availability
+The health check is a liveness check. It will check that the Azure Queue Service is reachable and that the client can connect to it. If the service needs longer than the configured timeout to respond, the health check will return `Degraded`. If the service is not reachable, the health check will return `Unhealthy`.
 
 ### Usage
-After adding the package, yo need to import the namespace `NetEvolve.HealthChecks.Azure.Blobs` and add the health check to the service collection.
+After adding the package, yo need to import the namespace `NetEvolve.HealthChecks.Azure.Queues` and add the health check to the service collection.
 ```csharp
-using NetEvolve.HealthChecks.Azure.Blobs;
+using NetEvolve.HealthChecks.Azure.Queues;
 ```
 Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
 
@@ -29,11 +29,11 @@ Therefor you can use two different approaches. In both approaches you have to pr
 - `tags`: The tags for the health check. The tags `azure`, `storage` and `blob` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. Therefor you have to add the configuration section `HealthChecks:AzureBlobContainer` to your `appsettings.json` file.
+The first one is to use the configuration based approach. Therefor you have to add the configuration section `HealthChecks:AzureQueueClient` to your `appsettings.json` file.
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureBlobContainer("<name>");
+builder.AddAzureQueueClint("<name>");
 ```
 
 The configuration looks like this:
@@ -41,7 +41,7 @@ The configuration looks like this:
 {
   ..., // other configuration
   "HealthChecks": {
-    "AzureBlobContainer": {
+    "AzureQueueClient": {
       "<name>": {
         "ConnectionString": "<connection-string>", // required
         "ContainerName": "<container-name>", // required
@@ -54,11 +54,11 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Options based
-The second one is to use the options based approach. Therefor you have to create an instance of `AzureBlobContainerOptions` and provide the configuration.
+The second one is to use the options based approach. Therefor you have to create an instance of `AzureQueueClientOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureBlobContainer("<name>", options =>
+builder.AddAzureQueueClient("<name>", options =>
 {
     options.ConnectionString = "<connection-string>";
     options.ContainerName = "<container-name>";

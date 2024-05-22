@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: QueueSharedKeyDegraded: Degraded,
+      name: QueueSharedKeyDegraded,
+      status: Degraded
+    }
+  ],
+  status: Degraded
+}

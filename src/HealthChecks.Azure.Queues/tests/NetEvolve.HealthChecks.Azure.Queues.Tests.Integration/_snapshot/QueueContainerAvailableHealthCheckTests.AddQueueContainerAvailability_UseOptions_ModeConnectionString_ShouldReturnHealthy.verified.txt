@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: QueueConnectionStringHealthy: Healthy,
+      name: QueueConnectionStringHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

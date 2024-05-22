@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: QueueServiceProviderWithConfigurationHealthy: Healthy,
+      name: QueueServiceProviderWithConfigurationHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

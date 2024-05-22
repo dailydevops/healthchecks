@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: QueueSharedKeyHealthy: Healthy,
+      name: QueueSharedKeyHealthy,
+      status: Healthy
+    }
+  ],
+  status: Healthy
+}

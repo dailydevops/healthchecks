@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: QueueServiceProviderNotExistsUnhealthy: Container `notexists` does not exist.,
+      name: QueueServiceProviderNotExistsUnhealthy,
+      status: Unhealthy
+    }
+  ],
+  status: Unhealthy
+}

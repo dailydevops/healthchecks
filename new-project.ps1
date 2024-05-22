@@ -33,10 +33,6 @@ param (
 
   [Parameter(Mandatory = $false)]
   [Switch]
-  $EnableProjectGrouping,
-
-  [Parameter(Mandatory = $false)]
-  [Switch]
   $DisableArchitectureTests = $false
 )
 
@@ -51,6 +47,6 @@ New-Project `
   -DisableIntegrationTests $DisableIntegrationTests `
   -SolutionFile "./HealthChecks.sln" `
   -OutputDirectory (Get-Location) `
-  -EnableProjectGrouping $EnableProjectGrouping `
+  -EnableProjectGrouping $true `
   -EnableAdvProjectGrouping $false `
   -DisableArchitectureTests $DisableArchitectureTests

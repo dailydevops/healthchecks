@@ -1,0 +1,10 @@
+﻿{
+  results: [
+    {
+      description: QueueConnectionStringDegraded: Degraded,
+      name: QueueConnectionStringDegraded,
+      status: Degraded
+    }
+  ],
+  status: Degraded
+}
