@@ -28,7 +28,8 @@ public abstract class HealthCheckTestBase
         Action<IHealthChecksBuilder> healthChecks,
         Action<IConfigurationBuilder>? config = null,
         Action<IServiceCollection>? serviceBuilder = null,
-        Action<TestServer>? serverConfiguration = null
+        Action<TestServer>? serverConfiguration = null,
+        Func<Argon.JToken?, Argon.JToken?>? clearJToken = null
     )
     {
         var builder = new WebHostBuilder()
@@ -61,6 +62,11 @@ public abstract class HealthCheckTestBase
                 .ConfigureAwait(false);
             var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
+
+            if (clearJToken is not  null)
+            {
+                content = clearJToken.Invoke(content);
+            }
 
             _ = await Verifier
                 .Verify(content)

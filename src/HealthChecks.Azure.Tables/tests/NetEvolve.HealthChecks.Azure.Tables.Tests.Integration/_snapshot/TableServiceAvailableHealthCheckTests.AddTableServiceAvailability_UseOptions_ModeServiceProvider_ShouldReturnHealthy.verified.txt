@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ServiceServiceProviderHealthy: Degraded,
+      name: ServiceServiceProviderHealthy,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Degraded
+}

@@ -13,6 +13,7 @@
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.25.0.90414" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Azure.Data.Tables" Version="12.8.3" />
     <PackageVersion Include="Azure.Identity" Version="1.11.3" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.18.0" />
