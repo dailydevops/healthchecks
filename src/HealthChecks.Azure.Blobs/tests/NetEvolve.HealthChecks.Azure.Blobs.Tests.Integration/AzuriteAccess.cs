@@ -13,7 +13,9 @@ public sealed class AzuriteAccess : IAsyncLifetime, IAsyncDisposable
     public const string AccountKey =
         "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
 
-    private readonly AzuriteContainer _container = new AzuriteBuilder().Build();
+    private readonly AzuriteContainer _container = new AzuriteBuilder()
+        .WithImage("mcr.microsoft.com/azure-storage/azurite:latest")
+        .Build();
 
     public string ConnectionString => _container.GetConnectionString();
 

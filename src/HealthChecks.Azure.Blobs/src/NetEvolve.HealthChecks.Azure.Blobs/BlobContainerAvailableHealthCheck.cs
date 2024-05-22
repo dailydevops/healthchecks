@@ -17,10 +17,7 @@ internal sealed class BlobContainerAvailableHealthCheck
         IServiceProvider serviceProvider,
         IOptionsMonitor<BlobContainerAvailableOptions> optionsMonitor
     )
-        : base(optionsMonitor)
-    {
-        _serviceProvider = serviceProvider;
-    }
+        : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
