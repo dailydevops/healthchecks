@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Azure.Tests.Integration;
+﻿namespace NetEvolve.HealthChecks.Azure.Blobs.Tests.Integration;
 
 using System;
 using System.Diagnostics.CodeAnalysis;

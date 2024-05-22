@@ -8,7 +8,6 @@ using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
-using NetEvolve.HealthChecks.Azure.Tests.Integration;
 using NetEvolve.HealthChecks.Tests;
 using Xunit;
 

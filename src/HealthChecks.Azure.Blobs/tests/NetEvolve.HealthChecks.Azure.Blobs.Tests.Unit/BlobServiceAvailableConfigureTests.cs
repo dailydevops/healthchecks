@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.BlobServiceAvailable.Connector.Tests.Unit;
+﻿namespace NetEvolve.HealthChecks.Azure.Blobs.Tests.Unit;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
