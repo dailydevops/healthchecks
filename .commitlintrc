@@ -4,5 +4,5 @@ rules:
     - 2
     - never
     - - upper-case
-      - pascal-case
-      - start-case
+      - camel-case
+      - kebab-case
