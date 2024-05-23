@@ -31,6 +31,7 @@
     <ProjectReference Include="..\..\..\HealthChecks.MySql\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.Npgsql\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.Oracle\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
+    <ProjectReference Include="..\..\..\HealthChecks.Redis\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.Redpanda\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.SqlEdge\src\NetEvolve.HealthChecks.SqlEdge\NetEvolve.HealthChecks.SqlEdge.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.SQLite\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />

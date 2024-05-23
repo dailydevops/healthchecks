@@ -1,0 +1,13 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDegraded: Degraded,
+      name: TestContainerDegraded,
+      status: Degraded,
+      tags: [
+        redis
+      ]
+    }
+  ],
+  status: Degraded
+}

@@ -229,9 +229,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Azur
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B83C8D95-A323-4D9F-BBA4-16F04417ED21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Abstractions.Tests.Architecture", "src\HealthChecks.Abstractions\tests\NetEvolve.HealthChecks.Abstractions.Tests.Architecture\NetEvolve.HealthChecks.Abstractions.Tests.Architecture.csproj", "{83224595-3809-4911-B594-C4307A19E9F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Abstractions.Tests.Architecture", "src\HealthChecks.Abstractions\tests\NetEvolve.HealthChecks.Abstractions.Tests.Architecture\NetEvolve.HealthChecks.Abstractions.Tests.Architecture.csproj", "{83224595-3809-4911-B594-C4307A19E9F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Abstractions.Tests.Unit", "src\HealthChecks.Abstractions\tests\NetEvolve.HealthChecks.Abstractions.Tests.Unit\NetEvolve.HealthChecks.Abstractions.Tests.Unit.csproj", "{7322CBB2-9BF2-4472-8668-9B720D2302DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Abstractions.Tests.Unit", "src\HealthChecks.Abstractions\tests\NetEvolve.HealthChecks.Abstractions.Tests.Unit\NetEvolve.HealthChecks.Abstractions.Tests.Unit.csproj", "{7322CBB2-9BF2-4472-8668-9B720D2302DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HealthChecks.Redis", "HealthChecks.Redis", "{EC3B50DB-C00B-4654-826F-D1D90F54B4AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A4B21189-537D-4044-B16E-171F80A3FD38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Redis", "src\HealthChecks.Redis\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj", "{93316898-9723-41F6-8066-8B38AD8F9D66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{438BA793-BAA9-4308-9AC3-497135603596}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Redis.Tests.Unit", "src\HealthChecks.Redis\tests\NetEvolve.HealthChecks.Redis.Tests.Unit\NetEvolve.HealthChecks.Redis.Tests.Unit.csproj", "{CF0D3DD3-AC22-46C0-B583-025970A1B273}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.HealthChecks.Redis.Tests.Integration", "src\HealthChecks.Redis\tests\NetEvolve.HealthChecks.Redis.Tests.Integration\NetEvolve.HealthChecks.Redis.Tests.Integration.csproj", "{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -855,6 +867,42 @@ Global
 		{7322CBB2-9BF2-4472-8668-9B720D2302DF}.Release|x64.Build.0 = Release|Any CPU
 		{7322CBB2-9BF2-4472-8668-9B720D2302DF}.Release|x86.ActiveCfg = Release|Any CPU
 		{7322CBB2-9BF2-4472-8668-9B720D2302DF}.Release|x86.Build.0 = Release|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Debug|x64.Build.0 = Debug|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Debug|x86.Build.0 = Debug|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Release|x64.ActiveCfg = Release|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Release|x64.Build.0 = Release|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Release|x86.ActiveCfg = Release|Any CPU
+		{93316898-9723-41F6-8066-8B38AD8F9D66}.Release|x86.Build.0 = Release|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Debug|x64.Build.0 = Debug|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Debug|x86.Build.0 = Debug|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Release|x64.ActiveCfg = Release|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Release|x64.Build.0 = Release|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Release|x86.ActiveCfg = Release|Any CPU
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273}.Release|x86.Build.0 = Release|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Debug|x64.Build.0 = Debug|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Debug|x86.Build.0 = Debug|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Release|x64.ActiveCfg = Release|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Release|x64.Build.0 = Release|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -965,6 +1013,12 @@ Global
 		{B83C8D95-A323-4D9F-BBA4-16F04417ED21} = {F1295538-5B81-429D-94BD-E246EDC8D7C8}
 		{83224595-3809-4911-B594-C4307A19E9F4} = {B83C8D95-A323-4D9F-BBA4-16F04417ED21}
 		{7322CBB2-9BF2-4472-8668-9B720D2302DF} = {B83C8D95-A323-4D9F-BBA4-16F04417ED21}
+		{EC3B50DB-C00B-4654-826F-D1D90F54B4AA} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
+		{A4B21189-537D-4044-B16E-171F80A3FD38} = {EC3B50DB-C00B-4654-826F-D1D90F54B4AA}
+		{93316898-9723-41F6-8066-8B38AD8F9D66} = {A4B21189-537D-4044-B16E-171F80A3FD38}
+		{438BA793-BAA9-4308-9AC3-497135603596} = {EC3B50DB-C00B-4654-826F-D1D90F54B4AA}
+		{CF0D3DD3-AC22-46C0-B583-025970A1B273} = {438BA793-BAA9-4308-9AC3-497135603596}
+		{5B94DFF5-F780-4C18-BD03-93A6D040C2D5} = {438BA793-BAA9-4308-9AC3-497135603596}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
@@ -976,6 +1030,7 @@ Global
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{33c2c63b-f1d8-4710-82ca-015667224f77}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{36436743-dc06-4a42-93ff-56b165c51ea2}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{4d2bf995-9cc2-449b-b240-01c074217fa8}*SharedItemsImports = 5
+		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{5b94dff5-f780-4c18-bd03-93a6d040c2d5}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{7ee322b9-2492-4250-b32e-09bc6ab00e14}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{83fc6528-bd04-434b-8fcd-34c5191e54fb}*SharedItemsImports = 5
 		src\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems*{8b6ffc25-4c06-4258-93a6-d083bd9128dc}*SharedItemsImports = 5
