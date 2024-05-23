@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Redis;
+﻿namespace NetEvolve.HealthChecks.Redis;
 
 /// <summary>
 /// Specifies the mode of handling connections.
