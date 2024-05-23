@@ -55,6 +55,30 @@ The following table lists all currently available NuGet packages. For more detai
       <td colspan=3>Contains HealthChecks for Apache Kafka, based on the NuGet package `Confluent.Kafka`.</td>
     </tr>
     <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/"><b>NetEvolve.HealthChecks.Azure.Blobs</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for Azure Blob Storage.</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/"><b>NetEvolve.HealthChecks.Azure.Queues</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Queues?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for Azure Queue Storage.</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/"><b>NetEvolve.HealthChecks.Azure.Tables</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Tables?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for Azure Table Storage.</td>
+    </tr>
+    <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><b>NetEvolve.HealthChecks.ClickHouse</b></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget" alt="Nuget"></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ClickHouse?logo=nuget" alt="Nuget"></a></td>
