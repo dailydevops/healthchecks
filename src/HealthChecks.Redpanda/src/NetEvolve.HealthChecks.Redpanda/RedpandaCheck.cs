@@ -46,12 +46,8 @@ internal sealed class RedpandaCheck : ConfigurableHealthCheckBase<RedpandaOption
         {
             return new HealthCheckResult(failureStatus, $"{name}: Unhealthy");
         }
-        else if (!isHealthy)
-        {
-            return HealthCheckResult.Degraded($"{name}: Degraded");
-        }
 
-        return HealthCheckResult.Healthy($"{name}: Healthy");
+        return HealthCheckState(isHealthy, name);
     }
 
     private static IProducer<string, string> GetProducer(

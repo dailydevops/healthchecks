@@ -53,8 +53,6 @@ internal sealed class QueueClientAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return isValid && result && queueInTime
-            ? HealthCheckResult.Healthy($"{name}: Healthy")
-            : HealthCheckResult.Degraded($"{name}: Degraded");
+        return HealthCheckState(isValid && result && queueInTime, name);
     }
 }

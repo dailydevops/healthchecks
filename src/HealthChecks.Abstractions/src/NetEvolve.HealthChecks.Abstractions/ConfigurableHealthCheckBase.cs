@@ -92,4 +92,21 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
         TConfiguration options,
         CancellationToken cancellationToken
     );
+
+    /// <summary>
+    /// Returns a <see cref="HealthCheckResult"/> based on the value of the <paramref name="condition"/>.
+    /// </summary>
+    /// <param name="condition">
+    /// When <see langword="true"/>, returns a <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Healthy"/>. Otherwise, returns <see cref="HealthStatus.Degraded"/>.
+    /// </param>
+    /// <param name="name">
+    /// Name of the Health Check Configuration.
+    /// </param>
+    /// <returns>
+    /// A <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Healthy"/> or <see cref="HealthStatus.Degraded"/>.
+    /// </returns>
+    protected HealthCheckResult HealthCheckState(bool condition, string name) =>
+        condition
+            ? HealthCheckResult.Healthy($"{name}: Healthy")
+            : HealthCheckResult.Degraded($"{name}: Degraded");
 }

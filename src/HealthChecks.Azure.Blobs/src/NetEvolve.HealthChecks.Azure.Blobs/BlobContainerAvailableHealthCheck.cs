@@ -53,8 +53,6 @@ internal sealed class BlobContainerAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return (isValid && result && containerInTime)
-            ? HealthCheckResult.Healthy($"{name}: Healthy")
-            : HealthCheckResult.Degraded($"{name}: Degraded");
+        return HealthCheckState(isValid && result && containerInTime, name);
     }
 }

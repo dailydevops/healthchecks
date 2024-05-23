@@ -24,6 +24,10 @@
     <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
 
+  <ItemGroup Label="Test compability" Condition=" '$(IsTestableProject)' == 'false' ">
+    <InternalsVisibleTo Include="NetEvolve.HealthChecks.Abstractions.Tests.Architecture" />
+  </ItemGroup>
+
   <PropertyGroup Label="Settings for test projects" Condition=" '$(IsTestableProject)' == 'true' ">
     <NoWarn>$(NoWarn);CS8604;CA2007;</NoWarn>
   </PropertyGroup>
