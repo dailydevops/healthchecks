@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
+using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
@@ -39,8 +40,7 @@ public static class DependencyInjectionExtensions
         if (!builder.IsServiceTypeRegistered<RedisDatabaseCheckMarker>())
         {
             _ = builder
-                .Services
-                .AddSingleton<RedisDatabaseCheckMarker>()
+                .Services.AddSingleton<RedisDatabaseCheckMarker>()
                 .AddSingleton<RedisDatabaseHealthCheck>()
                 .ConfigureOptions<RedisDatabaseConfigure>();
         }

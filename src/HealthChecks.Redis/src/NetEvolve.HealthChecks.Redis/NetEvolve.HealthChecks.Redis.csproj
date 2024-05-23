@@ -14,6 +14,8 @@
     <PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
-  <Import Project="..\..\..\HealthChecks.Shared\src\NetEvolve.HealthChecks.Shared.Abstractions\NetEvolve.HealthChecks.Shared.Abstractions.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\HealthChecks.Abstractions\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
 
 </Project>

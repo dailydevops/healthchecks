@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.ClickHouse;
 using NetEvolve.HealthChecks.Dapr;
 using NetEvolve.HealthChecks.Npgsql;
 using NetEvolve.HealthChecks.Oracle;
+using NetEvolve.HealthChecks.Redis;
 using NetEvolve.HealthChecks.Redpanda;
 using NetEvolve.HealthChecks.SqlEdge;
 using NetEvolve.HealthChecks.SQLite;
@@ -44,6 +45,7 @@ internal static class HealthCheckArchitecture
             typeof(MySqlConnectorCheck).Assembly,
             typeof(NpgsqlCheck).Assembly,
             typeof(OracleCheck).Assembly,
+            typeof(RedisDatabaseHealthCheck).Assembly,
             typeof(RedpandaCheck).Assembly,
             typeof(SqlEdgeCheck).Assembly,
             typeof(SQLiteCheck).Assembly,
