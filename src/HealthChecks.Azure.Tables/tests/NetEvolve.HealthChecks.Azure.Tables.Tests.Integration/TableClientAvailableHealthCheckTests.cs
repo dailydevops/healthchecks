@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Argon;
 using global::Azure.Data.Tables;
 using global::Azure.Data.Tables.Sas;
 using Microsoft.Extensions.Azure;

@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
-using global::Azure.Data.Tables.Sas;
 using Microsoft.Extensions.Azure;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Tests;

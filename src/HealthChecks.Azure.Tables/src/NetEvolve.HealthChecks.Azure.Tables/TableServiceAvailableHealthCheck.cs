@@ -35,8 +35,6 @@ internal sealed class TableServiceAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return isValid && result
-            ? HealthCheckResult.Healthy($"{name}: Healthy")
-            : HealthCheckResult.Degraded($"{name}: Degraded");
+        return HealthCheckState(isValid && result, name);
     }
 }

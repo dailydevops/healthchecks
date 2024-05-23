@@ -39,8 +39,6 @@ internal sealed class DaprHealthCheck : ConfigurableHealthCheckBase<DaprOptions>
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return isHealthy && result
-            ? HealthCheckResult.Healthy($"{name}: Healthy")
-            : HealthCheckResult.Degraded($"{name}: Degraded");
+        return HealthCheckState(isHealthy && result, name);
     }
 }
