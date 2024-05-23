@@ -5,7 +5,7 @@
     <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
 
     <Description>Contains HealthChecks for Redis, based on the NuGet package `StackExchange.Redis`.</Description>
-    <PackageTags>$(PackageTags);redis;</PackageTags>
+    <PackageTags>$(PackageTags);redis;stackexchange;</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +17,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\HealthChecks.Abstractions\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>
