@@ -127,6 +127,14 @@ The following table lists all currently available NuGet packages. For more detai
       <td colspan=3>Contains HealthChecks for Oracle Databases, based on the nuget package `Oracle.ManagedDataAccess.Core`.</td>
     </tr>
     <tr>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/"><b>NetEvolve.HealthChecks.Redis</b></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redis?logo=nuget" alt="Nuget"></a></td>
+      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redis?logo=nuget" alt="Nuget"></a></td>
+    </tr>
+    <tr>
+      <td colspan=3>Contains HealthChecks for Redis, based on the NuGet package `StackExchange.Redis`.</td>
+    </tr>
+    <tr>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/"><b>NetEvolve.HealthChecks.Redpanda</b></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?logo=nuget" alt="Nuget"></a></td>
       <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redpanda?logo=nuget" alt="Nuget"></a></td>
