@@ -21,7 +21,7 @@ on:
 jobs:
   all:
     name: Build & Tests
-    uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@0.10.1
+    uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@0.10.3
     with:
       enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}
