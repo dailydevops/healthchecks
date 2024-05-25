@@ -1,8 +1,4 @@
-extends: '@commitlint/config-conventional'
+extends: "@commitlint/config-conventional"
 rules:
-  subject-case:
-    - 2
-    - never
-    - - upper-case
-      - camel-case
-      - kebab-case
+  body-max-line-length: [2, "always", 250]
+  subject-case: [2, "never", ["upper-case", "camel-case", "kebab-case"]]
