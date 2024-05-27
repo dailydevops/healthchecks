@@ -21,161 +21,26 @@ In addition, we try to support the latest LTS and STS versions of .NET ([.NET Su
 The following table lists all currently available NuGet packages. For more details about the packages, please visit the corresponding NuGet page.
 
 <!-- packages:start -->
-<table>
-  <thead>
-    <tr>
-      <td><b>Package Name</b></td>
-      <td><b>Current Version</b></td>
-      <td><b>Downloads</b></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><b>NetEvolve.HealthChecks</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains general application HealthChecks.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/"><b>NetEvolve.HealthChecks.Abstractions</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Abstractions?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Abstractions?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains abstract implementations for the `NetEvolve.HealthChecks`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/"><b>NetEvolve.HealthChecks.Apache.Kafka</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Apache Kafka, based on the NuGet package `Confluent.Kafka`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/"><b>NetEvolve.HealthChecks.Azure.Blobs</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Azure Blob Storage.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/"><b>NetEvolve.HealthChecks.Azure.Queues</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Queues?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Azure Queue Storage.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/"><b>NetEvolve.HealthChecks.Azure.Tables</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Tables?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Azure Table Storage.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><b>NetEvolve.HealthChecks.ClickHouse</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ClickHouse?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for ClickHouse, based on the nuget package `ClickHouse.Client`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/"><b>NetEvolve.HealthChecks.Dapr</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Dapr?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Dapr, based on the nuget package `Dapr.Client`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><b>NetEvolve.HealthChecks.MySql</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for MySql, based on the nuget package `MySql.Data`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><b>NetEvolve.HealthChecks.MySql.Connector</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for MySql, based on the nuget package `MySqlConnector`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><b>NetEvolve.HealthChecks.Npgsql</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for PostgreSQL, based on the nuget package `Npgsql`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><b>NetEvolve.HealthChecks.Oracle</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Oracle Databases, based on the nuget package `Oracle.ManagedDataAccess.Core`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/"><b>NetEvolve.HealthChecks.Redis</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redis?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redis?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Redis, based on the NuGet package `StackExchange.Redis`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/"><b>NetEvolve.HealthChecks.Redpanda</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redpanda?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Redpanda, based on the NuGet package `Confluent.Kafka`. This is a temporary measure; if a dedicated Redpanda client is provided in the future, we will use it immediately.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/"><b>NetEvolve.HealthChecks.SqlEdge</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlEdge?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlEdge?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for SqlEdge, based on the nuget package `Microsoft.Data.SqlClient`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><b>NetEvolve.HealthChecks.SQLite</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for SQLite, based on the nuget package `Microsoft.Data.Sqlite`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><b>NetEvolve.HealthChecks.SqlServer</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Microsoft SqlServer, based on the nuget package `Microsoft.Data.SqlClient`.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><b>NetEvolve.HealthChecks.SqlServer.Legacy</b></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><img src="https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/"><img src="https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>Contains HealthChecks for Microsoft SqlServer, based on the nuget package `System.Data.SqlClient`.</td>
-    </tr>
-  </tbody>
-</table>
+| Package Name | Current Version | Downloads |
+|-------------:|:---------------:|-----------|
+| [NetEvolve.HealthChecks](https://www.nuget.org/packages/NetEvolve.HealthChecks/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks?logo=nuget) |
+| [NetEvolve.HealthChecks.Abstractions](https://www.nuget.org/packages/NetEvolve.HealthChecks.Abstractions/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Abstractions?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Abstractions?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Abstractions?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Abstractions?logo=nuget) |
+| [NetEvolve.HealthChecks.Apache.Kafka](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Kafka?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget) |
+| [NetEvolve.HealthChecks.Azure.Blobs](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Blobs?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget) |
+| [NetEvolve.HealthChecks.Azure.Queues](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Queues?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget) |
+| [NetEvolve.HealthChecks.Azure.Tables](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Tables?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?logo=nuget) |
+| [NetEvolve.HealthChecks.ClickHouse](https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ClickHouse?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget) |
+| [NetEvolve.HealthChecks.Dapr](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Dapr?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget) |
+| [NetEvolve.HealthChecks.MySql](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget) |
+| [NetEvolve.HealthChecks.MySql.Connector](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql.Connector/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql.Connector?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql.Connector?logo=nuget) |
+| [NetEvolve.HealthChecks.Npgsql](https://www.nuget.org/packages/NetEvolve.HealthChecks.Npgsql/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Npgsql?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Npgsql?logo=nuget) |
+| [NetEvolve.HealthChecks.Oracle](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget) |
+| [NetEvolve.HealthChecks.Redis](https://www.nuget.org/packages/NetEvolve.HealthChecks.Redis/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redis?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redis?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redis?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redis?logo=nuget) |
+| [NetEvolve.HealthChecks.Redpanda](https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redpanda?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?logo=nuget) |
+| [NetEvolve.HealthChecks.SqlEdge](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlEdge/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlEdge?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlEdge?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlEdge?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlEdge?logo=nuget) |
+| [NetEvolve.HealthChecks.SQLite](https://www.nuget.org/packages/NetEvolve.HealthChecks.SQLite/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SQLite?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SQLite?logo=nuget) |
+| [NetEvolve.HealthChecks.SqlServer](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget) |
+| [NetEvolve.HealthChecks.SqlServer.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/) | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget)| [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?logo=nuget) |
 <!-- packages:end -->
 
 ### Package naming explanation

@@ -21,48 +21,23 @@ function Get-Packages {
     return
   }
 
-  $result = @'
+  $result = @"
 
-<table>
-  <thead>
-    <tr>
-      <td><b>Package Name</b></td>
-      <td><b>Current Version</b></td>
-      <td><b>Downloads</b></td>
-    </tr>
-  </thead>
-  <tbody>
+| Package Name | Current Version | Downloads |
+|-------------:|:---------------:|-----------|
 
-'@
+"@
 
   foreach ($package in ($data.data | Sort-Object -Property id)) {
     if ($package.projectUrl -ne $repositoryUrl) {
       continue
     }
 
-    $description = $package.summary;
-    if ([string]::IsNullOrWhiteSpace($description)) {
-      $description = $package.description;
-    }
+    $result += "| [$($package.title)](https://www.nuget.org/packages/$($package.id)/) "
+    $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
+    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget) |`n"
 
-    $result += @"
-    <tr>
-      <td><a href="https://www.nuget.org/packages/$($package.id)/"><b>$($package.title)</b></a></td>
-      <td><a href="https://www.nuget.org/packages/$($package.id)/"><img src="https://img.shields.io/nuget/v/$($package.id)?logo=nuget" alt="Nuget"></a></td>
-      <td><a href="https://www.nuget.org/packages/$($package.id)/"><img src="https://img.shields.io/nuget/dt/$($package.id)?logo=nuget" alt="Nuget"></a></td>
-    </tr>
-    <tr>
-      <td colspan=3>$($description)</td>
-    </tr>
-
-"@
   }
-
-  $result += @'
-  </tbody>
-</table>
-
-'@
 
   return $result
 }
