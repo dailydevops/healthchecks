@@ -34,8 +34,8 @@ function Get-Packages {
     }
 
     $result += "| [$($package.title)](https://www.nuget.org/packages/$($package.id)/) "
-    $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
-    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?style=for-the-badge&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget) |`n"
+    $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
+    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget) |`n"
 
   }
 
