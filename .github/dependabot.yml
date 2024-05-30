@@ -13,7 +13,7 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "build(ci)"
+      prefix: "chore(ci)"
     labels:
       - "dependency-actions"
     open-pull-requests-limit: 50
@@ -23,7 +23,7 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "build(deps)"
+      prefix: "chore(deps)"
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 50
@@ -51,7 +51,7 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "build(mods)"
+      prefix: "chore(mods)"
     labels:
       - "dependency-gitmodule"
     open-pull-requests-limit: 50
@@ -65,7 +65,7 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "build(dev)"
+      prefix: "chore(dev)"
     labels:
       - "dependency-devcontainers"
     open-pull-requests-limit: 50
