@@ -20,7 +20,7 @@
     <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/healthchecks</PackageProjectUrl>
     <PackageTags>healthcheck;healthchecks;health;diagnostics;</PackageTags>
-    <PackageReleaseNotes>$(PackageProjectUrl)/releases/tag/$(Version)</PackageReleaseNotes>
+    <PackageReleaseNotes>$(PackageProjectUrl)/releases/</PackageReleaseNotes>
 
     <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
