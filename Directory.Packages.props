@@ -61,6 +61,6 @@
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="7.0.19" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0'">
-    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="6.0.30" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="6.0.31" />
   </ItemGroup>
 </Project>
