@@ -14,7 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Azure.Data.Tables" Version="12.8.3" />
-    <PackageVersion Include="Azure.Identity" Version="1.11.3" />
+    <PackageVersion Include="Azure.Identity" Version="1.11.4" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.18.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.5.0" />
