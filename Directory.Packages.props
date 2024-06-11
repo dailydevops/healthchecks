@@ -22,9 +22,6 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="Dapr.Client" Version="1.13.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.5" />
-    <PackageVersion Update="Microsoft.AspNetCore.TestHost" Version="7.0.19" Condition=" '$(TargetFramework)' == 'net7.0' " />
-    <PackageVersion Update="Microsoft.AspNetCore.TestHost" Version="6.0.30" Condition=" '$(TargetFramework)' == 'net6.0' " />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.5" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.6" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.7.3" />
@@ -55,5 +52,15 @@
     <PackageVersion Include="Verify.Xunit" Version="25.0.1" />
     <PackageVersion Include="xunit" Version="2.8.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0'">
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.5" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0'">
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="7.0.19" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="6.0.30" />
   </ItemGroup>
 </Project>
