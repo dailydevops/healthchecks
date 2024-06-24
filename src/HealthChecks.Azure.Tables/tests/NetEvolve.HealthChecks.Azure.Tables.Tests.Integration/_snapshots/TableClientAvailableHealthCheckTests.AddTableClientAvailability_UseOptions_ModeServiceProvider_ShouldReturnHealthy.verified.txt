@@ -1,9 +1,9 @@
 ﻿{
   results: [
     {
-      description: TableServiceProviderHealthy: Degraded,
+      description: TableServiceProviderHealthy: Healthy,
       name: TableServiceProviderHealthy,
-      status: Degraded,
+      status: Healthy,
       tags: [
         storage,
         azure,
@@ -11,5 +11,5 @@
       ]
     }
   ],
-  status: Degraded
+  status: Healthy
 }
