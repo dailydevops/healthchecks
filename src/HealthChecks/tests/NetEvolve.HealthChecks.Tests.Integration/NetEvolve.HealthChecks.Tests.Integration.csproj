@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
@@ -23,10 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="_snapshot\" />
   </ItemGroup>
 
   <Import Project="..\..\..\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems" Label="Shared" />

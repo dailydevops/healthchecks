@@ -25,10 +25,6 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="_snapshot\" />
-  </ItemGroup>
-
   <Import Project="..\..\..\HealthChecks.Shared\tests\NetEvolve.HealthChecks.Shared.Tests\NetEvolve.HealthChecks.Shared.Tests.projitems" Label="Shared" />
 
 </Project>

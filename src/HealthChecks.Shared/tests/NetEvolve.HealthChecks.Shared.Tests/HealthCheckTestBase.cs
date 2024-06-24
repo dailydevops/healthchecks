@@ -68,25 +68,8 @@ public abstract class HealthCheckTestBase
                 content = clearJToken.Invoke(content);
             }
 
-            _ = await Verifier
-                .Verify(content)
-                .UseDirectory(GetProjectDirectory())
-#if AUTO_VERIFY
-                .AutoVerify()
-#endif
-                .ConfigureAwait(true);
+            _ = await Verifier.Verify(content).ConfigureAwait(true);
         }
-    }
-
-    private string GetProjectDirectory()
-    {
-        var directory = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "..");
-        var projectName = GetType().Assembly.GetName().Name!;
-        var shortName = projectName[(projectName.IndexOf('.', StringComparison.OrdinalIgnoreCase) + 1)..];
-        shortName = shortName[..shortName.IndexOf(".Tests.", StringComparison.OrdinalIgnoreCase)];
-
-        var snapshotDirectory = Path.Combine(directory, shortName, "tests", projectName, "_snapshot");
-        return Path.GetFullPath(snapshotDirectory);
     }
 
     private static Task WriteResponse(HttpContext context, HealthReport report)
