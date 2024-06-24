@@ -33,10 +33,12 @@ public abstract class HealthCheckTestBase
     )
     {
         var builder = new WebHostBuilder()
-            .ConfigureAppConfiguration((_, configBuilder) =>
-            {
-                config?.Invoke(configBuilder);
-            })
+            .ConfigureAppConfiguration(
+                (_, configBuilder) =>
+                {
+                    config?.Invoke(configBuilder);
+                }
+            )
             .ConfigureServices(services =>
             {
                 serviceBuilder?.Invoke(services);
@@ -45,10 +47,10 @@ public abstract class HealthCheckTestBase
             })
             .Configure(app =>
             {
-                _ = app.UseHealthChecks(HealthCheckPath, new HealthCheckOptions
-                {
-                    ResponseWriter = WriteResponse
-                });
+                _ = app.UseHealthChecks(
+                    HealthCheckPath,
+                    new HealthCheckOptions { ResponseWriter = WriteResponse }
+                );
             });
 
         using (var server = new TestServer(builder))
@@ -61,7 +63,9 @@ public abstract class HealthCheckTestBase
                 .GetAsync(new Uri(HealthCheckPath, UriKind.Relative))
                 .ConfigureAwait(false);
             var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
+            var content = string.IsNullOrWhiteSpace(resultContent)
+                ? null
+                : Argon.JToken.Parse(resultContent);
 
             if (clearJToken is not null)
             {
@@ -102,7 +106,10 @@ public abstract class HealthCheckTestBase
                 writer.WriteEndObject();
             }
 
-            return context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()), cancellationToken: context.RequestAborted);
+            return context.Response.WriteAsync(
+                Encoding.UTF8.GetString(memoryStream.ToArray()),
+                cancellationToken: context.RequestAborted
+            );
         }
     }
 
@@ -152,7 +159,11 @@ public abstract class HealthCheckTestBase
         writer.WriteEndObject();
     }
 
-    [SuppressMessage("Performance", "CA1851:Possible multiple enumerations of 'IEnumerable' collection", Justification = "As designed.")]
+    [SuppressMessage(
+        "Performance",
+        "CA1851:Possible multiple enumerations of 'IEnumerable' collection",
+        Justification = "As designed."
+    )]
     private static void WriteTags(Utf8JsonWriter writer, IEnumerable<string> tags)
     {
         if (!tags.Any())
