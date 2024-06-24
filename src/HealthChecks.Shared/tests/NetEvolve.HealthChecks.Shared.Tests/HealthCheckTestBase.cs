@@ -1,6 +1,4 @@
-﻿// #define AUTO_VERIFY
-
-namespace NetEvolve.HealthChecks.Tests;
+﻿namespace NetEvolve.HealthChecks.Tests;
 
 using System;
 using System.Collections.Generic;
