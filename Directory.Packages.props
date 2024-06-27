@@ -10,7 +10,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48" />
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.27.0.93347" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.28.0.94264" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Azure.Data.Tables" Version="12.8.3" />
