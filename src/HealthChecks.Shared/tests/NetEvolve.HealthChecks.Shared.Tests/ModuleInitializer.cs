@@ -16,7 +16,7 @@ internal static class ModuleInitializer
         VerifierSettings.AutoVerify(includeBuildServer: false);
 
         Verifier.DerivePathInfo(
-            (sourceFile, projectDirectory, type, method) =>
+            static (sourceFile, projectDirectory, type, method) =>
             {
                 var directory = Path.Combine(projectDirectory, "_snapshots");
                 _ = Directory.CreateDirectory(directory);
