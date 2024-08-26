@@ -62,8 +62,9 @@ internal sealed class BlobContainerAvailableConfigure
         {
             BlobClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             BlobClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            BlobClientCreationMode.DefaultAzureCredentials
-                => ValidateModeDefaultAzureCredentials(options),
+            BlobClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
+                options
+            ),
             BlobClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             BlobClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),

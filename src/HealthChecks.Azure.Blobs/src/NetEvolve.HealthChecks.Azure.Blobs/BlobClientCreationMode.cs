@@ -33,5 +33,5 @@ public enum BlobClientCreationMode
     /// <summary>
     /// The <see cref="BlobServiceClient"/> is created using the <see cref="BlobContainerAvailableOptions.ServiceUri"/>.
     /// </summary>
-    AzureSasCredential = 4
+    AzureSasCredential = 4,
 }

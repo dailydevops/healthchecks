@@ -85,7 +85,7 @@ public sealed class KafkaConfigureTests
         {
             Topic = "Test",
             Mode = ProducerHandleMode.Create,
-            Configuration = new ProducerConfig()
+            Configuration = new ProducerConfig(),
         };
 
         // Act
@@ -109,7 +109,7 @@ public sealed class KafkaConfigureTests
         {
             Topic = "Test",
             Mode = ProducerHandleMode.Create,
-            Configuration = new ProducerConfig { BootstrapServers = "localhost:9092" }
+            Configuration = new ProducerConfig { BootstrapServers = "localhost:9092" },
         };
 
         // Act

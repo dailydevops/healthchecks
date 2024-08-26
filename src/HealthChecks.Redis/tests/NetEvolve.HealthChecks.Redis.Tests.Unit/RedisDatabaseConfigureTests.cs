@@ -51,7 +51,7 @@ public sealed class RedisDatabaseConfigureTests
         var options = new RedisDatabaseOptions
         {
             ConnectionString = default,
-            Mode = ConnectionHandleMode.Create
+            Mode = ConnectionHandleMode.Create,
         };
 
         // Act

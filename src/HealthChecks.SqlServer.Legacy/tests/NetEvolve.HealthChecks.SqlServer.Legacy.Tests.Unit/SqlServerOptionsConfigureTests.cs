@@ -100,7 +100,7 @@ public sealed class SqlServerOptionsConfigureTests
         var options = new SqlServerLegacyOptions
         {
             ConnectionString = "Test",
-            Command = string.Empty
+            Command = string.Empty,
         };
 
         // Act
@@ -119,7 +119,7 @@ public sealed class SqlServerOptionsConfigureTests
         var options = new SqlServerLegacyOptions
         {
             ConnectionString = "Test",
-            Command = string.Empty
+            Command = string.Empty,
         };
 
         // Act

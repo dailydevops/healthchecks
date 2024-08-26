@@ -82,7 +82,7 @@ public sealed class TableClientAvailableConfigureTests
                 new TableClientAvailableOptions
                 {
                     Mode = (TableClientCreationMode)13,
-                    TableName = "test"
+                    TableName = "test",
                 }
             },
             // Mode: ServiceProvider
@@ -93,7 +93,7 @@ public sealed class TableClientAvailableConfigureTests
                 new TableClientAvailableOptions
                 {
                     Mode = TableClientCreationMode.ServiceProvider,
-                    TableName = "test"
+                    TableName = "test",
                 }
             },
             // Mode: DefaultAzureCredentials
@@ -104,7 +104,7 @@ public sealed class TableClientAvailableConfigureTests
                 new TableClientAvailableOptions
                 {
                     Mode = TableClientCreationMode.DefaultAzureCredentials,
-                    TableName = "test"
+                    TableName = "test",
                 }
             },
             {
@@ -115,7 +115,7 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -126,7 +126,7 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("https://example.com", UriKind.Absolute)
+                    ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                 }
             },
             // Mode: ConnectionString
@@ -137,7 +137,7 @@ public sealed class TableClientAvailableConfigureTests
                 new TableClientAvailableOptions
                 {
                     TableName = "test",
-                    Mode = TableClientCreationMode.ConnectionString
+                    Mode = TableClientCreationMode.ConnectionString,
                 }
             },
             {
@@ -148,7 +148,7 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.ConnectionString,
-                    ConnectionString = "connectionString"
+                    ConnectionString = "connectionString",
                 }
             },
             // Mode: SharedKey
@@ -159,7 +159,7 @@ public sealed class TableClientAvailableConfigureTests
                 new TableClientAvailableOptions
                 {
                     TableName = "test",
-                    Mode = TableClientCreationMode.SharedKey
+                    Mode = TableClientCreationMode.SharedKey,
                 }
             },
             {
@@ -170,7 +170,7 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.SharedKey,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -182,7 +182,7 @@ public sealed class TableClientAvailableConfigureTests
                     TableName = "test",
                     Mode = TableClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
-                    AccountName = null
+                    AccountName = null,
                 }
             },
             {
@@ -195,7 +195,7 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = null
+                    AccountKey = null,
                 }
             },
             {
@@ -208,7 +208,7 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = "test"
+                    AccountKey = "test",
                 }
             },
             // Mode: AzureSasCredential
@@ -219,7 +219,7 @@ public sealed class TableClientAvailableConfigureTests
                 new TableClientAvailableOptions
                 {
                     TableName = "test",
-                    Mode = TableClientCreationMode.AzureSasCredential
+                    Mode = TableClientCreationMode.AzureSasCredential,
                 }
             },
             {
@@ -230,7 +230,7 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -241,7 +241,7 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute", UriKind.Absolute),
                 }
             },
             {
@@ -252,9 +252,9 @@ public sealed class TableClientAvailableConfigureTests
                 {
                     TableName = "test",
                     Mode = TableClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute),
                 }
-            }
+            },
         };
 
         return data;

@@ -62,8 +62,9 @@ internal sealed class QueueClientAvailableConfigure
         {
             QueueClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             QueueClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            QueueClientCreationMode.DefaultAzureCredentials
-                => ValidateModeDefaultAzureCredentials(options),
+            QueueClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
+                options
+            ),
             QueueClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             QueueClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),

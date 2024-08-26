@@ -57,8 +57,9 @@ internal sealed class TableServiceAvailableConfigure
         {
             TableClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             TableClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            TableClientCreationMode.DefaultAzureCredentials
-                => ValidateModeDefaultAzureCredentials(options),
+            TableClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
+                options
+            ),
             TableClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             TableClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),

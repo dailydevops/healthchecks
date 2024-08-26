@@ -82,7 +82,7 @@ public sealed class QueueClientAvailableConfigureTests
                 new QueueClientAvailableOptions
                 {
                     Mode = (QueueClientCreationMode)13,
-                    QueueName = "test"
+                    QueueName = "test",
                 }
             },
             // Mode: ServiceProvider
@@ -93,7 +93,7 @@ public sealed class QueueClientAvailableConfigureTests
                 new QueueClientAvailableOptions
                 {
                     Mode = QueueClientCreationMode.ServiceProvider,
-                    QueueName = "test"
+                    QueueName = "test",
                 }
             },
             // Mode: DefaultAzureCredentials
@@ -104,7 +104,7 @@ public sealed class QueueClientAvailableConfigureTests
                 new QueueClientAvailableOptions
                 {
                     Mode = QueueClientCreationMode.DefaultAzureCredentials,
-                    QueueName = "test"
+                    QueueName = "test",
                 }
             },
             {
@@ -115,7 +115,7 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -126,7 +126,7 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("https://example.com", UriKind.Absolute)
+                    ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                 }
             },
             // Mode: ConnectionString
@@ -137,7 +137,7 @@ public sealed class QueueClientAvailableConfigureTests
                 new QueueClientAvailableOptions
                 {
                     QueueName = "test",
-                    Mode = QueueClientCreationMode.ConnectionString
+                    Mode = QueueClientCreationMode.ConnectionString,
                 }
             },
             {
@@ -148,7 +148,7 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.ConnectionString,
-                    ConnectionString = "connectionString"
+                    ConnectionString = "connectionString",
                 }
             },
             // Mode: SharedKey
@@ -159,7 +159,7 @@ public sealed class QueueClientAvailableConfigureTests
                 new QueueClientAvailableOptions
                 {
                     QueueName = "test",
-                    Mode = QueueClientCreationMode.SharedKey
+                    Mode = QueueClientCreationMode.SharedKey,
                 }
             },
             {
@@ -170,7 +170,7 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.SharedKey,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -182,7 +182,7 @@ public sealed class QueueClientAvailableConfigureTests
                     QueueName = "test",
                     Mode = QueueClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
-                    AccountName = null
+                    AccountName = null,
                 }
             },
             {
@@ -195,7 +195,7 @@ public sealed class QueueClientAvailableConfigureTests
                     Mode = QueueClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = null
+                    AccountKey = null,
                 }
             },
             {
@@ -208,7 +208,7 @@ public sealed class QueueClientAvailableConfigureTests
                     Mode = QueueClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = "test"
+                    AccountKey = "test",
                 }
             },
             // Mode: AzureSasCredential
@@ -219,7 +219,7 @@ public sealed class QueueClientAvailableConfigureTests
                 new QueueClientAvailableOptions
                 {
                     QueueName = "test",
-                    Mode = QueueClientCreationMode.AzureSasCredential
+                    Mode = QueueClientCreationMode.AzureSasCredential,
                 }
             },
             {
@@ -230,7 +230,7 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -241,7 +241,7 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute", UriKind.Absolute),
                 }
             },
             {
@@ -252,9 +252,9 @@ public sealed class QueueClientAvailableConfigureTests
                 {
                     QueueName = "test",
                     Mode = QueueClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute),
                 }
-            }
+            },
         };
 
         return data;

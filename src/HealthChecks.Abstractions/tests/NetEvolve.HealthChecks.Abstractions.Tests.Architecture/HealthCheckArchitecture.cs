@@ -50,7 +50,7 @@ internal static class HealthCheckArchitecture
             typeof(SqlEdgeCheck).Assembly,
             typeof(SQLiteCheck).Assembly,
             typeof(SqlServerCheck).Assembly,
-            typeof(SqlServerLegacyCheck).Assembly
+            typeof(SqlServerLegacyCheck).Assembly,
         ];
         var architecture = new ArchLoader()
             .LoadAssembliesRecursively(

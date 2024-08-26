@@ -30,7 +30,7 @@ public class ConfigurableHealthCheckBaseTests
 
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", check, null, null)
+            Registration = new HealthCheckRegistration("test", check, null, null),
         };
 
         // Act

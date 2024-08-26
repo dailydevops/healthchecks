@@ -13,5 +13,5 @@ public enum ConnectionHandleMode
     /// <summary>
     /// Specifies that a new connection is created each time.
     /// </summary>
-    Create
+    Create,
 }

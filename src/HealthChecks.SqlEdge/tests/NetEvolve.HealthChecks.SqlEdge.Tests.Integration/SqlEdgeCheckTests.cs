@@ -89,7 +89,7 @@ public class SqlEdgeCheckTests : HealthCheckTestBase, IClassFixture<SqlEdgeDatab
                     {
                         "HealthChecks:SqlEdge:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
-                    }
+                    },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -110,7 +110,7 @@ public class SqlEdgeCheckTests : HealthCheckTestBase, IClassFixture<SqlEdgeDatab
                         "HealthChecks:SqlEdge:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SqlEdge:TestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:SqlEdge:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -127,7 +127,7 @@ public class SqlEdgeCheckTests : HealthCheckTestBase, IClassFixture<SqlEdgeDatab
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:SqlEdge:TestNoValues:ConnectionString", "" }
+                    { "HealthChecks:SqlEdge:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -148,7 +148,7 @@ public class SqlEdgeCheckTests : HealthCheckTestBase, IClassFixture<SqlEdgeDatab
                         "HealthChecks:SqlEdge:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SqlEdge:TestNoValues:Timeout", "-2" }
+                    { "HealthChecks:SqlEdge:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

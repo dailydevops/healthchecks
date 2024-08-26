@@ -88,7 +88,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
                     {
                         "HealthChecks:PostgreSql:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
-                    }
+                    },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -109,7 +109,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
                         "HealthChecks:PostgreSql:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:PostgreSql:TestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:PostgreSql:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -126,7 +126,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:PostgreSql:TestNoValues:ConnectionString", "" }
+                    { "HealthChecks:PostgreSql:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -147,7 +147,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
                         "HealthChecks:PostgreSql:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:PostgreSql:TestNoValues:Timeout", "-2" }
+                    { "HealthChecks:PostgreSql:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

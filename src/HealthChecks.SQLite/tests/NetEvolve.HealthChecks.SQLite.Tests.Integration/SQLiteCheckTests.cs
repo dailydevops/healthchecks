@@ -90,7 +90,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
                     {
                         "HealthChecks:SQLite:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
-                    }
+                    },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -111,7 +111,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
                         "HealthChecks:SQLite:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SQLite:TestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:SQLite:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -128,7 +128,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:SQLite:TestNoValues:ConnectionString", "" }
+                    { "HealthChecks:SQLite:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -149,7 +149,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
                         "HealthChecks:SQLite:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:SQLite:TestNoValues:Timeout", "-2" }
+                    { "HealthChecks:SQLite:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
