@@ -33,5 +33,5 @@ public enum QueueClientCreationMode
     /// <summary>
     /// The <see cref="QueueServiceClient"/> is created using the <see cref="QueueClientAvailableOptions.ServiceUri"/>.
     /// </summary>
-    AzureSasCredential = 4
+    AzureSasCredential = 4,
 }

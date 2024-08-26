@@ -89,7 +89,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 "name",
                 new QueueServiceAvailableOptions
                 {
-                    Mode = QueueClientCreationMode.DefaultAzureCredentials
+                    Mode = QueueClientCreationMode.DefaultAzureCredentials,
                 }
             },
             {
@@ -99,7 +99,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -109,7 +109,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("https://example.com", UriKind.Absolute)
+                    ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                 }
             },
             // Mode: ConnectionString
@@ -126,7 +126,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.ConnectionString,
-                    ConnectionString = "connectionString"
+                    ConnectionString = "connectionString",
                 }
             },
             // Mode: SharedKey
@@ -143,7 +143,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.SharedKey,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -154,7 +154,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 {
                     Mode = QueueClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
-                    AccountName = null
+                    AccountName = null,
                 }
             },
             {
@@ -166,7 +166,7 @@ public sealed class QueueServiceAvailableConfigureTests
                     Mode = QueueClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = null
+                    AccountKey = null,
                 }
             },
             {
@@ -178,7 +178,7 @@ public sealed class QueueServiceAvailableConfigureTests
                     Mode = QueueClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = "test"
+                    AccountKey = "test",
                 }
             },
             // Mode: AzureSasCredential
@@ -188,7 +188,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 "name",
                 new QueueServiceAvailableOptions
                 {
-                    Mode = QueueClientCreationMode.AzureSasCredential
+                    Mode = QueueClientCreationMode.AzureSasCredential,
                 }
             },
             {
@@ -198,7 +198,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -208,7 +208,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute", UriKind.Absolute),
                 }
             },
             {
@@ -218,9 +218,9 @@ public sealed class QueueServiceAvailableConfigureTests
                 new QueueServiceAvailableOptions
                 {
                     Mode = QueueClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute),
                 }
-            }
+            },
         };
 
         return data;

@@ -36,7 +36,7 @@ public sealed class NpgsqlCheckTests
         var check = new NpgsqlCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", check, null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -56,7 +56,7 @@ public sealed class NpgsqlCheckTests
         var check = new NpgsqlCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", check, null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null),
         };
 
         // Act

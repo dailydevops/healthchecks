@@ -83,7 +83,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 new BlobContainerAvailableOptions
                 {
                     Mode = (BlobClientCreationMode)13,
-                    ContainerName = "test"
+                    ContainerName = "test",
                 }
             },
             // Mode: ServiceProvider
@@ -94,7 +94,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 new BlobContainerAvailableOptions
                 {
                     Mode = BlobClientCreationMode.ServiceProvider,
-                    ContainerName = "test"
+                    ContainerName = "test",
                 }
             },
             // Mode: DefaultAzureCredentials
@@ -105,7 +105,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 new BlobContainerAvailableOptions
                 {
                     Mode = BlobClientCreationMode.DefaultAzureCredentials,
-                    ContainerName = "test"
+                    ContainerName = "test",
                 }
             },
             {
@@ -116,7 +116,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -127,7 +127,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.DefaultAzureCredentials,
-                    ServiceUri = new Uri("https://example.com", UriKind.Absolute)
+                    ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                 }
             },
             // Mode: ConnectionString
@@ -138,7 +138,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 new BlobContainerAvailableOptions
                 {
                     ContainerName = "test",
-                    Mode = BlobClientCreationMode.ConnectionString
+                    Mode = BlobClientCreationMode.ConnectionString,
                 }
             },
             {
@@ -149,7 +149,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.ConnectionString,
-                    ConnectionString = "connectionString"
+                    ConnectionString = "connectionString",
                 }
             },
             // Mode: SharedKey
@@ -160,7 +160,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 new BlobContainerAvailableOptions
                 {
                     ContainerName = "test",
-                    Mode = BlobClientCreationMode.SharedKey
+                    Mode = BlobClientCreationMode.SharedKey,
                 }
             },
             {
@@ -171,7 +171,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.SharedKey,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -183,7 +183,7 @@ public sealed class BlobContainerAvailableConfigureTests
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
-                    AccountName = null
+                    AccountName = null,
                 }
             },
             {
@@ -196,7 +196,7 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = null
+                    AccountKey = null,
                 }
             },
             {
@@ -209,7 +209,7 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = "test"
+                    AccountKey = "test",
                 }
             },
             // Mode: AzureSasCredential
@@ -220,7 +220,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 new BlobContainerAvailableOptions
                 {
                     ContainerName = "test",
-                    Mode = BlobClientCreationMode.AzureSasCredential
+                    Mode = BlobClientCreationMode.AzureSasCredential,
                 }
             },
             {
@@ -231,7 +231,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("/relative", UriKind.Relative)
+                    ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
             },
             {
@@ -242,7 +242,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute", UriKind.Absolute),
                 }
             },
             {
@@ -253,9 +253,9 @@ public sealed class BlobContainerAvailableConfigureTests
                 {
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.AzureSasCredential,
-                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute)
+                    ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute),
                 }
-            }
+            },
         };
 
         return data;

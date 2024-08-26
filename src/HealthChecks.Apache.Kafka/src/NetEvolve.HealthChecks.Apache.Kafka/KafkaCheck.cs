@@ -19,7 +19,7 @@ internal sealed class KafkaCheck : ConfigurableHealthCheckBase<KafkaOptions>
     private static readonly Message<string, string> _message = new Message<string, string>()
     {
         Key = "HealthCheck",
-        Value = "HealthCheck"
+        Value = "HealthCheck",
     };
 
     public KafkaCheck(

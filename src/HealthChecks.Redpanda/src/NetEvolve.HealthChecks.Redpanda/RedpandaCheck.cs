@@ -19,7 +19,7 @@ internal sealed class RedpandaCheck : ConfigurableHealthCheckBase<RedpandaOption
     private static readonly Message<string, string> _message = new Message<string, string>()
     {
         Key = "HealthCheck",
-        Value = "HealthCheck"
+        Value = "HealthCheck",
     };
 
     public RedpandaCheck(

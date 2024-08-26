@@ -39,7 +39,7 @@ public sealed class RedpandaCheckTests
         var check = new RedpandaCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", check, null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -60,7 +60,7 @@ public sealed class RedpandaCheckTests
         var check = new RedpandaCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", check, null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null),
         };
 
         // Act

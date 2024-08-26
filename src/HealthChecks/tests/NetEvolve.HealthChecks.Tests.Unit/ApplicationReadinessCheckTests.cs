@@ -36,7 +36,7 @@ public sealed class ApplicationReadinessCheckTests
         var cancellationToken = new CancellationToken();
         var context = new HealthCheckContext
         {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null)
+            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -56,7 +56,7 @@ public sealed class ApplicationReadinessCheckTests
         var cancellationToken = new CancellationToken(true);
         var context = new HealthCheckContext
         {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null)
+            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -75,7 +75,7 @@ public sealed class ApplicationReadinessCheckTests
         var cancellationToken = new CancellationToken();
         var context = new HealthCheckContext
         {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null)
+            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
         };
 
         // Act

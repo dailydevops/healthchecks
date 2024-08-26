@@ -105,7 +105,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                     {
                         "HealthChecks:RedisDatabase:TestContainerHealthy:ConnectionString",
                         _database.GetConnectionString()
-                    }
+                    },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -138,7 +138,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                         _database.GetConnectionString()
                     },
                     { "HealthChecks:RedisDatabase:TestContainerDegraded:Timeout", "0" },
-                    { "HealthChecks:RedisDatabase:TestContainerDegraded:Mode", "Create" }
+                    { "HealthChecks:RedisDatabase:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -156,7 +156,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:RedisDatabase:TestNoValues:ConnectionString", "" },
-                    { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" }
+                    { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -178,7 +178,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                         _database.GetConnectionString()
                     },
                     { "HealthChecks:RedisDatabase:TestNoValues:Timeout", "-2" },
-                    { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" }
+                    { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

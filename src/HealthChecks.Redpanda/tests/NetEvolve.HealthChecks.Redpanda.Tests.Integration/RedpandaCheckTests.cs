@@ -58,7 +58,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                 {
                     var config = new ProducerConfig
                     {
-                        BootstrapServers = _database.BootstrapAddress
+                        BootstrapServers = _database.BootstrapAddress,
                     };
 
                     return new ProducerBuilder<string, string>(config).Build();
@@ -83,7 +83,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
-                    { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" }
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -106,7 +106,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
-                    { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "ServiceProvider" }
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "ServiceProvider" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -116,7 +116,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                 {
                     var config = new ProducerConfig
                     {
-                        BootstrapServers = _database.BootstrapAddress
+                        BootstrapServers = _database.BootstrapAddress,
                     };
 
                     return new ProducerBuilder<string, string>(config).Build();
@@ -135,7 +135,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     options.Configuration = new()
                     {
                         BootstrapServers = _database.BootstrapAddress,
-                        EnableDeliveryReports = false
+                        EnableDeliveryReports = false,
                     };
                     options.Mode = ProducerHandleMode.Create;
                     options.Timeout = 5000;
@@ -165,7 +165,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
-                    { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" }
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -208,7 +208,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                 {
                     var config = new ProducerConfig
                     {
-                        BootstrapServers = _database.BootstrapAddress
+                        BootstrapServers = _database.BootstrapAddress,
                     };
 
                     return new ProducerBuilder<string, string>(config).Build();
@@ -236,7 +236,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         "HealthChecks:RedPanda:TestContainerDegraded:Topic",
                         "TestContainerDegraded"
                     },
-                    { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" }
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -262,7 +262,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         "HealthChecks:RedPanda:TestContainerDegraded:Topic",
                         "TestContainerDegraded"
                     },
-                    { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "ServiceProvider" }
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "ServiceProvider" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -272,7 +272,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                 {
                     var config = new ProducerConfig
                     {
-                        BootstrapServers = _database.BootstrapAddress
+                        BootstrapServers = _database.BootstrapAddress,
                     };
 
                     return new ProducerBuilder<string, string>(config).Build();
@@ -291,7 +291,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     options.Configuration = new()
                     {
                         BootstrapServers = _database.BootstrapAddress,
-                        EnableDeliveryReports = false
+                        EnableDeliveryReports = false,
                     };
                     options.Mode = ProducerHandleMode.Create;
                     options.Timeout = 0;
@@ -324,7 +324,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         "HealthChecks:RedPanda:TestContainerDegraded:Topic",
                         "TestContainerDegraded"
                     },
-                    { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" }
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -341,7 +341,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     options.Configuration = new()
                     {
                         BootstrapServers = _database.BootstrapAddress,
-                        SocketTimeoutMs = 0
+                        SocketTimeoutMs = 0,
                     };
                     options.Mode = ProducerHandleMode.Create;
                     options.Topic = "TestContainerUnhealty";
@@ -370,7 +370,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     var config = new ProducerConfig
                     {
                         BootstrapServers = _database.BootstrapAddress,
-                        SocketTimeoutMs = 0
+                        SocketTimeoutMs = 0,
                     };
 
                     return new ProducerBuilder<string, string>(config).Build();
@@ -434,7 +434,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                     options.Configuration = new()
                     {
                         BootstrapServers = _database.BootstrapAddress,
-                        EnableDeliveryReports = false
+                        EnableDeliveryReports = false,
                     };
                     options.Mode = ProducerHandleMode.Create;
                     options.Topic = "TestContainerUnhealty";

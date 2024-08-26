@@ -36,7 +36,7 @@ public sealed class SqlServerCheckTests
         var check = new SqlServerCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", check, null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -56,7 +56,7 @@ public sealed class SqlServerCheckTests
         var check = new SqlServerCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("Test", check, null, null)
+            Registration = new HealthCheckRegistration("Test", check, null, null),
         };
 
         // Act

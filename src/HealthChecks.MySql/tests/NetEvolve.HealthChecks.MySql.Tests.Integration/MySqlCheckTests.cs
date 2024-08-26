@@ -90,7 +90,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                     {
                         "HealthChecks:MySql:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
-                    }
+                    },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -111,7 +111,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                         "HealthChecks:MySql:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:MySql:TestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:MySql:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -128,7 +128,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:MySql:TestNoValues:ConnectionString", "" }
+                    { "HealthChecks:MySql:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -149,7 +149,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
                         "HealthChecks:MySql:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:MySql:TestNoValues:Timeout", "-2" }
+                    { "HealthChecks:MySql:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

@@ -33,5 +33,5 @@ public enum TableClientCreationMode
     /// <summary>
     /// The <see cref="TableServiceClient"/> is created using the <see cref="TableClientAvailableOptions.ServiceUri"/>.
     /// </summary>
-    AzureSasCredential = 4
+    AzureSasCredential = 4,
 }

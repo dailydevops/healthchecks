@@ -89,7 +89,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
                     {
                         "HealthChecks:ClickHouse:TestContainerHealthy:ConnectionString",
                         _database.ConnectionString
-                    }
+                    },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -110,7 +110,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
                         "HealthChecks:ClickHouse:TestContainerDegraded:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:ClickHouse:TestContainerDegraded:Timeout", "0" }
+                    { "HealthChecks:ClickHouse:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -127,7 +127,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:ClickHouse:TestNoValues:ConnectionString", "" }
+                    { "HealthChecks:ClickHouse:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -148,7 +148,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
                         "HealthChecks:ClickHouse:TestNoValues:ConnectionString",
                         _database.ConnectionString
                     },
-                    { "HealthChecks:ClickHouse:TestNoValues:Timeout", "-2" }
+                    { "HealthChecks:ClickHouse:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
