@@ -31,7 +31,7 @@
     <PackageVersion Include="NetEvolve.Arguments" Version="1.2.90" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.2.98" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.2.97" />
-    <PackageVersion Include="Npgsql" Version="8.0.3" />
+    <PackageVersion Include="Npgsql" Version="8.0.4" />
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="3.21.130" />
