@@ -15,6 +15,11 @@
     <_TestTargetFrameworks Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">net8.0</_TestTargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Workaround, until https://github.com/GitTools/GitVersion/pull/4206 is released -->
+    <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
+  </PropertyGroup>
+
   <PropertyGroup Label="Settings for non test projects" Condition=" '$(IsTestableProject)' == 'false' ">
     <Title>$(MSBuildProjectName)</Title>
     <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
