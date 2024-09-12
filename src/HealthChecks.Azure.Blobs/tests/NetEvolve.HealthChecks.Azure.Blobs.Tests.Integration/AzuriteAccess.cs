@@ -14,7 +14,7 @@ public sealed class AzuriteAccess : IAsyncLifetime, IAsyncDisposable
         "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
 
     private readonly AzuriteContainer _container = new AzuriteBuilder()
-        .WithImage("mcr.microsoft.com/azure-storage/azurite:latest")
+        .WithCommand("--skipApiVersionCheck")
         .Build();
 
     public string ConnectionString => _container.GetConnectionString();
