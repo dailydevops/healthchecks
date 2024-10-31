@@ -30,7 +30,7 @@
     <PackageVersion Include="MySqlConnector" Version="2.3.7" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.2.100" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.2.113" />
-    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.2.111" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.3.0" />
     <PackageVersion Include="Npgsql" Version="8.0.5" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
