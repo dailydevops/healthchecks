@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Abstractions.Tests.Architecture;
 
 using ArchUnitNET.Domain;
-using ArchUnitNET.Fluent.Syntax.Elements.Members;
 using ArchUnitNET.xUnit;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Xunit;

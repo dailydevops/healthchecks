@@ -10,8 +10,8 @@
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" '$(IsTestableProject)' == 'true' " />
 
   <PropertyGroup Label="General settings for all projects">
-    <_ProjectTargetFrameworks>net6.0;net7.0;net8.0</_ProjectTargetFrameworks>
-    <_TestTargetFrameworks>net6.0;net7.0;net8.0</_TestTargetFrameworks>
+    <_ProjectTargetFrameworks>net8.0;net9.0</_ProjectTargetFrameworks>
+    <_TestTargetFrameworks>net8.0;net9.0</_TestTargetFrameworks>
     <_TestTargetFrameworks Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">net8.0</_TestTargetFrameworks>
   </PropertyGroup>
 
