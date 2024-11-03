@@ -14,7 +14,6 @@ using NetEvolve.HealthChecks.Npgsql;
 using NetEvolve.HealthChecks.Oracle;
 using NetEvolve.HealthChecks.Redis;
 using NetEvolve.HealthChecks.Redpanda;
-using NetEvolve.HealthChecks.SqlEdge;
 using NetEvolve.HealthChecks.SQLite;
 using NetEvolve.HealthChecks.SqlServer;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
@@ -47,7 +46,6 @@ internal static class HealthCheckArchitecture
             typeof(OracleCheck).Assembly,
             typeof(RedisDatabaseHealthCheck).Assembly,
             typeof(RedpandaCheck).Assembly,
-            typeof(SqlEdgeCheck).Assembly,
             typeof(SQLiteCheck).Assembly,
             typeof(SqlServerCheck).Assembly,
             typeof(SqlServerLegacyCheck).Assembly,

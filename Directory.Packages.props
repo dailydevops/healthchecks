@@ -47,7 +47,6 @@
     <PackageVersion Include="Testcontainers.PostgreSql" Version="3.10.0" />
     <PackageVersion Include="Testcontainers.Redis" Version="3.10.0" />
     <PackageVersion Include="Testcontainers.Redpanda" Version="3.10.0" />
-    <PackageVersion Include="Testcontainers.SqlEdge" Version="3.10.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.11.1" />
     <PackageVersion Include="Verify.Xunit" Version="28.1.0" />
     <PackageVersion Include="xunit" Version="2.9.2" />

@@ -33,7 +33,6 @@
     <ProjectReference Include="..\..\..\HealthChecks.Oracle\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.Redis\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.Redpanda\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
-    <ProjectReference Include="..\..\..\HealthChecks.SqlEdge\src\NetEvolve.HealthChecks.SqlEdge\NetEvolve.HealthChecks.SqlEdge.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.SQLite\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.SqlServer.Legacy\src\NetEvolve.HealthChecks.SqlServer.Legacy\NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <ProjectReference Include="..\..\..\HealthChecks.SqlServer\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />
