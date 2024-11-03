@@ -52,6 +52,7 @@ internal static class ClientCreation
             options.ConfigureClientOptions(clientOptions);
         }
 
+#pragma warning disable IDE0010 // Add missing cases
         switch (options.Mode)
         {
             case QueueClientCreationMode.DefaultAzureCredentials:
@@ -82,5 +83,6 @@ internal static class ClientCreation
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }
+#pragma warning restore IDE0010 // Add missing cases
     }
 }
