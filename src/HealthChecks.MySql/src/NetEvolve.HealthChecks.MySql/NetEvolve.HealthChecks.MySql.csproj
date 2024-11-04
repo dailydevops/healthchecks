@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="MySql.Data" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>
