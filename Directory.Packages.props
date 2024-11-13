@@ -27,7 +27,7 @@
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.8.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageVersion Include="MySql.Data" Version="9.1.0" />
-    <PackageVersion Include="MySqlConnector" Version="2.3.7" />
+    <PackageVersion Include="MySqlConnector" Version="2.4.0" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.2.100" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.2.113" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.3.1" />
