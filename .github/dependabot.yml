@@ -17,6 +17,9 @@ updates:
     labels:
       - "dependency-actions"
     open-pull-requests-limit: 50
+    # Add assignees
+    assignees:
+      - "samtrion"
 
   - package-ecosystem: "nuget"
     directory: "/"
@@ -27,6 +30,9 @@ updates:
     labels:
       - "dependency-nuget"
     open-pull-requests-limit: 50
+    # Add assignees
+    assignees:
+      - "samtrion"
     groups:
      coverlet:
        patterns:
@@ -55,6 +61,9 @@ updates:
     labels:
       - "dependency-gitmodule"
     open-pull-requests-limit: 50
+    # Add assignees
+    assignees:
+      - "samtrion"
     groups:
       submodules:
         patterns:
@@ -69,3 +78,6 @@ updates:
     labels:
       - "dependency-devcontainers"
     open-pull-requests-limit: 50
+    # Add assignees
+    assignees:
+      - "samtrion"
