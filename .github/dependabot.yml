@@ -15,7 +15,7 @@ updates:
     commit-message:
       prefix: "chore(ci)"
     labels:
-      - "dependency-actions"
+      - "dependency:actions"
     open-pull-requests-limit: 50
     # Add assignees
     assignees:
@@ -28,7 +28,7 @@ updates:
     commit-message:
       prefix: "chore(deps)"
     labels:
-      - "dependency-nuget"
+      - "dependency:nuget"
     open-pull-requests-limit: 50
     # Add assignees
     assignees:
@@ -59,7 +59,7 @@ updates:
     commit-message:
       prefix: "chore(mods)"
     labels:
-      - "dependency-gitmodule"
+      - "dependency:submodule"
     open-pull-requests-limit: 50
     # Add assignees
     assignees:
@@ -76,7 +76,7 @@ updates:
     commit-message:
       prefix: "chore(dev)"
     labels:
-      - "dependency-devcontainers"
+      - "dependency:devcontainers"
     open-pull-requests-limit: 50
     # Add assignees
     assignees:
