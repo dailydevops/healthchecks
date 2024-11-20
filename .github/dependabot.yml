@@ -4,7 +4,7 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 # Every time I update this file without changing the content, I increment this counter.
-# Counter: 29
+# Counter: 30
 
 version: 2
 updates:
@@ -16,7 +16,7 @@ updates:
       prefix: "chore(ci)"
     labels:
       - "dependency:actions"
-    open-pull-requests-limit: 50
+    open-pull-requests-limit: 20
     # Add assignees
     assignees:
       - "samtrion"
@@ -29,7 +29,7 @@ updates:
       prefix: "chore(deps)"
     labels:
       - "dependency:nuget"
-    open-pull-requests-limit: 50
+    open-pull-requests-limit: 20
     # Add assignees
     assignees:
       - "samtrion"
@@ -60,7 +60,7 @@ updates:
       prefix: "chore(mods)"
     labels:
       - "dependency:submodule"
-    open-pull-requests-limit: 50
+    open-pull-requests-limit: 20
     # Add assignees
     assignees:
       - "samtrion"
@@ -77,7 +77,7 @@ updates:
       prefix: "chore(dev)"
     labels:
       - "dependency:devcontainers"
-    open-pull-requests-limit: 50
+    open-pull-requests-limit: 20
     # Add assignees
     assignees:
       - "samtrion"
