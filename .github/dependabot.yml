@@ -52,23 +52,6 @@ updates:
          - "xunit"
          - "xunit*"
 
-  - package-ecosystem: "gitsubmodule"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "chore(mods)"
-    labels:
-      - "dependency:submodule"
-    open-pull-requests-limit: 20
-    # Add assignees
-    assignees:
-      - "samtrion"
-    groups:
-      submodules:
-        patterns:
-          - "*"
-
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
