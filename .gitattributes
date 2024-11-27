@@ -1,4 +1,26 @@
-* text=auto eol=lf
+* text=auto
+* text eol=lf
+
+# (binary is a macro for -text -diff)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.pyc binary
+*.pdf binary
 
 # https://github.com/VerifyTests/Verify?tab=readme-ov-file#text-file-settings
 *.verified.txt text eol=lf working-tree-encoding=UTF-8
