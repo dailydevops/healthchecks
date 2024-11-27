@@ -5,4 +5,10 @@
 *.verified.xml text eol=lf working-tree-encoding=UTF-8
 *.verified.json text eol=lf working-tree-encoding=UTF-8
 
-git add *.png --force
+# Images
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
