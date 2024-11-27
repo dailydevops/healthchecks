@@ -37,7 +37,7 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.6.1" />
     <PackageVersion Include="Polyfill" Version="7.5.0" />
-    <PackageVersion Include="StackExchange.Redis" Version="2.8.16" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.8.22" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.0.0" />
