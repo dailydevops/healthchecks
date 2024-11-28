@@ -1,14 +1,5 @@
 <Project>
 
-  <PropertyGroup>
-    <DirEngineering>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'eng'))</DirEngineering>
-    <DirEngineeringSettings>$([MSBuild]::NormalizeDirectory('$(DirEngineering)', 'settings'))</DirEngineeringSettings>
-  </PropertyGroup>
-
-  <Import Project="$(DirEngineeringSettings)sln.build.props" />
-  <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" '$(IsTestableProject)' == 'false' " />
-  <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" '$(IsTestableProject)' == 'true' " />
-
   <PropertyGroup Label="General settings for all projects">
     <_ProjectTargetFrameworks>net8.0;net9.0</_ProjectTargetFrameworks>
     <_TestTargetFrameworks>net8.0;net9.0</_TestTargetFrameworks>
@@ -20,7 +11,7 @@
     <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Label="Settings for non test projects" Condition=" '$(IsTestableProject)' == 'false' ">
+  <PropertyGroup Label="Settings for non test projects">
     <Title>$(MSBuildProjectName)</Title>
     <RepositoryUrl>https://github.com/dailydevops/healthchecks.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/healthchecks</PackageProjectUrl>
@@ -29,17 +20,5 @@
 
     <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
-
-  <ItemGroup Label="Test compability" Condition=" '$(IsTestableProject)' == 'false' ">
-    <InternalsVisibleTo Include="NetEvolve.HealthChecks.Abstractions.Tests.Architecture" />
-  </ItemGroup>
-
-  <PropertyGroup Label="Settings for test projects" Condition=" '$(IsTestableProject)' == 'true' ">
-    <NoWarn>$(NoWarn);CS8604;CA2007;</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(IsTestableProject)' == 'false' ">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
 
 </Project>
