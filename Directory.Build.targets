@@ -8,8 +8,4 @@
     <NoWarn>$(NoWarn);CS8604;CA2007;</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(IsTestableProject)' == 'false' ">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
 </Project>
