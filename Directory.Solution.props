@@ -1,10 +1,6 @@
 <Project>
-
   <PropertyGroup>
-    <DirEngineering>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'eng'))</DirEngineering>
-    <DirEngineeringSettings>$([MSBuild]::NormalizeDirectory('$(DirEngineering)', 'settings'))</DirEngineeringSettings>
+    <!-- For solution restore, msbuild doesn't honor the property set in Directory.Build.props. -->
+    <RestoreUseStaticGraphEvaluation>true</RestoreUseStaticGraphEvaluation>
   </PropertyGroup>
-
-  <Import Project="$(DirEngineeringSettings)sln.solution.props" />
-
 </Project>

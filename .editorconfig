@@ -87,3 +87,193 @@ indent_style = tab
 [*.{received,verified}.txt]
 insert_final_newline = false
 trim_trailing_whitespace = false
+
+[*.{cs,csx,vb,vbx}]
+# .NET Code Style Settings
+# See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+dotnet_sort_system_directives_first                                     = true
+dotnet_separate_import_directive_groups                                 = false
+
+# Don't use 'this.'/'Me.' prefix for anything
+dotnet_style_qualification_for_field                                    = false : error
+dotnet_style_qualification_for_property                                 = false : error
+dotnet_style_qualification_for_method                                   = false : error
+dotnet_style_qualification_for_event                                    = false : error
+
+# Use language keywords over framework type names for type references
+# i.e. prefer 'string' over 'String'
+dotnet_style_predefined_type_for_locals_parameters_members              = true : error
+dotnet_style_predefined_type_for_member_access                          = true : error
+
+# Prefer object/collection initializers
+# This is a suggestion because there are cases where this is necessary
+dotnet_style_object_initializer                                         = true : warning
+dotnet_style_collection_initializer                                     = true : warning
+
+# C# 7: Prefer using named tuple names over '.Item1', '.Item2', etc.
+dotnet_style_explicit_tuple_names                                       = true : error
+
+# Prefer using 'foo ?? bar' over 'foo is not null ? foo : bar'
+dotnet_style_coalesce_expression                                        = true : error
+
+# Prefer using '?.' over ternary null checking where possible
+dotnet_style_null_propagation                                           = true : error
+
+# Modifier preferences
+# See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-language-conventions?view=vs-2019#normalize-modifiers
+dotnet_style_require_accessibility_modifiers                            = always : error
+dotnet_style_readonly_field                                             = true : warning
+
+# Required Styles
+dotnet_naming_style.all_const.capitalization                            = pascal_case
+dotnet_naming_symbols.all_const.applicable_kinds                        = field
+dotnet_naming_symbols.all_const.required_modifiers                      = const
+dotnet_naming_rule.all_const.severity                                   = error
+dotnet_naming_rule.all_const.style                                      = all_elements
+dotnet_naming_rule.all_const.symbols                                    = all_const
+
+dotnet_naming_style.all_fields.required_prefix                          = _
+dotnet_naming_style.all_fields.capitalization                           = camel_case
+dotnet_naming_symbols.all_fields.applicable_kinds                       = field
+dotnet_naming_rule.all_fields.severity                                  = error
+dotnet_naming_rule.all_fields.style                                     = all_fields
+dotnet_naming_rule.all_fields.symbols                                   = all_fields
+
+dotnet_naming_style.all_interfaces.required_prefix                      = I
+dotnet_naming_style.all_interfaces.capitalization                       = pascal_case
+dotnet_naming_symbols.all_interfaces.applicable_kinds                   = interface
+dotnet_naming_rule.all_interfaces.severity                              = error
+dotnet_naming_rule.all_interfaces.style                                 = all_interfaces
+dotnet_naming_rule.all_interfaces.symbols                               = all_interfaces
+
+dotnet_naming_style.all_type_parameter.required_prefix                  = T
+dotnet_naming_style.all_type_parameter.capitalization                   = pascal_case
+dotnet_naming_symbols.all_type_parameter.applicable_kinds               = type_parameter
+dotnet_naming_rule.all_type_parameter.severity                          = error
+dotnet_naming_rule.all_type_parameter.style                             = all_type_parameter
+dotnet_naming_rule.all_type_parameter.symbols                           = all_type_parameter
+
+dotnet_naming_style.abstract_class.required_suffix                      = Base
+dotnet_naming_style.abstract_class.capitalization                       = pascal_case
+dotnet_naming_symbols.abstract_class.applicable_kinds                   = class
+dotnet_naming_symbols.abstract_class.required_modifiers                 = abstract
+dotnet_naming_rule.abstract_class.severity                              = warning
+dotnet_naming_rule.abstract_class.style                                 = abstract_class
+dotnet_naming_rule.abstract_class.symbols                               = abstract_class
+
+dotnet_naming_style.method_async.required_suffix                        = Async
+dotnet_naming_style.method_async.capitalization                         = pascal_case
+dotnet_naming_symbols.method_async.applicable_kinds                     = method
+dotnet_naming_symbols.method_async.required_modifiers                   = async
+dotnet_naming_rule.method_async.severity                                = warning
+dotnet_naming_rule.method_async.style                                   = method_async
+dotnet_naming_rule.method_async.symbols                                 = method_async
+
+dotnet_naming_style.all_elements.capitalization                         = pascal_case
+dotnet_naming_symbols.all_elements.applicable_kinds                     = namespace,class,struct,enum,property,method,event,delegate,local_function
+dotnet_naming_rule.all_elements.severity                                = error
+dotnet_naming_rule.all_elements.style                                   = all_elements
+dotnet_naming_rule.all_elements.symbols                                 = all_elements
+
+dotnet_naming_style.all_parameters.capitalization                       = camel_case
+dotnet_naming_symbols.all_parameters.applicable_kinds                   = parameter,local
+dotnet_naming_rule.all_parameters.severity                              = error
+dotnet_naming_rule.all_parameters.style                                 = all_parameters
+dotnet_naming_rule.all_parameters.symbols                               = all_parameters
+
+dotnet_style_operator_placement_when_wrapping                           = beginning_of_line
+dotnet_style_prefer_is_null_check_over_reference_equality_method        = true : suggestion
+dotnet_style_prefer_auto_properties                                     = true : silent
+
+# Placement for using directives
+csharp_using_directive_placement                                        = inside_namespace : warning
+
+# Use 'var' in all cases where it can be used
+csharp_style_var_for_built_in_types                                     = true : error
+csharp_style_var_when_type_is_apparent                                  = true : error
+csharp_style_var_elsewhere                                              = true : error
+
+# Unused value preferences
+csharp_style_unused_value_expression_statement_preference               = discard_variable : warning
+csharp_style_unused_value_assignment_preference                         = discard_variable : warning
+
+# C# 7: Prefer using pattern matching over "if(x is T) { var t = (T)x; }" and "var t = x as T; if(t is not null) { ... }"
+csharp_style_pattern_matching_over_is_with_cast_check                   = true : warning
+csharp_style_pattern_matching_over_as_with_null_check                   = true : warning
+
+# C# 7: Prefer using 'out var' where possible
+csharp_style_inlined_variable_declaration                               = true : error
+
+# C# 7: Use throw expressions when null-checking
+csharp_style_throw_expression                                           = false : error
+
+# Prefer using "func?.Invoke(args)" over "if(func is not null) { func(args); }"
+csharp_style_conditional_delegate_call                                  = true : error
+
+# Newline settings
+csharp_indent_braces                                                    = false
+csharp_open_brace_on_new_line                                           = all
+csharp_new_line_before_open_brace                                       = all
+csharp_new_line_before_else                                             = true
+csharp_new_line_before_catch                                            = true
+csharp_new_line_before_finally                                          = true
+csharp_new_line_before_members_in_object_initializers                   = true
+csharp_new_line_before_members_in_anonymous_types                       = true
+
+# Prefer expression-bodied methods, constructors, operators, etc.
+csharp_style_expression_bodied_methods                                  = true : warning
+csharp_style_expression_bodied_constructors                             = true : warning
+csharp_style_expression_bodied_operators                                = true : warning
+csharp_style_expression_bodied_properties                               = true : warning
+csharp_style_expression_bodied_indexers                                 = true : warning
+csharp_style_expression_bodied_accessors                                = true : warning
+
+# Prefer Braces even for one line of code, because of
+csharp_prefer_braces                                                    = true : error
+csharp_type_declaration_braces                                          = next_line
+csharp_invocable_declaration_braces                                     = next_line
+csharp_anonymous_method_declaration_braces                              = next_line
+csharp_accessor_owner_declaration_braces                                = next_line
+csharp_accessor_declaration_braces                                      = next_line
+csharp_case_block_braces                                                = next_line
+csharp_initializer_braces                                               = next_line
+csharp_other_braces                                                     = next_line
+
+# Tuple Preferences
+csharp_style_deconstructed_variable_declaration                         = true : warning
+
+# Simplify new expression (IDE0090)
+csharp_style_implicit_object_creation_when_type_is_apparent             = false
+csharp_style_namespace_declarations                                     = file_scoped : warning
+csharp_prefer_simple_using_statement                                    = false : suggestion
+csharp_indent_labels                                                    = one_less_than_current
+csharp_style_expression_bodied_lambdas                                  = true : silent
+csharp_style_expression_bodied_local_functions                          = false : silent
+
+# Use Compound assignment
+dotnet_style_prefer_compound_assignment                                 = false
+
+# Prefer if-else statement
+dotnet_style_prefer_conditional_expression_over_return                  = false
+dotnet_diagnostic.IDE0046.severity                                      = suggestion
+
+# Prefer standard constructors
+csharp_style_prefer_primary_constructors                                = false
+dotnet_diagnostic.IDE0290.severity                                      = suggestion
+
+# [CSharpier] Incompatible rules deactivated
+# https://csharpier.com/docs/IntegratingWithLinters#code-analysis-rules
+dotnet_diagnostic.IDE0055.severity                                      = none
+dotnet_diagnostic.SA1000.severity                                       = none
+dotnet_diagnostic.SA1009.severity                                       = none
+dotnet_diagnostic.SA1111.severity                                       = none
+dotnet_diagnostic.SA1118.severity                                       = none
+dotnet_diagnostic.SA1137.severity                                       = none
+dotnet_diagnostic.SA1413.severity                                       = none
+dotnet_diagnostic.SA1500.severity                                       = none
+dotnet_diagnostic.SA1501.severity                                       = none
+dotnet_diagnostic.SA1502.severity                                       = none
+dotnet_diagnostic.SA1504.severity                                       = none
+dotnet_diagnostic.SA1515.severity                                       = none
+dotnet_diagnostic.SA1516.severity                                       = none
+
