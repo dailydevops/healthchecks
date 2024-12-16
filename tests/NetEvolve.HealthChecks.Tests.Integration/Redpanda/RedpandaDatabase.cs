@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Redpanda;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testcontainers.Redpanda;
 using Xunit;

@@ -2,14 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Redis;
-using NetEvolve.HealthChecks.Tests;
 using StackExchange.Redis;
 using Xunit;
 

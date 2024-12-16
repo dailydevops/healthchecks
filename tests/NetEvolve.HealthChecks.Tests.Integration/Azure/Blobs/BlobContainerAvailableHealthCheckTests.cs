@@ -1,15 +1,12 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Blobs;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using global::Azure.Storage.Blobs;
 using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 
-[SetCulture("en-US")]
 public class BlobContainerAvailableHealthCheckTests
     : HealthCheckTestBase,
         IClassFixture<AzuriteAccess>

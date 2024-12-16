@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.MySqlConnector;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testcontainers.MySql;
 using Xunit;

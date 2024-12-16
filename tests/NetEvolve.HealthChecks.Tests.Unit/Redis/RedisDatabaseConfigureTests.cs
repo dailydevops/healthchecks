@@ -1,9 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Redis;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Redis;
 using Xunit;
 

@@ -2,15 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Npgsql;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabase>
 {
     private readonly NpgsqlDatabase _database;

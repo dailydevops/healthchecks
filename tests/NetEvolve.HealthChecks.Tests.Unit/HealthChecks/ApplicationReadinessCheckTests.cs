@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using NetEvolve.Extensions.XUnit;
 using Xunit;
 
 public sealed class ApplicationReadinessCheckTests

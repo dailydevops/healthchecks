@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Redis;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testcontainers.Redis;
 using Xunit;

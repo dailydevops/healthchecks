@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testcontainers.Azurite;
 using Xunit;

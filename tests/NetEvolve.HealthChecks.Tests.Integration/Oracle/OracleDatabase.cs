@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Oracle;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testcontainers.Oracle;
 using Xunit;

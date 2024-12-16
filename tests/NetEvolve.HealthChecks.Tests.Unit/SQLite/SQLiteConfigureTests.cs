@@ -1,9 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.SQLite;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SQLite;
 using Xunit;
 

@@ -2,15 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Oracle;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabase>
 {
     private readonly OracleDatabase _database;

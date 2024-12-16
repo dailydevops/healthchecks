@@ -2,15 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SQLite;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabase>
 {
     private readonly SQLiteDatabase _database;

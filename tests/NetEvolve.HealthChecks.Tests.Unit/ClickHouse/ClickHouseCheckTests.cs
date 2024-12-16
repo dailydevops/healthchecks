@@ -1,12 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.ClickHouse;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.ClickHouse;
 using NSubstitute;
 using Xunit;
