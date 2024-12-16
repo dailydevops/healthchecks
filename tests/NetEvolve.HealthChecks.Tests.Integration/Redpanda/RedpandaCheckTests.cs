@@ -67,10 +67,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
     [Fact]
     public async Task AddRedpanda_UseConfigurationCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedpanda("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddRedpanda("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -90,10 +87,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
     [Fact]
     public async Task AddRedpanda_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedpanda("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddRedpanda("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -145,10 +139,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
     [Fact]
     public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedpanda("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddRedpanda("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -217,10 +208,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
     [Fact]
     public async Task AddRedpanda_UseConfigurationCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedpanda("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddRedpanda("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -243,10 +231,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
     [Fact]
     public async Task AddRedpanda_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedpanda("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddRedpanda("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -301,10 +286,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
     [Fact]
     public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedpanda("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddRedpanda("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

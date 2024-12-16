@@ -23,10 +23,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
         {
             _ = healthChecks.AddPostgreSql(
                 "TestContainerHealthy",
-                options =>
-                {
-                    options.ConnectionString = _database.ConnectionString;
-                }
+                options => options.ConnectionString = _database.ConnectionString
             );
         });
 
@@ -76,10 +73,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
     [Fact]
     public async Task AddPostgreSql_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddPostgreSql("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -96,10 +90,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
     [Fact]
     public async Task AddPostgreSql_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddPostgreSql("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -117,10 +108,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
     [Fact]
     public async Task AddPostgreSql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddPostgreSql("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -134,10 +122,7 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
     [Fact]
     public async Task AddPostgreSql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddPostgreSql("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddPostgreSql("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

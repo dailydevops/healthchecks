@@ -143,9 +143,7 @@ public class TableClientAvailableHealthCheckTests
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
-                        {
                             clientOptions.Retry.MaxRetries = 0;
-                        };
                     }
                 );
             },
@@ -202,9 +200,7 @@ public class TableClientAvailableHealthCheckTests
                     options.Mode = TableClientCreationMode.SharedKey;
                     options.ServiceUri = _uriTableStorage;
                     options.ConfigureClientOptions = clientOptions =>
-                    {
                         clientOptions.Retry.MaxRetries = 0;
-                    };
                 }
             );
         });

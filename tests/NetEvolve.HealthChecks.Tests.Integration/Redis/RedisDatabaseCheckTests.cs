@@ -41,10 +41,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
             {
                 _ = healthChecks.AddRedisDatabase(
                     "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                    }
+                    options => options.ConnectionString = _database.GetConnectionString()
                 );
             },
             serviceBuilder: builder =>
@@ -93,10 +90,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     [Fact]
     public async Task AddRedisDatabase_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedisDatabase("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddRedisDatabase("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -124,10 +118,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     [Fact]
     public async Task AddRedisDatabase_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedisDatabase("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddRedisDatabase("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -146,10 +137,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     [Fact]
     public async Task AddRedisDatabase_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedisDatabase("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddRedisDatabase("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -164,10 +152,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     [Fact]
     public async Task AddRedisDatabase_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddRedisDatabase("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddRedisDatabase("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>

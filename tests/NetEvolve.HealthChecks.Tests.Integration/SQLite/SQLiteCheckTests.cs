@@ -23,10 +23,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
         {
             _ = healthChecks.AddSQLite(
                 "TestContainerHealthy",
-                options =>
-                {
-                    options.ConnectionString = _database.ConnectionString;
-                }
+                options => options.ConnectionString = _database.ConnectionString
             );
         });
 
@@ -77,10 +74,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
     [Fact]
     public async Task AddSQLite_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSQLite("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddSQLite("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -97,10 +91,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
     [Fact]
     public async Task AddSQLite_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSQLite("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddSQLite("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -118,10 +109,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
     [Fact]
     public async Task AddSQLite_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSQLite("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddSQLite("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -135,10 +123,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
     [Fact]
     public async Task AddSQLite_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSQLite("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddSQLite("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

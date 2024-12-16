@@ -33,10 +33,7 @@ public class TableServiceAvailableHealthCheckTests
             {
                 _ = healthChecks.AddTableServiceAvailability(
                     "ServiceServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = TableClientCreationMode.ServiceProvider;
-                    }
+                    options => options.Mode = TableClientCreationMode.ServiceProvider
                 );
             },
             serviceBuilder: services =>
@@ -58,9 +55,7 @@ public class TableServiceAvailableHealthCheckTests
                     {
                         options.Mode = TableClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
-                        {
                             clientOptions.Retry.MaxRetries = 0;
-                        };
                     }
                 );
             },
@@ -136,9 +131,7 @@ public class TableServiceAvailableHealthCheckTests
                     options.Mode = TableClientCreationMode.SharedKey;
                     options.ServiceUri = _uriTableStorage;
                     options.ConfigureClientOptions = clientOptions =>
-                    {
                         clientOptions.Retry.MaxRetries = 0;
-                    };
                 }
             );
         });

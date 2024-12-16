@@ -23,10 +23,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
         {
             _ = healthChecks.AddSqlServerLegacy(
                 "TestContainerHealthy",
-                options =>
-                {
-                    options.ConnectionString = _database.ConnectionString;
-                }
+                options => options.ConnectionString = _database.ConnectionString
             );
         });
 
@@ -77,10 +74,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
     [Fact]
     public async Task AddSqlServerLegacy_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSqlServerLegacy("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddSqlServerLegacy("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -97,10 +91,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
     [Fact]
     public async Task AddSqlServerLegacy_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSqlServerLegacy("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddSqlServerLegacy("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -118,10 +109,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
     [Fact]
     public async Task AddSqlServerLegacy_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSqlServerLegacy("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddSqlServerLegacy("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -135,10 +123,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
     [Fact]
     public async Task AddSqlServerLegacy_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddSqlServerLegacy("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddSqlServerLegacy("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

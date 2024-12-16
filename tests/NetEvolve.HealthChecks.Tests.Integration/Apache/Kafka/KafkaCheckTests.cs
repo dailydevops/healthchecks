@@ -67,10 +67,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     [Fact]
     public async Task AddKafka_UseConfigurationCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKafka("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddKafka("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -90,10 +87,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     [Fact]
     public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKafka("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddKafka("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -145,10 +139,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     [Fact]
     public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKafka("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddKafka("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -217,10 +208,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     [Fact]
     public async Task AddKafka_UseConfigurationCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKafka("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddKafka("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -240,10 +228,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     [Fact]
     public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKafka("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddKafka("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -295,10 +280,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     [Fact]
     public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKafka("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddKafka("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

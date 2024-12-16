@@ -11,18 +11,12 @@ public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Fact]
     public async Task AddApplicationReady_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddApplicationReady();
-        });
+        await RunAndVerify(healthChecks => _ = healthChecks.AddApplicationReady());
 
     [Fact]
     public async Task AddApplicationReady_WithCustomName_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddApplicationReady();
-            },
+            healthChecks => _ = healthChecks.AddApplicationReady(),
             serverConfiguration: server =>
             {
                 var lifetime = server.Services.GetRequiredService<IHostApplicationLifetime>();

@@ -120,9 +120,7 @@ public class QueueClientAvailableHealthCheckTests
                         options.QueueName = "test";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
-                        {
                             clientOptions.Retry.MaxRetries = 0;
-                        };
                     }
                 );
             },
@@ -179,9 +177,7 @@ public class QueueClientAvailableHealthCheckTests
                     options.Mode = QueueClientCreationMode.SharedKey;
                     options.ServiceUri = _uriQueueStorage;
                     options.ConfigureClientOptions = clientOptions =>
-                    {
                         clientOptions.Retry.MaxRetries = 0;
-                    };
                 }
             );
         });

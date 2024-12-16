@@ -16,11 +16,11 @@ internal static class ModuleInitializer
         VerifierSettings.AutoVerify(includeBuildServer: false);
 
         Verifier.DerivePathInfo(
-            (sourceFile, projectDirectory, type, method) =>
+            (_, projectDirectory, type, method) =>
             {
                 var directory = Path.Combine(projectDirectory, "_snapshots");
-                _ = Directory.CreateDirectory(directory);
-                return new(directory, type.Name, method.Name);
+                var createdDirectory = Directory.CreateDirectory(directory);
+                return new(createdDirectory.FullName, type.Name, method.Name);
             }
         );
     }

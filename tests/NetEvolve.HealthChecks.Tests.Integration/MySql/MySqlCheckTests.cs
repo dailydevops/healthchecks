@@ -23,10 +23,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
         {
             _ = healthChecks.AddMySql(
                 "TestContainerHealthy",
-                options =>
-                {
-                    options.ConnectionString = _database.ConnectionString;
-                }
+                options => options.ConnectionString = _database.ConnectionString
             );
         });
 
@@ -78,10 +75,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddMySql("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddMySql("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -98,10 +92,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddMySql("TestContainerDegraded");
-            },
+            healthChecks => _ = healthChecks.AddMySql("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -119,10 +110,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddMySql("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddMySql("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -136,10 +124,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddMySql("TestNoValues");
-            },
+            healthChecks => _ = healthChecks.AddMySql("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

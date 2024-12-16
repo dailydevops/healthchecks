@@ -41,10 +41,7 @@ public class QueueServiceAvailableHealthCheckTests
             {
                 _ = healthChecks.AddQueueServiceAvailability(
                     "ServiceServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = QueueClientCreationMode.ServiceProvider;
-                    }
+                    options => options.Mode = QueueClientCreationMode.ServiceProvider
                 );
             },
             serviceBuilder: services =>
@@ -66,9 +63,7 @@ public class QueueServiceAvailableHealthCheckTests
                     {
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
-                        {
                             clientOptions.Retry.MaxRetries = 0;
-                        };
                     }
                 );
             },
@@ -144,9 +139,7 @@ public class QueueServiceAvailableHealthCheckTests
                     options.Mode = QueueClientCreationMode.SharedKey;
                     options.ServiceUri = _uriQueueStorage;
                     options.ConfigureClientOptions = clientOptions =>
-                    {
                         clientOptions.Retry.MaxRetries = 0;
-                    };
                 }
             );
         });

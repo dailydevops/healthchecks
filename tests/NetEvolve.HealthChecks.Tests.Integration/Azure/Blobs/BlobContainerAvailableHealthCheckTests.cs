@@ -119,9 +119,7 @@ public class BlobContainerAvailableHealthCheckTests
                         options.ContainerName = "test";
                         options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
-                        {
                             clientOptions.Retry.MaxRetries = 0;
-                        };
                     }
                 );
             },
@@ -178,9 +176,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options.Mode = BlobClientCreationMode.SharedKey;
                     options.ServiceUri = _uriBlobStorage;
                     options.ConfigureClientOptions = clientOptions =>
-                    {
                         clientOptions.Retry.MaxRetries = 0;
-                    };
                 }
             );
         });

@@ -41,10 +41,7 @@ public class BlobServiceAvailableHealthCheckTests
             {
                 _ = healthChecks.AddBlobServiceAvailability(
                     "ServiceServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = BlobClientCreationMode.ServiceProvider;
-                    }
+                    options => options.Mode = BlobClientCreationMode.ServiceProvider
                 );
             },
             serviceBuilder: services =>
@@ -66,9 +63,7 @@ public class BlobServiceAvailableHealthCheckTests
                     {
                         options.Mode = BlobClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions =>
-                        {
                             clientOptions.Retry.MaxRetries = 0;
-                        };
                     }
                 );
             },
@@ -144,9 +139,7 @@ public class BlobServiceAvailableHealthCheckTests
                     options.Mode = BlobClientCreationMode.SharedKey;
                     options.ServiceUri = _uriBlobStorage;
                     options.ConfigureClientOptions = clientOptions =>
-                    {
                         clientOptions.Retry.MaxRetries = 0;
-                    };
                 }
             );
         });

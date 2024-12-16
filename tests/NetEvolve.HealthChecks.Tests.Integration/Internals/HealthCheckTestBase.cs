@@ -30,12 +30,7 @@ public abstract class HealthCheckTestBase
     )
     {
         var builder = new WebHostBuilder()
-            .ConfigureAppConfiguration(
-                (_, configBuilder) =>
-                {
-                    config?.Invoke(configBuilder);
-                }
-            )
+            .ConfigureAppConfiguration((_, configBuilder) => config?.Invoke(configBuilder))
             .ConfigureServices(services =>
             {
                 serviceBuilder?.Invoke(services);
