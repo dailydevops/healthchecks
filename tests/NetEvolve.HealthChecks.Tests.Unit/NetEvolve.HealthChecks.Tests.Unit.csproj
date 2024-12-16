@@ -42,7 +42,6 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Legacy\NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
-    <ProjectReference Include="..\NetEvolve.HealthChecks.Tests.Integration\NetEvolve.HealthChecks.Tests.Integration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
