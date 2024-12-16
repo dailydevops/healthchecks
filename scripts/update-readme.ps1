@@ -8,7 +8,7 @@ function Get-Packages {
   param (
   )
   $repositoryUrl = 'https://github.com/dailydevops/healthchecks'
-  $queryUrl = 'https://api-v2v3search-0.nuget.org/query?q=NetEvolve.HealthChecks'
+  $queryUrl = 'https://azuresearch-usnc.nuget.org/query?q=netevolve.healthchecks&prerelease=true&semVerLevel=2.0.0'
   $response = Invoke-WebRequest -Uri $queryUrl
   if ($response.statuscode -ne 200) {
     Write-Error "Failed to get packages from $repositoryUrl"
