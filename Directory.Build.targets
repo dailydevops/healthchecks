@@ -2,6 +2,9 @@
 
   <ItemGroup Label="Test compability" Condition=" '$(IsTestableProject)' == 'false' ">
     <InternalsVisibleTo Include="NetEvolve.HealthChecks.Abstractions.Tests.Architecture" />
+    <InternalsVisibleTo Include="NetEvolve.HealthChecks.Tests.Architecture" />
+    <InternalsVisibleTo Include="NetEvolve.HealthChecks.Tests.Integration" />
+    <InternalsVisibleTo Include="NetEvolve.HealthChecks.Tests.Unit" />
   </ItemGroup>
 
   <PropertyGroup Label="Settings for test projects" Condition=" '$(IsTestableProject)' == 'true' ">

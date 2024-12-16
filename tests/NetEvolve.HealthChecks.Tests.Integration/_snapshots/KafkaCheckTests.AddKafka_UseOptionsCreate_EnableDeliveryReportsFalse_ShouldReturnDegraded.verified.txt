@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDegraded: Unhealthy,
+      name: TestContainerDegraded,
+      status: Unhealthy,
+      tags: [
+        kafka,
+        message-queue
+      ]
+    }
+  ],
+  status: Unhealthy
+}
