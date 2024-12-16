@@ -2,15 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SqlServer;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerDatabase>
 {
     private readonly SqlServerDatabase _database;

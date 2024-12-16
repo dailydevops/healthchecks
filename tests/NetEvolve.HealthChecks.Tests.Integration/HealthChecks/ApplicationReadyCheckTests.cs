@@ -1,12 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.HealthChecks;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NetEvolve.Extensions.XUnit;
 
-[SetCulture("en-US")]
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Fact]

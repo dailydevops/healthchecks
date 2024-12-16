@@ -1,11 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Tables;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 

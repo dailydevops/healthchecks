@@ -2,15 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.MySql.Connector;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class MySqlConnectorCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
 {
     private readonly MySqlDatabase _database;

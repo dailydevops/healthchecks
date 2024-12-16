@@ -1,10 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Apache.Kafka;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 

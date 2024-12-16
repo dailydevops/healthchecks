@@ -1,11 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Queues;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using global::Azure.Storage.Queues;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 

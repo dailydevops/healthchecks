@@ -2,7 +2,6 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Dapr;
 using Xunit;
 

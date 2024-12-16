@@ -2,17 +2,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Redpanda;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDatabase>
 {
     private readonly RedpandaDatabase _database;

@@ -1,11 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Blobs;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using global::Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 

@@ -1,16 +1,12 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Tables;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.Azure;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
-using NetEvolve.HealthChecks.Tests;
 using Xunit;
 
-[SetCulture("en-US")]
 public class TableServiceAvailableHealthCheckTests
     : HealthCheckTestBase,
         IClassFixture<AzuriteAccess>
