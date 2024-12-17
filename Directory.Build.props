@@ -3,6 +3,8 @@
   <PropertyGroup Label="General settings for all projects">
     <_ProjectTargetFrameworks>net8.0;net9.0</_ProjectTargetFrameworks>
     <_TestTargetFrameworks>net8.0;net9.0</_TestTargetFrameworks>
+
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
