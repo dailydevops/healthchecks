@@ -22,6 +22,7 @@ internal static class HealthCheckArchitecture
             typeof(Apache.Kafka.KafkaCheck).Assembly,
             typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
+            typeof(Azure.ServiceBus.ServiceBusQueueHealthCheck).Assembly,
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             typeof(ClickHouse.ClickHouseCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
