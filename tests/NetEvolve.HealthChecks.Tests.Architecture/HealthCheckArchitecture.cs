@@ -25,6 +25,7 @@ internal static class HealthCheckArchitecture
             // Azure
             typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
+            typeof(Azure.ServiceBus.ServiceBusQueueHealthCheck).Assembly,
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             // others
             typeof(ClickHouse.ClickHouseCheck).Assembly,
