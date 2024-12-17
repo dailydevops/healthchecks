@@ -60,6 +60,8 @@
     <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.IntegrationTestAttribute" />
     <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.SetCultureAttribute">
       <_Parameter1>en_US</_Parameter1>
+      <_Parameter2>true</_Parameter2>
+      <_Parameter2_TypeName>System.Boolean</_Parameter2_TypeName>
     </AssemblyAttribute>
   </ItemGroup>
 
