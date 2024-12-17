@@ -36,7 +36,13 @@ function Get-Packages {
     $result += "| **[$($package.title)](https://www.nuget.org/packages/$($package.id)/)** "
     $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
     $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
-    $result += "| $($package.description) |`n"
+
+    if ($package.deprecation) {
+      $result += "|❌ **DEPRECATED**: $($package.deprecation.message) <br/> $($package.description) |`n"
+    }
+    else {
+      $result += "| $($package.description) |`n"
+    }
 
   }
 
