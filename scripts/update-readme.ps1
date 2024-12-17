@@ -23,8 +23,8 @@ function Get-Packages {
 
   $result = @"
 
-| Package Name | Current Version | Downloads |
-|-------------:|:---------------:|-----------|
+| Package Name | Current Version | Downloads | Description |
+|:-------------|:---------------:|:---------:|-------------|
 
 "@
 
@@ -33,9 +33,10 @@ function Get-Packages {
       continue
     }
 
-    $result += "| [$($package.title)](https://www.nuget.org/packages/$($package.id)/) "
+    $result += "| **[$($package.title)](https://www.nuget.org/packages/$($package.id)/)** "
     $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
-    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget) |`n"
+    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
+    $result += "| $($package.description) |`n"
 
   }
 
