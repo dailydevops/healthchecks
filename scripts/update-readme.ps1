@@ -24,7 +24,7 @@ function Get-Packages {
   $result = @"
 
 | Package Name | Current Version | Downloads |
-|-------------:|:---------------:|-----------|
+|:-------------|:---------------:|:---------:|
 
 "@
 
@@ -34,8 +34,14 @@ function Get-Packages {
     }
 
     $result += "| [$($package.title)](https://www.nuget.org/packages/$($package.id)/) "
-    $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget)"
-    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget)](https://img.shields.io/nuget/v/$($package.id)?logo=nuget) |`n"
+    if ($package.deprecation) {
+      $result += "❌ **DEPRECATED**"
+    }
+    $result += "<br/><small>$($package.description)</small> "
+
+    $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/#versions-body-tab) "
+    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/) "
+    $result += "|`n"
 
   }
 
