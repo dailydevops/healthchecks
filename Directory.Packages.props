@@ -15,6 +15,7 @@
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="3.7.400.65" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.9.1" />
     <PackageVersion Include="Azure.Identity" Version="1.13.1" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.23.0" />
@@ -44,6 +45,7 @@
     <PackageVersion Include="Testcontainers.Azurite" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.1.0" />
+    <PackageVersion Include="Testcontainers.LocalStack" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.MsSql" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.MySql" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.Oracle" Version="4.1.0" />
