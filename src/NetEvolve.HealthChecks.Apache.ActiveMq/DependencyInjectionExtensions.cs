@@ -63,5 +63,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class ActiveMqCheckMarker { }
+    private sealed partial class ActiveMqCheckMarker;
 }
