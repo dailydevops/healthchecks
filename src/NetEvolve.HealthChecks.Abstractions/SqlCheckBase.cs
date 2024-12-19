@@ -12,7 +12,7 @@ using NetEvolve.Extensions.Tasks;
 /// <summary>
 /// Configurable implementation of <see cref="IHealthCheck"/> with focus on <see cref="DbConnection"/> based implementations.
 /// </summary>
-/// <typeparam name="TConfiguration"></typeparam>
+/// <typeparam name="TConfiguration">Type of Configuration</typeparam>
 public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
     where TConfiguration : class, ISqlCheckOptions
 {

@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSqlServerLegacy([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.SqlServer.Legacy.SqlServerLegacyOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class SqlServerLegacyOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions
+    {
+        public SqlServerLegacyOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+}

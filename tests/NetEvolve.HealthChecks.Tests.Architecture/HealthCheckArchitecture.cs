@@ -4,21 +4,6 @@ using System;
 using System.Threading;
 using ArchUnitNET.Domain;
 using ArchUnitNET.Loader;
-using NetEvolve.HealthChecks.Apache.Kafka;
-using NetEvolve.HealthChecks.Azure.Blobs;
-using NetEvolve.HealthChecks.Azure.Queues;
-using NetEvolve.HealthChecks.Azure.Tables;
-using NetEvolve.HealthChecks.ClickHouse;
-using NetEvolve.HealthChecks.Dapr;
-using NetEvolve.HealthChecks.Npgsql;
-using NetEvolve.HealthChecks.Oracle;
-using NetEvolve.HealthChecks.Redis;
-using NetEvolve.HealthChecks.Redpanda;
-using NetEvolve.HealthChecks.SQLite;
-using NetEvolve.HealthChecks.SqlServer;
-using NetEvolve.HealthChecks.SqlServer.Legacy;
-using MySqlCheck = MySql.MySqlCheck;
-using MySqlConnectorCheck = MySql.Connector.MySqlCheck;
 
 internal static class HealthCheckArchitecture
 {
@@ -34,23 +19,24 @@ internal static class HealthCheckArchitecture
     {
         System.Reflection.Assembly[] assemblies =
         [
-            typeof(KafkaCheck).Assembly,
-            typeof(BlobContainerAvailableHealthCheck).Assembly,
-            typeof(QueueClientAvailableHealthCheck).Assembly,
-            typeof(TableClientAvailableHealthCheck).Assembly,
-            typeof(ClickHouseCheck).Assembly,
-            typeof(DaprHealthCheck).Assembly,
-            typeof(MySqlCheck).Assembly,
-            typeof(MySqlConnectorCheck).Assembly,
-            typeof(NpgsqlCheck).Assembly,
-            typeof(OracleCheck).Assembly,
-            typeof(RedisDatabaseHealthCheck).Assembly,
-            typeof(RedpandaCheck).Assembly,
-            typeof(SQLiteCheck).Assembly,
-            typeof(SqlServerCheck).Assembly,
-            typeof(SqlServerLegacyCheck).Assembly,
+            typeof(Apache.Kafka.KafkaCheck).Assembly,
+            typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
+            typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
+            typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
+            typeof(ClickHouse.ClickHouseCheck).Assembly,
+            typeof(Dapr.DaprHealthCheck).Assembly,
+            typeof(MySql.MySqlCheck).Assembly,
+            typeof(MySql.Connector.MySqlCheck).Assembly,
+            typeof(Npgsql.NpgsqlCheck).Assembly,
+            typeof(Oracle.OracleCheck).Assembly,
+            typeof(Redis.RedisDatabaseHealthCheck).Assembly,
+            typeof(Redpanda.RedpandaCheck).Assembly,
+            typeof(SQLite.SQLiteCheck).Assembly,
+            typeof(SqlServer.SqlServerCheck).Assembly,
+            typeof(SqlServer.Legacy.SqlServerLegacyCheck).Assembly,
         ];
-        var architecture = new ArchLoader()
+
+        return new ArchLoader()
             .LoadAssembliesRecursively(
                 assemblies,
                 x =>
@@ -62,6 +48,5 @@ internal static class HealthCheckArchitecture
                         : FilterResult.SkipAndContinue
             )
             .Build();
-        return architecture;
     }
 }

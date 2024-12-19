@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.Oracle
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddOracle([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Oracle.OracleOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class OracleOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions
+    {
+        public OracleOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+}

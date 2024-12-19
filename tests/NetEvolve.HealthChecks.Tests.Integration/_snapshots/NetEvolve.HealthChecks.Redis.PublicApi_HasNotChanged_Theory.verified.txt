@@ -1,0 +1,19 @@
+﻿namespace NetEvolve.HealthChecks.Redis
+{
+    public enum ConnectionHandleMode
+    {
+        ServiceProvider = 0,
+        Create = 1,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddRedisDatabase(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Redis.RedisDatabaseOptions>? options = null, params string[] tags) { }
+    }
+    public class RedisDatabaseOptions
+    {
+        public RedisDatabaseOptions() { }
+        public string? ConnectionString { get; set; }
+        public NetEvolve.HealthChecks.Redis.ConnectionHandleMode Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+}

@@ -1,0 +1,39 @@
+﻿namespace NetEvolve.HealthChecks.Azure.Queues
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddQueueClientAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Queues.QueueClientAvailableOptions>? options = null, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddQueueServiceAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Queues.QueueServiceAvailableOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class QueueClientAvailableOptions
+    {
+        public QueueClientAvailableOptions() { }
+        public string? AccountKey { get; set; }
+        public string? AccountName { get; set; }
+        public System.Action<Azure.Storage.Queues.QueueClientOptions>? ConfigureClientOptions { get; set; }
+        public string? ConnectionString { get; set; }
+        public NetEvolve.HealthChecks.Azure.Queues.QueueClientCreationMode Mode { get; set; }
+        public string? QueueName { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public int Timeout { get; set; }
+    }
+    public enum QueueClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        ConnectionString = 2,
+        SharedKey = 3,
+        AzureSasCredential = 4,
+    }
+    public sealed class QueueServiceAvailableOptions
+    {
+        public QueueServiceAvailableOptions() { }
+        public string? AccountKey { get; set; }
+        public string? AccountName { get; set; }
+        public System.Action<Azure.Storage.Queues.QueueClientOptions>? ConfigureClientOptions { get; set; }
+        public string? ConnectionString { get; set; }
+        public NetEvolve.HealthChecks.Azure.Queues.QueueClientCreationMode Mode { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public int Timeout { get; set; }
+    }
+}

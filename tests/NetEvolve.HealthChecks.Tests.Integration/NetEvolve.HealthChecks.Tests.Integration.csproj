@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NetEvolve.Extensions.XUnit" />
+    <PackageReference Include="PublicApiGenerator" />
     <PackageReference Include="Testcontainers.Azurite" />
     <PackageReference Include="Testcontainers.ClickHouse" />
     <PackageReference Include="Testcontainers.Kafka" />
