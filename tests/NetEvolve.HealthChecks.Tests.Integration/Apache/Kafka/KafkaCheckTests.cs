@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.HealthChecks.Apache.ActiveMq;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 
