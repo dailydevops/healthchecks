@@ -4,21 +4,6 @@ using System;
 using System.Threading;
 using ArchUnitNET.Domain;
 using ArchUnitNET.Loader;
-using NetEvolve.HealthChecks.Apache.Kafka;
-using NetEvolve.HealthChecks.Azure.Blobs;
-using NetEvolve.HealthChecks.Azure.Queues;
-using NetEvolve.HealthChecks.Azure.Tables;
-using NetEvolve.HealthChecks.ClickHouse;
-using NetEvolve.HealthChecks.Dapr;
-using NetEvolve.HealthChecks.Npgsql;
-using NetEvolve.HealthChecks.Oracle;
-using NetEvolve.HealthChecks.Redis;
-using NetEvolve.HealthChecks.Redpanda;
-using NetEvolve.HealthChecks.SQLite;
-using NetEvolve.HealthChecks.SqlServer;
-using NetEvolve.HealthChecks.SqlServer.Legacy;
-using MySqlCheck = MySql.MySqlCheck;
-using MySqlConnectorCheck = MySql.Connector.MySqlCheck;
 
 internal static class HealthCheckArchitecture
 {
@@ -32,25 +17,17 @@ internal static class HealthCheckArchitecture
 
     private static Architecture LoadArchitecture()
     {
-        System.Reflection.Assembly[] assemblies =
-        [
-            typeof(KafkaCheck).Assembly,
-            typeof(BlobContainerAvailableHealthCheck).Assembly,
-            typeof(QueueClientAvailableHealthCheck).Assembly,
-            typeof(TableClientAvailableHealthCheck).Assembly,
-            typeof(ClickHouseCheck).Assembly,
-            typeof(DaprHealthCheck).Assembly,
-            typeof(MySqlCheck).Assembly,
-            typeof(MySqlConnectorCheck).Assembly,
-            typeof(NpgsqlCheck).Assembly,
-            typeof(OracleCheck).Assembly,
-            typeof(RedisDatabaseHealthCheck).Assembly,
-            typeof(RedpandaCheck).Assembly,
-            typeof(SQLiteCheck).Assembly,
-            typeof(SqlServerCheck).Assembly,
-            typeof(SqlServerLegacyCheck).Assembly,
-        ];
-        var architecture = new ArchLoader()
+        var assemblies = System
+            .Reflection.Assembly.GetExecutingAssembly()!
+            .GetReferencedAssemblies()
+            .Where(a =>
+                a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase)
+                == true
+            )
+            .Select(System.Reflection.Assembly.Load)
+            .ToArray();
+
+        return new ArchLoader()
             .LoadAssembliesRecursively(
                 assemblies,
                 x =>
@@ -62,6 +39,5 @@ internal static class HealthCheckArchitecture
                         : FilterResult.SkipAndContinue
             )
             .Build();
-        return architecture;
     }
 }
