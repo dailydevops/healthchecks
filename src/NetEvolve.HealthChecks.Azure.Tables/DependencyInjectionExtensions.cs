@@ -111,7 +111,7 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class AzureTableCheckMarker { }
+    private sealed partial class AzureTableCheckMarker;
 
-    private sealed partial class AzureTableServiceCheckMarker { }
+    private sealed partial class AzureTableServiceCheckMarker;
 }

@@ -31,7 +31,7 @@ public static partial class IHealthChecksBuilderExtensions
     /// </summary>
     /// <typeparam name="T">Type of service</typeparam>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/> instance.</param>
-    /// <param name="name"></param>
+    /// <param name="name">Configuration name.</param>
     /// <exception cref="ArgumentNullException">Throws a <see cref="ArgumentNullException"/>, when <paramref name="builder"/> is null.</exception>
     public static bool IsNameAlreadyUsed<T>(this IHealthChecksBuilder builder, string name)
         where T : IHealthCheck

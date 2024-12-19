@@ -62,5 +62,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class RedisDatabaseCheckMarker { }
+    private sealed partial class RedisDatabaseCheckMarker;
 }

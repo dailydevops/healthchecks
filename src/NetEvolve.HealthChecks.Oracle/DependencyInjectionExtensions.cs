@@ -63,5 +63,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class OracleCheckMarker { }
+    private sealed partial class OracleCheckMarker;
 }

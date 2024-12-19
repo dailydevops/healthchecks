@@ -111,7 +111,7 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class AzureQueueClientCheckMarker { }
+    private sealed partial class AzureQueueClientCheckMarker;
 
-    private sealed partial class AzureQueueServiceCheckMarker { }
+    private sealed partial class AzureQueueServiceCheckMarker;
 }
