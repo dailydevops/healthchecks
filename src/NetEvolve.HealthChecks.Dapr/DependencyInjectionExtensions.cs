@@ -55,5 +55,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class DaprMarker { }
+    private sealed partial class DaprMarker;
 }

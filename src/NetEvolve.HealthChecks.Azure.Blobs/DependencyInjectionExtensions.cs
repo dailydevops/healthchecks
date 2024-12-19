@@ -111,7 +111,7 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class AzureBlobContainerCheckMarker { }
+    private sealed partial class AzureBlobContainerCheckMarker;
 
-    private sealed partial class AzureBlobServiceCheckMarker { }
+    private sealed partial class AzureBlobServiceCheckMarker;
 }

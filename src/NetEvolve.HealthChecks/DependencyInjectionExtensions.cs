@@ -75,7 +75,7 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class ApplicationReadyCheckMarker { }
+    private sealed partial class ApplicationReadyCheckMarker;
 
-    private sealed partial class ApplicationHealthyCheckMarker { }
+    private sealed partial class ApplicationHealthyCheckMarker;
 }
