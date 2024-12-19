@@ -17,15 +17,24 @@ internal static class HealthCheckArchitecture
 
     private static Architecture LoadArchitecture()
     {
-        var assemblies = System
-            .Reflection.Assembly.GetExecutingAssembly()!
-            .GetReferencedAssemblies()
-            .Where(a =>
-                a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase)
-                == true
-            )
-            .Select(System.Reflection.Assembly.Load)
-            .ToArray();
+        System.Reflection.Assembly[] assemblies =
+        [
+            typeof(Apache.Kafka.KafkaCheck).Assembly,
+            typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
+            typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
+            typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
+            typeof(ClickHouse.ClickHouseCheck).Assembly,
+            typeof(Dapr.DaprHealthCheck).Assembly,
+            typeof(MySql.MySqlCheck).Assembly,
+            typeof(MySql.Connector.MySqlCheck).Assembly,
+            typeof(Npgsql.NpgsqlCheck).Assembly,
+            typeof(Oracle.OracleCheck).Assembly,
+            typeof(Redis.RedisDatabaseHealthCheck).Assembly,
+            typeof(Redpanda.RedpandaCheck).Assembly,
+            typeof(SQLite.SQLiteCheck).Assembly,
+            typeof(SqlServer.SqlServerCheck).Assembly,
+            typeof(SqlServer.Legacy.SqlServerLegacyCheck).Assembly,
+        ];
 
         return new ArchLoader()
             .LoadAssembliesRecursively(
