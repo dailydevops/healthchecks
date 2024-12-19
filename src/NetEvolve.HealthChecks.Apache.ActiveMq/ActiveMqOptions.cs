@@ -30,5 +30,8 @@ public class ActiveMqOptions
         set;
     }
 
+    /// <summary>
+    /// Gets or sets the timeout in milliseconds for executing the healthcheck.
+    /// </summary>
     public int Timeout { get; set; } = 100;
 }
