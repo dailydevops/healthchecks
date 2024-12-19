@@ -15,6 +15,7 @@
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.0" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.9.1" />
     <PackageVersion Include="Azure.Identity" Version="1.13.1" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.23.0" />
@@ -41,6 +42,7 @@
     <PackageVersion Include="StackExchange.Redis" Version="2.8.22" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
+    <PackageVersion Include="Testcontainers.ActiveMq" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.1.0" />
