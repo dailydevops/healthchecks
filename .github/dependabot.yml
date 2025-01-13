@@ -20,6 +20,8 @@ updates:
     # Add assignees
     assignees:
       - "samtrion"
+    reviewers:
+      - samtrion
 
   - package-ecosystem: "nuget"
     directory: "/"
@@ -33,6 +35,8 @@ updates:
     # Add assignees
     assignees:
       - "samtrion"
+    reviewers:
+      - samtrion
     groups:
      coverlet:
        patterns:
@@ -68,3 +72,5 @@ updates:
     # Add assignees
     assignees:
       - "samtrion"
+    reviewers:
+      - samtrion
