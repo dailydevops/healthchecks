@@ -40,7 +40,7 @@
     <PackageVersion Include="PublicApiGenerator" Version="11.3.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.8.24" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageVersion Include="System.Text.Json" Version="9.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.1" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.1.0" />
