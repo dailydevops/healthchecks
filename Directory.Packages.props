@@ -21,8 +21,8 @@
     <PackageVersion Include="Azure.Storage.Queues" Version="12.21.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.9.1" />
     <PackageVersion Include="Confluent.Kafka" Version="2.8.0" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.3" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.3" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Dapr.Client" Version="1.14.0" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.1" />
