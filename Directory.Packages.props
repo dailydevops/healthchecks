@@ -10,7 +10,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19" />
-    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.3.39" />
+    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.3.47" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.12.10" />
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.5.0.109200" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
