@@ -1,14 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-
     <Description>Contains general application HealthChecks.</Description>
     <PackageTags>$(PackageTags);application;self;readiness</PackageTags>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>
