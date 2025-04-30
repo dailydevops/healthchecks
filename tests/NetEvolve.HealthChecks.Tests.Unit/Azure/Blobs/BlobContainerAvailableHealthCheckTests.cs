@@ -13,8 +13,8 @@ public class ClientCreationTests
         var options = new BlobContainerAvailableOptions { Mode = (BlobClientCreationMode)13 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(
-            () => ClientCreation.CreateBlobServiceClient(options, serviceProvider)
+        _ = Assert.Throws<UnreachableException>(() =>
+            ClientCreation.CreateBlobServiceClient(options, serviceProvider)
         );
     }
 
@@ -27,8 +27,8 @@ public class ClientCreationTests
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(
-            () => ClientCreation.CreateBlobServiceClient(options, serviceProvider)
+        _ = Assert.Throws<UnreachableException>(() =>
+            ClientCreation.CreateBlobServiceClient(options, serviceProvider)
         );
     }
 }
