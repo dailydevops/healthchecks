@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
-
     <NoWarn>$(NoWarn);CA1034</NoWarn>
   </PropertyGroup>
   <ItemGroup>
