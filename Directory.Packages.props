@@ -25,6 +25,7 @@
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.0" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.10.0" />
     <PackageVersion Include="Azure.Identity" Version="1.13.2" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.18.2" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.13.2" />
@@ -59,6 +60,7 @@
     <PackageVersion Include="Testcontainers.PostgreSql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Redis" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Redpanda" Version="4.4.0" />
+    <PackageVersion Include="Testcontainers.ServiceBus" Version="4.4.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.11.4" />
     <PackageVersion Include="Verify.Xunit" Version="30.0.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
