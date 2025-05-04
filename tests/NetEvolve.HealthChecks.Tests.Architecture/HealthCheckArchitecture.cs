@@ -19,10 +19,14 @@ internal static class HealthCheckArchitecture
     {
         System.Reflection.Assembly[] assemblies =
         [
+            // Apache
+            typeof(Apache.ActiveMq.ActiveMqHealthCheck).Assembly,
             typeof(Apache.Kafka.KafkaCheck).Assembly,
+            // Azure
             typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
+            // others
             typeof(ClickHouse.ClickHouseCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
             typeof(MySql.MySqlCheck).Assembly,

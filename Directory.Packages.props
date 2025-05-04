@@ -22,6 +22,7 @@
     />
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.0" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.10.0" />
     <PackageVersion Include="Azure.Identity" Version="1.13.2" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
@@ -48,6 +49,7 @@
     <PackageVersion Include="StackExchange.Redis" Version="2.8.31" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.4" />
+    <PackageVersion Include="Testcontainers.ActiveMq" Version="4.1.0" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.4.0" />
