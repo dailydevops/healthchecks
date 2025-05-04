@@ -18,6 +18,7 @@
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.Azurite" />
     <PackageReference Include="Testcontainers.ClickHouse" />
+    <PackageReference Include="Testcontainers.CosmosDb" />
     <PackageReference Include="Testcontainers.Kafka" />
     <PackageReference Include="Testcontainers.LocalStack" />
     <PackageReference Include="Testcontainers.MsSql" />
