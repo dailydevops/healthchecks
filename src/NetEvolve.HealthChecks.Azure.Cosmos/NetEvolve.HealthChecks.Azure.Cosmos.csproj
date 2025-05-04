@@ -1,22 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-
     <Description>Contains HealthChecks for Azure CosmosDB.</Description>
     <PackageTags>$(PackageTags);azure;cosmos;cosmosdb;</PackageTags>
-
     <AzureCosmosDisableNewtonsoftJsonCheck>true</AzureCosmosDisableNewtonsoftJsonCheck>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Cosmos" />
     <PackageReference Include="NetEvolve.Arguments" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>
