@@ -66,8 +66,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Tests.Architecture", "tests\NetEvolve.HealthChecks.Tests.Architecture\NetEvolve.HealthChecks.Tests.Architecture.csproj", "{17BCA132-1FBB-46C1-B6A1-60F64969383D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Apache.ActiveMq", "src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj", "{1F26E911-E73F-409A-87FC-1214EF36FF61}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.AWS.SNS", "src\NetEvolve.HealthChecks.AWS.SNS\NetEvolve.HealthChecks.AWS.SNS.csproj", "{546D5904-1811-457F-8C48-3F78D7F0C803}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.ServiceBus", "src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj", "{6133570F-FF54-480D-8979-B0787022EA6A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Cosmos", "src\NetEvolve.HealthChecks.Azure.Cosmos\NetEvolve.HealthChecks.Azure.Cosmos.csproj", "{0014110E-EC85-4D97-BFC4-D1485511B4C1}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Qdrant", "src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj", "{C8A7D343-6785-48CB-A6B5-6A5863A1F4F0}"
 EndProject
