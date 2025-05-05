@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SQLite;
 using Xunit;
 
+[TestGroup(nameof(SQLite))]
 public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabase>
 {
     private readonly SQLiteDatabase _database;

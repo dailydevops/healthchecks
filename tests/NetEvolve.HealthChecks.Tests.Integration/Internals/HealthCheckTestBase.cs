@@ -16,7 +16,9 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.XUnit;
 
+[TestGroup(nameof(HealthChecks))]
 public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";

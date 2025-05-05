@@ -3,9 +3,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
+[TestGroup("AzureQueues")]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]

@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Npgsql;
 using Xunit;
 
+[TestGroup(nameof(Npgsql))]
 public sealed class NpgsqlConfigureTests
 {
     [Fact]

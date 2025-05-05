@@ -3,9 +3,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
+[TestGroup("AzureTables")]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]

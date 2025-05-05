@@ -4,9 +4,11 @@ using System;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.Azure;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
+[TestGroup("AzureTables")]
 public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;

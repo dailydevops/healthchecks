@@ -3,9 +3,11 @@
 using ArchUnitNET.Domain;
 using ArchUnitNET.xUnit;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.XUnit;
 using Xunit;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
+[TestGroup(nameof(HealthChecks))]
 public class HealthCheckTests
 {
     private readonly IObjectProvider<Class> _healthChecks = Classes()

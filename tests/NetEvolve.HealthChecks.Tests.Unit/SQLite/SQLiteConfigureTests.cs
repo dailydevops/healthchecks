@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SQLite;
 using Xunit;
 
+[TestGroup(nameof(SQLite))]
 public sealed class SQLiteConfigureTests
 {
     [Fact]

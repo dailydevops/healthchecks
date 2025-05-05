@@ -3,9 +3,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.MySql.Connector;
 using Xunit;
 
+[TestGroup(nameof(MySqlConnector))]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]

@@ -4,9 +4,11 @@ using System;
 using global::Azure.Storage.Queues;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
+[TestGroup("AzureQueues")]
 public sealed class QueueClientAvailableConfigureTests
 {
     [Fact]

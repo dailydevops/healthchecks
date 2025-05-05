@@ -4,9 +4,11 @@ using System;
 using global::Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
+[TestGroup("AzureBlobs")]
 public sealed class BlobContainerAvailableConfigureTests
 {
     [Fact]

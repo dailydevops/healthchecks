@@ -5,10 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Oracle;
 using NSubstitute;
 using Xunit;
 
+[TestGroup(nameof(Oracle))]
 public sealed class OracleCheckTests
 {
     [Fact]

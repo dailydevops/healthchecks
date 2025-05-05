@@ -5,8 +5,10 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
+using NetEvolve.Extensions.XUnit;
 using PublicApiGenerator;
 
+[TestGroup(nameof(HealthChecks))]
 public class PublicApiTests
 {
     private static readonly string[] _excludedAttributes =

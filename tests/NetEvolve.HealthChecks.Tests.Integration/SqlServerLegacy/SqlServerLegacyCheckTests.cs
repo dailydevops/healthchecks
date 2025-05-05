@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 using Xunit;
 
+[TestGroup(nameof(SqlServerLegacy))]
 public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlServerLegacyDatabase>
 {
     private readonly SqlServerLegacyDatabase _database;

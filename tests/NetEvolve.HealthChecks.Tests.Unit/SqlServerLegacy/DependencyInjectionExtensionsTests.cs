@@ -3,9 +3,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 using Xunit;
 
+[TestGroup(nameof(SqlServerLegacy))]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]

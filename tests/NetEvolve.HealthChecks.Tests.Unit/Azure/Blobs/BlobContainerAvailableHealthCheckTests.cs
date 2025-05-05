@@ -2,9 +2,11 @@
 
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
+[TestGroup("AzureBlobs")]
 public class ClientCreationTests
 {
     [Fact]

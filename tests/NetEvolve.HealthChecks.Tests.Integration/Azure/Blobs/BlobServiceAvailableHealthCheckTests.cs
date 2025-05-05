@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using global::Azure.Storage.Blobs;
 using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
+[TestGroup("AzureBlobs")]
 public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;

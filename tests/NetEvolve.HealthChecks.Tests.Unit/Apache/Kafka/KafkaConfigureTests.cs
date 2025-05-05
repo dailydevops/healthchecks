@@ -3,9 +3,11 @@
 using System;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 
+[TestGroup(nameof(Kafka))]
 public sealed class KafkaConfigureTests
 {
     [Fact]

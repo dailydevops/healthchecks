@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Dapr;
 using Xunit;
 
+[TestGroup(nameof(Dapr))]
 public sealed class DaprConfigureTests
 {
     [Fact]

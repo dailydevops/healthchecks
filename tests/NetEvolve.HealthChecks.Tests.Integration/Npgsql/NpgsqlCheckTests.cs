@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Npgsql;
 using Xunit;
 
+[TestGroup(nameof(Npgsql))]
 public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabase>
 {
     private readonly NpgsqlDatabase _database;

@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.MySql.Connector;
 using Xunit;
 
+[TestGroup(nameof(MySqlConnector))]
 public sealed class MySqlConfigureTests
 {
     [Fact]
