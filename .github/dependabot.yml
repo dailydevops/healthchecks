@@ -19,8 +19,6 @@ updates:
     open-pull-requests-limit: 20
     # Add assignees
     assignees:
-      - "samtrion"
-    reviewers:
       - samtrion
 
   - package-ecosystem: "nuget"
@@ -34,8 +32,6 @@ updates:
     open-pull-requests-limit: 20
     # Add assignees
     assignees:
-      - "samtrion"
-    reviewers:
       - samtrion
     groups:
      coverlet:
@@ -70,7 +66,4 @@ updates:
       - "dependency:devcontainers"
     open-pull-requests-limit: 20
     # Add assignees
-    assignees:
-      - "samtrion"
-    reviewers:
       - samtrion
