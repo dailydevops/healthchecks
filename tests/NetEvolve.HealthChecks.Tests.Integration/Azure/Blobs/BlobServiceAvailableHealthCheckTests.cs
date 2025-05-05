@@ -9,7 +9,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
-[TestGroup("AzureBlobs")]
+[TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;

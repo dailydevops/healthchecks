@@ -7,7 +7,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 
-[TestGroup(nameof(Kafka))]
+[TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 public sealed class KafkaConfigureTests
 {
     [Fact]
