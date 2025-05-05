@@ -20,10 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.1" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="3.7.400.65" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.0.1" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.13.2" />
-    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.18.2" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.19.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
@@ -31,7 +31,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Dapr.Client" Version="1.15.4" />
-    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.46.0" />
+    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.49.0" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.11.0" />
