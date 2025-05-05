@@ -17,15 +17,10 @@ internal static class ClientFactory
         CancellationToken cancellationToken
     )
     {
-        var factory = _factories.GetOrAdd(
-            options.BrokerAddress,
-            brokerAddress => new ConnectionFactory(brokerAddress)
-        );
+        var factory = _factories.GetOrAdd(options.BrokerAddress, brokerAddress => new ConnectionFactory(brokerAddress));
 
         return options.Username is null && options.Password is null
             ? await factory.CreateConnectionAsync().ConfigureAwait(false)
-            : await factory
-                .CreateConnectionAsync(options.Username, options.Password)
-                .ConfigureAwait(false);
+            : await factory.CreateConnectionAsync(options.Username, options.Password).ConfigureAwait(false);
     }
 }

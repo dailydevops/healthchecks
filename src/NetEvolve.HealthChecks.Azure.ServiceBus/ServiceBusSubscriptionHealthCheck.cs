@@ -7,8 +7,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ServiceBusSubscriptionHealthCheck
-    : ConfigurableHealthCheckBase<ServiceBusSubscriptionOptions>
+internal sealed class ServiceBusSubscriptionHealthCheck : ConfigurableHealthCheckBase<ServiceBusSubscriptionOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -37,11 +36,7 @@ internal sealed class ServiceBusSubscriptionHealthCheck
         var client = ClientCreation.GetAdministrationClient(name, options, _serviceProvider);
 
         var (isValid, subscription) = await client
-            .GetSubscriptionRuntimePropertiesAsync(
-                options.TopicName,
-                options.SubscriptionName,
-                cancellationToken
-            )
+            .GetSubscriptionRuntimePropertiesAsync(options.TopicName, options.SubscriptionName, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 

@@ -13,6 +13,5 @@ public sealed class CosmosDbContainer : IAsyncLifetime, IAsyncDisposable
 
     public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
 
-    async ValueTask IAsyncDisposable.DisposeAsync() =>
-        await _container.DisposeAsync().ConfigureAwait(false);
+    async ValueTask IAsyncDisposable.DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 }

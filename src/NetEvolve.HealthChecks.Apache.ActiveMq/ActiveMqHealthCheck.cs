@@ -22,9 +22,7 @@ internal sealed class ActiveMqHealthCheck : ConfigurableHealthCheckBase<ActiveMq
         CancellationToken cancellationToken
     )
     {
-        using var client = await ClientFactory
-            .GetConnectionAsync(options, cancellationToken)
-            .ConfigureAwait(false);
+        using var client = await ClientFactory.GetConnectionAsync(options, cancellationToken).ConfigureAwait(false);
 
         var isValid = await client
             .StartAsync()
