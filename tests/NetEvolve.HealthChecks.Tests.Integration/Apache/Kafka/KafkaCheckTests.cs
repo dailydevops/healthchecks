@@ -50,10 +50,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -102,10 +99,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -144,10 +138,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    {
-                        "HealthChecks:Kafka:TestContainerHealthy:Configuration:EnableDeliveryReports",
-                        "false"
-                    },
+                    { "HealthChecks:Kafka:TestContainerHealthy:Configuration:EnableDeliveryReports", "false" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "Create" },
@@ -191,10 +182,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -243,10 +231,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -285,10 +270,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerDegraded:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    {
-                        "HealthChecks:Kafka:TestContainerDegraded:Configuration:EnableDeliveryReports",
-                        "false"
-                    },
+                    { "HealthChecks:Kafka:TestContainerDegraded:Configuration:EnableDeliveryReports", "false" },
                     { "HealthChecks:Kafka:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:Kafka:TestContainerDegraded:Topic", "TestContainerDegraded" },
                     { "HealthChecks:Kafka:TestContainerDegraded:Mode", "Create" },

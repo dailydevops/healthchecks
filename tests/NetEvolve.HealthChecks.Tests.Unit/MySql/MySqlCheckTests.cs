@@ -31,10 +31,7 @@ public sealed class MySqlCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlOptions>>();
         var check = new MySqlCheck(optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("Test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -51,10 +48,7 @@ public sealed class MySqlCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlOptions>>();
         var check = new MySqlCheck(optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("Test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
         var result = await check.CheckHealthAsync(context);

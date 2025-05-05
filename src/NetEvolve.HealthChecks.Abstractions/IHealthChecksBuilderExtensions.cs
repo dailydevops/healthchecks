@@ -44,8 +44,7 @@ public static partial class IHealthChecksBuilderExtensions
         {
             var options = scope.ServiceProvider.GetService<IOptions<HealthCheckServiceOptions>>();
 
-            return options?.Value?.Registrations
-                    is ICollection<HealthCheckRegistration> registrations
+            return options?.Value?.Registrations is ICollection<HealthCheckRegistration> registrations
                 && registrations.Any(IsNameAlreadyUsedForServiceType);
 
             bool IsNameAlreadyUsedForServiceType(HealthCheckRegistration registration) =>

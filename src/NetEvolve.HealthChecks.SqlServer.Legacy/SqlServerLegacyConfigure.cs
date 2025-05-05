@@ -21,8 +21,7 @@ internal sealed class SqlServerLegacyConfigure
         _configuration.Bind($"HealthChecks:SqlServer:{name}", options);
     }
 
-    public void Configure(SqlServerLegacyOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(SqlServerLegacyOptions options) => Configure(Options.DefaultName, options);
 
     public void PostConfigure(string? name, SqlServerLegacyOptions options)
     {

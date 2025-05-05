@@ -90,10 +90,7 @@ public sealed class RedpandaConfigureTests
 
         // Assert
         Assert.True(result.Failed);
-        Assert.Equal(
-            "The property BootstrapServers cannot be null or whitespace.",
-            result.FailureMessage
-        );
+        Assert.Equal("The property BootstrapServers cannot be null or whitespace.", result.FailureMessage);
     }
 
     [Fact]

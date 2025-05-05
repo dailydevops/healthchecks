@@ -11,6 +11,7 @@ indent_style = space
 trim_trailing_whitespace = true
 charset = utf-8
 end_of_line = lf
+max_line_length = 120
 
 # Verify settings
 # https://github.com/VerifyTests/Verify?tab=readme-ov-file#text-file-settings

@@ -11,9 +11,7 @@ public sealed class AzuriteAccess : IAsyncLifetime, IAsyncDisposable
     public const string AccountKey =
         "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
 
-    private readonly AzuriteContainer _container = new AzuriteBuilder()
-        .WithCommand("--skipApiVersionCheck")
-        .Build();
+    private readonly AzuriteContainer _container = new AzuriteBuilder().WithCommand("--skipApiVersionCheck").Build();
 
     public string ConnectionString => _container.GetConnectionString();
 
@@ -21,6 +19,5 @@ public sealed class AzuriteAccess : IAsyncLifetime, IAsyncDisposable
 
     public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
 
-    async ValueTask IAsyncDisposable.DisposeAsync() =>
-        await _container.DisposeAsync().ConfigureAwait(false);
+    async ValueTask IAsyncDisposable.DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 }

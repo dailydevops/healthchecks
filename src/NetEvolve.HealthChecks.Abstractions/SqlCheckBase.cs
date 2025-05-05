@@ -19,8 +19,7 @@ public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
     /// <inheritdoc/>
-    protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) =>
-        _optionsMonitor = optionsMonitor;
+    protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) => _optionsMonitor = optionsMonitor;
 
     /// <inheritdoc/>
     public async Task<HealthCheckResult> CheckHealthAsync(
@@ -35,14 +34,10 @@ public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
 
         if (cancellationToken.IsCancellationRequested)
         {
-            return new HealthCheckResult(
-                failureStatus,
-                description: $"{configurationName}: Cancellation requested."
-            );
+            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Cancellation requested.");
         }
 
-        return await InternalAsync(configurationName, failureStatus, cancellationToken)
-            .ConfigureAwait(false);
+        return await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
     }
 
     private async Task<HealthCheckResult> InternalAsync(
@@ -62,8 +57,7 @@ public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
                 );
             }
 
-            return await ExecuteHealthCheckAsync(configurationName, options, cancellationToken)
-                .ConfigureAwait(false);
+            return await ExecuteHealthCheckAsync(configurationName, options, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {

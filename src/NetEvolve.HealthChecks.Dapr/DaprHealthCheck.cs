@@ -14,10 +14,7 @@ internal sealed class DaprHealthCheck : ConfigurableHealthCheckBase<DaprOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public DaprHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<DaprOptions> optionsMonitor
-    )
+    public DaprHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<DaprOptions> optionsMonitor)
         : base(optionsMonitor)
     {
         ArgumentNullException.ThrowIfNull(serviceProvider);

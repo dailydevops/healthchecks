@@ -45,21 +45,14 @@ public sealed class RedisDatabaseConfigureTests
         // Arrange
         var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
         var name = "Test";
-        var options = new RedisDatabaseOptions
-        {
-            ConnectionString = default,
-            Mode = ConnectionHandleMode.Create,
-        };
+        var options = new RedisDatabaseOptions { ConnectionString = default, Mode = ConnectionHandleMode.Create };
 
         // Act
         var result = configure.Validate(name, options);
 
         // Assert
         Assert.True(result.Failed);
-        Assert.Equal(
-            "The property ConnectionString cannot be null or whitespace.",
-            result.FailureMessage
-        );
+        Assert.Equal("The property ConnectionString cannot be null or whitespace.", result.FailureMessage);
     }
 
     [Fact]

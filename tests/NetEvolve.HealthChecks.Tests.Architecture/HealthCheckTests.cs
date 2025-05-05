@@ -33,11 +33,7 @@ public class HealthCheckTests
     [Fact]
     public void Class_ShouldResideInNamespace_StartsWithNetEvolveExpected()
     {
-        var rule = Classes()
-            .That()
-            .Are(_healthChecks)
-            .Should()
-            .ResideInNamespace(@"NetEvolve\.HealthChecks", true);
+        var rule = Classes().That().Are(_healthChecks).Should().ResideInNamespace(@"NetEvolve\.HealthChecks", true);
 
         rule.Check(HealthCheckArchitecture.Instance);
     }

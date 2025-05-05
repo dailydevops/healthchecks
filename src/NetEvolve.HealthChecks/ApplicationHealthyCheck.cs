@@ -15,9 +15,7 @@ internal sealed class ApplicationHealthyCheck : HealthCheckBase
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return new ValueTask<HealthCheckResult>(
-                HealthCheckResult.Unhealthy($"{name}: Unhealthy")
-            );
+            return new ValueTask<HealthCheckResult>(HealthCheckResult.Unhealthy($"{name}: Unhealthy"));
         }
 
         return new ValueTask<HealthCheckResult>(HealthCheckResult.Healthy($"{name}: Healthy"));

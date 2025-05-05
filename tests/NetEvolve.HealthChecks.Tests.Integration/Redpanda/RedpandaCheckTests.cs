@@ -50,10 +50,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -102,10 +99,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -144,10 +138,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         "HealthChecks:RedPanda:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    {
-                        "HealthChecks:RedPanda:TestContainerHealthy:Configuration:EnableDeliveryReports",
-                        "false"
-                    },
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Configuration:EnableDeliveryReports", "false" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
@@ -191,10 +182,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -214,10 +202,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         _database.BootstrapAddress
                     },
                     { "HealthChecks:RedPanda:TestContainerDegraded:Timeout", "0" },
-                    {
-                        "HealthChecks:RedPanda:TestContainerDegraded:Topic",
-                        "TestContainerDegraded"
-                    },
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Topic", "TestContainerDegraded" },
                     { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -237,10 +222,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         _database.BootstrapAddress
                     },
                     { "HealthChecks:RedPanda:TestContainerDegraded:Timeout", "0" },
-                    {
-                        "HealthChecks:RedPanda:TestContainerDegraded:Topic",
-                        "TestContainerDegraded"
-                    },
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Topic", "TestContainerDegraded" },
                     { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "ServiceProvider" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -249,10 +231,7 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
             {
                 _ = builder.AddSingleton(_ =>
                 {
-                    var config = new ProducerConfig
-                    {
-                        BootstrapServers = _database.BootstrapAddress,
-                    };
+                    var config = new ProducerConfig { BootstrapServers = _database.BootstrapAddress };
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
@@ -291,15 +270,9 @@ public class RedpandaCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDat
                         "HealthChecks:RedPanda:TestContainerDegraded:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    {
-                        "HealthChecks:RedPanda:TestContainerDegraded:Configuration:EnableDeliveryReports",
-                        "false"
-                    },
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Configuration:EnableDeliveryReports", "false" },
                     { "HealthChecks:RedPanda:TestContainerDegraded:Timeout", "0" },
-                    {
-                        "HealthChecks:RedPanda:TestContainerDegraded:Topic",
-                        "TestContainerDegraded"
-                    },
+                    { "HealthChecks:RedPanda:TestContainerDegraded:Topic", "TestContainerDegraded" },
                     { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);

@@ -48,12 +48,7 @@ public sealed class QueueServiceAvailableConfigureTests
         Assert.Equal(expectedMessage, result.FailureMessage);
     }
 
-    public static TheoryData<
-        bool,
-        string?,
-        string?,
-        QueueServiceAvailableOptions
-    > GetValidateTestCases()
+    public static TheoryData<bool, string?, string?, QueueServiceAvailableOptions> GetValidateTestCases()
     {
         var data = new TheoryData<bool, string?, string?, QueueServiceAvailableOptions>
         {
@@ -84,10 +79,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
-                new QueueServiceAvailableOptions
-                {
-                    Mode = QueueClientCreationMode.DefaultAzureCredentials,
-                }
+                new QueueServiceAvailableOptions { Mode = QueueClientCreationMode.DefaultAzureCredentials }
             },
             {
                 false,
@@ -183,10 +175,7 @@ public sealed class QueueServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
-                new QueueServiceAvailableOptions
-                {
-                    Mode = QueueClientCreationMode.AzureSasCredential,
-                }
+                new QueueServiceAvailableOptions { Mode = QueueClientCreationMode.AzureSasCredential }
             },
             {
                 false,

@@ -53,14 +53,9 @@ internal sealed class RedisDatabaseHealthCheck : ConfigurableHealthCheckBase<Red
 
         if (_connections is null)
         {
-            _connections = new ConcurrentDictionary<string, IConnectionMultiplexer>(
-                StringComparer.OrdinalIgnoreCase
-            );
+            _connections = new ConcurrentDictionary<string, IConnectionMultiplexer>(StringComparer.OrdinalIgnoreCase);
         }
 
-        return _connections.GetOrAdd(
-            name,
-            _ => ConnectionMultiplexer.Connect(options.ConnectionString!)
-        );
+        return _connections.GetOrAdd(name, _ => ConnectionMultiplexer.Connect(options.ConnectionString!));
     }
 }

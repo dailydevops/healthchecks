@@ -79,10 +79,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() =>
-            _ = builder
-                .AddBlobContainerAvailability(name, x => { })
-                .AddBlobContainerAvailability(name);
+        void Act() => _ = builder.AddBlobContainerAvailability(name, x => { }).AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -159,8 +156,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() =>
-            _ = builder.AddBlobServiceAvailability(name, x => { }).AddBlobServiceAvailability(name);
+        void Act() => _ = builder.AddBlobServiceAvailability(name, x => { }).AddBlobServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

@@ -33,10 +33,7 @@ public sealed class RedpandaCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedpandaOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new RedpandaCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("Test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -54,10 +51,7 @@ public sealed class RedpandaCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedpandaOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new RedpandaCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("Test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
         var result = await check.CheckHealthAsync(context);

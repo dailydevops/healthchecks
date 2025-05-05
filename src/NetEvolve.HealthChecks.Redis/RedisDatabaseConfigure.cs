@@ -38,10 +38,7 @@ internal sealed class RedisDatabaseConfigure
             return Fail("The property Timeout cannot be less than -1.");
         }
 
-        if (
-            options.Mode == ConnectionHandleMode.Create
-            && string.IsNullOrWhiteSpace(options.ConnectionString)
-        )
+        if (options.Mode == ConnectionHandleMode.Create && string.IsNullOrWhiteSpace(options.ConnectionString))
         {
             return Fail("The property ConnectionString cannot be null or whitespace.");
         }

@@ -48,12 +48,7 @@ public sealed class TableServiceAvailableConfigureTests
         Assert.Equal(expectedMessage, result.FailureMessage);
     }
 
-    public static TheoryData<
-        bool,
-        string?,
-        string?,
-        TableServiceAvailableOptions
-    > GetValidateTestCases()
+    public static TheoryData<bool, string?, string?, TableServiceAvailableOptions> GetValidateTestCases()
     {
         var data = new TheoryData<bool, string?, string?, TableServiceAvailableOptions>
         {
@@ -84,10 +79,7 @@ public sealed class TableServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
-                new TableServiceAvailableOptions
-                {
-                    Mode = TableClientCreationMode.DefaultAzureCredentials,
-                }
+                new TableServiceAvailableOptions { Mode = TableClientCreationMode.DefaultAzureCredentials }
             },
             {
                 false,
@@ -183,10 +175,7 @@ public sealed class TableServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
-                new TableServiceAvailableOptions
-                {
-                    Mode = TableClientCreationMode.AzureSasCredential,
-                }
+                new TableServiceAvailableOptions { Mode = TableClientCreationMode.AzureSasCredential }
             },
             {
                 false,

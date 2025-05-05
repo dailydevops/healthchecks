@@ -32,14 +32,10 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
 
         if (cancellationToken.IsCancellationRequested)
         {
-            return new HealthCheckResult(
-                failureStatus,
-                description: $"{configurationName}: Cancellation requested."
-            );
+            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Cancellation requested.");
         }
 
-        return await InternalAsync(configurationName, failureStatus, cancellationToken)
-            .ConfigureAwait(false);
+        return await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
     }
 
     private async Task<HealthCheckResult> InternalAsync(
@@ -59,12 +55,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
                 );
             }
 
-            return await ExecuteHealthCheckAsync(
-                    configurationName,
-                    failureStatus,
-                    options,
-                    cancellationToken
-                )
+            return await ExecuteHealthCheckAsync(configurationName, failureStatus, options, cancellationToken)
                 .ConfigureAwait(false);
         }
         catch (Exception ex)
@@ -104,7 +95,5 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     /// A <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Healthy"/> or <see cref="HealthStatus.Degraded"/>.
     /// </returns>
     protected static HealthCheckResult HealthCheckState(bool condition, string name) =>
-        condition
-            ? HealthCheckResult.Healthy($"{name}: Healthy")
-            : HealthCheckResult.Degraded($"{name}: Degraded");
+        condition ? HealthCheckResult.Healthy($"{name}: Healthy") : HealthCheckResult.Degraded($"{name}: Degraded");
 }

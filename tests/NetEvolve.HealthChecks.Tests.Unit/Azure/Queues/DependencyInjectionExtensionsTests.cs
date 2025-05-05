@@ -79,8 +79,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() =>
-            _ = builder.AddQueueClientAvailability(name, x => { }).AddQueueClientAvailability(name);
+        void Act() => _ = builder.AddQueueClientAvailability(name, x => { }).AddQueueClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -157,10 +156,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() =>
-            _ = builder
-                .AddQueueServiceAvailability(name, x => { })
-                .AddQueueServiceAvailability(name);
+        void Act() => _ = builder.AddQueueServiceAvailability(name, x => { }).AddQueueServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

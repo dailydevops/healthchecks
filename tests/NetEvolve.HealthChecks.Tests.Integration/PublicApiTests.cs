@@ -28,11 +28,7 @@ public class PublicApiTests
 
         var types = assembly.GetTypes().Where(IsVisibleToIntelliSense).ToArray();
 
-        var options = new ApiGeneratorOptions
-        {
-            ExcludeAttributes = _excludedAttributes,
-            IncludeTypes = types,
-        };
+        var options = new ApiGeneratorOptions { ExcludeAttributes = _excludedAttributes, IncludeTypes = types };
 
         var publicApi = assembly.GeneratePublicApi(options);
 
@@ -46,10 +42,7 @@ public class PublicApiTests
             var assemblies = Assembly
                 .GetExecutingAssembly()!
                 .GetReferencedAssemblies()
-                .Where(a =>
-                    a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase)
-                    == true
-                )
+                .Where(a => a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase) == true)
                 .Select(Assembly.Load)
                 .ToArray();
 

@@ -7,9 +7,7 @@ using Microsoft.Extensions.Azure;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
-public class TableServiceAvailableHealthCheckTests
-    : HealthCheckTestBase,
-        IClassFixture<AzuriteAccess>
+public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _uriTableStorage;
@@ -34,9 +32,7 @@ public class TableServiceAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             }
         );
 
@@ -50,16 +46,13 @@ public class TableServiceAvailableHealthCheckTests
                     options =>
                     {
                         options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions =>
-                            clientOptions.Retry.MaxRetries = 0;
+                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                     }
                 );
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             }
         );
 
@@ -79,9 +72,7 @@ public class TableServiceAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             }
         );
 
@@ -126,8 +117,7 @@ public class TableServiceAvailableHealthCheckTests
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = TableClientCreationMode.SharedKey;
                     options.ServiceUri = _uriTableStorage;
-                    options.ConfigureClientOptions = clientOptions =>
-                        clientOptions.Retry.MaxRetries = 0;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                 }
             );
         });

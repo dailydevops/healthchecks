@@ -26,10 +26,7 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "tags",
-            () => builder.AddApplicationReady(tags: null!)
-        );
+        _ = Assert.Throws<ArgumentNullException>("tags", () => builder.AddApplicationReady(tags: null!));
     }
 
     [Fact]
@@ -67,20 +64,14 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "tags",
-            () => builder.AddApplicationHealthy(tags: null!)
-        );
+        _ = Assert.Throws<ArgumentNullException>("tags", () => builder.AddApplicationHealthy(tags: null!));
     }
 
     [Fact]
     public void AddApplicationHealthy_Fine_Expected()
     {
         var services = new ServiceCollection();
-        _ = services
-            .AddHealthChecks()
-            .AddApplicationHealthy("self", "healthy")
-            .AddApplicationHealthy();
+        _ = services.AddHealthChecks().AddApplicationHealthy("self", "healthy").AddApplicationHealthy();
 
         var serviceProvider = services.BuildServiceProvider();
 
@@ -95,11 +86,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.IsType<ApplicationHealthyCheck>(check.Factory(serviceProvider));
     }
 
-    [SuppressMessage(
-        "Performance",
-        "CA1812:Avoid uninstantiated internal classes",
-        Justification = "False positive"
-    )]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "False positive")]
     private sealed class TestHostApplicationLifeTime : IHostApplicationLifetime, IDisposable
     {
         private readonly CancellationTokenSource _sourceStarted = new();

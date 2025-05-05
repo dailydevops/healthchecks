@@ -31,9 +31,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             {
                 await RunAndVerify(healthChecks =>
                 {
-                    _ = healthChecks
-                        .AddSQLite("TestContainerHealthy")
-                        .AddSQLite("TestContainerHealthy");
+                    _ = healthChecks.AddSQLite("TestContainerHealthy").AddSQLite("TestContainerHealthy");
                 });
             }
         );
@@ -75,10 +73,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:SQLite:TestContainerHealthy:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:SQLite:TestContainerHealthy:ConnectionString", _database.ConnectionString },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -92,10 +87,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:SQLite:TestContainerDegraded:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:SQLite:TestContainerDegraded:ConnectionString", _database.ConnectionString },
                     { "HealthChecks:SQLite:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -124,10 +116,7 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:SQLite:TestNoValues:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:SQLite:TestNoValues:ConnectionString", _database.ConnectionString },
                     { "HealthChecks:SQLite:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);

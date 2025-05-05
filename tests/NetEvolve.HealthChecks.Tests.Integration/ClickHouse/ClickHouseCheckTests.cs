@@ -31,9 +31,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             {
                 await RunAndVerify(healthChecks =>
                 {
-                    _ = healthChecks
-                        .AddClickHouse("TestContainerHealthy")
-                        .AddClickHouse("TestContainerHealthy");
+                    _ = healthChecks.AddClickHouse("TestContainerHealthy").AddClickHouse("TestContainerHealthy");
                 });
             }
         );
@@ -75,10 +73,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:ClickHouse:TestContainerHealthy:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:ClickHouse:TestContainerHealthy:ConnectionString", _database.ConnectionString },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -92,10 +87,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:ClickHouse:TestContainerDegraded:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:ClickHouse:TestContainerDegraded:ConnectionString", _database.ConnectionString },
                     { "HealthChecks:ClickHouse:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -124,10 +116,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:ClickHouse:TestNoValues:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:ClickHouse:TestNoValues:ConnectionString", _database.ConnectionString },
                     { "HealthChecks:ClickHouse:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);

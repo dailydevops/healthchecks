@@ -26,10 +26,7 @@ public class ConfigurableHealthCheckBaseTests
 
         Assert.NotNull(check);
 
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("test", check, null, null) };
 
         // Act
         var result = await check.CheckHealthAsync(context, default);
@@ -39,9 +36,8 @@ public class ConfigurableHealthCheckBaseTests
     }
 
 #pragma warning disable CA1812 // Unused classes
-    private sealed class TestConfigurableHealthCheck(
-        IOptionsMonitor<TestConfiguration> optionsMonitor
-    ) : ConfigurableHealthCheckBase<TestConfiguration>(optionsMonitor)
+    private sealed class TestConfigurableHealthCheck(IOptionsMonitor<TestConfiguration> optionsMonitor)
+        : ConfigurableHealthCheckBase<TestConfiguration>(optionsMonitor)
     {
         protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
             string name,

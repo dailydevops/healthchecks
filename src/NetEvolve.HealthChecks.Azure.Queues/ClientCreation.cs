@@ -33,10 +33,7 @@ internal static class ClientCreation
             );
         }
 
-        return _queueServiceClients.GetOrAdd(
-            name,
-            _ => CreateQueueServiceClient(options, serviceProvider)
-        );
+        return _queueServiceClients.GetOrAdd(name, _ => CreateQueueServiceClient(options, serviceProvider));
     }
 
     internal static QueueServiceClient CreateQueueServiceClient<TOptions>(
@@ -56,30 +53,18 @@ internal static class ClientCreation
         switch (options.Mode)
         {
             case QueueClientCreationMode.DefaultAzureCredentials:
-                var tokenCredential =
-                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new QueueServiceClient(options.ServiceUri, tokenCredential, clientOptions);
             case QueueClientCreationMode.ConnectionString:
                 return new QueueServiceClient(options.ConnectionString, clientOptions);
             case QueueClientCreationMode.SharedKey:
-                var sharedKeyCredential = new StorageSharedKeyCredential(
-                    options.AccountName,
-                    options.AccountKey
-                );
-                return new QueueServiceClient(
-                    options.ServiceUri,
-                    sharedKeyCredential,
-                    clientOptions
-                );
+                var sharedKeyCredential = new StorageSharedKeyCredential(options.AccountName, options.AccountKey);
+                return new QueueServiceClient(options.ServiceUri, sharedKeyCredential, clientOptions);
             case QueueClientCreationMode.AzureSasCredential:
                 var queueUriBuilder = new QueueUriBuilder(options.ServiceUri) { Sas = null };
                 var azureSasCredential = new AzureSasCredential(options.ServiceUri!.Query);
 
-                return new QueueServiceClient(
-                    queueUriBuilder.ToUri(),
-                    azureSasCredential,
-                    clientOptions
-                );
+                return new QueueServiceClient(queueUriBuilder.ToUri(), azureSasCredential, clientOptions);
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }

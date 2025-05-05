@@ -16,10 +16,7 @@ internal sealed class TableServiceAvailableConfigure
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public TableServiceAvailableConfigure(
-        IConfiguration configuration,
-        IServiceProvider serviceProvider
-    )
+    public TableServiceAvailableConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
     {
         _configuration = configuration;
         _serviceProvider = serviceProvider;
@@ -31,8 +28,7 @@ internal sealed class TableServiceAvailableConfigure
         _configuration.Bind($"HealthChecks:AzureTableService:{name}", options);
     }
 
-    public void Configure(TableServiceAvailableOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(TableServiceAvailableOptions options) => Configure(Options.DefaultName, options);
 
     public ValidateOptionsResult Validate(string? name, TableServiceAvailableOptions options)
     {
@@ -57,18 +53,14 @@ internal sealed class TableServiceAvailableConfigure
         {
             TableClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             TableClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            TableClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
-                options
-            ),
+            TableClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
             TableClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             TableClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),
         };
     }
 
-    private static ValidateOptionsResult ValidateModeAzureSasCredential(
-        TableServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeAzureSasCredential(TableServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -127,9 +119,7 @@ internal sealed class TableServiceAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(
-        TableServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(TableServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -148,9 +138,7 @@ internal sealed class TableServiceAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeConnectionString(
-        TableServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeConnectionString(TableServiceAvailableOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {

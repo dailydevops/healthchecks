@@ -48,12 +48,7 @@ public sealed class TableClientAvailableConfigureTests
         Assert.Equal(expectedMessage, result.FailureMessage);
     }
 
-    public static TheoryData<
-        bool,
-        string?,
-        string?,
-        TableClientAvailableOptions
-    > GetValidateTestCases()
+    public static TheoryData<bool, string?, string?, TableClientAvailableOptions> GetValidateTestCases()
     {
         var data = new TheoryData<bool, string?, string?, TableClientAvailableOptions>
         {
@@ -66,32 +61,19 @@ public sealed class TableClientAvailableConfigureTests
                 "name",
                 new TableClientAvailableOptions { Timeout = -2 }
             },
-            {
-                false,
-                "The container name cannot be null or whitespace.",
-                "name",
-                new TableClientAvailableOptions()
-            },
+            { false, "The container name cannot be null or whitespace.", "name", new TableClientAvailableOptions() },
             {
                 false,
                 "The mode `13` is not supported.",
                 "name",
-                new TableClientAvailableOptions
-                {
-                    Mode = (TableClientCreationMode)13,
-                    TableName = "test",
-                }
+                new TableClientAvailableOptions { Mode = (TableClientCreationMode)13, TableName = "test" }
             },
             // Mode: ServiceProvider
             {
                 false,
                 $"No service of type `{nameof(TableServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new TableClientAvailableOptions
-                {
-                    Mode = TableClientCreationMode.ServiceProvider,
-                    TableName = "test",
-                }
+                new TableClientAvailableOptions { Mode = TableClientCreationMode.ServiceProvider, TableName = "test" }
             },
             // Mode: DefaultAzureCredentials
             {
@@ -131,11 +113,7 @@ public sealed class TableClientAvailableConfigureTests
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
-                new TableClientAvailableOptions
-                {
-                    TableName = "test",
-                    Mode = TableClientCreationMode.ConnectionString,
-                }
+                new TableClientAvailableOptions { TableName = "test", Mode = TableClientCreationMode.ConnectionString }
             },
             {
                 true,
@@ -153,11 +131,7 @@ public sealed class TableClientAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
-                new TableClientAvailableOptions
-                {
-                    TableName = "test",
-                    Mode = TableClientCreationMode.SharedKey,
-                }
+                new TableClientAvailableOptions { TableName = "test", Mode = TableClientCreationMode.SharedKey }
             },
             {
                 false,

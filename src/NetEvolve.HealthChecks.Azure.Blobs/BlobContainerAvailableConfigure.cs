@@ -16,10 +16,7 @@ internal sealed class BlobContainerAvailableConfigure
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public BlobContainerAvailableConfigure(
-        IConfiguration configuration,
-        IServiceProvider serviceProvider
-    )
+    public BlobContainerAvailableConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
     {
         _configuration = configuration;
         _serviceProvider = serviceProvider;
@@ -31,8 +28,7 @@ internal sealed class BlobContainerAvailableConfigure
         _configuration.Bind($"HealthChecks:AzureBlobContainer:{name}", options);
     }
 
-    public void Configure(BlobContainerAvailableOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(BlobContainerAvailableOptions options) => Configure(Options.DefaultName, options);
 
     public ValidateOptionsResult Validate(string? name, BlobContainerAvailableOptions options)
     {
@@ -62,18 +58,14 @@ internal sealed class BlobContainerAvailableConfigure
         {
             BlobClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             BlobClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            BlobClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
-                options
-            ),
+            BlobClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
             BlobClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             BlobClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),
         };
     }
 
-    private static ValidateOptionsResult ValidateModeAzureSasCredential(
-        BlobContainerAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeAzureSasCredential(BlobContainerAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -99,9 +91,7 @@ internal sealed class BlobContainerAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeSharedKey(
-        BlobContainerAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeSharedKey(BlobContainerAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -134,9 +124,7 @@ internal sealed class BlobContainerAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(
-        BlobContainerAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(BlobContainerAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -155,9 +143,7 @@ internal sealed class BlobContainerAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeConnectionString(
-        BlobContainerAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeConnectionString(BlobContainerAvailableOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {

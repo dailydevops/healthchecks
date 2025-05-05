@@ -28,15 +28,10 @@ internal static class ClientCreation
 
         if (_blobServiceClients is null)
         {
-            _blobServiceClients = new ConcurrentDictionary<string, BlobServiceClient>(
-                StringComparer.OrdinalIgnoreCase
-            );
+            _blobServiceClients = new ConcurrentDictionary<string, BlobServiceClient>(StringComparer.OrdinalIgnoreCase);
         }
 
-        return _blobServiceClients.GetOrAdd(
-            name,
-            _ => CreateBlobServiceClient(options, serviceProvider)
-        );
+        return _blobServiceClients.GetOrAdd(name, _ => CreateBlobServiceClient(options, serviceProvider));
     }
 
     internal static BlobServiceClient CreateBlobServiceClient<TOptions>(
@@ -56,30 +51,18 @@ internal static class ClientCreation
         switch (options.Mode)
         {
             case BlobClientCreationMode.DefaultAzureCredentials:
-                var tokenCredential =
-                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new BlobServiceClient(options.ServiceUri, tokenCredential, clientOptions);
             case BlobClientCreationMode.ConnectionString:
                 return new BlobServiceClient(options.ConnectionString, clientOptions);
             case BlobClientCreationMode.SharedKey:
-                var sharedKeyCredential = new StorageSharedKeyCredential(
-                    options.AccountName,
-                    options.AccountKey
-                );
-                return new BlobServiceClient(
-                    options.ServiceUri,
-                    sharedKeyCredential,
-                    clientOptions
-                );
+                var sharedKeyCredential = new StorageSharedKeyCredential(options.AccountName, options.AccountKey);
+                return new BlobServiceClient(options.ServiceUri, sharedKeyCredential, clientOptions);
             case BlobClientCreationMode.AzureSasCredential:
                 var blobUriBuilder = new BlobUriBuilder(options.ServiceUri) { Sas = null };
                 var azureSasCredential = new AzureSasCredential(options.ServiceUri!.Query);
 
-                return new BlobServiceClient(
-                    blobUriBuilder.ToUri(),
-                    azureSasCredential,
-                    clientOptions
-                );
+                return new BlobServiceClient(blobUriBuilder.ToUri(), azureSasCredential, clientOptions);
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }
