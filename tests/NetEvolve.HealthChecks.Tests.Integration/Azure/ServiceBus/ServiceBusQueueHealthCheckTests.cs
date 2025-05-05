@@ -3,9 +3,7 @@
 using Microsoft.Extensions.Azure;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 
-public class ServiceBusQueueHealthCheckTests
-    : HealthCheckTestBase,
-        IClassFixture<ServiceBusContainer>
+public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixture<ServiceBusContainer>
 {
     private readonly ServiceBusContainer _container;
 
@@ -45,9 +43,7 @@ public class ServiceBusQueueHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddServiceBusClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
             }
         );
 }

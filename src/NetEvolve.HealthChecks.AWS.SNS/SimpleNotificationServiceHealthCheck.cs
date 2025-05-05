@@ -14,9 +14,7 @@ using NetEvolve.HealthChecks.Abstractions;
 internal sealed class SimpleNotificationServiceHealthCheck
     : ConfigurableHealthCheckBase<SimpleNotificationServiceOptions>
 {
-    public SimpleNotificationServiceHealthCheck(
-        IOptionsMonitor<SimpleNotificationServiceOptions> optionsMonitor
-    )
+    public SimpleNotificationServiceHealthCheck(IOptionsMonitor<SimpleNotificationServiceOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -39,9 +37,7 @@ internal sealed class SimpleNotificationServiceHealthCheck
         return HealthCheckState(isValid && topic is not null, name);
     }
 
-    private static AmazonSimpleNotificationServiceClient CreateClient(
-        SimpleNotificationServiceOptions options
-    )
+    private static AmazonSimpleNotificationServiceClient CreateClient(SimpleNotificationServiceOptions options)
     {
         var hasCredentials = options.GetCredentials() is not null;
         var hasEndpoint = options.GetRegionEndpoint() is not null;
@@ -58,10 +54,7 @@ internal sealed class SimpleNotificationServiceHealthCheck
                 options.GetCredentials(),
                 options.GetRegionEndpoint()
             ),
-            (true, false) => new AmazonSimpleNotificationServiceClient(
-                options.GetCredentials(),
-                config
-            ),
+            (true, false) => new AmazonSimpleNotificationServiceClient(options.GetCredentials(), config),
             (false, true) => new AmazonSimpleNotificationServiceClient(options.GetRegionEndpoint()),
             _ => throw new InvalidOperationException("Invalid ClientCreationMode."),
         };

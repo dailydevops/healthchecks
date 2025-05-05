@@ -3,9 +3,7 @@
 using NetEvolve.HealthChecks.AWS.SNS;
 using NodaTime;
 
-public class SimpleNotificationServiceHealthCheckTests
-    : HealthCheckTestBase,
-        IClassFixture<LocalStackInstance>
+public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IClassFixture<LocalStackInstance>
 {
     private readonly LocalStackInstance _instance;
 
