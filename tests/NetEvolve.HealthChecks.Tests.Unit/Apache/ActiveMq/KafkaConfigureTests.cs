@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using NetEvolve.HealthChecks.Apache.ActiveMq;
 using Xunit;
 
+[TestGroup($"{nameof(Apache)}.{nameof(ActiveMq)}")]
 public sealed class ActiveMqConfigureTests
 {
     [Fact]
