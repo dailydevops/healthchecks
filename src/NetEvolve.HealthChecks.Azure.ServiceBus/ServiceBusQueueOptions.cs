@@ -1,7 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.ServiceBus;
 
-using Microsoft.Extensions.Options;
-
 public class ServiceBusQueueOptions : ServiceBusOptionsBase
 {
     /// <summary>
