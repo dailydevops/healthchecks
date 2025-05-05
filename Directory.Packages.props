@@ -19,7 +19,7 @@
     />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.0" />
+    <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.1" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="3.7.400.65" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.13.2" />
