@@ -2,6 +2,7 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.ActiveMq;
 using Xunit;
 
