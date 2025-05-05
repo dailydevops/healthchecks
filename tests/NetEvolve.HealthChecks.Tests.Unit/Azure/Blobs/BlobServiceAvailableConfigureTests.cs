@@ -8,7 +8,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
-[TestGroup("AzureBlobs")]
+[TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 public sealed class BlobServiceAvailableConfigureTests
 {
     [Fact]
