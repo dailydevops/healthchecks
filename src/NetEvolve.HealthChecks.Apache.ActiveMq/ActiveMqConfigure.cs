@@ -5,9 +5,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class ActiveMqConfigure
-    : IConfigureNamedOptions<ActiveMqOptions>,
-        IValidateOptions<ActiveMqOptions>
+internal sealed class ActiveMqConfigure : IConfigureNamedOptions<ActiveMqOptions>, IValidateOptions<ActiveMqOptions>
 {
     private readonly IConfiguration _configuration;
 
