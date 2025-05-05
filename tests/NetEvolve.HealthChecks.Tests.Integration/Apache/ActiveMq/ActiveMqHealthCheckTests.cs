@@ -44,20 +44,13 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
         private static readonly string Password = $"{Guid.NewGuid():D}";
 
         public CustomCredentials()
-            : base(
-                new ArtemisBuilder().WithUsername(Username).WithPassword(Password).Build(),
-                Username,
-                Password
-            ) { }
+            : base(new ArtemisBuilder().WithUsername(Username).WithPassword(Password).Build(), Username, Password) { }
     }
 
     public sealed class NoCredentials : ActiveMqHealthCheckTests
     {
         public NoCredentials()
-            : base(
-                new ArtemisBuilder().WithEnvironment("ANONYMOUS_LOGIN", bool.TrueString).Build(),
-                null,
-                string.Empty
-            ) { }
+            : base(new ArtemisBuilder().WithEnvironment("ANONYMOUS_LOGIN", bool.TrueString).Build(), null, string.Empty)
+        { }
     }
 }

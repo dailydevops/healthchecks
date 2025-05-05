@@ -8,8 +8,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ServiceBusTopicHealthCheck
-    : ConfigurableHealthCheckBase<ServiceBusTopicOptions>
+internal sealed class ServiceBusTopicHealthCheck : ConfigurableHealthCheckBase<ServiceBusTopicOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
