@@ -8,7 +8,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
-[TestGroup("AzureTables")]
+[TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
 public sealed class TableClientAvailableConfigureTests
 {
     [Fact]

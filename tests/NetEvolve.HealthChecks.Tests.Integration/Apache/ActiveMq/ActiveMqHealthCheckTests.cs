@@ -1,10 +1,12 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.ActiveMq;
 
 using System.Threading.Tasks;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.ActiveMq;
 using Testcontainers.ActiveMq;
 using TestContainer = Testcontainers.ActiveMq.ArtemisContainer;
 
+[TestGroup($"{nameof(Apache)}.{nameof(ActiveMq)}")]
 public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLifetime
 {
     private readonly TestContainer _container;
