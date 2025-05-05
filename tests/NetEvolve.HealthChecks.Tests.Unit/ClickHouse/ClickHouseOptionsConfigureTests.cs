@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.ClickHouse;
 using Xunit;
 
+[TestGroup(nameof(ClickHouse))]
 public sealed class ClickHouseOptionsConfigureTests
 {
     [Fact]

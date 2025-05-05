@@ -4,8 +4,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.XUnit;
 using Xunit;
 
+[TestGroup(nameof(HealthChecks))]
 public sealed class ApplicationSelfCheckTests
 {
     [Fact]

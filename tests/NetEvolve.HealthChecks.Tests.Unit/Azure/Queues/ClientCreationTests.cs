@@ -2,9 +2,11 @@
 
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
+[TestGroup("AzureQueues")]
 public class ClientCreationTests
 {
     [Fact]

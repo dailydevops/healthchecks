@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 
+[TestGroup(nameof(Kafka))]
 public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 {
     private readonly KafkaDatabase _database;

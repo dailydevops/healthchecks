@@ -3,9 +3,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
+[TestGroup("AzureBlobs")]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
@@ -79,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() => _ = builder.AddBlobContainerAvailability(name, x => { }).AddBlobContainerAvailability(name);
+        void Act() => _ = builder.AddBlobContainerAvailability(name, __ => { }).AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -156,7 +158,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() => _ = builder.AddBlobServiceAvailability(name, x => { }).AddBlobServiceAvailability(name);
+        void Act() => _ = builder.AddBlobServiceAvailability(name, __ => { }).AddBlobServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

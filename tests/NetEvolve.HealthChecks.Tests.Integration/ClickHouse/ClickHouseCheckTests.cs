@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.ClickHouse;
 using Xunit;
 
+[TestGroup(nameof(ClickHouse))]
 public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHouseDatabase>
 {
     private readonly ClickHouseDatabase _database;

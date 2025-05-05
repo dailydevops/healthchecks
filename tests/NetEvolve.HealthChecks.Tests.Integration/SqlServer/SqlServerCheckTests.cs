@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SqlServer;
 using Xunit;
 
+[TestGroup(nameof(SqlServer))]
 public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerDatabase>
 {
     private readonly SqlServerDatabase _database;

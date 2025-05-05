@@ -3,7 +3,9 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NetEvolve.Extensions.XUnit;
 
+[TestGroup(nameof(HealthChecks))]
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Fact]

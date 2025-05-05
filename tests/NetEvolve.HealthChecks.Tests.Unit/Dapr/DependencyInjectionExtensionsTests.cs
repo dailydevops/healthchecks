@@ -6,9 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Dapr;
 using Xunit;
 
+[TestGroup(nameof(Dapr))]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]

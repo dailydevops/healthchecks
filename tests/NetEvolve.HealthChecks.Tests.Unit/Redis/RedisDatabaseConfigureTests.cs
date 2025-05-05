@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Redis;
 using Xunit;
 
+[TestGroup(nameof(Redis))]
 public sealed class RedisDatabaseConfigureTests
 {
     [Fact]

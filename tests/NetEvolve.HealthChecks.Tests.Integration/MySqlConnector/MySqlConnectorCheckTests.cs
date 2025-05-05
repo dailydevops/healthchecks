@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.MySql.Connector;
 using Xunit;
 
+[TestGroup(nameof(MySqlConnector))]
 public class MySqlConnectorCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
 {
     private readonly MySqlDatabase _database;

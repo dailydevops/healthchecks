@@ -6,8 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using NetEvolve.Extensions.XUnit;
 using Xunit;
 
+[TestGroup(nameof(HealthChecks))]
 public sealed class ApplicationReadinessCheckTests
 {
     [Fact]

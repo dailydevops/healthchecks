@@ -11,7 +11,8 @@ using NetEvolve.HealthChecks.Redis;
 using StackExchange.Redis;
 using Xunit;
 
-[SetCulture]
+[SetCulture("", asHiddenCategory: true)]
+[TestGroup(nameof(Redis))]
 public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisDatabase>
 {
     private readonly RedisDatabase _database;
@@ -58,12 +59,9 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
-            {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddRedisDatabase("TestContainerHealthy").AddRedisDatabase("TestContainerHealthy");
-                });
-            }
+                    _ = healthChecks.AddRedisDatabase("TestContainerHealthy").AddRedisDatabase("TestContainerHealthy")
+                )
         );
 
     [Fact]

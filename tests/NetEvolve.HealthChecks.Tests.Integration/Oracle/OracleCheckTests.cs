@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Oracle;
 using Xunit;
 
+[TestGroup(nameof(Oracle))]
 public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabase>
 {
     private readonly OracleDatabase _database;

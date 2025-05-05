@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using global::Azure.Storage.Queues;
 using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
+[TestGroup("AzureQueues")]
 public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;

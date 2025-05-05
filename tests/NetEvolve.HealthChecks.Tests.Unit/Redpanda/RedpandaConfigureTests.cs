@@ -3,9 +3,11 @@
 using System;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Redpanda;
 using Xunit;
 
+[TestGroup(nameof(Redpanda))]
 public sealed class RedpandaConfigureTests
 {
     [Fact]

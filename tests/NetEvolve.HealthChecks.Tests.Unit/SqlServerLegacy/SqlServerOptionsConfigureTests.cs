@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 using Xunit;
 
+[TestGroup(nameof(SqlServerLegacy))]
 public sealed class SqlServerOptionsConfigureTests
 {
     [Fact]

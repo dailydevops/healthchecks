@@ -3,9 +3,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.SQLite;
 using Xunit;
 
+[TestGroup(nameof(SQLite))]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
