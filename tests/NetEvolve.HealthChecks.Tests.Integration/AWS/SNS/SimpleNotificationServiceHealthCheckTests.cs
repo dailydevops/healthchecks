@@ -1,8 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS.SNS;
 
+using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
 using NodaTime;
 
+[TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
 public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IClassFixture<LocalStackInstance>
 {
     private readonly LocalStackInstance _instance;
