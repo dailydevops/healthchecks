@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.AWS.SNS;
 
-using System;
 using Amazon;
 using Amazon.Runtime;
 
@@ -20,14 +19,12 @@ public sealed class SimpleNotificationServiceOptions
 
     public int Timeout { get; set; } = 100;
 
-    internal AWSCredentials? GetCredentials()
-    {
-        return CreationMode switch
+    internal AWSCredentials? GetCredentials() =>
+        CreationMode switch
         {
             CreationMode.BasicAuthentication => new BasicAWSCredentials(AccessKey, SecretKey),
             _ => null,
         };
-    }
 
     internal RegionEndpoint? GetRegionEndpoint() => CreationMode == CreationMode ? null : null;
 }
