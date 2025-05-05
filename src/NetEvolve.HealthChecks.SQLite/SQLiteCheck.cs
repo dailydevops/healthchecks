@@ -15,6 +15,5 @@ internal sealed class SQLiteCheck : SqlCheckBase<SQLiteOptions>
     public SQLiteCheck(IOptionsMonitor<SQLiteOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
-    protected override DbConnection CreateConnection(string connectionString) =>
-        new SqliteConnection(connectionString);
+    protected override DbConnection CreateConnection(string connectionString) => new SqliteConnection(connectionString);
 }

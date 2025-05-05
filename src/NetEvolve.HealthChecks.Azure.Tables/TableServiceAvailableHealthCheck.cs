@@ -8,8 +8,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class TableServiceAvailableHealthCheck
-    : ConfigurableHealthCheckBase<TableServiceAvailableOptions>
+internal sealed class TableServiceAvailableHealthCheck : ConfigurableHealthCheckBase<TableServiceAvailableOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 

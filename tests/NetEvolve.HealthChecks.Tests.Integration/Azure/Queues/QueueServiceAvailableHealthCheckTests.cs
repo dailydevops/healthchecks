@@ -8,9 +8,7 @@ using Microsoft.Extensions.Azure;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
-public class QueueServiceAvailableHealthCheckTests
-    : HealthCheckTestBase,
-        IClassFixture<AzuriteAccess>
+public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _accountSasUri;
@@ -42,9 +40,7 @@ public class QueueServiceAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddQueueServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
             }
         );
 
@@ -58,16 +54,13 @@ public class QueueServiceAvailableHealthCheckTests
                     options =>
                     {
                         options.Mode = QueueClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions =>
-                            clientOptions.Retry.MaxRetries = 0;
+                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                     }
                 );
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddQueueServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
             }
         );
 
@@ -87,9 +80,7 @@ public class QueueServiceAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddQueueServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
             }
         );
 
@@ -134,8 +125,7 @@ public class QueueServiceAvailableHealthCheckTests
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = QueueClientCreationMode.SharedKey;
                     options.ServiceUri = _uriQueueStorage;
-                    options.ConfigureClientOptions = clientOptions =>
-                        clientOptions.Retry.MaxRetries = 0;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                 }
             );
         });

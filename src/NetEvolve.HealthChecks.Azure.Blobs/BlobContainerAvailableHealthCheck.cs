@@ -8,8 +8,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class BlobContainerAvailableHealthCheck
-    : ConfigurableHealthCheckBase<BlobContainerAvailableOptions>
+internal sealed class BlobContainerAvailableHealthCheck : ConfigurableHealthCheckBase<BlobContainerAvailableOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -43,9 +42,7 @@ internal sealed class BlobContainerAvailableHealthCheck
         var containerExists = await container.ExistsAsync(cancellationToken).ConfigureAwait(false);
         if (!containerExists)
         {
-            return HealthCheckResult.Unhealthy(
-                $"{name}: Container `{options.ContainerName}` does not exist."
-            );
+            return HealthCheckResult.Unhealthy($"{name}: Container `{options.ContainerName}` does not exist.");
         }
 
         (var containerInTime, _) = await container

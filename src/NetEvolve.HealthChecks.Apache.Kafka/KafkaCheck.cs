@@ -22,10 +22,7 @@ internal sealed class KafkaCheck : ConfigurableHealthCheckBase<KafkaOptions>
         Value = "HealthCheck",
     };
 
-    public KafkaCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<KafkaOptions> optionsMonitor
-    )
+    public KafkaCheck(IServiceProvider serviceProvider, IOptionsMonitor<KafkaOptions> optionsMonitor)
         : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -63,9 +60,7 @@ internal sealed class KafkaCheck : ConfigurableHealthCheckBase<KafkaOptions>
 
         if (_producers is null)
         {
-            _producers = new ConcurrentDictionary<string, IProducer<string, string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
+            _producers = new ConcurrentDictionary<string, IProducer<string, string>>(StringComparer.OrdinalIgnoreCase);
         }
 
         return _producers.GetOrAdd(name, _ => CreateProducer(options));

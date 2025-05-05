@@ -6,9 +6,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class RedpandaConfigure
-    : IConfigureNamedOptions<RedpandaOptions>,
-        IValidateOptions<RedpandaOptions>
+internal sealed class RedpandaConfigure : IConfigureNamedOptions<RedpandaOptions>, IValidateOptions<RedpandaOptions>
 {
     private readonly IConfiguration _configuration;
 

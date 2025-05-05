@@ -31,10 +31,7 @@ public sealed class ApplicationReadinessCheckTests
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
         var cancellationToken = new CancellationToken();
-        var context = new HealthCheckContext
-        {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
-        };
+        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         lifetime.StartApplication();
@@ -51,10 +48,7 @@ public sealed class ApplicationReadinessCheckTests
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
         var cancellationToken = new CancellationToken(true);
-        var context = new HealthCheckContext
-        {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
-        };
+        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         var result = await sut.CheckHealthAsync(context, cancellationToken);
@@ -70,10 +64,7 @@ public sealed class ApplicationReadinessCheckTests
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
         var cancellationToken = new CancellationToken();
-        var context = new HealthCheckContext
-        {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
-        };
+        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         lifetime.StartApplication();
@@ -87,11 +78,7 @@ public sealed class ApplicationReadinessCheckTests
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
     }
 
-    [SuppressMessage(
-        "Performance",
-        "CA1812:Avoid uninstantiated internal classes",
-        Justification = "False positive"
-    )]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "False positive")]
     private sealed class TestHostApplicationLifeTime : IHostApplicationLifetime, IDisposable
     {
         private readonly CancellationTokenSource _sourceStarted = new();

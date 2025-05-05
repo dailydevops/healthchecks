@@ -48,12 +48,7 @@ public sealed class BlobServiceAvailableConfigureTests
         Assert.Equal(expectedMessage, result.FailureMessage);
     }
 
-    public static TheoryData<
-        bool,
-        string?,
-        string?,
-        BlobServiceAvailableOptions
-    > GetValidateTestCases()
+    public static TheoryData<bool, string?, string?, BlobServiceAvailableOptions> GetValidateTestCases()
     {
         var data = new TheoryData<bool, string?, string?, BlobServiceAvailableOptions>
         {
@@ -84,10 +79,7 @@ public sealed class BlobServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
-                new BlobServiceAvailableOptions
-                {
-                    Mode = BlobClientCreationMode.DefaultAzureCredentials,
-                }
+                new BlobServiceAvailableOptions { Mode = BlobClientCreationMode.DefaultAzureCredentials }
             },
             {
                 false,

@@ -6,9 +6,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class KafkaConfigure
-    : IConfigureNamedOptions<KafkaOptions>,
-        IValidateOptions<KafkaOptions>
+internal sealed class KafkaConfigure : IConfigureNamedOptions<KafkaOptions>, IValidateOptions<KafkaOptions>
 {
     private readonly IConfiguration _configuration;
 

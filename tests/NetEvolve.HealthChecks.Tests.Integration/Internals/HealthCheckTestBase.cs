@@ -39,10 +39,7 @@ public abstract class HealthCheckTestBase
             })
             .Configure(app =>
             {
-                _ = app.UseHealthChecks(
-                    HealthCheckPath,
-                    new HealthCheckOptions { ResponseWriter = WriteResponse }
-                );
+                _ = app.UseHealthChecks(HealthCheckPath, new HealthCheckOptions { ResponseWriter = WriteResponse });
             });
 
         using (var server = new TestServer(builder))
@@ -51,13 +48,9 @@ public abstract class HealthCheckTestBase
 
             serverConfiguration?.Invoke(server);
 
-            var response = await client
-                .GetAsync(new Uri(HealthCheckPath, UriKind.Relative))
-                .ConfigureAwait(false);
+            var response = await client.GetAsync(new Uri(HealthCheckPath, UriKind.Relative)).ConfigureAwait(false);
             var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var content = string.IsNullOrWhiteSpace(resultContent)
-                ? null
-                : Argon.JToken.Parse(resultContent);
+            var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
 
             if (clearJToken is not null)
             {

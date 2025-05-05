@@ -48,12 +48,7 @@ public sealed class QueueClientAvailableConfigureTests
         Assert.Equal(expectedMessage, result.FailureMessage);
     }
 
-    public static TheoryData<
-        bool,
-        string?,
-        string?,
-        QueueClientAvailableOptions
-    > GetValidateTestCases()
+    public static TheoryData<bool, string?, string?, QueueClientAvailableOptions> GetValidateTestCases()
     {
         var data = new TheoryData<bool, string?, string?, QueueClientAvailableOptions>
         {
@@ -66,32 +61,19 @@ public sealed class QueueClientAvailableConfigureTests
                 "name",
                 new QueueClientAvailableOptions { Timeout = -2 }
             },
-            {
-                false,
-                "The queue name cannot be null or whitespace.",
-                "name",
-                new QueueClientAvailableOptions()
-            },
+            { false, "The queue name cannot be null or whitespace.", "name", new QueueClientAvailableOptions() },
             {
                 false,
                 "The mode `13` is not supported.",
                 "name",
-                new QueueClientAvailableOptions
-                {
-                    Mode = (QueueClientCreationMode)13,
-                    QueueName = "test",
-                }
+                new QueueClientAvailableOptions { Mode = (QueueClientCreationMode)13, QueueName = "test" }
             },
             // Mode: ServiceProvider
             {
                 false,
                 $"No service of type `{nameof(QueueServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new QueueClientAvailableOptions
-                {
-                    Mode = QueueClientCreationMode.ServiceProvider,
-                    QueueName = "test",
-                }
+                new QueueClientAvailableOptions { Mode = QueueClientCreationMode.ServiceProvider, QueueName = "test" }
             },
             // Mode: DefaultAzureCredentials
             {
@@ -131,11 +113,7 @@ public sealed class QueueClientAvailableConfigureTests
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
-                new QueueClientAvailableOptions
-                {
-                    QueueName = "test",
-                    Mode = QueueClientCreationMode.ConnectionString,
-                }
+                new QueueClientAvailableOptions { QueueName = "test", Mode = QueueClientCreationMode.ConnectionString }
             },
             {
                 true,
@@ -153,11 +131,7 @@ public sealed class QueueClientAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
-                new QueueClientAvailableOptions
-                {
-                    QueueName = "test",
-                    Mode = QueueClientCreationMode.SharedKey,
-                }
+                new QueueClientAvailableOptions { QueueName = "test", Mode = QueueClientCreationMode.SharedKey }
             },
             {
                 false,

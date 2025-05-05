@@ -15,6 +15,5 @@ internal sealed class SqlServerCheck : SqlCheckBase<SqlServerOptions>
     public SqlServerCheck(IOptionsMonitor<SqlServerOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
-    protected override DbConnection CreateConnection(string connectionString) =>
-        new SqlConnection(connectionString);
+    protected override DbConnection CreateConnection(string connectionString) => new SqlConnection(connectionString);
 }

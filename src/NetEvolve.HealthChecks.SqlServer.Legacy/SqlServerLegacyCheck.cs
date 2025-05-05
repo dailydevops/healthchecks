@@ -16,7 +16,6 @@ internal sealed class SqlServerLegacyCheck : SqlCheckBase<SqlServerLegacyOptions
         : base(optionsMonitor) { }
 
 #pragma warning disable CS0618 // Type or member is obsolete
-    protected override DbConnection CreateConnection(string connectionString) =>
-        new SqlConnection(connectionString);
+    protected override DbConnection CreateConnection(string connectionString) => new SqlConnection(connectionString);
 #pragma warning restore CS0618 // Type or member is obsolete
 }

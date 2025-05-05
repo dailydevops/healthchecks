@@ -15,6 +15,5 @@ internal sealed class NpgsqlCheck : SqlCheckBase<NpgsqlOptions>
     public NpgsqlCheck(IOptionsMonitor<NpgsqlOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
-    protected override DbConnection CreateConnection(string connectionString) =>
-        new NpgsqlConnection(connectionString);
+    protected override DbConnection CreateConnection(string connectionString) => new NpgsqlConnection(connectionString);
 }

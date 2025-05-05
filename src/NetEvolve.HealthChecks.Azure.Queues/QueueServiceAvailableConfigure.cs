@@ -16,10 +16,7 @@ internal sealed class QueueServiceAvailableConfigure
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public QueueServiceAvailableConfigure(
-        IConfiguration configuration,
-        IServiceProvider serviceProvider
-    )
+    public QueueServiceAvailableConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
     {
         _configuration = configuration;
         _serviceProvider = serviceProvider;
@@ -31,8 +28,7 @@ internal sealed class QueueServiceAvailableConfigure
         _configuration.Bind($"HealthChecks:AzureQueueService:{name}", options);
     }
 
-    public void Configure(QueueServiceAvailableOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(QueueServiceAvailableOptions options) => Configure(Options.DefaultName, options);
 
     public ValidateOptionsResult Validate(string? name, QueueServiceAvailableOptions options)
     {
@@ -57,18 +53,14 @@ internal sealed class QueueServiceAvailableConfigure
         {
             QueueClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             QueueClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            QueueClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
-                options
-            ),
+            QueueClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
             QueueClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             QueueClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),
         };
     }
 
-    private static ValidateOptionsResult ValidateModeAzureSasCredential(
-        QueueServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeAzureSasCredential(QueueServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -127,9 +119,7 @@ internal sealed class QueueServiceAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(
-        QueueServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(QueueServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -148,9 +138,7 @@ internal sealed class QueueServiceAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeConnectionString(
-        QueueServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeConnectionString(QueueServiceAvailableOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {

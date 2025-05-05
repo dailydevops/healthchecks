@@ -8,8 +8,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class QueueClientAvailableHealthCheck
-    : ConfigurableHealthCheckBase<QueueClientAvailableOptions>
+internal sealed class QueueClientAvailableHealthCheck : ConfigurableHealthCheckBase<QueueClientAvailableOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -43,9 +42,7 @@ internal sealed class QueueClientAvailableHealthCheck
         var queueExists = await queue.ExistsAsync(cancellationToken).ConfigureAwait(false);
         if (!queueExists)
         {
-            return HealthCheckResult.Unhealthy(
-                $"{name}: Queue `{options.QueueName}` does not exist."
-            );
+            return HealthCheckResult.Unhealthy($"{name}: Queue `{options.QueueName}` does not exist.");
         }
 
         (var queueInTime, _) = await queue

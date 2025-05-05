@@ -7,9 +7,7 @@ using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
 using NetEvolve.HealthChecks.Azure.Blobs;
 
-public class BlobContainerAvailableHealthCheckTests
-    : HealthCheckTestBase,
-        IClassFixture<AzuriteAccess>
+public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _accountSasUri;
@@ -52,9 +50,7 @@ public class BlobContainerAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddBlobServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
             }
         );
 
@@ -75,9 +71,7 @@ public class BlobContainerAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddBlobServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
             }
         );
 
@@ -98,9 +92,7 @@ public class BlobContainerAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddBlobServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
             }
         );
 
@@ -115,16 +107,13 @@ public class BlobContainerAvailableHealthCheckTests
                     {
                         options.ContainerName = "test";
                         options.Mode = BlobClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions =>
-                            clientOptions.Retry.MaxRetries = 0;
+                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                     }
                 );
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddBlobServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
             }
         );
 
@@ -172,8 +161,7 @@ public class BlobContainerAvailableHealthCheckTests
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = BlobClientCreationMode.SharedKey;
                     options.ServiceUri = _uriBlobStorage;
-                    options.ConfigureClientOptions = clientOptions =>
-                        clientOptions.Retry.MaxRetries = 0;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                 }
             );
         });

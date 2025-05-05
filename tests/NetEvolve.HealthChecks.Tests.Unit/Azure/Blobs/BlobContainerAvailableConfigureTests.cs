@@ -48,12 +48,7 @@ public sealed class BlobContainerAvailableConfigureTests
         Assert.Equal(expectedMessage, result.FailureMessage);
     }
 
-    public static TheoryData<
-        bool,
-        string?,
-        string?,
-        BlobContainerAvailableOptions
-    > GetValidateTestCases()
+    public static TheoryData<bool, string?, string?, BlobContainerAvailableOptions> GetValidateTestCases()
     {
         var data = new TheoryData<bool, string?, string?, BlobContainerAvailableOptions>
         {
@@ -66,21 +61,12 @@ public sealed class BlobContainerAvailableConfigureTests
                 "name",
                 new BlobContainerAvailableOptions { Timeout = -2 }
             },
-            {
-                false,
-                "The container name cannot be null or whitespace.",
-                "name",
-                new BlobContainerAvailableOptions()
-            },
+            { false, "The container name cannot be null or whitespace.", "name", new BlobContainerAvailableOptions() },
             {
                 false,
                 "The mode `13` is not supported.",
                 "name",
-                new BlobContainerAvailableOptions
-                {
-                    Mode = (BlobClientCreationMode)13,
-                    ContainerName = "test",
-                }
+                new BlobContainerAvailableOptions { Mode = (BlobClientCreationMode)13, ContainerName = "test" }
             },
             // Mode: ServiceProvider
             {
@@ -153,11 +139,7 @@ public sealed class BlobContainerAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
-                new BlobContainerAvailableOptions
-                {
-                    ContainerName = "test",
-                    Mode = BlobClientCreationMode.SharedKey,
-                }
+                new BlobContainerAvailableOptions { ContainerName = "test", Mode = BlobClientCreationMode.SharedKey }
             },
             {
                 false,

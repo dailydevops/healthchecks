@@ -33,10 +33,7 @@ public sealed class RedisDatabaseCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedisDatabaseOptions>>();
         var check = new RedisDatabaseHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("Test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -54,10 +51,7 @@ public sealed class RedisDatabaseCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedisDatabaseOptions>>();
         var check = new RedisDatabaseHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("Test", check, null, null),
-        };
+        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
         var result = await check.CheckHealthAsync(context);

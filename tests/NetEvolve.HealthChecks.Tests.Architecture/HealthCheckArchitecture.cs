@@ -40,10 +40,7 @@ internal static class HealthCheckArchitecture
             .LoadAssembliesRecursively(
                 assemblies,
                 x =>
-                    x.Name.Name.StartsWith(
-                        "NetEvolve.HealthChecks",
-                        StringComparison.OrdinalIgnoreCase
-                    )
+                    x.Name.Name.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase)
                         ? FilterResult.LoadAndContinue
                         : FilterResult.SkipAndContinue
             )

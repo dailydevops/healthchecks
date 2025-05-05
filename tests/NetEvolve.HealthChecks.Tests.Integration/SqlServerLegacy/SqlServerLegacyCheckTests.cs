@@ -75,10 +75,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:SqlServer:TestContainerHealthy:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:SqlServer:TestContainerHealthy:ConnectionString", _database.ConnectionString },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -92,10 +89,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:SqlServer:TestContainerDegraded:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:SqlServer:TestContainerDegraded:ConnectionString", _database.ConnectionString },
                     { "HealthChecks:SqlServer:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -124,10 +118,7 @@ public class SqlServerLegacyCheckTests : HealthCheckTestBase, IClassFixture<SqlS
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:SqlServer:TestNoValues:ConnectionString",
-                        _database.ConnectionString
-                    },
+                    { "HealthChecks:SqlServer:TestNoValues:ConnectionString", _database.ConnectionString },
                     { "HealthChecks:SqlServer:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);

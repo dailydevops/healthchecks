@@ -15,6 +15,5 @@ internal sealed class OracleCheck : SqlCheckBase<OracleOptions>
     public OracleCheck(IOptionsMonitor<OracleOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
-    protected override DbConnection CreateConnection(string connectionString) =>
-        new OracleConnection(connectionString);
+    protected override DbConnection CreateConnection(string connectionString) => new OracleConnection(connectionString);
 }

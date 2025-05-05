@@ -15,6 +15,5 @@ internal sealed class MySqlCheck : SqlCheckBase<MySqlOptions>
     public MySqlCheck(IOptionsMonitor<MySqlOptions> optionsMonitor)
         : base(optionsMonitor) { }
 
-    protected override DbConnection CreateConnection(string connectionString) =>
-        new MySqlConnection(connectionString);
+    protected override DbConnection CreateConnection(string connectionString) => new MySqlConnection(connectionString);
 }

@@ -48,9 +48,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                 {
                     var options = services.GetService<IOptionsSnapshot<RedisDatabaseOptions>>();
 
-                    return ConnectionMultiplexer.Connect(
-                        options!.Get("TestContainerHealthy").ConnectionString
-                    );
+                    return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
                 });
             }
         );
@@ -63,9 +61,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
             {
                 await RunAndVerify(healthChecks =>
                 {
-                    _ = healthChecks
-                        .AddRedisDatabase("TestContainerHealthy")
-                        .AddRedisDatabase("TestContainerHealthy");
+                    _ = healthChecks.AddRedisDatabase("TestContainerHealthy").AddRedisDatabase("TestContainerHealthy");
                 });
             }
         );
@@ -106,9 +102,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                 {
                     var options = services.GetService<IOptionsSnapshot<RedisDatabaseOptions>>();
 
-                    return ConnectionMultiplexer.Connect(
-                        options!.Get("TestContainerHealthy").ConnectionString
-                    );
+                    return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
                 });
             }
         );
@@ -155,10 +149,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
             {
                 var values = new Dictionary<string, string?>
                 {
-                    {
-                        "HealthChecks:RedisDatabase:TestNoValues:ConnectionString",
-                        _database.GetConnectionString()
-                    },
+                    { "HealthChecks:RedisDatabase:TestNoValues:ConnectionString", _database.GetConnectionString() },
                     { "HealthChecks:RedisDatabase:TestNoValues:Timeout", "-2" },
                     { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" },
                 };

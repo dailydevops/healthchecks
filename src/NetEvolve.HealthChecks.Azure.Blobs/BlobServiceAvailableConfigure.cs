@@ -16,10 +16,7 @@ internal sealed class BlobServiceAvailableConfigure
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public BlobServiceAvailableConfigure(
-        IConfiguration configuration,
-        IServiceProvider serviceProvider
-    )
+    public BlobServiceAvailableConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
     {
         _configuration = configuration;
         _serviceProvider = serviceProvider;
@@ -31,8 +28,7 @@ internal sealed class BlobServiceAvailableConfigure
         _configuration.Bind($"HealthChecks:AzureBlob:{name}", options);
     }
 
-    public void Configure(BlobServiceAvailableOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(BlobServiceAvailableOptions options) => Configure(Options.DefaultName, options);
 
     public ValidateOptionsResult Validate(string? name, BlobServiceAvailableOptions options)
     {
@@ -57,18 +53,14 @@ internal sealed class BlobServiceAvailableConfigure
         {
             BlobClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
             BlobClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
-            BlobClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
-                options
-            ),
+            BlobClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
             BlobClientCreationMode.SharedKey => ValidateModeSharedKey(options),
             BlobClientCreationMode.AzureSasCredential => ValidateModeAzureSasCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),
         };
     }
 
-    private static ValidateOptionsResult ValidateModeAzureSasCredential(
-        BlobServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeAzureSasCredential(BlobServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -127,9 +119,7 @@ internal sealed class BlobServiceAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(
-        BlobServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(BlobServiceAvailableOptions options)
     {
         if (options.ServiceUri is null)
         {
@@ -148,9 +138,7 @@ internal sealed class BlobServiceAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeConnectionString(
-        BlobServiceAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeConnectionString(BlobServiceAvailableOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {

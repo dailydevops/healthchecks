@@ -13,8 +13,7 @@ public class ClientCreationTests
         var options = new TableClientAvailableOptions { Mode = (TableClientCreationMode)13 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() =>
-            ClientCreation.CreateTableServiceClient(options, serviceProvider)
+        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateTableServiceClient(options, serviceProvider)
         );
     }
 }

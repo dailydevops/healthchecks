@@ -7,9 +7,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class DaprConfigure
-    : IConfigureNamedOptions<DaprOptions>,
-        IValidateOptions<DaprOptions>
+internal sealed class DaprConfigure : IConfigureNamedOptions<DaprOptions>, IValidateOptions<DaprOptions>
 {
     private readonly IConfiguration _configuration;
 

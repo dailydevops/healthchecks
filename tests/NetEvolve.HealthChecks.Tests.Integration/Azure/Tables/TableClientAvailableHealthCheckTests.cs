@@ -10,9 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
-public class TableClientAvailableHealthCheckTests
-    : HealthCheckTestBase,
-        IClassFixture<AzuriteAccess>
+public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _accountSasUri;
@@ -28,10 +26,7 @@ public class TableClientAvailableHealthCheckTests
         var tableClient = client.GetTableClient("test");
         _ = tableClient.CreateIfNotExists();
 
-        _accountSasUri = tableClient.GenerateSasUri(
-            TableSasPermissions.All,
-            DateTimeOffset.UtcNow.AddDays(1)
-        );
+        _accountSasUri = tableClient.GenerateSasUri(TableSasPermissions.All, DateTimeOffset.UtcNow.AddDays(1));
     }
 
     [Fact]
@@ -50,9 +45,7 @@ public class TableClientAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             }
         );
 
@@ -73,9 +66,7 @@ public class TableClientAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             }
         );
 
@@ -96,9 +87,7 @@ public class TableClientAvailableHealthCheckTests
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             },
             clearJToken: token =>
             {
@@ -109,10 +98,7 @@ public class TableClientAvailableHealthCheckTests
 
                 if (
                     token.Value<string>("status") is string status
-                    && status.Equals(
-                        nameof(HealthCheckResult.Unhealthy),
-                        StringComparison.OrdinalIgnoreCase
-                    )
+                    && status.Equals(nameof(HealthCheckResult.Unhealthy), StringComparison.OrdinalIgnoreCase)
                 )
                 {
                     var results = token["results"].FirstOrDefault();
@@ -138,16 +124,13 @@ public class TableClientAvailableHealthCheckTests
                     {
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions =>
-                            clientOptions.Retry.MaxRetries = 0;
+                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                     }
                 );
             },
             serviceBuilder: services =>
             {
-                services.AddAzureClients(clients =>
-                    _ = clients.AddTableServiceClient(_container.ConnectionString)
-                );
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
             }
         );
 
@@ -195,8 +178,7 @@ public class TableClientAvailableHealthCheckTests
                     options.AccountName = AzuriteAccess.AccountName;
                     options.Mode = TableClientCreationMode.SharedKey;
                     options.ServiceUri = _uriTableStorage;
-                    options.ConfigureClientOptions = clientOptions =>
-                        clientOptions.Retry.MaxRetries = 0;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                 }
             );
         });

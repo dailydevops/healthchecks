@@ -32,10 +32,7 @@ internal static class ClientCreation
             );
         }
 
-        return _tableServiceClients.GetOrAdd(
-            name,
-            _ => CreateTableServiceClient(options, serviceProvider)
-        );
+        return _tableServiceClients.GetOrAdd(name, _ => CreateTableServiceClient(options, serviceProvider));
     }
 
     internal static TableServiceClient CreateTableServiceClient<TOptions>(
@@ -55,30 +52,18 @@ internal static class ClientCreation
         switch (options.Mode)
         {
             case TableClientCreationMode.DefaultAzureCredentials:
-                var tokenCredential =
-                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new TableServiceClient(options.ServiceUri, tokenCredential, clientOptions);
             case TableClientCreationMode.ConnectionString:
                 return new TableServiceClient(options.ConnectionString, clientOptions);
             case TableClientCreationMode.SharedKey:
-                var sharedKeyCredential = new TableSharedKeyCredential(
-                    options.AccountName,
-                    options.AccountKey
-                );
-                return new TableServiceClient(
-                    options.ServiceUri,
-                    sharedKeyCredential,
-                    clientOptions
-                );
+                var sharedKeyCredential = new TableSharedKeyCredential(options.AccountName, options.AccountKey);
+                return new TableServiceClient(options.ServiceUri, sharedKeyCredential, clientOptions);
             case TableClientCreationMode.AzureSasCredential:
                 var tableUriBuilder = new TableUriBuilder(options.ServiceUri) { Sas = null };
                 var azureSasCredential = new AzureSasCredential(options.ServiceUri!.Query);
 
-                return new TableServiceClient(
-                    tableUriBuilder.ToUri(),
-                    azureSasCredential,
-                    clientOptions
-                );
+                return new TableServiceClient(tableUriBuilder.ToUri(), azureSasCredential, clientOptions);
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }

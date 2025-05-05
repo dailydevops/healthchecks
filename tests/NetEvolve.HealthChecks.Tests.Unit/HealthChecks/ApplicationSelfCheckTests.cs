@@ -27,10 +27,7 @@ public sealed class ApplicationSelfCheckTests
         // Arrange
         var sut = new ApplicationHealthyCheck();
         var cancellationToken = new CancellationToken();
-        var context = new HealthCheckContext
-        {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
-        };
+        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         var result = await sut.CheckHealthAsync(context, cancellationToken);
@@ -45,10 +42,7 @@ public sealed class ApplicationSelfCheckTests
         // Arrange
         var sut = new ApplicationHealthyCheck();
         var cancellationToken = new CancellationToken(true);
-        var context = new HealthCheckContext
-        {
-            Registration = new("Test", sut, HealthStatus.Unhealthy, null),
-        };
+        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         var result = await sut.CheckHealthAsync(context, cancellationToken);
