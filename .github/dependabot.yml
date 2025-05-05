@@ -66,4 +66,5 @@ updates:
       - "dependency:devcontainers"
     open-pull-requests-limit: 20
     # Add assignees
+    assignees:
       - samtrion
