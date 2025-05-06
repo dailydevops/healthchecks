@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ServiceBusQueueServiceProviderHealthy: Degraded,
+      name: ServiceBusQueueServiceProviderHealthy,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Degraded
+}
