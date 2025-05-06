@@ -34,7 +34,7 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="MySql.Data" Version="9.3.0" />
     <PackageVersion Include="MySqlConnector" Version="2.4.0" />
-    <PackageVersion Include="NetEvolve.Arguments" Version="1.3.77" />
+    <PackageVersion Include="NetEvolve.Arguments" Version="1.3.84" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="1.3.74" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.6.0" />
     <PackageVersion Include="Npgsql" Version="9.0.3" />
