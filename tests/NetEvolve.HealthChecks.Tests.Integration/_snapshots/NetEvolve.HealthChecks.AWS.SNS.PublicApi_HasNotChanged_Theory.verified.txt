@@ -1,0 +1,21 @@
+﻿namespace NetEvolve.HealthChecks.AWS.SNS
+{
+    public enum CreationMode
+    {
+        BasicAuthentication = 0,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSimpleNotificationService([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.AWS.SNS.SimpleNotificationServiceOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class SimpleNotificationServiceOptions
+    {
+        public SimpleNotificationServiceOptions() { }
+        public string? AccessKey { get; set; }
+        public NetEvolve.HealthChecks.AWS.SNS.CreationMode CreationMode { get; set; }
+        public string? SecretKey { get; set; }
+        public string? ServiceUrl { get; set; }
+        public int Timeout { get; set; }
+        public string? TopicName { get; set; }
+    }
+}
