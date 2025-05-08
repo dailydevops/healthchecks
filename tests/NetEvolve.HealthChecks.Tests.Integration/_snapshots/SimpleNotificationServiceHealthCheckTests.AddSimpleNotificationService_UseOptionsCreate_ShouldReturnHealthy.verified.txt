@@ -1,19 +1,9 @@
 ﻿{
   results: [
     {
-      description: TestContainerHealthy: Unexpected error.,
-      exception: {
-        innerExceptions: [
-          {
-            message: Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.,
-            type: HttpErrorResponseException
-          }
-        ],
-        message: The security token included in the request is invalid.,
-        type: Amazon.SimpleNotificationService.AmazonSimpleNotificationServiceException
-      },
+      description: TestContainerHealthy: Healthy,
       name: TestContainerHealthy,
-      status: Unhealthy,
+      status: Healthy,
       tags: [
         aws,
         sns,
@@ -21,5 +11,5 @@
       ]
     }
   ],
-  status: Unhealthy
+  status: Healthy
 }
