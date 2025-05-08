@@ -21,6 +21,64 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                     options.AccessKey = LocalStackInstance.AccessKey;
                     options.SecretKey = LocalStackInstance.SecretKey;
                     options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = LocalStackInstance.TopicName;
+                    options.Subscription = _instance.Subscription;
+                    options.Mode = CreationMode.BasicAuthentication;
+                }
+            );
+        });
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddSimpleNotificationService(
+                "TestContainerUnhealthy",
+                options =>
+                {
+                    options.AccessKey = LocalStackInstance.AccessKey;
+                    options.SecretKey = LocalStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = LocalStackInstance.TopicName;
+                    options.Subscription = "NotFound";
+                    options.Mode = CreationMode.BasicAuthentication;
+                }
+            );
+        });
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_ShouldReturnUnhealthy() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddSimpleNotificationService(
+                "TestContainerUnhealthy",
+                options =>
+                {
+                    options.AccessKey = LocalStackInstance.AccessKey;
+                    options.SecretKey = LocalStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = "Invalid";
+                    options.Subscription = _instance.Subscription;
+                    options.Mode = CreationMode.BasicAuthentication;
+                }
+            );
+        });
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnDegraded() =>
+        await RunAndVerify(healthChecks =>
+        {
+            _ = healthChecks.AddSimpleNotificationService(
+                "TestContainerDegraded",
+                options =>
+                {
+                    options.AccessKey = LocalStackInstance.AccessKey;
+                    options.SecretKey = LocalStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = LocalStackInstance.TopicName;
+                    options.Subscription = _instance.Subscription;
+                    options.Timeout = 1;
+                    options.Mode = CreationMode.BasicAuthentication;
                 }
             );
         });

@@ -12,9 +12,11 @@
     {
         public SimpleNotificationServiceOptions() { }
         public string? AccessKey { get; set; }
-        public NetEvolve.HealthChecks.AWS.SNS.CreationMode CreationMode { get; set; }
+        public NetEvolve.HealthChecks.AWS.SNS.CreationMode? Mode { get; set; }
+        public Amazon.RegionEndpoint? RegionEndpoint { get; set; }
         public string? SecretKey { get; set; }
         public string? ServiceUrl { get; set; }
+        public string? Subscription { get; set; }
         public int Timeout { get; set; }
         public string? TopicName { get; set; }
     }
