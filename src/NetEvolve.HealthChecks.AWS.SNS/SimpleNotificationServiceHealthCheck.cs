@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.AWS.SNS;
 
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Amazon;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -27,36 +27,70 @@ internal sealed class SimpleNotificationServiceHealthCheck
         using var client = CreateClient(options);
 
         var (isValid, topic) = await client
-            .GetSubscriptionAttributesAsync(
-                new GetSubscriptionAttributesRequest { SubscriptionArn = options.TopicName },
-                cancellationToken
-            )
+            .FindTopicAsync(options.TopicName)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid && topic is not null, name);
+        if (string.IsNullOrWhiteSpace(topic?.TopicArn))
+        {
+            return new HealthCheckResult(failureStatus, $"{name}: Topic `{options.TopicName}` not found.");
+        }
+
+        var (isValid2, subscriptions) = await GetSubscriptionsAsync(client, topic, options, cancellationToken)
+            .ConfigureAwait(false);
+        var found = subscriptions.Any(x => x.EndsWith(options.Subscription!, StringComparison.Ordinal));
+
+        if (!found)
+        {
+            return new HealthCheckResult(failureStatus, $"{name}: Subscription `{options.Subscription}` not found.");
+        }
+
+        return HealthCheckState(isValid && isValid2, name);
+    }
+
+    private static async Task<(bool, List<string>)> GetSubscriptionsAsync(
+        AmazonSimpleNotificationServiceClient client,
+        Topic topic,
+        SimpleNotificationServiceOptions options,
+        CancellationToken cancellationToken
+    )
+    {
+        var (isValid, response) = await client
+            .ListSubscriptionsByTopicAsync(topic.TopicArn, cancellationToken)
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
+        var subscriptions = new List<string>();
+
+        if (response.HttpStatusCode != HttpStatusCode.OK)
+        {
+            return (false, subscriptions);
+        }
+
+        subscriptions.AddRange(response.Subscriptions.Select(x => x.SubscriptionArn));
+
+        while (!string.IsNullOrEmpty(response.NextToken))
+        {
+            (isValid, response) = await client
+                .ListSubscriptionsByTopicAsync(topic.TopicArn, response.NextToken, cancellationToken)
+                .WithTimeoutAsync(options.Timeout, cancellationToken)
+                .ConfigureAwait(false);
+
+            subscriptions.AddRange(response.Subscriptions.Select(x => x.SubscriptionArn));
+        }
+
+        return (isValid, subscriptions);
     }
 
     private static AmazonSimpleNotificationServiceClient CreateClient(SimpleNotificationServiceOptions options)
     {
-        var hasCredentials = options.GetCredentials() is not null;
-        var hasEndpoint = options.GetRegionEndpoint() is not null;
+        var config = new AmazonSimpleNotificationServiceConfig { ServiceURL = options.ServiceUrl };
 
-        var config = new AmazonSimpleNotificationServiceConfig
+        return (options.GetCredentials() is not null, options.RegionEndpoint is not null) switch
         {
-            ServiceURL = options.ServiceUrl,
-            RegionEndpoint = RegionEndpoint.USEast1,
-        };
-
-        return (hasCredentials, hasEndpoint) switch
-        {
-            (true, true) => new AmazonSimpleNotificationServiceClient(
-                options.GetCredentials(),
-                options.GetRegionEndpoint()
-            ),
+            (true, true) => new AmazonSimpleNotificationServiceClient(options.GetCredentials(), options.RegionEndpoint),
             (true, false) => new AmazonSimpleNotificationServiceClient(options.GetCredentials(), config),
-            (false, true) => new AmazonSimpleNotificationServiceClient(options.GetRegionEndpoint()),
-            _ => throw new InvalidOperationException("Invalid ClientCreationMode."),
+            (false, true) => new AmazonSimpleNotificationServiceClient(options.RegionEndpoint),
+            _ => new AmazonSimpleNotificationServiceClient(),
         };
     }
 }
