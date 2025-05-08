@@ -6,7 +6,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
-[TestGroup("AzureQueues")]
+[TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 public class ClientCreationTests
 {
     [Fact]
