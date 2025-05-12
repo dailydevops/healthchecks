@@ -4,7 +4,7 @@
     {
       "name": "Docker: .NET 10.0 Preview",
       "type": "docker",
-      "dockerImage": "mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview"
+      "dockerImage": "mcr.microsoft.com/dotnet/sdk:10.0-preview"
     },
     {
       "name": "Docker: .NET 9.0",
