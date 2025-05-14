@@ -2,8 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
+    "schedule:daily",
     ":approveMajorUpdates",
-    ":semanticCommitType(chore)"
+    ":semanticCommitType(chore)",
+    ":timezone(Europe/Berlin)",
   ],
   "packageRules": [
     {
