@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		new-project.ps1 = new-project.ps1
 		nuget.config = nuget.config
 		README.md = README.md
+		.github\renovate.json = .github\renovate.json
 		update-solution.ps1 = update-solution.ps1
 	EndProjectSection
 EndProject

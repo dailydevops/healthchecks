@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "schedule:daily",
+    ":approveMajorUpdates",
+    ":assignAndReview(samtrion)",
+    ":semanticCommits",
+    ":semanticCommitType(chore)",
+    ":timezone(Europe/Berlin)"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [ "nuget" ],
+      "extends": [
+        ":label(dependency:nuget)",
+        ":semanticCommitScope(nuget)",
+      ]
+    }
+  ],
+  "rebaseWhen": "auto",
+  "separateMajorMinor": true,
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "separateMultipleMinor": true
+}
