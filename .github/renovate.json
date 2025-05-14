@@ -10,6 +10,7 @@
     ":semanticCommitType(chore)",
     ":timezone(Europe/Berlin)"
   ],
+  "dependencyDashboard": true,
   "packageRules": [
     {
       "matchDatasources": [ "nuget" ],
