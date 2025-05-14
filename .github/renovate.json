@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended",
     "schedule:daily",
+    ":automergeMinorPatch",
     ":approveMajorUpdates",
     ":assignAndReview(samtrion)",
     ":semanticCommits",
