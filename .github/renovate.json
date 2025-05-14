@@ -1,6 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":approveMajorUpdates",
+    ":semanticCommitType(chore)"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [ "nuget" ],
+      "extends": [
+        ":label(dependency:nuget)",
+        ":semanticCommitScope(nuget)",
+      ]
+    }
   ]
 }
