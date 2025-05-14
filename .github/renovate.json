@@ -4,8 +4,10 @@
     "config:recommended",
     "schedule:daily",
     ":approveMajorUpdates",
+    ":assignAndReview(samtrion)",
+    ":semanticCommits",
     ":semanticCommitType(chore)",
-    ":timezone(Europe/Berlin)",
+    ":timezone(Europe/Berlin)"
   ],
   "packageRules": [
     {
@@ -15,5 +17,10 @@
         ":semanticCommitScope(nuget)",
       ]
     }
-  ]
+  ],
+  "rebaseWhen": "auto",
+  "separateMajorMinor": true,
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "separateMultipleMinor": true
 }
