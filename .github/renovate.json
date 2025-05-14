@@ -3,8 +3,8 @@
   "extends": [
     "config:recommended",
     "schedule:daily",
-    ":automergeMinorPatch",
     ":approveMajorUpdates",
+    ":automergeStableNonMajor",
     ":assignAndReview(samtrion)",
     ":semanticCommits",
     ":semanticCommitType(chore)",
@@ -15,7 +15,7 @@
       "matchDatasources": [ "nuget" ],
       "extends": [
         ":label(dependency:nuget)",
-        ":semanticCommitScope(nuget)",
+        ":semanticCommitScope(nuget)"
       ]
     }
   ],
