@@ -62,5 +62,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class SimpleNotificationServiceCheckMarker { }
+    private sealed partial class SimpleNotificationServiceCheckMarker;
 }
