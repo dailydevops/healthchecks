@@ -59,14 +59,13 @@ internal sealed class SimpleNotificationServiceHealthCheck
             .ListSubscriptionsByTopicAsync(topic.TopicArn, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
-        var subscriptions = new List<string>();
 
         if (response.HttpStatusCode != HttpStatusCode.OK)
         {
-            return (false, subscriptions);
+            throw new InvalidOperationException($"Invalid response from AWS: {response.HttpStatusCode}");
         }
 
-        subscriptions.AddRange(response.Subscriptions.Select(x => x.SubscriptionArn));
+        var subscriptions = response.Subscriptions.ConvertAll(x => x.SubscriptionArn);
 
         while (!string.IsNullOrEmpty(response.NextToken))
         {
@@ -74,6 +73,11 @@ internal sealed class SimpleNotificationServiceHealthCheck
                 .ListSubscriptionsByTopicAsync(topic.TopicArn, response.NextToken, cancellationToken)
                 .WithTimeoutAsync(options.Timeout, cancellationToken)
                 .ConfigureAwait(false);
+
+            if (response.HttpStatusCode != HttpStatusCode.OK)
+            {
+                throw new InvalidOperationException($"Invalid response from AWS: {response.HttpStatusCode}");
+            }
 
             subscriptions.AddRange(response.Subscriptions.Select(x => x.SubscriptionArn));
         }
