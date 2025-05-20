@@ -1,14 +1,24 @@
 ﻿namespace NetEvolve.HealthChecks.AWS.SNS;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using NetEvolve.Arguments;
 
 internal sealed class SimpleNotificationServiceConfigure
     : IConfigureNamedOptions<SimpleNotificationServiceOptions>,
         IValidateOptions<SimpleNotificationServiceOptions>
 {
-    public void Configure(string? name, SimpleNotificationServiceOptions options) { }
+    private readonly IConfiguration _configuration;
 
-    public void Configure(SimpleNotificationServiceOptions options) { }
+    public SimpleNotificationServiceConfigure(IConfiguration configuration) => _configuration = configuration;
+
+    public void Configure(string? name, SimpleNotificationServiceOptions options)
+    {
+        Argument.ThrowIfNullOrWhiteSpace(name);
+        _configuration.Bind($"HealthChecks:AWSSNS:{name}", options);
+    }
+
+    public void Configure(SimpleNotificationServiceOptions options) => Configure(Options.DefaultName, options);
 
     public ValidateOptionsResult Validate(string? name, SimpleNotificationServiceOptions options)
     {
