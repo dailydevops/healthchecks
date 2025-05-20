@@ -41,4 +41,26 @@ public sealed class LocalStackInstance : IAsyncLifetime
             .SubscriptionArn.Replace(topic.TopicArn, string.Empty, StringComparison.Ordinal)
             .Trim(':');
     }
+
+    internal async Task<DisposableSubscription> CreateNumberOfSubscriptions(string topicName, int numberOfSubscriptions)
+    {
+        var client = new AmazonSimpleNotificationServiceClient(
+            AccessKey,
+            SecretKey,
+            new AmazonSimpleNotificationServiceConfig { ServiceURL = ConnectionString }
+        );
+        var topic = await client.CreateTopicAsync(topicName).ConfigureAwait(false);
+
+        var subscription = await client.SubscribeAsync(topic.TopicArn, "email", $"Test{1:D6}@example.com");
+
+        if (numberOfSubscriptions > 1)
+        {
+            for (var i = 2; i <= numberOfSubscriptions; i++)
+            {
+                _ = await client.SubscribeAsync(topic.TopicArn, "email", $"Test{i:D6}@example.com");
+            }
+        }
+
+        return new DisposableSubscription(client, topic.TopicArn, subscription.SubscriptionArn);
+    }
 }
