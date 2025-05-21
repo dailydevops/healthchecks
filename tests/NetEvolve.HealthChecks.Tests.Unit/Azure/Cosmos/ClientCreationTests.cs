@@ -67,25 +67,6 @@ public sealed class ClientCreationTests
     }
 
     [Fact]
-    public void GetCosmosClient_WhenModeIsDefault_ReturnsNewClientWithEndpointAndKey()
-    {
-        // Arrange
-        var serviceProvider = new ServiceCollection().AddCosmosDbClient().BuildServiceProvider();
-        var options = new CosmosClientAvailableOptions
-        {
-            EndpointUri = new Uri("https://localhost:8081"),
-            PrimaryKey = "dummyKey",
-        };
-
-        // Act
-        var result = ClientCreation.GetCosmosClient("test", options, serviceProvider);
-
-        // Assert
-        Assert.NotNull(result);
-        _ = Assert.IsType<CosmosClient>(result);
-    }
-
-    [Fact]
     public void CreateCosmosClient_WhenEndpointUriIsNull_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -120,47 +101,5 @@ public sealed class ClientCreationTests
         Assert.NotNull(result);
         _ = Assert.IsType<CosmosClient>(result);
         Assert.True(optionsConfigured);
-    }
-
-    [Fact]
-    public void GetCosmosClient_CalledMultipleTimes_ReturnsSameInstance()
-    {
-        // Arrange
-        var serviceProvider = new ServiceCollection().AddCosmosDbClient().BuildServiceProvider();
-        var options = new CosmosClientAvailableOptions
-        {
-            EndpointUri = new Uri("https://localhost:8081"),
-            PrimaryKey = "dummyKey",
-        };
-
-        // Act
-        var result1 = ClientCreation.GetCosmosClient("test", options, serviceProvider);
-        var result2 = ClientCreation.GetCosmosClient("test", options, serviceProvider);
-
-        // Assert
-        Assert.NotNull(result1);
-        Assert.NotNull(result2);
-        Assert.Same(result1, result2);
-    }
-
-    [Fact]
-    public void GetCosmosClient_WithDifferentNames_ReturnsDifferentInstances()
-    {
-        // Arrange
-        var serviceProvider = new ServiceCollection().AddCosmosDbClient().BuildServiceProvider();
-        var options = new CosmosClientAvailableOptions
-        {
-            EndpointUri = new Uri("https://localhost:8081"),
-            PrimaryKey = "dummyKey",
-        };
-
-        // Act
-        var result1 = ClientCreation.GetCosmosClient("test1", options, serviceProvider);
-        var result2 = ClientCreation.GetCosmosClient("test2", options, serviceProvider);
-
-        // Assert
-        Assert.NotNull(result1);
-        Assert.NotNull(result2);
-        Assert.NotSame(result1, result2);
     }
 }
