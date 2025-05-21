@@ -6,7 +6,7 @@ using global::Azure.Storage.Blobs;
 /// <summary>
 /// Options for the <see cref="BlobServiceAvailableHealthCheck"/>.
 /// </summary>
-public sealed class BlobServiceAvailableOptions : IBlobOptions
+public sealed record BlobServiceAvailableOptions : IBlobOptions
 {
     /// <summary>
     /// Gets or sets the connection string.

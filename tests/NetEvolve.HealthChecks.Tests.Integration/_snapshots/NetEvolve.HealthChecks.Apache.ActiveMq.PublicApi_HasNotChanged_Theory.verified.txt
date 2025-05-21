@@ -1,6 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Apache.ActiveMq
 {
-    public class ActiveMqOptions
+    public sealed class ActiveMqOptions : System.IEquatable<NetEvolve.HealthChecks.Apache.ActiveMq.ActiveMqOptions>
     {
         public ActiveMqOptions() { }
         public string? BrokerAddress { get; set; }

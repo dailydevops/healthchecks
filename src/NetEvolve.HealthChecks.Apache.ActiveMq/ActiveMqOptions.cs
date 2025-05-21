@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents configuration options for the Apache ActiveMQ health check.
 /// </summary>
-public class ActiveMqOptions
+public sealed record ActiveMqOptions
 {
     /// <summary>
     /// Gets or sets the address of the ActiveMQ broker.

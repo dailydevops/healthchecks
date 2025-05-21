@@ -6,7 +6,7 @@ using global::Azure.Data.Tables;
 /// <summary>
 /// Options for the <see cref="TableServiceAvailableHealthCheck"/>.
 /// </summary>
-public sealed class TableServiceAvailableOptions : ITableOptions
+public sealed record TableServiceAvailableOptions : ITableOptions
 {
     /// <summary>
     /// Gets or sets the connection string.

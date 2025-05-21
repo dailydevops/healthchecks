@@ -49,7 +49,7 @@ public class ConfigurableHealthCheckBaseTests
         ) => throw new NotImplementedException();
     }
 
-    private sealed class TestConfiguration
+    private sealed record TestConfiguration
     {
         public string? Name { get; set; }
     }

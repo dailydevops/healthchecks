@@ -6,7 +6,7 @@ using global::Azure.Storage.Queues;
 /// <summary>
 /// Options for the <see cref="QueueClientAvailableHealthCheck"/>.
 /// </summary>
-public sealed class QueueClientAvailableOptions : IQueueOptions
+public sealed record QueueClientAvailableOptions : IQueueOptions
 {
     /// <summary>
     /// Gets or sets the connection string.
