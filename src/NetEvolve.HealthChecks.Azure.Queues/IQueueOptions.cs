@@ -13,7 +13,7 @@ internal interface IQueueOptions
 
     string? AccountKey { get; }
 
-    QueueClientCreationMode Mode { get; }
+    QueueClientCreationMode? Mode { get; }
 
     Action<QueueClientOptions>? ConfigureClientOptions { get; }
 

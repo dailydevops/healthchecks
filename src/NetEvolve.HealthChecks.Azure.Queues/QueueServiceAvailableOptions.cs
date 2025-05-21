@@ -16,7 +16,7 @@ public sealed record QueueServiceAvailableOptions : IQueueOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public QueueClientCreationMode Mode { get; set; }
+    public QueueClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds for executing the healthcheck.
