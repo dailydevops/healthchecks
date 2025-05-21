@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents configuration options for Azure Service Bus queue health checks.
 /// </summary>
-public class ServiceBusQueueOptions : ServiceBusOptionsBase
+public sealed record ServiceBusQueueOptions : ServiceBusOptionsBase
 {
     /// <summary>
     /// Gets or sets a value indicating whether to enable peek mode. Default is <c>false</c>.

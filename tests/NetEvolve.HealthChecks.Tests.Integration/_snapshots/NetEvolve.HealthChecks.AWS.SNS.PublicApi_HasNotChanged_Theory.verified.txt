@@ -8,7 +8,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSimpleNotificationService([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.AWS.SNS.SimpleNotificationServiceOptions>? options = null, params string[] tags) { }
     }
-    public sealed class SimpleNotificationServiceOptions
+    public sealed class SimpleNotificationServiceOptions : System.IEquatable<NetEvolve.HealthChecks.AWS.SNS.SimpleNotificationServiceOptions>
     {
         public SimpleNotificationServiceOptions() { }
         public string? AccessKey { get; set; }
