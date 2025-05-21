@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Cosmos;
 
 using System;
-using System.Configuration;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

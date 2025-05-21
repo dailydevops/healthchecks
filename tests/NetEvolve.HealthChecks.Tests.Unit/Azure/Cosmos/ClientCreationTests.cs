@@ -2,7 +2,6 @@
 
 using System;
 using Microsoft.Azure.Cosmos;
-using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Cosmos;
