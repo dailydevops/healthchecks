@@ -10,7 +10,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddServiceBusQueueHealthCheck([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusQueueOptions>? options = null, params string[] tags) { }
     }
-    public abstract class ServiceBusOptionsBase
+    public abstract class ServiceBusOptionsBase : System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase>
     {
         protected ServiceBusOptionsBase() { }
         public string? ConnectionString { get; set; }
@@ -18,20 +18,20 @@
         public NetEvolve.HealthChecks.Azure.ServiceBus.ClientCreationMode Mode { get; set; }
         public int Timeout { get; set; }
     }
-    public class ServiceBusQueueOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase
+    public sealed class ServiceBusQueueOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusQueueOptions>
     {
         public ServiceBusQueueOptions() { }
         public bool EnablePeekMode { get; set; }
         public string? QueueName { get; set; }
     }
-    public class ServiceBusSubscriptionOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase
+    public sealed class ServiceBusSubscriptionOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusSubscriptionOptions>
     {
         public ServiceBusSubscriptionOptions() { }
         public bool EnablePeekMode { get; set; }
         public string SubscriptionName { get; set; }
         public string TopicName { get; set; }
     }
-    public class ServiceBusTopicOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase
+    public sealed class ServiceBusTopicOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusTopicOptions>
     {
         public ServiceBusTopicOptions() { }
         public string TopicName { get; set; }

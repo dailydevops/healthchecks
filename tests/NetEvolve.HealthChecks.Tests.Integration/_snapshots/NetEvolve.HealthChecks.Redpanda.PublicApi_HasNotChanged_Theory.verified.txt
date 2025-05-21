@@ -9,7 +9,7 @@
         ServiceProvider = 0,
         Create = 1,
     }
-    public class RedpandaOptions
+    public sealed class RedpandaOptions : System.IEquatable<NetEvolve.HealthChecks.Redpanda.RedpandaOptions>
     {
         public RedpandaOptions() { }
         public Confluent.Kafka.ProducerConfig Configuration { get; set; }

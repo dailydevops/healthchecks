@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents configuration options for Azure Service Bus topic health checks.
 /// </summary>
-public class ServiceBusTopicOptions : ServiceBusOptionsBase
+public sealed record ServiceBusTopicOptions : ServiceBusOptionsBase
 {
     /// <summary>
     /// Gets or sets the name of the topic to check for existence.

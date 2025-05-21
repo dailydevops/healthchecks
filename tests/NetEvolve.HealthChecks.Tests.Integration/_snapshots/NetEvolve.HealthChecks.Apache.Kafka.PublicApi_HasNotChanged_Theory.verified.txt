@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddKafka([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Apache.Kafka.KafkaOptions>? options = null, params string[] tags) { }
     }
-    public class KafkaOptions
+    public sealed class KafkaOptions : System.IEquatable<NetEvolve.HealthChecks.Apache.Kafka.KafkaOptions>
     {
         public KafkaOptions() { }
         public Confluent.Kafka.ProducerConfig Configuration { get; set; }

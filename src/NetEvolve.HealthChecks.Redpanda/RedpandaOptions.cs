@@ -5,7 +5,7 @@ using Confluent.Kafka;
 /// <summary>
 /// Options for <see cref="RedpandaCheck"/>.
 /// </summary>
-public class RedpandaOptions
+public sealed record RedpandaOptions
 {
     /// <summary>
     /// The name of the topic to produce messages to.

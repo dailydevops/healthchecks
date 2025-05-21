@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 /// </summary>
 /// <typeparam name="TConfiguration">Type of Configuration</typeparam>
 public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
-    where TConfiguration : class
+    where TConfiguration : class, IEquatable<TConfiguration>, new()
 {
     private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
 
@@ -47,7 +47,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
         try
         {
             var options = _optionsMonitor.Get(configurationName);
-            if (options is null)
+            if (options is null || options.Equals(new TConfiguration()))
             {
                 return new HealthCheckResult(
                     HealthStatus.Unhealthy,

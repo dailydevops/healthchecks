@@ -9,7 +9,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddRedisDatabase(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Redis.RedisDatabaseOptions>? options = null, params string[] tags) { }
     }
-    public class RedisDatabaseOptions
+    public sealed class RedisDatabaseOptions : System.IEquatable<NetEvolve.HealthChecks.Redis.RedisDatabaseOptions>
     {
         public RedisDatabaseOptions() { }
         public string? ConnectionString { get; set; }

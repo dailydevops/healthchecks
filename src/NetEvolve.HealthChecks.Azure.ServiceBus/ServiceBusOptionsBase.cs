@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the base configuration options for Azure Service Bus health checks.
 /// </summary>
-public abstract class ServiceBusOptionsBase
+public abstract record ServiceBusOptionsBase
 {
     /// <summary>
     /// Gets or sets the client creation mode. Default is <see cref="ClientCreationMode.ServiceProvider"/>.

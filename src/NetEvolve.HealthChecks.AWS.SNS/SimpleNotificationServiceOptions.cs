@@ -6,7 +6,7 @@ using Amazon.Runtime;
 /// <summary>
 /// Represents configuration options for the AWS SNS health check.
 /// </summary>
-public sealed class SimpleNotificationServiceOptions
+public sealed record SimpleNotificationServiceOptions
 {
     /// <summary>
     /// Gets or sets the AWS access key used for authentication.
