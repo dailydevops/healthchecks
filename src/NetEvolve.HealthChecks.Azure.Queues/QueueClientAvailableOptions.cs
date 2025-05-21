@@ -16,7 +16,7 @@ public sealed record QueueClientAvailableOptions : IQueueOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public QueueClientCreationMode Mode { get; set; }
+    public QueueClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.

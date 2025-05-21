@@ -16,7 +16,7 @@ public sealed record TableServiceAvailableOptions : ITableOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public TableClientCreationMode Mode { get; set; }
+    public TableClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds for executing the healthcheck.
