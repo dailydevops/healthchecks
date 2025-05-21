@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using global::Azure.Identity;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
