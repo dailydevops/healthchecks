@@ -58,6 +58,22 @@ public sealed class ActiveMqConfigureTests
     }
 
     [Fact]
+    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    {
+        // Arrange
+        var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
+        var name = "Test";
+        var options = new ActiveMqOptions { BrokerAddress = "Test", Timeout = -2 };
+
+        // Act
+        var result = configure.Validate(name, options);
+
+        // Assert
+        Assert.True(result.Failed);
+        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+    }
+
+    [Fact]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
