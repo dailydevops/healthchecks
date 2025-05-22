@@ -16,7 +16,16 @@ using NetEvolve.Extensions.Tasks;
 public abstract class SqlCheckBase<TConfiguration> : ConfigurableHealthCheckBase<TConfiguration>
     where TConfiguration : class, ISqlCheckOptions, IEquatable<TConfiguration>, new()
 {
-    /// <inheritdoc />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SqlCheckBase{TConfiguration}"/> class.
+    /// </summary>
+    /// <param name="optionsMonitor">
+    /// The <see cref="IOptionsMonitor{TOptions}"/> used to retrieve configuration options.
+    /// </param>
+    /// <remarks>
+    /// This constructor invokes the base class <see cref="ConfigurableHealthCheckBase{TConfiguration}"/>
+    /// to initialize the health check with the provided configuration options.
+    /// </remarks>
     protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
         : base(optionsMonitor) { }
 
