@@ -1,8 +1,15 @@
 ﻿namespace NetEvolve.HealthChecks.Apache.ActiveMq;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>
 /// Represents configuration options for the Apache ActiveMQ health check.
 /// </summary>
+[SuppressMessage(
+    "Minor Code Smell",
+    "S2325:Methods and properties that don't access instance data should be static",
+    Justification = "False positive."
+)]
 public sealed record ActiveMqOptions
 {
     /// <summary>

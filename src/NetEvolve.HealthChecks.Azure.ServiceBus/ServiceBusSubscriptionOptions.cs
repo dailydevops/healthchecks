@@ -17,10 +17,10 @@ public sealed record ServiceBusSubscriptionOptions : ServiceBusOptionsBase
     /// <summary>
     /// Gets or sets the name of the subscription to check for existence.
     /// </summary>
-    public string SubscriptionName { get; set; }
+    public string? SubscriptionName { get; set; }
 
     /// <summary>
     /// Gets or sets the name of the topic associated with the subscription.
     /// </summary>
-    public string TopicName { get; set; }
+    public string? TopicName { get; set; }
 }

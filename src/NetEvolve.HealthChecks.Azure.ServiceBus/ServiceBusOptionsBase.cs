@@ -18,7 +18,7 @@ public abstract record ServiceBusOptionsBase
     /// <summary>
     /// Gets or sets the fully qualified namespace for the Azure Service Bus resource.
     /// </summary>
-    public string FullyQualifiedNamespace { get; set; }
+    public string? FullyQualifiedNamespace { get; set; }
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds to use when connecting and executing tasks against the Service Bus. Default is 100 milliseconds.

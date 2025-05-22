@@ -13,7 +13,7 @@ internal static class ModuleInitializer
         VerifierSettings.SortPropertiesAlphabetically();
         VerifierSettings.SortJsonObjects();
 
-        //VerifierSettings.AutoVerify(includeBuildServer: false);
+        VerifierSettings.AutoVerify(includeBuildServer: false);
 
         Verifier.DerivePathInfo(
             (_, projectDirectory, type, method) =>

@@ -12,14 +12,12 @@ using Xunit;
 public sealed class DependencyInjectionExtensionsTests
 {
     [Fact]
-    public void AddCosmosClientAvailability_WhenBuilderIsNull_ThrowsArgumentNullException()
-    {
+    public void AddCosmosClientAvailability_WhenBuilderIsNull_ThrowsArgumentNullException() =>
         // Act & Assert
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
             () => DependencyInjectionExtensions.AddCosmosClientAvailability(null!, "test")
         );
-    }
 
     [Fact]
     public void AddCosmosClientAvailability_WhenNameIsNull_ThrowsArgumentException()
@@ -105,14 +103,12 @@ public sealed class DependencyInjectionExtensionsTests
     }
 
     [Fact]
-    public void AddCosmosDatabaseAvailability_WhenBuilderIsNull_ThrowsArgumentNullException()
-    {
+    public void AddCosmosDatabaseAvailability_WhenBuilderIsNull_ThrowsArgumentNullException() =>
         // Act & Assert
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
             () => DependencyInjectionExtensions.AddCosmosDatabaseAvailability(null!, "test")
         );
-    }
 
     [Fact]
     public void AddCosmosDatabaseAvailability_WhenNameIsNull_ThrowsArgumentException()
@@ -144,14 +140,12 @@ public sealed class DependencyInjectionExtensionsTests
     }
 
     [Fact]
-    public void AddCosmosContainerAvailability_WhenBuilderIsNull_ThrowsArgumentNullException()
-    {
+    public void AddCosmosContainerAvailability_WhenBuilderIsNull_ThrowsArgumentNullException() =>
         // Act & Assert
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
             () => DependencyInjectionExtensions.AddCosmosContainerAvailability(null!, "test")
         );
-    }
 
     [Fact]
     public void AddCosmosContainerAvailability_WhenNameIsNull_ThrowsArgumentException()

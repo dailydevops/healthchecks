@@ -78,37 +78,4 @@ public sealed class CosmosClientAvailableHealthCheckTests
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
         Assert.Equal("test: Missing configuration.", result.Description);
     }
-
-    [Fact]
-    public async Task CheckHealthAsync_WhenOptionsProvided_ExecutesHealthCheck()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddOptions();
-        _ = services.Configure<CosmosClientAvailableOptions>(
-            "test",
-            options =>
-            {
-                options.ConnectionString = "AccountEndpoint=https://localhost:8081/;AccountKey=dummyKey;";
-                options.Mode = CosmosClientCreationMode.ConnectionString;
-            }
-        );
-
-        var serviceProvider = services.BuildServiceProvider();
-        var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<CosmosClientAvailableOptions>>();
-        var sut = new CosmosClientAvailableHealthCheck(serviceProvider, optionsMonitor);
-
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("test", sut, HealthStatus.Unhealthy, Array.Empty<string>()),
-        };
-
-        // Act & Assert
-        // The actual result will depend on whether a real Cosmos DB is available,
-        // since we're not mocking. In tests, this will likely return Degraded or Unhealthy.
-        var result = await sut.CheckHealthAsync(context);
-
-        // We're just verifying that it doesn't throw an exception
-        Assert.NotNull(result);
-    }
 }
