@@ -29,13 +29,12 @@ public abstract class SqlCheckBase<TConfiguration> : ConfigurableHealthCheckBase
     protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
         : base(optionsMonitor) { }
 
+    /// <inheritdoc />
     [SuppressMessage(
         "Security",
         "CA2100:Review SQL queries for security vulnerabilities",
         Justification = "As designed."
     )]
-
-    /// <inheritdoc />
     protected sealed override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
