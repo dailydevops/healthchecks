@@ -71,5 +71,5 @@ builder.AddAzureTableClient("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddKafka("<name>", options => ..., "azure");
+    builder.AddAzureTableClient("<name>", options => ..., "azure");
 ```
