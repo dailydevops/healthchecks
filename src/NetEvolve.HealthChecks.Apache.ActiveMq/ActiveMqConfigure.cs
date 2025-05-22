@@ -36,6 +36,11 @@ internal sealed class ActiveMqConfigure : IConfigureNamedOptions<ActiveMqOptions
             return Fail("The broker address cannot be null or whitespace.");
         }
 
+        if (options.Timeout < Timeout.Infinite)
+        {
+            return Fail("The timeout cannot be less than infinite (-1).");
+        }
+
         return Success;
     }
 }
