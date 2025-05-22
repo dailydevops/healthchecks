@@ -14,7 +14,7 @@
     {
         protected ServiceBusOptionsBase() { }
         public string? ConnectionString { get; set; }
-        public string FullyQualifiedNamespace { get; set; }
+        public string? FullyQualifiedNamespace { get; set; }
         public NetEvolve.HealthChecks.Azure.ServiceBus.ClientCreationMode Mode { get; set; }
         public int Timeout { get; set; }
     }
@@ -28,12 +28,12 @@
     {
         public ServiceBusSubscriptionOptions() { }
         public bool EnablePeekMode { get; set; }
-        public string SubscriptionName { get; set; }
-        public string TopicName { get; set; }
+        public string? SubscriptionName { get; set; }
+        public string? TopicName { get; set; }
     }
     public sealed class ServiceBusTopicOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusTopicOptions>
     {
         public ServiceBusTopicOptions() { }
-        public string TopicName { get; set; }
+        public string? TopicName { get; set; }
     }
 }
