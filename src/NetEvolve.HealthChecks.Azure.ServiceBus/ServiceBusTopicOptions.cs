@@ -8,5 +8,5 @@ public sealed record ServiceBusTopicOptions : ServiceBusOptionsBase
     /// <summary>
     /// Gets or sets the name of the topic to check for existence.
     /// </summary>
-    public string TopicName { get; set; }
+    public string? TopicName { get; set; }
 }
