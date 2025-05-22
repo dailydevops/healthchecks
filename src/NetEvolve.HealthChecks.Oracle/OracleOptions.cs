@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="OracleCheck"/>
 /// </summary>
-public sealed class OracleOptions : ISqlCheckOptions
+public sealed record OracleOptions : ISqlCheckOptions
 {
     /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;

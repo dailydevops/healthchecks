@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="NpgsqlCheck"/>
 /// </summary>
-public sealed class NpgsqlOptions : ISqlCheckOptions
+public sealed record NpgsqlOptions : ISqlCheckOptions
 {
     /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;

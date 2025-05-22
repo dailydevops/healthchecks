@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="MySqlCheck"/>
 /// </summary>
-public sealed class MySqlOptions : ISqlCheckOptions
+public sealed record MySqlOptions : ISqlCheckOptions
 {
     /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;

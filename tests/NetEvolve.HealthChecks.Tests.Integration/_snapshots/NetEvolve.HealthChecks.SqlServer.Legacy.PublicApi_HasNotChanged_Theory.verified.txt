@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSqlServerLegacy([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.SqlServer.Legacy.SqlServerLegacyOptions>? options = null, params string[] tags) { }
     }
-    public sealed class SqlServerLegacyOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions
+    public sealed class SqlServerLegacyOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.SqlServer.Legacy.SqlServerLegacyOptions>
     {
         public SqlServerLegacyOptions() { }
         public string Command { get; }
