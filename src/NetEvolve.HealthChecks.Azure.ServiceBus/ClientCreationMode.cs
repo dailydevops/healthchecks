@@ -13,6 +13,13 @@ public enum ClientCreationMode
     /// </summary>
     ServiceProvider = 0,
 
+    /// <summary>
+    /// Provides a default set of Azure Active Directory (AAD) credentials for authenticating with Azure services.
+    /// </summary>
     DefaultAzureCredentials,
+
+    /// <summary>
+    /// Gets or sets the connection string used to establish a connection to the database.
+    /// </summary>
     ConnectionString,
 }
