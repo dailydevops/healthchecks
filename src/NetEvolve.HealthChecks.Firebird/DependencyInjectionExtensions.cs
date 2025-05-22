@@ -38,10 +38,10 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
-        if (!builder.IsServiceTypeRegistered<MySqlCheckMarker>())
+        if (!builder.IsServiceTypeRegistered<FirebirdCheckMarker>())
         {
             _ = builder
-                .Services.AddSingleton<MySqlCheckMarker>()
+                .Services.AddSingleton<FirebirdCheckMarker>()
                 .AddSingleton<FirebirdCheck>()
                 .ConfigureOptions<FirebirdConfigure>();
         }
@@ -63,5 +63,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class MySqlCheckMarker;
+    private sealed partial class FirebirdCheckMarker;
 }
