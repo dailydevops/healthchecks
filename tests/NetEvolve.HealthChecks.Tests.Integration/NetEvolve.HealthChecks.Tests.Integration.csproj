@@ -42,6 +42,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SNS\NetEvolve.HealthChecks.AWS.SNS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Cosmos\NetEvolve.HealthChecks.Azure.Cosmos.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
