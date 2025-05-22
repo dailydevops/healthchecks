@@ -37,7 +37,7 @@ You can use two different approaches. In both approaches, you have to provide a 
 - `tags`: The tags for the health check. The tags `azure`, `cosmos`, and `cosmosdb` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. Therefor you have to add the appropriate configuration section to your `appsettings.json` file.
+The first one is to use the configuration based approach. Therefore, you have to add the appropriate configuration section to your `appsettings.json` file.
 
 #### For Cosmos Client health check:
 ```csharp

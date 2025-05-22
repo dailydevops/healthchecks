@@ -23,7 +23,7 @@ After adding the package, you need to import the namespace and add the health ch
 ```csharp
 using NetEvolve.HealthChecks.Dapr;
 ```
-Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
+Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
 ### Parameters
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.

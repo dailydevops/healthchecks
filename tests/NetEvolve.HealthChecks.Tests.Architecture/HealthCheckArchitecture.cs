@@ -42,6 +42,7 @@ internal static class HealthCheckArchitecture
             typeof(SQLite.SQLiteCheck).Assembly,
             typeof(SqlServer.SqlServerCheck).Assembly,
             typeof(SqlServer.Legacy.SqlServerLegacyCheck).Assembly,
+            typeof(Firebird.FirebirdCheck).Assembly,
         ];
 
         return new ArchLoader()
