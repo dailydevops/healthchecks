@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure.Cosmos", "src\NetEvolve.HealthChecks.Azure.Cosmos\NetEvolve.HealthChecks.Azure.Cosmos.csproj", "{0014110E-EC85-4D97-BFC4-D1485511B4C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Firebird", "src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj", "{C9DCEB02-764C-4F05-BF80-EBBBD985F490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -371,6 +373,18 @@ Global
 		{0014110E-EC85-4D97-BFC4-D1485511B4C1}.Release|x64.Build.0 = Release|Any CPU
 		{0014110E-EC85-4D97-BFC4-D1485511B4C1}.Release|x86.ActiveCfg = Release|Any CPU
 		{0014110E-EC85-4D97-BFC4-D1485511B4C1}.Release|x86.Build.0 = Release|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Release|x64.Build.0 = Release|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -400,6 +414,7 @@ Global
 		{546D5904-1811-457F-8C48-3F78D7F0C803} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{6133570F-FF54-480D-8979-B0787022EA6A} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{0014110E-EC85-4D97-BFC4-D1485511B4C1} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
+		{C9DCEB02-764C-4F05-BF80-EBBBD985F490} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
