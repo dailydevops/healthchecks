@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddOracle([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Oracle.OracleOptions>? options = null, params string[] tags) { }
     }
-    public sealed class OracleOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions
+    public sealed class OracleOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.Oracle.OracleOptions>
     {
         public OracleOptions() { }
         public string Command { get; }

@@ -13,73 +13,37 @@ using NetEvolve.Extensions.Tasks;
 /// Configurable implementation of <see cref="IHealthCheck"/> with focus on <see cref="DbConnection"/> based implementations.
 /// </summary>
 /// <typeparam name="TConfiguration">Type of Configuration</typeparam>
-public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
-    where TConfiguration : class, ISqlCheckOptions
+public abstract class SqlCheckBase<TConfiguration> : ConfigurableHealthCheckBase<TConfiguration>
+    where TConfiguration : class, ISqlCheckOptions, IEquatable<TConfiguration>, new()
 {
-    private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SqlCheckBase{TConfiguration}"/> class.
+    /// </summary>
+    /// <param name="optionsMonitor">
+    /// The <see cref="IOptionsMonitor{TOptions}"/> used to retrieve configuration options.
+    /// </param>
+    /// <remarks>
+    /// This constructor invokes the base class <see cref="ConfigurableHealthCheckBase{TConfiguration}"/>
+    /// to initialize the health check with the provided configuration options.
+    /// </remarks>
+    protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor)
+        : base(optionsMonitor) { }
 
-    /// <inheritdoc/>
-    protected SqlCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) => _optionsMonitor = optionsMonitor;
-
-    /// <inheritdoc/>
-    public async Task<HealthCheckResult> CheckHealthAsync(
-        HealthCheckContext context,
-        CancellationToken cancellationToken = default
-    )
-    {
-        ArgumentNullException.ThrowIfNull(context);
-
-        var configurationName = context.Registration.Name;
-        var failureStatus = context.Registration.FailureStatus;
-
-        if (cancellationToken.IsCancellationRequested)
-        {
-            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Cancellation requested.");
-        }
-
-        return await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
-    }
-
-    private async Task<HealthCheckResult> InternalAsync(
-        string configurationName,
-        HealthStatus failureStatus,
-        CancellationToken cancellationToken
-    )
-    {
-        try
-        {
-            var options = _optionsMonitor.Get(configurationName);
-            if (options is null)
-            {
-                return new HealthCheckResult(
-                    HealthStatus.Unhealthy,
-                    description: $"{configurationName}: Missing configuration."
-                );
-            }
-
-            return await ExecuteHealthCheckAsync(configurationName, options, cancellationToken).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            return new HealthCheckResult(
-                failureStatus,
-                description: $"{configurationName}: Unexpected error.",
-                exception: ex
-            );
-        }
-    }
-
+    /// <inheritdoc />
     [SuppressMessage(
         "Security",
         "CA2100:Review SQL queries for security vulnerabilities",
         Justification = "As designed."
     )]
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    protected sealed override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+        HealthStatus failureStatus,
         TConfiguration options,
         CancellationToken cancellationToken
     )
     {
+        ArgumentNullException.ThrowIfNull(options);
+
         using (var connection = CreateConnection(options.ConnectionString))
         {
             await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
@@ -93,9 +57,7 @@ public abstract class SqlCheckBase<TConfiguration> : IHealthCheck
                     .WithTimeoutAsync(options.Timeout, cancellationToken)
                     .ConfigureAwait(false);
 
-                return isHealthy
-                    ? HealthCheckResult.Healthy($"{name}: Healthy")
-                    : HealthCheckResult.Degraded($"{name}: Degraded");
+                return HealthCheckState(isHealthy, name);
             }
         }
     }

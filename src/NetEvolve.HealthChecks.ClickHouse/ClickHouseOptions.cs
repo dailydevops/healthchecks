@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="ClickHouseCheck"/>
 /// </summary>
-public sealed class ClickHouseOptions : ISqlCheckOptions
+public sealed record ClickHouseOptions : ISqlCheckOptions
 {
     /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;

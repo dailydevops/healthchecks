@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddPostgreSql([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Npgsql.NpgsqlOptions>? options = null, params string[] tags) { }
     }
-    public sealed class NpgsqlOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions
+    public sealed class NpgsqlOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.Npgsql.NpgsqlOptions>
     {
         public NpgsqlOptions() { }
         public string Command { get; }

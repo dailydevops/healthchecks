@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="SqlServerLegacyCheck"/>
 /// </summary>
-public sealed class SqlServerLegacyOptions : ISqlCheckOptions
+public sealed record SqlServerLegacyOptions : ISqlCheckOptions
 {
     /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;

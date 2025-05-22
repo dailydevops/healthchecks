@@ -5,7 +5,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// <summary>
 /// Options for <see cref="SQLiteCheck"/>
 /// </summary>
-public sealed class SQLiteOptions : ISqlCheckOptions
+public sealed record SQLiteOptions : ISqlCheckOptions
 {
     /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
     public string ConnectionString { get; set; } = default!;
