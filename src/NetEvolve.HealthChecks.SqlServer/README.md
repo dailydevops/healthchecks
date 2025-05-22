@@ -24,7 +24,7 @@ After adding the package, you need to import the namespace and add the health ch
 ```csharp
 using NetEvolve.HealthChecks.SqlServer;
 ```
-Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
+Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
 :heavy_exclamation_mark: The configuration of this package is compatible with the [NetEvolve.HealthChecks.SqlServer.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/) package.
 

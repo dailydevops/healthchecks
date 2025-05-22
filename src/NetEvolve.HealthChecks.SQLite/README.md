@@ -24,7 +24,7 @@ After adding the package, you need to import the namespace `NetEvolve.HealthChec
 ```csharp
 using NetEvolve.HealthChecks.SQLite;
 ```
-Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
+Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
