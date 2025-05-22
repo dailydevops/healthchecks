@@ -21,7 +21,7 @@ After adding the package, yo need to import the namespace `NetEvolve.HealthCheck
 ```csharp
 using NetEvolve.HealthChecks.Azure.Tables;
 ```
-Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
+Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
@@ -29,7 +29,7 @@ Therefor you can use two different approaches. In both approaches you have to pr
 - `tags`: The tags for the health check. The tags `azure`, `storage` and `blob` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. Therefor you have to add the configuration section `HealthChecks:AzureTableClient` to your `appsettings.json` file.
+The first one is to use the configuration based approach. Therefore, you have to add the configuration section `HealthChecks:AzureTableClient` to your `appsettings.json` file.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -54,7 +54,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Options based
-The second one is to use the options based approach. Therefor you have to create an instance of `AzureTableClientOptions` and provide the configuration.
+The second one is to use the options based approach. Therefore, you have to create an instance of `AzureTableClientOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
