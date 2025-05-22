@@ -32,7 +32,6 @@
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Dapr.Client" Version="1.15.4" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.3" />
-    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.32.1" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.11.0" />
@@ -54,7 +53,6 @@
     <PackageVersion Include="Testcontainers.ActiveMq" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.4.0" />
-    <PackageVersion Include="Testcontainers.CosmosDb" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="4.4.0" />
