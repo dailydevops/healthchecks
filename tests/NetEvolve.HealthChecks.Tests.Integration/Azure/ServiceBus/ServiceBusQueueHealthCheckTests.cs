@@ -18,7 +18,11 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
             {
                 _ = healthChecks.AddServiceBusQueueHealthCheck(
                     "ServiceBusQueueServiceProviderHealthy",
-                    options => options.QueueName = ServiceBusContainer.QueueName
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.QueueName = ServiceBusContainer.QueueName;
+                    }
                 );
             },
             serviceBuilder: services =>
@@ -38,6 +42,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
                     "ServiceBusQueueServiceProviderHealthy",
                     options =>
                     {
+                        options.Mode = ClientCreationMode.ServiceProvider;
                         options.EnablePeekMode = true;
                         options.QueueName = ServiceBusContainer.QueueName;
                     }

@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.AWS.SNS;
 
-using Amazon;
 using Amazon.Runtime;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.AWS.SNS;

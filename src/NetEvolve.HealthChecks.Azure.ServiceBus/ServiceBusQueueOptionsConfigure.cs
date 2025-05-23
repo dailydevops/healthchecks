@@ -1,15 +1,40 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.ServiceBus;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using NetEvolve.Arguments;
+using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal class ServiceBusQueueOptionsConfigure
     : IConfigureNamedOptions<ServiceBusQueueOptions>,
         IValidateOptions<ServiceBusQueueOptions>
 {
-    public void Configure(string? name, ServiceBusQueueOptions options) { }
+    private readonly IConfiguration _configuration;
 
-    public void Configure(ServiceBusQueueOptions options) { }
+    public ServiceBusQueueOptionsConfigure(IConfiguration configuration) => _configuration = configuration;
 
-    public ValidateOptionsResult Validate(string? name, ServiceBusQueueOptions options) =>
-        ValidateOptionsResult.Success;
+    public void Configure(string? name, ServiceBusQueueOptions options)
+    {
+        Argument.ThrowIfNullOrWhiteSpace(name);
+        _configuration.Bind($"HealthChecks:ServiceBusQueue:{name}", options);
+    }
+
+    public void Configure(ServiceBusQueueOptions options) => Configure(Options.DefaultName, options);
+
+    public ValidateOptionsResult Validate(string? name, ServiceBusQueueOptions options)
+    {
+        var result = ServiceBusOptionsBase.InternalValidate(name, options);
+
+        if (result is not null)
+        {
+            return result;
+        }
+
+        if (string.IsNullOrWhiteSpace(options.QueueName))
+        {
+            return Fail("The queue name cannot be null or whitespace.");
+        }
+
+        return Success;
+    }
 }

@@ -11,8 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal static class ClientCreation
 {
-    private static ConcurrentDictionary<string, ServiceBusClient>? _serviceBusClients;
-    private static ConcurrentDictionary<string, ServiceBusAdministrationClient>? _serviceBusAdministrationClients;
+    private static readonly ConcurrentDictionary<string, ServiceBusClient> _serviceBusClients = new(
+        StringComparer.OrdinalIgnoreCase
+    );
+    private static readonly ConcurrentDictionary<
+        string,
+        ServiceBusAdministrationClient
+    > _serviceBusAdministrationClients = new(StringComparer.OrdinalIgnoreCase);
 
     internal static ServiceBusClient GetClient<TOptions>(
         string name,
@@ -24,11 +29,6 @@ internal static class ClientCreation
         if (options.Mode == ClientCreationMode.ServiceProvider)
         {
             return serviceProvider.GetRequiredService<ServiceBusClient>();
-        }
-
-        if (_serviceBusClients is null)
-        {
-            _serviceBusClients = new ConcurrentDictionary<string, ServiceBusClient>(StringComparer.OrdinalIgnoreCase);
         }
 
         return _serviceBusClients.GetOrAdd(name, _ => CreateClient(options, serviceProvider));
@@ -46,13 +46,6 @@ internal static class ClientCreation
             return serviceProvider.GetRequiredService<ServiceBusAdministrationClient>();
         }
 
-        if (_serviceBusAdministrationClients is null)
-        {
-            _serviceBusAdministrationClients = new ConcurrentDictionary<string, ServiceBusAdministrationClient>(
-                StringComparer.OrdinalIgnoreCase
-            );
-        }
-
         return _serviceBusAdministrationClients.GetOrAdd(
             name,
             _ => CreateAdministrationClient(options, serviceProvider)
@@ -63,7 +56,6 @@ internal static class ClientCreation
         where TOptions : ServiceBusOptionsBase =>
         options.Mode switch
         {
-            ClientCreationMode.ServiceProvider => serviceProvider.GetRequiredService<ServiceBusClient>(),
             ClientCreationMode.DefaultAzureCredentials => new ServiceBusClient(
                 options.FullyQualifiedNamespace,
                 serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential()
@@ -79,7 +71,6 @@ internal static class ClientCreation
         where TOptions : ServiceBusOptionsBase =>
         options.Mode switch
         {
-            ClientCreationMode.ServiceProvider => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>(),
             ClientCreationMode.DefaultAzureCredentials => new ServiceBusAdministrationClient(
                 options.FullyQualifiedNamespace,
                 serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential()
