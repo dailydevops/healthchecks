@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal static class ClientCreation
 {
+    private static readonly ServiceBusClientOptions _clientOptions = new ServiceBusClientOptions();
+    private static readonly ServiceBusAdministrationClientOptions _administrationClientOptions =
+        new ServiceBusAdministrationClientOptions();
+
     private static readonly ConcurrentDictionary<string, ServiceBusClient> _serviceBusClients = new(
         StringComparer.OrdinalIgnoreCase
     );
@@ -18,6 +22,12 @@ internal static class ClientCreation
         string,
         ServiceBusAdministrationClient
     > _serviceBusAdministrationClients = new(StringComparer.OrdinalIgnoreCase);
+
+    static ClientCreation()
+    {
+        _clientOptions.RetryOptions.MaxRetries = 0;
+        _administrationClientOptions.Retry.MaxRetries = 0;
+    }
 
     internal static ServiceBusClient GetClient<TOptions>(
         string name,
@@ -58,9 +68,10 @@ internal static class ClientCreation
         {
             ClientCreationMode.DefaultAzureCredentials => new ServiceBusClient(
                 options.FullyQualifiedNamespace,
-                serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential()
+                serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential(),
+                _clientOptions
             ),
-            ClientCreationMode.ConnectionString => new ServiceBusClient(options.ConnectionString),
+            ClientCreationMode.ConnectionString => new ServiceBusClient(options.ConnectionString, _clientOptions),
             _ => throw new UnreachableException($"Invalid client creation mode `{options.Mode}`."),
         };
 
@@ -73,9 +84,13 @@ internal static class ClientCreation
         {
             ClientCreationMode.DefaultAzureCredentials => new ServiceBusAdministrationClient(
                 options.FullyQualifiedNamespace,
-                serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential()
+                serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential(),
+                _administrationClientOptions
             ),
-            ClientCreationMode.ConnectionString => new ServiceBusAdministrationClient(options.ConnectionString),
+            ClientCreationMode.ConnectionString => new ServiceBusAdministrationClient(
+                options.ConnectionString,
+                _administrationClientOptions
+            ),
             _ => throw new UnreachableException($"Invalid client creation mode `{options.Mode}`."),
         };
 }

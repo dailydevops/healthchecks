@@ -36,12 +36,12 @@ internal sealed class ServiceBusQueueHealthCheck : ConfigurableHealthCheckBase<S
     {
         var client = ClientCreation.GetAdministrationClient(name, options, _serviceProvider);
 
-        var (isValid, queue) = await client
-            .GetQueueAsync(options.QueueName, cancellationToken: cancellationToken)
+        var (isValid, _) = await client
+            .GetQueueRuntimePropertiesAsync(options.QueueName, cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid && queue is not null, name);
+        return HealthCheckState(isValid, name);
     }
 
     private async ValueTask<HealthCheckResult> ExecutePeekHealthCheckAsync(
@@ -55,7 +55,7 @@ internal sealed class ServiceBusQueueHealthCheck : ConfigurableHealthCheckBase<S
         var receiver = client.CreateReceiver(options.QueueName);
 
         var (isValid, _) = await receiver
-            .ReceiveMessageAsync(cancellationToken: cancellationToken)
+            .PeekMessageAsync(cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 

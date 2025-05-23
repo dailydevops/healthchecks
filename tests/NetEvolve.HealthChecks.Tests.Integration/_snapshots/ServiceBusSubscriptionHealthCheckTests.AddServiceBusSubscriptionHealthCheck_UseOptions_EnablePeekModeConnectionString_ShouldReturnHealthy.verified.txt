@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: ServiceBusQueueServiceProviderHealthy: Healthy,
-      name: ServiceBusQueueServiceProviderHealthy,
+      description: ServiceBusSubscriptionConnectionStringPeekHealthy: Healthy,
+      name: ServiceBusSubscriptionConnectionStringPeekHealthy,
       status: Healthy,
       tags: [
         storage,
