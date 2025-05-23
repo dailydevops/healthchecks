@@ -32,6 +32,11 @@ internal sealed class SimpleNotificationServiceConfigure
             return ValidateOptionsResult.Fail("The option cannot be null.");
         }
 
+        if (options.Timeout < Timeout.Infinite)
+        {
+            return ValidateOptionsResult.Fail("The timeout cannot be less than infinite (-1).");
+        }
+
         if (string.IsNullOrWhiteSpace(options.TopicName))
         {
             return ValidateOptionsResult.Fail("The topic name cannot be null or whitespace.");
