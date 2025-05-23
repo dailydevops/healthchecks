@@ -33,9 +33,9 @@ internal sealed class RedisDatabaseConfigure
             return Fail("The option cannot be null.");
         }
 
-        if (options.Timeout < -1)
+        if (options.Timeout < Timeout.Infinite)
         {
-            return Fail("The property Timeout cannot be less than -1.");
+            return Fail("The timeout cannot be less than infinite (-1).");
         }
 
         if (options.Mode == ConnectionHandleMode.Create && string.IsNullOrWhiteSpace(options.ConnectionString))
