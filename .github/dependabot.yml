@@ -4,7 +4,7 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 # Every time I update this file without changing the content, I increment this counter.
-# Counter: 46
+# Counter: 47
 
 version: 2
 updates:
