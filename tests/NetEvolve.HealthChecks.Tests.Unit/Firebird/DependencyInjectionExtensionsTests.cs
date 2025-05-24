@@ -29,10 +29,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddFirebird(name);
+        void Act() => _ = builder.AddFirebird(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
