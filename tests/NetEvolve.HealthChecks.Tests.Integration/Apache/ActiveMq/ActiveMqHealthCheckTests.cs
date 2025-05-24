@@ -49,9 +49,9 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
                 "TestContainerUnhealthy",
                 options =>
                 {
-                    options.BrokerAddress = "tcp://localhost:65535"; // Unused port
-                    options.Username = "invalid";
-                    options.Password = "invalid";
+                    options.BrokerAddress = "invalid";
+                    options.Username = _username;
+                    options.Password = _password;
                     options.Timeout = 500;
                 }
             );
@@ -98,9 +98,9 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:BrokerAddress", "tcp://localhost:65535" },
-                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:Username", "invalid" },
-                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:Password", "invalid" },
+                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:BrokerAddress", "invalid" },
+                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:Username", _username },
+                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:Password", _password },
                     { "HealthChecks:ActiveMq:TestContainerUnhealthy:Timeout", "500" },
                 };
                 _ = config.AddInMemoryCollection(values);
