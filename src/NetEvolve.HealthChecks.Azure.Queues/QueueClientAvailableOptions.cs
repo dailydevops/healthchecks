@@ -6,7 +6,7 @@ using global::Azure.Storage.Queues;
 /// <summary>
 /// Options for the <see cref="QueueClientAvailableHealthCheck"/>.
 /// </summary>
-public sealed class QueueClientAvailableOptions : IQueueOptions
+public sealed record QueueClientAvailableOptions : IQueueOptions
 {
     /// <summary>
     /// Gets or sets the connection string.
@@ -16,7 +16,7 @@ public sealed class QueueClientAvailableOptions : IQueueOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public QueueClientCreationMode Mode { get; set; }
+    public QueueClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.

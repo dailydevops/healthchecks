@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ServiceBusSubscriptionServiceProviderPeekHealthy: Healthy,
+      name: ServiceBusSubscriptionServiceProviderPeekHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Healthy
+}

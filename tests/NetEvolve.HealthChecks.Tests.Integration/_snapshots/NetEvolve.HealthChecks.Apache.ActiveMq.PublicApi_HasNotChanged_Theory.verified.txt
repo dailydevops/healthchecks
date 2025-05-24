@@ -1,0 +1,15 @@
+﻿namespace NetEvolve.HealthChecks.Apache.ActiveMq
+{
+    public sealed class ActiveMqOptions : System.IEquatable<NetEvolve.HealthChecks.Apache.ActiveMq.ActiveMqOptions>
+    {
+        public ActiveMqOptions() { }
+        public string? BrokerAddress { get; set; }
+        public string? Password { get; set; }
+        public int Timeout { get; set; }
+        public string? Username { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddActiveMq([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Apache.ActiveMq.ActiveMqOptions>? options = null, params string[] tags) { }
+    }
+}

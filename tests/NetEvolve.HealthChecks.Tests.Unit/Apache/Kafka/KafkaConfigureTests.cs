@@ -7,7 +7,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 
-[TestGroup(nameof(Kafka))]
+[TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 public sealed class KafkaConfigureTests
 {
     [Fact]
@@ -142,5 +142,21 @@ public sealed class KafkaConfigureTests
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
+    }
+
+    [Fact]
+    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    {
+        // Arrange
+        var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
+        var name = "Test";
+        var options = new KafkaOptions { Timeout = -2 };
+
+        // Act
+        var result = configure.Validate(name, options);
+
+        // Assert
+        Assert.True(result.Failed);
+        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
     }
 }

@@ -5,7 +5,7 @@ using Confluent.Kafka;
 /// <summary>
 /// Options for <see cref="KafkaCheck"/>.
 /// </summary>
-public class KafkaOptions
+public sealed record KafkaOptions
 {
     /// <summary>
     /// The name of the topic to produce messages to.

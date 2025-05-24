@@ -32,6 +32,11 @@ internal sealed class KafkaConfigure : IConfigureNamedOptions<KafkaOptions>, IVa
             return Fail("The option cannot be null.");
         }
 
+        if (options.Timeout < Timeout.Infinite)
+        {
+            return Fail("The timeout cannot be less than infinite (-1).");
+        }
+
         if (string.IsNullOrWhiteSpace(options.Topic))
         {
             return Fail("The topic cannot be null or whitespace.");

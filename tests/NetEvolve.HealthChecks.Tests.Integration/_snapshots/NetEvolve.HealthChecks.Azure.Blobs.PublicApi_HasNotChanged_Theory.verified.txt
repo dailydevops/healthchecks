@@ -8,7 +8,7 @@
         SharedKey = 3,
         AzureSasCredential = 4,
     }
-    public sealed class BlobContainerAvailableOptions
+    public sealed class BlobContainerAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Blobs.BlobContainerAvailableOptions>
     {
         public BlobContainerAvailableOptions() { }
         public string? AccountKey { get; set; }
@@ -16,18 +16,18 @@
         public System.Action<Azure.Storage.Blobs.BlobClientOptions>? ConfigureClientOptions { get; set; }
         public string? ConnectionString { get; set; }
         public string? ContainerName { get; set; }
-        public NetEvolve.HealthChecks.Azure.Blobs.BlobClientCreationMode Mode { get; set; }
+        public NetEvolve.HealthChecks.Azure.Blobs.BlobClientCreationMode? Mode { get; set; }
         public System.Uri? ServiceUri { get; set; }
         public int Timeout { get; set; }
     }
-    public sealed class BlobServiceAvailableOptions
+    public sealed class BlobServiceAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Blobs.BlobServiceAvailableOptions>
     {
         public BlobServiceAvailableOptions() { }
         public string? AccountKey { get; set; }
         public string? AccountName { get; set; }
         public System.Action<Azure.Storage.Blobs.BlobClientOptions>? ConfigureClientOptions { get; set; }
         public string? ConnectionString { get; set; }
-        public NetEvolve.HealthChecks.Azure.Blobs.BlobClientCreationMode Mode { get; set; }
+        public NetEvolve.HealthChecks.Azure.Blobs.BlobClientCreationMode? Mode { get; set; }
         public System.Uri? ServiceUri { get; set; }
         public int Timeout { get; set; }
     }

@@ -70,7 +70,7 @@ public sealed class RedisDatabaseConfigureTests
 
         // Assert
         Assert.True(result.Failed);
-        Assert.Equal("The property Timeout cannot be less than -1.", result.FailureMessage);
+        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
     }
 
     [Fact]
