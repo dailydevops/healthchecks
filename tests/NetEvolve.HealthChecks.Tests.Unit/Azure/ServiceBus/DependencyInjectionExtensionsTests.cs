@@ -30,10 +30,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddServiceBusQueueHealthCheck(name);
+        void Act() => _ = builder.AddServiceBusQueueHealthCheck(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() => _ = builder.AddServiceBusQueueHealthCheck(name, x => { }).AddServiceBusQueueHealthCheck(name);
+        void Act() => _ = builder.AddServiceBusQueueHealthCheck(name, _ => { }).AddServiceBusQueueHealthCheck(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -107,10 +107,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddServiceBusTopicHealthCheck(name);
+        void Act() => _ = builder.AddServiceBusTopicHealthCheck(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -158,7 +158,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() => _ = builder.AddServiceBusTopicHealthCheck(name, x => { }).AddServiceBusTopicHealthCheck(name);
+        void Act() => _ = builder.AddServiceBusTopicHealthCheck(name, _ => { }).AddServiceBusTopicHealthCheck(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -184,10 +184,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddServiceBusSubscriptionHealthCheck(name);
+        void Act() => _ = builder.AddServiceBusSubscriptionHealthCheck(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -236,7 +236,7 @@ public class DependencyInjectionExtensionsTests
 
         // Act
         void Act() =>
-            _ = builder.AddServiceBusSubscriptionHealthCheck(name, x => { }).AddServiceBusSubscriptionHealthCheck(name);
+            _ = builder.AddServiceBusSubscriptionHealthCheck(name, _ => { }).AddServiceBusSubscriptionHealthCheck(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

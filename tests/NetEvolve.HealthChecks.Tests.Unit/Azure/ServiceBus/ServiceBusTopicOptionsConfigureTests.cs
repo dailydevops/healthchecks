@@ -13,7 +13,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new ServiceBusTopicOptions();
 
         // Act
@@ -43,7 +43,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = " ";
+        const string name = " ";
         var options = new ServiceBusTopicOptions();
 
         // Act
@@ -72,7 +72,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new ServiceBusTopicOptions();
 
         // Act
@@ -88,7 +88,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = default(ServiceBusTopicOptions);
 
         // Act
@@ -104,7 +104,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions { Timeout = -2 };
 
         // Act
@@ -120,7 +120,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions { Timeout = 100, Mode = null };
 
         // Act
@@ -136,7 +136,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions
         {
             Timeout = 100,
@@ -160,7 +160,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions
         {
             Timeout = 100,
@@ -184,7 +184,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions
         {
             Timeout = 100,
@@ -205,7 +205,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions
         {
             Timeout = 100,
@@ -226,7 +226,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusTopicOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ServiceBusTopicOptions
         {
             Timeout = 100,
