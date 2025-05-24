@@ -15,7 +15,7 @@ public sealed class ActiveMqConfigureTests
         // Arrange
         var options = new ActiveMqOptions();
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -30,7 +30,7 @@ public sealed class ActiveMqConfigureTests
     {
         // Arrange
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = default(ActiveMqOptions);
 
         // Act
@@ -46,7 +46,7 @@ public sealed class ActiveMqConfigureTests
     {
         // Arrange
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new ActiveMqOptions();
 
         // Act
@@ -58,11 +58,27 @@ public sealed class ActiveMqConfigureTests
     }
 
     [Fact]
+    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    {
+        // Arrange
+        var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
+        const string name = "Test";
+        var options = new ActiveMqOptions { BrokerAddress = "Test", Timeout = -2 };
+
+        // Act
+        var result = configure.Validate(name, options);
+
+        // Assert
+        Assert.True(result.Failed);
+        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+    }
+
+    [Fact]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new ActiveMqOptions();
 
         // Act

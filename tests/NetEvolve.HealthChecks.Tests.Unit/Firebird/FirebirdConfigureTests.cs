@@ -14,7 +14,7 @@ public sealed class FirebirdConfigureTests
         // Arrange
         var options = new FirebirdOptions();
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -29,7 +29,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = default(FirebirdOptions);
 
         // Act
@@ -45,7 +45,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new FirebirdOptions();
 
         // Act
@@ -61,7 +61,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new FirebirdOptions { ConnectionString = "Test", Timeout = -2 };
 
         // Act
@@ -77,7 +77,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new FirebirdOptions { ConnectionString = "Test" };
 
         // Act
@@ -93,7 +93,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new FirebirdOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
@@ -108,7 +108,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new FirebirdOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
@@ -124,7 +124,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new FirebirdOptions();
 
         // Act
