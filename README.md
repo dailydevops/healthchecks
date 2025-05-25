@@ -47,6 +47,16 @@ The following table lists all currently available NuGet packages. For more detai
 ## Package naming explanation
 The package names are based on the following naming schema - `NetEvolve.HealthChecks.<ServiceGroup?>.<ServiceName>.<ServiceVersion?>`
 
+### Explanation of the naming schema:
+
+- `NetEvolve` is the name of the organization that maintains this repository.
+- `HealthChecks` indicates that this package contains health checks for various services.
+- `<ServiceGroup?>` is an optional part that groups related services together. It helps to categorize the health checks based on the service provider or technology.
+- `<ServiceName>` is the name of the service for which the health check is provided. It specifies the actual service that the health check is targeting.
+- `<ServiceVersion?>` is an optional suffix that identifies a specific implementation or version of the client library used to connect to the service. This is useful when there are multiple client libraries available for the same service, each with different implementations or approaches.
+
+### ServiceGroup and ServiceName
+
 The `ServiceGroup` is optional and is used to group related services. For example, all azure platform services are grouped under `Azure`. The `ServiceName` is the name of the service for which the health check is provided. For example, `SqlServer` or `MySql`.
 
 The following table lists all planned and used groups. We will add more groups maybe in the future, if the demand is there.
