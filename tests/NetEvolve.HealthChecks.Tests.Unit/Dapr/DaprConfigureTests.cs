@@ -1,6 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Dapr;
 
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Dapr;
@@ -15,7 +17,7 @@ public sealed class DaprConfigureTests
         // Arrange
         var options = new DaprOptions();
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -30,7 +32,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = default(DaprOptions);
 
         // Act
@@ -46,7 +48,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new DaprOptions { Timeout = -2 };
 
         // Act
@@ -62,7 +64,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string name = "Test";
         var options = new DaprOptions { Timeout = 100 };
 
         // Act
@@ -77,7 +79,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new DaprOptions();
 
         // Act
@@ -88,7 +90,40 @@ public sealed class DaprConfigureTests
     }
 
     [Fact]
-    public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    public void ConfigureWithoutName_WhenArgumentNameNull_ThrowArgumentNullException()
+    {
+        // Arrange
+        var configure = new DaprConfigure(new ConfigurationBuilder().Build());
+        var options = new DaprOptions();
+
+        // Act
+        void Act() => configure.Configure(options);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("name", Act);
+    }
+
+    [Fact]
+    public void Configure_WithNameParameter_BindsConfigurationCorrectly()
+    {
+        // Arrange
+        var configValues = new Dictionary<string, string?> { { "HealthChecks:TestDapr:Timeout", "500" } };
+
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+
+        var configure = new DaprConfigure(configuration);
+        var options = new DaprOptions();
+        const string name = "TestDapr";
+
+        // Act
+        configure.Configure(name, options);
+
+        // Assert
+        Assert.Equal(500, options.Timeout);
+    }
+
+    [Fact]
+    public void Configure_WithDefaultName_ThrowsArgumentException()
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
