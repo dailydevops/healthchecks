@@ -16,7 +16,7 @@ public static class DependencyInjectionExtensions
     private static readonly string[] _defaultTags = ["qdrant", "database"];
 
     /// <summary>
-    /// Add a health check for Apache Kafka.
+    /// Add a health check for Qdrant.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="QdrantHealthCheck"/>.</param>
