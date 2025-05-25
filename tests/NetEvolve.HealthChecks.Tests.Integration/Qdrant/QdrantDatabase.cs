@@ -10,8 +10,6 @@ public sealed class QdrantDatabase : IAsyncLifetime
 
     public Uri GrpcConnectionString => new Uri(_database.GetGrpcConnectionString());
 
-    public Uri HttpConnectionString => new Uri(_database.GetHttpConnectionString());
-
     public async Task DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync() => await _database.StartAsync().ConfigureAwait(false);
