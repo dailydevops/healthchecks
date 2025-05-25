@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Dapr;
