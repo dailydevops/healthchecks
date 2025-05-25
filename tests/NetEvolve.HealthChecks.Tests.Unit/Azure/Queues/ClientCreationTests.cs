@@ -15,7 +15,8 @@ public class ClientCreationTests
         var options = new QueueClientAvailableOptions { Mode = (QueueClientCreationMode)13 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateQueueServiceClient(options, serviceProvider)
+        _ = Assert.Throws<UnreachableException>(() =>
+            ClientCreation.CreateQueueServiceClient(options, serviceProvider)
         );
     }
 
@@ -25,7 +26,8 @@ public class ClientCreationTests
         var options = new QueueClientAvailableOptions { Mode = QueueClientCreationMode.ServiceProvider };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateQueueServiceClient(options, serviceProvider)
+        _ = Assert.Throws<UnreachableException>(() =>
+            ClientCreation.CreateQueueServiceClient(options, serviceProvider)
         );
     }
 }
