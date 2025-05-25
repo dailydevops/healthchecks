@@ -137,7 +137,7 @@ public sealed class QdrantOptionsConfigureTests
     public void Configure_WhenArgumentNameValid_BindsFromConfiguration()
     {
         // Arrange
-        var configValues = new Dictionary<string, string> { ["HealthChecks:Qdrant:Test:Timeout"] = "200" };
+        var configValues = new Dictionary<string, string?> { ["HealthChecks:Qdrant:Test:Timeout"] = "200" };
         var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
         var configure = new QdrantOptionsConfigure(configuration);
         var name = "Test";
