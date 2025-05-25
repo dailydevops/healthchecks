@@ -15,6 +15,7 @@ This is a mono repository for several NuGet packages based on the [Microsoft.Ext
 
 ### What is the difference between this repository and the [AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks) repository?
 The main difference is that we try to focus on providing packages that are fully configurable via code or configuration. This means that you can configure the health checks in your `Program.cs` file, or in your `appsettings.json` file, or in any other configuration provider. In some cases, we provide the same healthcheck for a service with an alternative implementation. For example, we provide a healthcheck for MySql that is based on `MySql.Data` and one that is based on `MySqlConnector`. This allows you to choose the implementation that best suits your needs or fits your existing dependencies.
+
 In addition, we try to support the latest LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)) as well as the latest preview version of .NET for at least 3 years, but we **can't guarantee** this. This depends on the support of related NuGet packages and the .NET platform itself. See the [Supported .NET Version](#supported-net-version) section for more details.
 
 ## NuGet packages
@@ -43,10 +44,10 @@ The following table lists all currently available NuGet packages. For more detai
 | [NetEvolve.HealthChecks.SqlServer.Legacy](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/) <br/><small>Contains HealthChecks for Microsoft SqlServer, based on the nuget package `System.Data.SqlClient`.</small> | [![NuGet Version](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer.Legacy?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/#versions-body-tab) | [![NuGet Downloads](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer.Legacy?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer.Legacy/) |
 <!-- packages:end -->
 
-### Package naming explanation
-The package names are based on the following naming schema - `NetEvolve.HealthChecks.<GroupName?>.<ServiceName>`
+## Package naming explanation
+The package names are based on the following naming schema - `NetEvolve.HealthChecks.<ServiceGroup?>.<ServiceName>.<ServiceVersion?>`
 
-The `GroupName` is optional and is used to group related services. For example, all azure platform services are grouped under `Azure`. The `ServiceName` is the name of the service for which the health check is provided. For example, `SqlServer` or `MySql`.
+The `ServiceGroup` is optional and is used to group related services. For example, all azure platform services are grouped under `Azure`. The `ServiceName` is the name of the service for which the health check is provided. For example, `SqlServer` or `MySql`.
 
 The following table lists all planned and used groups. We will add more groups maybe in the future, if the demand is there.
 - Apache
@@ -54,15 +55,43 @@ The following table lists all planned and used groups. We will add more groups m
 - Azure
 - GCP
 
+The `ServiceVersion` in the package naming schema `NetEvolve.HealthChecks.<ServiceGroup?>.<ServiceName>.<ServiceVersion?>` refers to an optional suffix that identifies a specific implementation or version of the client library used to connect to the service.
+
+This component is used when:
+
+1.	Multiple Client Libraries: When there are multiple client libraries available for the same service, each with different implementations or approaches.
+2.	Legacy vs Modern Implementations: To distinguish between older `Legacy` and newer implementations of a client library for the same service.
+
+This naming convention allows developers to choose the specific client implementation that best matches their existing dependencies without having to change their application architecture. For example, if your application already uses `MySqlConnector`, you would choose the corresponding health check package that uses the same client library.
+
+The `ServiceVersion` is particularly valuable in scenarios where:
+- Different client libraries have varying features, performance characteristics, or compatibility.
+- You need to maintain compatibility with specific versions of a service.
+
+### Examples in the Repository:      
+
+1. SQL Server Client Libraries:
+    - `NetEvolve.HealthChecks.SqlServer` - Uses the modern `Microsoft.Data.SqlClient`
+    - `NetEvolve.HealthChecks.SqlServer.Legacy` - Uses the legacy `System.Data.SqlClient`
+
+2. MySQL Client Libraries:
+    - `NetEvolve.HealthChecks.MySql` - Uses the implementation of `MySql.Data`
+    - `NetEvolve.HealthChecks.MySql.Connector` - Uses the alternative implementation of `MySqlConnector`
+
+2. RabbitMQ Client Libraries:
+    - `NetEvolve.HealthChecks.RabbitMQ` - Uses the latest version of `RabbitMQ.Client`
+    - `NetEvolve.HealthChecks.RabbitMQ.V6` - Uses the older version of `RabbitMQ.Client` (version 6.x)
+
 ## Supported .NET version
 We try to support the LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)), as well as the latest preview version of .NET. We will try to support each framework version for at least 3 years, but we can't guarantee it. This depends on the support of related NuGet packages and the .NET platform itself.
 
-| .NET Version                     | Supported                                               |
-|----------------------------------|:--------------------------------------------------------|
-| **.NET Standard**                | :x: No                                                  |
-| **.NET 7.0 or earlier versions** | :x: No                                                  |
-| **.NET 8.0**                     | :white_check_mark: Yes                                  |
-| **.NET 9.0**                     | :white_check_mark: Yes                                  |
+| .NET Version                     | Supported                                                        |
+|----------------------------------|:-----------------------------------------------------------------|
+| **.NET Standard**                | :x: No                                                           |
+| **.NET 7.0 or earlier versions** | :x: No                                                           |
+| **.NET 8.0**                     | :white_check_mark: Yes                                           |
+| **.NET 9.0**                     | :white_check_mark: Yes                                           |
+| **.NET 10.0**                    | :white_square_button: Early stage of planning, not yet supported |
 
 Why did we choose this approach? Because we want to be able to take advantage of the latest language features of the .NET platform and the performance gains that come with them. We know that not all of our NuGet packages will gain performance from this, but this is our general strategy and nobody knows what the future will bring.
 
