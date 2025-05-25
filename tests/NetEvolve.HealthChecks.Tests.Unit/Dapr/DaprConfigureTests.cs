@@ -99,7 +99,7 @@ public sealed class DaprConfigureTests
         void Act() => configure.Configure(options);
 
         // Assert
-        _ = Assert.Throws<ArgumentNullException>("name", Act);
+        _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
