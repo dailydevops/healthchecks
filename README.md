@@ -78,7 +78,7 @@ The `ServiceVersion` is particularly valuable in scenarios where:
     - `NetEvolve.HealthChecks.MySql` - Uses the implementation of `MySql.Data`
     - `NetEvolve.HealthChecks.MySql.Connector` - Uses the alternative implementation of `MySqlConnector`
 
-2. RabbitMQ Client Libraries:
+3. RabbitMQ Client Libraries:
     - `NetEvolve.HealthChecks.RabbitMQ` - Uses the latest version of `RabbitMQ.Client`
     - `NetEvolve.HealthChecks.RabbitMQ.V6` - Uses the older version of `RabbitMQ.Client` (version 6.x)
 
