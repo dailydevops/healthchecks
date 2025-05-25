@@ -42,6 +42,7 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.8.0" />
     <PackageVersion Include="PublicApiGenerator" Version="11.4.6" />
+    <PackageVersion Include="Qdrant.Client" Version="1.14.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.8.37" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.4" />
@@ -52,6 +53,7 @@
     <PackageVersion Include="Testcontainers.MySql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Oracle" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="4.4.0" />
+    <PackageVersion Include="Testcontainers.Qdrant" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Redis" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Redpanda" Version="4.4.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.11.4" />
