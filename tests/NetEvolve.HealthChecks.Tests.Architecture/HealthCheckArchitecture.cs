@@ -31,6 +31,7 @@ internal static class HealthCheckArchitecture
             typeof(Oracle.OracleCheck).Assembly,
             typeof(Redis.RedisDatabaseHealthCheck).Assembly,
             typeof(Redpanda.RedpandaCheck).Assembly,
+            typeof(Qdrant.QdrantHealthCheck).Assembly,
             typeof(SQLite.SQLiteCheck).Assembly,
             typeof(SqlServer.SqlServerCheck).Assembly,
             typeof(SqlServer.Legacy.SqlServerLegacyCheck).Assembly,

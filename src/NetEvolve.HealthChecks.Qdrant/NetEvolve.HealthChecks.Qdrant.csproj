@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Qdrant Vector database, based on the nuget package `Qdrant.Client`.</Description>
+    <PackageTags>$(PackageTags);qdrant;database</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+    <PackageReference Include="Qdrant.Client" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>

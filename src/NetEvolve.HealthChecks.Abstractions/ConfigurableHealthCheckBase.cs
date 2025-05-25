@@ -96,4 +96,20 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     /// </returns>
     protected static HealthCheckResult HealthCheckState(bool condition, string name) =>
         condition ? HealthCheckResult.Healthy($"{name}: Healthy") : HealthCheckResult.Degraded($"{name}: Degraded");
+
+    /// <summary>
+    /// Creates a <see cref="HealthCheckResult"/> with the specified failure status, indicating an unhealthy state.
+    /// </summary>
+    /// <param name="failureStatus">The <see cref="HealthStatus"/> to use for the unhealthy result.</param>
+    /// <param name="name">The name of the health check to include in the description.</param>
+    /// <param name="message">Additional message to include in the description. Defaults to "Unhealthy".</param>
+    /// <returns>
+    /// A <see cref="HealthCheckResult"/> with the specified <paramref name="failureStatus"/> and a description
+    /// formatted as "{name}: {message}".
+    /// </returns>
+    protected static HealthCheckResult HealthCheckUnhealthy(
+        HealthStatus failureStatus,
+        string name,
+        string message = "Unhealthy"
+    ) => new HealthCheckResult(failureStatus, $"{name}: {message}");
 }
