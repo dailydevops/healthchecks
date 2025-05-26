@@ -10,7 +10,8 @@ using NetEvolve.HealthChecks.Azure.ServiceBus;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Topic")]
-public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase, IClassFixture<ServiceBusContainer>
+[Collection($"{nameof(Azure)}.{nameof(ServiceBus)}")]
+public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
 {
     private readonly ServiceBusContainer _container;
 
