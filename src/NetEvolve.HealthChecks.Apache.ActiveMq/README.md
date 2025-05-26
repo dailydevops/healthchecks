@@ -74,5 +74,6 @@ builder.AddActiveMq("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-        builder.AddActiveMq("<name>", options => ..., "activemq");
+
+builder.AddActiveMq("<name>", options => ..., "activemq");
 ```

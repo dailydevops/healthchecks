@@ -71,5 +71,6 @@ builder.AddAzureBlobContainer("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddAzureBlobContainer("<name>", options => ..., "azure");
+
+builder.AddAzureBlobContainer("<name>", options => ..., "azure");
 ```

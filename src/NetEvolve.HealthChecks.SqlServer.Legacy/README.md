@@ -72,5 +72,6 @@ builder.AddSqlServerLegacy("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddSqlServerLegacy("<name>", options => ..., "sqlserver", "database");
+
+builder.AddSqlServerLegacy("<name>", options => ..., "sqlserver", "database");
 ```

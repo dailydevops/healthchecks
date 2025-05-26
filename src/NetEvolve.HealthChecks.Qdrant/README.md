@@ -69,5 +69,6 @@ builder.AddQdrant("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-        builder.AddQdrant("<name>", options => ..., "qdrant");
+
+builder.AddQdrant("<name>", options => ..., "qdrant");
 ```

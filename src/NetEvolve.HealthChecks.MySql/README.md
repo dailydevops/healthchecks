@@ -71,5 +71,6 @@ builder.AddMySql("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddMySql("<name>", options => ..., "MySql", "database");
+
+builder.AddMySql("<name>", options => ..., "MySql", "database");
 ```

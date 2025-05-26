@@ -173,5 +173,6 @@ builder.AddAzureServiceBusTopic("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-        builder.AddAzureServiceBus("<name>", options => ..., "azure-servicebus");
+
+builder.AddAzureServiceBus("<name>", options => ..., "azure-servicebus");
 ```

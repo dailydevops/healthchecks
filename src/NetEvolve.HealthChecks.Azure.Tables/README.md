@@ -71,5 +71,6 @@ builder.AddAzureTableClient("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddAzureTableClient("<name>", options => ..., "azure");
+
+builder.AddAzureTableClient("<name>", options => ..., "azure");
 ```

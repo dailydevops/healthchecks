@@ -71,5 +71,6 @@ builder.AddAzureQueueClient("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddAzureQueueClient("<name>", options => ..., "azure");
+
+builder.AddAzureQueueClient("<name>", options => ..., "azure");
 ```

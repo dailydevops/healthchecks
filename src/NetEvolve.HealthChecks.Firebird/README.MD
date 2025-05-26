@@ -71,5 +71,6 @@ builder.AddFirebird("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddFirebird("<name>", options => ..., "Firebird", "database");
+
+builder.AddFirebird("<name>", options => ..., "Firebird", "database");
 ```

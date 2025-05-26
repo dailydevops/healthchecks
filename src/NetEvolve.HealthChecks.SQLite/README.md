@@ -70,5 +70,6 @@ builder.AddSQLite("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddSQLite("<name>", options => ..., "sqlite", "database");
+
+builder.AddSQLite("<name>", options => ..., "sqlite", "database");
 ```

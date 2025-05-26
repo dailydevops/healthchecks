@@ -77,5 +77,6 @@ builder.AddKafka("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddKafka("<name>", options => ..., "kafka");
+
+builder.AddKafka("<name>", options => ..., "kafka");
 ```

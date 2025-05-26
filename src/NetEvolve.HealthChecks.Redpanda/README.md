@@ -77,5 +77,6 @@ builder.AddRedpanda("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddRedpanda("<name>", options => ..., "redpanda");
+
+builder.AddRedpanda("<name>", options => ..., "redpanda");
 ```

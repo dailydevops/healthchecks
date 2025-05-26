@@ -70,5 +70,6 @@ builder.AddOracle("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddOracle("<name>", options => ..., "oracle", "database");
+
+builder.AddOracle("<name>", options => ..., "oracle", "database");
 ```

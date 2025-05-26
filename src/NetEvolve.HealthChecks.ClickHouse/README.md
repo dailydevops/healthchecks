@@ -70,5 +70,6 @@ builder.AddClickHouse("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddClickHouse("<name>", options => ..., "clickhouse", "database");
+
+builder.AddClickHouse("<name>", options => ..., "clickhouse", "database");
 ```

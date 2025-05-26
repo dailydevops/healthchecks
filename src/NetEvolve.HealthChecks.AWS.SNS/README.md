@@ -77,5 +77,6 @@ builder.AddSimpleNotificationService("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-        builder.AddSimpleNotificationService("<name>", options => ..., "sns");
+
+builder.AddSimpleNotificationService("<name>", options => ..., "sns");
 ```

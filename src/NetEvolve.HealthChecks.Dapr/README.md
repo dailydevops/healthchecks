@@ -64,5 +64,6 @@ builder.AddDapr(options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddDapr(options => ..., "Dapr");
+
+builder.AddDapr(options => ..., "Dapr");
 ```

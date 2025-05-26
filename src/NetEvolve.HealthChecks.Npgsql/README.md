@@ -70,5 +70,6 @@ builder.AddPostgreSql("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddPostgreSql("<name>", options => ..., "postgresql", "database");
+
+builder.AddPostgreSql("<name>", options => ..., "postgresql", "database");
 ```

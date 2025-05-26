@@ -72,5 +72,6 @@ builder.AddSqlServer("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddSqlServer("<name>", options => ..., "sqlserver", "database");
+
+builder.AddSqlServer("<name>", options => ..., "sqlserver", "database");
 ```
