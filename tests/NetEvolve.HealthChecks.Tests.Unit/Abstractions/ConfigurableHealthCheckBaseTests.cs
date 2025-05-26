@@ -41,7 +41,7 @@ public class ConfigurableHealthCheckBaseTests
     public void HealthCheckState_WhenConditionIsTrue_ReturnsHealthy()
     {
         // Arrange
-        var testName = "TestHealthCheck";
+        const string testName = "TestHealthCheck";
 
         // Act
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckState(true, testName);
@@ -55,7 +55,7 @@ public class ConfigurableHealthCheckBaseTests
     public void HealthCheckState_WhenConditionIsFalse_ReturnsDegraded()
     {
         // Arrange
-        var testName = "TestHealthCheck";
+        const string testName = "TestHealthCheck";
 
         // Act
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckState(false, testName);
@@ -69,8 +69,8 @@ public class ConfigurableHealthCheckBaseTests
     public void HealthCheckUnhealthy_WithDefaultMessage_ReturnsUnhealthyWithDefaultMessage()
     {
         // Arrange
-        var testName = "TestHealthCheck";
-        var failureStatus = HealthStatus.Unhealthy;
+        const string testName = "TestHealthCheck";
+        const HealthStatus failureStatus = HealthStatus.Unhealthy;
 
         // Act
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(failureStatus, testName);
@@ -84,9 +84,9 @@ public class ConfigurableHealthCheckBaseTests
     public void HealthCheckUnhealthy_WithCustomMessage_ReturnsUnhealthyWithCustomMessage()
     {
         // Arrange
-        var testName = "TestHealthCheck";
-        var failureStatus = HealthStatus.Degraded;
-        var customMessage = "Custom unhealthy message";
+        const string testName = "TestHealthCheck";
+        const HealthStatus failureStatus = HealthStatus.Degraded;
+        const string customMessage = "Custom unhealthy message";
 
         // Act
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(failureStatus, testName, customMessage);
@@ -100,7 +100,7 @@ public class ConfigurableHealthCheckBaseTests
     public void HealthCheckDegraded_ReturnsHealthCheckResultWithDegradedStatus()
     {
         // Arrange
-        var testName = "TestHealthCheck";
+        const string testName = "TestHealthCheck";
 
         // Act
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckDegraded(testName);
