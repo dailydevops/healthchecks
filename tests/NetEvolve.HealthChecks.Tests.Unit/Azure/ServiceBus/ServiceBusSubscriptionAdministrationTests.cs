@@ -15,6 +15,7 @@ using NSubstitute;
 using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
+[TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Subscription")]
 public sealed class ServiceBusSubscriptionAdministrationTests
 {
     [Fact]

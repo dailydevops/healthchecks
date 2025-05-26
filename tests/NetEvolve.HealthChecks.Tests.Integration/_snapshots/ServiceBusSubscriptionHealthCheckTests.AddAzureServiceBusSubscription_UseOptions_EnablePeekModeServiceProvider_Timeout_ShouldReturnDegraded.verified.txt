@@ -5,7 +5,7 @@
       name: ServiceBusSubscriptionServiceProviderPeekDegraded,
       status: Degraded,
       tags: [
-        storage,
+        messaging,
         azure,
         servicebus
       ]

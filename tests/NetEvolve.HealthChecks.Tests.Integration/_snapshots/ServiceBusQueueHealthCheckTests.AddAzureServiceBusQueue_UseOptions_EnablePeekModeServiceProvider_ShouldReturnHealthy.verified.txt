@@ -5,7 +5,7 @@
       name: ServiceBusQueueServiceProviderHealthy,
       status: Degraded,
       tags: [
-        storage,
+        messaging,
         azure,
         servicebus
       ]

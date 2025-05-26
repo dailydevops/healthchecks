@@ -6,6 +6,7 @@ using NetEvolve.HealthChecks.Azure.ServiceBus;
 using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
+[TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")]
 public sealed class ServiceBusQueueOptionsConfigureTests
 {
     [Fact]

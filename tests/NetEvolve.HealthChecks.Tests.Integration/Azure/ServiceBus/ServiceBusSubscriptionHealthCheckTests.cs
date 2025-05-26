@@ -9,6 +9,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
+[TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Subscription")]
 public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase, IClassFixture<ServiceBusContainer>
 {
     private readonly ServiceBusContainer _container;

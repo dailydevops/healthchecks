@@ -9,7 +9,7 @@
       name: ConfigurationUnhealthy,
       status: Unhealthy,
       tags: [
-        storage,
+        messaging,
         azure,
         servicebus
       ]

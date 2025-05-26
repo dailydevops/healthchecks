@@ -9,7 +9,7 @@
       name: ServiceBusQueueServiceProviderPeekUnhealthy,
       status: Unhealthy,
       tags: [
-        storage,
+        messaging,
         azure,
         servicebus
       ]
