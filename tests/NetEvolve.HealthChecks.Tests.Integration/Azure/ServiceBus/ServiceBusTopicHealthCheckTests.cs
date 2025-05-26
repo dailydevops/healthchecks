@@ -1,6 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.ServiceBus;
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 
@@ -138,4 +142,104 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 }
             );
         });
+
+    // Configuration-based tests
+
+    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddServiceBusTopicHealthCheck_UseConfiguration_ShouldReturnHealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusTopicHealthCheck("ConfigurationHealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:ConnectionString",
+                        _container.ConnectionString
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:TopicName",
+                        ServiceBusContainer.TopicName
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Mode",
+                        nameof(ClientCreationMode.ConnectionString)
+                    },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddServiceBusTopicHealthCheck_UseConfiguration_TopicNotExists_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusTopicHealthCheck("ConfigurationUnhealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationUnhealthy:ConnectionString",
+                        _container.ConnectionString
+                    },
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationUnhealthy:TopicName", "nonexistent-topic" },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationUnhealthy:Mode",
+                        nameof(ClientCreationMode.ConnectionString)
+                    },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddServiceBusTopicHealthCheck_UseConfiguration_ShouldReturnDegraded() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusTopicHealthCheck("ConfigurationDegraded"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationDegraded:ConnectionString",
+                        _container.ConnectionString
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationDegraded:TopicName",
+                        ServiceBusContainer.TopicName
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationDegraded:Mode",
+                        nameof(ClientCreationMode.ConnectionString)
+                    },
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationDegraded:Timeout", "0" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddServiceBusTopicHealthCheck_UseConfiguration_DefaultAzureCredentials_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusTopicHealthCheck("ConfigurationCredentialsUnhealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationCredentialsUnhealthy:FullyQualifiedNamespace",
+                        "namespace.servicebus.windows.net"
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationCredentialsUnhealthy:TopicName",
+                        ServiceBusContainer.TopicName
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationCredentialsUnhealthy:Mode",
+                        nameof(ClientCreationMode.DefaultAzureCredentials)
+                    },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
 }

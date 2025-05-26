@@ -1,6 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.ServiceBus;
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 
@@ -197,5 +201,83 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
             },
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
+        );
+
+    // Configuration-based tests
+
+    [Fact]
+    public async Task AddServiceBusQueueHealthCheck_UseConfiguration_EnablePeekMode_ShouldReturnHealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusQueueHealthCheck("ConfigurationHealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:ConnectionString",
+                        _container.ConnectionString
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:QueueName",
+                        ServiceBusContainer.QueueName
+                    },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:EnablePeekMode", "true" },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:Mode",
+                        nameof(ClientCreationMode.ConnectionString)
+                    },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact]
+    public async Task AddServiceBusQueueHealthCheck_UseConfiguration_EnablePeekMode_QueueNotExists_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusQueueHealthCheck("ConfigurationUnhealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationUnhealthy:ConnectionString",
+                        _container.ConnectionString
+                    },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationUnhealthy:QueueName", "nonexistent-queue" },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationUnhealthy:EnablePeekMode", "true" },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationUnhealthy:Mode",
+                        nameof(ClientCreationMode.ConnectionString)
+                    },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact]
+    public async Task AddServiceBusQueueHealthCheck_UseConfiguration_ShouldReturnDegraded() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddServiceBusQueueHealthCheck("ConfigurationDegraded"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationDegraded:ConnectionString",
+                        _container.ConnectionString
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationDegraded:QueueName",
+                        ServiceBusContainer.QueueName
+                    },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationDegraded:EnablePeekMode", "true" },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationDegraded:Mode",
+                        nameof(ClientCreationMode.ConnectionString)
+                    },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationDegraded:Timeout", "0" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
         );
 }

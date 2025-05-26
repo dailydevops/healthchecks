@@ -16,7 +16,7 @@ internal class ServiceBusQueueOptionsConfigure
     public void Configure(string? name, ServiceBusQueueOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:ServiceBusQueue:{name}", options);
+        _configuration.Bind($"HealthChecks:AzureServiceBusQueue:{name}", options);
     }
 
     public void Configure(ServiceBusQueueOptions options) => Configure(Options.DefaultName, options);

@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ConfigurationDegraded: Degraded,
+      name: ConfigurationDegraded,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Degraded
+}

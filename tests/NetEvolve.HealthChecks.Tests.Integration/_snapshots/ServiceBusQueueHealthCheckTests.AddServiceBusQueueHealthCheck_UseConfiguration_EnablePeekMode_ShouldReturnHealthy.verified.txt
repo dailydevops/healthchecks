@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ConfigurationHealthy: Healthy,
+      name: ConfigurationHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Healthy
+}

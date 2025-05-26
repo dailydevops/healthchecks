@@ -16,7 +16,7 @@ internal class ServiceBusTopicOptionsConfigure
     public void Configure(string? name, ServiceBusTopicOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:ServiceBusSubscription:{name}", options);
+        _configuration.Bind($"HealthChecks:AzureServiceBusTopic:{name}", options);
     }
 
     public void Configure(ServiceBusTopicOptions options) => Configure(Options.DefaultName, options);
