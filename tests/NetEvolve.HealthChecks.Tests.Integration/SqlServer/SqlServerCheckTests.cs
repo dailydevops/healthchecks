@@ -32,9 +32,8 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddSqlServer("TestContainerHealthy").AddSqlServer("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddSqlServer("TestContainerHealthy").AddSqlServer("TestContainerHealthy")
+                );
             }
         );
 

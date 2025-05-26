@@ -32,9 +32,8 @@ public class MySqlConnectorCheckTests : HealthCheckTestBase, IClassFixture<MySql
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy")
+                );
             }
         );
 

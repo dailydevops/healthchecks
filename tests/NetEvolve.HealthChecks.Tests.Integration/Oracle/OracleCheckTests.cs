@@ -32,9 +32,8 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddOracle("TestContainerHealthy").AddOracle("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddOracle("TestContainerHealthy").AddOracle("TestContainerHealthy")
+                );
             }
         );
 

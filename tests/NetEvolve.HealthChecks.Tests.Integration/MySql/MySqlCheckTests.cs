@@ -32,9 +32,8 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy")
+                );
             }
         );
 

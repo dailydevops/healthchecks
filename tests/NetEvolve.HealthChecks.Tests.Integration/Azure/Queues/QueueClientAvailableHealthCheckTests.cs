@@ -52,9 +52,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -73,9 +71,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -94,9 +90,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -115,9 +109,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]

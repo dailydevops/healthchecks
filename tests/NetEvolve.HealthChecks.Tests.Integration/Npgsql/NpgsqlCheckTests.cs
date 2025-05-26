@@ -32,9 +32,8 @@ public class NpgsqlCheckTests : HealthCheckTestBase, IClassFixture<NpgsqlDatabas
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddPostgreSql("TestContainerHealthy").AddPostgreSql("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddPostgreSql("TestContainerHealthy").AddPostgreSql("TestContainerHealthy")
+                );
             }
         );
 

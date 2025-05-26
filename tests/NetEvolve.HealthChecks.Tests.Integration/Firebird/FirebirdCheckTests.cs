@@ -28,9 +28,8 @@ public sealed class FirebirdCheckTests : HealthCheckTestBase, IClassFixture<Fire
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddFirebird("TestContainerHealthy").AddFirebird("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddFirebird("TestContainerHealthy").AddFirebird("TestContainerHealthy")
+                );
             }
         );
 

@@ -51,9 +51,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -72,9 +70,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -93,9 +89,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -114,9 +108,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]

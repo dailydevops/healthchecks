@@ -40,9 +40,8 @@ public abstract class HealthCheckTestBase
                 healthChecks?.Invoke(healthChecksBuilder);
             })
             .Configure(app =>
-            {
-                _ = app.UseHealthChecks(HealthCheckPath, new HealthCheckOptions { ResponseWriter = WriteResponse });
-            });
+                _ = app.UseHealthChecks(HealthCheckPath, new HealthCheckOptions { ResponseWriter = WriteResponse })
+            );
 
         using (var server = new TestServer(builder))
         {

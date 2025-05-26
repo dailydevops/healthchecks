@@ -46,9 +46,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -67,9 +65,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -88,9 +84,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            },
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
             clearJToken: token =>
             {
                 if (token is null)
@@ -131,9 +125,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]

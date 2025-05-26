@@ -49,9 +49,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
     [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
@@ -124,9 +122,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
     [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
@@ -200,8 +196,6 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 }

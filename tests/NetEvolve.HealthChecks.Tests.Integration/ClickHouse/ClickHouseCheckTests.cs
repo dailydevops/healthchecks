@@ -32,9 +32,8 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddClickHouse("TestContainerHealthy").AddClickHouse("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddClickHouse("TestContainerHealthy").AddClickHouse("TestContainerHealthy")
+                );
             }
         );
 

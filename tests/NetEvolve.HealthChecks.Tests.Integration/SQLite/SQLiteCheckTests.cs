@@ -32,9 +32,8 @@ public class SQLiteCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabas
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddSQLite("TestContainerHealthy").AddSQLite("TestContainerHealthy");
-                });
+                    _ = healthChecks.AddSQLite("TestContainerHealthy").AddSQLite("TestContainerHealthy")
+                );
             }
         );
 
