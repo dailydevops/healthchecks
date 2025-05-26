@@ -126,7 +126,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                     { "HealthChecks:AWSSNS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", LocalStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", _instance.Subscription },
-                    { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", CreationMode.BasicAuthentication.ToString() },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -145,7 +145,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", LocalStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Subscription", "NotFound" },
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", CreationMode.BasicAuthentication.ToString() },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -164,7 +164,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", "Invalid" },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Subscription", _instance.Subscription },
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", CreationMode.BasicAuthentication.ToString() },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -184,7 +184,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                     { "HealthChecks:AWSSNS:TestContainerDegraded:TopicName", LocalStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerDegraded:Subscription", _instance.Subscription },
                     { "HealthChecks:AWSSNS:TestContainerDegraded:Timeout", "0" },
-                    { "HealthChecks:AWSSNS:TestContainerDegraded:Mode", CreationMode.BasicAuthentication.ToString() },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -207,10 +207,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                         { "HealthChecks:AWSSNS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", topicName },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", subscription.SubscriptionArn },
-                        {
-                            "HealthChecks:AWSSNS:TestContainerHealthy:Mode",
-                            CreationMode.BasicAuthentication.ToString()
-                        },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                     };
                     _ = config.AddInMemoryCollection(values);
                 }
