@@ -7,28 +7,41 @@ param (
 function Get-Packages {
   param (
   )
-  $repositoryUrl = 'https://github.com/dailydevops/healthchecks'
-  $queryUrl = 'https://azuresearch-usnc.nuget.org/query?q=netevolve.healthchecks&prerelease=true&semVerLevel=2.0.0'
-  $response = Invoke-WebRequest -Uri $queryUrl
-  if ($response.statuscode -ne 200) {
-    Write-Error "Failed to get packages from $repositoryUrl"
-    return
-  }
+  Write-Host "Getting packages from Nuget"
 
-  $data = ConvertFrom-Json $response.Content
-  if ($data.totalHits -eq 0) {
-    Write-Error "No packages found at $repositoryUrl"
-    return
-  }
+  $resultData = @()
+  $take = 100
+  $skip = 0
+  $repositoryUrl = 'https://github.com/dailydevops/healthchecks'
+
+  do {
+    $queryUrl = "https://azuresearch-usnc.nuget.org/query?q=netevolve.healthchecks&take=$($take)&skip=$($skip)&prerelease=true&semVerLevel=2.0.0"
+    $response = Invoke-WebRequest -Uri $queryUrl
+    if ($response.statuscode -ne 200) {
+      Write-Error "Failed to get packages from $repositoryUrl"
+      return
+    }
+
+    $data = ConvertFrom-Json $response.Content
+    if ($data.totalHits -eq 0) {
+      Write-Error "No packages found at $repositoryUrl"
+      return
+    }
+
+    $skip += $data.data.Length
+    $resultData += $data.data
+
+  } while ($skip -lt $data.totalHits)
+
 
   $result = @"
 
-| Package Name | Current Version | Downloads |
-|:-------------|:---------------:|:---------:|
+| Package Name | Current Version |
+|:-------------|:---------------:|
 
 "@
 
-  foreach ($package in ($data.data | Sort-Object -Property id)) {
+  foreach ($package in ($resultData | Sort-Object -Property id)) {
     if ($package.projectUrl -ne $repositoryUrl) {
       continue
     }
@@ -40,7 +53,6 @@ function Get-Packages {
     $result += "<br/><small>$($package.description)</small> "
 
     $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/#versions-body-tab) "
-    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/) "
     $result += "|`n"
 
   }
