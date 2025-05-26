@@ -1,6 +1,5 @@
 name: 💡 Feature Request
-description: Suggest a new feature or enhancement
-about: |
+description: |
   Use this template to propose a new feature or enhancement for the package. Please provide as much detail as possible to help us understand your request.
 title: "feature: <replace with a short description>"
 labels:
