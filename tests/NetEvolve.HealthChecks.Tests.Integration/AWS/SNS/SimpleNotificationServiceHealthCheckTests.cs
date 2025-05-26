@@ -1,5 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS.SNS;
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
 
@@ -104,6 +108,113 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                     }
                 );
             });
+        }
+    }
+
+    // Configuration-based tests
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnHealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:AccessKey", LocalStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", LocalStackInstance.TopicName },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", _instance.Subscription },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", CreationMode.BasicAuthentication.ToString() },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:AccessKey", LocalStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", LocalStackInstance.TopicName },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Subscription", "NotFound" },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", CreationMode.BasicAuthentication.ToString() },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:AccessKey", LocalStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", "Invalid" },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Subscription", _instance.Subscription },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", CreationMode.BasicAuthentication.ToString() },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnDegraded() =>
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:AccessKey", LocalStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:ServiceUrl", _instance.ConnectionString },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:TopicName", LocalStackInstance.TopicName },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:Subscription", _instance.Subscription },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:Mode", CreationMode.BasicAuthentication.ToString() },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_ShouldReturnHealthy()
+    {
+        const string topicName = "MassOf101SubscriptionsConfig";
+        await using (var subscription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
+        {
+            await RunAndVerify(
+                healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
+                config =>
+                {
+                    var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                    {
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:AccessKey", LocalStackInstance.AccessKey },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:SecretKey", LocalStackInstance.SecretKey },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", topicName },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", subscription.SubscriptionArn },
+                        {
+                            "HealthChecks:AWSSNS:TestContainerHealthy:Mode",
+                            CreationMode.BasicAuthentication.ToString()
+                        },
+                    };
+                    _ = config.AddInMemoryCollection(values);
+                }
+            );
         }
     }
 }
