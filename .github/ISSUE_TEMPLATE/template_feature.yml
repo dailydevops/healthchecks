@@ -1,0 +1,69 @@
+name: 💡 Feature Request
+description: Suggest a new feature or enhancement
+about: |
+  Use this template to propose a new feature or enhancement for the package. Please provide as much detail as possible to help us understand your request.
+title: "feature: <replace with a short description>"
+labels:
+  - type:feature
+  - state:investigate
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature!
+        Please fill out the information below to help us understand your request.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm you've completed the following steps before submitting your feature request.
+      options:
+        - label: I have searched for similar feature requests in both open and closed issues
+          required: true
+        - label: I have read the documentation to confirm this feature doesn't already exist
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Provide a clear and concise description of the feature you're requesting
+      placeholder: I would like to see...
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case
+      description: Explain the use case or problem this feature would solve
+      placeholder: This feature would help me when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution
+      description: If you have an idea of how this could be implemented, please share
+      placeholder: I think this could work by...
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: I've tried to accomplish this by...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples about the feature request here
+    validations:
+      required: false

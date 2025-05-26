@@ -1,5 +1,7 @@
 name: 🐞 Bug
 description: Submit a bug report
+about: |
+  Use this template to report a bug in the package. Please provide as much detail as possible to help us understand and reproduce the issue.
 title: "bug: <replace with a short description>"
 labels:
   - type:bug
