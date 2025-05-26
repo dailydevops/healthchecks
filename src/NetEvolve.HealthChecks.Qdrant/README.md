@@ -1,4 +1,4 @@
-# NetEvolve.HealthChecks.Azure.Blobs
+# NetEvolve.HealthChecks.Qdrant
 
 [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Qdrant?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Qdrant/)
 [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Qdrant?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Qdrant/)
