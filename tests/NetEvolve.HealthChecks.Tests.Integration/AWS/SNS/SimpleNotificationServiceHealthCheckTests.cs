@@ -116,7 +116,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     [Fact]
     public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
+            healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -135,7 +135,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     [Fact]
     public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
+            healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -154,7 +154,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     [Fact]
     public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
+            healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -173,7 +173,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     [Fact]
     public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
+            healthChecks => healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -197,7 +197,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
         await using (var subscription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
         {
             await RunAndVerify(
-                healthChecks => _ = healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
+                healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
                 config =>
                 {
                     var values = new Dictionary<string, string?>(StringComparer.Ordinal)

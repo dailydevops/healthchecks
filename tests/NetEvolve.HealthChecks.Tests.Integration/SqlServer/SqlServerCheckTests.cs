@@ -32,7 +32,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                    _ = healthChecks.AddSqlServer("TestContainerHealthy").AddSqlServer("TestContainerHealthy")
+                    healthChecks.AddSqlServer("TestContainerHealthy").AddSqlServer("TestContainerHealthy")
                 );
             }
         );
@@ -69,7 +69,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
     [Fact]
     public async Task AddSqlServer_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSqlServer("TestContainerHealthy"),
+            healthChecks => healthChecks.AddSqlServer("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -83,7 +83,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
     [Fact]
     public async Task AddSqlServer_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSqlServer("TestContainerDegraded"),
+            healthChecks => healthChecks.AddSqlServer("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -98,7 +98,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
     [Fact]
     public async Task AddSqlServer_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSqlServer("TestNoValues"),
+            healthChecks => healthChecks.AddSqlServer("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -112,7 +112,7 @@ public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerD
     [Fact]
     public async Task AddSqlServer_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddSqlServer("TestNoValues"),
+            healthChecks => healthChecks.AddSqlServer("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

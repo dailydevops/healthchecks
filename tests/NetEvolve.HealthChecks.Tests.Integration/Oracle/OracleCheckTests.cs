@@ -32,7 +32,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                    _ = healthChecks.AddOracle("TestContainerHealthy").AddOracle("TestContainerHealthy")
+                    healthChecks.AddOracle("TestContainerHealthy").AddOracle("TestContainerHealthy")
                 );
             }
         );
@@ -68,7 +68,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
     [Fact]
     public async Task AddOracle_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddOracle("TestContainerHealthy"),
+            healthChecks => healthChecks.AddOracle("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -82,7 +82,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
     [Fact]
     public async Task AddOracle_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddOracle("TestContainerDegraded"),
+            healthChecks => healthChecks.AddOracle("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -97,7 +97,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
     [Fact]
     public async Task AddOracle_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddOracle("TestNoValues"),
+            healthChecks => healthChecks.AddOracle("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -111,7 +111,7 @@ public class OracleCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabas
     [Fact]
     public async Task AddOracle_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddOracle("TestNoValues"),
+            healthChecks => healthChecks.AddOracle("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

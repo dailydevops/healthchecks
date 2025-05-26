@@ -76,7 +76,7 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
     [Fact]
     public async Task AddActiveMq_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddActiveMq("TestContainerHealthy"),
+            healthChecks => healthChecks.AddActiveMq("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -93,7 +93,7 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
     [Fact]
     public async Task AddActiveMq_UseConfiguration_ShouldReturnUnhealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddActiveMq("TestContainerUnhealthy"),
+            healthChecks => healthChecks.AddActiveMq("TestContainerUnhealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -110,7 +110,7 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
     [Fact]
     public async Task AddActiveMq_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddActiveMq("TestContainerDegraded"),
+            healthChecks => healthChecks.AddActiveMq("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -127,7 +127,7 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
     [Fact]
     public async Task AddActiveMq_UseConfigration_BrokerAddressStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddActiveMq("TestNoValues"),
+            healthChecks => healthChecks.AddActiveMq("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -141,7 +141,7 @@ public abstract class ActiveMqHealthCheckTests : HealthCheckTestBase, IAsyncLife
     [Fact]
     public async Task AddActiveMq_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddActiveMq("TestNoValues"),
+            healthChecks => healthChecks.AddActiveMq("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

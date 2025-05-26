@@ -21,7 +21,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     [Fact]
     public async Task AddQdrant_UseOptions_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddQdrant("TestContainerHealthy"),
+            healthChecks => healthChecks.AddQdrant("TestContainerHealthy", options => options.Timeout = 1000),
             serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
@@ -32,8 +32,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
             async () =>
             {
                 await RunAndVerify(
-                    healthChecks =>
-                        _ = healthChecks.AddQdrant("TestContainerHealthy").AddQdrant("TestContainerHealthy"),
+                    healthChecks => healthChecks.AddQdrant("TestContainerHealthy").AddQdrant("TestContainerHealthy"),
                     serviceBuilder: services =>
                         services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
                 );
@@ -43,7 +42,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     [Fact]
     public async Task AddQdrant_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddQdrant("TestContainerDegraded", options => options.Timeout = 0),
+            healthChecks => healthChecks.AddQdrant("TestContainerDegraded", options => options.Timeout = 0),
             serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
@@ -69,19 +68,19 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     [Fact]
     public async Task AddQdrant_UseGrpcConnection_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddQdrant("TestContainerGrpcHealthy"),
+            healthChecks => healthChecks.AddQdrant("TestContainerGrpcHealthy", options => options.Timeout = 1000),
             serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
     [Fact]
     public async Task AddQdrant_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddQdrant("TestContainerConfigHealthy"),
+            healthChecks => healthChecks.AddQdrant("TestContainerConfigHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Qdrant:TestContainerConfigHealthy:Timeout", "100" },
+                    { "HealthChecks:Qdrant:TestContainerConfigHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -91,7 +90,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     [Fact]
     public async Task AddQdrant_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddQdrant("TestContainerConfigDegraded"),
+            healthChecks => healthChecks.AddQdrant("TestContainerConfigDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -106,7 +105,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     [Fact]
     public async Task AddQdrant_UseConfiguration_WithKeyedService_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddQdrant("TestContainerConfigKeyedHealthy"),
+            healthChecks => healthChecks.AddQdrant("TestContainerConfigKeyedHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

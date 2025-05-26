@@ -208,7 +208,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
     [Fact]
     public async Task AddAzureServiceBusQueue_UseConfiguration_EnablePeekMode_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddAzureServiceBusQueue("ConfigurationHealthy"),
+            healthChecks => healthChecks.AddAzureServiceBusQueue("ConfigurationHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -234,7 +234,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
     [Fact]
     public async Task AddAzureServiceBusQueue_UseConfiguration_EnablePeekMode_QueueNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddAzureServiceBusQueue("ConfigurationUnhealthy"),
+            healthChecks => healthChecks.AddAzureServiceBusQueue("ConfigurationUnhealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -257,7 +257,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase, IClassFixtur
     [Fact]
     public async Task AddAzureServiceBusQueue_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddAzureServiceBusQueue("ConfigurationDegraded"),
+            healthChecks => healthChecks.AddAzureServiceBusQueue("ConfigurationDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

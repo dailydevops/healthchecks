@@ -1,18 +1,14 @@
 ﻿{
   results: [
     {
-      description: TestContainerHealthy: Unexpected error.,
-      exception: {
-        message: No service for type 'Qdrant.Client.QdrantClient' has been registered.,
-        type: System.InvalidOperationException
-      },
+      description: TestContainerHealthy: Healthy,
       name: TestContainerHealthy,
-      status: Unhealthy,
+      status: Healthy,
       tags: [
         qdrant,
         database
       ]
     }
   ],
-  status: Unhealthy
+  status: Healthy
 }

@@ -28,7 +28,7 @@ public sealed class FirebirdCheckTests : HealthCheckTestBase, IClassFixture<Fire
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                    _ = healthChecks.AddFirebird("TestContainerHealthy").AddFirebird("TestContainerHealthy")
+                    healthChecks.AddFirebird("TestContainerHealthy").AddFirebird("TestContainerHealthy")
                 );
             }
         );
@@ -65,7 +65,7 @@ public sealed class FirebirdCheckTests : HealthCheckTestBase, IClassFixture<Fire
     [Fact]
     public async Task AddFirebird_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddFirebird("TestContainerHealthy"),
+            healthChecks => healthChecks.AddFirebird("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -79,7 +79,7 @@ public sealed class FirebirdCheckTests : HealthCheckTestBase, IClassFixture<Fire
     [Fact]
     public async Task AddFirebird_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddFirebird("TestContainerDegraded"),
+            healthChecks => healthChecks.AddFirebird("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -94,7 +94,7 @@ public sealed class FirebirdCheckTests : HealthCheckTestBase, IClassFixture<Fire
     [Fact]
     public async Task AddFirebird_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddFirebird("TestNoValues"),
+            healthChecks => healthChecks.AddFirebird("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -108,7 +108,7 @@ public sealed class FirebirdCheckTests : HealthCheckTestBase, IClassFixture<Fire
     [Fact]
     public async Task AddFirebird_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddFirebird("TestNoValues"),
+            healthChecks => healthChecks.AddFirebird("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
