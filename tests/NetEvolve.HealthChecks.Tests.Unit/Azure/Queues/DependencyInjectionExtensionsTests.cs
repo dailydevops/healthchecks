@@ -30,7 +30,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
         void Act() => _ = builder.AddQueueClientAvailability(name);
@@ -78,7 +78,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
         void Act() => _ = builder.AddQueueClientAvailability(name, x => { }).AddQueueClientAvailability(name);
@@ -107,7 +107,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
         void Act() => _ = builder.AddQueueServiceAvailability(name);
@@ -155,7 +155,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
         void Act() => _ = builder.AddQueueServiceAvailability(name, x => { }).AddQueueServiceAvailability(name);

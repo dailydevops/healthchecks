@@ -30,7 +30,7 @@ public sealed class ActiveMqConfigureTests
     {
         // Arrange
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = default(ActiveMqOptions);
 
         // Act
@@ -46,7 +46,7 @@ public sealed class ActiveMqConfigureTests
     {
         // Arrange
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ActiveMqOptions();
 
         // Act
@@ -62,7 +62,7 @@ public sealed class ActiveMqConfigureTests
     {
         // Arrange
         var configure = new ActiveMqConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ActiveMqOptions { BrokerAddress = "Test", Timeout = -2 };
 
         // Act

@@ -43,7 +43,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = " ";
+        const string? name = " ";
         var options = new ServiceBusQueueOptions();
 
         // Act
@@ -88,7 +88,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = default(ServiceBusQueueOptions);
 
         // Act
@@ -104,7 +104,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions { Timeout = -2 };
 
         // Act
@@ -120,7 +120,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions { Timeout = 100, Mode = null };
 
         // Act
@@ -136,7 +136,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions
         {
             Timeout = 100,
@@ -160,7 +160,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions
         {
             Timeout = 100,
@@ -184,7 +184,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions
         {
             Timeout = 100,
@@ -205,7 +205,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions
         {
             Timeout = 100,
@@ -226,7 +226,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
     {
         // Arrange
         var configure = new ServiceBusQueueOptionsConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new ServiceBusQueueOptions
         {
             Timeout = 100,

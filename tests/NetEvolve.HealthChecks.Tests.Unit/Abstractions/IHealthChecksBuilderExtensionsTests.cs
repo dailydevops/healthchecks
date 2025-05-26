@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Abstractions;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Abstractions;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -76,7 +76,7 @@ public class IHealthChecksBuilderExtensionsTests
         var services = new ServiceCollection();
         _ = services.AddSingleton<TestHealthCheck>();
         var builder = services.AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Add a health check with the given name and type
         _ = builder.AddCheck<TestHealthCheck>(name, HealthStatus.Healthy);
@@ -96,7 +96,7 @@ public class IHealthChecksBuilderExtensionsTests
         _ = services.AddSingleton<TestHealthCheck>();
         _ = services.AddSingleton<AnotherTestHealthCheck>();
         var builder = services.AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Add a health check with the given name but different type
         _ = builder.AddCheck<AnotherTestHealthCheck>(name, HealthStatus.Healthy);

@@ -30,7 +30,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
         void Act() => _ = builder.AddQdrant(name);
@@ -78,7 +78,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
         void Act() => _ = builder.AddQdrant(name).AddQdrant(name);
@@ -94,7 +94,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
         _ = builder.AddQdrant(name, options => options.Timeout = 200);
@@ -114,7 +114,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
         _ = builder.AddQdrant(name);

@@ -15,7 +15,7 @@ public sealed class RedisDatabaseConfigureTests
         // Arrange
         var options = new RedisDatabaseOptions();
         var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -30,7 +30,7 @@ public sealed class RedisDatabaseConfigureTests
     {
         // Arrange
         var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = default(RedisDatabaseOptions);
 
         // Act
@@ -46,7 +46,7 @@ public sealed class RedisDatabaseConfigureTests
     {
         // Arrange
         var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new RedisDatabaseOptions { ConnectionString = default, Mode = ConnectionHandleMode.Create };
 
         // Act
@@ -62,7 +62,7 @@ public sealed class RedisDatabaseConfigureTests
     {
         // Arrange
         var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new RedisDatabaseOptions { ConnectionString = "Test", Timeout = -2 };
 
         // Act
@@ -78,7 +78,7 @@ public sealed class RedisDatabaseConfigureTests
     {
         // Arrange
         var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new RedisDatabaseOptions();
 
         // Act

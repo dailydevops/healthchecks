@@ -31,7 +31,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = default(KafkaOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions();
 
         // Act
@@ -63,7 +63,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions { Topic = "Test", Mode = ProducerHandleMode.Create };
 
         // Act
@@ -79,7 +79,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions
         {
             Topic = "Test",
@@ -100,7 +100,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions
         {
             Topic = "Test",
@@ -149,7 +149,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions { Timeout = -2 };
 
         // Act

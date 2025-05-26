@@ -15,7 +15,7 @@ public sealed class ClickHouseOptionsConfigureTests
         // Arrange
         var options = new ClickHouseOptions();
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -30,7 +30,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = default(ClickHouseOptions);
 
         // Act
@@ -46,7 +46,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new ClickHouseOptions();
 
         // Act
@@ -62,7 +62,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new ClickHouseOptions { ConnectionString = "Test", Timeout = -2 };
 
         // Act
@@ -78,7 +78,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new ClickHouseOptions { ConnectionString = "Test" };
 
         // Act
@@ -94,7 +94,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new ClickHouseOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
@@ -109,7 +109,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new ClickHouseOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
@@ -125,7 +125,7 @@ public sealed class ClickHouseOptionsConfigureTests
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new ClickHouseOptions();
 
         // Act

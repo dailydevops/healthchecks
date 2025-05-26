@@ -31,7 +31,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = default(RedpandaOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions();
 
         // Act
@@ -63,7 +63,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions { Topic = "Test", Mode = ProducerHandleMode.Create };
 
         // Act
@@ -79,7 +79,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions
         {
             Topic = "Test",
@@ -100,7 +100,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions
         {
             Topic = "Test",
@@ -149,7 +149,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions { Timeout = -2 };
 
         // Act

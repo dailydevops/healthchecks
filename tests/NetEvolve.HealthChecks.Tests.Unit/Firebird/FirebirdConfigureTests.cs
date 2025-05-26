@@ -29,7 +29,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = default(FirebirdOptions);
 
         // Act
@@ -45,7 +45,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new FirebirdOptions();
 
         // Act
@@ -61,7 +61,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new FirebirdOptions { ConnectionString = "Test", Timeout = -2 };
 
         // Act
@@ -77,7 +77,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new FirebirdOptions { ConnectionString = "Test" };
 
         // Act
@@ -93,7 +93,7 @@ public sealed class FirebirdConfigureTests
     {
         // Arrange
         var configure = new FirebirdConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new FirebirdOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
