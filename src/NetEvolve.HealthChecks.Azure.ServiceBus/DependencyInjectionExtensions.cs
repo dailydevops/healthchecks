@@ -27,7 +27,7 @@ public static class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddServiceBusQueueHealthCheck(
+    public static IHealthChecksBuilder AddAzureServiceBusQueue(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
         Action<ServiceBusQueueOptions>? options = null,
@@ -75,7 +75,7 @@ public static class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddServiceBusSubscriptionHealthCheck(
+    public static IHealthChecksBuilder AddAzureServiceBusSubscription(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
         Action<ServiceBusSubscriptionOptions>? options = null,
@@ -119,7 +119,7 @@ public static class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddServiceBusTopicHealthCheck(
+    public static IHealthChecksBuilder AddAzureServiceBusTopic(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
         Action<ServiceBusTopicOptions>? options = null,

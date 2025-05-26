@@ -1,0 +1,25 @@
+﻿{
+  results: [
+    {
+      description: ConfigurationDegraded: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte.,
+            type: SocketException
+          }
+        ],
+        message: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte. ErrorCode: ConnectionRefused (ServiceCommunicationProblem). For troubleshooting information, see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.,
+        type: Azure.Messaging.ServiceBus.ServiceBusException
+      },
+      name: ConfigurationDegraded,
+      status: Unhealthy,
+      tags: [
+        storage,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Unhealthy
+}

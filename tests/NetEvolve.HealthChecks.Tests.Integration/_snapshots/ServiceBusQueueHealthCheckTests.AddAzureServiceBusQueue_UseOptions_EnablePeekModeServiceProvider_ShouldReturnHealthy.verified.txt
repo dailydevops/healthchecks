@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: ConfigurationDegraded: Degraded,
-      name: ConfigurationDegraded,
+      description: ServiceBusQueueServiceProviderHealthy: Degraded,
+      name: ServiceBusQueueServiceProviderHealthy,
       status: Degraded,
       tags: [
         storage,

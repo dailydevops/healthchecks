@@ -11,20 +11,20 @@ using Xunit;
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
-    public void AddServiceBusQueueHealthCheck_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusQueue_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddServiceBusQueueHealthCheck("Test");
+        void Act() => builder.AddAzureServiceBusQueue("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
-    public void AddServiceBusQueueHealthCheck_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusQueue_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -33,14 +33,14 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddServiceBusQueueHealthCheck(name!);
+        void Act() => builder.AddAzureServiceBusQueue(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
-    public void AddServiceBusQueueHealthCheck_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddAzureServiceBusQueue_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -49,14 +49,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddServiceBusQueueHealthCheck(name);
+        void Act() => builder.AddAzureServiceBusQueue(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
-    public void AddServiceBusQueueHealthCheck_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusQueue_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -65,14 +65,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddServiceBusQueueHealthCheck("Test", tags: tags);
+        void Act() => builder.AddAzureServiceBusQueue("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Fact]
-    public void AddServiceBusQueueHealthCheck_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddAzureServiceBusQueue_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -81,27 +81,27 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddServiceBusQueueHealthCheck(name, _ => { }).AddServiceBusQueueHealthCheck(name);
+        void Act() => builder.AddAzureServiceBusQueue(name, _ => { }).AddAzureServiceBusQueue(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
     [Fact]
-    public void AddServiceBusTopicHealthCheck_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusTopic_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddServiceBusTopicHealthCheck("Test");
+        void Act() => builder.AddAzureServiceBusTopic("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
-    public void AddServiceBusTopicHealthCheck_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusTopic_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -110,14 +110,14 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddServiceBusTopicHealthCheck(name!);
+        void Act() => builder.AddAzureServiceBusTopic(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
-    public void AddServiceBusTopicHealthCheck_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddAzureServiceBusTopic_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -126,14 +126,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddServiceBusTopicHealthCheck(name);
+        void Act() => builder.AddAzureServiceBusTopic(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
-    public void AddServiceBusTopicHealthCheck_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusTopic_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -142,14 +142,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddServiceBusTopicHealthCheck("Test", tags: tags);
+        void Act() => builder.AddAzureServiceBusTopic("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Fact]
-    public void AddServiceBusTopicHealthCheck_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddAzureServiceBusTopic_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -158,27 +158,27 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddServiceBusTopicHealthCheck(name, _ => { }).AddServiceBusTopicHealthCheck(name);
+        void Act() => builder.AddAzureServiceBusTopic(name, _ => { }).AddAzureServiceBusTopic(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
     [Fact]
-    public void AddServiceBusSubscriptionHealthCheck_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusSubscription_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddServiceBusSubscriptionHealthCheck("Test");
+        void Act() => builder.AddAzureServiceBusSubscription("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
-    public void AddServiceBusSubscriptionHealthCheck_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusSubscription_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -187,14 +187,14 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddServiceBusSubscriptionHealthCheck(name!);
+        void Act() => builder.AddAzureServiceBusSubscription(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
-    public void AddServiceBusSubscriptionHealthCheck_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddAzureServiceBusSubscription_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -203,14 +203,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddServiceBusSubscriptionHealthCheck(name);
+        void Act() => builder.AddAzureServiceBusSubscription(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
-    public void AddServiceBusSubscriptionHealthCheck_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddAzureServiceBusSubscription_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -219,14 +219,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddServiceBusSubscriptionHealthCheck("Test", tags: tags);
+        void Act() => builder.AddAzureServiceBusSubscription("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Fact]
-    public void AddServiceBusSubscriptionHealthCheck_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddAzureServiceBusSubscription_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -235,8 +235,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() =>
-            _ = builder.AddServiceBusSubscriptionHealthCheck(name, _ => { }).AddServiceBusSubscriptionHealthCheck(name);
+        void Act() => _ = builder.AddAzureServiceBusSubscription(name, _ => { }).AddAzureServiceBusSubscription(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
