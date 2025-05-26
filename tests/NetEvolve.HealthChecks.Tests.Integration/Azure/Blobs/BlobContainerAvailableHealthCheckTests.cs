@@ -8,7 +8,7 @@ using Microsoft.Extensions.Azure;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 
-[TestGroup("AzureBlobs")]
+[TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
@@ -51,9 +51,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -72,9 +70,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -93,9 +89,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -114,9 +108,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase, IClas
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]

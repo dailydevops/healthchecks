@@ -32,9 +32,8 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddClickHouse("TestContainerHealthy").AddClickHouse("TestContainerHealthy");
-                });
+                    healthChecks.AddClickHouse("TestContainerHealthy").AddClickHouse("TestContainerHealthy")
+                );
             }
         );
 
@@ -70,7 +69,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
     [Fact]
     public async Task AddClickHouse_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddClickHouse("TestContainerHealthy"),
+            healthChecks => healthChecks.AddClickHouse("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -84,7 +83,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
     [Fact]
     public async Task AddClickHouse_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddClickHouse("TestContainerDegraded"),
+            healthChecks => healthChecks.AddClickHouse("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -99,7 +98,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
     [Fact]
     public async Task AddClickHouse_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddClickHouse("TestNoValues"),
+            healthChecks => healthChecks.AddClickHouse("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -113,7 +112,7 @@ public class ClickHouseCheckTests : HealthCheckTestBase, IClassFixture<ClickHous
     [Fact]
     public async Task AddClickHouse_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddClickHouse("TestNoValues"),
+            healthChecks => healthChecks.AddClickHouse("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

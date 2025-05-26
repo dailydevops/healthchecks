@@ -15,7 +15,7 @@ public sealed class OracleConfigureTests
         // Arrange
         var options = new OracleOptions();
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -30,7 +30,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = default(OracleOptions);
 
         // Act
@@ -46,7 +46,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new OracleOptions();
 
         // Act
@@ -62,7 +62,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new OracleOptions { ConnectionString = "Test", Timeout = -2 };
 
         // Act
@@ -78,7 +78,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new OracleOptions { ConnectionString = "Test" };
 
         // Act
@@ -94,7 +94,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new OracleOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
@@ -109,7 +109,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new OracleOptions { ConnectionString = "Test", Command = string.Empty };
 
         // Act
@@ -125,7 +125,7 @@ public sealed class OracleConfigureTests
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new OracleOptions();
 
         // Act

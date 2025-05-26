@@ -16,7 +16,7 @@ public sealed class RedpandaConfigureTests
         // Arrange
         var options = new RedpandaOptions();
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -31,7 +31,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = default(RedpandaOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions();
 
         // Act
@@ -63,7 +63,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions { Topic = "Test", Mode = ProducerHandleMode.Create };
 
         // Act
@@ -79,7 +79,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions
         {
             Topic = "Test",
@@ -100,7 +100,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new RedpandaOptions
         {
             Topic = "Test",
@@ -120,7 +120,7 @@ public sealed class RedpandaConfigureTests
     {
         // Arrange
         var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new RedpandaOptions();
 
         // Act
@@ -142,5 +142,21 @@ public sealed class RedpandaConfigureTests
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
+    }
+
+    [Fact]
+    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    {
+        // Arrange
+        var configure = new RedpandaConfigure(new ConfigurationBuilder().Build());
+        const string? name = "Test";
+        var options = new RedpandaOptions { Timeout = -2 };
+
+        // Act
+        var result = configure.Validate(name, options);
+
+        // Assert
+        Assert.True(result.Failed);
+        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
     }
 }

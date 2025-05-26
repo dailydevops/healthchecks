@@ -9,7 +9,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
-[TestGroup("AzureQueues")]
+[TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
@@ -41,9 +41,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase, IClass
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -61,9 +59,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase, IClass
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -81,9 +77,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase, IClass
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]

@@ -1,6 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);CA1034</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
@@ -14,9 +15,12 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NetEvolve.Extensions.XUnit" />
     <PackageReference Include="PublicApiGenerator" />
+    <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.Azurite" />
     <PackageReference Include="Testcontainers.ClickHouse" />
+    <PackageReference Include="Testcontainers.FirebirdSql" />
     <PackageReference Include="Testcontainers.Kafka" />
+    <PackageReference Include="Testcontainers.LocalStack" />
     <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="Testcontainers.MySql" />
     <PackageReference Include="Testcontainers.Oracle" />
@@ -24,6 +28,7 @@
     <PackageReference Include="Testcontainers.Qdrant" />
     <PackageReference Include="Testcontainers.Redis" />
     <PackageReference Include="Testcontainers.Redpanda" />
+    <PackageReference Include="Testcontainers.ServiceBus" />
     <PackageReference Include="Verify.Xunit" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
@@ -33,12 +38,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SNS\NetEvolve.HealthChecks.AWS.SNS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ClickHouse\NetEvolve.HealthChecks.ClickHouse.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
@@ -55,11 +64,11 @@
     <Folder Include="Dapr\" />
   </ItemGroup>
   <ItemGroup>
-    <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.IntegrationTestAttribute" />
     <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.SetCultureAttribute">
       <_Parameter1>en_US</_Parameter1>
       <_Parameter2>true</_Parameter2>
       <_Parameter2_TypeName>System.Boolean</_Parameter2_TypeName>
     </AssemblyAttribute>
+    <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.IntegrationTestAttribute" />
   </ItemGroup>
 </Project>

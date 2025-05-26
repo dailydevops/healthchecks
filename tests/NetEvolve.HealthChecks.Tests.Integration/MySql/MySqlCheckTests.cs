@@ -32,9 +32,8 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
             async () =>
             {
                 await RunAndVerify(healthChecks =>
-                {
-                    _ = healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy");
-                });
+                    healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy")
+                );
             }
         );
 
@@ -70,7 +69,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddMySql("TestContainerHealthy"),
+            healthChecks => healthChecks.AddMySql("TestContainerHealthy"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -84,7 +83,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddMySql("TestContainerDegraded"),
+            healthChecks => healthChecks.AddMySql("TestContainerDegraded"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -99,7 +98,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddMySql("TestNoValues"),
+            healthChecks => healthChecks.AddMySql("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -113,7 +112,7 @@ public class MySqlCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
     [Fact]
     public async Task AddMySql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => _ = healthChecks.AddMySql("TestNoValues"),
+            healthChecks => healthChecks.AddMySql("TestNoValues"),
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

@@ -20,7 +20,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddDapr();
+        void Act() => builder.AddDapr();
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -36,7 +36,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddDapr(tags: tags);
+        void Act() => builder.AddDapr(tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -48,11 +48,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         string[] tags = ["sidecar"];
-        _ = services
-            .AddSingleton<IConfiguration>(configuration)
-            .AddHealthChecks()
-            .AddDapr(options => { }, tags)
-            .AddDapr();
+        _ = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks().AddDapr(_ => { }, tags).AddDapr();
 
         var serviceProvider = services.BuildServiceProvider();
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>()!;

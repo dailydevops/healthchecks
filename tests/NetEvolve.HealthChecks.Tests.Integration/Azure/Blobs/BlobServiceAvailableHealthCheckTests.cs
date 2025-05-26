@@ -9,7 +9,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 using Xunit;
 
-[TestGroup("AzureBlobs")]
+[TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
@@ -41,9 +41,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -61,9 +59,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -81,9 +77,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
     [Fact]

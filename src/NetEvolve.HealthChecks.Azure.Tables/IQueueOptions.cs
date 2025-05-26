@@ -13,7 +13,7 @@ internal interface ITableOptions
 
     string? AccountKey { get; }
 
-    TableClientCreationMode Mode { get; }
+    TableClientCreationMode? Mode { get; }
 
     Action<TableClientOptions>? ConfigureClientOptions { get; }
 

@@ -16,7 +16,7 @@ public sealed class QdrantOptionsConfigureTests
         // Arrange
         var options = new QdrantOptions();
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -31,7 +31,7 @@ public sealed class QdrantOptionsConfigureTests
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = default(QdrantOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class QdrantOptionsConfigureTests
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new QdrantOptions { Timeout = -2 };
 
         // Act
@@ -63,7 +63,7 @@ public sealed class QdrantOptionsConfigureTests
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new QdrantOptions { Timeout = 100 };
 
         // Act
@@ -78,7 +78,7 @@ public sealed class QdrantOptionsConfigureTests
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new QdrantOptions { Timeout = Timeout.Infinite };
 
         // Act
@@ -93,7 +93,7 @@ public sealed class QdrantOptionsConfigureTests
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new QdrantOptions();
 
         // Act
@@ -123,7 +123,7 @@ public sealed class QdrantOptionsConfigureTests
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
-        var name = " ";
+        const string? name = " ";
         var options = new QdrantOptions();
 
         // Act
@@ -140,7 +140,7 @@ public sealed class QdrantOptionsConfigureTests
         var configValues = new Dictionary<string, string?> { ["HealthChecks:Qdrant:Test:Timeout"] = "200" };
         var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
         var configure = new QdrantOptionsConfigure(configuration);
-        var name = "Test";
+        const string? name = "Test";
         var options = new QdrantOptions();
 
         // Act

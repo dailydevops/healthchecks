@@ -1,0 +1,41 @@
+﻿namespace NetEvolve.HealthChecks.Azure.ServiceBus
+{
+    public enum ClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        ConnectionString = 2,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAzureServiceBusQueue([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusQueueOptions>? options = null, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAzureServiceBusSubscription([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusSubscriptionOptions>? options = null, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAzureServiceBusTopic([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusTopicOptions>? options = null, params string[] tags) { }
+    }
+    public abstract class ServiceBusOptionsBase : System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase>
+    {
+        protected ServiceBusOptionsBase() { }
+        public string? ConnectionString { get; set; }
+        public string? FullyQualifiedNamespace { get; set; }
+        public NetEvolve.HealthChecks.Azure.ServiceBus.ClientCreationMode? Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+    public sealed class ServiceBusQueueOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusQueueOptions>
+    {
+        public ServiceBusQueueOptions() { }
+        public bool EnablePeekMode { get; set; }
+        public string? QueueName { get; set; }
+    }
+    public sealed class ServiceBusSubscriptionOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusSubscriptionOptions>
+    {
+        public ServiceBusSubscriptionOptions() { }
+        public bool EnablePeekMode { get; set; }
+        public string? SubscriptionName { get; set; }
+        public string? TopicName { get; set; }
+    }
+    public sealed class ServiceBusTopicOptions : NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.ServiceBus.ServiceBusTopicOptions>
+    {
+        public ServiceBusTopicOptions() { }
+        public string? TopicName { get; set; }
+    }
+}

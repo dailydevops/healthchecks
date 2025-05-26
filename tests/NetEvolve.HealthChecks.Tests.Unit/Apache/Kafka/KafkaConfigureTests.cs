@@ -7,7 +7,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
 
-[TestGroup(nameof(Kafka))]
+[TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 public sealed class KafkaConfigureTests
 {
     [Fact]
@@ -16,7 +16,7 @@ public sealed class KafkaConfigureTests
         // Arrange
         var options = new KafkaOptions();
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
 
         // Act
         var result = configure.Validate(name, options);
@@ -31,7 +31,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = default(KafkaOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions();
 
         // Act
@@ -63,7 +63,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions { Topic = "Test", Mode = ProducerHandleMode.Create };
 
         // Act
@@ -79,7 +79,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions
         {
             Topic = "Test",
@@ -100,7 +100,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = "Test";
+        const string? name = "Test";
         var options = new KafkaOptions
         {
             Topic = "Test",
@@ -120,7 +120,7 @@ public sealed class KafkaConfigureTests
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
-        var name = default(string);
+        const string? name = default;
         var options = new KafkaOptions();
 
         // Act
@@ -142,5 +142,21 @@ public sealed class KafkaConfigureTests
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
+    }
+
+    [Fact]
+    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    {
+        // Arrange
+        var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
+        const string? name = "Test";
+        var options = new KafkaOptions { Timeout = -2 };
+
+        // Act
+        var result = configure.Validate(name, options);
+
+        // Assert
+        Assert.True(result.Failed);
+        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
     }
 }

@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ServiceBusQueueConnectionStringPeekHealthy: Healthy,
+      name: ServiceBusQueueConnectionStringPeekHealthy,
+      status: Healthy,
+      tags: [
+        messaging,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Healthy
+}

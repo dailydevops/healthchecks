@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: ServiceBusSubscriptionConnectionStringPeekUnhealthy: Unexpected error.,
+      exception: {
+        message: The operation is canceled because the owner is being closed. (ServiceTimeout). For troubleshooting information, see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.,
+        type: Azure.Messaging.ServiceBus.ServiceBusException
+      },
+      name: ServiceBusSubscriptionConnectionStringPeekUnhealthy,
+      status: Unhealthy,
+      tags: [
+        messaging,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Unhealthy
+}

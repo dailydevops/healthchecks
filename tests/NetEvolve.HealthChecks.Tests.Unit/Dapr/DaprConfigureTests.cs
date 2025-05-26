@@ -31,7 +31,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = default(DaprOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new DaprOptions { Timeout = -2 };
 
         // Act
@@ -63,7 +63,7 @@ public sealed class DaprConfigureTests
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
-        const string name = "Test";
+        const string? name = "Test";
         var options = new DaprOptions { Timeout = 100 };
 
         // Act
@@ -112,7 +112,7 @@ public sealed class DaprConfigureTests
 
         var configure = new DaprConfigure(configuration);
         var options = new DaprOptions();
-        const string name = "TestDapr";
+        const string? name = "TestDapr";
 
         // Act
         configure.Configure(name, options);

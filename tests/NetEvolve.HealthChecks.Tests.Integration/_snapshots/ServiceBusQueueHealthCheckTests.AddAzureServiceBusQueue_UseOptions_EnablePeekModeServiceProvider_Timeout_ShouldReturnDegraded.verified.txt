@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ServiceBusQueueServiceProviderPeekDegraded: Degraded,
+      name: ServiceBusQueueServiceProviderPeekDegraded,
+      status: Degraded,
+      tags: [
+        messaging,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Degraded
+}

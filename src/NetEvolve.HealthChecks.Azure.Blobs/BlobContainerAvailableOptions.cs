@@ -6,7 +6,7 @@ using global::Azure.Storage.Blobs;
 /// <summary>
 /// Options for the <see cref="BlobContainerAvailableHealthCheck"/>.
 /// </summary>
-public sealed class BlobContainerAvailableOptions : IBlobOptions
+public sealed record BlobContainerAvailableOptions : IBlobOptions
 {
     /// <summary>
     /// Gets or sets the connection string.
@@ -16,7 +16,7 @@ public sealed class BlobContainerAvailableOptions : IBlobOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public BlobClientCreationMode Mode { get; set; }
+    public BlobClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.

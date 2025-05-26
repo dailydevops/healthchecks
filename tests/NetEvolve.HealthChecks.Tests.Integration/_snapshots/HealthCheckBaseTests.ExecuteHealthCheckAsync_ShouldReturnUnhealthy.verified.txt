@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: NotImplementedException: Unexpected error.,
+      exception: {
+        message: The method or operation is not implemented.,
+        type: System.NotImplementedException
+      },
+      name: NotImplementedException,
+      status: Unhealthy
+    }
+  ],
+  status: Unhealthy
+}

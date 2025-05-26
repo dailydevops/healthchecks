@@ -37,6 +37,79 @@ public class ConfigurableHealthCheckBaseTests
         Assert.Equal(HealthStatus.Unhealthy, result.Status);
     }
 
+    [Fact]
+    public void HealthCheckState_WhenConditionIsTrue_ReturnsHealthy()
+    {
+        // Arrange
+        const string testName = "TestHealthCheck";
+
+        // Act
+        var result = TestHelperConfigurableHealthCheck.TestHealthCheckState(true, testName);
+
+        // Assert
+        Assert.Equal(HealthStatus.Healthy, result.Status);
+        Assert.Equal($"{testName}: Healthy", result.Description);
+    }
+
+    [Fact]
+    public void HealthCheckState_WhenConditionIsFalse_ReturnsDegraded()
+    {
+        // Arrange
+        const string testName = "TestHealthCheck";
+
+        // Act
+        var result = TestHelperConfigurableHealthCheck.TestHealthCheckState(false, testName);
+
+        // Assert
+        Assert.Equal(HealthStatus.Degraded, result.Status);
+        Assert.Equal($"{testName}: Degraded", result.Description);
+    }
+
+    [Fact]
+    public void HealthCheckUnhealthy_WithDefaultMessage_ReturnsUnhealthyWithDefaultMessage()
+    {
+        // Arrange
+        const string testName = "TestHealthCheck";
+        const HealthStatus failureStatus = HealthStatus.Unhealthy;
+
+        // Act
+        var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(failureStatus, testName);
+
+        // Assert
+        Assert.Equal(failureStatus, result.Status);
+        Assert.Equal($"{testName}: Unhealthy", result.Description);
+    }
+
+    [Fact]
+    public void HealthCheckUnhealthy_WithCustomMessage_ReturnsUnhealthyWithCustomMessage()
+    {
+        // Arrange
+        const string testName = "TestHealthCheck";
+        const HealthStatus failureStatus = HealthStatus.Degraded;
+        const string customMessage = "Custom unhealthy message";
+
+        // Act
+        var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(failureStatus, testName, customMessage);
+
+        // Assert
+        Assert.Equal(failureStatus, result.Status);
+        Assert.Equal($"{testName}: {customMessage}", result.Description);
+    }
+
+    [Fact]
+    public void HealthCheckDegraded_ReturnsHealthCheckResultWithDegradedStatus()
+    {
+        // Arrange
+        const string testName = "TestHealthCheck";
+
+        // Act
+        var result = TestHelperConfigurableHealthCheck.TestHealthCheckDegraded(testName);
+
+        // Assert
+        Assert.Equal(HealthStatus.Degraded, result.Status);
+        Assert.Equal($"{testName}: Degraded", result.Description);
+    }
+
 #pragma warning disable CA1812 // Unused classes
     private sealed class TestConfigurableHealthCheck(IOptionsMonitor<TestConfiguration> optionsMonitor)
         : ConfigurableHealthCheckBase<TestConfiguration>(optionsMonitor)
@@ -49,7 +122,29 @@ public class ConfigurableHealthCheckBaseTests
         ) => throw new NotImplementedException();
     }
 
-    private sealed class TestConfiguration
+    private sealed class TestHelperConfigurableHealthCheck(IOptionsMonitor<TestConfiguration> optionsMonitor)
+        : ConfigurableHealthCheckBase<TestConfiguration>(optionsMonitor)
+    {
+        protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+            string name,
+            HealthStatus failureStatus,
+            TestConfiguration options,
+            CancellationToken cancellationToken
+        ) => new(HealthCheckResult.Healthy());
+
+        public static HealthCheckResult TestHealthCheckState(bool condition, string name) =>
+            HealthCheckState(condition, name);
+
+        public static HealthCheckResult TestHealthCheckUnhealthy(
+            HealthStatus failureStatus,
+            string name,
+            string message = "Unhealthy"
+        ) => HealthCheckUnhealthy(failureStatus, name, message);
+
+        public static HealthCheckResult TestHealthCheckDegraded(string name) => HealthCheckDegraded(name);
+    }
+
+    private sealed record TestConfiguration
     {
         public string? Name { get; set; }
     }

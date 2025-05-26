@@ -8,7 +8,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
-[TestGroup("AzureTables")]
+[TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
 public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
@@ -33,9 +33,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase, IClass
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -53,9 +51,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase, IClass
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -73,9 +69,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase, IClass
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]

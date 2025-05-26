@@ -7,7 +7,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
-[TestGroup("AzureQueues")]
+[TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
@@ -17,7 +17,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddQueueClientAvailability("Test");
+        void Act() => builder.AddQueueClientAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -30,10 +30,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddQueueClientAvailability(name);
+        void Act() => builder.AddQueueClientAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -49,7 +49,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddQueueClientAvailability(name);
+        void Act() => builder.AddQueueClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -65,7 +65,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddQueueClientAvailability("Test", tags: tags);
+        void Act() => builder.AddQueueClientAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -78,10 +78,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddQueueClientAvailability(name, x => { }).AddQueueClientAvailability(name);
+        void Act() => builder.AddQueueClientAvailability(name, _ => { }).AddQueueClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -94,7 +94,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddQueueServiceAvailability("Test");
+        void Act() => builder.AddQueueServiceAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -107,10 +107,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddQueueServiceAvailability(name);
+        void Act() => builder.AddQueueServiceAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -126,7 +126,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddQueueServiceAvailability(name);
+        void Act() => builder.AddQueueServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -142,7 +142,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddQueueServiceAvailability("Test", tags: tags);
+        void Act() => builder.AddQueueServiceAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -155,10 +155,10 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string name = "Test";
+        const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddQueueServiceAvailability(name, x => { }).AddQueueServiceAvailability(name);
+        void Act() => builder.AddQueueServiceAvailability(name, _ => { }).AddQueueServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

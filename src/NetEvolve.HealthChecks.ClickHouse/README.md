@@ -24,7 +24,7 @@ After adding the package, you need to import the namespace and add the health ch
 ```csharp
 using NetEvolve.HealthChecks.ClickHouse;
 ```
-Therefor you can use two different approaches. In both approaches you have to provide a name for the health check.
+Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
@@ -70,5 +70,6 @@ builder.AddClickHouse("<name>", options =>
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddClickHouse("<name>", options => ..., "clickhouse", "database");
+
+builder.AddClickHouse("<name>", options => ..., "clickhouse", "database");
 ```

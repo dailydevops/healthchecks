@@ -9,7 +9,7 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
-[TestGroup("AzureQueues")]
+[TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
 {
     private readonly AzuriteAccess _container;
@@ -52,9 +52,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -73,9 +71,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -94,9 +90,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
@@ -115,9 +109,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                 );
             },
             serviceBuilder: services =>
-            {
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-            }
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]

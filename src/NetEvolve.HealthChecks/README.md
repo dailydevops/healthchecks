@@ -42,5 +42,6 @@ builder.AddApplicationReady()
 
 ```csharp
 var builder = services.AddHealthChecks();
-    builder.AddApplicationReady("readiness");
+
+builder.AddApplicationReady("readiness");
 ```

@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Workaround, until https://github.com/GitTools/GitVersion/pull/4206 is released -->
-    <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
+    <GitVersionTargetFramework>net9.0</GitVersionTargetFramework>
   </PropertyGroup>
   <PropertyGroup Label="Settings for non test projects">
     <Title>$(MSBuildProjectName)</Title>

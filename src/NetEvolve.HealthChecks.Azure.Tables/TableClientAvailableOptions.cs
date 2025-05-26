@@ -6,7 +6,7 @@ using global::Azure.Data.Tables;
 /// <summary>
 /// Options for the <see cref="TableClientAvailableHealthCheck"/>.
 /// </summary>
-public sealed class TableClientAvailableOptions : ITableOptions
+public sealed record TableClientAvailableOptions : ITableOptions
 {
     /// <summary>
     /// Gets or sets the connection string.
@@ -16,7 +16,7 @@ public sealed class TableClientAvailableOptions : ITableOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public TableClientCreationMode Mode { get; set; }
+    public TableClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.
