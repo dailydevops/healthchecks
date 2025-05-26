@@ -30,8 +30,10 @@ internal static class HealthCheckArchitecture
             typeof(Azure.ServiceBus.ServiceBusQueueHealthCheck).Assembly,
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             // others
+            typeof(Abstractions.HealthCheckBase).Assembly,
             typeof(ClickHouse.ClickHouseCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
+            typeof(Firebird.FirebirdCheck).Assembly,
             typeof(MySql.MySqlCheck).Assembly,
             typeof(MySql.Connector.MySqlCheck).Assembly,
             typeof(Npgsql.NpgsqlCheck).Assembly,
@@ -42,7 +44,6 @@ internal static class HealthCheckArchitecture
             typeof(SQLite.SQLiteCheck).Assembly,
             typeof(SqlServer.SqlServerCheck).Assembly,
             typeof(SqlServer.Legacy.SqlServerLegacyCheck).Assembly,
-            typeof(Firebird.FirebirdCheck).Assembly,
         ];
 
         return new ArchLoader()
