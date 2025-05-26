@@ -13,7 +13,7 @@ public sealed class ClientFactoryChecks
         // Arrange
 
         // Act
-        async Task Act() => _ = await ClientFactory.GetConnectionAsync(null!, default);
+        static async Task Act() => _ = await ClientFactory.GetConnectionAsync(null!, default);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("options", Act);

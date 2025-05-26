@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddSimpleNotificationService(name, x => { }).AddSimpleNotificationService(name);
+        void Act() => builder.AddSimpleNotificationService(name, _ => { }).AddSimpleNotificationService(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

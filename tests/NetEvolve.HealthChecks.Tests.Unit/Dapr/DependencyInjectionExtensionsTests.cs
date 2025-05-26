@@ -48,11 +48,7 @@ public class DependencyInjectionExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
         string[] tags = ["sidecar"];
-        _ = services
-            .AddSingleton<IConfiguration>(configuration)
-            .AddHealthChecks()
-            .AddDapr(options => { }, tags)
-            .AddDapr();
+        _ = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks().AddDapr(_ => { }, tags).AddDapr();
 
         var serviceProvider = services.BuildServiceProvider();
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>()!;

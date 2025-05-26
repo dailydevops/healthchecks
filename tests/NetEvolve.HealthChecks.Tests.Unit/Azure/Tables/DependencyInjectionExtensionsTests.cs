@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddTableClientAvailability(name, x => { }).AddTableClientAvailability(name);
+        void Act() => builder.AddTableClientAvailability(name, _ => { }).AddTableClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -158,7 +158,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddTableServiceAvailability(name, x => { }).AddTableServiceAvailability(name);
+        void Act() => builder.AddTableServiceAvailability(name, _ => { }).AddTableServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

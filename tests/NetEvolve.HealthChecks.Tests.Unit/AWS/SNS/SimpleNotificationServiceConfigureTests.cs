@@ -119,7 +119,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions();
-        _ = Assert.Throws<ArgumentNullException>(() => configure.Configure(null!, options));
+        _ = Assert.Throws<ArgumentNullException>(() => configure.Configure(null, options));
     }
 
     [Fact]
