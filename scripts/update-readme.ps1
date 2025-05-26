@@ -36,8 +36,8 @@ function Get-Packages {
 
   $result = @"
 
-| Package Name | Current Version | Downloads |
-|:-------------|:---------------:|:---------:|
+| Package Name | Current Version |
+|:-------------|:---------------:|
 
 "@
 
@@ -53,7 +53,6 @@ function Get-Packages {
     $result += "<br/><small>$($package.description)</small> "
 
     $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/#versions-body-tab) "
-    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/) "
     $result += "|`n"
 
   }
