@@ -17,7 +17,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddTableClientAvailability("Test");
+        void Act() => builder.AddTableClientAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -33,7 +33,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddTableClientAvailability(name);
+        void Act() => builder.AddTableClientAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -49,7 +49,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddTableClientAvailability(name);
+        void Act() => builder.AddTableClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -65,7 +65,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddTableClientAvailability("Test", tags: tags);
+        void Act() => builder.AddTableClientAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddTableClientAvailability(name, x => { }).AddTableClientAvailability(name);
+        void Act() => builder.AddTableClientAvailability(name, x => { }).AddTableClientAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -94,7 +94,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddTableServiceAvailability("Test");
+        void Act() => builder.AddTableServiceAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -110,7 +110,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddTableServiceAvailability(name);
+        void Act() => builder.AddTableServiceAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -126,7 +126,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddTableServiceAvailability(name);
+        void Act() => builder.AddTableServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -142,7 +142,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddTableServiceAvailability("Test", tags: tags);
+        void Act() => builder.AddTableServiceAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -158,7 +158,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddTableServiceAvailability(name, x => { }).AddTableServiceAvailability(name);
+        void Act() => builder.AddTableServiceAvailability(name, x => { }).AddTableServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

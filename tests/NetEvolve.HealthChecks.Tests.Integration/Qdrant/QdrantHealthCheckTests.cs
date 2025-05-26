@@ -22,7 +22,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     public async Task AddQdrant_UseOptions_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddQdrant("TestContainerHealthy"),
-            serviceBuilder: services => _ = new QdrantClient(_database.GrpcConnectionString)
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
     [Fact]
@@ -35,7 +35,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
                     healthChecks =>
                         _ = healthChecks.AddQdrant("TestContainerHealthy").AddQdrant("TestContainerHealthy"),
                     serviceBuilder: services =>
-                        _ = services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+                        services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
                 );
             }
         );
@@ -44,7 +44,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     public async Task AddQdrant_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddQdrant("TestContainerDegraded", options => options.Timeout = 0),
-            serviceBuilder: services => _ = services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
     [Fact]
@@ -70,7 +70,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
     public async Task AddQdrant_UseGrpcConnection_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddQdrant("TestContainerGrpcHealthy"),
-            serviceBuilder: services => _ = services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
     [Fact]
@@ -85,7 +85,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
     [Fact]
@@ -100,7 +100,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase, IClassFixture<
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
 
     [Fact]

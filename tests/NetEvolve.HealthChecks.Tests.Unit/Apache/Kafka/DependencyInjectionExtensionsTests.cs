@@ -17,7 +17,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddKafka("Test");
+        void Act() => builder.AddKafka("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -33,7 +33,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddKafka(name);
+        void Act() => builder.AddKafka(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -49,7 +49,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddKafka(name);
+        void Act() => builder.AddKafka(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -65,7 +65,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddKafka("Test", tags: tags);
+        void Act() => builder.AddKafka("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddKafka(name).AddKafka(name);
+        void Act() => builder.AddKafka(name).AddKafka(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

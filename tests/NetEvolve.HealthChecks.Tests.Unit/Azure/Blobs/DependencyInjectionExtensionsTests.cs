@@ -17,7 +17,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddBlobContainerAvailability("Test");
+        void Act() => builder.AddBlobContainerAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -33,7 +33,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddBlobContainerAvailability(name);
+        void Act() => builder.AddBlobContainerAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -49,7 +49,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddBlobContainerAvailability(name);
+        void Act() => builder.AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -65,7 +65,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddBlobContainerAvailability("Test", tags: tags);
+        void Act() => builder.AddBlobContainerAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddBlobContainerAvailability(name, __ => { }).AddBlobContainerAvailability(name);
+        void Act() => builder.AddBlobContainerAvailability(name, __ => { }).AddBlobContainerAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -94,7 +94,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddBlobServiceAvailability("Test");
+        void Act() => builder.AddBlobServiceAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -110,7 +110,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddBlobServiceAvailability(name);
+        void Act() => builder.AddBlobServiceAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -126,7 +126,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddBlobServiceAvailability(name);
+        void Act() => builder.AddBlobServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -142,7 +142,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddBlobServiceAvailability("Test", tags: tags);
+        void Act() => builder.AddBlobServiceAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -158,7 +158,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddBlobServiceAvailability(name, __ => { }).AddBlobServiceAvailability(name);
+        void Act() => builder.AddBlobServiceAvailability(name, __ => { }).AddBlobServiceAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

@@ -21,7 +21,7 @@ public class IHealthChecksBuilderExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.IsServiceTypeRegistered<IConfiguration>();
+        void Act() => builder.IsServiceTypeRegistered<IConfiguration>();
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -63,7 +63,7 @@ public class IHealthChecksBuilderExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.IsNameAlreadyUsed<TestHealthCheck>("Test");
+        void Act() => builder.IsNameAlreadyUsed<TestHealthCheck>("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);

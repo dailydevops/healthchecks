@@ -20,7 +20,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddDapr();
+        void Act() => builder.AddDapr();
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -36,7 +36,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddDapr(tags: tags);
+        void Act() => builder.AddDapr(tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);

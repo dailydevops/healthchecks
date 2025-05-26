@@ -17,7 +17,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => _ = builder.AddClickHouse("Test");
+        void Act() => builder.AddClickHouse("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -33,7 +33,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => _ = builder.AddClickHouse(name);
+        void Act() => builder.AddClickHouse(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -49,7 +49,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => _ = builder.AddClickHouse(name);
+        void Act() => builder.AddClickHouse(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -65,7 +65,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => _ = builder.AddClickHouse("Test", tags: tags);
+        void Act() => builder.AddClickHouse("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => _ = builder.AddClickHouse(name).AddClickHouse(name);
+        void Act() => builder.AddClickHouse(name).AddClickHouse(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
