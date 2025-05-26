@@ -95,7 +95,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     /// A <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Healthy"/> or <see cref="HealthStatus.Degraded"/>.
     /// </returns>
     protected static HealthCheckResult HealthCheckState(bool condition, string name) =>
-                condition ? HealthCheckResult.Healthy($"{name}: Healthy") : HealthCheckDegraded(name);
+        condition ? HealthCheckResult.Healthy($"{name}: Healthy") : HealthCheckDegraded(name);
 
     /// <summary>
     /// Creates a <see cref="HealthCheckResult"/> with the specified failure status, indicating an unhealthy state.
