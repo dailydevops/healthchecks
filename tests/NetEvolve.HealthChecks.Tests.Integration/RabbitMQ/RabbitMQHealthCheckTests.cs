@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.XUnit;
@@ -18,14 +19,23 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
     public RabbitMQHealthCheckTests(RabbitMQContainer container) => _container = container;
 
     [Fact]
-    public async Task AddRabbitMQ_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddRabbitMQ_UseOptions_ShouldReturnHealthy()
+    {
+        var factory = new ConnectionFactory { Uri = _container.ConnectionString };
+        var connection = await factory.CreateConnectionAsync();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy", options => options.Timeout = 1000),
-            serviceBuilder: RegisterRabbitMQConnection
+            serviceBuilder: services => services.AddSingleton(connection)
         );
+    }
 
     [Fact]
-    public async Task AddRabbitMQ_UseOptionsWithKeyedService_ShouldReturnHealthy() =>
+    public async Task AddRabbitMQ_UseOptionsWithKeyedService_ShouldReturnHealthy()
+    {
+        var factory = new ConnectionFactory { Uri = _container.ConnectionString };
+        var connection = await factory.CreateConnectionAsync();
+
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddRabbitMQ(
@@ -36,18 +46,28 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
                         options.Timeout = 1000;
                     }
                 ),
-            serviceBuilder: RegisterRabbitMQKeyedConnection("rabbitmq-test")
+            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test", (_, _) => connection)
         );
+    }
 
     [Fact]
-    public async Task AddRabbitMQ_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddRabbitMQ_UseOptions_ShouldReturnDegraded()
+    {
+        var factory = new ConnectionFactory { Uri = _container.ConnectionString };
+        var connection = await factory.CreateConnectionAsync();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded", options => options.Timeout = 0),
-            serviceBuilder: RegisterRabbitMQConnection
+            serviceBuilder: services => services.AddSingleton(connection)
         );
+    }
 
     [Fact]
-    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnHealthy()
+    {
+        var factory = new ConnectionFactory { Uri = _container.ConnectionString };
+        var connection = await factory.CreateConnectionAsync();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy"),
             config =>
@@ -58,11 +78,16 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: RegisterRabbitMQConnection
+            serviceBuilder: services => services.AddSingleton(connection)
         );
+    }
 
     [Fact]
-    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_ShouldReturnHealthy() =>
+    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_ShouldReturnHealthy()
+    {
+        var factory = new ConnectionFactory { Uri = _container.ConnectionString };
+        var connection = await factory.CreateConnectionAsync();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerKeyedHealthy"),
             config =>
@@ -74,11 +99,16 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: RegisterRabbitMQKeyedConnection("rabbitmq-test-config")
+            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test-config", (_, _) => connection)
         );
+    }
 
     [Fact]
-    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnDegraded()
+    {
+        var factory = new ConnectionFactory { Uri = _container.ConnectionString };
+        var connection = await factory.CreateConnectionAsync();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded"),
             config =>
@@ -89,26 +119,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: RegisterRabbitMQConnection
+            serviceBuilder: services => services.AddSingleton(connection)
         );
-
-    private void RegisterRabbitMQConnection(IServiceCollection services) =>
-        services.AddSingleton<global::RabbitMQ.Client.IConnection>(_ =>
-        {
-            var factory = new global::RabbitMQ.Client.ConnectionFactory { Uri = _container.ConnectionString };
-            return factory.CreateConnectionAsync().Result;
-        });
-
-    private Action<IServiceCollection> RegisterRabbitMQKeyedConnection(string key) =>
-        services =>
-        {
-            _ = services.AddKeyedSingleton<global::RabbitMQ.Client.IConnection>(
-                key,
-                (_, _) =>
-                {
-                    var factory = new global::RabbitMQ.Client.ConnectionFactory { Uri = _container.ConnectionString };
-                    return factory.CreateConnectionAsync().Result;
-                }
-            );
-        };
+    }
 }
