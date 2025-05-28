@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for RabbitMQ, based on the nuget package `RabbitMQ.Client`.</Description>
+    <PackageTags>$(PackageTags);rabbitmq;messaging</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+    <PackageReference Include="RabbitMQ.Client" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
