@@ -27,44 +27,36 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        var configurationName = context.Registration.Name;
+        var name = context.Registration.Name;
         var failureStatus = context.Registration.FailureStatus;
 
         if (cancellationToken.IsCancellationRequested)
         {
-            return new HealthCheckResult(failureStatus, description: $"{configurationName}: Cancellation requested.");
+            return new HealthCheckResult(failureStatus, description: $"{name}: Cancellation requested.");
         }
 
-        return await InternalAsync(configurationName, failureStatus, cancellationToken).ConfigureAwait(false);
+        return await InternalAsync(name, failureStatus, cancellationToken).ConfigureAwait(false);
     }
 
     private async Task<HealthCheckResult> InternalAsync(
-        string configurationName,
+        string name,
         HealthStatus failureStatus,
         CancellationToken cancellationToken
     )
     {
         try
         {
-            var options = _optionsMonitor.Get(configurationName);
+            var options = _optionsMonitor.Get(name);
             if (options is null || options.Equals(new TConfiguration()))
             {
-                return new HealthCheckResult(
-                    HealthStatus.Unhealthy,
-                    description: $"{configurationName}: Missing configuration."
-                );
+                return new HealthCheckResult(HealthStatus.Unhealthy, description: $"{name}: Missing configuration.");
             }
 
-            return await ExecuteHealthCheckAsync(configurationName, failureStatus, options, cancellationToken)
-                .ConfigureAwait(false);
+            return await ExecuteHealthCheckAsync(name, failureStatus, options, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            return new HealthCheckResult(
-                failureStatus,
-                description: $"{configurationName}: Unexpected error.",
-                exception: ex
-            );
+            return new HealthCheckResult(failureStatus, description: $"{name}: Unexpected error.", exception: ex);
         }
     }
 
