@@ -11,7 +11,7 @@ using Xunit;
 
 [TestGroup(nameof(SqlServer))]
 [Collection(nameof(SqlServer))]
-public class SqlServerCheckTests : HealthCheckTestBase, IClassFixture<SqlServerDatabase>
+public class SqlServerCheckTests : HealthCheckTestBase
 {
     private readonly SqlServerDatabase _database;
 
