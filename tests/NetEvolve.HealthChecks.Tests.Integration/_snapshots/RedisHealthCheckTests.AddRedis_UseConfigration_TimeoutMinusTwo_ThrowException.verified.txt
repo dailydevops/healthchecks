@@ -9,7 +9,8 @@
       name: TestNoValues,
       status: Unhealthy,
       tags: [
-        redis
+        redis,
+        cache
       ]
     }
   ],

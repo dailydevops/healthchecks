@@ -11,15 +11,15 @@ using NSubstitute;
 using Xunit;
 
 [TestGroup(nameof(Redis))]
-public sealed class RedisDatabaseCheckTests
+public sealed class RedisHealthCheckTests
 {
     [Fact]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RedisDatabaseOptions>>();
-        var check = new RedisDatabaseHealthCheck(serviceProvider, optionsMonitor);
+        var optionsMonitor = Substitute.For<IOptionsMonitor<RedisOptions>>();
+        var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!);
@@ -33,8 +33,8 @@ public sealed class RedisDatabaseCheckTests
     {
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RedisDatabaseOptions>>();
-        var check = new RedisDatabaseHealthCheck(serviceProvider, optionsMonitor);
+        var optionsMonitor = Substitute.For<IOptionsMonitor<RedisOptions>>();
+        var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -51,8 +51,8 @@ public sealed class RedisDatabaseCheckTests
     {
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RedisDatabaseOptions>>();
-        var check = new RedisDatabaseHealthCheck(serviceProvider, optionsMonitor);
+        var optionsMonitor = Substitute.For<IOptionsMonitor<RedisOptions>>();
+        var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

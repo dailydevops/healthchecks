@@ -5,23 +5,21 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class RedisDatabaseConfigure
-    : IConfigureNamedOptions<RedisDatabaseOptions>,
-        IValidateOptions<RedisDatabaseOptions>
+internal sealed class RedisConfigure : IConfigureNamedOptions<RedisOptions>, IValidateOptions<RedisOptions>
 {
     private readonly IConfiguration _configuration;
 
-    public RedisDatabaseConfigure(IConfiguration configuration) => _configuration = configuration;
+    public RedisConfigure(IConfiguration configuration) => _configuration = configuration;
 
-    public void Configure(string? name, RedisDatabaseOptions options)
+    public void Configure(string? name, RedisOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:RedisDatabase:{name}", options);
     }
 
-    public void Configure(RedisDatabaseOptions options) => Configure(Options.DefaultName, options);
+    public void Configure(RedisOptions options) => Configure(Options.DefaultName, options);
 
-    public ValidateOptionsResult Validate(string? name, RedisDatabaseOptions options)
+    public ValidateOptionsResult Validate(string? name, RedisOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

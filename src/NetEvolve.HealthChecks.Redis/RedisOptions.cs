@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the options for a Redis database.
 /// </summary>
-public sealed record RedisDatabaseOptions
+public sealed record RedisOptions
 {
     /// <summary>
     /// Gets or sets the connection string for the Redis database.

@@ -12,13 +12,13 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["redis"];
+    private static readonly string[] _defaultTags = ["redis", "cache"];
 
     /// <summary>
     /// Add a health check for Redis.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="RedisDatabaseHealthCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="RedisHealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -26,10 +26,10 @@ public static class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddRedisDatabase(
+    public static IHealthChecksBuilder AddRedis(
         this IHealthChecksBuilder builder,
         string name,
-        Action<RedisDatabaseOptions>? options = null,
+        Action<RedisOptions>? options = null,
         params string[] tags
     )
     {
@@ -41,11 +41,11 @@ public static class DependencyInjectionExtensions
         {
             _ = builder
                 .Services.AddSingleton<RedisDatabaseCheckMarker>()
-                .AddSingleton<RedisDatabaseHealthCheck>()
-                .ConfigureOptions<RedisDatabaseConfigure>();
+                .AddSingleton<RedisHealthCheck>()
+                .ConfigureOptions<RedisConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<RedisDatabaseHealthCheck>(name))
+        if (builder.IsNameAlreadyUsed<RedisHealthCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
@@ -55,7 +55,7 @@ public static class DependencyInjectionExtensions
             _ = builder.Services.Configure(name, options);
         }
 
-        return builder.AddCheck<RedisDatabaseHealthCheck>(
+        return builder.AddCheck<RedisHealthCheck>(
             name,
             HealthStatus.Unhealthy,
             _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)

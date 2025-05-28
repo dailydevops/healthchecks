@@ -14,18 +14,18 @@ using Xunit;
 
 [SetCulture("", asHiddenCategory: true)]
 [TestGroup(nameof(Redis))]
-public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisDatabase>
+public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisDatabase>
 {
     private readonly RedisDatabase _database;
 
-    public RedisDatabaseCheckTests(RedisDatabase database) => _database = database;
+    public RedisHealthCheckTests(RedisDatabase database) => _database = database;
 
     [Fact]
-    public async Task AddRedisDatabase_UseOptionsCreate_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseOptionsCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedisDatabase(
+                _ = healthChecks.AddRedis(
                     "TestContainerHealthy",
                     options =>
                     {
@@ -38,11 +38,11 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseOptionsServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseOptionsServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedisDatabase(
+                _ = healthChecks.AddRedis(
                     "TestContainerHealthy",
                     options => options.ConnectionString = _database.GetConnectionString()
                 );
@@ -52,7 +52,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
             {
                 _ = builder.AddSingleton<IConnectionMultiplexer>(services =>
                 {
-                    var options = services.GetService<IOptionsSnapshot<RedisDatabaseOptions>>();
+                    var options = services.GetService<IOptionsSnapshot<RedisOptions>>();
 
                     return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
                 });
@@ -60,23 +60,22 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
         _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
                 await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddRedisDatabase("TestContainerHealthy").AddRedisDatabase("TestContainerHealthy"),
+                    healthChecks => healthChecks.AddRedis("TestContainerHealthy").AddRedis("TestContainerHealthy"),
                     HealthStatus.Healthy
                 )
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddRedis_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedisDatabase(
+                _ = healthChecks.AddRedis(
                     "TestContainerDegraded",
                     options =>
                     {
@@ -90,9 +89,9 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddRedisDatabase("TestContainerHealthy"),
+            healthChecks => healthChecks.AddRedis("TestContainerHealthy"),
             HealthStatus.Healthy,
             config =>
             {
@@ -109,7 +108,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
             {
                 _ = builder.AddSingleton<IConnectionMultiplexer>(services =>
                 {
-                    var options = services.GetService<IOptionsSnapshot<RedisDatabaseOptions>>();
+                    var options = services.GetService<IOptionsSnapshot<RedisOptions>>();
 
                     return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
                 });
@@ -117,9 +116,9 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddRedis_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddRedisDatabase("TestContainerDegraded"),
+            healthChecks => healthChecks.AddRedis("TestContainerDegraded"),
             HealthStatus.Degraded,
             config =>
             {
@@ -137,9 +136,9 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddRedis_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddRedisDatabase("TestNoValues"),
+            healthChecks => healthChecks.AddRedis("TestNoValues"),
             HealthStatus.Unhealthy,
             config =>
             {
@@ -153,9 +152,9 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         );
 
     [Fact]
-    public async Task AddRedisDatabase_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddRedis_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddRedisDatabase("TestNoValues"),
+            healthChecks => healthChecks.AddRedis("TestNoValues"),
             HealthStatus.Unhealthy,
             config =>
             {

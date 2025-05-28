@@ -7,14 +7,14 @@ using NetEvolve.HealthChecks.Redis;
 using Xunit;
 
 [TestGroup(nameof(Redis))]
-public sealed class RedisDatabaseConfigureTests
+public sealed class RedisHealthConfigureTests
 {
     [Fact]
     public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
-        var options = new RedisDatabaseOptions();
-        var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
+        var options = new RedisOptions();
+        var configure = new RedisConfigure(new ConfigurationBuilder().Build());
         const string? name = default;
 
         // Act
@@ -29,9 +29,9 @@ public sealed class RedisDatabaseConfigureTests
     public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
+        var configure = new RedisConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = default(RedisDatabaseOptions);
+        var options = default(RedisOptions);
 
         // Act
         var result = configure.Validate(name, options);
@@ -45,9 +45,9 @@ public sealed class RedisDatabaseConfigureTests
     public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
-        var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
+        var configure = new RedisConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new RedisDatabaseOptions { ConnectionString = default, Mode = ConnectionHandleMode.Create };
+        var options = new RedisOptions { ConnectionString = default, Mode = ConnectionHandleMode.Create };
 
         // Act
         var result = configure.Validate(name, options);
@@ -61,9 +61,9 @@ public sealed class RedisDatabaseConfigureTests
     public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
-        var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
+        var configure = new RedisConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new RedisDatabaseOptions { ConnectionString = "Test", Timeout = -2 };
+        var options = new RedisOptions { ConnectionString = "Test", Timeout = -2 };
 
         // Act
         var result = configure.Validate(name, options);
@@ -77,9 +77,9 @@ public sealed class RedisDatabaseConfigureTests
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
+        var configure = new RedisConfigure(new ConfigurationBuilder().Build());
         const string? name = default;
-        var options = new RedisDatabaseOptions();
+        var options = new RedisOptions();
 
         // Act
         void Act() => configure.Configure(name, options);
@@ -92,8 +92,8 @@ public sealed class RedisDatabaseConfigureTests
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
-        var configure = new RedisDatabaseConfigure(new ConfigurationBuilder().Build());
-        var options = new RedisDatabaseOptions();
+        var configure = new RedisConfigure(new ConfigurationBuilder().Build());
+        var options = new RedisOptions();
 
         // Act
         void Act() => configure.Configure(options);
