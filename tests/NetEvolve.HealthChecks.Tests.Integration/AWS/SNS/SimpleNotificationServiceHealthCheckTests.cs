@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
-public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IClassFixture<LocalStackInstance>
+[Collection(nameof(AWS))]
+public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
 {
     private readonly LocalStackInstance _instance;
 
@@ -16,84 +18,8 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
 
     [Fact]
     public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddSimpleNotificationService(
-                "TestContainerHealthy",
-                options =>
-                {
-                    options.AccessKey = LocalStackInstance.AccessKey;
-                    options.SecretKey = LocalStackInstance.SecretKey;
-                    options.ServiceUrl = _instance.ConnectionString;
-                    options.TopicName = LocalStackInstance.TopicName;
-                    options.Subscription = _instance.Subscription;
-                    options.Mode = CreationMode.BasicAuthentication;
-                }
-            );
-        });
-
-    [Fact]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddSimpleNotificationService(
-                "TestContainerUnhealthy",
-                options =>
-                {
-                    options.AccessKey = LocalStackInstance.AccessKey;
-                    options.SecretKey = LocalStackInstance.SecretKey;
-                    options.ServiceUrl = _instance.ConnectionString;
-                    options.TopicName = LocalStackInstance.TopicName;
-                    options.Subscription = "NotFound";
-                    options.Mode = CreationMode.BasicAuthentication;
-                }
-            );
-        });
-
-    [Fact]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_ShouldReturnUnhealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddSimpleNotificationService(
-                "TestContainerUnhealthy",
-                options =>
-                {
-                    options.AccessKey = LocalStackInstance.AccessKey;
-                    options.SecretKey = LocalStackInstance.SecretKey;
-                    options.ServiceUrl = _instance.ConnectionString;
-                    options.TopicName = "Invalid";
-                    options.Subscription = _instance.Subscription;
-                    options.Mode = CreationMode.BasicAuthentication;
-                }
-            );
-        });
-
-    [Fact]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddSimpleNotificationService(
-                "TestContainerDegraded",
-                options =>
-                {
-                    options.AccessKey = LocalStackInstance.AccessKey;
-                    options.SecretKey = LocalStackInstance.SecretKey;
-                    options.ServiceUrl = _instance.ConnectionString;
-                    options.TopicName = LocalStackInstance.TopicName;
-                    options.Subscription = _instance.Subscription;
-                    options.Timeout = 0;
-                    options.Mode = CreationMode.BasicAuthentication;
-                }
-            );
-        });
-
-    [Fact]
-    public async Task AddSimpleNotificationService_Run101Subscriptions_ShouldReturnHealthy()
-    {
-        const string topicName = "MassOf101Subscriptions";
-        await using (var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
-        {
-            await RunAndVerify(healthChecks =>
+        await RunAndVerify(
+            healthChecks =>
             {
                 _ = healthChecks.AddSimpleNotificationService(
                     "TestContainerHealthy",
@@ -102,12 +28,103 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
                         options.AccessKey = LocalStackInstance.AccessKey;
                         options.SecretKey = LocalStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = topicName;
-                        options.Subscription = subcription.SubscriptionArn;
+                        options.TopicName = LocalStackInstance.TopicName;
+                        options.Subscription = _instance.Subscription;
                         options.Mode = CreationMode.BasicAuthentication;
                     }
                 );
-            });
+            },
+            HealthStatus.Healthy
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddSimpleNotificationService(
+                    "TestContainerUnhealthy",
+                    options =>
+                    {
+                        options.AccessKey = LocalStackInstance.AccessKey;
+                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.ServiceUrl = _instance.ConnectionString;
+                        options.TopicName = LocalStackInstance.TopicName;
+                        options.Subscription = "NotFound";
+                        options.Mode = CreationMode.BasicAuthentication;
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_ShouldReturnUnhealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddSimpleNotificationService(
+                    "TestContainerUnhealthy",
+                    options =>
+                    {
+                        options.AccessKey = LocalStackInstance.AccessKey;
+                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.ServiceUrl = _instance.ConnectionString;
+                        options.TopicName = "Invalid";
+                        options.Subscription = _instance.Subscription;
+                        options.Mode = CreationMode.BasicAuthentication;
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnDegraded() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddSimpleNotificationService(
+                    "TestContainerDegraded",
+                    options =>
+                    {
+                        options.AccessKey = LocalStackInstance.AccessKey;
+                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.ServiceUrl = _instance.ConnectionString;
+                        options.TopicName = LocalStackInstance.TopicName;
+                        options.Subscription = _instance.Subscription;
+                        options.Timeout = 0;
+                        options.Mode = CreationMode.BasicAuthentication;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
+
+    [Fact]
+    public async Task AddSimpleNotificationService_Run101Subscriptions_ShouldReturnHealthy()
+    {
+        const string topicName = "MassOf101Subscriptions";
+        await using (var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
+        {
+            await RunAndVerify(
+                healthChecks =>
+                {
+                    _ = healthChecks.AddSimpleNotificationService(
+                        "TestContainerHealthy",
+                        options =>
+                        {
+                            options.AccessKey = LocalStackInstance.AccessKey;
+                            options.SecretKey = LocalStackInstance.SecretKey;
+                            options.ServiceUrl = _instance.ConnectionString;
+                            options.TopicName = topicName;
+                            options.Subscription = subcription.SubscriptionArn;
+                            options.Mode = CreationMode.BasicAuthentication;
+                        }
+                    );
+                },
+                HealthStatus.Healthy
+            );
         }
     }
 
@@ -117,6 +134,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -136,6 +154,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -155,6 +174,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -174,6 +194,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
     public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -198,6 +219,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase, IC
         {
             await RunAndVerify(
                 healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
+                HealthStatus.Healthy,
                 config =>
                 {
                     var values = new Dictionary<string, string?>(StringComparer.Ordinal)

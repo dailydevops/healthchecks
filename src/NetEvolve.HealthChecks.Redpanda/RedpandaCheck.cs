@@ -14,7 +14,7 @@ using NetEvolve.HealthChecks.Abstractions;
 internal sealed class RedpandaCheck : ConfigurableHealthCheckBase<RedpandaOptions>
 {
     private readonly IServiceProvider _serviceProvider;
-    private static ConcurrentDictionary<string, IProducer<string, string>>? _producers;
+    private ConcurrentDictionary<string, IProducer<string, string>>? _producers;
 
     private static readonly Message<string, string> _message = new Message<string, string>()
     {
@@ -39,15 +39,15 @@ internal sealed class RedpandaCheck : ConfigurableHealthCheckBase<RedpandaOption
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        if (result.Status == PersistenceStatus.NotPersisted)
+        if (options.Configuration?.EnableDeliveryReports != false && result.Status == PersistenceStatus.NotPersisted)
         {
-            return new HealthCheckResult(failureStatus, $"{name}: Unhealthy");
+            return HealthCheckUnhealthy(failureStatus, name, "Message Not Persisted.");
         }
 
         return HealthCheckState(isHealthy, name);
     }
 
-    private static IProducer<string, string> GetProducer(
+    private IProducer<string, string> GetProducer(
         string name,
         RedpandaOptions options,
         IServiceProvider serviceProvider

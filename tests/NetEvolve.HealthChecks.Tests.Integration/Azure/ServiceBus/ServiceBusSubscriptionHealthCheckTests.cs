@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 
@@ -34,6 +35,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients =>
@@ -58,6 +60,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
@@ -66,36 +69,42 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
         "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
     )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddAzureServiceBusSubscription(
-                "ServiceBusSubscriptionConnectionStringHealthy",
-                options =>
-                {
-                    options.Mode = ClientCreationMode.ConnectionString;
-                    options.ConnectionString = _container.ConnectionString;
-                    options.TopicName = ServiceBusContainer.TopicName;
-                    options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusSubscription(
+                    "ServiceBusSubscriptionConnectionStringHealthy",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ConnectionString;
+                        options.ConnectionString = _container.ConnectionString;
+                        options.TopicName = ServiceBusContainer.TopicName;
+                        options.SubscriptionName = ServiceBusContainer.SubscriptionName;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeConnectionString_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddAzureServiceBusSubscription(
-                "ServiceBusSubscriptionConnectionStringPeekHealthy",
-                options =>
-                {
-                    options.Mode = ClientCreationMode.ConnectionString;
-                    options.ConnectionString = _container.ConnectionString;
-                    options.EnablePeekMode = true;
-                    options.TopicName = ServiceBusContainer.TopicName;
-                    options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusSubscription(
+                    "ServiceBusSubscriptionConnectionStringPeekHealthy",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ConnectionString;
+                        options.ConnectionString = _container.ConnectionString;
+                        options.EnablePeekMode = true;
+                        options.TopicName = ServiceBusContainer.TopicName;
+                        options.SubscriptionName = ServiceBusContainer.SubscriptionName;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [NotExecutableFact(
         "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
@@ -114,6 +123,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients =>
@@ -138,6 +148,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
@@ -146,36 +157,42 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
         "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
     )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeConnectionString_SubscriptionNotExists_ShouldReturnUnhealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddAzureServiceBusSubscription(
-                "ServiceBusSubscriptionConnectionStringUnhealthy",
-                options =>
-                {
-                    options.Mode = ClientCreationMode.ConnectionString;
-                    options.ConnectionString = _container.ConnectionString;
-                    options.TopicName = ServiceBusContainer.TopicName;
-                    options.SubscriptionName = "nonexistent-subscription";
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusSubscription(
+                    "ServiceBusSubscriptionConnectionStringUnhealthy",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ConnectionString;
+                        options.ConnectionString = _container.ConnectionString;
+                        options.TopicName = ServiceBusContainer.TopicName;
+                        options.SubscriptionName = "nonexistent-subscription";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 
     [Fact]
     public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeConnectionString_SubscriptionNotExists_ShouldReturnUnhealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddAzureServiceBusSubscription(
-                "ServiceBusSubscriptionConnectionStringPeekUnhealthy",
-                options =>
-                {
-                    options.Mode = ClientCreationMode.ConnectionString;
-                    options.ConnectionString = _container.ConnectionString;
-                    options.EnablePeekMode = true;
-                    options.TopicName = ServiceBusContainer.TopicName;
-                    options.SubscriptionName = "nonexistent-subscription";
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusSubscription(
+                    "ServiceBusSubscriptionConnectionStringPeekUnhealthy",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ConnectionString;
+                        options.ConnectionString = _container.ConnectionString;
+                        options.EnablePeekMode = true;
+                        options.TopicName = ServiceBusContainer.TopicName;
+                        options.SubscriptionName = "nonexistent-subscription";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 
     [NotExecutableFact(
         "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
@@ -194,6 +211,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients =>
@@ -218,6 +236,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
@@ -240,6 +259,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Degraded,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients =>
@@ -265,6 +285,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
+            HealthStatus.Degraded,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
@@ -277,6 +298,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
     public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -309,6 +331,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
     public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_SubscriptionNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationUnhealthy"),
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -341,6 +364,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
     public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_TopicNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationUnhealthy"),
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -371,6 +395,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
     public async Task AddAzureServiceBusSubscription_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

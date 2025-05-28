@@ -9,15 +9,17 @@ public class HealthCheckBaseTests : HealthCheckTestBase
 {
     [Fact]
     public async Task ExecuteHealthCheckAsync_ShouldReturnUnhealthy() =>
-        await RunAndVerify(healthChecks =>
-            healthChecks.Add(
-                new HealthCheckRegistration(
-                    "NotImplementedException",
-                    new TestHealthCheck(),
-                    HealthStatus.Unhealthy,
-                    null
-                )
-            )
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.Add(
+                    new HealthCheckRegistration(
+                        "NotImplementedException",
+                        new TestHealthCheck(),
+                        HealthStatus.Unhealthy,
+                        null
+                    )
+                ),
+            HealthStatus.Unhealthy
         );
 
     private sealed class TestHealthCheck : HealthCheckBase

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 using Xunit;
@@ -19,19 +20,26 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 
     [Fact]
     public async Task AddKafka_UseOptionsCreate_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerHealthy",
-                options =>
-                {
-                    options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Timeout = 5000;
-                    options.Topic = "TestContainerHealthy";
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.Configuration = new()
+                        {
+                            BootstrapServers = _database.BootstrapAddress,
+                            EnableDeliveryReports = true,
+                        };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Timeout = 5000;
+                        options.Topic = "TestContainerHealthy";
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnHealthy() =>
@@ -48,6 +56,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
                 _ = builder.AddSingleton(_ =>
@@ -63,6 +72,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     public async Task AddKafka_UseConfigurationCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -71,6 +81,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
+                    { "HealthChecks:Kafka:TestContainerDegraded:Configuration:EnableDeliveryReports", "true" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Timeout", "5000" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "Create" },
@@ -83,6 +94,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -110,28 +122,32 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 
     [Fact]
     public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerHealthy",
-                options =>
-                {
-                    options.Configuration = new()
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerHealthy",
+                    options =>
                     {
-                        BootstrapServers = _database.BootstrapAddress,
-                        EnableDeliveryReports = false,
-                    };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Timeout = 5000;
-                    options.Topic = "TestContainerHealthy";
-                }
-            );
-        });
+                        options.Configuration = new()
+                        {
+                            BootstrapServers = _database.BootstrapAddress,
+                            EnableDeliveryReports = false,
+                        };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Timeout = 5000;
+                        options.Topic = "TestContainerHealthy";
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -151,19 +167,26 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 
     [Fact]
     public async Task AddKafka_UseOptionsCreate_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerDegraded",
-                options =>
-                {
-                    options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Timeout = 0;
-                    options.Topic = "TestContainerDegraded";
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerDegraded",
+                    options =>
+                    {
+                        options.Configuration = new()
+                        {
+                            BootstrapServers = _database.BootstrapAddress,
+                            EnableDeliveryReports = true,
+                        };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Timeout = 0;
+                        options.Topic = "TestContainerDegraded";
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnDegraded() =>
@@ -180,6 +203,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                     }
                 );
             },
+            HealthStatus.Degraded,
             serviceBuilder: builder =>
             {
                 _ = builder.AddSingleton(_ =>
@@ -195,6 +219,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     public async Task AddKafka_UseConfigurationCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -203,6 +228,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                         "HealthChecks:Kafka:TestContainerDegraded:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
+                    { "HealthChecks:Kafka:TestContainerDegraded:Configuration:EnableDeliveryReports", "true" },
                     { "HealthChecks:Kafka:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:Kafka:TestContainerDegraded:Topic", "TestContainerDegraded" },
                     { "HealthChecks:Kafka:TestContainerDegraded:Mode", "Create" },
@@ -215,6 +241,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
     public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -242,28 +269,32 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 
     [Fact]
     public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerDegraded",
-                options =>
-                {
-                    options.Configuration = new()
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerDegraded",
+                    options =>
                     {
-                        BootstrapServers = _database.BootstrapAddress,
-                        EnableDeliveryReports = false,
-                    };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Timeout = 0;
-                    options.Topic = "TestContainerDegraded";
-                }
-            );
-        });
+                        options.Configuration = new()
+                        {
+                            BootstrapServers = _database.BootstrapAddress,
+                            EnableDeliveryReports = false,
+                        };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Timeout = 0;
+                        options.Topic = "TestContainerDegraded";
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -283,22 +314,25 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 
     [Fact]
     public async Task AddKafka_UseOptionsCreate_ShouldReturnUnhealty() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerUnhealty",
-                options =>
-                {
-                    options.Configuration = new()
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerUnhealty",
+                    options =>
                     {
-                        BootstrapServers = _database.BootstrapAddress,
-                        SocketTimeoutMs = 0,
-                    };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Topic = "TestContainerUnhealty";
-                }
-            );
-        });
+                        options.Configuration = new()
+                        {
+                            BootstrapServers = _database.BootstrapAddress,
+                            SocketTimeoutMs = 0,
+                        };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Topic = "TestContainerUnhealty";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 
     [Fact]
     public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnUnhealty() =>
@@ -314,6 +348,7 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: builder =>
             {
                 _ = builder.AddSingleton(_ =>
@@ -331,65 +366,55 @@ public class KafkaCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
 
     [Fact]
     public async Task AddKafka_UseOptions_ConfigurationNull_ShouldReturnUnhealty() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerUnhealty",
-                options =>
-                {
-                    options.Configuration = null!;
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Topic = "TestContainerUnhealty";
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerUnhealty",
+                    options =>
+                    {
+                        options.Configuration = null!;
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Topic = "TestContainerUnhealty";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 
     [Fact]
     public async Task AddKafka_UseOptions_BootstrapAddressNull_ShouldReturnUnhealty() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerUnhealty",
-                options =>
-                {
-                    options.Configuration = new() { BootstrapServers = null! };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Topic = "TestContainerUnhealty";
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerUnhealty",
+                    options =>
+                    {
+                        options.Configuration = new() { BootstrapServers = null! };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Topic = "TestContainerUnhealty";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 
     [Fact]
     public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_ShouldReturnUnhealty() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerUnhealty",
-                options =>
-                {
-                    options.Configuration = new() { BootstrapServers = " " };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Topic = "TestContainerUnhealty";
-                }
-            );
-        });
-
-    [Fact]
-    public async Task AddKafka_UseOptions_BootstrapAddressInvalid_ShoudlReturnUnhealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddKafka(
-                "TestContainerUnhealty",
-                options =>
-                {
-                    options.Configuration = new()
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddKafka(
+                    "TestContainerUnhealty",
+                    options =>
                     {
-                        BootstrapServers = _database.BootstrapAddress,
-                        EnableDeliveryReports = false,
-                    };
-                    options.Mode = ProducerHandleMode.Create;
-                    options.Topic = "TestContainerUnhealty";
-                }
-            );
-        });
+                        options.Configuration = new() { BootstrapServers = " " };
+                        options.Mode = ProducerHandleMode.Create;
+                        options.Topic = "TestContainerUnhealty";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 }

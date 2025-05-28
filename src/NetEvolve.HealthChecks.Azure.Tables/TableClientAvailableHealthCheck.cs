@@ -28,7 +28,7 @@ internal sealed class TableClientAvailableHealthCheck : ConfigurableHealthCheckB
     {
         var tableClient = ClientCreation.GetTableServiceClient(name, options, _serviceProvider);
 
-        var (isValid, result) = await tableClient
+        var (isValid, _) = await tableClient
             .QueryAsync(cancellationToken: cancellationToken)
             .GetAsyncEnumerator(cancellationToken)
             .MoveNextAsync()
@@ -43,6 +43,6 @@ internal sealed class TableClientAvailableHealthCheck : ConfigurableHealthCheckB
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid && result && tableInTime, name);
+        return HealthCheckState(isValid && tableInTime, name);
     }
 }

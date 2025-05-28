@@ -1,9 +1,9 @@
 ﻿{
   results: [
     {
-      description: ServiceBusQueueServiceProviderHealthy: Degraded,
+      description: ServiceBusQueueServiceProviderHealthy: Healthy,
       name: ServiceBusQueueServiceProviderHealthy,
-      status: Degraded,
+      status: Healthy,
       tags: [
         messaging,
         azure,
@@ -11,5 +11,5 @@
       ]
     }
   ],
-  status: Degraded
+  status: Healthy
 }

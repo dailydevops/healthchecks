@@ -12,7 +12,8 @@ using NetEvolve.HealthChecks.Azure.Tables;
 using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
-public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
+[Collection("Azurite")]
+public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _accountSasUri;
@@ -45,6 +46,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
@@ -64,6 +66,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Degraded,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
@@ -83,6 +86,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
             clearJToken: token =>
@@ -124,105 +128,125 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
     [Fact]
     public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddTableClientAvailability(
-                "TableConnectionStringHealthy",
-                options =>
-                {
-                    options.TableName = "test";
-                    options.ConnectionString = _container.ConnectionString;
-                    options.Mode = TableClientCreationMode.ConnectionString;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableConnectionStringHealthy",
+                    options =>
+                    {
+                        options.TableName = "test";
+                        options.ConnectionString = _container.ConnectionString;
+                        options.Mode = TableClientCreationMode.ConnectionString;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddTableClientAvailability(
-                "TableConnectionStringDegraded",
-                options =>
-                {
-                    options.TableName = "test";
-                    options.ConnectionString = _container.ConnectionString;
-                    options.Mode = TableClientCreationMode.ConnectionString;
-                    options.Timeout = 0;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableConnectionStringDegraded",
+                    options =>
+                    {
+                        options.TableName = "test";
+                        options.ConnectionString = _container.ConnectionString;
+                        options.Mode = TableClientCreationMode.ConnectionString;
+                        options.Timeout = 0;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddTableClientAvailability(
-                "TableSharedKeyHealthy",
-                options =>
-                {
-                    options.TableName = "test";
-                    options.AccountKey = AzuriteAccess.AccountKey;
-                    options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = TableClientCreationMode.SharedKey;
-                    options.ServiceUri = _uriTableStorage;
-                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableSharedKeyHealthy",
+                    options =>
+                    {
+                        options.TableName = "test";
+                        options.AccountKey = AzuriteAccess.AccountKey;
+                        options.AccountName = AzuriteAccess.AccountName;
+                        options.Mode = TableClientCreationMode.SharedKey;
+                        options.ServiceUri = _uriTableStorage;
+                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddTableClientAvailability(
-                "TableSharedKeyDegraded",
-                options =>
-                {
-                    options.TableName = "test";
-                    options.AccountKey = AzuriteAccess.AccountKey;
-                    options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = TableClientCreationMode.SharedKey;
-                    options.Timeout = 0;
-                    options.ServiceUri = _uriTableStorage;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableSharedKeyDegraded",
+                    options =>
+                    {
+                        options.TableName = "test";
+                        options.AccountKey = AzuriteAccess.AccountKey;
+                        options.AccountName = AzuriteAccess.AccountName;
+                        options.Mode = TableClientCreationMode.SharedKey;
+                        options.Timeout = 0;
+                        options.ServiceUri = _uriTableStorage;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddTableClientAvailability(
-                "TableAzureSasCredentialHealthy",
-                options =>
-                {
-                    options.TableName = "test";
-                    options.Mode = TableClientCreationMode.AzureSasCredential;
-                    options.ServiceUri = _accountSasUri;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableAzureSasCredentialHealthy",
+                    options =>
+                    {
+                        options.TableName = "test";
+                        options.Mode = TableClientCreationMode.AzureSasCredential;
+                        options.ServiceUri = _accountSasUri;
+                        options.Timeout = 1000;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddTableClientAvailability(
-                "TableAzureSasCredentialDegraded",
-                options =>
-                {
-                    options.TableName = "test";
-                    options.Mode = TableClientCreationMode.AzureSasCredential;
-                    options.ServiceUri = _accountSasUri;
-                    options.Timeout = 0;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableAzureSasCredentialDegraded",
+                    options =>
+                    {
+                        options.TableName = "test";
+                        options.Mode = TableClientCreationMode.AzureSasCredential;
+                        options.ServiceUri = _accountSasUri;
+                        options.Timeout = 0;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 }

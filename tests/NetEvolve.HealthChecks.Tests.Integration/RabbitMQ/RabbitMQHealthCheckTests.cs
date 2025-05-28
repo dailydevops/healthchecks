@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using global::RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
 using Xunit;
@@ -25,6 +26,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy", options => options.Timeout = 1000),
+            HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(connection)
         );
     }
@@ -45,6 +47,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
                         options.Timeout = 1000;
                     }
                 ),
+            HealthStatus.Healthy,
             serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test", (_, _) => connection)
         );
     }
@@ -57,6 +60,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded", options => options.Timeout = 0),
+            HealthStatus.Degraded,
             serviceBuilder: services => services.AddSingleton(connection)
         );
     }
@@ -69,6 +73,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -89,6 +94,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerKeyedHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -110,6 +116,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>

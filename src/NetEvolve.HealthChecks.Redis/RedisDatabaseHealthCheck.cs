@@ -12,7 +12,7 @@ using StackExchange.Redis;
 
 internal sealed class RedisDatabaseHealthCheck : ConfigurableHealthCheckBase<RedisDatabaseOptions>
 {
-    private static ConcurrentDictionary<string, IConnectionMultiplexer>? _connections;
+    private ConcurrentDictionary<string, IConnectionMultiplexer>? _connections;
     private readonly IServiceProvider _serviceProvider;
 
     public RedisDatabaseHealthCheck(
@@ -40,7 +40,7 @@ internal sealed class RedisDatabaseHealthCheck : ConfigurableHealthCheckBase<Red
         bool IsDegraded(TimeSpan elapsedTime) => elapsedTime.TotalMilliseconds >= options.Timeout;
     }
 
-    private static IConnectionMultiplexer GetConnection(
+    private IConnectionMultiplexer GetConnection(
         string name,
         RedisDatabaseOptions options,
         IServiceProvider serviceProvider

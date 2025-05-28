@@ -14,7 +14,7 @@ using NetEvolve.HealthChecks.Abstractions;
 internal sealed class KafkaCheck : ConfigurableHealthCheckBase<KafkaOptions>
 {
     private readonly IServiceProvider _serviceProvider;
-    private static ConcurrentDictionary<string, IProducer<string, string>>? _producers;
+    private ConcurrentDictionary<string, IProducer<string, string>>? _producers;
 
     private static readonly Message<string, string> _message = new Message<string, string>()
     {
@@ -39,19 +39,15 @@ internal sealed class KafkaCheck : ConfigurableHealthCheckBase<KafkaOptions>
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        if (result.Status == PersistenceStatus.NotPersisted)
+        if (options.Configuration?.EnableDeliveryReports != false && result.Status == PersistenceStatus.NotPersisted)
         {
-            return new HealthCheckResult(failureStatus, $"{name}: Unhealthy");
+            return HealthCheckUnhealthy(failureStatus, name, "Message Not Persisted.");
         }
 
         return HealthCheckState(isHealthy, name);
     }
 
-    private static IProducer<string, string> GetProducer(
-        string name,
-        KafkaOptions options,
-        IServiceProvider serviceProvider
-    )
+    private IProducer<string, string> GetProducer(string name, KafkaOptions options, IServiceProvider serviceProvider)
     {
         if (options.Mode == ProducerHandleMode.ServiceProvider)
         {

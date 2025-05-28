@@ -1,7 +1,13 @@
 ﻿{
   results: [
     {
-      description: TestContainerUnhealty: Unhealthy,
+      description: TestContainerUnhealty: Unexpected error.,
+      exception: {
+        message:
+Configuration property "socket.timeout.ms" value 0 is outside allowed range 10..300000
+,
+        type: System.ArgumentException
+      },
       name: TestContainerUnhealty,
       status: Unhealthy,
       tags: [
