@@ -17,7 +17,9 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
 
     public ServiceBusQueueHealthCheckTests(ServiceBusContainer container) => _container = container;
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusQueue_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -58,7 +60,9 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusQueue_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
         {
@@ -90,7 +94,9 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
             );
         });
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusQueue_UseOptions_ModeServiceProvider_QueueNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -131,7 +137,9 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusQueue_UseOptions_ModeConnectionString_QueueNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(healthChecks =>
         {
@@ -162,7 +170,9 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
             );
         });
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusQueue_UseOptions_ModeServiceProvider_Timeout_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>

@@ -17,7 +17,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
 
     public ServiceBusSubscriptionHealthCheckTests(ServiceBusContainer container) => _container = container;
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -60,7 +62,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks =>
         {
@@ -93,7 +97,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             );
         });
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_SubscriptionNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -136,7 +142,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeConnectionString_SubscriptionNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(healthChecks =>
         {
@@ -169,7 +177,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             );
         });
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_TopicNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -212,7 +222,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_Timeout_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -259,7 +271,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
 
     // Configuration-based tests
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationHealthy"),
@@ -289,7 +303,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_SubscriptionNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationUnhealthy"),
@@ -319,7 +335,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact(Skip = "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    [NotExecutableFact(
+        "Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17"
+    )]
     public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_TopicNotExists_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationUnhealthy"),
