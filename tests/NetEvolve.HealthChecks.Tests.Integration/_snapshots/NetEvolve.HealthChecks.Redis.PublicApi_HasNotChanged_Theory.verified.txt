@@ -7,11 +7,11 @@
     }
     public static class DependencyInjectionExtensions
     {
-        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddRedis(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Redis.RedisDatabaseOptions>? options = null, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddRedis(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Redis.RedisOptions>? options = null, params string[] tags) { }
     }
-    public sealed class RedisDatabaseOptions : System.IEquatable<NetEvolve.HealthChecks.Redis.RedisDatabaseOptions>
+    public sealed class RedisOptions : System.IEquatable<NetEvolve.HealthChecks.Redis.RedisOptions>
     {
-        public RedisDatabaseOptions() { }
+        public RedisOptions() { }
         public string? ConnectionString { get; set; }
         public NetEvolve.HealthChecks.Redis.ConnectionHandleMode Mode { get; set; }
         public int Timeout { get; set; }
