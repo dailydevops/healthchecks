@@ -5,7 +5,8 @@
       name: TestContainerDegraded,
       status: Degraded,
       tags: [
-        redis
+        redis,
+        cache
       ]
     }
   ],

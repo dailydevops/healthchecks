@@ -11,20 +11,20 @@ using Xunit;
 public class DependencyInjectionExtensionsTests
 {
     [Fact]
-    public void AddSQLite_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddRedis_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddRedisDatabase("Test");
+        void Act() => builder.AddRedis("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Fact]
-    public void AddSQLite_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddRedis_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -33,14 +33,14 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddRedisDatabase(name!);
+        void Act() => builder.AddRedis(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Fact]
-    public void AddSQLite_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddRedis_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -49,14 +49,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddRedisDatabase(name);
+        void Act() => builder.AddRedis(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Fact]
-    public void AddSQLite_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddRedis_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -65,14 +65,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddRedisDatabase("Test", tags: tags);
+        void Act() => builder.AddRedis("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Fact]
-    public void AddSQLite_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddRedis_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -81,7 +81,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddRedisDatabase(name).AddRedisDatabase(name);
+        void Act() => builder.AddRedis(name).AddRedis(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

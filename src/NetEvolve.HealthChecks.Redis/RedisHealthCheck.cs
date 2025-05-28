@@ -10,21 +10,18 @@ using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
 using StackExchange.Redis;
 
-internal sealed class RedisDatabaseHealthCheck : ConfigurableHealthCheckBase<RedisDatabaseOptions>
+internal sealed class RedisHealthCheck : ConfigurableHealthCheckBase<RedisOptions>
 {
     private ConcurrentDictionary<string, IConnectionMultiplexer>? _connections;
     private readonly IServiceProvider _serviceProvider;
 
-    public RedisDatabaseHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<RedisDatabaseOptions> optionsMonitor
-    )
+    public RedisHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<RedisOptions> optionsMonitor)
         : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
-        RedisDatabaseOptions options,
+        RedisOptions options,
         CancellationToken cancellationToken
     )
     {
@@ -40,11 +37,7 @@ internal sealed class RedisDatabaseHealthCheck : ConfigurableHealthCheckBase<Red
         bool IsDegraded(TimeSpan elapsedTime) => elapsedTime.TotalMilliseconds >= options.Timeout;
     }
 
-    private IConnectionMultiplexer GetConnection(
-        string name,
-        RedisDatabaseOptions options,
-        IServiceProvider serviceProvider
-    )
+    private IConnectionMultiplexer GetConnection(string name, RedisOptions options, IServiceProvider serviceProvider)
     {
         if (options.Mode == ConnectionHandleMode.ServiceProvider)
         {
