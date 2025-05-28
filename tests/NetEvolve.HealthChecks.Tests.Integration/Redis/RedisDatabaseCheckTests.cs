@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Redis;
@@ -21,17 +22,20 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
 
     [Fact]
     public async Task AddRedisDatabase_UseOptionsCreate_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddRedisDatabase(
-                "TestContainerHealthy",
-                options =>
-                {
-                    options.ConnectionString = _database.GetConnectionString();
-                    options.Mode = ConnectionHandleMode.Create;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddRedisDatabase(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.ConnectionString = _database.GetConnectionString();
+                        options.Mode = ConnectionHandleMode.Create;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddRedisDatabase_UseOptionsServiceProvider_ShouldReturnHealthy() =>
@@ -43,6 +47,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
                     options => options.ConnectionString = _database.GetConnectionString()
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
                 _ = builder.AddSingleton<IConnectionMultiplexer>(services =>
@@ -59,30 +64,36 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
         _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
-                await RunAndVerify(healthChecks =>
-                    healthChecks.AddRedisDatabase("TestContainerHealthy").AddRedisDatabase("TestContainerHealthy")
+                await RunAndVerify(
+                    healthChecks =>
+                        healthChecks.AddRedisDatabase("TestContainerHealthy").AddRedisDatabase("TestContainerHealthy"),
+                    HealthStatus.Healthy
                 )
         );
 
     [Fact]
     public async Task AddRedisDatabase_UseOptions_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddRedisDatabase(
-                "TestContainerDegraded",
-                options =>
-                {
-                    options.ConnectionString = _database.GetConnectionString();
-                    options.Timeout = 0;
-                    options.Mode = ConnectionHandleMode.Create;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddRedisDatabase(
+                    "TestContainerDegraded",
+                    options =>
+                    {
+                        options.ConnectionString = _database.GetConnectionString();
+                        options.Timeout = 0;
+                        options.Mode = ConnectionHandleMode.Create;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddRedisDatabase_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedisDatabase("TestContainerHealthy"),
+            HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -109,6 +120,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     public async Task AddRedisDatabase_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedisDatabase("TestContainerDegraded"),
+            HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -128,6 +140,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     public async Task AddRedisDatabase_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedisDatabase("TestNoValues"),
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>
@@ -143,6 +156,7 @@ public class RedisDatabaseCheckTests : HealthCheckTestBase, IClassFixture<RedisD
     public async Task AddRedisDatabase_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedisDatabase("TestNoValues"),
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>

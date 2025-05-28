@@ -25,6 +25,7 @@ public abstract class HealthCheckTestBase
 
     protected async ValueTask RunAndVerify(
         Action<IHealthChecksBuilder> healthChecks,
+        HealthStatus expectedStatus,
         Action<IConfigurationBuilder>? config = null,
         Action<IServiceCollection>? serviceBuilder = null,
         Action<TestServer>? serverConfiguration = null,
@@ -56,6 +57,18 @@ public abstract class HealthCheckTestBase
             if (clearJToken is not null)
             {
                 content = clearJToken.Invoke(content);
+            }
+
+            if (content is not null)
+            {
+                var statusValue = content["status"]?.ToString();
+
+                if (!Enum.TryParse<HealthStatus>(statusValue, out var actualStatus))
+                {
+                    Assert.Fail($"Invalid Health status `{statusValue}`.");
+                }
+
+                Assert.Equal(expectedStatus, actualStatus);
             }
 
             _ = await Verify(content).ConfigureAwait(true);

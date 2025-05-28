@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using global::Azure.Storage.Queues;
 using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
-public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassFixture<AzuriteAccess>
+[Collection("Azurite")]
+public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;
     private readonly Uri _accountSasUri;
@@ -51,6 +53,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
@@ -70,6 +73,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Degraded,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
@@ -89,6 +93,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Unhealthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
@@ -108,105 +113,124 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase, IClassF
                     }
                 );
             },
+            HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
         );
 
     [Fact]
     public async Task AddQueueClientAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddQueueClientAvailability(
-                "QueueConnectionStringHealthy",
-                options =>
-                {
-                    options.QueueName = "test";
-                    options.ConnectionString = _container.ConnectionString;
-                    options.Mode = QueueClientCreationMode.ConnectionString;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueClientAvailability(
+                    "QueueConnectionStringHealthy",
+                    options =>
+                    {
+                        options.QueueName = "test";
+                        options.ConnectionString = _container.ConnectionString;
+                        options.Mode = QueueClientCreationMode.ConnectionString;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddQueueClientAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddQueueClientAvailability(
-                "QueueConnectionStringDegraded",
-                options =>
-                {
-                    options.QueueName = "test";
-                    options.ConnectionString = _container.ConnectionString;
-                    options.Mode = QueueClientCreationMode.ConnectionString;
-                    options.Timeout = 0;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueClientAvailability(
+                    "QueueConnectionStringDegraded",
+                    options =>
+                    {
+                        options.QueueName = "test";
+                        options.ConnectionString = _container.ConnectionString;
+                        options.Mode = QueueClientCreationMode.ConnectionString;
+                        options.Timeout = 0;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddQueueClientAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddQueueClientAvailability(
-                "QueueSharedKeyHealthy",
-                options =>
-                {
-                    options.QueueName = "test";
-                    options.AccountKey = AzuriteAccess.AccountKey;
-                    options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = QueueClientCreationMode.SharedKey;
-                    options.ServiceUri = _uriQueueStorage;
-                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueClientAvailability(
+                    "QueueSharedKeyHealthy",
+                    options =>
+                    {
+                        options.QueueName = "test";
+                        options.AccountKey = AzuriteAccess.AccountKey;
+                        options.AccountName = AzuriteAccess.AccountName;
+                        options.Mode = QueueClientCreationMode.SharedKey;
+                        options.ServiceUri = _uriQueueStorage;
+                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddQueueClientAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddQueueClientAvailability(
-                "QueueSharedKeyDegraded",
-                options =>
-                {
-                    options.QueueName = "test";
-                    options.AccountKey = AzuriteAccess.AccountKey;
-                    options.AccountName = AzuriteAccess.AccountName;
-                    options.Mode = QueueClientCreationMode.SharedKey;
-                    options.Timeout = 0;
-                    options.ServiceUri = _uriQueueStorage;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueClientAvailability(
+                    "QueueSharedKeyDegraded",
+                    options =>
+                    {
+                        options.QueueName = "test";
+                        options.AccountKey = AzuriteAccess.AccountKey;
+                        options.AccountName = AzuriteAccess.AccountName;
+                        options.Mode = QueueClientCreationMode.SharedKey;
+                        options.Timeout = 0;
+                        options.ServiceUri = _uriQueueStorage;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 
     [Fact]
     public async Task AddQueueClientAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddQueueClientAvailability(
-                "QueueAzureSasCredentialHealthy",
-                options =>
-                {
-                    options.QueueName = "test";
-                    options.Mode = QueueClientCreationMode.AzureSasCredential;
-                    options.ServiceUri = _accountSasUri;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueClientAvailability(
+                    "QueueAzureSasCredentialHealthy",
+                    options =>
+                    {
+                        options.QueueName = "test";
+                        options.Mode = QueueClientCreationMode.AzureSasCredential;
+                        options.ServiceUri = _accountSasUri;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
 
     [Fact]
     public async Task AddQueueClientAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
-        await RunAndVerify(healthChecks =>
-        {
-            _ = healthChecks.AddQueueClientAvailability(
-                "QueueAzureSasCredentialDegraded",
-                options =>
-                {
-                    options.QueueName = "test";
-                    options.Mode = QueueClientCreationMode.AzureSasCredential;
-                    options.ServiceUri = _accountSasUri;
-                    options.Timeout = 0;
-                }
-            );
-        });
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueClientAvailability(
+                    "QueueAzureSasCredentialDegraded",
+                    options =>
+                    {
+                        options.QueueName = "test";
+                        options.Mode = QueueClientCreationMode.AzureSasCredential;
+                        options.ServiceUri = _accountSasUri;
+                        options.Timeout = 0;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
 }

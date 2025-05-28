@@ -1,9 +1,9 @@
 ﻿{
   results: [
     {
-      description: ServiceSharedKeyHealthy: Degraded,
+      description: ServiceSharedKeyHealthy: Healthy,
       name: ServiceSharedKeyHealthy,
-      status: Degraded,
+      status: Healthy,
       tags: [
         storage,
         azure,
@@ -11,5 +11,5 @@
       ]
     }
   ],
-  status: Degraded
+  status: Healthy
 }
