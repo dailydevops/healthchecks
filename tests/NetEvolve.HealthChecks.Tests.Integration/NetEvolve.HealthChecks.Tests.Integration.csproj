@@ -63,9 +63,6 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dapr\" />
-  </ItemGroup>
-  <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.SetCultureAttribute">
       <_Parameter1>en_US</_Parameter1>
       <_Parameter2>true</_Parameter2>
