@@ -19,7 +19,7 @@ public static class DependencyInjectionExtensions
     /// Add a health check for the MySql database.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="OracleCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="OracleHealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -42,11 +42,11 @@ public static class DependencyInjectionExtensions
         {
             _ = builder
                 .Services.AddSingleton<OracleCheckMarker>()
-                .AddSingleton<OracleCheck>()
+                .AddSingleton<OracleHealthCheck>()
                 .ConfigureOptions<OracleConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<OracleCheck>(name))
+        if (builder.IsNameAlreadyUsed<OracleHealthCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
@@ -56,7 +56,7 @@ public static class DependencyInjectionExtensions
             _ = builder.Services.Configure(name, options);
         }
 
-        return builder.AddCheck<OracleCheck>(
+        return builder.AddCheck<OracleHealthCheck>(
             name,
             HealthStatus.Unhealthy,
             _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)

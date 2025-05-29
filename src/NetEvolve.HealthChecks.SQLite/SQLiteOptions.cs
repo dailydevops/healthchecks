@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="SQLiteCheck"/>
+/// Options for <see cref="SQLiteHealthCheck"/>
 /// </summary>
 public sealed record SQLiteOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record SQLiteOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = SQLiteCheck.DefaultCommand;
+    public string Command { get; internal set; } = SQLiteHealthCheck.DefaultCommand;
 }

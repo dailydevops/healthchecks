@@ -85,7 +85,7 @@ public sealed class FirebirdConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(FirebirdCheck.DefaultCommand, options.Command);
+        Assert.Equal(FirebirdHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public sealed class FirebirdConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(FirebirdCheck.DefaultCommand, options.Command);
+        Assert.Equal(FirebirdHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

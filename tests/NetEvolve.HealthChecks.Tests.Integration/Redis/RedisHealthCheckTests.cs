@@ -14,11 +14,11 @@ using Xunit;
 
 [SetCulture("", asHiddenCategory: true)]
 [TestGroup(nameof(Redis))]
-public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisDatabase>
+public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisContainer>
 {
-    private readonly RedisDatabase _database;
+    private readonly RedisContainer _database;
 
-    public RedisHealthCheckTests(RedisDatabase database) => _database = database;
+    public RedisHealthCheckTests(RedisContainer database) => _database = database;
 
     [Fact]
     public async Task AddRedis_UseOptionsCreate_ShouldReturnHealthy() =>

@@ -32,7 +32,7 @@ internal sealed class SQLiteConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = SQLiteCheck.DefaultCommand;
+            options.Command = SQLiteHealthCheck.DefaultCommand;
         }
     }
 

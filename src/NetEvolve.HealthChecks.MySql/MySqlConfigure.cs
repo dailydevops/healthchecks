@@ -32,7 +32,7 @@ internal sealed class MySqlConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = MySqlCheck.DefaultCommand;
+            options.Command = MySqlHealthCheck.DefaultCommand;
         }
     }
 

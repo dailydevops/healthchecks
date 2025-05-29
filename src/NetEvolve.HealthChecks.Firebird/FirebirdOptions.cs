@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="FirebirdCheck"/>
+/// Options for <see cref="FirebirdHealthCheck"/>
 /// </summary>
 public sealed record FirebirdOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record FirebirdOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = FirebirdCheck.DefaultCommand;
+    public string Command { get; internal set; } = FirebirdHealthCheck.DefaultCommand;
 }

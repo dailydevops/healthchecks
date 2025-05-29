@@ -86,7 +86,7 @@ public sealed class OracleConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(OracleCheck.DefaultCommand, options.Command);
+        Assert.Equal(OracleHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class OracleConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(OracleCheck.DefaultCommand, options.Command);
+        Assert.Equal(OracleHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

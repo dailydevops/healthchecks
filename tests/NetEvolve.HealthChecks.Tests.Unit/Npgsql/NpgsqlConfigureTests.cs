@@ -86,7 +86,7 @@ public sealed class NpgsqlConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(NpgsqlCheck.DefaultCommand, options.Command);
+        Assert.Equal(NpgsqlHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class NpgsqlConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(NpgsqlCheck.DefaultCommand, options.Command);
+        Assert.Equal(NpgsqlHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

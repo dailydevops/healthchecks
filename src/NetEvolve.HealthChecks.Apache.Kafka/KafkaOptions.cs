@@ -3,7 +3,7 @@
 using Confluent.Kafka;
 
 /// <summary>
-/// Options for <see cref="KafkaCheck"/>.
+/// Options for <see cref="KafkaHealthCheck"/>.
 /// </summary>
 public sealed record KafkaOptions
 {

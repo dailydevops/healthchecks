@@ -86,7 +86,7 @@ public sealed class MySqlConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(MySqlCheck.DefaultCommand, options.Command);
+        Assert.Equal(MySqlHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class MySqlConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(MySqlCheck.DefaultCommand, options.Command);
+        Assert.Equal(MySqlHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

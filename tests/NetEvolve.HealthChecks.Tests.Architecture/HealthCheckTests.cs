@@ -8,6 +8,7 @@ using Xunit;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 [TestGroup(nameof(HealthChecks))]
+[TestGroup("Architecture")]
 public class HealthCheckTests
 {
     private readonly IObjectProvider<Class> _healthChecks = Classes()
@@ -36,6 +37,14 @@ public class HealthCheckTests
     public void Class_ShouldResideInNamespace_StartsWithNetEvolveExpected()
     {
         var rule = Classes().That().Are(_healthChecks).Should().ResideInNamespace(@"NetEvolve\.HealthChecks", true);
+
+        rule.Check(HealthCheckArchitecture.Instance);
+    }
+
+    [Fact]
+    public void Class_ShouldEndsWithHealthCheck_Expected()
+    {
+        var rule = Classes().That().Are(_healthChecks).Should().HaveNameEndingWith("HealthCheck");
 
         rule.Check(HealthCheckArchitecture.Instance);
     }

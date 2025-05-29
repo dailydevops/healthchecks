@@ -32,7 +32,7 @@ internal sealed class SqlServerConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = SqlServerCheck.DefaultCommand;
+            options.Command = SqlServerHealthCheck.DefaultCommand;
         }
     }
 

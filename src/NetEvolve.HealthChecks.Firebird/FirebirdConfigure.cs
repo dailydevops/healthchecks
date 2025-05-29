@@ -31,7 +31,7 @@ internal sealed class FirebirdConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = FirebirdCheck.DefaultCommand;
+            options.Command = FirebirdHealthCheck.DefaultCommand;
         }
     }
 
