@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.DB2
+{
+    public sealed class DB2Options : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.DB2.DB2Options>
+    {
+        public DB2Options() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddDB2([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.DB2.DB2Options>? options = null, params string[] tags) { }
+    }
+}
