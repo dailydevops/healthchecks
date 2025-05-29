@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: ERROR [42601] [IBM][DB2/LINUXX8664] SQL0104N  An unexpected token "END-OF-STATEMENT" was found following "invalid".  Expected tokens may include:  "JOIN <joined_table>".,
+        type: IBM.Data.Db2.DB2Exception
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        DB2,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
