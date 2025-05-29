@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["DB2", "database"];
+    private static readonly string[] _defaultTags = ["db2", "database"];
 
     /// <summary>
     /// Add a health check for the DB2 database.
