@@ -32,7 +32,7 @@ internal sealed class NpgsqlConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = NpgsqlCheck.DefaultCommand;
+            options.Command = NpgsqlHealthCheck.DefaultCommand;
         }
     }
 

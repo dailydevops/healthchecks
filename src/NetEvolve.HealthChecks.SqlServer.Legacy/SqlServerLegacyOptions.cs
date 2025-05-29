@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="SqlServerLegacyCheck"/>
+/// Options for <see cref="SqlServerLegacyHealthCheck"/>
 /// </summary>
 public sealed record SqlServerLegacyOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record SqlServerLegacyOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = SqlServerLegacyCheck.DefaultCommand;
+    public string Command { get; internal set; } = SqlServerLegacyHealthCheck.DefaultCommand;
 }

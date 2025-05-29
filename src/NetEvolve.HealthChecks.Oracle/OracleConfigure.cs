@@ -32,7 +32,7 @@ internal sealed class OracleConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = OracleCheck.DefaultCommand;
+            options.Command = OracleHealthCheck.DefaultCommand;
         }
     }
 

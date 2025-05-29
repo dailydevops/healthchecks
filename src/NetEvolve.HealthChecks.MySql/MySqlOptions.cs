@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="MySqlCheck"/>
+/// Options for <see cref="MySqlHealthCheck"/>
 /// </summary>
 public sealed record MySqlOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record MySqlOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = MySqlCheck.DefaultCommand;
+    public string Command { get; internal set; } = MySqlHealthCheck.DefaultCommand;
 }

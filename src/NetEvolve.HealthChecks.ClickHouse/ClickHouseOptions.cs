@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="ClickHouseCheck"/>
+/// Options for <see cref="ClickHouseHealthCheck"/>
 /// </summary>
 public sealed record ClickHouseOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record ClickHouseOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = ClickHouseCheck.DefaultCommand;
+    public string Command { get; internal set; } = ClickHouseHealthCheck.DefaultCommand;
 }

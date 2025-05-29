@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="NpgsqlCheck"/>
+/// Options for <see cref="NpgsqlHealthCheck"/>
 /// </summary>
 public sealed record NpgsqlOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record NpgsqlOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = NpgsqlCheck.DefaultCommand;
+    public string Command { get; internal set; } = NpgsqlHealthCheck.DefaultCommand;
 }

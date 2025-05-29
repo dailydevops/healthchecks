@@ -32,7 +32,7 @@ internal sealed class SqlServerLegacyConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = SqlServerLegacyCheck.DefaultCommand;
+            options.Command = SqlServerLegacyHealthCheck.DefaultCommand;
         }
     }
 

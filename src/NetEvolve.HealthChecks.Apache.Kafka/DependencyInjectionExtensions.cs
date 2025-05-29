@@ -19,7 +19,7 @@ public static class DependencyInjectionExtensions
     /// Add a health check for Apache Kafka.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="KafkaCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="KafkaHealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -42,11 +42,11 @@ public static class DependencyInjectionExtensions
         {
             _ = builder
                 .Services.AddSingleton<KafkaCheckMarker>()
-                .AddSingleton<KafkaCheck>()
+                .AddSingleton<KafkaHealthCheck>()
                 .ConfigureOptions<KafkaConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<KafkaCheck>(name))
+        if (builder.IsNameAlreadyUsed<KafkaHealthCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
@@ -56,7 +56,7 @@ public static class DependencyInjectionExtensions
             _ = builder.Services.Configure(name, options);
         }
 
-        return builder.AddCheck<KafkaCheck>(
+        return builder.AddCheck<KafkaHealthCheck>(
             name,
             HealthStatus.Unhealthy,
             _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)

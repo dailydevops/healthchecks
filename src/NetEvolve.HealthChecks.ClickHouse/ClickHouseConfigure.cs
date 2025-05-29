@@ -32,7 +32,7 @@ internal sealed class ClickHouseConfigure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = ClickHouseCheck.DefaultCommand;
+            options.Command = ClickHouseHealthCheck.DefaultCommand;
         }
     }
 

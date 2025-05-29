@@ -9,6 +9,7 @@ using NetEvolve.Extensions.XUnit;
 using PublicApiGenerator;
 
 [TestGroup(nameof(HealthChecks))]
+[TestGroup("Architecture")]
 public class PublicApiTests
 {
     private static readonly string[] _excludedAttributes =

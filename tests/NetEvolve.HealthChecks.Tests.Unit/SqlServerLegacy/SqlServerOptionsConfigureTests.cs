@@ -86,7 +86,7 @@ public sealed class SqlServerOptionsConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(SqlServerLegacyCheck.DefaultCommand, options.Command);
+        Assert.Equal(SqlServerLegacyHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class SqlServerOptionsConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(SqlServerLegacyCheck.DefaultCommand, options.Command);
+        Assert.Equal(SqlServerLegacyHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

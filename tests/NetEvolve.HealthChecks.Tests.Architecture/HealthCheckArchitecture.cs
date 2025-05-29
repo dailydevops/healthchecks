@@ -21,7 +21,7 @@ internal static class HealthCheckArchitecture
         [
             // Apache
             typeof(Apache.ActiveMq.ActiveMqHealthCheck).Assembly,
-            typeof(Apache.Kafka.KafkaCheck).Assembly,
+            typeof(Apache.Kafka.KafkaHealthCheck).Assembly,
             // AWS
             typeof(AWS.SNS.SimpleNotificationServiceHealthCheck).Assembly,
             // Azure
@@ -31,20 +31,20 @@ internal static class HealthCheckArchitecture
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             // others
             typeof(Abstractions.HealthCheckBase).Assembly,
-            typeof(ClickHouse.ClickHouseCheck).Assembly,
+            typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
-            typeof(Firebird.FirebirdCheck).Assembly,
-            typeof(MySql.MySqlCheck).Assembly,
-            typeof(MySql.Connector.MySqlCheck).Assembly,
-            typeof(Npgsql.NpgsqlCheck).Assembly,
-            typeof(Oracle.OracleCheck).Assembly,
+            typeof(Firebird.FirebirdHealthCheck).Assembly,
+            typeof(MySql.MySqlHealthCheck).Assembly,
+            typeof(MySql.Connector.MySqlHealthCheck).Assembly,
+            typeof(Npgsql.NpgsqlHealthCheck).Assembly,
+            typeof(Oracle.OracleHealthCheck).Assembly,
             typeof(NetEvolve.HealthChecks.RabbitMQ.RabbitMQHealthCheck).Assembly,
             typeof(Redis.RedisHealthCheck).Assembly,
-            typeof(Redpanda.RedpandaCheck).Assembly,
+            typeof(Redpanda.RedpandaHealthCheck).Assembly,
             typeof(Qdrant.QdrantHealthCheck).Assembly,
-            typeof(SQLite.SQLiteCheck).Assembly,
-            typeof(SqlServer.SqlServerCheck).Assembly,
-            typeof(SqlServer.Legacy.SqlServerLegacyCheck).Assembly,
+            typeof(SQLite.SQLiteHealthCheck).Assembly,
+            typeof(SqlServer.SqlServerHealthCheck).Assembly,
+            typeof(SqlServer.Legacy.SqlServerLegacyHealthCheck).Assembly,
         ];
 
         return new ArchLoader()

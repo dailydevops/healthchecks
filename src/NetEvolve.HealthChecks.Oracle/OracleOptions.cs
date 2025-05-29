@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="OracleCheck"/>
+/// Options for <see cref="OracleHealthCheck"/>
 /// </summary>
 public sealed record OracleOptions : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record OracleOptions : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = OracleCheck.DefaultCommand;
+    public string Command { get; internal set; } = OracleHealthCheck.DefaultCommand;
 }

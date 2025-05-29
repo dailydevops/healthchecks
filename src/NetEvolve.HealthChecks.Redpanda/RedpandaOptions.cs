@@ -3,7 +3,7 @@
 using Confluent.Kafka;
 
 /// <summary>
-/// Options for <see cref="RedpandaCheck"/>.
+/// Options for <see cref="RedpandaHealthCheck"/>.
 /// </summary>
 public sealed record RedpandaOptions
 {

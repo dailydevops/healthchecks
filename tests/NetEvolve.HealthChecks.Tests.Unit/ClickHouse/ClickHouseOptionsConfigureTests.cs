@@ -86,7 +86,7 @@ public sealed class ClickHouseOptionsConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(ClickHouseCheck.DefaultCommand, options.Command);
+        Assert.Equal(ClickHouseHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class ClickHouseOptionsConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(ClickHouseCheck.DefaultCommand, options.Command);
+        Assert.Equal(ClickHouseHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

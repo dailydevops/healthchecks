@@ -86,7 +86,7 @@ public sealed class SQLiteConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(SQLiteCheck.DefaultCommand, options.Command);
+        Assert.Equal(SQLiteHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class SQLiteConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(SQLiteCheck.DefaultCommand, options.Command);
+        Assert.Equal(SQLiteHealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
