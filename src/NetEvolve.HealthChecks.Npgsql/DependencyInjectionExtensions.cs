@@ -16,7 +16,7 @@ public static class DependencyInjectionExtensions
     private static readonly string[] _defaultTags = ["postgresql", "database"];
 
     /// <summary>
-    /// Add a health check for the MySql database.
+    /// Add a health check for PostgreSQL using the specified <paramref name="name"/> and optional <paramref name="options"/>.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="NpgsqlHealthCheck"/>.</param>
