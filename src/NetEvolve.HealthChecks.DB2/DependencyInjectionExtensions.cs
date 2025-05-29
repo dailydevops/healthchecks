@@ -16,7 +16,7 @@ public static class DependencyInjectionExtensions
     private static readonly string[] _defaultTags = ["db2", "database"];
 
     /// <summary>
-    /// Add a health check for the DB2 database.
+    /// Add a health check for IBM's DB2 database.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="DB2HealthCheck"/>.</param>
