@@ -5,7 +5,7 @@ using IBM.Data.Db2;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class DB2Check : SqlCheckBase<DB2Options>
+internal sealed class DB2HealthCheck : SqlCheckBase<DB2Options>
 {
     /// <summary>
     /// The default sql command.
