@@ -41,6 +41,14 @@ public class HealthCheckTests
     }
 
     [Fact]
+    public void Class_ShouldEndsWithHealthCheck_Expected()
+    {
+        var rule = Classes().That().Are(_healthChecks).Should().HaveNameEndingWith("HealthCheck");
+
+        rule.Check(HealthCheckArchitecture.Instance);
+    }
+
+    [Fact]
     public void Constructors_ShouldBePublic_Expected()
     {
         var rule = MethodMembers()
