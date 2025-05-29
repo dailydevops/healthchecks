@@ -33,6 +33,7 @@ internal static class HealthCheckArchitecture
             typeof(Abstractions.HealthCheckBase).Assembly,
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
+            typeof(DB2.DB2Check).Assembly,
             typeof(DuckDB.DuckDBHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
