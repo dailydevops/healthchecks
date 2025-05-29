@@ -3,7 +3,7 @@
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// Options for <see cref="DB2Check"/>
+/// Options for <see cref="DB2HealthCheck"/>
 /// </summary>
 public sealed record DB2Options : ISqlCheckOptions
 {
@@ -14,5 +14,5 @@ public sealed record DB2Options : ISqlCheckOptions
     public int Timeout { get; set; } = 100;
 
     /// <inheritdoc cref="ISqlCheckOptions.Command"/>
-    public string Command { get; internal set; } = DB2Check.DefaultCommand;
+    public string Command { get; internal set; } = DB2HealthCheck.DefaultCommand;
 }

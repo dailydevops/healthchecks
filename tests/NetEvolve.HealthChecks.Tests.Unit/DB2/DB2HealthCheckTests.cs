@@ -11,14 +11,14 @@ using NSubstitute;
 using Xunit;
 
 [TestGroup(nameof(DB2))]
-public sealed class DBCheckTests
+public sealed class DB2HealthCheckTests
 {
     [Fact]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<DB2Options>>();
-        var check = new DB2Check(optionsMonitor);
+        var check = new DB2HealthCheck(optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -32,7 +32,7 @@ public sealed class DBCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<DB2Options>>();
-        var check = new DB2Check(optionsMonitor);
+        var check = new DB2HealthCheck(optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -49,7 +49,7 @@ public sealed class DBCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<DB2Options>>();
-        var check = new DB2Check(optionsMonitor);
+        var check = new DB2HealthCheck(optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
