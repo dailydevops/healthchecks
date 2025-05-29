@@ -3,7 +3,7 @@
 [![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.DB2?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DB2/)
 [![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.DB2?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DB2/)
 
-This package provides a health check for DB2 databases, based on the [Net.IBM.Data.Db2 (Windows)](https://www.nuget.org/packages/Net.IBM.Data.Db2/), [Net.IBM.Data.Db2-lnx (Linux)](https://www.nuget.org/packages/Net.IBM.Data.Db2-lnx/) and [Net.IBM.Data.Db2-osx (OSX)](https://www.nuget.org/packages/Net.IBM.Data.Db2-osx/) packages. The main purpose is to check if the database is available and if the database is online.
+This package provides a health check for IBM's DB2 databases, based on the [Net.IBM.Data.Db2 (Windows)](https://www.nuget.org/packages/Net.IBM.Data.Db2/), [Net.IBM.Data.Db2-lnx (Linux)](https://www.nuget.org/packages/Net.IBM.Data.Db2-lnx/) and [Net.IBM.Data.Db2-osx (OSX)](https://www.nuget.org/packages/Net.IBM.Data.Db2-osx/) packages. The main purpose is to check if the database is available and if the database is online.
 
 :bulb: This package is available for .NET 6.0 and later.
 
@@ -13,7 +13,7 @@ To use this package, you need to add the package to your project. You can do thi
 dotnet add package NetEvolve.HealthChecks.DB2
 ```
 
-## Health Check - DB2 Liveness
+## Health Check - IBM DB2 Liveness
 The health check is a liveness check. It checks if the DB2 Server is available and if the database is online.
 If the query needs longer than the configured timeout, the health check will return `Degraded`.
 If the query fails, for whatever reason, the health check will return `Unhealthy`.
