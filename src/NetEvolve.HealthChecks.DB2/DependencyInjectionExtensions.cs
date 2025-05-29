@@ -19,7 +19,7 @@ public static class DependencyInjectionExtensions
     /// Add a health check for the DB2 database.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="DB2Check"/>.</param>
+    /// <param name="name">The name of the <see cref="DB2HealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -42,11 +42,11 @@ public static class DependencyInjectionExtensions
         {
             _ = builder
                 .Services.AddSingleton<DB2CheckMarker>()
-                .AddSingleton<DB2Check>()
+                .AddSingleton<DB2HealthCheck>()
                 .ConfigureOptions<DB2Configure>();
         }
 
-        if (builder.IsNameAlreadyUsed<DB2Check>(name))
+        if (builder.IsNameAlreadyUsed<DB2HealthCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
@@ -56,7 +56,7 @@ public static class DependencyInjectionExtensions
             _ = builder.Services.Configure(name, options);
         }
 
-        return builder.AddCheck<DB2Check>(
+        return builder.AddCheck<DB2HealthCheck>(
             name,
             HealthStatus.Unhealthy,
             _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)

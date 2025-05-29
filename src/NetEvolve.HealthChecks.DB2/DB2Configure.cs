@@ -31,7 +31,7 @@ internal sealed class DB2Configure
 
         if (string.IsNullOrWhiteSpace(options.Command))
         {
-            options.Command = DB2Check.DefaultCommand;
+            options.Command = DB2HealthCheck.DefaultCommand;
         }
     }
 

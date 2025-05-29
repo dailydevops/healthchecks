@@ -86,7 +86,7 @@ public sealed class DB2ConfigureTests
 
         // Assert
         Assert.True(result.Succeeded);
-        Assert.Equal(DB2Check.DefaultCommand, options.Command);
+        Assert.Equal(DB2HealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]
@@ -101,7 +101,7 @@ public sealed class DB2ConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(DB2Check.DefaultCommand, options.Command);
+        Assert.Equal(DB2HealthCheck.DefaultCommand, options.Command);
     }
 
     [Fact]

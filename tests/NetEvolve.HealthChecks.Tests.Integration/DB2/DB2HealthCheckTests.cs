@@ -9,11 +9,11 @@ using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.DB2;
 
 [TestGroup(nameof(DB2))]
-public class DB2CheckTests : HealthCheckTestBase, IClassFixture<DB2Database>
+public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Database>
 {
     private readonly DB2Database _database;
 
-    public DB2CheckTests(DB2Database database) => _database = database;
+    public DB2HealthCheckTests(DB2Database database) => _database = database;
 
     [Fact]
     public async Task AddDB2_UseOptions_ShouldReturnHealthy() =>
