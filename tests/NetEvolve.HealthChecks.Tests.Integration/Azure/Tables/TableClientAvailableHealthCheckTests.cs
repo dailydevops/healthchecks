@@ -3,36 +3,20 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using global::Azure.Data.Tables;
-using global::Azure.Data.Tables.Sas;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
-[Collection("Azurite")]
+[ClassDataSource<AzuriteAccess>(Shared = SharedType.PerTestSession)]
 public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;
-    private readonly Uri _accountSasUri;
-    private readonly Uri _uriTableStorage;
 
-    public TableClientAvailableHealthCheckTests(AzuriteAccess container)
-    {
-        _container = container;
+    public TableClientAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
-        var client = new TableServiceClient(_container.ConnectionString);
-        _uriTableStorage = client.Uri;
-
-        var tableClient = client.GetTableClient("test");
-        _ = tableClient.CreateIfNotExists();
-
-        _accountSasUri = tableClient.GenerateSasUri(TableSasPermissions.All, DateTimeOffset.UtcNow.AddDays(1));
-    }
-
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -51,7 +35,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -71,7 +55,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -113,7 +97,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -133,7 +117,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -151,7 +135,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -170,7 +154,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -183,15 +167,16 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.AccountKey = AzuriteAccess.AccountKey;
                         options.AccountName = AzuriteAccess.AccountName;
                         options.Mode = TableClientCreationMode.SharedKey;
-                        options.ServiceUri = _uriTableStorage;
+                        options.ServiceUri = _container.TableServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                        options.Timeout = 1000;
                     }
                 );
             },
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -205,14 +190,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.AccountName = AzuriteAccess.AccountName;
                         options.Mode = TableClientCreationMode.SharedKey;
                         options.Timeout = 0;
-                        options.ServiceUri = _uriTableStorage;
+                        options.ServiceUri = _container.TableServiceEndpoint;
                     }
                 );
             },
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -223,7 +208,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _accountSasUri;
+                        options.ServiceUri = _container.TableAccountSasUri;
                         options.Timeout = 1000;
                     }
                 );
@@ -231,7 +216,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -242,7 +227,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _accountSasUri;
+                        options.ServiceUri = _container.TableAccountSasUri;
                         options.Timeout = 0;
                     }
                 );

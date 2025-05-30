@@ -6,19 +6,18 @@ using global::RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
-using Xunit;
 
-[SetCulture("", asHiddenCategory: true)]
 [TestGroup(nameof(RabbitMQ))]
-public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixture<RabbitMQContainer>
+[ClassDataSource<RabbitMQContainer>(Shared = SharedType.PerTestSession)]
+public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
 {
     private readonly RabbitMQContainer _container;
 
     public RabbitMQHealthCheckTests(RabbitMQContainer container) => _container = container;
 
-    [Fact]
+    [Test]
     public async Task AddRabbitMQ_UseOptions_ShouldReturnHealthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
@@ -31,7 +30,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
+    [Test]
     public async Task AddRabbitMQ_UseOptionsWithKeyedService_ShouldReturnHealthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
@@ -52,7 +51,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
+    [Test]
     public async Task AddRabbitMQ_UseOptions_ShouldReturnDegraded()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
@@ -65,7 +64,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
+    [Test]
     public async Task AddRabbitMQ_UseConfiguration_ShouldReturnHealthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
@@ -86,7 +85,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
+    [Test]
     public async Task AddRabbitMQ_UseConfigurationWithKeyedService_ShouldReturnHealthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
@@ -108,7 +107,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
+    [Test]
     public async Task AddRabbitMQ_UseConfiguration_ShouldReturnDegraded()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };

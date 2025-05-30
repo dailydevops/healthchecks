@@ -1,8 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.ActiveMq;
 
-public sealed class ActiveMqHealthCustomCredentialsCheckTests
-    : ActiveMqHealthCheckBaseTests,
-        IClassFixture<ActiveMqCustomCredentials>
+using NetEvolve.Extensions.TUnit;
+
+[ClassDataSource<ActiveMqCustomCredentials>(Shared = SharedType.PerTestSession)]
+[InheritsTests]
+[TestGroup($"{nameof(Apache)}.{nameof(ActiveMq)}")]
+public sealed class ActiveMqHealthCustomCredentialsCheckTests : ActiveMqHealthCheckBaseTests
 {
     public ActiveMqHealthCustomCredentialsCheckTests(ActiveMqCustomCredentials accessor)
         : base(accessor) { }

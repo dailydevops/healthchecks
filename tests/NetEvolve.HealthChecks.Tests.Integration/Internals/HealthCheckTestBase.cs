@@ -16,9 +16,8 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
 
-[TestGroup(nameof(HealthChecks))]
+// [TestGroup(nameof(HealthChecks))] - https://github.com/thomhurst/TUnit/issues/2481
 public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
@@ -59,19 +58,22 @@ public abstract class HealthCheckTestBase
                 content = clearJToken.Invoke(content);
             }
 
-            if (content is not null)
+            using (Assert.Multiple())
             {
-                var statusValue = content["status"]?.ToString();
-
-                if (!Enum.TryParse<HealthStatus>(statusValue, out var actualStatus))
+                if (content is not null)
                 {
-                    Assert.Fail($"Invalid Health status `{statusValue}`.");
+                    var statusValue = content["status"]?.ToString();
+
+                    if (!Enum.TryParse<HealthStatus>(statusValue, out var actualStatus))
+                    {
+                        Assert.Fail($"Invalid Health status `{statusValue}`.");
+                    }
+
+                    _ = await Assert.That(actualStatus).IsEqualTo(expectedStatus);
                 }
 
-                Assert.Equal(expectedStatus, actualStatus);
+                _ = await Verify(content).HashParameters().ConfigureAwait(true);
             }
-
-            _ = await Verify(content).ConfigureAwait(true);
         }
     }
 

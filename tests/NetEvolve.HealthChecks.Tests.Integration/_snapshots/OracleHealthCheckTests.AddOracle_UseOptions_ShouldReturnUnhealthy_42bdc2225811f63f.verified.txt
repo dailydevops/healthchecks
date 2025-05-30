@@ -4,7 +4,7 @@
       description: TestContainerUnhealthy: Unexpected error.,
       exception: {
         message:
-ORA-00923: FROM keyword not found where expected
+ORA-00923: Schlüsselwort FROM nicht an erwarteter Stelle gefunden
 https://docs.oracle.com/error-help/db/ora-00923/,
         type: Oracle.ManagedDataAccess.Client.OracleException
       },

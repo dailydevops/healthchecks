@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Testcontainers.ServiceBus;
 using TestContainer = Testcontainers.ServiceBus.ServiceBusContainer;
 
-public sealed class ServiceBusContainer : IAsyncLifetime, IAsyncDisposable
+public sealed class ServiceBusContainer : IAsyncInitializer, IAsyncDisposable
 {
     public const string QueueName = "queue.1";
     public const string SubscriptionName = "subscription.1";
@@ -18,6 +18,4 @@ public sealed class ServiceBusContainer : IAsyncLifetime, IAsyncDisposable
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
-
-    async Task IAsyncLifetime.DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 }

@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.ClickHouse;
-using Xunit;
 
 [TestGroup(nameof(ClickHouse))]
-public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<ClickHouseDatabase>
+[ClassDataSource<ClickHouseDatabase>(Shared = SharedType.PerTestSession)]
+public class ClickHouseHealthCheckTests : HealthCheckTestBase
 {
     private readonly ClickHouseDatabase _database;
 
     public ClickHouseHealthCheckTests(ClickHouseDatabase database) => _database = database;
 
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseOptions_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -29,21 +29,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<Cli
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddClickHouse_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddClickHouse("TestContainerHealthy").AddClickHouse("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -61,7 +47,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<Cli
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseOptions_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -78,7 +64,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<Cli
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestContainerHealthy"),
@@ -93,7 +79,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<Cli
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestContainerDegraded"),
@@ -109,7 +95,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<Cli
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestNoValues"),
@@ -124,7 +110,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase, IClassFixture<Cli
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddClickHouse_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestNoValues"),

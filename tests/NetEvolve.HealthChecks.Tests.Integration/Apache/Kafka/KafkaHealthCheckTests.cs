@@ -7,18 +7,18 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
-using Xunit;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
-public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
+[ClassDataSource<KafkaContainer>(Shared = SharedType.PerTestSession)]
+public class KafkaHealthCheckTests : HealthCheckTestBase
 {
-    private readonly KafkaDatabase _database;
+    private readonly KafkaContainer _database;
 
-    public KafkaHealthCheckTests(KafkaDatabase database) => _database = database;
+    public KafkaHealthCheckTests(KafkaContainer database) => _database = database;
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -41,7 +41,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -68,7 +68,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseConfigurationCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
@@ -90,7 +90,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
@@ -120,7 +120,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -143,7 +143,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
@@ -165,7 +165,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -188,7 +188,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -215,7 +215,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseConfigurationCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
@@ -237,7 +237,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
@@ -267,7 +267,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -290,7 +290,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
@@ -312,7 +312,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsCreate_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -334,7 +334,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -364,7 +364,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptions_ConfigurationNull_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -382,7 +382,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptions_BootstrapAddressNull_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -400,7 +400,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>

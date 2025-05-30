@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using VerifyTests;
-using VerifyXunit;
+using VerifyTUnit;
 
 internal static class ModuleInitializer
 {

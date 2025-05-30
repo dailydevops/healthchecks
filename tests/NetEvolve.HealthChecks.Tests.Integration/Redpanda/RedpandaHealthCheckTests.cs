@@ -7,18 +7,18 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Redpanda;
-using Xunit;
 
 [TestGroup(nameof(Redpanda))]
-public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<RedpandaDatabase>
+[ClassDataSource<RedpandaDatabase>(Shared = SharedType.PerTestSession)]
+public class RedpandaHealthCheckTests : HealthCheckTestBase
 {
     private readonly RedpandaDatabase _database;
 
     public RedpandaHealthCheckTests(RedpandaDatabase database) => _database = database;
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -37,7 +37,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -64,7 +64,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseConfigurationCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
@@ -85,7 +85,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
@@ -115,7 +115,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -138,7 +138,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
@@ -160,7 +160,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -179,7 +179,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -206,7 +206,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseConfigurationCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
@@ -227,7 +227,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
@@ -257,7 +257,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -280,7 +280,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
@@ -302,7 +302,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsCreate_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -324,7 +324,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptionsServiceProvider_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -354,7 +354,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptions_ConfigurationNull_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -372,7 +372,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptions_BootstrapAddressNull_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>
@@ -390,7 +390,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase, IClassFixture<Redpa
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_ShouldReturnUnhealty() =>
         await RunAndVerify(
             healthChecks =>

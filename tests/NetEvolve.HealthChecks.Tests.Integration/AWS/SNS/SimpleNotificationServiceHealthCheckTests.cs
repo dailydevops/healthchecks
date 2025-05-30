@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
-[Collection(nameof(AWS))]
+[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerTestSession)]
 public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
 {
     private readonly LocalStackInstance _instance;
 
     public SimpleNotificationServiceHealthCheckTests(LocalStackInstance instance) => _instance = instance;
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -37,7 +37,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -58,7 +58,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -79,7 +79,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -101,7 +101,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_Run101Subscriptions_ShouldReturnHealthy()
     {
         const string topicName = "MassOf101Subscriptions";
@@ -130,7 +130,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
 
     // Configuration-based tests
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
@@ -145,12 +145,13 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", LocalStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", _instance.Subscription },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
@@ -170,7 +171,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
@@ -190,7 +191,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
@@ -211,7 +212,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_ShouldReturnHealthy()
     {
         const string topicName = "MassOf101SubscriptionsConfig";

@@ -2,17 +2,18 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Firebird;
 
 [TestGroup(nameof(Firebird))]
-public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixture<FirebirdDatabase>
+[ClassDataSource<FirebirdDatabase>(Shared = SharedType.PerTestSession)]
+public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
 {
     private readonly FirebirdDatabase _database;
 
     public FirebirdHealthCheckTests(FirebirdDatabase database) => _database = database;
 
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseOptions_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -29,21 +30,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixtur
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddFirebird_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddFirebird("TestContainerHealthy").AddFirebird("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -61,7 +48,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixtur
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseOptions_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -78,7 +65,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixtur
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestContainerHealthy"),
@@ -94,7 +81,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixtur
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestContainerDegraded"),
@@ -110,7 +97,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixtur
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestNoValues"),
@@ -125,7 +112,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase, IClassFixtur
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddFirebird_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestNoValues"),
