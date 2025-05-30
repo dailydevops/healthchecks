@@ -10,11 +10,9 @@ using NetEvolve.HealthChecks.SQLite;
 using Xunit;
 
 [TestGroup(nameof(SQLite))]
-public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteDatabase>
+public class SQLiteHealthCheckTests : HealthCheckTestBase
 {
-    private readonly SQLiteDatabase _database;
-
-    public SQLiteHealthCheckTests(SQLiteDatabase database) => _database = database;
+    private const string ConnectionString = "Data Source=:memory:";
 
     [Fact]
     public async Task AddSQLite_UseOptions_ShouldReturnHealthy() =>
@@ -23,7 +21,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteD
             {
                 _ = healthChecks.AddSQLite(
                     "TestContainerHealthy",
-                    options => options.ConnectionString = _database.ConnectionString
+                    options => options.ConnectionString = ConnectionString
                 );
             },
             HealthStatus.Healthy
@@ -51,7 +49,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteD
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.ConnectionString = _database.ConnectionString;
+                        options.ConnectionString = ConnectionString;
                         options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
                         options.Timeout = 0;
                     }
@@ -69,7 +67,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteD
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.ConnectionString;
+                        options.ConnectionString = ConnectionString;
                         options.Command = "SELECT 1 = `1`";
                     }
                 );
@@ -86,7 +84,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteD
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:SQLite:TestContainerHealthy:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:SQLite:TestContainerHealthy:ConnectionString", ConnectionString },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -101,7 +99,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteD
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:SQLite:TestContainerDegraded:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:SQLite:TestContainerDegraded:ConnectionString", ConnectionString },
                     { "HealthChecks:SQLite:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -132,7 +130,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase, IClassFixture<SQLiteD
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:SQLite:TestNoValues:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:SQLite:TestNoValues:ConnectionString", ConnectionString },
                     { "HealthChecks:SQLite:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
