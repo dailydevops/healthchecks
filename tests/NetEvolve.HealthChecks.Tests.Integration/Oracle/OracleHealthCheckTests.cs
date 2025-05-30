@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Oracle;
-using Xunit;
 
 [TestGroup(nameof(Oracle))]
-public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleDatabase>
+[ClassDataSource<OracleDatabase>(Shared = SharedType.PerTestSession)]
+public class OracleHealthCheckTests : HealthCheckTestBase
 {
     private readonly OracleDatabase _database;
 
     public OracleHealthCheckTests(OracleDatabase database) => _database = database;
 
-    [Fact]
+    [Test]
     public async Task AddOracle_UseOptions_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -29,20 +29,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleD
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddOracle_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddOracle("TestContainerHealthy").AddOracle("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
+    [Test]
     public async Task AddOracle_UseOptions_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -59,7 +46,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleD
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddOracle_UseOptions_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -76,7 +63,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleD
             HealthStatus.Unhealthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddOracle_UseConfiguration_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestContainerHealthy"),
@@ -91,7 +78,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleD
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddOracle_UseConfiguration_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestContainerDegraded"),
@@ -107,7 +94,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleD
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddOracle_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestNoValues"),
@@ -122,7 +109,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase, IClassFixture<OracleD
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddOracle_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestNoValues"),

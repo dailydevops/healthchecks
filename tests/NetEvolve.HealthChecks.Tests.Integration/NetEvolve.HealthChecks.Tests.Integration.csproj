@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);CA1034</NoWarn>
+    <NoWarn>$(NoWarn);CA1034;IDE1006</NoWarn>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
@@ -12,8 +13,8 @@
     <PackageReference Include="coverlet.msbuild" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="NetEvolve.Extensions.XUnit" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="NetEvolve.Extensions.TUnit" />
     <PackageReference Include="PublicApiGenerator" />
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.Azurite" />
@@ -30,12 +31,9 @@
     <PackageReference Include="Testcontainers.Redis" />
     <PackageReference Include="Testcontainers.Redpanda" />
     <PackageReference Include="Testcontainers.ServiceBus" />
-    <PackageReference Include="Verify.Xunit" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="TUnit" />
+    <PackageReference Include="Verify.ParametersHashing" />
+    <PackageReference Include="Verify.TUnit" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
@@ -63,11 +61,6 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.SetCultureAttribute">
-      <_Parameter1>en_US</_Parameter1>
-      <_Parameter2>true</_Parameter2>
-      <_Parameter2_TypeName>System.Boolean</_Parameter2_TypeName>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.IntegrationTestAttribute" />
+    <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.IntegrationTestAttribute" />
   </ItemGroup>
 </Project>

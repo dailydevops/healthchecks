@@ -4,16 +4,16 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 
 [TestGroup(nameof(HealthChecks))]
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
-    [Fact]
+    [Test]
     public async Task AddApplicationReady_ShouldReturnHealthy() =>
         await RunAndVerify(healthChecks => healthChecks.AddApplicationReady(), HealthStatus.Healthy);
 
-    [Fact]
+    [Test]
     public async Task AddApplicationReady_WithCustomName_ShouldReturnUnhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddApplicationReady(),

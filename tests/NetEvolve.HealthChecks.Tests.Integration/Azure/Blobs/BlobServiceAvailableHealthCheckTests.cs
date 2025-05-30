@@ -1,38 +1,20 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Blobs;
 
-using System;
 using System.Threading.Tasks;
-using global::Azure.Storage.Blobs;
-using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
-[Collection("Azurite")]
+[ClassDataSource<AzuriteAccess>(Shared = SharedType.PerTestSession)]
 public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;
-    private readonly Uri _accountSasUri;
-    private readonly Uri _uriBlobStorage;
 
-    public BlobServiceAvailableHealthCheckTests(AzuriteAccess container)
-    {
-        _container = container;
+    public BlobServiceAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
-        var client = new BlobServiceClient(_container.ConnectionString);
-        _uriBlobStorage = client.Uri;
-
-        _accountSasUri = client.GenerateAccountSasUri(
-            AccountSasPermissions.All,
-            DateTimeOffset.UtcNow.AddDays(1),
-            AccountSasResourceTypes.All
-        );
-    }
-
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -47,7 +29,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -66,7 +48,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeServiceProvider_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -85,7 +67,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -102,7 +84,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -120,7 +102,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -132,15 +114,16 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                         options.AccountKey = AzuriteAccess.AccountKey;
                         options.AccountName = AzuriteAccess.AccountName;
                         options.Mode = BlobClientCreationMode.SharedKey;
-                        options.ServiceUri = _uriBlobStorage;
+                        options.ServiceUri = _container.BlobServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                        options.Timeout = 1000;
                     }
                 );
             },
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -153,14 +136,14 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                         options.AccountName = AzuriteAccess.AccountName;
                         options.Mode = BlobClientCreationMode.SharedKey;
                         options.Timeout = 0;
-                        options.ServiceUri = _uriBlobStorage;
+                        options.ServiceUri = _container.BlobServiceEndpoint;
                     }
                 );
             },
             HealthStatus.Degraded
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -170,14 +153,15 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Mode = BlobClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _accountSasUri;
+                        options.ServiceUri = _container.BlobAccountSasUri;
+                        options.Timeout = 1000;
                     }
                 );
             },
             HealthStatus.Healthy
         );
 
-    [Fact]
+    [Test]
     public async Task AddBlobServiceAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -187,7 +171,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Mode = BlobClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _accountSasUri;
+                        options.ServiceUri = _container.BlobAccountSasUri;
                         options.Timeout = 0;
                     }
                 );

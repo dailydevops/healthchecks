@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Testcontainers.ActiveMq;
 
-public sealed class ActiveMqNoCredentials : IAsyncLifetime, IActiveMQAccessor
+public sealed class ActiveMqNoCredentials : IAsyncInitializer, IAsyncDisposable, IActiveMQAccessor
 {
     private readonly ArtemisContainer _container = new ArtemisBuilder()
         .WithEnvironment("ANONYMOUS_LOGIN", bool.TrueString)
@@ -15,7 +15,7 @@ public sealed class ActiveMqNoCredentials : IAsyncLifetime, IActiveMQAccessor
 
     public string? Password => string.Empty;
 
-    public async Task DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
+    public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
 }
