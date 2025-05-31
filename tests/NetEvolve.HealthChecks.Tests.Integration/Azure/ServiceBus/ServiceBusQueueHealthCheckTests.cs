@@ -10,7 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
-// [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")] - https://github.com/thomhurst/TUnit/issues/2481
+[TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")]
 [ClassDataSource<ServiceBusContainer>(Shared = SharedType.PerTestSession)]
 public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
 {

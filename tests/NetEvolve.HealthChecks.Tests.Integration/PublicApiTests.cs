@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 using NetEvolve.Extensions.TUnit;
 using PublicApiGenerator;
 
-// [TestGroup(nameof(HealthChecks))] - https://github.com/thomhurst/TUnit/issues/2481
+[TestGroup(nameof(HealthChecks))]
 [TestGroup("Architecture")]
 public class PublicApiTests
 {
