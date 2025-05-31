@@ -3,15 +3,14 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Dapr;
-using Xunit;
 
 [TestGroup(nameof(Dapr))]
 public sealed class DaprConfigureTests
 {
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var options = new DaprOptions();
@@ -22,12 +21,15 @@ public sealed class DaprConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
@@ -38,12 +40,15 @@ public sealed class DaprConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
@@ -54,12 +59,15 @@ public sealed class DaprConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
-    public void Validate_EverythingFine_Expected()
+    [Test]
+    public async Task Validate_EverythingFine_Expected()
     {
         // Arrange
         var configure = new DaprConfigure(new ConfigurationBuilder().Build());
@@ -70,10 +78,10 @@ public sealed class DaprConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -88,7 +96,7 @@ public sealed class DaprConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void ConfigureWithoutName_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -102,8 +110,8 @@ public sealed class DaprConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
-    public void Configure_WithNameParameter_BindsConfigurationCorrectly()
+    [Test]
+    public async Task Configure_WithNameParameter_BindsConfigurationCorrectly()
     {
         // Arrange
         var configValues = new Dictionary<string, string?> { { "HealthChecks:TestDapr:Timeout", "500" } };
@@ -118,10 +126,10 @@ public sealed class DaprConfigureTests
         configure.Configure(name, options);
 
         // Assert
-        Assert.Equal(500, options.Timeout);
+        _ = await Assert.That(options.Timeout).IsEqualTo(500);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WithDefaultName_ThrowsArgumentException()
     {
         // Arrange

@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Abstractions;
-using Xunit;
 
 [TestGroup(nameof(HealthChecks))]
 public class ConfigurableHealthCheckBaseTests
 {
-    [Fact]
+    [Test]
     public async Task InternalAsync_SomethingHappens_ReturnsUnhealthy()
     {
         // Arrange
@@ -25,20 +24,17 @@ public class ConfigurableHealthCheckBaseTests
 
         using var scope = serviceProvider.CreateScope();
         var check = scope.ServiceProvider.GetService<IHealthCheck>();
-
-        Assert.NotNull(check);
-
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("test", check, null, null) };
 
         // Act
         var result = await check.CheckHealthAsync(context, default);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
-    [Fact]
-    public void HealthCheckState_WhenConditionIsTrue_ReturnsHealthy()
+    [Test]
+    public async Task HealthCheckState_WhenConditionIsTrue_ReturnsHealthy()
     {
         // Arrange
         const string testName = "TestHealthCheck";
@@ -47,12 +43,15 @@ public class ConfigurableHealthCheckBaseTests
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckState(true, testName);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
-        Assert.Equal($"{testName}: Healthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy", StringComparison.Ordinal);
+        }
     }
 
-    [Fact]
-    public void HealthCheckState_WhenConditionIsFalse_ReturnsDegraded()
+    [Test]
+    public async Task HealthCheckState_WhenConditionIsFalse_ReturnsDegraded()
     {
         // Arrange
         const string testName = "TestHealthCheck";
@@ -61,12 +60,15 @@ public class ConfigurableHealthCheckBaseTests
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckState(false, testName);
 
         // Assert
-        Assert.Equal(HealthStatus.Degraded, result.Status);
-        Assert.Equal($"{testName}: Degraded", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Degraded", StringComparison.Ordinal);
+        }
     }
 
-    [Fact]
-    public void HealthCheckUnhealthy_WithDefaultMessage_ReturnsUnhealthyWithDefaultMessage()
+    [Test]
+    public async Task HealthCheckUnhealthy_WithDefaultMessage_ReturnsUnhealthyWithDefaultMessage()
     {
         // Arrange
         const string testName = "TestHealthCheck";
@@ -76,28 +78,39 @@ public class ConfigurableHealthCheckBaseTests
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(failureStatus, testName);
 
         // Assert
-        Assert.Equal(failureStatus, result.Status);
-        Assert.Equal($"{testName}: Unhealthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Unhealthy", StringComparison.Ordinal);
+        }
     }
 
-    [Fact]
-    public void HealthCheckUnhealthy_WithCustomMessage_ReturnsUnhealthyWithCustomMessage()
+    [Test]
+    public async Task HealthCheckUnhealthy_WithCustomMessage_ReturnsUnhealthyWithCustomMessage()
     {
         // Arrange
         const string testName = "TestHealthCheck";
-        const HealthStatus failureStatus = HealthStatus.Degraded;
         const string customMessage = "Custom unhealthy message";
 
         // Act
-        var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(failureStatus, testName, customMessage);
+        var result = TestHelperConfigurableHealthCheck.TestHealthCheckUnhealthy(
+            HealthStatus.Degraded,
+            testName,
+            customMessage
+        );
 
         // Assert
-        Assert.Equal(failureStatus, result.Status);
-        Assert.Equal($"{testName}: {customMessage}", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo($"{testName}: {customMessage}", StringComparison.Ordinal);
+        }
     }
 
-    [Fact]
-    public void HealthCheckDegraded_ReturnsHealthCheckResultWithDegradedStatus()
+    [Test]
+    public async Task HealthCheckDegraded_ReturnsHealthCheckResultWithDegradedStatus()
     {
         // Arrange
         const string testName = "TestHealthCheck";
@@ -106,8 +119,11 @@ public class ConfigurableHealthCheckBaseTests
         var result = TestHelperConfigurableHealthCheck.TestHealthCheckDegraded(testName);
 
         // Assert
-        Assert.Equal(HealthStatus.Degraded, result.Status);
-        Assert.Equal($"{testName}: Degraded", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Degraded", StringComparison.Ordinal);
+        }
     }
 
 #pragma warning disable CA1812 // Unused classes

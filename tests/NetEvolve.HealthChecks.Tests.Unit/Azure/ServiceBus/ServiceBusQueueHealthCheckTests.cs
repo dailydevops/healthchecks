@@ -5,16 +5,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 using NSubstitute;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")]
 public sealed class ServiceBusQueueHealthCheckTests
 {
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -29,7 +28,7 @@ public sealed class ServiceBusQueueHealthCheckTests
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -43,11 +42,14 @@ public sealed class ServiceBusQueueHealthCheckTests
         var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("Test: Cancellation requested.", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -61,7 +63,10 @@ public sealed class ServiceBusQueueHealthCheckTests
         var result = await check.CheckHealthAsync(context);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("Test: Missing configuration.", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+        }
     }
 }

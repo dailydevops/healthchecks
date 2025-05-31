@@ -7,16 +7,15 @@ using global::RabbitMQ.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
-using Xunit;
 
 [TestGroup(nameof(RabbitMQ))]
 public sealed class RabbitMQHealthCheckTests
 {
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
         // Arrange
@@ -45,11 +44,14 @@ public sealed class RabbitMQHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
-        Assert.Equal("test: Healthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService()
     {
         // Arrange
@@ -78,11 +80,14 @@ public sealed class RabbitMQHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
-        Assert.Equal("test: Healthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenConnectionFails_ReturnsUnhealthy()
     {
         // Arrange
@@ -111,14 +116,15 @@ public sealed class RabbitMQHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Multiple(
-            () => Assert.Equal(HealthStatus.Unhealthy, result.Status),
-            () => Assert.Contains("test: Unexpected error.", result.Description, StringComparison.Ordinal),
-            () => Assert.NotNull(result.Exception)
-        );
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert.That(result.Exception).IsNotNull();
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded()
     {
         // Arrange
@@ -155,7 +161,10 @@ public sealed class RabbitMQHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Degraded, result.Status);
-        Assert.Contains("test: Degraded", result.Description, StringComparison.Ordinal);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Degraded", StringComparison.Ordinal);
+        }
     }
 }

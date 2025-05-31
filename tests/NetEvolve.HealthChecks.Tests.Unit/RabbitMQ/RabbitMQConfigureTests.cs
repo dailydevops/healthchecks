@@ -3,15 +3,14 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
-using Xunit;
 
 [TestGroup(nameof(RabbitMQ))]
 public sealed class RabbitMQConfigureTests
 {
-    [Fact]
-    public void Configure_WithNameAndOptions_BindsConfigurationCorrectly()
+    [Test]
+    public async Task Configure_WithNameAndOptions_BindsConfigurationCorrectly()
     {
         // Arrange
         var configValues = new Dictionary<string, string?>
@@ -29,11 +28,14 @@ public sealed class RabbitMQConfigureTests
         configure.Configure("TestName", options);
 
         // Assert
-        Assert.Equal("test-key", options.KeyedService);
-        Assert.Equal(200, options.Timeout);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.KeyedService).IsEqualTo("test-key");
+            _ = await Assert.That(options.Timeout).IsEqualTo(200);
+        }
     }
 
-    [Fact]
+    [Test]
     public void Configure_WithNullName_ThrowsArgumentException()
     {
         // Arrange
@@ -46,7 +48,7 @@ public sealed class RabbitMQConfigureTests
         _ = Assert.Throws<ArgumentNullException>(() => configure.Configure(name, options));
     }
 
-    [Fact]
+    [Test]
     public void Configure_WithEmptyName_ThrowsArgumentException()
     {
         // Arrange
@@ -59,8 +61,8 @@ public sealed class RabbitMQConfigureTests
         _ = Assert.Throws<ArgumentException>(() => configure.Configure(name, options));
     }
 
-    [Fact]
-    public void Validate_WithValidOptions_ReturnsSuccess()
+    [Test]
+    public async Task Validate_WithValidOptions_ReturnsSuccess()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -71,11 +73,11 @@ public sealed class RabbitMQConfigureTests
         var result = configure.Validate("TestName", options);
 
         // Assert
-        Assert.Equal(ValidateOptionsResult.Success, result);
+        _ = await Assert.That(result).IsEqualTo(ValidateOptionsResult.Success);
     }
 
-    [Fact]
-    public void Validate_WithNullName_ReturnsFail()
+    [Test]
+    public async Task Validate_WithNullName_ReturnsFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -86,12 +88,15 @@ public sealed class RabbitMQConfigureTests
         var result = configure.Validate(null, options);
 
         // Assert
-        Assert.False(result.Succeeded);
-        Assert.Contains("name cannot be null", result.FailureMessage, StringComparison.Ordinal);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WithEmptyName_ReturnsFail()
+    [Test]
+    public async Task Validate_WithEmptyName_ReturnsFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -102,12 +107,15 @@ public sealed class RabbitMQConfigureTests
         var result = configure.Validate("", options);
 
         // Assert
-        Assert.False(result.Succeeded);
-        Assert.Contains("name cannot be null", result.FailureMessage, StringComparison.Ordinal);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WithNullOptions_ReturnsFail()
+    [Test]
+    public async Task Validate_WithNullOptions_ReturnsFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -117,12 +125,15 @@ public sealed class RabbitMQConfigureTests
         var result = configure.Validate("TestName", null!);
 
         // Assert
-        Assert.False(result.Succeeded);
-        Assert.Contains("option cannot be null", result.FailureMessage, StringComparison.Ordinal);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WithInvalidTimeout_ReturnsFail()
+    [Test]
+    public async Task Validate_WithInvalidTimeout_ReturnsFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -136,7 +147,10 @@ public sealed class RabbitMQConfigureTests
         var result = configure.Validate("TestName", options);
 
         // Assert
-        Assert.False(result.Succeeded);
-        Assert.Contains("timeout cannot be less than infinite", result.FailureMessage, StringComparison.Ordinal);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 }

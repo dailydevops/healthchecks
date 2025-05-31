@@ -1,15 +1,14 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
 
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Subscription")]
 public sealed class ServiceBusSubscriptionOptionsConfigureTests
 {
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -24,7 +23,7 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -39,7 +38,7 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameWhitespace_ThrowArgumentException()
     {
         // Arrange
@@ -54,7 +53,7 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenDefaultConfigure_ThrowArgumentException()
     {
         // Arrange
@@ -69,8 +68,8 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
-    public void Validate_WhenNameNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenNameNull_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -81,12 +80,15 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenOptionsNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenOptionsNull_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -97,12 +99,15 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenTimeoutLessThanInfinite_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenTimeoutLessThanInfinite_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -113,12 +118,15 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenModeNull_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -129,12 +137,15 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The client creation mode cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The client creation mode cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeDefaultAzureCredentialsAndNoNamespace_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenModeDefaultAzureCredentialsAndNoNamespace_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -150,15 +161,19 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal(
-            "The fully qualified namespace cannot be null or whitespace when using DefaultAzureCredentials.",
-            result.FailureMessage
-        );
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The fully qualified namespace cannot be null or whitespace when using DefaultAzureCredentials."
+                );
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeConnectionStringAndNoConnectionString_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenModeConnectionStringAndNoConnectionString_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -174,15 +189,17 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal(
-            "The connection string cannot be null or whitespace when using ConnectionString.",
-            result.FailureMessage
-        );
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The connection string cannot be null or whitespace when using ConnectionString.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenTopicNameNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenTopicNameNull_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -199,12 +216,15 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The topic name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The topic name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenTopicNameEmpty_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenTopicNameEmpty_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -221,12 +241,15 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The topic name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The topic name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenSubscriptionNameNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenSubscriptionNameNull_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -243,12 +266,17 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The subscription name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The subscription name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenSubscriptionNameEmpty_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenSubscriptionNameEmpty_ReturnsFail()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -265,12 +293,17 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The subscription name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The subscription name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenValid_ReturnsSuccess()
+    [Test]
+    public async Task Validate_WhenValid_ReturnsSuccess()
     {
         // Arrange
         var configure = new ServiceBusSubscriptionOptionsConfigure(new ConfigurationBuilder().Build());
@@ -287,7 +320,10 @@ public sealed class ServiceBusSubscriptionOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
-        Assert.Null(result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsNull();
+        }
     }
 }

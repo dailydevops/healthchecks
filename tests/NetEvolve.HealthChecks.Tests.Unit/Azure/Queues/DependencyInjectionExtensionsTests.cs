@@ -3,14 +3,13 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddQueueClientAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -23,7 +22,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueClientAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -39,7 +38,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueClientAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -55,7 +54,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueClientAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -71,7 +70,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueClientAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
@@ -87,7 +86,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueServiceAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -100,7 +99,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueServiceAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -116,7 +115,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueServiceAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -132,7 +131,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueServiceAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -148,7 +147,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQueueServiceAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange

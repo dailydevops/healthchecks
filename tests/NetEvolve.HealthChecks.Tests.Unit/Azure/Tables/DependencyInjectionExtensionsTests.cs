@@ -3,14 +3,13 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddTableClientAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -23,7 +22,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableClientAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -39,7 +38,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableClientAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -55,7 +54,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableClientAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -71,7 +70,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableClientAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
@@ -87,7 +86,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableServiceAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -100,7 +99,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableServiceAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -116,7 +115,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableServiceAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -132,7 +131,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableServiceAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -148,7 +147,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddTableServiceAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange

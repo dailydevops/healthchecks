@@ -4,14 +4,13 @@ using System;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
 public sealed class TableClientAvailableConfigureTests
 {
-    [Fact]
+    [Test]
     public void Configue_OnlyOptions_ThrowsArgumentException()
     {
         // Arrange
@@ -26,9 +25,9 @@ public sealed class TableClientAvailableConfigureTests
         _ = Assert.Throws<ArgumentException>("name", () => configure.Configure(options));
     }
 
-    [Theory]
-    [MemberData(nameof(GetValidateTestCases))]
-    public void Validate_Theory_Expected(
+    [Test]
+    [MethodDataSource(nameof(GetValidateTestCases))]
+    public async Task Validate_Theory_Expected(
         bool expectedResult,
         string? expectedMessage,
         string? name,
@@ -46,49 +45,63 @@ public sealed class TableClientAvailableConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.Equal(expectedResult, result.Succeeded);
-        Assert.Equal(expectedMessage, result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsEqualTo(expectedResult);
+            _ = await Assert.That(result.FailureMessage).IsEqualTo(expectedMessage);
+        }
     }
 
-    public static TheoryData<bool, string?, string?, TableClientAvailableOptions> GetValidateTestCases()
+    public static IEnumerable<Func<(bool, string?, string?, TableClientAvailableOptions)>> GetValidateTestCases()
     {
-        var data = new TheoryData<bool, string?, string?, TableClientAvailableOptions>
-        {
-            { false, "The name cannot be null or whitespace.", null, null! },
-            { false, "The name cannot be null or whitespace.", "\t", null! },
-            { false, "The option cannot be null.", "name", null! },
-            {
+        yield return () => (false, "The name cannot be null or whitespace.", null, null!);
+        yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
+        yield return () => (false, "The option cannot be null.", "name", null!);
+        yield return () =>
+            (
                 false,
                 "The timeout cannot be less than infinite (-1).",
                 "name",
                 new TableClientAvailableOptions { Timeout = -2 }
-            },
-            { false, "The container name cannot be null or whitespace.", "name", new TableClientAvailableOptions() },
-            {
+            );
+        yield return () =>
+            (
                 false,
-                "The mode `13` is not supported.",
+                "The container name cannot be null or whitespace.",
                 "name",
-                new TableClientAvailableOptions { Mode = (TableClientCreationMode)13, TableName = "test" }
-            },
-            // Mode: ServiceProvider
-            {
+                new TableClientAvailableOptions { TableName = null! }
+            );
+        yield return () =>
+            (
+                false,
+                "The container name cannot be null or whitespace.",
+                "name",
+                new TableClientAvailableOptions { TableName = "\t" }
+            );
+
+        // Mode: ServiceProvider
+        yield return () =>
+            (
                 false,
                 $"No service of type `{nameof(TableServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
                 new TableClientAvailableOptions { Mode = TableClientCreationMode.ServiceProvider, TableName = "test" }
-            },
-            // Mode: DefaultAzureCredentials
-            {
+            );
+
+        // Mode: DefaultAzureCredentials
+        yield return () =>
+            (
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
                 new TableClientAvailableOptions
                 {
-                    Mode = TableClientCreationMode.DefaultAzureCredentials,
                     TableName = "test",
+                    Mode = TableClientCreationMode.DefaultAzureCredentials,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The service url must be an absolute url when using `DefaultAzureCredentials` mode.",
                 "name",
@@ -98,8 +111,9 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -109,15 +123,18 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                 }
-            },
-            // Mode: ConnectionString
-            {
+            );
+
+        // Mode: ConnectionString
+        yield return () =>
+            (
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
                 new TableClientAvailableOptions { TableName = "test", Mode = TableClientCreationMode.ConnectionString }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -127,15 +144,18 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.ConnectionString,
                     ConnectionString = "connectionString",
                 }
-            },
-            // Mode: SharedKey
-            {
+            );
+
+        // Mode: SharedKey
+        yield return () =>
+            (
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
                 new TableClientAvailableOptions { TableName = "test", Mode = TableClientCreationMode.SharedKey }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The service url must be an absolute url when using `SharedKey` mode.",
                 "name",
@@ -145,8 +165,9 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.SharedKey,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The account name cannot be null or whitespace when using `SharedKey` mode.",
                 "name",
@@ -157,8 +178,9 @@ public sealed class TableClientAvailableConfigureTests
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = null,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The account key cannot be null or whitespace when using `SharedKey` mode.",
                 "name",
@@ -170,8 +192,9 @@ public sealed class TableClientAvailableConfigureTests
                     AccountName = "test",
                     AccountKey = null,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -183,9 +206,11 @@ public sealed class TableClientAvailableConfigureTests
                     AccountName = "test",
                     AccountKey = "test",
                 }
-            },
-            // Mode: AzureSasCredential
-            {
+            );
+
+        // Mode: AzureSasCredential
+        yield return () =>
+            (
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
@@ -194,8 +219,9 @@ public sealed class TableClientAvailableConfigureTests
                     TableName = "test",
                     Mode = TableClientCreationMode.AzureSasCredential,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The service url must be an absolute url when using `AzureSasCredential` mode.",
                 "name",
@@ -205,8 +231,9 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The sas query token cannot be null or whitespace when using `AzureSasCredential` mode.",
                 "name",
@@ -216,8 +243,9 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute", UriKind.Absolute),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -227,9 +255,6 @@ public sealed class TableClientAvailableConfigureTests
                     Mode = TableClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute),
                 }
-            },
-        };
-
-        return data;
+            );
     }
 }

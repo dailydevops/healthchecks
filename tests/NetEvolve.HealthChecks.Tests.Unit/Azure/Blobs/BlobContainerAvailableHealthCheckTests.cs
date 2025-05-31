@@ -2,14 +2,13 @@
 
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 public class ClientCreationTests
 {
-    [Fact]
+    [Test]
     public void CreateBlobServiceClient_InvalidMode_ThrowUnreachableException()
     {
         var options = new BlobContainerAvailableOptions { Mode = (BlobClientCreationMode)13 };
@@ -18,7 +17,7 @@ public class ClientCreationTests
         _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateBlobServiceClient(options, serviceProvider));
     }
 
-    [Fact]
+    [Test]
     public void CreateBlobServiceClient_ModeServiceProvider_ThrowUnreachableException()
     {
         var options = new BlobContainerAvailableOptions { Mode = BlobClientCreationMode.ServiceProvider };
