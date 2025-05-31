@@ -2,10 +2,14 @@
 
 using System;
 using System.Threading.Tasks;
+using global::Azure.Data.Tables;
+using global::Azure.Data.Tables.Sas;
+using global::Azure.Storage.Blobs;
+using global::Azure.Storage.Queues;
+using global::Azure.Storage.Sas;
 using Testcontainers.Azurite;
-using Xunit;
 
-public sealed class AzuriteAccess : IAsyncLifetime, IAsyncDisposable
+public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
 {
     public const string AccountName = "devstoreaccount1";
     public const string AccountKey =
@@ -13,11 +17,53 @@ public sealed class AzuriteAccess : IAsyncLifetime, IAsyncDisposable
 
     private readonly AzuriteContainer _container = new AzuriteBuilder().WithCommand("--skipApiVersionCheck").Build();
 
+    public Uri BlobAccountSasUri { get; private set; } = default!;
+
+    public Uri BlobServiceEndpoint => new Uri(_container.GetBlobEndpoint());
+
     public string ConnectionString => _container.GetConnectionString();
 
-    public async Task DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
+    public Uri QueueAccountSasUri { get; private set; } = default!;
 
-    public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
+    public Uri QueueServiceEndpoint => new Uri(_container.GetQueueEndpoint());
 
-    async ValueTask IAsyncDisposable.DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
+    public Uri TableAccountSasUri { get; private set; } = default!;
+
+    public Uri TableServiceEndpoint => new Uri(_container.GetTableEndpoint());
+
+    public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
+
+    public async Task InitializeAsync()
+    {
+        await _container.StartAsync().ConfigureAwait(false);
+
+        var blobServiceClient = new BlobServiceClient(ConnectionString);
+
+        var blobContainerClient = blobServiceClient.GetBlobContainerClient("test");
+        _ = await blobContainerClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+
+        BlobAccountSasUri = blobServiceClient.GenerateAccountSasUri(
+            AccountSasPermissions.All,
+            DateTimeOffset.UtcNow.AddDays(1),
+            AccountSasResourceTypes.All
+        );
+
+        var queueServiceClient = new QueueServiceClient(ConnectionString);
+
+        var queueClient = queueServiceClient.GetQueueClient("test");
+        _ = await queueClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+
+        QueueAccountSasUri = queueServiceClient.GenerateAccountSasUri(
+            AccountSasPermissions.All,
+            DateTimeOffset.UtcNow.AddDays(1),
+            AccountSasResourceTypes.All
+        );
+
+        var tableServiceClient = new TableServiceClient(ConnectionString);
+
+        var tableClient = tableServiceClient.GetTableClient("test");
+        _ = await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+
+        TableAccountSasUri = tableClient.GenerateSasUri(TableSasPermissions.All, DateTimeOffset.UtcNow.AddDays(1));
+    }
 }

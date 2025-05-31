@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Testcontainers.ActiveMq;
 
-public sealed class ActiveMqDefaultCredentials : IAsyncLifetime, IActiveMQAccessor
+public sealed class ActiveMqDefaultCredentials : IAsyncInitializer, IAsyncDisposable, IActiveMQAccessor
 {
     private readonly ArtemisContainer _container = new ArtemisBuilder().Build();
 
@@ -13,7 +13,7 @@ public sealed class ActiveMqDefaultCredentials : IAsyncLifetime, IActiveMQAccess
 
     public string? Password => ArtemisBuilder.DefaultPassword;
 
-    public async Task DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
+    public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
 }
