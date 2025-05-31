@@ -9,7 +9,7 @@
       name: TestNoValues,
       status: Unhealthy,
       tags: [
-        DB2,
+        db2,
         database
       ]
     }

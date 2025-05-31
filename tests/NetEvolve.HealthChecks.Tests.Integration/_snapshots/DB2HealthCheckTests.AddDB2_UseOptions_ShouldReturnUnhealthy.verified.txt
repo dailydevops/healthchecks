@@ -9,7 +9,7 @@
       name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
-        DB2,
+        db2,
         database
       ]
     }

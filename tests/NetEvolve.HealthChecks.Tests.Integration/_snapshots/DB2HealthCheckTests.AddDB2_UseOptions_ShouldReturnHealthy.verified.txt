@@ -5,7 +5,7 @@
       name: TestContainerHealthy,
       status: Healthy,
       tags: [
-        DB2,
+        db2,
         database
       ]
     }
