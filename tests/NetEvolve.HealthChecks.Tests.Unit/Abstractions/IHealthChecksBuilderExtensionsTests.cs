@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Abstractions;
-using Xunit;
 
 [TestGroup(nameof(HealthChecks))]
 public class IHealthChecksBuilderExtensionsTests
 {
-    [Fact]
+    [Test]
     public void IsServiceTypeRegistered_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -27,8 +26,8 @@ public class IHealthChecksBuilderExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
-    public void IsServiceTypeRegistered_WhenServiceTypeIsRegistered_ReturnsTrue()
+    [Test]
+    public async Task IsServiceTypeRegistered_WhenServiceTypeIsRegistered_ReturnsTrue()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -39,11 +38,11 @@ public class IHealthChecksBuilderExtensionsTests
         var result = builder.IsServiceTypeRegistered<IConfiguration>();
 
         // Assert
-        Assert.True(result);
+        _ = await Assert.That(result).IsTrue();
     }
 
-    [Fact]
-    public void IsServiceTypeRegistered_WhenServiceTypeIsNotRegistered_ReturnsFalse()
+    [Test]
+    public async Task IsServiceTypeRegistered_WhenServiceTypeIsNotRegistered_ReturnsFalse()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -53,10 +52,10 @@ public class IHealthChecksBuilderExtensionsTests
         var result = builder.IsServiceTypeRegistered<IConfiguration>();
 
         // Assert
-        Assert.False(result);
+        _ = await Assert.That(result).IsFalse();
     }
 
-    [Fact]
+    [Test]
     public void IsNameAlreadyUsed_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -69,8 +68,8 @@ public class IHealthChecksBuilderExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
-    public void IsNameAlreadyUsed_WhenNameIsUsedForSameServiceType_ReturnsTrue()
+    [Test]
+    public async Task IsNameAlreadyUsed_WhenNameIsUsedForSameServiceType_ReturnsTrue()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -85,11 +84,11 @@ public class IHealthChecksBuilderExtensionsTests
         var result = builder.IsNameAlreadyUsed<TestHealthCheck>(name);
 
         // Assert
-        Assert.True(result);
+        _ = await Assert.That(result).IsTrue();
     }
 
-    [Fact]
-    public void IsNameAlreadyUsed_WhenNameIsUsedForDifferentServiceType_ReturnsFalse()
+    [Test]
+    public async Task IsNameAlreadyUsed_WhenNameIsUsedForDifferentServiceType_ReturnsFalse()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -105,11 +104,11 @@ public class IHealthChecksBuilderExtensionsTests
         var result = builder.IsNameAlreadyUsed<TestHealthCheck>(name);
 
         // Assert
-        Assert.False(result);
+        _ = await Assert.That(result).IsFalse();
     }
 
-    [Fact]
-    public void IsNameAlreadyUsed_WhenNameIsNotUsed_ReturnsFalse()
+    [Test]
+    public async Task IsNameAlreadyUsed_WhenNameIsNotUsed_ReturnsFalse()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -122,7 +121,7 @@ public class IHealthChecksBuilderExtensionsTests
         var result = builder.IsNameAlreadyUsed<TestHealthCheck>("Test");
 
         // Assert
-        Assert.False(result);
+        _ = await Assert.That(result).IsFalse();
     }
 
     // Test health check classes

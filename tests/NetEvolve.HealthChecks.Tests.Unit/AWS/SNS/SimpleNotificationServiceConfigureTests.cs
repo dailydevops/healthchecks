@@ -2,9 +2,8 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
-using Xunit;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
 public sealed class SimpleNotificationServiceConfigureTests
@@ -12,46 +11,56 @@ public sealed class SimpleNotificationServiceConfigureTests
     private static SimpleNotificationServiceConfigure CreateConfigure(IConfiguration? configuration = null) =>
         new(configuration ?? new ConfigurationBuilder().Build());
 
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void Validate_WhenNameIsNullOrWhiteSpace_ReturnsFail(string? name)
+    [Test]
+    [Arguments(null)]
+    [Arguments("")]
+    [Arguments("   ")]
+    public async Task Validate_WhenNameIsNullOrWhiteSpace_ReturnsFail(string? name)
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions { TopicName = "topic", ServiceUrl = "url" };
-        Assert.True(configure.Validate(name, options).Failed);
+        var result = configure.Validate(name, options);
+
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
-    [Fact]
-    public void Validate_WhenOptionsIsNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenOptionsIsNull_ReturnsFail()
     {
         var configure = CreateConfigure();
-        Assert.True(configure.Validate("Test", null!).Failed);
+        var result = configure.Validate("Test", null!);
+
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
-    [Theory]
-    [InlineData(null)]
-    [InlineData("   ")]
-    public void Validate_WhenTopicNameIsNullOrWhiteSpace_ReturnsFail(string? topicName)
+    [Test]
+    [Arguments(null)]
+    [Arguments("")]
+    [Arguments("   ")]
+    public async Task Validate_WhenTopicNameIsNullOrWhiteSpace_ReturnsFail(string? topicName)
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions { ServiceUrl = "url", TopicName = topicName };
-        Assert.True(configure.Validate("Test", options).Failed);
+        var result = configure.Validate("Test", options);
+
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
-    [Fact]
-    public void Validate_WhenServiceUrlIsNullOrWhiteSpace_ReturnsFail()
+    [Test]
+    [Arguments(null)]
+    [Arguments("")]
+    [Arguments("   ")]
+    public async Task Validate_WhenServiceUrlIsNullOrWhiteSpace_ReturnsFail(string? service)
     {
         var configure = CreateConfigure();
-        var options = new SimpleNotificationServiceOptions { TopicName = "topic", ServiceUrl = null };
-        Assert.True(configure.Validate("Test", options).Failed);
-        options.ServiceUrl = "   ";
-        Assert.True(configure.Validate("Test", options).Failed);
+        var options = new SimpleNotificationServiceOptions { TopicName = "topic", ServiceUrl = service };
+        var result = configure.Validate("Test", options);
+
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
-    [Fact]
-    public void Validate_WhenModeIsBasicAuthentication_AndAccessKeyAndSecretKeyAreSet_ReturnsSuccess()
+    [Test]
+    public async Task Validate_WhenModeIsBasicAuthentication_AndAccessKeyAndSecretKeyAreSet_ReturnsSuccess()
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions
@@ -63,11 +72,12 @@ public sealed class SimpleNotificationServiceConfigureTests
             SecretKey = "secret",
         };
         var result = configure.Validate("Test", options);
-        Assert.True(result.Succeeded);
+
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
-    [Fact]
-    public void Validate_WhenModeIsNull_DoesNotRequireAccessKeyOrSecretKey()
+    [Test]
+    public async Task Validate_WhenModeIsNull_DoesNotRequireAccessKeyOrSecretKey()
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions
@@ -79,11 +89,12 @@ public sealed class SimpleNotificationServiceConfigureTests
             SecretKey = null,
         };
         var result = configure.Validate("Test", options);
-        Assert.True(result.Succeeded);
+
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
-    [Fact]
-    public void Configure_WithValidName_BindsConfiguration()
+    [Test]
+    public async Task Configure_WithValidName_BindsConfiguration()
     {
         var config = new ConfigurationBuilder()
             .AddInMemoryCollection(
@@ -98,15 +109,20 @@ public sealed class SimpleNotificationServiceConfigureTests
         var configure = CreateConfigure(config);
         var options = new SimpleNotificationServiceOptions();
         configure.Configure("Test", options);
-        Assert.Equal("topic", options.TopicName);
-        Assert.Equal("url", options.ServiceUrl);
-        Assert.Equal("access", options.AccessKey);
-        Assert.Equal("secret", options.SecretKey);
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options).IsNotNull();
+            _ = await Assert.That(options.TopicName).IsEqualTo("topic");
+            _ = await Assert.That(options.ServiceUrl).IsEqualTo("url");
+            _ = await Assert.That(options.AccessKey).IsEqualTo("access");
+            _ = await Assert.That(options.SecretKey).IsEqualTo("secret");
+        }
     }
 
-    [Theory]
-    [InlineData("")]
-    [InlineData("   ")]
+    [Test]
+    [Arguments("")]
+    [Arguments("   ")]
     public void Configure_WithNullOrWhiteSpaceName_ThrowsArgumentException(string? name)
     {
         var configure = CreateConfigure();
@@ -114,7 +130,7 @@ public sealed class SimpleNotificationServiceConfigureTests
         _ = Assert.Throws<ArgumentException>(() => configure.Configure(name, options));
     }
 
-    [Fact]
+    [Test]
     public void Configure_WithNullOrWhiteSpaceName_ThrowsArgumentNullException()
     {
         var configure = CreateConfigure();
@@ -122,8 +138,8 @@ public sealed class SimpleNotificationServiceConfigureTests
         _ = Assert.Throws<ArgumentNullException>(() => configure.Configure(null, options));
     }
 
-    [Fact]
-    public void Configure_Parameterless_UsesDefaultName()
+    [Test]
+    public async Task Configure_Parameterless_UsesDefaultName()
     {
         var config = new ConfigurationBuilder()
             .AddInMemoryCollection(
@@ -136,15 +152,20 @@ public sealed class SimpleNotificationServiceConfigureTests
         var configure = CreateConfigure(config);
         var options = new SimpleNotificationServiceOptions();
         configure.Configure("Default", options);
-        Assert.Equal("topic-default", options.TopicName);
-        Assert.Equal("url-default", options.ServiceUrl);
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options).IsNotNull();
+            _ = await Assert.That(options.TopicName).IsEqualTo("topic-default");
+            _ = await Assert.That(options.ServiceUrl).IsEqualTo("url-default");
+        }
     }
 
-    [Theory]
-    [InlineData(-2)]
-    [InlineData(-3)]
-    [InlineData(-100)]
-    public void Validate_WhenTimeoutLessThanInfinite_ReturnsFail(int timeout)
+    [Test]
+    [Arguments(-2)]
+    [Arguments(-3)]
+    [Arguments(-100)]
+    public async Task Validate_WhenTimeoutLessThanInfinite_ReturnsFail(int timeout)
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions
@@ -154,20 +175,22 @@ public sealed class SimpleNotificationServiceConfigureTests
             Timeout = timeout,
         };
         var result = configure.Validate("Test", options);
-        Assert.True(result.Failed);
-        Assert.Contains(
-            "timeout cannot be less than infinite",
-            result.FailureMessage,
-            StringComparison.OrdinalIgnoreCase
-        );
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .Contains("timeout cannot be less than infinite", StringComparison.OrdinalIgnoreCase);
+        }
     }
 
-    [Theory]
-    [InlineData(-1)] // Timeout.Infinite
-    [InlineData(0)]
-    [InlineData(100)]
-    [InlineData(1000)]
-    public void Validate_WhenTimeoutIsValidValue_ReturnsSuccess(int timeout)
+    [Test]
+    [Arguments(-1)] // Timeout.Infinite
+    [Arguments(0)]
+    [Arguments(100)]
+    [Arguments(1000)]
+    public async Task Validate_WhenTimeoutIsValidValue_ReturnsSuccess(int timeout)
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions
@@ -177,11 +200,21 @@ public sealed class SimpleNotificationServiceConfigureTests
             Timeout = timeout,
         };
         var result = configure.Validate("Test", options);
-        Assert.True(result.Succeeded);
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsNull();
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeIsBasicAuthentication_AndAccessKeyIsNullOrWhiteSpace_ReturnsFail()
+    [Test]
+    [Arguments(null)]
+    [Arguments("")]
+    [Arguments("   ")]
+    public async Task Validate_WhenModeIsBasicAuthentication_AndAccessKeyIsNullOrWhiteSpace_ReturnsFail(
+        string? accessKey
+    )
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions
@@ -189,22 +222,28 @@ public sealed class SimpleNotificationServiceConfigureTests
             TopicName = "topic",
             ServiceUrl = "url",
             Mode = CreationMode.BasicAuthentication,
-            AccessKey = null,
+            AccessKey = accessKey,
             SecretKey = "secret",
         };
 
         var result = configure.Validate("Test", options);
-        Assert.True(result.Failed);
-        Assert.Contains("access key cannot be null", result.FailureMessage, StringComparison.OrdinalIgnoreCase);
 
-        options.AccessKey = "   ";
-        result = configure.Validate("Test", options);
-        Assert.True(result.Failed);
-        Assert.Contains("access key cannot be null", result.FailureMessage, StringComparison.OrdinalIgnoreCase);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The access key cannot be null or whitespace.", StringComparison.Ordinal);
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeIsBasicAuthentication_AndSecretKeyIsNullOrWhiteSpace_ReturnsFail()
+    [Test]
+    [Arguments(null)]
+    [Arguments("")]
+    [Arguments("   ")]
+    public async Task Validate_WhenModeIsBasicAuthentication_AndSecretKeyIsNullOrWhiteSpace_ReturnsFail(
+        string? secretKey
+    )
     {
         var configure = CreateConfigure();
         var options = new SimpleNotificationServiceOptions
@@ -213,21 +252,22 @@ public sealed class SimpleNotificationServiceConfigureTests
             ServiceUrl = "url",
             Mode = CreationMode.BasicAuthentication,
             AccessKey = "access",
-            SecretKey = null,
+            SecretKey = secretKey,
         };
 
         var result = configure.Validate("Test", options);
-        Assert.True(result.Failed);
-        Assert.Contains("secret key cannot be null", result.FailureMessage, StringComparison.OrdinalIgnoreCase);
 
-        options.SecretKey = "   ";
-        result = configure.Validate("Test", options);
-        Assert.True(result.Failed);
-        Assert.Contains("secret key cannot be null", result.FailureMessage, StringComparison.OrdinalIgnoreCase);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The secret key cannot be null or whitespace.", StringComparison.Ordinal);
+        }
     }
 
-    [Fact]
-    public void Configure_BindsAllConfigurationProperties()
+    [Test]
+    public async Task Configure_BindsAllConfigurationProperties()
     {
         var config = new ConfigurationBuilder()
             .AddInMemoryCollection(
@@ -246,12 +286,16 @@ public sealed class SimpleNotificationServiceConfigureTests
         var options = new SimpleNotificationServiceOptions();
         configure.Configure("Test", options);
 
-        Assert.Equal("topic", options.TopicName);
-        Assert.Equal("url", options.ServiceUrl);
-        Assert.Equal("access", options.AccessKey);
-        Assert.Equal("secret", options.SecretKey);
-        Assert.Equal(500, options.Timeout);
-        Assert.Equal("sub123", options.Subscription);
-        Assert.Equal(CreationMode.BasicAuthentication, options.Mode);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options).IsNotNull();
+            _ = await Assert.That(options.TopicName).IsEqualTo("topic");
+            _ = await Assert.That(options.ServiceUrl).IsEqualTo("url");
+            _ = await Assert.That(options.AccessKey).IsEqualTo("access");
+            _ = await Assert.That(options.SecretKey).IsEqualTo("secret");
+            _ = await Assert.That(options.Timeout).IsEqualTo(500);
+            _ = await Assert.That(options.Subscription).IsEqualTo("sub123");
+            _ = await Assert.That(options.Mode).IsEqualTo(CreationMode.BasicAuthentication);
+        }
     }
 }

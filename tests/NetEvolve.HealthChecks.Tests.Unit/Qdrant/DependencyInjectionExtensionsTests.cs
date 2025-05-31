@@ -3,14 +3,13 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Qdrant;
-using Xunit;
 
 [TestGroup(nameof(Qdrant))]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddQdrant_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -23,7 +22,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQdrant_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -39,7 +38,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQdrant_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -55,7 +54,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQdrant_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -71,7 +70,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddQdrant_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
@@ -87,8 +86,8 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
-    [Fact]
-    public void AddQdrant_WhenArgumentOptionsProvided_RegisterOptionsWithName()
+    [Test]
+    public async Task AddQdrant_WhenArgumentOptionsProvided_RegisterOptionsWithName()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -104,11 +103,11 @@ public class DependencyInjectionExtensionsTests
             .Get(name);
 
         // Assert
-        Assert.Equal(200, options.Timeout);
+        _ = await Assert.That(options.Timeout).IsEqualTo(200);
     }
 
-    [Fact]
-    public void AddQdrant_WhenCalled_RegistersServicesAndHealthCheck()
+    [Test]
+    public async Task AddQdrant_WhenCalled_RegistersServicesAndHealthCheck()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -121,6 +120,6 @@ public class DependencyInjectionExtensionsTests
         var provider = services.BuildServiceProvider();
 
         // Assert
-        Assert.NotNull(provider.GetService<QdrantHealthCheck>());
+        _ = await Assert.That(provider.GetService<QdrantHealthCheck>()).IsNotNull();
     }
 }

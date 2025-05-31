@@ -3,15 +3,14 @@
 using System;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Qdrant;
-using Xunit;
 
 [TestGroup(nameof(Qdrant))]
 public sealed class QdrantOptionsConfigureTests
 {
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ReturnsFail()
     {
         // Arrange
         var options = new QdrantOptions();
@@ -22,12 +21,15 @@ public sealed class QdrantOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ReturnsFail()
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
@@ -38,12 +40,15 @@ public sealed class QdrantOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ReturnsFail()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ReturnsFail()
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
@@ -54,12 +59,15 @@ public sealed class QdrantOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutValid_ReturnsSuccess()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutValid_ReturnsSuccess()
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
@@ -70,11 +78,11 @@ public sealed class QdrantOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutInfinite_ReturnsSuccess()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutInfinite_ReturnsSuccess()
     {
         // Arrange
         var configure = new QdrantOptionsConfigure(new ConfigurationBuilder().Build());
@@ -85,10 +93,10 @@ public sealed class QdrantOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -103,7 +111,7 @@ public sealed class QdrantOptionsConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameEmpty_ThrowsArgumentException()
     {
         // Arrange
@@ -118,7 +126,7 @@ public sealed class QdrantOptionsConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameWhitespace_ThrowsArgumentException()
     {
         // Arrange
@@ -133,8 +141,8 @@ public sealed class QdrantOptionsConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
-    public void Configure_WhenArgumentNameValid_BindsFromConfiguration()
+    [Test]
+    public async Task Configure_WhenArgumentNameValid_BindsFromConfiguration()
     {
         // Arrange
         var configValues = new Dictionary<string, string?> { ["HealthChecks:Qdrant:Test:Timeout"] = "200" };
@@ -147,6 +155,6 @@ public sealed class QdrantOptionsConfigureTests
         configure.Configure(name, options);
 
         // Assert
-        Assert.Equal(200, options.Timeout);
+        _ = await Assert.That(options.Timeout).IsEqualTo(200);
     }
 }
