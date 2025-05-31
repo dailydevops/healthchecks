@@ -17,7 +17,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-// [TestGroup(nameof(HealthChecks))] - https://github.com/thomhurst/TUnit/issues/2481
 public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
