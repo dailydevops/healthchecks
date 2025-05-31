@@ -8,21 +8,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks;
-using Xunit;
 
 [TestGroup(nameof(HealthChecks))]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddApplicationReadinessCheck_ParamBuilderNull_ArgumentNullException() =>
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
             () => DependencyInjectionExtensions.AddApplicationReady(null!, tags: null!)
         );
 
-    [Fact]
+    [Test]
     public void AddApplicationReadinessCheck_ParamTagsNull_ArgumentNullException()
     {
         var services = new ServiceCollection();
@@ -31,8 +30,8 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", () => builder.AddApplicationReady(tags: null!));
     }
 
-    [Fact]
-    public void AddApplicationReadinessCheck_Fine_Expected()
+    [Test]
+    public async Task AddApplicationReadinessCheck_Fine_Expected()
     {
         var services = new ServiceCollection();
         _ = services
@@ -44,23 +43,25 @@ public class DependencyInjectionExtensionsTests
         var serviceProvider = services.BuildServiceProvider();
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>()!;
 
-        _ = Assert.Single(options.Value.Registrations);
-
         var check = options.Value.Registrations.First();
 
-        Assert.Equal(3, check.Tags.Count);
-        Assert.Equal("ApplicationReady", check.Name);
-        _ = Assert.IsType<ApplicationReadyCheck>(check.Factory(serviceProvider));
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(check).IsNotNull();
+            _ = await Assert.That(check!.Tags.Count).IsEqualTo(3);
+            _ = await Assert.That(check!.Name).IsEqualTo("ApplicationReady");
+            _ = await Assert.That(check!.Factory(serviceProvider)).IsNotNull().And.IsTypeOf<ApplicationReadyCheck>();
+        }
     }
 
-    [Fact]
+    [Test]
     public void AddApplicationHealthy_ParamBuilderNull_ArgumentNullException() =>
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
             () => DependencyInjectionExtensions.AddApplicationHealthy(null!, tags: null!)
         );
 
-    [Fact]
+    [Test]
     public void AddApplicationHealthy_ParamTagsNull_ArgumentNullException()
     {
         var services = new ServiceCollection();
@@ -69,8 +70,8 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", () => builder.AddApplicationHealthy(tags: null!));
     }
 
-    [Fact]
-    public void AddApplicationHealthy_Fine_Expected()
+    [Test]
+    public async Task AddApplicationHealthy_Fine_Expected()
     {
         var services = new ServiceCollection();
         _ = services.AddHealthChecks().AddApplicationHealthy("self", "healthy").AddApplicationHealthy();
@@ -79,13 +80,15 @@ public class DependencyInjectionExtensionsTests
 
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>()!;
 
-        _ = Assert.Single(options.Value.Registrations);
-
         var check = options.Value.Registrations.First();
 
-        Assert.Equal(2, check.Tags.Count);
-        Assert.Equal("ApplicationHealthy", check.Name);
-        _ = Assert.IsType<ApplicationHealthyCheck>(check.Factory(serviceProvider));
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(check).IsNotNull();
+            _ = await Assert.That(check.Tags.Count).IsEqualTo(2);
+            _ = await Assert.That(check.Name).IsEqualTo("ApplicationHealthy");
+            _ = await Assert.That(check.Factory(serviceProvider)).IsTypeOf<ApplicationHealthyCheck>();
+        }
     }
 
     [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "False positive")]

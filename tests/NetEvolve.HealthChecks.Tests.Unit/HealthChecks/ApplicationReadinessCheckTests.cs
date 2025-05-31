@@ -6,13 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using NetEvolve.Extensions.XUnit;
-using Xunit;
+using NetEvolve.Extensions.TUnit;
 
 [TestGroup(nameof(HealthChecks))]
 public sealed class ApplicationReadinessCheckTests
 {
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException()
     {
         // Arrange
@@ -26,7 +25,7 @@ public sealed class ApplicationReadinessCheckTests
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy()
     {
         // Arrange
@@ -40,10 +39,10 @@ public sealed class ApplicationReadinessCheckTests
         var result = await sut.CheckHealthAsync(context, cancellationToken);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy()
     {
         // Arrange
@@ -56,10 +55,10 @@ public sealed class ApplicationReadinessCheckTests
         var result = await sut.CheckHealthAsync(context, cancellationToken);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenApplicationStopped_ReturnsUnhealthy()
     {
         // Arrange
@@ -73,11 +72,11 @@ public sealed class ApplicationReadinessCheckTests
 
         // Assert
         var result = await sut.CheckHealthAsync(context, cancellationToken);
-        Assert.Equal(HealthStatus.Healthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
 
         lifetime.StopApplication();
         result = await sut.CheckHealthAsync(context, cancellationToken);
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
     [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "False positive")]

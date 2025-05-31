@@ -2,14 +2,13 @@
 
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 public class ClientCreationTests
 {
-    [Fact]
+    [Test]
     public void CreateQueueServiceClient_InvalidMode_ThrowUnreachableException()
     {
         var options = new QueueClientAvailableOptions { Mode = (QueueClientCreationMode)13 };
@@ -20,7 +19,7 @@ public class ClientCreationTests
         );
     }
 
-    [Fact]
+    [Test]
     public void CreateQueueServiceClient_ModeServiceProvider_ThrowUnreachableException()
     {
         var options = new QueueClientAvailableOptions { Mode = QueueClientCreationMode.ServiceProvider };

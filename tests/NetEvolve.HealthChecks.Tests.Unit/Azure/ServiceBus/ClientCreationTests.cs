@@ -1,18 +1,17 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
 
 using System;
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 using NSubstitute;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 public sealed class ClientCreationTests
 {
-    [Fact]
-    public void GetClient_WhenModeIsConnectionString_ShouldCreateNewClient()
+    [Test]
+    public async Task GetClient_WhenModeIsConnectionString_ShouldCreateNewClient()
     {
         // Arrange
         const string connectionString =
@@ -32,11 +31,11 @@ public sealed class ClientCreationTests
         );
 
         // Assert
-        Assert.NotNull(client);
+        _ = await Assert.That(client).IsNotNull();
     }
 
-    [Fact]
-    public void GetClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient()
+    [Test]
+    public async Task GetClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient()
     {
         // Arrange
         const string fullyQualifiedNamespace = "test.servicebus.windows.net";
@@ -55,11 +54,11 @@ public sealed class ClientCreationTests
         );
 
         // Assert
-        Assert.NotNull(client);
+        _ = await Assert.That(client).IsNotNull();
     }
 
-    [Fact]
-    public void GetClient_CalledTwiceWithSameName_ShouldReturnSameInstance()
+    [Test]
+    public async Task GetClient_CalledTwiceWithSameName_ShouldReturnSameInstance()
     {
         // Arrange
         const string connectionString =
@@ -84,11 +83,11 @@ public sealed class ClientCreationTests
         );
 
         // Assert
-        Assert.Same(client1, client2);
+        _ = await Assert.That(client1).IsSameReferenceAs(client2);
     }
 
-    [Fact]
-    public void GetAdministrationClient_WhenModeIsConnectionString_ShouldCreateNewClient()
+    [Test]
+    public async Task GetAdministrationClient_WhenModeIsConnectionString_ShouldCreateNewClient()
     {
         // Arrange
         const string connectionString =
@@ -108,11 +107,11 @@ public sealed class ClientCreationTests
         );
 
         // Assert
-        Assert.NotNull(client);
+        _ = await Assert.That(client).IsNotNull();
     }
 
-    [Fact]
-    public void GetAdministrationClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient()
+    [Test]
+    public async Task GetAdministrationClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient()
     {
         // Arrange
         const string fullyQualifiedNamespace = "test.servicebus.windows.net";
@@ -131,11 +130,11 @@ public sealed class ClientCreationTests
         );
 
         // Assert
-        Assert.NotNull(client);
+        _ = await Assert.That(client).IsNotNull();
     }
 
-    [Fact]
-    public void GetAdministrationClient_CalledTwiceWithSameName_ShouldReturnSameInstance()
+    [Test]
+    public async Task GetAdministrationClient_CalledTwiceWithSameName_ShouldReturnSameInstance()
     {
         // Arrange
         const string connectionString =
@@ -160,10 +159,10 @@ public sealed class ClientCreationTests
         );
 
         // Assert
-        Assert.Same(client1, client2);
+        _ = await Assert.That(client1).IsSameReferenceAs(client2);
     }
 
-    [Fact]
+    [Test]
     public void GetClient_WhenModeIsInvalid_ShouldThrowUnreachableException()
     {
         // Arrange
@@ -182,7 +181,7 @@ public sealed class ClientCreationTests
         _ = Assert.Throws<UnreachableException>(Act);
     }
 
-    [Fact]
+    [Test]
     public void GetAdministrationClient_WhenModeIsInvalid_ShouldThrowUnreachableException()
     {
         // Arrange
@@ -201,7 +200,7 @@ public sealed class ClientCreationTests
         _ = Assert.Throws<UnreachableException>(Act);
     }
 
-    [Fact]
+    [Test]
     public void GetClient_WhenServiceProviderIsNull_ShouldThrowInvalidOperationException()
     {
         // Arrange
@@ -220,7 +219,7 @@ public sealed class ClientCreationTests
         _ = Assert.Throws<InvalidOperationException>(Act);
     }
 
-    [Fact]
+    [Test]
     public void GetAdministrationClient_WhenServiceProviderIsNull_ShouldThrowInvalidOperationException()
     {
         // Arrange

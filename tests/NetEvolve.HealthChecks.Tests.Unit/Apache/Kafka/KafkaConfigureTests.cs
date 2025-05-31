@@ -3,15 +3,14 @@
 using System;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
-using Xunit;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 public sealed class KafkaConfigureTests
 {
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var options = new KafkaOptions();
@@ -22,12 +21,15 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
@@ -38,12 +40,15 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
@@ -54,12 +59,15 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The topic cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The topic cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeCreate_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenModeCreate_ThrowArgumentException()
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
@@ -70,12 +78,15 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The configuration cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The configuration cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenModeCreateAndBootstrapServerEmpty_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenModeCreateAndBootstrapServerEmpty_ThrowArgumentException()
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
@@ -91,12 +102,17 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The property BootstrapServers cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The property BootstrapServers cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_EverythingCorrect_Expected()
+    [Test]
+    public async Task Validate_EverythingCorrect_Expected()
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
@@ -112,10 +128,10 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -130,7 +146,7 @@ public sealed class KafkaConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -144,8 +160,8 @@ public sealed class KafkaConfigureTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new KafkaConfigure(new ConfigurationBuilder().Build());
@@ -156,7 +172,10 @@ public sealed class KafkaConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 }

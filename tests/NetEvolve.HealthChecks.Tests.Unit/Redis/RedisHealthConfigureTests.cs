@@ -2,15 +2,14 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Redis;
-using Xunit;
 
 [TestGroup(nameof(Redis))]
 public sealed class RedisHealthConfigureTests
 {
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var options = new RedisOptions();
@@ -21,12 +20,15 @@ public sealed class RedisHealthConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new RedisConfigure(new ConfigurationBuilder().Build());
@@ -37,12 +39,15 @@ public sealed class RedisHealthConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
         var configure = new RedisConfigure(new ConfigurationBuilder().Build());
@@ -53,12 +58,17 @@ public sealed class RedisHealthConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The property ConnectionString cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The property ConnectionString cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new RedisConfigure(new ConfigurationBuilder().Build());
@@ -69,11 +79,14 @@ public sealed class RedisHealthConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -88,7 +101,7 @@ public sealed class RedisHealthConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange

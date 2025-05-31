@@ -8,16 +8,15 @@ using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
 using NSubstitute;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Subscription")]
 public sealed class ServiceBusSubscriptionAdministrationTests
 {
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetSubscriptionRuntimeProperties()
     {
         // Arrange
@@ -46,10 +45,10 @@ public sealed class ServiceBusSubscriptionAdministrationTests
         var result = await healthCheck.CheckHealthAsync(context);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenSubscriptionDoesNotExist_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -92,10 +91,10 @@ public sealed class ServiceBusSubscriptionAdministrationTests
         var result = await healthCheck.CheckHealthAsync(context);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
-    [Fact]
+    [Test]
     [SuppressMessage(
         "Substitute creation",
         "NS2001:Could not find accessible constructor.",
@@ -145,6 +144,6 @@ public sealed class ServiceBusSubscriptionAdministrationTests
         var result = await healthCheck.CheckHealthAsync(context);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
+        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 }

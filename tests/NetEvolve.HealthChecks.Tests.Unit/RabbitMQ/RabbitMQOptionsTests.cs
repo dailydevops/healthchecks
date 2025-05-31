@@ -1,25 +1,27 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.RabbitMQ;
 
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
-using Xunit;
 
 [TestGroup(nameof(RabbitMQ))]
 public sealed class RabbitMQOptionsTests
 {
-    [Fact]
-    public void Constructor_DefaultValues_AreCorrect()
+    [Test]
+    public async Task Constructor_DefaultValues_AreCorrect()
     {
         // Arrange & Act
         var options = new RabbitMQOptions();
 
         // Assert
-        Assert.Null(options.KeyedService);
-        Assert.Equal(100, options.Timeout);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.KeyedService).IsNull();
+            _ = await Assert.That(options.Timeout).IsEqualTo(100);
+        }
     }
 
-    [Fact]
-    public void KeyedService_SetAndGet_WorksCorrectly()
+    [Test]
+    public async Task KeyedService_SetAndGet_WorksCorrectly()
     {
         // Arrange
         var options = new RabbitMQOptions();
@@ -29,11 +31,11 @@ public sealed class RabbitMQOptionsTests
         options.KeyedService = testValue;
 
         // Assert
-        Assert.Equal(testValue, options.KeyedService);
+        _ = await Assert.That(options.KeyedService).IsEqualTo(testValue);
     }
 
-    [Fact]
-    public void Timeout_SetAndGet_WorksCorrectly()
+    [Test]
+    public async Task Timeout_SetAndGet_WorksCorrectly()
     {
         // Arrange
         var options = new RabbitMQOptions();
@@ -43,6 +45,6 @@ public sealed class RabbitMQOptionsTests
         options.Timeout = testValue;
 
         // Assert
-        Assert.Equal(testValue, options.Timeout);
+        _ = await Assert.That(options.Timeout).IsEqualTo(testValue);
     }
 }
