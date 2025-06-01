@@ -2,3 +2,5 @@
 global using TUnit.Core.Interfaces;
 
 [assembly: ParallelLimiter<HealthCheckParallelLimit>]
+//[assembly: TUnit.Core.Executors.Culture("en-US")]
+[assembly: TUnit.Core.Executors.InvariantCulture]

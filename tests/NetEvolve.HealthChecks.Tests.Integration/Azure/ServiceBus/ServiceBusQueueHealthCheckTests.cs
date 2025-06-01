@@ -53,7 +53,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.EnablePeekMode = true;
                         options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

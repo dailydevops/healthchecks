@@ -23,7 +23,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

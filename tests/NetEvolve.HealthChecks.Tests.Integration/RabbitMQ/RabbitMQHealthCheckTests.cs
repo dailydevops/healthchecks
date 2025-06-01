@@ -43,7 +43,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.KeyedService = "rabbitmq-test";
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 ),
             HealthStatus.Healthy,

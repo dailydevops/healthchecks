@@ -116,7 +116,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                         options.Mode = BlobClientCreationMode.SharedKey;
                         options.ServiceUri = _container.BlobServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -154,7 +154,7 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = BlobClientCreationMode.AzureSasCredential;
                         options.ServiceUri = _container.BlobAccountSasUri;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

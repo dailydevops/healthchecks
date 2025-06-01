@@ -44,7 +44,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.KeyedService = "qdrant-test";
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

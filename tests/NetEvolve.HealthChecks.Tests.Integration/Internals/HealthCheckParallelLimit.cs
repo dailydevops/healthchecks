@@ -2,5 +2,5 @@
 
 public record HealthCheckParallelLimit : IParallelLimit
 {
-    public int Limit => 4;
+    public int Limit => Math.Min(4, Environment.ProcessorCount - 1);
 }

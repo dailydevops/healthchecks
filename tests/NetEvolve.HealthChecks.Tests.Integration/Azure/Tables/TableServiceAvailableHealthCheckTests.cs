@@ -24,7 +24,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -44,7 +44,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = TableClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -83,7 +83,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.ConnectionString = _container.ConnectionString;
                         options.Mode = TableClientCreationMode.ConnectionString;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -122,7 +122,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
                         options.Mode = TableClientCreationMode.SharedKey;
                         options.ServiceUri = _container.TableServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

@@ -116,7 +116,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                         options.Mode = QueueClientCreationMode.SharedKey;
                         options.ServiceUri = _container.QueueServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
