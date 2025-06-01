@@ -105,27 +105,26 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
     public async Task AddSimpleNotificationService_Run101Subscriptions_ShouldReturnHealthy()
     {
         const string topicName = "MassOf101Subscriptions";
-        await using (var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
-        {
-            await RunAndVerify(
-                healthChecks =>
-                {
-                    _ = healthChecks.AddSimpleNotificationService(
-                        "TestContainerHealthy",
-                        options =>
-                        {
-                            options.AccessKey = LocalStackInstance.AccessKey;
-                            options.SecretKey = LocalStackInstance.SecretKey;
-                            options.ServiceUrl = _instance.ConnectionString;
-                            options.TopicName = topicName;
-                            options.Subscription = subcription.SubscriptionArn;
-                            options.Mode = CreationMode.BasicAuthentication;
-                        }
-                    );
-                },
-                HealthStatus.Healthy
-            );
-        }
+        await using var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101);
+
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddSimpleNotificationService(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.AccessKey = LocalStackInstance.AccessKey;
+                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.ServiceUrl = _instance.ConnectionString;
+                        options.TopicName = topicName;
+                        options.Subscription = subcription.SubscriptionArn;
+                        options.Mode = CreationMode.BasicAuthentication;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
     }
 
     // Configuration-based tests

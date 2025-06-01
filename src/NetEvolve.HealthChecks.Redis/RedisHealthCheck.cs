@@ -44,10 +44,7 @@ internal sealed class RedisHealthCheck : ConfigurableHealthCheckBase<RedisOption
             return serviceProvider.GetRequiredService<IConnectionMultiplexer>();
         }
 
-        if (_connections is null)
-        {
-            _connections = new ConcurrentDictionary<string, IConnectionMultiplexer>(StringComparer.OrdinalIgnoreCase);
-        }
+        _connections ??= new ConcurrentDictionary<string, IConnectionMultiplexer>(StringComparer.OrdinalIgnoreCase);
 
         return _connections.GetOrAdd(name, _ => ConnectionMultiplexer.Connect(options.ConnectionString!));
     }

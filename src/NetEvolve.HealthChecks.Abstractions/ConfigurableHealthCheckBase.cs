@@ -47,7 +47,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
         try
         {
             var options = _optionsMonitor.Get(name);
-            if (options is null || options.Equals(new TConfiguration()))
+            if (options?.Equals(new TConfiguration()) != false)
             {
                 return new HealthCheckResult(HealthStatus.Unhealthy, description: $"{name}: Missing configuration.");
             }

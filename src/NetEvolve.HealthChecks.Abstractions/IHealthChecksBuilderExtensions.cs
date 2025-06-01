@@ -40,16 +40,15 @@ public static partial class IHealthChecksBuilderExtensions
 
         var serviceProvider = builder.Services.BuildServiceProvider();
 
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var options = scope.ServiceProvider.GetService<IOptions<HealthCheckServiceOptions>>();
+        using var scope = serviceProvider.CreateScope();
 
-            return options?.Value?.Registrations is ICollection<HealthCheckRegistration> registrations
-                && registrations.Any(IsNameAlreadyUsedForServiceType);
+        var options = scope.ServiceProvider.GetService<IOptions<HealthCheckServiceOptions>>();
 
-            bool IsNameAlreadyUsedForServiceType(HealthCheckRegistration registration) =>
-                registration.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
-                && registration.Factory(scope.ServiceProvider).GetType() == typeof(T);
-        }
+        return options?.Value?.Registrations is ICollection<HealthCheckRegistration> registrations
+            && registrations.Any(IsNameAlreadyUsedForServiceType);
+
+        bool IsNameAlreadyUsedForServiceType(HealthCheckRegistration registration) =>
+            registration.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+            && registration.Factory(scope.ServiceProvider).GetType() == typeof(T);
     }
 }
