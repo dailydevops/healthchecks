@@ -34,6 +34,7 @@ internal static class HealthCheckArchitecture
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
+            typeof(MongoDb.MongoDbHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,
             typeof(Npgsql.NpgsqlHealthCheck).Assembly,

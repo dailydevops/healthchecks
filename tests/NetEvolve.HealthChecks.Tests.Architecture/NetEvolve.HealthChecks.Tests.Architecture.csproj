@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ClickHouse\NetEvolve.HealthChecks.ClickHouse.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
