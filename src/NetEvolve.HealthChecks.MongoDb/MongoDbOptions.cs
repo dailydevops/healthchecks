@@ -9,9 +9,13 @@ using MongoDB.Driver;
 public sealed record MongoDbOptions
 {
     /// <summary>
-    /// The connection string for the database to check.
+    /// Gets or sets the key used to resolve the <c>IConnection</c> from the service provider.
     /// </summary>
-    public string ConnectionString { get; set; } = default!;
+    /// <remarks>
+    /// When specified, the health check will resolve the <c>IConnection</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>IConnection</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// </remarks>
+    public string? KeyedService { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.

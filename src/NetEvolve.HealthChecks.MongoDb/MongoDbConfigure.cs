@@ -14,16 +14,23 @@ internal sealed class MongoDbConfigure
 {
     private readonly IConfiguration _configuration;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MongoDbConfigure"/> class.
+    /// </summary>
+    /// <param name="configuration">The <see cref="IConfiguration"/> instance used to bind configuration values.</param>
     public MongoDbConfigure(IConfiguration configuration) => _configuration = configuration;
 
+    /// <inheritdoc />
     public void Configure(string? name, MongoDbOptions options)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:MongoDb:{name}", options);
     }
 
+    /// <inheritdoc />
     public void Configure(MongoDbOptions options) => Configure(Options.DefaultName, options);
 
+    /// <inheritdoc />
     public void PostConfigure(string? name, MongoDbOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -37,6 +44,7 @@ internal sealed class MongoDbConfigure
         }
     }
 
+    /// <inheritdoc />
     public ValidateOptionsResult Validate(string? name, MongoDbOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -47,11 +55,6 @@ internal sealed class MongoDbConfigure
         if (options is null)
         {
             return Fail("The option cannot be null.");
-        }
-
-        if (string.IsNullOrWhiteSpace(options.ConnectionString))
-        {
-            return Fail("The connection string cannot be null or whitespace.");
         }
 
         if (options.Timeout < Timeout.Infinite)

@@ -10,6 +10,29 @@ using Xunit;
 public sealed class MongoDbConfigureTests
 {
     [Fact]
+    public void Configure_WithNameAndOptions_BindsConfigurationCorrectly()
+    {
+        // Arrange
+        var configValues = new Dictionary<string, string?>
+        {
+            ["HealthChecks:MongoDb:TestName:KeyedService"] = "test-key",
+            ["HealthChecks:MongoDb:TestName:Timeout"] = "200",
+        };
+
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+
+        var options = new MongoDbOptions();
+        var configure = new MongoDbConfigure(configuration);
+
+        // Act
+        configure.Configure("TestName", options);
+
+        // Assert
+        Assert.Equal("test-key", options.KeyedService);
+        Assert.Equal(200, options.Timeout);
+    }
+
+    [Fact]
     public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -42,28 +65,12 @@ public sealed class MongoDbConfigureTests
     }
 
     [Fact]
-    public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
-    {
-        // Arrange
-        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
-        const string? name = "Test";
-        var options = new MongoDbOptions();
-
-        // Act
-        var result = configure.Validate(name, options);
-
-        // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The connection string cannot be null or whitespace.", result.FailureMessage);
-    }
-
-    [Fact]
     public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new MongoDbOptions { ConnectionString = "Test", Timeout = -2 };
+        var options = new MongoDbOptions { Timeout = -2 };
 
         // Act
         var result = configure.Validate(name, options);
@@ -79,7 +86,7 @@ public sealed class MongoDbConfigureTests
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new MongoDbOptions { ConnectionString = "Test" };
+        var options = new MongoDbOptions();
 
         // Act
         var result = configure.Validate(name, options);
@@ -95,13 +102,16 @@ public sealed class MongoDbConfigureTests
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
         const string? name = default;
-        var options = new MongoDbOptions { ConnectionString = "Test" };
+        var options = new MongoDbOptions();
+        var controlKeyedService = options.KeyedService;
+        var controlTimeout = options.Timeout;
 
         // Act
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal("Test", options.ConnectionString);
+        Assert.Equal(controlKeyedService, options.KeyedService);
+        Assert.Equal(controlTimeout, options.Timeout);
         Assert.Equal(MongoDbHealthCheck.DefaultCommandAsync, options.CommandAsync);
     }
 

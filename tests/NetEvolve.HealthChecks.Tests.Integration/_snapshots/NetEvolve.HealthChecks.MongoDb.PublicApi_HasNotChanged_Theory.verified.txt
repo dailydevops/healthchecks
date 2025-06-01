@@ -8,7 +8,7 @@
     {
         public MongoDbOptions() { }
         public System.Func<MongoDB.Driver.MongoClient, System.Threading.CancellationToken, System.Threading.Tasks.Task<MongoDB.Bson.BsonDocument>> CommandAsync { get; }
-        public string ConnectionString { get; set; }
+        public string? KeyedService { get; set; }
         public int Timeout { get; set; }
     }
 }

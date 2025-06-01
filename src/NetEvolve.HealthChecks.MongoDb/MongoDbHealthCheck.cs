@@ -12,8 +12,20 @@ using NetEvolve.HealthChecks.Abstractions;
 
 internal sealed class MongoDbHealthCheck : ConfigurableHealthCheckBase<MongoDbOptions>
 {
-    public MongoDbHealthCheck(IOptionsMonitor<MongoDbOptions> optionsMonitor)
-        : base(optionsMonitor) { }
+    private readonly IServiceProvider _serviceProvider;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MongoDbHealthCheck"/> class.
+    /// </summary>
+    /// <param name="optionsMonitor">The <see cref="IOptionsMonitor{TOptions}"/> instance used to access named options.</param>
+    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to resolve dependencies.</param>
+    public MongoDbHealthCheck(IOptionsMonitor<MongoDbOptions> optionsMonitor, IServiceProvider serviceProvider)
+        : base(optionsMonitor)
+    {
+        ArgumentNullException.ThrowIfNull(serviceProvider);
+
+        _serviceProvider = serviceProvider;
+    }
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
@@ -22,7 +34,10 @@ internal sealed class MongoDbHealthCheck : ConfigurableHealthCheckBase<MongoDbOp
         CancellationToken cancellationToken
     )
     {
-        using var client = new MongoClient(options.ConnectionString); // Ensure IDisposable is properly handled
+        var client = string.IsNullOrWhiteSpace(options.KeyedService)
+            ? _serviceProvider.GetRequiredService<MongoClient>()
+            : _serviceProvider.GetRequiredKeyedService<MongoClient>(options.KeyedService);
+
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
         var (isHealthy, result) = await commandTask
