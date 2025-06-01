@@ -2,15 +2,14 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
-using Xunit;
 
 [TestGroup(nameof(MongoDb))]
 public sealed class MongoDbConfigureTests
 {
-    [Fact]
-    public void Configure_WithNameAndOptions_BindsConfigurationCorrectly()
+    [Test]
+    public async Task Configure_WithNameAndOptions_BindsConfigurationCorrectly()
     {
         // Arrange
         var configValues = new Dictionary<string, string?>
@@ -28,12 +27,15 @@ public sealed class MongoDbConfigureTests
         configure.Configure("TestName", options);
 
         // Assert
-        Assert.Equal("test-key", options.KeyedService);
-        Assert.Equal(200, options.Timeout);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.KeyedService).IsEqualTo("test-key");
+            _ = await Assert.That(options.Timeout).IsEqualTo(200);
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var options = new MongoDbOptions();
@@ -44,12 +46,15 @@ public sealed class MongoDbConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
@@ -60,12 +65,15 @@ public sealed class MongoDbConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
@@ -76,12 +84,15 @@ public sealed class MongoDbConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentCommandNull_SetDefaultCommand()
+    [Test]
+    public async Task Validate_WhenArgumentCommandNull_SetDefaultCommand()
     {
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
@@ -92,12 +103,15 @@ public sealed class MongoDbConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
-        Assert.Equal(MongoDbHealthCheck.DefaultCommandAsync, options.CommandAsync);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(options.CommandAsync).IsEqualTo(MongoDbHealthCheck.DefaultCommandAsync);
+        }
     }
 
-    [Fact]
-    public void PostConfigure_WhenNameIsNull_DoNothing()
+    [Test]
+    public async Task PostConfigure_WhenNameIsNull_DoNothing()
     {
         // Arrange
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
@@ -110,12 +124,15 @@ public sealed class MongoDbConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(controlKeyedService, options.KeyedService);
-        Assert.Equal(controlTimeout, options.Timeout);
-        Assert.Equal(MongoDbHealthCheck.DefaultCommandAsync, options.CommandAsync);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.KeyedService).IsEqualTo(controlKeyedService);
+            _ = await Assert.That(options.Timeout).IsEqualTo(controlTimeout);
+            _ = await Assert.That(options.CommandAsync).IsEqualTo(MongoDbHealthCheck.DefaultCommandAsync);
+        }
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -130,7 +147,7 @@ public sealed class MongoDbConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange

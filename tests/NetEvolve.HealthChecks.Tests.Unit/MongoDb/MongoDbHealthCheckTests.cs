@@ -8,15 +8,14 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
 using NSubstitute;
-using Xunit;
 
 [TestGroup(nameof(MongoDb))]
 public sealed class MongoDbHealthCheckTests
 {
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -31,7 +30,7 @@ public sealed class MongoDbHealthCheckTests
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -46,11 +45,14 @@ public sealed class MongoDbHealthCheckTests
         var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("Test: Cancellation requested.", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -64,11 +66,14 @@ public sealed class MongoDbHealthCheckTests
         var result = await check.CheckHealthAsync(context);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("Test: Missing configuration.", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
     {
         // Arrange
@@ -103,11 +108,14 @@ public sealed class MongoDbHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
-        Assert.Equal("test: Healthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService()
     {
         // Arrange
@@ -142,11 +150,14 @@ public sealed class MongoDbHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
-        Assert.Equal("test: Healthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -181,14 +192,15 @@ public sealed class MongoDbHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Multiple(
-            () => Assert.Equal(HealthStatus.Unhealthy, result.Status),
-            () => Assert.Contains("test: Unexpected error.", result.Description, StringComparison.Ordinal),
-            () => Assert.NotNull(result.Exception)
-        );
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).Contains("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert.That(result.Exception).IsNotNull();
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenTimeout_ShouldReturnDegraded()
     {
         // Arrange
@@ -223,7 +235,10 @@ public sealed class MongoDbHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Degraded, result.Status);
-        Assert.Contains("test: Degraded", result.Description, StringComparison.Ordinal);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert.That(result.Description).Contains("test: Degraded", StringComparison.Ordinal);
+        }
     }
 }

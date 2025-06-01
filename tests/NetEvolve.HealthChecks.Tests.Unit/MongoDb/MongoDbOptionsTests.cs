@@ -1,28 +1,32 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.MongoDb;
 
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
-using Xunit;
 
 [TestGroup(nameof(MongoDb))]
 public sealed class MongoDbOptionsTests
 {
-    [Fact]
-    public void Constructor_DefaultValues_AreCorrect()
+    [Test]
+    public async Task Constructor_DefaultValues_AreCorrect()
     {
         // Arrange & Act
         var options = new MongoDbOptions();
 
         // Assert
-        Assert.Null(options.KeyedService);
-        Assert.Equal(100, options.Timeout);
-        Assert.Equal(MongoDbHealthCheck.DefaultCommandAsync, options.CommandAsync);
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.KeyedService).IsNull();
+            _ = await Assert.That(options.Timeout).IsEqualTo(100);
+            _ = await Assert.That(options.CommandAsync).IsEqualTo(MongoDbHealthCheck.DefaultCommandAsync);
+        }
     }
 
-    [Fact]
-    public void KeyedService_SetAndGet_WorksCorrectly()
+    [Test]
+    public async Task KeyedService_SetAndGet_WorksCorrectly()
     {
         // Arrange
         var options = new MongoDbOptions();
@@ -32,11 +36,11 @@ public sealed class MongoDbOptionsTests
         options.KeyedService = testValue;
 
         // Assert
-        Assert.Equal(testValue, options.KeyedService);
+        _ = await Assert.That(options.KeyedService).IsEqualTo(testValue);
     }
 
-    [Fact]
-    public void Timeout_SetAndGet_WorksCorrectly()
+    [Test]
+    public async Task Timeout_SetAndGet_WorksCorrectly()
     {
         // Arrange
         var options = new MongoDbOptions();
@@ -46,11 +50,11 @@ public sealed class MongoDbOptionsTests
         options.Timeout = testValue;
 
         // Assert
-        Assert.Equal(testValue, options.Timeout);
+        _ = await Assert.That(options.Timeout).IsEqualTo(testValue);
     }
 
-    [Fact]
-    public void CommandAsync_SetAndGet_WorksCorrectly()
+    [Test]
+    public async Task CommandAsync_SetAndGet_WorksCorrectly()
     {
         // Arrange
         var options = new MongoDbOptions();
@@ -64,6 +68,6 @@ public sealed class MongoDbOptionsTests
         options.CommandAsync = testValue;
 
         // Assert
-        Assert.Equal(testValue, options.CommandAsync);
+        _ = await Assert.That(options.CommandAsync).IsEqualTo(testValue);
     }
 }
