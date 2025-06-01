@@ -4,13 +4,9 @@
     <Description>Contains HealthChecks for Db2, based on the nuget packages `Net.IBM.Data.Db2` (Windows), `Net.IBM.Data.Db2-lnx` (Linux) and `Net.IBM.Data.Db2-osx` (OSX).</Description>
     <PackageTags>$(PackageTags);db2;</PackageTags>
   </PropertyGroup>
-  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+  <ItemGroup>
     <PackageReference Include="Net.IBM.Data.Db2" />
-  </ItemGroup>
-  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
     <PackageReference Include="Net.IBM.Data.Db2-lnx" />
-  </ItemGroup>
-  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <PackageReference Include="Net.IBM.Data.Db2-osx" />
   </ItemGroup>
   <ItemGroup>
