@@ -35,7 +35,7 @@ public class PublicApiTests
 
         var publicApi = assembly.GeneratePublicApi(options);
 
-        _ = await Verify(publicApi).HashParameters().UseTypeName(assembly.GetName().Name);
+        _ = await Verify(publicApi).IgnoreParametersForVerified().UseTypeName(assembly.GetName().Name);
     }
 
     public static Func<Assembly>[] GetAssemblies() =>
