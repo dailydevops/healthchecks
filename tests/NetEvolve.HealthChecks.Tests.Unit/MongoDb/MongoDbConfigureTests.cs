@@ -35,6 +35,35 @@ public sealed class MongoDbConfigureTests
     }
 
     [Test]
+    public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
+    {
+        // Arrange
+        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
+        const string? name = default;
+        var options = new MongoDbOptions();
+
+        // Act
+        void Act() => configure.Configure(name, options);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("name", Act);
+    }
+
+    [Test]
+    public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    {
+        // Arrange
+        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
+        var options = new MongoDbOptions();
+
+        // Act
+        void Act() => configure.Configure(options);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>("name", Act);
+    }
+
+    [Test]
     public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -108,56 +137,5 @@ public sealed class MongoDbConfigureTests
             _ = await Assert.That(result.Succeeded).IsTrue();
             _ = await Assert.That(options.CommandAsync).IsEqualTo(MongoDbHealthCheck.DefaultCommandAsync);
         }
-    }
-
-    [Test]
-    public async Task PostConfigure_WhenNameIsNull_DoNothing()
-    {
-        // Arrange
-        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
-        const string? name = default;
-        var options = new MongoDbOptions();
-        var controlKeyedService = options.KeyedService;
-        var controlTimeout = options.Timeout;
-
-        // Act
-        configure.PostConfigure(name, options);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options.KeyedService).IsEqualTo(controlKeyedService);
-            _ = await Assert.That(options.Timeout).IsEqualTo(controlTimeout);
-            _ = await Assert.That(options.CommandAsync).IsEqualTo(MongoDbHealthCheck.DefaultCommandAsync);
-        }
-    }
-
-    [Test]
-    public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
-        const string? name = default;
-        var options = new MongoDbOptions();
-
-        // Act
-        void Act() => configure.Configure(name, options);
-
-        // Assert
-        _ = Assert.Throws<ArgumentNullException>("name", Act);
-    }
-
-    [Test]
-    public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
-        var options = new MongoDbOptions();
-
-        // Act
-        void Act() => configure.Configure(options);
-
-        // Assert
-        _ = Assert.Throws<ArgumentException>("name", Act);
     }
 }

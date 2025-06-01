@@ -7,10 +7,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class MongoDbConfigure
-    : IConfigureNamedOptions<MongoDbOptions>,
-        IPostConfigureOptions<MongoDbOptions>,
-        IValidateOptions<MongoDbOptions>
+internal sealed class MongoDbConfigure : IConfigureNamedOptions<MongoDbOptions>, IValidateOptions<MongoDbOptions>
 {
     private readonly IConfiguration _configuration;
 
@@ -29,20 +26,6 @@ internal sealed class MongoDbConfigure
 
     /// <inheritdoc />
     public void Configure(MongoDbOptions options) => Configure(Options.DefaultName, options);
-
-    /// <inheritdoc />
-    public void PostConfigure(string? name, MongoDbOptions options)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return;
-        }
-
-        if (options.CommandAsync is null)
-        {
-            options.CommandAsync = MongoDbHealthCheck.DefaultCommandAsync;
-        }
-    }
 
     /// <inheritdoc />
     public ValidateOptionsResult Validate(string? name, MongoDbOptions options)
