@@ -21,13 +21,21 @@ internal static class ModuleInitializer
             {
                 var directory = Path.Combine(projectDirectory, "_snapshots");
                 var createdDirectory = Directory.CreateDirectory(directory);
-                return new(createdDirectory.FullName, type.Name, method.Name);
+                return new(createdDirectory.FullName, CleanTypeName(type), CleanMethodName(method.Name));
             }
         );
 
         // Removes Azure.ServiceBus TrackingId from error message
         VerifierSettings.AddScrubber(RemoveTrackingId);
     }
+
+    private static string CleanTypeName(Type type) =>
+        type.Name.Replace("Tests", string.Empty, StringComparison.OrdinalIgnoreCase);
+
+    private static string CleanMethodName(string methodName) =>
+        methodName
+            .Replace("Async", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("_", "_", StringComparison.OrdinalIgnoreCase);
 
     private static void RemoveTrackingId(StringBuilder builder)
     {

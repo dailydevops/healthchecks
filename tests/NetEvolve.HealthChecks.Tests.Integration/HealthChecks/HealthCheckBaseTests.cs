@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.Abstractions;
 public class HealthCheckBaseTests : HealthCheckTestBase
 {
     [Test]
-    public async Task ExecuteHealthCheckAsync_ShouldReturnUnhealthy() =>
+    public async Task ExecuteHealthCheckAsync_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.Add(

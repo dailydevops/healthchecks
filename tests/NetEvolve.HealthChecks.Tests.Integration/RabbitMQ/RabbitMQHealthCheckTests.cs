@@ -18,7 +18,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     public RabbitMQHealthCheckTests(RabbitMQContainer container) => _container = container;
 
     [Test]
-    public async Task AddRabbitMQ_UseOptions_ShouldReturnHealthy()
+    public async Task AddRabbitMQ_UseOptions_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -31,7 +31,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseOptionsWithKeyedService_ShouldReturnHealthy()
+    public async Task AddRabbitMQ_UseOptionsWithKeyedService_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -52,7 +52,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseOptions_ShouldReturnDegraded()
+    public async Task AddRabbitMQ_UseOptions_Degraded()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -65,7 +65,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnHealthy()
+    public async Task AddRabbitMQ_UseConfiguration_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -86,7 +86,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_ShouldReturnHealthy()
+    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -108,7 +108,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnDegraded()
+    public async Task AddRabbitMQ_UseConfiguration_Degraded()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();

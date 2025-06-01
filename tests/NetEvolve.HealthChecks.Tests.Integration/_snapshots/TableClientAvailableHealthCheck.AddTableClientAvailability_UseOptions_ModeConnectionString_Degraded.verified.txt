@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TableConnectionStringDegraded: Degraded,
+      name: TableConnectionStringDegraded,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Degraded
+}

@@ -1,0 +1,8 @@
+﻿namespace NetEvolve.HealthChecks
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddApplicationHealthy([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddApplicationReady([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, params string[] tags) { }
+    }
+}

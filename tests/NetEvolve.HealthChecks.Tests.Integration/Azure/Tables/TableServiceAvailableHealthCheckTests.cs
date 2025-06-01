@@ -15,7 +15,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
     public TableServiceAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddTableServiceAvailability_UseOptions_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,7 +34,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddTableServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -54,7 +54,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_ModeServiceProvider_ShouldReturnDegraded() =>
+    public async Task AddTableServiceAvailability_UseOptions_ModeServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -73,7 +73,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
+    public async Task AddTableServiceAvailability_UseOptions_ModeConnectionString_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -91,7 +91,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
+    public async Task AddTableServiceAvailability_UseOptions_ModeConnectionString_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -109,7 +109,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
+    public async Task AddTableServiceAvailability_UseOptions_ModeSharedKey_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -130,7 +130,7 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
+    public async Task AddTableServiceAvailability_UseOptions_ModeSharedKey_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {

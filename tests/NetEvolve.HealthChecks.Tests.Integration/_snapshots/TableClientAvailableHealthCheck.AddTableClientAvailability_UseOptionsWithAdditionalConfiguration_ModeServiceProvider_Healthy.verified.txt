@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TableServiceProviderWithConfigurationHealthy: Healthy,
+      name: TableServiceProviderWithConfigurationHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Healthy
+}

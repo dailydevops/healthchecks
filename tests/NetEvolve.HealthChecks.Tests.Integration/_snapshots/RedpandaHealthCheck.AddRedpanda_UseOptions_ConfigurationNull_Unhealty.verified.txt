@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealty: Unexpected error.,
+      exception: {
+        message: The configuration cannot be null.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: TestContainerUnhealty,
+      status: Unhealthy,
+      tags: [
+        redpanda,
+        message-queue
+      ]
+    }
+  ],
+  status: Unhealthy
+}

@@ -19,7 +19,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
     public KafkaHealthCheckTests(KafkaContainer database) => _database = database;
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_ShouldReturnHealthy() =>
+    public async Task AddKafka_UseOptionsCreate_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -42,7 +42,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -69,7 +69,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_ShouldReturnHealthy() =>
+    public async Task AddKafka_UseConfigurationCreate_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -91,7 +91,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddKafka_UseConfigurationServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -121,7 +121,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
+    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -144,7 +144,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
+    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -166,7 +166,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_ShouldReturnDegraded() =>
+    public async Task AddKafka_UseOptionsCreate_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -189,7 +189,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnDegraded() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -216,7 +216,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_ShouldReturnDegraded() =>
+    public async Task AddKafka_UseConfigurationCreate_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -238,7 +238,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
+    public async Task AddKafka_UseConfigurationServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -268,7 +268,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
+    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -291,7 +291,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
+    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -313,7 +313,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_ShouldReturnUnhealty() =>
+    public async Task AddKafka_UseOptionsCreate_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -335,7 +335,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnUnhealty() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -365,7 +365,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_ConfigurationNull_ShouldReturnUnhealty() =>
+    public async Task AddKafka_UseOptions_ConfigurationNull_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -383,7 +383,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_BootstrapAddressNull_ShouldReturnUnhealty() =>
+    public async Task AddKafka_UseOptions_BootstrapAddressNull_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -401,7 +401,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_ShouldReturnUnhealty() =>
+    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {

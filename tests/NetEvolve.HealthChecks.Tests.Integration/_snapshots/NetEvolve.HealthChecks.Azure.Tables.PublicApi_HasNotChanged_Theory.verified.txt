@@ -1,0 +1,39 @@
+﻿namespace NetEvolve.HealthChecks.Azure.Tables
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddTableClientAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Tables.TableClientAvailableOptions>? options = null, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddTableServiceAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Tables.TableServiceAvailableOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class TableClientAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Tables.TableClientAvailableOptions>
+    {
+        public TableClientAvailableOptions() { }
+        public string? AccountKey { get; set; }
+        public string? AccountName { get; set; }
+        public System.Action<Azure.Data.Tables.TableClientOptions>? ConfigureClientOptions { get; set; }
+        public string? ConnectionString { get; set; }
+        public NetEvolve.HealthChecks.Azure.Tables.TableClientCreationMode? Mode { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public string? TableName { get; set; }
+        public int Timeout { get; set; }
+    }
+    public enum TableClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        ConnectionString = 2,
+        SharedKey = 3,
+        AzureSasCredential = 4,
+    }
+    public sealed class TableServiceAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Tables.TableServiceAvailableOptions>
+    {
+        public TableServiceAvailableOptions() { }
+        public string? AccountKey { get; set; }
+        public string? AccountName { get; set; }
+        public System.Action<Azure.Data.Tables.TableClientOptions>? ConfigureClientOptions { get; set; }
+        public string? ConnectionString { get; set; }
+        public NetEvolve.HealthChecks.Azure.Tables.TableClientCreationMode? Mode { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public int Timeout { get; set; }
+    }
+}

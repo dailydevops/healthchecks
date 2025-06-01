@@ -17,7 +17,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
     public NpgsqlHealthCheckTests(NpgsqlDatabase database) => _database = database;
 
     [Test]
-    public async Task AddPostgreSql_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddPostgreSql_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -30,7 +30,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddPostgreSql_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddPostgreSql_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -47,7 +47,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddPostgreSql_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddPostgreSql_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -64,7 +64,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddPostgreSql_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -79,7 +79,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddPostgreSql_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestContainerDegraded"),
             HealthStatus.Degraded,

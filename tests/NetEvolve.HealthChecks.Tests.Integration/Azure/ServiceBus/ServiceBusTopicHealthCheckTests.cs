@@ -19,7 +19,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
     public ServiceBusTopicHealthCheckTests(ServiceBusContainer container) => _container = container;
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -42,7 +42,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeConnectionString_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -60,7 +60,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeServiceProvider_TopicNotExists_ShouldReturnUnhealthy() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeServiceProvider_TopicNotExists_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -83,7 +83,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeConnectionString_TopicNotExists_ShouldReturnUnhealthy() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeConnectionString_TopicNotExists_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -101,7 +101,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeServiceProvider_Timeout_ShouldReturnDegraded() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeServiceProvider_Timeout_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -125,7 +125,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeConnectionString_Timeout_ShouldReturnDegraded() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeConnectionString_Timeout_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -144,7 +144,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseOptions_ModeDefaultAzureCredentials_ShouldReturnUnhealthy() =>
+    public async Task AddAzureServiceBusTopic_UseOptions_ModeDefaultAzureCredentials_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -164,7 +164,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
     // Configuration-based tests
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddAzureServiceBusTopic_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusTopic("ConfigurationHealthy"),
             HealthStatus.Healthy,
@@ -190,7 +190,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseConfiguration_TopicNotExists_ShouldReturnUnhealthy() =>
+    public async Task AddAzureServiceBusTopic_UseConfiguration_TopicNotExists_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusTopic("ConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
@@ -213,7 +213,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddAzureServiceBusTopic_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusTopic("ConfigurationDegraded"),
             HealthStatus.Degraded,
@@ -240,7 +240,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusTopic_UseConfiguration_DefaultAzureCredentials_ShouldReturnUnhealthy() =>
+    public async Task AddAzureServiceBusTopic_UseConfiguration_DefaultAzureCredentials_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusTopic("ConfigurationCredentialsUnhealthy"),
             HealthStatus.Unhealthy,

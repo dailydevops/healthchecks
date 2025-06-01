@@ -1,0 +1,39 @@
+﻿namespace NetEvolve.HealthChecks.Azure.Blobs
+{
+    public enum BlobClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        ConnectionString = 2,
+        SharedKey = 3,
+        AzureSasCredential = 4,
+    }
+    public sealed class BlobContainerAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Blobs.BlobContainerAvailableOptions>
+    {
+        public BlobContainerAvailableOptions() { }
+        public string? AccountKey { get; set; }
+        public string? AccountName { get; set; }
+        public System.Action<Azure.Storage.Blobs.BlobClientOptions>? ConfigureClientOptions { get; set; }
+        public string? ConnectionString { get; set; }
+        public string? ContainerName { get; set; }
+        public NetEvolve.HealthChecks.Azure.Blobs.BlobClientCreationMode? Mode { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public int Timeout { get; set; }
+    }
+    public sealed class BlobServiceAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Blobs.BlobServiceAvailableOptions>
+    {
+        public BlobServiceAvailableOptions() { }
+        public string? AccountKey { get; set; }
+        public string? AccountName { get; set; }
+        public System.Action<Azure.Storage.Blobs.BlobClientOptions>? ConfigureClientOptions { get; set; }
+        public string? ConnectionString { get; set; }
+        public NetEvolve.HealthChecks.Azure.Blobs.BlobClientCreationMode? Mode { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddBlobContainerAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Blobs.BlobContainerAvailableOptions>? options = null, params string[] tags) { }
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddBlobServiceAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Blobs.BlobServiceAvailableOptions>? options = null, params string[] tags) { }
+    }
+}

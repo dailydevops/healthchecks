@@ -19,7 +19,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
     public RedisHealthCheckTests(RedisContainer database) => _database = database;
 
     [Test]
-    public async Task AddRedis_UseOptionsCreate_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseOptionsCreate_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,7 +36,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedis_UseOptionsServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseOptionsServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -58,7 +58,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedis_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddRedis_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -76,7 +76,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedis_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddRedis_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -103,7 +103,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedis_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddRedis_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestContainerDegraded"),
             HealthStatus.Degraded,

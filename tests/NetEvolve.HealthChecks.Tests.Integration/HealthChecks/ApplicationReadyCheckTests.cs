@@ -10,11 +10,11 @@ using NetEvolve.Extensions.TUnit;
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Test]
-    public async Task AddApplicationReady_ShouldReturnHealthy() =>
+    public async Task AddApplicationReady_Healthy() =>
         await RunAndVerify(healthChecks => healthChecks.AddApplicationReady(), HealthStatus.Healthy);
 
     [Test]
-    public async Task AddApplicationReady_WithCustomName_ShouldReturnUnhealthy() =>
+    public async Task AddApplicationReady_WithCustomName_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddApplicationReady(),
             HealthStatus.Unhealthy,

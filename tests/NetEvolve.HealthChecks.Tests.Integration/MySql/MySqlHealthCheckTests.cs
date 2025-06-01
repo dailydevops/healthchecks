@@ -17,7 +17,7 @@ public class MySqlHealthCheckTests : HealthCheckTestBase
     public MySqlHealthCheckTests(MySqlDatabase database) => _database = database;
 
     [Test]
-    public async Task AddMySql_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddMySql_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -30,7 +30,7 @@ public class MySqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMySql_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddMySql_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -48,7 +48,7 @@ public class MySqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMySql_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddMySql_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,7 +65,7 @@ public class MySqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMySql_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddMySql_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -80,7 +80,7 @@ public class MySqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMySql_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddMySql_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestContainerDegraded"),
             HealthStatus.Degraded,

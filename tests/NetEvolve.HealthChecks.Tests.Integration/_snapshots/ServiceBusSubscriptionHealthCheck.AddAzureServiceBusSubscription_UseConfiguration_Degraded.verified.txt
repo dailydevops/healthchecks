@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ConfigurationDegraded: Degraded,
+      name: ConfigurationDegraded,
+      status: Degraded,
+      tags: [
+        messaging,
+        azure,
+        servicebus
+      ]
+    }
+  ],
+  status: Degraded
+}

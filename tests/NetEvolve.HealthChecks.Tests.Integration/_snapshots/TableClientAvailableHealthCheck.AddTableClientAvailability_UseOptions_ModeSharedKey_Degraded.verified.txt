@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TableSharedKeyDegraded: Degraded,
+      name: TableSharedKeyDegraded,
+      status: Degraded,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Degraded
+}

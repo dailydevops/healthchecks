@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealty: Unexpected error.,
+      exception: {
+        message: The property BootstrapServers cannot be null or whitespace.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: TestContainerUnhealty,
+      status: Unhealthy,
+      tags: [
+        kafka,
+        message-queue
+      ]
+    }
+  ],
+  status: Unhealthy
+}

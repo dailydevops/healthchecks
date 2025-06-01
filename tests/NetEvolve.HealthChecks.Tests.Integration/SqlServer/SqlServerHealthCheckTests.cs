@@ -17,7 +17,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
     public SqlServerHealthCheckTests(SqlServerDatabase database) => _database = database;
 
     [Test]
-    public async Task AddSqlServer_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddSqlServer_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -30,7 +30,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServer_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddSqlServer_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -48,7 +48,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServer_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddSqlServer_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,7 +65,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServer_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddSqlServer_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServer("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -80,7 +80,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServer_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddSqlServer_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServer("TestContainerDegraded"),
             HealthStatus.Degraded,

@@ -19,7 +19,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
     public RedpandaHealthCheckTests(RedpandaDatabase database) => _database = database;
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_ShouldReturnHealthy() =>
+    public async Task AddRedpanda_UseOptionsCreate_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -38,7 +38,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,7 +65,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_ShouldReturnHealthy() =>
+    public async Task AddRedpanda_UseConfigurationCreate_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -86,7 +86,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddRedpanda_UseConfigurationServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -116,7 +116,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
+    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -139,7 +139,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
+    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -161,7 +161,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_ShouldReturnDegraded() =>
+    public async Task AddRedpanda_UseOptionsCreate_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -180,7 +180,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_ShouldReturnDegraded() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -207,7 +207,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_ShouldReturnDegraded() =>
+    public async Task AddRedpanda_UseConfigurationCreate_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -228,7 +228,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
+    public async Task AddRedpanda_UseConfigurationServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -258,7 +258,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
+    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -281,7 +281,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
+    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -303,7 +303,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_ShouldReturnUnhealty() =>
+    public async Task AddRedpanda_UseOptionsCreate_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -325,7 +325,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_ShouldReturnUnhealty() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -355,7 +355,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_ConfigurationNull_ShouldReturnUnhealty() =>
+    public async Task AddRedpanda_UseOptions_ConfigurationNull_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -373,7 +373,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_BootstrapAddressNull_ShouldReturnUnhealty() =>
+    public async Task AddRedpanda_UseOptions_BootstrapAddressNull_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -391,7 +391,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_ShouldReturnUnhealty() =>
+    public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_Unhealty() =>
         await RunAndVerify(
             healthChecks =>
             {

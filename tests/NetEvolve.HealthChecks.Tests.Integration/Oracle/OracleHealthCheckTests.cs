@@ -17,7 +17,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
     public OracleHealthCheckTests(OracleDatabase database) => _database = database;
 
     [Test]
-    public async Task AddOracle_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddOracle_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,7 +34,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOracle_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddOracle_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -51,7 +51,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOracle_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddOracle_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -68,7 +68,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOracle_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddOracle_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -84,7 +84,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOracle_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddOracle_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestContainerDegraded"),
             HealthStatus.Degraded,

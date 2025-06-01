@@ -17,7 +17,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
     public SimpleNotificationServiceHealthCheckTests(LocalStackInstance instance) => _instance = instance;
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnHealthy() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -38,7 +38,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -59,7 +59,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_ShouldReturnUnhealthy() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -80,7 +80,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_ShouldReturnDegraded() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -102,7 +102,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_Run101Subscriptions_ShouldReturnHealthy()
+    public async Task AddSimpleNotificationService_Run101Subscriptions_Healthy()
     {
         const string topicName = "MassOf101Subscriptions";
         await using var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101);
@@ -130,7 +130,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
     // Configuration-based tests
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -151,7 +151,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_ShouldReturnUnhealthy() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -171,7 +171,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_ShouldReturnUnhealthy() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -191,7 +191,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -212,7 +212,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_ShouldReturnHealthy()
+    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_Healthy()
     {
         const string topicName = "MassOf101SubscriptionsConfig";
         await using (var subscription = await _instance.CreateNumberOfSubscriptions(topicName, 101))

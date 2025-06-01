@@ -14,7 +14,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
     public FirebirdHealthCheckTests(FirebirdDatabase database) => _database = database;
 
     [Test]
-    public async Task AddFirebird_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddFirebird_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,7 +31,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddFirebird_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddFirebird_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -49,7 +49,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddFirebird_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddFirebird_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,7 +66,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddFirebird_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddFirebird_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -82,7 +82,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddFirebird_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddFirebird_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestContainerDegraded"),
             HealthStatus.Degraded,

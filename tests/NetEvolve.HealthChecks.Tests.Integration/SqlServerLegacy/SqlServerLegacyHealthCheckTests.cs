@@ -18,7 +18,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
     public SqlServerLegacyHealthCheckTests(SqlServerDatabase database) => _database = database;
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddSqlServerLegacy_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,7 +31,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddSqlServerLegacy_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -49,7 +49,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddSqlServerLegacy_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,7 +66,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -81,7 +81,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestContainerDegraded"),
             HealthStatus.Degraded,

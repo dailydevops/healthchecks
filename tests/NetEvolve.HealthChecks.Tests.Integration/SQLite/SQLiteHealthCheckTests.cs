@@ -14,7 +14,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
     private const string ConnectionString = "Data Source=:memory:";
 
     [Test]
-    public async Task AddSQLite_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddSQLite_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -27,7 +27,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSQLite_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddSQLite_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -45,7 +45,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSQLite_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddSQLite_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -62,7 +62,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSQLite_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddSQLite_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLite("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -77,7 +77,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSQLite_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddSQLite_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLite("TestContainerDegraded"),
             HealthStatus.Degraded,

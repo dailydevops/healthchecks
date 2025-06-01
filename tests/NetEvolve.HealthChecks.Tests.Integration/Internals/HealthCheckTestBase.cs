@@ -71,7 +71,7 @@ public abstract class HealthCheckTestBase
                     _ = await Assert.That(actualStatus).IsEqualTo(expectedStatus);
                 }
 
-                _ = await Verify(content).IgnoreParametersForVerified().ConfigureAwait(true);
+                _ = await Verify(content).IgnoreParameters().ConfigureAwait(true);
             }
         }
     }

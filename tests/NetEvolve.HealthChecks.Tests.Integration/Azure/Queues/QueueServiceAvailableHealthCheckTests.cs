@@ -15,7 +15,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
     public QueueServiceAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -30,7 +30,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
+    public async Task AddQueueServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -49,7 +49,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_ShouldReturnDegraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -68,7 +68,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -85,7 +85,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -103,7 +103,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -124,7 +124,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -144,7 +144,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -161,7 +161,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {

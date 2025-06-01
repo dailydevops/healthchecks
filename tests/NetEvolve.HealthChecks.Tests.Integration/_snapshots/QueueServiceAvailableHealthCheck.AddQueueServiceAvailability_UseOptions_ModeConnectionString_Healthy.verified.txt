@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: ServiceConnectionStringHealthy: Healthy,
+      name: ServiceConnectionStringHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        queue
+      ]
+    }
+  ],
+  status: Healthy
+}

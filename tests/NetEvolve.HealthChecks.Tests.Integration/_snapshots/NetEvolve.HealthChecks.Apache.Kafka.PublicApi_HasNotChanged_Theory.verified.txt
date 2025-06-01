@@ -1,0 +1,20 @@
+﻿namespace NetEvolve.HealthChecks.Apache.Kafka
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddKafka([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Apache.Kafka.KafkaOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class KafkaOptions : System.IEquatable<NetEvolve.HealthChecks.Apache.Kafka.KafkaOptions>
+    {
+        public KafkaOptions() { }
+        public Confluent.Kafka.ProducerConfig Configuration { get; set; }
+        public NetEvolve.HealthChecks.Apache.Kafka.ProducerHandleMode Mode { get; set; }
+        public int Timeout { get; set; }
+        public string Topic { get; set; }
+    }
+    public enum ProducerHandleMode
+    {
+        ServiceProvider = 0,
+        Create = 1,
+    }
+}

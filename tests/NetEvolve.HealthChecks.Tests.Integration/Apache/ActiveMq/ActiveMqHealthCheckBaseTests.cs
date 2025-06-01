@@ -12,7 +12,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
     protected ActiveMqHealthCheckBaseTests(IActiveMQAccessor accessor) => _accessor = accessor;
 
     [Test]
-    public async Task AddActiveMq_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddActiveMq_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,7 +31,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddActiveMq_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -50,7 +50,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddActiveMq_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -69,7 +69,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddActiveMq_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -87,7 +87,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_ShouldReturnUnhealthy() =>
+    public async Task AddActiveMq_UseConfiguration_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -105,7 +105,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddActiveMq_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerDegraded"),
             HealthStatus.Degraded,

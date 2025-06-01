@@ -8,6 +8,6 @@ using NetEvolve.Extensions.TUnit;
 public class ApplicationHealthyCheckTests : HealthCheckTestBase
 {
     [Test]
-    public async Task AddApplicationHealthy_ShouldReturnHealthy() =>
+    public async Task AddApplicationHealthy_Healthy() =>
         await RunAndVerify(healthChecks => healthChecks.AddApplicationHealthy(), HealthStatus.Healthy);
 }

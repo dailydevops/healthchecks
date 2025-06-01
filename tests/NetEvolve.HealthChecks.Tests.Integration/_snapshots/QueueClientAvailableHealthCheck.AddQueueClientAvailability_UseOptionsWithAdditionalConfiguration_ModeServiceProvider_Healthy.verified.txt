@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: QueueServiceProviderWithConfigurationHealthy: Healthy,
+      name: QueueServiceProviderWithConfigurationHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        queue
+      ]
+    }
+  ],
+  status: Healthy
+}

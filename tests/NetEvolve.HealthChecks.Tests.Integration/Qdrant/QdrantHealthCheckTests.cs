@@ -19,7 +19,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
     public QdrantHealthCheckTests(QdrantDatabase database) => _database = database;
 
     [Test]
-    public async Task AddQdrant_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddQdrant_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerHealthy", options => options.Timeout = 1000),
             HealthStatus.Healthy,
@@ -27,7 +27,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQdrant_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddQdrant_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
@@ -35,7 +35,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQdrant_UseOptions_WithKeyedService_ShouldReturnHealthy() =>
+    public async Task AddQdrant_UseOptions_WithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -59,7 +59,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQdrant_UseGrpcConnection_ShouldReturnHealthy() =>
+    public async Task AddQdrant_UseGrpcConnection_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerGrpcHealthy", options => options.Timeout = 1000),
             HealthStatus.Healthy,
@@ -67,7 +67,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQdrant_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddQdrant_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerConfigHealthy"),
             HealthStatus.Healthy,
@@ -83,7 +83,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQdrant_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddQdrant_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerConfigDegraded"),
             HealthStatus.Degraded,
@@ -99,7 +99,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddQdrant_UseConfiguration_WithKeyedService_ShouldReturnHealthy() =>
+    public async Task AddQdrant_UseConfiguration_WithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerConfigKeyedHealthy"),
             HealthStatus.Healthy,

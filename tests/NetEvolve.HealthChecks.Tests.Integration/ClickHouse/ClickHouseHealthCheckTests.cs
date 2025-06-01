@@ -17,7 +17,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
     public ClickHouseHealthCheckTests(ClickHouseDatabase database) => _database = database;
 
     [Test]
-    public async Task AddClickHouse_UseOptions_ShouldReturnHealthy() =>
+    public async Task AddClickHouse_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -30,7 +30,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddClickHouse_UseOptions_ShouldReturnDegraded() =>
+    public async Task AddClickHouse_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -48,7 +48,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddClickHouse_UseOptions_ShouldReturnUnhealthy() =>
+    public async Task AddClickHouse_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,7 +65,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddClickHouse_UseConfiguration_ShouldReturnHealthy() =>
+    public async Task AddClickHouse_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -80,7 +80,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddClickHouse_UseConfiguration_ShouldReturnDegraded() =>
+    public async Task AddClickHouse_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestContainerDegraded"),
             HealthStatus.Degraded,
