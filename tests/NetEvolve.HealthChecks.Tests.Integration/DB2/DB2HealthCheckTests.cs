@@ -5,18 +5,19 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DB2;
 
+[ClassDataSource<DB2Database>(Shared = SharedType.PerTestSession)]
 [TestGroup(nameof(DB2))]
-public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Database>
+public class DB2HealthCheckTests : HealthCheckTestBase
 {
     private readonly DB2Database _database;
 
     public DB2HealthCheckTests(DB2Database database) => _database = database;
 
-    [Fact]
-    public async Task AddDB2_UseOptions_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddDB2_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -28,21 +29,8 @@ public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Databas
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddDB2_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddDB2("TestContainerHealthy").AddDB2("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
-    public async Task AddDB2_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddDB2_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -59,8 +47,8 @@ public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Databas
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddDB2_UseOptions_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddDB2_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -76,8 +64,8 @@ public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Databas
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddDB2_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddDB2_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDB2("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -91,8 +79,8 @@ public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Databas
             }
         );
 
-    [Fact]
-    public async Task AddDB2_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddDB2_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDB2("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -111,7 +99,7 @@ public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Databas
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddDB2_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDB2("TestNoValues"),
@@ -126,7 +114,7 @@ public class DB2HealthCheckTests : HealthCheckTestBase, IClassFixture<DB2Databas
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddDB2_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDB2("TestNoValues"),

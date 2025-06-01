@@ -1,16 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.DB2;
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DB2;
-using Xunit;
 
 [TestGroup(nameof(DB2))]
 public sealed class DB2ConfigureTests
 {
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var options = new DB2Options();
@@ -21,12 +21,15 @@ public sealed class DB2ConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new DB2Configure(new ConfigurationBuilder().Build());
@@ -37,12 +40,15 @@ public sealed class DB2ConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
         var configure = new DB2Configure(new ConfigurationBuilder().Build());
@@ -53,12 +59,17 @@ public sealed class DB2ConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The connection string cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The connection string cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new DB2Configure(new ConfigurationBuilder().Build());
@@ -69,12 +80,15 @@ public sealed class DB2ConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentCommandNull_SetDefaultCommand()
+    [Test]
+    public async Task Validate_WhenArgumentCommandNull_SetDefaultCommand()
     {
         // Arrange
         var configure = new DB2Configure(new ConfigurationBuilder().Build());
@@ -85,12 +99,15 @@ public sealed class DB2ConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
-        Assert.Equal(DB2HealthCheck.DefaultCommand, options.Command);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(options.Command).IsEqualTo(DB2HealthCheck.DefaultCommand);
+        }
     }
 
-    [Fact]
-    public void PostConfigure_WhenArgumentCommandEmpty_SetDefaultCommand()
+    [Test]
+    public async Task PostConfigure_WhenArgumentCommandEmpty_SetDefaultCommand()
     {
         // Arrange
         var configure = new DB2Configure(new ConfigurationBuilder().Build());
@@ -101,11 +118,11 @@ public sealed class DB2ConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(DB2HealthCheck.DefaultCommand, options.Command);
+        _ = await Assert.That(options.Command).IsEqualTo(DB2HealthCheck.DefaultCommand);
     }
 
-    [Fact]
-    public void PostConfigure_WhenNameIsNull_DoNothing()
+    [Test]
+    public async Task PostConfigure_WhenNameIsNull_DoNothing()
     {
         // Arrange
         var configure = new DB2Configure(new ConfigurationBuilder().Build());
@@ -116,11 +133,14 @@ public sealed class DB2ConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal("Test", options.ConnectionString);
-        Assert.Equal(string.Empty, options.Command);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.Command).IsEqualTo(string.Empty);
+            _ = await Assert.That(options.ConnectionString).IsEqualTo("Test");
+        }
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -135,7 +155,7 @@ public sealed class DB2ConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
