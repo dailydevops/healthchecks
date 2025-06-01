@@ -1,22 +1,21 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.AWS.SNS;
 
 using Amazon.Runtime;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
-using Xunit;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
 public sealed class SimpleNotificationServiceOptionsTests
 {
-    [Fact]
-    public void GetCredentials_WhenModeIsNull_ReturnsNull()
+    [Test]
+    public async Task GetCredentials_WhenModeIsNull_ReturnsNull()
     {
         var options = new SimpleNotificationServiceOptions { Mode = null };
-        Assert.Null(options.GetCredentials());
+        _ = await Assert.That(options.GetCredentials()).IsNull();
     }
 
-    [Fact]
-    public void GetCredentials_WhenModeIsBasicAuthentication_ReturnsBasicAWSCredentials()
+    [Test]
+    public async Task GetCredentials_WhenModeIsBasicAuthentication_ReturnsBasicAWSCredentials()
     {
         var options = new SimpleNotificationServiceOptions
         {
@@ -27,7 +26,6 @@ public sealed class SimpleNotificationServiceOptionsTests
 
         var credentials = options.GetCredentials();
 
-        Assert.NotNull(credentials);
-        _ = Assert.IsType<BasicAWSCredentials>(credentials);
+        _ = await Assert.That(credentials).IsNotNull().And.IsTypeOf<BasicAWSCredentials>();
     }
 }

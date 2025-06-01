@@ -2,15 +2,14 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Oracle;
-using Xunit;
 
 [TestGroup(nameof(Oracle))]
 public sealed class OracleConfigureTests
 {
-    [Fact]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var options = new OracleOptions();
@@ -21,12 +20,15 @@ public sealed class OracleConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The name cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    [Test]
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
@@ -37,12 +39,15 @@ public sealed class OracleConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The option cannot be null.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentConnectionStringNull_ThrowArgumentException()
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
@@ -53,12 +58,17 @@ public sealed class OracleConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The connection string cannot be null or whitespace.", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The connection string cannot be null or whitespace.");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [Test]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
@@ -69,12 +79,15 @@ public sealed class OracleConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Failed);
-        Assert.Equal("The timeout cannot be less than infinite (-1).", result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+        }
     }
 
-    [Fact]
-    public void Validate_WhenArgumentCommandNull_SetDefaultCommand()
+    [Test]
+    public async Task Validate_WhenArgumentCommandNull_SetDefaultCommand()
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
@@ -85,12 +98,15 @@ public sealed class OracleConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.True(result.Succeeded);
-        Assert.Equal(OracleHealthCheck.DefaultCommand, options.Command);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(options.Command).IsEqualTo(OracleHealthCheck.DefaultCommand);
+        }
     }
 
-    [Fact]
-    public void PostConfigure_WhenArgumentCommandEmpty_SetDefaultCommand()
+    [Test]
+    public async Task PostConfigure_WhenArgumentCommandEmpty_SetDefaultCommand()
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
@@ -101,11 +117,11 @@ public sealed class OracleConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal(OracleHealthCheck.DefaultCommand, options.Command);
+        _ = await Assert.That(options.Command).IsEqualTo(OracleHealthCheck.DefaultCommand);
     }
 
-    [Fact]
-    public void PostConfigure_WhenNameIsNull_DoNothing()
+    [Test]
+    public async Task PostConfigure_WhenNameIsNull_DoNothing()
     {
         // Arrange
         var configure = new OracleConfigure(new ConfigurationBuilder().Build());
@@ -116,11 +132,14 @@ public sealed class OracleConfigureTests
         configure.PostConfigure(name, options);
 
         // Assert
-        Assert.Equal("Test", options.ConnectionString);
-        Assert.Equal(string.Empty, options.Command);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.ConnectionString).IsEqualTo("Test");
+            _ = await Assert.That(options.Command).IsEqualTo(string.Empty);
+        }
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -135,7 +154,7 @@ public sealed class OracleConfigureTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void Configure_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange

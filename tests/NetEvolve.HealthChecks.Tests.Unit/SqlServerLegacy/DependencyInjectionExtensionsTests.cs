@@ -3,14 +3,13 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
-using Xunit;
 
 [TestGroup(nameof(SqlServerLegacy))]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddSqlServer_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -23,7 +22,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddSqlServer_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -39,7 +38,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddSqlServer_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -55,7 +54,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddSqlServer_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -71,7 +70,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddSqlServer_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange

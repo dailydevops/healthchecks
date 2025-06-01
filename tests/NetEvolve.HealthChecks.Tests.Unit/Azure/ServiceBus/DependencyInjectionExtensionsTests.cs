@@ -3,14 +3,13 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddAzureServiceBusQueue_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -23,7 +22,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusQueue_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -39,7 +38,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusQueue_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -55,7 +54,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusQueue_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -71,7 +70,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusQueue_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
@@ -87,7 +86,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusTopic_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -100,7 +99,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusTopic_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -116,7 +115,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusTopic_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -132,7 +131,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusTopic_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -148,7 +147,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusTopic_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
@@ -164,7 +163,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusSubscription_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -177,7 +176,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusSubscription_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -193,7 +192,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusSubscription_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
@@ -209,7 +208,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusSubscription_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -225,7 +224,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddAzureServiceBusSubscription_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange

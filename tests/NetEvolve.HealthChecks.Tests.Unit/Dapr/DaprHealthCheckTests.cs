@@ -7,16 +7,15 @@ using global::Dapr.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Dapr;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
-using Xunit;
 
 [TestGroup(nameof(Dapr))]
 public sealed class DaprHealthCheckTests
 {
-    [Fact]
+    [Test]
     public void Constructor_WhenServiceProviderNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -30,7 +29,7 @@ public sealed class DaprHealthCheckTests
         _ = Assert.Throws<ArgumentNullException>("serviceProvider", Act);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenDaprHealthy_ReturnsHealthy()
     {
         // Arrange
@@ -55,11 +54,14 @@ public sealed class DaprHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Healthy, result.Status);
-        Assert.Equal("DaprSidecar: Healthy", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Healthy");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenDaprUnhealthy_ReturnsDegraded()
     {
         // Arrange
@@ -84,11 +86,14 @@ public sealed class DaprHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Degraded, result.Status);
-        Assert.Equal("DaprSidecar: Degraded", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Degraded");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenDaprTimeout_ReturnsDegraded()
     {
         // Arrange
@@ -120,11 +125,14 @@ public sealed class DaprHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Degraded, result.Status);
-        Assert.Equal("DaprSidecar: Degraded", result.Description);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
+            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Degraded");
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenDaprError_ReturnsUnhealthy()
     {
         // Arrange
@@ -151,14 +159,17 @@ public sealed class DaprHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.True(result.Description!.Contains("DaprSidecar: Unexpected error.", StringComparison.Ordinal));
-        Assert.NotNull(result.Exception);
-        _ = Assert.IsType<InvalidOperationException>(result.Exception);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert
+                .That(result.Description!.Contains("DaprSidecar: Unexpected error.", StringComparison.Ordinal))
+                .IsTrue();
+            _ = await Assert.That(result.Exception).IsNotNull().And.IsTypeOf<InvalidOperationException>();
+        }
     }
 
-#if NET8_0_OR_GREATER
-    [Fact]
+    [Test]
     public async Task CheckHealthAsync_WhenCancelled_ReturnsUnhealthy()
     {
         // Arrange
@@ -187,41 +198,10 @@ public sealed class DaprHealthCheckTests
         var result = await healthCheck.CheckHealthAsync(context, cts.Token);
 
         // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("DaprSidecar: Cancellation requested.", result.Description);
-    }
-#else
-    [Fact]
-    public async Task CheckHealthAsync_WhenCancelled_ReturnsUnhealthy()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        var options = new DaprOptions { Timeout = 100 };
-
-        var mockClient = Substitute.For<DaprClient>();
-        mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
-
-        services.AddSingleton<DaprClient>(mockClient);
-        services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = options.Timeout);
-
-        var serviceProvider = services.BuildServiceProvider();
-        var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
-
-        var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext
+        using (Assert.Multiple())
         {
-            Registration = new HealthCheckRegistration("DaprSidecar", healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        using var cts = new CancellationTokenSource();
-        cts.Cancel();
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, cts.Token);
-
-        // Assert
-        Assert.Equal(HealthStatus.Unhealthy, result.Status);
-        Assert.Equal("DaprSidecar: Cancellation requested.", result.Description);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Cancellation requested.");
+        }
     }
-#endif
 }

@@ -2,14 +2,13 @@
 
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
 public class ClientCreationTests
 {
-    [Fact]
+    [Test]
     public void CreateTableServiceClient_InvalidMode_ThrowUnreachableException()
     {
         var options = new TableClientAvailableOptions { Mode = (TableClientCreationMode)13 };

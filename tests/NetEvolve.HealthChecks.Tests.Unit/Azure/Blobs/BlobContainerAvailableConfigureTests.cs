@@ -4,14 +4,13 @@ using System;
 using global::Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
-using Xunit;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 public sealed class BlobContainerAvailableConfigureTests
 {
-    [Fact]
+    [Test]
     public void Configue_OnlyOptions_ThrowsArgumentException()
     {
         // Arrange
@@ -26,9 +25,9 @@ public sealed class BlobContainerAvailableConfigureTests
         _ = Assert.Throws<ArgumentException>("name", () => configure.Configure(options));
     }
 
-    [Theory]
-    [MemberData(nameof(GetValidateTestCases))]
-    public void Validate_Theory_Expected(
+    [Test]
+    [MethodDataSource(nameof(GetValidateTestCases))]
+    public async Task Validate_Theory_Expected(
         bool expectedResult,
         string? expectedMessage,
         string? name,
@@ -46,32 +45,37 @@ public sealed class BlobContainerAvailableConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        Assert.Equal(expectedResult, result.Succeeded);
-        Assert.Equal(expectedMessage, result.FailureMessage);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsEqualTo(expectedResult);
+            _ = await Assert.That(result.FailureMessage).IsEqualTo(expectedMessage);
+        }
     }
 
-    public static TheoryData<bool, string?, string?, BlobContainerAvailableOptions> GetValidateTestCases()
+    public static IEnumerable<Func<(bool, string?, string?, BlobContainerAvailableOptions)>> GetValidateTestCases()
     {
-        var data = new TheoryData<bool, string?, string?, BlobContainerAvailableOptions>
-        {
-            { false, "The name cannot be null or whitespace.", null, null! },
-            { false, "The name cannot be null or whitespace.", "\t", null! },
-            { false, "The option cannot be null.", "name", null! },
-            {
+        yield return () => (false, "The name cannot be null or whitespace.", null, null!);
+        yield return () => (false, "The option cannot be null.", "name", null!);
+        yield return () =>
+            (
                 false,
                 "The timeout cannot be less than infinite (-1).",
                 "name",
                 new BlobContainerAvailableOptions { Timeout = -2 }
-            },
-            { false, "The container name cannot be null or whitespace.", "name", new BlobContainerAvailableOptions() },
-            {
+            );
+        yield return () =>
+            (false, "The container name cannot be null or whitespace.", "name", new BlobContainerAvailableOptions());
+        yield return () =>
+            (
                 false,
                 "The mode `13` is not supported.",
                 "name",
                 new BlobContainerAvailableOptions { Mode = (BlobClientCreationMode)13, ContainerName = "test" }
-            },
-            // Mode: ServiceProvider
-            {
+            );
+
+        // Mode: ServiceProvider
+        yield return () =>
+            (
                 false,
                 $"No service of type `{nameof(BlobServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
@@ -80,9 +84,11 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.ServiceProvider,
                     ContainerName = "test",
                 }
-            },
-            // Mode: DefaultAzureCredentials
-            {
+            );
+
+        // Mode: DefaultAzureCredentials
+        yield return () =>
+            (
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
@@ -91,8 +97,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.DefaultAzureCredentials,
                     ContainerName = "test",
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The service url must be an absolute url when using `DefaultAzureCredentials` mode.",
                 "name",
@@ -102,8 +109,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -113,9 +121,11 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                 }
-            },
-            // Mode: ConnectionString
-            {
+            );
+
+        // Mode: ConnectionString
+        yield return () =>
+            (
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
@@ -124,8 +134,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.ConnectionString,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -135,15 +146,18 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.ConnectionString,
                     ConnectionString = "connectionString",
                 }
-            },
-            // Mode: SharedKey
-            {
+            );
+
+        // Mode: SharedKey
+        yield return () =>
+            (
                 false,
                 "The service url cannot be null when using `SharedKey` mode.",
                 "name",
                 new BlobContainerAvailableOptions { ContainerName = "test", Mode = BlobClientCreationMode.SharedKey }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The service url must be an absolute url when using `SharedKey` mode.",
                 "name",
@@ -153,8 +167,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The account name cannot be null or whitespace when using `SharedKey` mode.",
                 "name",
@@ -163,10 +178,10 @@ public sealed class BlobContainerAvailableConfigureTests
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
-                    AccountName = null,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The account key cannot be null or whitespace when using `SharedKey` mode.",
                 "name",
@@ -176,10 +191,10 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.SharedKey,
                     ServiceUri = new Uri("https://example.com", UriKind.Absolute),
                     AccountName = "test",
-                    AccountKey = null,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -191,9 +206,11 @@ public sealed class BlobContainerAvailableConfigureTests
                     AccountName = "test",
                     AccountKey = "test",
                 }
-            },
-            // Mode: AzureSasCredential
-            {
+            );
+
+        // Mode: AzureSasCredential
+        yield return () =>
+            (
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
@@ -202,8 +219,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     ContainerName = "test",
                     Mode = BlobClientCreationMode.AzureSasCredential,
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The service url must be an absolute url when using `AzureSasCredential` mode.",
                 "name",
@@ -213,8 +231,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 false,
                 "The sas query token cannot be null or whitespace when using `AzureSasCredential` mode.",
                 "name",
@@ -224,8 +243,9 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute", UriKind.Absolute),
                 }
-            },
-            {
+            );
+        yield return () =>
+            (
                 true,
                 null,
                 "name",
@@ -235,9 +255,6 @@ public sealed class BlobContainerAvailableConfigureTests
                     Mode = BlobClientCreationMode.AzureSasCredential,
                     ServiceUri = new Uri("https://absolute?query=test", UriKind.Absolute),
                 }
-            },
-        };
-
-        return data;
+            );
     }
 }

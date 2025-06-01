@@ -6,14 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Dapr;
-using Xunit;
 
 [TestGroup(nameof(Dapr))]
 public class DependencyInjectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddDapr_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -26,7 +25,7 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
-    [Fact]
+    [Test]
     public void AddDapr_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
@@ -42,8 +41,8 @@ public class DependencyInjectionExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
-    [Fact]
-    public void AddDapr_Fine_Expected()
+    [Test]
+    public async Task AddDapr_Fine_Expected()
     {
         var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
@@ -53,12 +52,14 @@ public class DependencyInjectionExtensionsTests
         var serviceProvider = services.BuildServiceProvider();
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>()!;
 
-        _ = Assert.Single(options.Value.Registrations);
-
         var check = options.Value.Registrations.First();
 
-        Assert.Equal(2, check.Tags.Count);
-        Assert.Equal("DaprSidecar", check.Name);
-        _ = Assert.IsType<DaprHealthCheck>(check.Factory(serviceProvider));
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(check).IsNotNull();
+            _ = await Assert.That(check.Tags.Count).IsEqualTo(2);
+            _ = await Assert.That(check.Name).IsEqualTo("DaprSidecar");
+            _ = await Assert.That(check.Factory(serviceProvider)).IsTypeOf<DaprHealthCheck>();
+        }
     }
 }
