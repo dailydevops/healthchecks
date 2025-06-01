@@ -58,10 +58,7 @@ internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<Redpanda
             return serviceProvider.GetRequiredService<IProducer<string, string>>();
         }
 
-        if (_producers is null)
-        {
-            _producers = new ConcurrentDictionary<string, IProducer<string, string>>(StringComparer.OrdinalIgnoreCase);
-        }
+        _producers ??= new ConcurrentDictionary<string, IProducer<string, string>>(StringComparer.OrdinalIgnoreCase);
 
         return _producers.GetOrAdd(name, _ => CreateProducer(options));
     }

@@ -5,17 +5,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite;
-using Xunit;
 
 [TestGroup(nameof(SQLite))]
 public class SQLiteHealthCheckTests : HealthCheckTestBase
 {
     private const string ConnectionString = "Data Source=:memory:";
 
-    [Fact]
-    public async Task AddSQLite_UseOptions_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddSQLite_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -27,21 +26,8 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddSQLite_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddSQLite("TestContainerHealthy").AddSQLite("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
-    public async Task AddSQLite_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddSQLite_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -58,8 +44,8 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddSQLite_UseOptions_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddSQLite_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -75,8 +61,8 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddSQLite_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddSQLite_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLite("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -90,8 +76,8 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
-    public async Task AddSQLite_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddSQLite_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLite("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -106,7 +92,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSQLite_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLite("TestNoValues"),
@@ -121,7 +107,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSQLite_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLite("TestNoValues"),

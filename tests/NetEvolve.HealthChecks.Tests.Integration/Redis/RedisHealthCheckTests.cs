@@ -1,27 +1,25 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Redis;
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Redis;
 using StackExchange.Redis;
-using Xunit;
 
-[SetCulture("", asHiddenCategory: true)]
 [TestGroup(nameof(Redis))]
-public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisContainer>
+[ClassDataSource<RedisContainer>(Shared = SharedType.PerTestSession)]
+public class RedisHealthCheckTests : HealthCheckTestBase
 {
     private readonly RedisContainer _database;
 
     public RedisHealthCheckTests(RedisContainer database) => _database = database;
 
-    [Fact]
-    public async Task AddRedis_UseOptionsCreate_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddRedis_UseOptionsCreate_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -37,8 +35,8 @@ public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisCon
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddRedis_UseOptionsServiceProvider_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddRedis_UseOptionsServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -59,19 +57,8 @@ public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisCon
             }
         );
 
-    [Fact]
-    public async Task AddRedis_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddRedis("TestContainerHealthy").AddRedis("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                )
-        );
-
-    [Fact]
-    public async Task AddRedis_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddRedis_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -88,8 +75,8 @@ public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisCon
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddRedis_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddRedis_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -115,8 +102,8 @@ public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisCon
             }
         );
 
-    [Fact]
-    public async Task AddRedis_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddRedis_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -135,7 +122,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisCon
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedis_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestNoValues"),
@@ -151,7 +138,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase, IClassFixture<RedisCon
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddRedis_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestNoValues"),

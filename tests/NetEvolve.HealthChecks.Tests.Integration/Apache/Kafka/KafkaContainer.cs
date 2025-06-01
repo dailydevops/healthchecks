@@ -2,15 +2,14 @@
 
 using System.Threading.Tasks;
 using Testcontainers.Kafka;
-using Xunit;
 
-public sealed class KafkaDatabase : IAsyncLifetime
+public sealed class KafkaContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly KafkaContainer _database = new KafkaBuilder().Build();
+    private readonly Testcontainers.Kafka.KafkaContainer _database = new KafkaBuilder().Build();
 
     public string BootstrapAddress => _database.GetBootstrapAddress();
 
-    public async Task DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
+    public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync() => await _database.StartAsync().ConfigureAwait(false);
 }

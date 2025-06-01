@@ -6,20 +6,19 @@ using global::RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
-using Xunit;
 
-[SetCulture("", asHiddenCategory: true)]
 [TestGroup(nameof(RabbitMQ))]
-public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixture<RabbitMQContainer>
+[ClassDataSource<RabbitMQContainer>(Shared = SharedType.PerTestSession)]
+public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
 {
     private readonly RabbitMQContainer _container;
 
     public RabbitMQHealthCheckTests(RabbitMQContainer container) => _container = container;
 
-    [Fact]
-    public async Task AddRabbitMQ_UseOptions_ShouldReturnHealthy()
+    [Test]
+    public async Task AddRabbitMQ_UseOptions_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -31,8 +30,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
-    public async Task AddRabbitMQ_UseOptionsWithKeyedService_ShouldReturnHealthy()
+    [Test]
+    public async Task AddRabbitMQ_UseOptionsWithKeyedService_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -44,7 +43,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
                     options =>
                     {
                         options.KeyedService = "rabbitmq-test";
-                        options.Timeout = 1000;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 ),
             HealthStatus.Healthy,
@@ -52,8 +51,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
-    public async Task AddRabbitMQ_UseOptions_ShouldReturnDegraded()
+    [Test]
+    public async Task AddRabbitMQ_UseOptions_Degraded()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -65,8 +64,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
-    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnHealthy()
+    [Test]
+    public async Task AddRabbitMQ_UseConfiguration_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -86,8 +85,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
-    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_ShouldReturnHealthy()
+    [Test]
+    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_Healthy()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();
@@ -108,8 +107,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase, IClassFixtur
         );
     }
 
-    [Fact]
-    public async Task AddRabbitMQ_UseConfiguration_ShouldReturnDegraded()
+    [Test]
+    public async Task AddRabbitMQ_UseConfiguration_Degraded()
     {
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync();

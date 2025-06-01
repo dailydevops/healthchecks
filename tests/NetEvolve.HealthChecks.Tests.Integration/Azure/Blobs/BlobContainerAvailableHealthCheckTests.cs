@@ -1,45 +1,21 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Blobs;
 
-using System;
 using System.Threading.Tasks;
-using global::Azure.Storage.Blobs;
-using global::Azure.Storage.Sas;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
-[Collection("Azurite")]
+[ClassDataSource<AzuriteAccess>(Shared = SharedType.PerTestSession)]
 public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;
-    private readonly Uri _accountSasUri;
-    private readonly Uri _uriBlobStorage;
 
-    public BlobContainerAvailableHealthCheckTests(AzuriteAccess container)
-    {
-        _container = container;
+    public BlobContainerAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
-        var client = new BlobServiceClient(_container.ConnectionString);
-        _uriBlobStorage = client.Uri;
-
-        _accountSasUri = client.GenerateAccountSasUri(
-            AccountSasPermissions.All,
-            DateTimeOffset.UtcNow.AddDays(1),
-            AccountSasResourceTypes.All
-        );
-
-        var containerClient = client.GetBlobContainerClient("test");
-
-        if (!containerClient.Exists())
-        {
-            _ = containerClient.Create();
-        }
-    }
-
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -57,8 +33,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -77,8 +53,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -97,8 +73,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -117,8 +93,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -135,8 +111,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -154,8 +130,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -167,7 +143,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                         options.AccountKey = AzuriteAccess.AccountKey;
                         options.AccountName = AzuriteAccess.AccountName;
                         options.Mode = BlobClientCreationMode.SharedKey;
-                        options.ServiceUri = _uriBlobStorage;
+                        options.ServiceUri = _container.BlobServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
                     }
                 );
@@ -175,8 +151,8 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -189,15 +165,15 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                         options.AccountName = AzuriteAccess.AccountName;
                         options.Mode = BlobClientCreationMode.SharedKey;
                         options.Timeout = 0;
-                        options.ServiceUri = _uriBlobStorage;
+                        options.ServiceUri = _container.BlobServiceEndpoint;
                     }
                 );
             },
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -207,15 +183,15 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.ContainerName = "test";
                         options.Mode = BlobClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _accountSasUri;
+                        options.ServiceUri = _container.BlobAccountSasUri;
                     }
                 );
             },
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -225,7 +201,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.ContainerName = "test";
                         options.Mode = BlobClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _accountSasUri;
+                        options.ServiceUri = _container.BlobAccountSasUri;
                         options.Timeout = 0;
                     }
                 );

@@ -5,7 +5,7 @@ using Amazon.SimpleNotificationService;
 using Testcontainers.LocalStack;
 using TestContainer = Testcontainers.LocalStack.LocalStackContainer;
 
-public sealed class LocalStackInstance : IAsyncLifetime
+public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
 {
     /// <summary>Access Key</summary>
     /// <see href="https://docs.aws.amazon.com/STS/latest/APIReference/API_GetAccessKeyInfo.html" />
@@ -22,7 +22,7 @@ public sealed class LocalStackInstance : IAsyncLifetime
 
     internal string Subscription { get; private set; } = default!;
 
-    public async Task DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
+    public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
     public async Task InitializeAsync()
     {

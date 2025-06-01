@@ -2,12 +2,12 @@
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 
 [TestGroup(nameof(HealthChecks))]
 public class ApplicationHealthyCheckTests : HealthCheckTestBase
 {
-    [Fact]
-    public async Task AddApplicationHealthy_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddApplicationHealthy_Healthy() =>
         await RunAndVerify(healthChecks => healthChecks.AddApplicationHealthy(), HealthStatus.Healthy);
 }

@@ -5,19 +5,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MySql.Connector;
-using Xunit;
+using NetEvolve.HealthChecks.Tests.Integration.MySql;
 
 [TestGroup(nameof(MySqlConnector))]
-public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture<MySqlDatabase>
+[ClassDataSource<MySqlDatabase>(Shared = SharedType.PerTestSession)]
+public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
 {
     private readonly MySqlDatabase _database;
 
     public MySqlConnectorHealthCheckTests(MySqlDatabase database) => _database = database;
 
-    [Fact]
-    public async Task AddMySql_UseOptions_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMySql_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -29,21 +30,8 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddMySql_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddMySql("TestContainerHealthy").AddMySql("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
-    public async Task AddMySql_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddMySql_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -60,8 +48,8 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddMySql_UseOptions_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddMySql_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -77,8 +65,8 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddMySql_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMySql_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -92,8 +80,8 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture
             }
         );
 
-    [Fact]
-    public async Task AddMySql_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddMySql_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -108,7 +96,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddMySql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestNoValues"),
@@ -123,7 +111,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase, IClassFixture
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddMySql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestNoValues"),

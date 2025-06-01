@@ -7,19 +7,19 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
-using Xunit;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
-public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDatabase>
+[ClassDataSource<KafkaContainer>(Shared = SharedType.PerTestSession)]
+public class KafkaHealthCheckTests : HealthCheckTestBase
 {
-    private readonly KafkaDatabase _database;
+    private readonly KafkaContainer _database;
 
-    public KafkaHealthCheckTests(KafkaDatabase database) => _database = database;
+    public KafkaHealthCheckTests(KafkaContainer database) => _database = database;
 
-    [Fact]
-    public async Task AddKafka_UseOptionsCreate_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddKafka_UseOptionsCreate_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -41,8 +41,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddKafka_UseOptionsServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -68,8 +68,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseConfigurationCreate_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddKafka_UseConfigurationCreate_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -90,8 +90,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddKafka_UseConfigurationServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -120,8 +120,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -143,8 +143,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -165,8 +165,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsCreate_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddKafka_UseOptionsCreate_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -188,8 +188,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddKafka_UseOptionsServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -215,8 +215,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseConfigurationCreate_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddKafka_UseConfigurationCreate_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -237,8 +237,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseConfigurationServiceProvider_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddKafka_UseConfigurationServiceProvider_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -267,8 +267,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -290,8 +290,8 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -312,13 +312,13 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsCreate_ShouldReturnUnhealty() =>
+    [Test]
+    public async Task AddKafka_UseOptionsCreate_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new()
@@ -327,24 +327,24 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
                             SocketTimeoutMs = 0,
                         };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptionsServiceProvider_ShouldReturnUnhealty() =>
+    [Test]
+    public async Task AddKafka_UseOptionsServiceProvider_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -364,54 +364,54 @@ public class KafkaHealthCheckTests : HealthCheckTestBase, IClassFixture<KafkaDat
             }
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptions_ConfigurationNull_ShouldReturnUnhealty() =>
+    [Test]
+    public async Task AddKafka_UseOptions_ConfigurationNull_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = null!;
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptions_BootstrapAddressNull_ShouldReturnUnhealty() =>
+    [Test]
+    public async Task AddKafka_UseOptions_BootstrapAddressNull_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new() { BootstrapServers = null! };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_ShouldReturnUnhealty() =>
+    [Test]
+    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new() { BootstrapServers = " " };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },

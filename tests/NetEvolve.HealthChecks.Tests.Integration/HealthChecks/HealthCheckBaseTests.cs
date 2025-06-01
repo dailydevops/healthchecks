@@ -3,12 +3,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Abstractions;
 
+[TestGroup(nameof(HealthChecks))]
 public class HealthCheckBaseTests : HealthCheckTestBase
 {
-    [Fact]
-    public async Task ExecuteHealthCheckAsync_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task ExecuteHealthCheckAsync_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.Add(

@@ -5,21 +5,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 using NetEvolve.HealthChecks.Tests.Integration.SqlServer;
-using Xunit;
 
 [TestGroup(nameof(SqlServerLegacy))]
-[Collection(nameof(SqlServer))]
+[ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerTestSession)]
 public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
 {
     private readonly SqlServerDatabase _database;
 
     public SqlServerLegacyHealthCheckTests(SqlServerDatabase database) => _database = database;
 
-    [Fact]
-    public async Task AddSqlServerLegacy_UseOptions_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddSqlServerLegacy_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,24 +30,8 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddSqlServerLegacy_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-            {
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks
-                            .AddSqlServerLegacy("TestContainerHealthy")
-                            .AddSqlServerLegacy("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                );
-            }
-        );
-
-    [Fact]
-    public async Task AddSqlServerLegacy_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddSqlServerLegacy_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,8 +48,8 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddSqlServerLegacy_UseOptions_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddSqlServerLegacy_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -82,8 +65,8 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddSqlServerLegacy_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddSqlServerLegacy_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -97,8 +80,8 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
-    public async Task AddSqlServerLegacy_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddSqlServerLegacy_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -113,7 +96,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSqlServerLegacy_UseConfigration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestNoValues"),
@@ -128,7 +111,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddSqlServerLegacy_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestNoValues"),

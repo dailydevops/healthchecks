@@ -3,19 +3,16 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.XUnit;
 using NetEvolve.HealthChecks.Apache.ActiveMq;
-using Testcontainers.ActiveMq;
 
-[TestGroup($"{nameof(Apache)}.{nameof(ActiveMq)}")]
 public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
 {
     private readonly IActiveMQAccessor _accessor;
 
     protected ActiveMqHealthCheckBaseTests(IActiveMQAccessor accessor) => _accessor = accessor;
 
-    [Fact]
-    public async Task AddActiveMq_UseOptions_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddActiveMq_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -33,8 +30,8 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             HealthStatus.Healthy
         );
 
-    [Fact]
-    public async Task AddActiveMq_UseOptions_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddActiveMq_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -52,8 +49,8 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             HealthStatus.Unhealthy
         );
 
-    [Fact]
-    public async Task AddActiveMq_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddActiveMq_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -71,8 +68,8 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Fact]
-    public async Task AddActiveMq_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddActiveMq_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -89,8 +86,8 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
-    public async Task AddActiveMq_UseConfiguration_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddActiveMq_UseConfiguration_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -107,8 +104,8 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
-    public async Task AddActiveMq_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddActiveMq_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -125,7 +122,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddActiveMq_UseConfigration_BrokerAddressStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestNoValues"),
@@ -140,7 +137,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
             }
         );
 
-    [Fact]
+    [Test]
     public async Task AddActiveMq_UseConfigration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestNoValues"),

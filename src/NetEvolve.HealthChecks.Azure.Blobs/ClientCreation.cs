@@ -26,10 +26,7 @@ internal static class ClientCreation
             return serviceProvider.GetRequiredService<BlobServiceClient>();
         }
 
-        if (_blobServiceClients is null)
-        {
-            _blobServiceClients = new ConcurrentDictionary<string, BlobServiceClient>(StringComparer.OrdinalIgnoreCase);
-        }
+        _blobServiceClients ??= new ConcurrentDictionary<string, BlobServiceClient>(StringComparer.OrdinalIgnoreCase);
 
         return _blobServiceClients.GetOrAdd(name, _ => CreateBlobServiceClient(options, serviceProvider));
     }

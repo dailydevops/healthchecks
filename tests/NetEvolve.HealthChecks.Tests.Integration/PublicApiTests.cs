@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using PublicApiGenerator;
 
 [TestGroup(nameof(HealthChecks))]
@@ -23,11 +23,11 @@ public class PublicApiTests
         typeof(AttributeUsageAttribute).FullName!,
     ];
 
-    [Theory]
-    [MemberData(nameof(GetAssemblies))]
-    public Task PublicApi_HasNotChanged_Theory(Assembly assembly)
+    [Test]
+    [MethodDataSource(nameof(GetAssemblies))]
+    public async Task PublicApi_HasNotChanged_Theory(Assembly assembly)
     {
-        Assert.NotNull(assembly);
+        ArgumentNullException.ThrowIfNull(assembly);
 
         var types = assembly.GetTypes().Where(IsVisibleToIntelliSense).ToArray();
 
@@ -35,25 +35,16 @@ public class PublicApiTests
 
         var publicApi = assembly.GeneratePublicApi(options);
 
-        return Verify(publicApi).UseTypeName(assembly.GetName().Name);
+        _ = await Verify(publicApi).IgnoreParameters().UseTypeName(assembly.GetName().Name);
     }
 
-    public static TheoryData<Assembly> GetAssemblies
-    {
-        get
-        {
-            var assemblies = Assembly
-                .GetExecutingAssembly()!
-                .GetReferencedAssemblies()
-                .Where(a => a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase) == true)
-                .Select(Assembly.Load)
-                .ToArray();
-
-            var data = new TheoryData<Assembly>();
-            data.AddRange(assemblies);
-            return data;
-        }
-    }
+    public static Func<Assembly>[] GetAssemblies() =>
+        Assembly
+            .GetExecutingAssembly()!
+            .GetReferencedAssemblies()
+            .Where(a => a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase) == true)
+            .Select<AssemblyName, Func<Assembly>>(a => () => Assembly.Load(a))
+            .ToArray();
 
     private static bool IsVisibleToIntelliSense(Type type)
     {

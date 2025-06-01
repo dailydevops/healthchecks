@@ -1,4 +1,5 @@
 ﻿global using NetEvolve.HealthChecks.Tests.Integration.Internals;
-global using Xunit;
+global using TUnit.Core.Interfaces;
 
-[assembly: CollectionBehavior(CollectionBehavior.CollectionPerClass, MaxParallelThreads = 2)]
+[assembly: ParallelLimiter<HealthCheckParallelLimit>]
+[assembly: TUnit.Core.Executors.InvariantCulture]
