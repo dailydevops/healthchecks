@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Internals;
 
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,6 +12,14 @@ internal static class ModuleInitializer
     [ModuleInitializer]
     public static void Init()
     {
+        // Set all tests to use the same culture
+        // This is necessary to ensure consistent results across different environments
+        var cultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+        Thread.CurrentThread.CurrentCulture = cultureInfo;
+        Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
         VerifierSettings.SortPropertiesAlphabetically();
         VerifierSettings.SortJsonObjects();
 
