@@ -313,12 +313,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_Unhealty() =>
+    public async Task AddKafka_UseOptionsCreate_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new()
@@ -327,7 +327,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                             SocketTimeoutMs = 0,
                         };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -335,16 +335,16 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_Unhealty() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -365,17 +365,17 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_ConfigurationNull_Unhealty() =>
+    public async Task AddKafka_UseOptions_ConfigurationNull_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = null!;
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -383,17 +383,17 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_BootstrapAddressNull_Unhealty() =>
+    public async Task AddKafka_UseOptions_BootstrapAddressNull_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new() { BootstrapServers = null! };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -401,17 +401,17 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_Unhealty() =>
+    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddKafka(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new() { BootstrapServers = " " };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },

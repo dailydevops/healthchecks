@@ -303,12 +303,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_Unhealty() =>
+    public async Task AddRedpanda_UseOptionsCreate_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new()
@@ -317,7 +317,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                             SocketTimeoutMs = 0,
                         };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -325,16 +325,16 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_Unhealty() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -355,17 +355,17 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_ConfigurationNull_Unhealty() =>
+    public async Task AddRedpanda_UseOptions_ConfigurationNull_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = null!;
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -373,17 +373,17 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_BootstrapAddressNull_Unhealty() =>
+    public async Task AddRedpanda_UseOptions_BootstrapAddressNull_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new() { BootstrapServers = null! };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },
@@ -391,17 +391,17 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_Unhealty() =>
+    public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealty",
+                    "TestContainerUnhealthy",
                     options =>
                     {
                         options.Configuration = new() { BootstrapServers = " " };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealty";
+                        options.Topic = "TestContainerUnhealthy";
                     }
                 );
             },

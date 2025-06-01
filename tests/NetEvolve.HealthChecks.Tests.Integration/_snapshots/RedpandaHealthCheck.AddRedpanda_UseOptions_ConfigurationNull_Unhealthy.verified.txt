@@ -1,15 +1,15 @@
 ﻿{
   results: [
     {
-      description: TestContainerUnhealty: Unexpected error.,
+      description: TestContainerUnhealthy: Unexpected error.,
       exception: {
-        message: The property BootstrapServers cannot be null or whitespace.,
+        message: The configuration cannot be null.,
         type: Microsoft.Extensions.Options.OptionsValidationException
       },
-      name: TestContainerUnhealty,
+      name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
-        kafka,
+        redpanda,
         message-queue
       ]
     }
