@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.MongoDb;
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
@@ -70,6 +71,25 @@ public sealed class MongoDbConfigureTests
         var options = new MongoDbOptions();
         var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
         const string? name = default;
+
+        // Act
+        var result = configure.Validate(name, options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenArgumentNameWhitespace_ThrowArgumentInvalidException()
+    {
+        // Arrange
+        var options = new MongoDbOptions();
+        var configure = new MongoDbConfigure(new ConfigurationBuilder().Build());
+        const string name = "";
 
         // Act
         var result = configure.Validate(name, options);
