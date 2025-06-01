@@ -12,6 +12,9 @@
 *.bak
 *- [Bb]ackup.*
 
+# Sarif files
+*.sarif
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
