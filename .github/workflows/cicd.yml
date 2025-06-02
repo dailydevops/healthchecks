@@ -17,6 +17,10 @@ on:
           - normal
           - detailed
           - diagnostic
+      disablePublish:
+        required: true
+        type: Boolean
+        default: true
 
 jobs:
   all:
@@ -28,5 +32,6 @@ jobs:
       dotnet-logging: ${{ inputs.dotnet-logging }}
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      disablePublish: {{ inputs.disablePublish | true }}
       solution: ./HealthChecks.sln
     secrets: inherit
