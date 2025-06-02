@@ -70,4 +70,20 @@ public sealed class MongoDbOptionsTests
         // Assert
         _ = await Assert.That(options.CommandAsync).IsEqualTo(testValue);
     }
+
+    [Test]
+    public async Task Instance_CanBeShallowCopied()
+    {
+        var options = new MongoDbOptions();
+        var options2 = options with { };
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options2).IsNotNull();
+            _ = await Assert.That(options2).IsNotSameReferenceAs(options);
+            _ = await Assert.That(options2.KeyedService).IsEqualTo(options.KeyedService);
+            _ = await Assert.That(options2.Timeout).IsEqualTo(options.Timeout);
+            _ = await Assert.That(options2.CommandAsync).IsEqualTo(options.CommandAsync);
+        }
+    }
 }
