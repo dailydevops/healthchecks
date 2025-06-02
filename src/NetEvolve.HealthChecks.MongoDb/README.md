@@ -25,8 +25,6 @@ using NetEvolve.HealthChecks.MongoDb;
 ```
 Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
-:heavy_exclamation_mark: The configuration of this package is compatible with the [NetEvolve.HealthChecks.MongoDb.Connector](https://www.nuget.org/packages/NetEvolve.HealthChecks.MongoDb.Connector/) package.
-
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
@@ -56,7 +54,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you have only one SQL Server instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you have only one NoSQL Server instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
