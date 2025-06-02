@@ -9,6 +9,13 @@ using Raven.Client.Documents;
 public sealed class MongoDbOptionsTests
 {
     [Test]
+    public async Task RavenDbOptions_CanBeConstructed()
+    {
+        var options = new RavenDbOptions();
+        _ = await Assert.That(options).IsNotNull();
+    }
+
+    [Test]
     public async Task Constructor_DefaultValues_AreCorrect()
     {
         // Arrange & Act
