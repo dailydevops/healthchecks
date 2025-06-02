@@ -19,7 +19,7 @@ on:
           - diagnostic
       disablePublish:
         required: true
-        type: Boolean
+        type: boolean
         default: true
 
 jobs:
