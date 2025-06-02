@@ -18,7 +18,7 @@ public class HealthCheckTests
         .AreAssignableTo(typeof(IHealthCheck));
 
     [Fact]
-    public void Class_ShouldBeInternal_Expected()
+    public void HealthCheckClass_ShouldBeInternal_Expected()
     {
         var rule = Classes().That().Are(_healthChecks).Should().BeInternal();
 
@@ -26,7 +26,7 @@ public class HealthCheckTests
     }
 
     [Fact]
-    public void Class_ShouldBeSealed_Expected()
+    public void HealthCheckClass_ShouldBeSealed_Expected()
     {
         var rule = Classes().That().Are(_healthChecks).Should().BeSealed();
 
@@ -34,7 +34,7 @@ public class HealthCheckTests
     }
 
     [Fact]
-    public void Class_ShouldResideInNamespace_StartsWithNetEvolveExpected()
+    public void HealthCheckClass_ShouldResideInNamespace_StartsWithNetEvolveExpected()
     {
         var rule = Classes().That().Are(_healthChecks).Should().ResideInNamespace(@"NetEvolve\.HealthChecks", true);
 
@@ -42,7 +42,7 @@ public class HealthCheckTests
     }
 
     [Fact]
-    public void Class_ShouldEndsWithHealthCheck_Expected()
+    public void HealthCheckClass_ShouldHaveNameEndingWithHealthCheck_Expected()
     {
         var rule = Classes().That().Are(_healthChecks).Should().HaveNameEndingWith("HealthCheck");
 
@@ -50,7 +50,7 @@ public class HealthCheckTests
     }
 
     [Fact]
-    public void Constructors_ShouldBePublic_Expected()
+    public void HealthCheckConstructors_ShouldBePublic_Expected()
     {
         var rule = MethodMembers()
             .That()
@@ -67,7 +67,7 @@ public class HealthCheckTests
     }
 
     [Fact]
-    public void Members_ShouldNotBePublic_Expected()
+    public void HealthCheckMembers_ShouldNotBePublic_Expected()
     {
         var healthCheckMembers = MethodMembers().That().AreDeclaredIn(typeof(IHealthCheck));
 

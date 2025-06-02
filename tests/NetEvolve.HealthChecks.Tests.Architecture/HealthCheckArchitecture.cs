@@ -38,7 +38,7 @@ internal static class HealthCheckArchitecture
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,
             typeof(Npgsql.NpgsqlHealthCheck).Assembly,
             typeof(Oracle.OracleHealthCheck).Assembly,
-            typeof(NetEvolve.HealthChecks.RabbitMQ.RabbitMQHealthCheck).Assembly,
+            typeof(RabbitMQ.RabbitMQHealthCheck).Assembly,
             typeof(Redis.RedisHealthCheck).Assembly,
             typeof(Redpanda.RedpandaHealthCheck).Assembly,
             typeof(Qdrant.QdrantHealthCheck).Assembly,
