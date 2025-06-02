@@ -37,6 +37,7 @@
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.11.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
+    <PackageVersion Include="MongoDB.Driver" Version="3.4.0" />
     <PackageVersion Include="MySql.Data" Version="9.3.0" />
     <PackageVersion Include="MySqlConnector" Version="2.4.0" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.3.84" />
@@ -59,6 +60,7 @@
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="4.4.0" />
+    <PackageVersion Include="Testcontainers.MongoDb" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.MsSql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.MySql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Oracle" Version="4.4.0" />
