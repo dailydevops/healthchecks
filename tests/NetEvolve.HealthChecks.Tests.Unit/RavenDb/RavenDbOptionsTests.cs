@@ -6,13 +6,22 @@ using NetEvolve.HealthChecks.RavenDb;
 using Raven.Client.Documents;
 
 [TestGroup(nameof(RavenDb))]
-public sealed class MongoDbOptionsTests
+public sealed class RavenDbOptionsTests
 {
     [Test]
-    public async Task RavenDbOptions_CanBeConstructed()
+    public async Task RavenDbOptions_CanBeShallowCopied()
     {
         var options = new RavenDbOptions();
-        _ = await Assert.That(options).IsNotNull();
+        var options2 = options with { };
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options2).IsNotNull();
+            _ = await Assert.That(options2).IsNotSameReferenceAs(options);
+            _ = await Assert.That(options2.KeyedService).IsEqualTo(options.KeyedService);
+            _ = await Assert.That(options2.Timeout).IsEqualTo(options.Timeout);
+            _ = await Assert.That(options2.CommandAsync).IsEqualTo(options.CommandAsync);
+        }
     }
 
     [Test]
