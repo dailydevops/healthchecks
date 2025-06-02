@@ -8,21 +8,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using NetEvolve.Extensions.XUnit;
+using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
-using Xunit;
 
+[ClassDataSource<MongoDbDatabase>(Shared = SharedType.PerTestSession)]
 [TestGroup(nameof(MongoDb))]
-public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoDbDatabase>, IDisposable
+public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly MongoDbDatabase _database;
-    private readonly MongoClient _client;
+    private MongoClient _client = default!;
     private bool _disposed;
 
-    public MongoDbHealthCheckTests(MongoDbDatabase database)
+    public MongoDbHealthCheckTests(MongoDbDatabase database) => _database = database;
+
+    public Task InitializeAsync()
     {
-        _database = database;
         _client = new MongoClient(_database.ConnectionString);
+
+        return Task.CompletedTask;
     }
 
     public void Dispose()
@@ -44,16 +47,16 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
         }
     }
 
-    [Fact]
-    public async Task AddMongoDb_UseOptions_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMongoDb_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerHealthy", options => options.Timeout = 1000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseOptionsWithKeyedService_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMongoDb_UseOptionsWithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddMongoDb(
@@ -68,8 +71,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client)
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseOptionsDoubleRegistered_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMongoDb_UseOptionsDoubleRegistered_Healthy() =>
         await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
@@ -80,8 +83,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
                 )
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseOptions_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddMongoDb_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddMongoDb(
@@ -106,8 +109,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseOptions_ShouldReturnUnhealthy() =>
+    [Test]
+    public async Task AddMongoDb_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -131,8 +134,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseConfiguration_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMongoDb_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -147,8 +150,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseConfigurationWithKeyedService_ShouldReturnHealthy() =>
+    [Test]
+    public async Task AddMongoDb_UseConfigurationWithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -164,8 +167,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _client)
         );
 
-    [Fact]
-    public async Task AddMongoDb_UseConfiguration_ShouldReturnDegraded() =>
+    [Test]
+    public async Task AddMongoDb_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -180,7 +183,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
-    [Fact]
+    [Test]
     public async Task AddMongoDb_UseConfigration_ConnectionStringEmpty_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestNoValues"),
@@ -196,7 +199,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IClassFixture<MongoD
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
-    [Fact]
+    [Test]
     public async Task AddMongoDb_UseConfigration_TimeoutMinusTwo_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestNoValues"),
