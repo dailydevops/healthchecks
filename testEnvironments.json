@@ -15,6 +15,11 @@
       "name": "Docker: .NET 8.0",
       "type": "docker",
       "dockerImage": "mcr.microsoft.com/dotnet/sdk:8.0"
+    },
+    {
+      "name": "WSL: Ubuntu",
+      "type": "wsl",
+      "wslDistribution": "Ubuntu"
     }
   ]
 }
