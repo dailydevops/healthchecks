@@ -12,7 +12,8 @@ no such column: 1,
       status: Unhealthy,
       tags: [
         sqlite,
-        database
+        database,
+        legacy
       ]
     }
   ],

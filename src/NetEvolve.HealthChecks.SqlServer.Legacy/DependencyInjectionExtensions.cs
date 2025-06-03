@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["sqlserver", "database"];
+    private static readonly string[] _defaultTags = ["sqlserver", "database", "legacy"];
 
     /// <summary>
     /// Add a health check for the SQL Server database.

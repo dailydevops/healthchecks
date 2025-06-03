@@ -6,7 +6,8 @@
       status: Degraded,
       tags: [
         sqlite,
-        database
+        database,
+        legacy
       ]
     }
   ],

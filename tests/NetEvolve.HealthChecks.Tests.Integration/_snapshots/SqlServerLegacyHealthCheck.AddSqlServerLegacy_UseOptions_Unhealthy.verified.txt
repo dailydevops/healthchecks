@@ -10,7 +10,8 @@
       status: Unhealthy,
       tags: [
         sqlserver,
-        database
+        database,
+        legacy
       ]
     }
   ],

@@ -6,7 +6,8 @@
       status: Healthy,
       tags: [
         sqlite,
-        database
+        database,
+        legacy
       ]
     }
   ],

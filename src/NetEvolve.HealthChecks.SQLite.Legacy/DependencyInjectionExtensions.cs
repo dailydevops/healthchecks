@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["sqlite", "database"];
+    private static readonly string[] _defaultTags = ["sqlite", "database", "legacy"];
 
     /// <summary>
     /// Add a health check for the SQLite database, based on <c>System.Data.SQLite</c>.
