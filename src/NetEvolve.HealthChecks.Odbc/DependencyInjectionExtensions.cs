@@ -38,10 +38,10 @@ public static class DependencyInjectionExtensions
         Argument.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
-        if (!builder.IsServiceTypeRegistered<SqlServerCheckMarker>())
+        if (!builder.IsServiceTypeRegistered<OdbcCheckMarker>())
         {
             _ = builder
-                .Services.AddSingleton<SqlServerCheckMarker>()
+                .Services.AddSingleton<OdbcCheckMarker>()
                 .AddSingleton<OdbcHealthCheck>()
                 .ConfigureOptions<OdbcConfigure>();
         }
@@ -63,5 +63,5 @@ public static class DependencyInjectionExtensions
         );
     }
 
-    private sealed partial class SqlServerCheckMarker;
+    private sealed partial class OdbcCheckMarker;
 }
