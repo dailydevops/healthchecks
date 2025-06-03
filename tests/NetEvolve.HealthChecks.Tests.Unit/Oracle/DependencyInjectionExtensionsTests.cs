@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.Oracle;
 public class DependencyInjectionExtensionsTests
 {
     [Test]
-    public void AddSQLite_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddOracle_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
@@ -23,7 +23,7 @@ public class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public void AddSQLite_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddOracle_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -39,7 +39,7 @@ public class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public void AddSQLite_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddOracle_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -55,7 +55,7 @@ public class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public void AddSQLite_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddOracle_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -71,7 +71,7 @@ public class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public void AddSQLite_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddOracle_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
