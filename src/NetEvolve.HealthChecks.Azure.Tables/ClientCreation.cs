@@ -9,11 +9,11 @@ using global::Azure.Data.Tables;
 using global::Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-internal static class ClientCreation
+internal class ClientCreation
 {
-    private static ConcurrentDictionary<string, TableServiceClient>? _tableServiceClients;
+    private ConcurrentDictionary<string, TableServiceClient>? _tableServiceClients;
 
-    internal static TableServiceClient GetTableServiceClient<TOptions>(
+    internal TableServiceClient GetTableServiceClient<TOptions>(
         string name,
         TOptions options,
         IServiceProvider serviceProvider
