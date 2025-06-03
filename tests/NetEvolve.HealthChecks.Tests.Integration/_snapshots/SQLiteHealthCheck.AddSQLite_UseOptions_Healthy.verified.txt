@@ -5,7 +5,7 @@
       name: TestContainerHealthy,
       status: Healthy,
       tags: [
-        sqlserver,
+        sqlite,
         database
       ]
     }
