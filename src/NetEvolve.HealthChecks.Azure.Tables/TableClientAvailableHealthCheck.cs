@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
@@ -26,7 +27,8 @@ internal sealed class TableClientAvailableHealthCheck : ConfigurableHealthCheckB
         CancellationToken cancellationToken
     )
     {
-        var tableClient = ClientCreation.GetTableServiceClient(name, options, _serviceProvider);
+        var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
+        var tableClient = clientCreation.GetTableServiceClient(name, options, _serviceProvider);
 
         var (isValid, _) = await tableClient
             .QueryAsync(cancellationToken: cancellationToken)
