@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.SQLite.Legacy;
 using NSubstitute;
 
 [TestGroup(nameof(SQLiteLegacy))]
-public sealed class SQLiteHealthCheckTests
+public sealed class SQLiteLegacyHealthCheckTests
 {
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
