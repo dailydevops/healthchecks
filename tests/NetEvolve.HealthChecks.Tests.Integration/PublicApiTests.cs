@@ -39,12 +39,11 @@ public class PublicApiTests
     }
 
     public static Func<Assembly>[] GetAssemblies() =>
-        Assembly
+        [.. Assembly
             .GetExecutingAssembly()!
             .GetReferencedAssemblies()
             .Where(a => a.Name?.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase) == true)
-            .Select<AssemblyName, Func<Assembly>>(a => () => Assembly.Load(a))
-            .ToArray();
+            .Select<AssemblyName, Func<Assembly>>(a => () => Assembly.Load(a))];
 
     private static bool IsVisibleToIntelliSense(Type type)
     {
