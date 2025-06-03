@@ -45,6 +45,7 @@ internal static class HealthCheckArchitecture
             typeof(Redpanda.RedpandaHealthCheck).Assembly,
             typeof(Qdrant.QdrantHealthCheck).Assembly,
             typeof(SQLite.SQLiteHealthCheck).Assembly,
+            typeof(SQLite.Legacy.SQLiteLegacyHealthCheck).Assembly,
             typeof(SqlServer.SqlServerHealthCheck).Assembly,
             typeof(SqlServer.Legacy.SqlServerLegacyHealthCheck).Assembly,
         ];

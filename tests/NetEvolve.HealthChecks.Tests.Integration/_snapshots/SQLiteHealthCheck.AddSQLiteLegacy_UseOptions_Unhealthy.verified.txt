@@ -1,0 +1,20 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message:
+SQL logic error
+no such column: 1,
+        type: System.Data.SQLite.SQLiteException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        sqlite,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
