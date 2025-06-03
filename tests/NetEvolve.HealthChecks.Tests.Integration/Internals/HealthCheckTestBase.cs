@@ -21,6 +21,8 @@ public abstract class HealthCheckTestBase
 {
     private const string HealthCheckPath = "/health";
 
+    private static readonly JsonWriterOptions _options = new JsonWriterOptions { Indented = true };
+
     protected async ValueTask RunAndVerify(
         Action<IHealthChecksBuilder> healthChecks,
         HealthStatus expectedStatus,
@@ -76,15 +78,13 @@ public abstract class HealthCheckTestBase
         }
     }
 
-    private static Task WriteResponse(HttpContext context, HealthReport report)
+    private static async Task WriteResponse(HttpContext context, HealthReport report)
     {
         context.Response.ContentType = "application/json; charset=utf-8";
 
-        var options = new JsonWriterOptions { Indented = true };
-
         using (var memoryStream = new MemoryStream())
         {
-            using (var writer = new Utf8JsonWriter(memoryStream, options))
+            using (var writer = new Utf8JsonWriter(memoryStream, _options))
             {
                 writer.WriteStartObject();
                 writer.WriteString("status", report.Status.ToString());
@@ -106,7 +106,7 @@ public abstract class HealthCheckTestBase
                 writer.WriteEndObject();
             }
 
-            return context.Response.WriteAsync(
+            await context.Response.WriteAsync(
                 Encoding.UTF8.GetString(memoryStream.ToArray()),
                 cancellationToken: context.RequestAborted
             );
