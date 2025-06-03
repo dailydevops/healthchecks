@@ -32,7 +32,7 @@ Therefore, you can use two different approaches. In both approaches you have to 
 - `tags`: The tags for the health check. The tags `sqlite` and `database` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. This approach is recommended if you have multiple SQL Server instances to check.
+The first one is to use the configuration based approach. This approach is recommended if you have multiple SQLite instances to check.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -55,7 +55,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you have only one SQL Server instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you have only one SQLite instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
