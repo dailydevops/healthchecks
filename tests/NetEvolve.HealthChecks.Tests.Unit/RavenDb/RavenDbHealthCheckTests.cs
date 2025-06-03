@@ -81,7 +81,7 @@ public sealed class RavenDbHealthCheckTests
         {
             KeyedService = "test-key",
             Timeout = 100,
-            CommandAsync = async (_1, _2) =>
+            CommandAsync = async (_, _) =>
             {
                 await Task.CompletedTask;
                 return true;
