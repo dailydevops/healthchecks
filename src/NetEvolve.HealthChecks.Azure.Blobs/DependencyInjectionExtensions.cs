@@ -43,6 +43,7 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<AzureBlobContainerCheckMarker>()
                 .AddSingleton<BlobContainerAvailableHealthCheck>()
+                .AddSingleton<ClientCreation>()
                 .ConfigureOptions<BlobContainerAvailableConfigure>();
         }
 
@@ -91,6 +92,7 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<AzureBlobServiceCheckMarker>()
                 .AddSingleton<BlobServiceAvailableHealthCheck>()
+                .AddSingleton<ClientCreation>()
                 .ConfigureOptions<BlobServiceAvailableConfigure>();
         }
 
