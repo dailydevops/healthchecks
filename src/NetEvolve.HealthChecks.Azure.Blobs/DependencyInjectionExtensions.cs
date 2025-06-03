@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
 using NetEvolve.HealthChecks.Abstractions;
@@ -44,6 +45,8 @@ public static class DependencyInjectionExtensions
                 .Services.AddSingleton<AzureBlobContainerCheckMarker>()
                 .AddSingleton<BlobContainerAvailableHealthCheck>()
                 .ConfigureOptions<BlobContainerAvailableConfigure>();
+
+            builder.Services.TryAddSingleton<ClientCreation>();
         }
 
         if (builder.IsNameAlreadyUsed<BlobContainerAvailableHealthCheck>(name))
@@ -92,6 +95,8 @@ public static class DependencyInjectionExtensions
                 .Services.AddSingleton<AzureBlobServiceCheckMarker>()
                 .AddSingleton<BlobServiceAvailableHealthCheck>()
                 .ConfigureOptions<BlobServiceAvailableConfigure>();
+
+            builder.Services.TryAddSingleton<ClientCreation>();
         }
 
         if (builder.IsNameAlreadyUsed<BlobServiceAvailableHealthCheck>(name))

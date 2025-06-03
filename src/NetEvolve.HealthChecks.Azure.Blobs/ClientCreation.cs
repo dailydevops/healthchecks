@@ -10,11 +10,11 @@ using global::Azure.Storage;
 using global::Azure.Storage.Blobs;
 using Microsoft.Extensions.DependencyInjection;
 
-internal static class ClientCreation
+internal class ClientCreation
 {
-    private static ConcurrentDictionary<string, BlobServiceClient>? _blobServiceClients;
+    private ConcurrentDictionary<string, BlobServiceClient>? _blobServiceClients;
 
-    internal static BlobServiceClient GetBlobServiceClient<TOptions>(
+    internal BlobServiceClient GetBlobServiceClient<TOptions>(
         string name,
         TOptions options,
         IServiceProvider serviceProvider
