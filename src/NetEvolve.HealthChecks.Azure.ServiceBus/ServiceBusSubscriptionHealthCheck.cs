@@ -34,8 +34,8 @@ internal sealed class ServiceBusSubscriptionHealthCheck : ConfigurableHealthChec
         CancellationToken cancellationToken
     )
     {
-        var clientCreation = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
-        var client = clientCreation.GetAdministrationClient(name, options, _serviceProvider);
+        var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
+        var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
         var (isValid, _) = await client
             .GetSubscriptionRuntimePropertiesAsync(options.TopicName, options.SubscriptionName, cancellationToken)
@@ -51,8 +51,8 @@ internal sealed class ServiceBusSubscriptionHealthCheck : ConfigurableHealthChec
         CancellationToken cancellationToken
     )
     {
-        var clientCreation = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
-        var client = clientCreation.GetClient(name, options, _serviceProvider);
+        var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
+        var client = clientFactory.GetClient(name, options, _serviceProvider);
 
         var receiver = client.CreateReceiver(options.TopicName, options.SubscriptionName);
 

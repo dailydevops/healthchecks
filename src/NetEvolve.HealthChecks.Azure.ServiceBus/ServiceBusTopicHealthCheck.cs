@@ -26,8 +26,8 @@ internal sealed class ServiceBusTopicHealthCheck : ConfigurableHealthCheckBase<S
         CancellationToken cancellationToken
     )
     {
-        var clientCreation = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
-        var client = clientCreation.GetAdministrationClient(name, options, _serviceProvider);
+        var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
+        var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
         var (isValid, _) = await client
             .GetTopicRuntimePropertiesAsync(options.TopicName, cancellationToken: cancellationToken)
