@@ -113,7 +113,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSQLiteLegacy_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddSQLiteLegacy_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLiteLegacy("TestNoValues"),
             HealthStatus.Unhealthy,
