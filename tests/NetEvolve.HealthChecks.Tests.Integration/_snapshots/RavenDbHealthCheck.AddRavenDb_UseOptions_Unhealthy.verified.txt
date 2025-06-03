@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: Database 'nonexistent-db' does not exist.,
+        type: Raven.Client.Exceptions.Database.DatabaseDoesNotExistException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        ravendb,
+        nosql
+      ]
+    }
+  ],
+  status: Unhealthy
+}

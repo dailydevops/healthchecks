@@ -51,6 +51,7 @@
     <PackageVersion Include="PublicApiGenerator" Version="11.4.6" />
     <PackageVersion Include="Qdrant.Client" Version="1.14.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.1.2" />
+    <PackageVersion Include="RavenDB.Client" Version="7.0.2" />
     <PackageVersion Include="StackExchange.Redis" Version="2.8.37" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.4" />
@@ -67,6 +68,7 @@
     <PackageVersion Include="Testcontainers.PostgreSql" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Qdrant" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.RabbitMq" Version="4.4.0" />
+    <PackageVersion Include="Testcontainers.RavenDb" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Redis" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.Redpanda" Version="4.4.0" />
     <PackageVersion Include="Testcontainers.ServiceBus" Version="4.4.0" />

@@ -40,6 +40,7 @@ internal static class HealthCheckArchitecture
             typeof(Npgsql.NpgsqlHealthCheck).Assembly,
             typeof(Oracle.OracleHealthCheck).Assembly,
             typeof(RabbitMQ.RabbitMQHealthCheck).Assembly,
+            typeof(RavenDb.RavenDbHealthCheck).Assembly,
             typeof(Redis.RedisHealthCheck).Assembly,
             typeof(Redpanda.RedpandaHealthCheck).Assembly,
             typeof(Qdrant.QdrantHealthCheck).Assembly,

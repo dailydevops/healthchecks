@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for RavenDb, based on the nuget package `RavenDB.Client`.</Description>
+    <PackageTags>$(PackageTags);ravendb</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="RavenDB.Client" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
