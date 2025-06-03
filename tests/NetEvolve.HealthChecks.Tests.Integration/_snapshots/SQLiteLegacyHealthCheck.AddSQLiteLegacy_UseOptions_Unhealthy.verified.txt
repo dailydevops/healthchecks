@@ -3,13 +3,15 @@
     {
       description: TestContainerUnhealthy: Unexpected error.,
       exception: {
-        message: This is a test.,
-        type: System.Data.SqlClient.SqlException
+        message:
+SQL logic error
+no such column: 1,
+        type: System.Data.SQLite.SQLiteException
       },
       name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
-        sqlserver,
+        sqlite,
         database,
         legacy
       ]

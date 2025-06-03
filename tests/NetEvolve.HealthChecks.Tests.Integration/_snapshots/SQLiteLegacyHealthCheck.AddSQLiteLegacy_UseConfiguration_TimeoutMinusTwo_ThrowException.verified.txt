@@ -3,13 +3,13 @@
     {
       description: TestNoValues: Unexpected error.,
       exception: {
-        message: The connection string cannot be null or whitespace.,
+        message: The timeout cannot be less than infinite (-1).,
         type: Microsoft.Extensions.Options.OptionsValidationException
       },
       name: TestNoValues,
       status: Unhealthy,
       tags: [
-        sqlserver,
+        sqlite,
         database,
         legacy
       ]

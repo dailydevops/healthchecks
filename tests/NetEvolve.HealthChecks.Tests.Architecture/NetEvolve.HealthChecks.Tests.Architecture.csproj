@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Legacy\NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Legacy\NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />

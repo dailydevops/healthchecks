@@ -9,7 +9,7 @@
       name: TestNoValues,
       status: Unhealthy,
       tags: [
-        sqlserver,
+        sqlite,
         database,
         legacy
       ]

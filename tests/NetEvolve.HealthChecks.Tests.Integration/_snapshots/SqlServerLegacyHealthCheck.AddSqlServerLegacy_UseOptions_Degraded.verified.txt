@@ -6,7 +6,8 @@
       status: Degraded,
       tags: [
         sqlserver,
-        database
+        database,
+        legacy
       ]
     }
   ],

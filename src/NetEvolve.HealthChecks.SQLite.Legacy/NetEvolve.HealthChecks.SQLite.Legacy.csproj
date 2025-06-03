@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for SQLite, based on the nuget package `System.Data.Sqlite`.</Description>
+    <PackageTags>$(PackageTags);sqlite;legacy</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+    <PackageReference Include="System.Data.SQLite" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Runtime.Loader.UseRidGraph" Value="true" />
+  </ItemGroup>
+</Project>
