@@ -24,7 +24,8 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     {
                         options.ConnectionString = GetConnectionString();
                         options.Timeout = 1000; // Set a reasonable timeout
-                    });
+                    }
+                );
             },
             HealthStatus.Healthy
         );
