@@ -5,6 +5,7 @@
     <PackageTags>$(PackageTags);ravendb</PackageTags>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
     <PackageReference Include="RavenDB.Client" />
   </ItemGroup>
   <ItemGroup>
