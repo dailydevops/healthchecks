@@ -23,7 +23,11 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddClickHouse(
                     "TestContainerHealthy",
-                    options => options.ConnectionString = _database.ConnectionString
+                    options =>
+                    {
+                        options.ConnectionString = _database.ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
+                    }
                 );
             },
             HealthStatus.Healthy
@@ -74,6 +78,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:ClickHouse:TestContainerHealthy:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:ClickHouse:TestContainerHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

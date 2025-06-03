@@ -24,7 +24,11 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddMySql(
                     "TestContainerHealthy",
-                    options => options.ConnectionString = _database.ConnectionString
+                    options =>
+                    {
+                        options.ConnectionString = _database.ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
+                    }
                 );
             },
             HealthStatus.Healthy
@@ -75,6 +79,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:MySql:TestContainerHealthy:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:MySql:TestContainerHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

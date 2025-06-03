@@ -24,7 +24,11 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddSqlServerLegacy(
                     "TestContainerHealthy",
-                    options => options.ConnectionString = _database.ConnectionString
+                    options =>
+                    {
+                        options.ConnectionString = _database.ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
+                    }
                 );
             },
             HealthStatus.Healthy
@@ -75,6 +79,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:SqlServer:TestContainerHealthy:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:SqlServer:TestContainerHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

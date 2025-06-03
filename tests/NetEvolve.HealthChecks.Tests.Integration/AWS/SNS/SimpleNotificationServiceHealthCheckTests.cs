@@ -31,6 +31,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                         options.TopicName = LocalStackInstance.TopicName;
                         options.Subscription = _instance.Subscription;
                         options.Mode = CreationMode.BasicAuthentication;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

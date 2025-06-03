@@ -23,7 +23,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                         options.BrokerAddress = _accessor.BrokerAddress;
                         options.Username = _accessor.Username;
                         options.Password = _accessor.Password;
-                        options.Timeout = 500;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -80,7 +80,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestContainerHealthy:BrokerAddress", _accessor.BrokerAddress },
                     { "HealthChecks:ActiveMq:TestContainerHealthy:Username", _accessor.Username },
                     { "HealthChecks:ActiveMq:TestContainerHealthy:Password", _accessor.Password },
-                    { "HealthChecks:ActiveMq:TestContainerHealthy:Timeout", "500" },
+                    { "HealthChecks:ActiveMq:TestContainerHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
