@@ -130,6 +130,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.TableName = "test";
                         options.ConnectionString = _container.ConnectionString;
                         options.Mode = TableClientCreationMode.ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

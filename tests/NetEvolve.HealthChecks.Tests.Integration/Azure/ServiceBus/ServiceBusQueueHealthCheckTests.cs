@@ -29,6 +29,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.QueueName = ServiceBusContainer.QueueName;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -74,6 +75,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ConnectionString;
                         options.ConnectionString = _container.ConnectionString;
                         options.QueueName = ServiceBusContainer.QueueName;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -93,7 +95,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         options.ConnectionString = _container.ConnectionString;
                         options.EnablePeekMode = true;
                         options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = Timeout.Infinite;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

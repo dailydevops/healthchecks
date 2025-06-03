@@ -25,6 +25,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.QueueName = "test";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -85,6 +86,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.QueueName = "test";
                         options.Mode = QueueClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -105,6 +107,7 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.QueueName = "test";
                         options.ConnectionString = _container.ConnectionString;
                         options.Mode = QueueClientCreationMode.ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

@@ -29,6 +29,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.TopicName = ServiceBusContainer.TopicName;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -53,6 +54,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ConnectionString;
                         options.ConnectionString = _container.ConnectionString;
                         options.TopicName = ServiceBusContainer.TopicName;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -184,6 +186,7 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
                         "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Mode",
                         nameof(ClientCreationMode.ConnectionString)
                     },
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

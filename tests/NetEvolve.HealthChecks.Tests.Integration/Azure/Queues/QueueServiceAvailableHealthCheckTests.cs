@@ -21,7 +21,11 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddQueueServiceAvailability(
                     "ServiceServiceProviderHealthy",
-                    options => options.Mode = QueueClientCreationMode.ServiceProvider
+                    options =>
+                    {
+                        options.Mode = QueueClientCreationMode.ServiceProvider;
+                        options.Timeout = 1000; // Set a reasonable timeout
+                    }
                 );
             },
             HealthStatus.Healthy,
@@ -78,6 +82,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.ConnectionString = _container.ConnectionString;
                         options.Mode = QueueClientCreationMode.ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },
@@ -154,6 +159,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = QueueClientCreationMode.AzureSasCredential;
                         options.ServiceUri = _container.QueueAccountSasUri;
+                        options.Timeout = 1000; // Set a reasonable timeout
                     }
                 );
             },

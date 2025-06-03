@@ -20,7 +20,11 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddSQLite(
                     "TestContainerHealthy",
-                    options => options.ConnectionString = ConnectionString
+                    options =>
+                    {
+                        options.ConnectionString = ConnectionString;
+                        options.Timeout = 1000; // Set a reasonable timeout
+                    }
                 );
             },
             HealthStatus.Healthy
@@ -71,6 +75,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:SQLite:TestContainerHealthy:ConnectionString", ConnectionString },
+                    { "HealthChecks:SQLite:TestContainerHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
