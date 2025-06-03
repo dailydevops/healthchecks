@@ -43,6 +43,7 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<AzureQueueClientCheckMarker>()
                 .AddSingleton<QueueClientAvailableHealthCheck>()
+                .AddSingleton<ClientCreation>()
                 .ConfigureOptions<QueueClientAvailableConfigure>();
         }
 
@@ -91,6 +92,7 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<AzureQueueServiceCheckMarker>()
                 .AddSingleton<QueueServiceAvailableHealthCheck>()
+                .AddSingleton<ClientCreation>()
                 .ConfigureOptions<QueueServiceAvailableConfigure>();
         }
 

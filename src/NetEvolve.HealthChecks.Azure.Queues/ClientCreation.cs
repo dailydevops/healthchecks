@@ -10,11 +10,11 @@ using global::Azure.Storage;
 using global::Azure.Storage.Queues;
 using Microsoft.Extensions.DependencyInjection;
 
-internal static class ClientCreation
+internal class ClientCreation
 {
-    private static ConcurrentDictionary<string, QueueServiceClient>? _queueServiceClients;
+    private ConcurrentDictionary<string, QueueServiceClient>? _queueServiceClients;
 
-    internal static QueueServiceClient GetQueueServiceClient<TOptions>(
+    internal QueueServiceClient GetQueueServiceClient<TOptions>(
         string name,
         TOptions options,
         IServiceProvider serviceProvider
