@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.Odbc
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddOdbc([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Odbc.OdbcOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class OdbcOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.Odbc.OdbcOptions>
+    {
+        public OdbcOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+}
