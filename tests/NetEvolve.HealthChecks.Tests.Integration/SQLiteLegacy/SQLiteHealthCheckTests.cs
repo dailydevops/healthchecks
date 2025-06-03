@@ -98,7 +98,7 @@ public class SQLiteHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSQLiteLegacy_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddSQLiteLegacy_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSQLiteLegacy("TestNoValues"),
             HealthStatus.Unhealthy,
