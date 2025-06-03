@@ -5,7 +5,7 @@
       name: TestContainerDegraded,
       status: Degraded,
       tags: [
-        sqlserver,
+        sqlite,
         database
       ]
     }
