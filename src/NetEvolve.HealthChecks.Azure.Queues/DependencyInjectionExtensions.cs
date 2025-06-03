@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
 using NetEvolve.HealthChecks.Abstractions;
@@ -43,8 +44,9 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<AzureQueueClientCheckMarker>()
                 .AddSingleton<QueueClientAvailableHealthCheck>()
-                .AddSingleton<ClientCreation>()
                 .ConfigureOptions<QueueClientAvailableConfigure>();
+
+            builder.Services.TryAddSingleton<ClientCreation>();
         }
 
         if (builder.IsNameAlreadyUsed<QueueClientAvailableHealthCheck>(name))
@@ -92,8 +94,9 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<AzureQueueServiceCheckMarker>()
                 .AddSingleton<QueueServiceAvailableHealthCheck>()
-                .AddSingleton<ClientCreation>()
                 .ConfigureOptions<QueueServiceAvailableConfigure>();
+
+            builder.Services.TryAddSingleton<ClientCreation>();
         }
 
         if (builder.IsNameAlreadyUsed<QueueServiceAvailableHealthCheck>(name))
