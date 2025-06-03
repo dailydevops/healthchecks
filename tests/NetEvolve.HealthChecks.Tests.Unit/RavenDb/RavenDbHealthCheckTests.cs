@@ -81,7 +81,7 @@ public sealed class RavenDbHealthCheckTests
         {
             KeyedService = "test-key",
             Timeout = 100,
-            CommandAsync = async (IDocumentStore _1, CancellationToken _2) =>
+            CommandAsync = async (_1, _2) =>
             {
                 await Task.CompletedTask;
                 return true;
@@ -123,7 +123,7 @@ public sealed class RavenDbHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1000,
-            CommandAsync = async (IDocumentStore _1, CancellationToken _2) =>
+            CommandAsync = async (_1, _2) =>
             {
                 await Task.CompletedTask;
                 return true;
@@ -165,7 +165,7 @@ public sealed class RavenDbHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1000,
-            CommandAsync = async (IDocumentStore _1, CancellationToken _2) =>
+            CommandAsync = async (_1, _2) =>
             {
                 await Task.CompletedTask;
                 throw new RavenException("Test exception");
@@ -208,7 +208,7 @@ public sealed class RavenDbHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (IDocumentStore _1, CancellationToken cancellationToken) =>
+            CommandAsync = async (_1, cancellationToken) =>
             {
                 await Task.Delay(100, cancellationToken); // Simulate long-running command
                 return true;
