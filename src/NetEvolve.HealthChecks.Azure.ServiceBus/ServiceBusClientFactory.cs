@@ -9,31 +9,25 @@ using global::Azure.Messaging.ServiceBus;
 using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.DependencyInjection;
 
-internal static class ClientCreation
+internal sealed class ServiceBusClientFactory
 {
     private static readonly ServiceBusClientOptions _clientOptions = new ServiceBusClientOptions();
     private static readonly ServiceBusAdministrationClientOptions _administrationClientOptions =
         new ServiceBusAdministrationClientOptions();
 
-    private static readonly ConcurrentDictionary<string, ServiceBusClient> _serviceBusClients = new(
+    private readonly ConcurrentDictionary<string, ServiceBusClient> _serviceBusClients = new(
         StringComparer.OrdinalIgnoreCase
     );
-    private static readonly ConcurrentDictionary<
-        string,
-        ServiceBusAdministrationClient
-    > _serviceBusAdministrationClients = new(StringComparer.OrdinalIgnoreCase);
+    private readonly ConcurrentDictionary<string, ServiceBusAdministrationClient> _serviceBusAdministrationClients =
+        new(StringComparer.OrdinalIgnoreCase);
 
-    static ClientCreation()
+    static ServiceBusClientFactory()
     {
         _clientOptions.RetryOptions.MaxRetries = 0;
         _administrationClientOptions.Retry.MaxRetries = 0;
     }
 
-    internal static ServiceBusClient GetClient<TOptions>(
-        string name,
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal ServiceBusClient GetClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
         where TOptions : ServiceBusOptionsBase
     {
         if (options.Mode == ClientCreationMode.ServiceProvider)
@@ -44,7 +38,7 @@ internal static class ClientCreation
         return _serviceBusClients.GetOrAdd(name, _ => CreateClient(options, serviceProvider));
     }
 
-    internal static ServiceBusAdministrationClient GetAdministrationClient<TOptions>(
+    internal ServiceBusAdministrationClient GetAdministrationClient<TOptions>(
         string name,
         TOptions options,
         IServiceProvider serviceProvider

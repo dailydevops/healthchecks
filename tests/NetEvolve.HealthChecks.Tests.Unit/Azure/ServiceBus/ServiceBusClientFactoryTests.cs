@@ -8,7 +8,7 @@ using NetEvolve.HealthChecks.Azure.ServiceBus;
 using NSubstitute;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
-public sealed class ClientCreationTests
+public sealed class ServiceBusClientFactoryTests
 {
     [Test]
     public async Task GetClient_WhenModeIsConnectionString_ShouldCreateNewClient()
@@ -22,9 +22,10 @@ public sealed class ClientCreationTests
             ConnectionString = connectionString,
         };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
-        var client = ClientCreation.GetClient(
+        var client = clientCreation.GetClient(
             nameof(GetClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient),
             options,
             serviceProvider
@@ -45,9 +46,10 @@ public sealed class ClientCreationTests
             FullyQualifiedNamespace = fullyQualifiedNamespace,
         };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
-        var client = ClientCreation.GetClient(
+        var client = clientCreation.GetClient(
             nameof(GetClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient),
             options,
             serviceProvider
@@ -69,14 +71,15 @@ public sealed class ClientCreationTests
             ConnectionString = connectionString,
         };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
-        var client1 = ClientCreation.GetClient(
+        var client1 = clientCreation.GetClient(
             nameof(GetClient_CalledTwiceWithSameName_ShouldReturnSameInstance),
             options,
             serviceProvider
         );
-        var client2 = ClientCreation.GetClient(
+        var client2 = clientCreation.GetClient(
             nameof(GetClient_CalledTwiceWithSameName_ShouldReturnSameInstance),
             options,
             serviceProvider
@@ -98,9 +101,10 @@ public sealed class ClientCreationTests
             ConnectionString = connectionString,
         };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
-        var client = ClientCreation.GetAdministrationClient(
+        var client = clientCreation.GetAdministrationClient(
             nameof(GetAdministrationClient_WhenModeIsConnectionString_ShouldCreateNewClient),
             options,
             serviceProvider
@@ -121,9 +125,10 @@ public sealed class ClientCreationTests
             FullyQualifiedNamespace = fullyQualifiedNamespace,
         };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
-        var client = ClientCreation.GetAdministrationClient(
+        var client = clientCreation.GetAdministrationClient(
             nameof(GetAdministrationClient_WhenModeIsDefaultAzureCredentials_ShouldCreateNewClient),
             options,
             serviceProvider
@@ -145,14 +150,15 @@ public sealed class ClientCreationTests
             ConnectionString = connectionString,
         };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
-        var client1 = ClientCreation.GetAdministrationClient(
+        var client1 = clientCreation.GetAdministrationClient(
             nameof(GetAdministrationClient_CalledTwiceWithSameName_ShouldReturnSameInstance),
             options,
             serviceProvider
         );
-        var client2 = ClientCreation.GetAdministrationClient(
+        var client2 = clientCreation.GetAdministrationClient(
             nameof(GetAdministrationClient_CalledTwiceWithSameName_ShouldReturnSameInstance),
             options,
             serviceProvider
@@ -168,10 +174,11 @@ public sealed class ClientCreationTests
         // Arrange
         var options = new ServiceBusQueueOptions { Mode = (ClientCreationMode)int.MaxValue };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
         void Act() =>
-            ClientCreation.GetClient(
+            clientCreation.GetClient(
                 nameof(GetClient_WhenModeIsInvalid_ShouldThrowUnreachableException),
                 options,
                 serviceProvider
@@ -187,10 +194,11 @@ public sealed class ClientCreationTests
         // Arrange
         var options = new ServiceBusQueueOptions { Mode = (ClientCreationMode)int.MaxValue };
         var serviceProvider = Substitute.For<IServiceProvider>();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
         void Act() =>
-            ClientCreation.GetAdministrationClient(
+            clientCreation.GetAdministrationClient(
                 nameof(GetAdministrationClient_WhenModeIsInvalid_ShouldThrowUnreachableException),
                 options,
                 serviceProvider
@@ -206,10 +214,11 @@ public sealed class ClientCreationTests
         // Arrange
         var options = new ServiceBusQueueOptions { Mode = ClientCreationMode.ServiceProvider };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
         void Act() =>
-            ClientCreation.GetClient(
+            clientCreation.GetClient(
                 nameof(GetClient_WhenServiceProviderIsNull_ShouldThrowInvalidOperationException),
                 options,
                 serviceProvider
@@ -225,10 +234,11 @@ public sealed class ClientCreationTests
         // Arrange
         var options = new ServiceBusQueueOptions { Mode = ClientCreationMode.ServiceProvider };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
+        var clientCreation = new ServiceBusClientFactory();
 
         // Act
         void Act() =>
-            ClientCreation.GetAdministrationClient(
+            clientCreation.GetAdministrationClient(
                 nameof(GetAdministrationClient_WhenServiceProviderIsNull_ShouldThrowInvalidOperationException),
                 options,
                 serviceProvider
