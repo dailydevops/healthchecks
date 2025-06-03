@@ -3,6 +3,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
@@ -25,7 +26,8 @@ internal sealed class QueueClientAvailableHealthCheck : ConfigurableHealthCheckB
         CancellationToken cancellationToken
     )
     {
-        var queueClient = ClientCreation.GetQueueServiceClient(name, options, _serviceProvider);
+        var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
+        var queueClient = clientCreation.GetQueueServiceClient(name, options, _serviceProvider);
 
         var queueTask = queueClient
             .GetQueuesAsync(cancellationToken: cancellationToken)
