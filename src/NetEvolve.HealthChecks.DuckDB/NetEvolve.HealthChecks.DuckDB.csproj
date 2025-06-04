@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for DuckDB, based on the nuget package `DuckDB.NET.Data`.</Description>
+    <PackageTags>$(PackageTags);duckdb</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DuckDB.NET.Data" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
