@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
 using NetEvolve.HealthChecks.Abstractions;
@@ -44,6 +45,8 @@ public static class DependencyInjectionExtensions
                 .Services.AddSingleton<ServiceBusQueueMarker>()
                 .AddSingleton<ServiceBusQueueHealthCheck>()
                 .ConfigureOptions<ServiceBusQueueOptionsConfigure>();
+
+            builder.Services.TryAddSingleton<ServiceBusClientFactory>();
         }
 
         if (builder.IsNameAlreadyUsed<ServiceBusQueueHealthCheck>(name))
@@ -85,21 +88,27 @@ public static class DependencyInjectionExtensions
         ArgumentNullException.ThrowIfNull(builder);
         Argument.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
+
         if (!builder.IsServiceTypeRegistered<ServiceBusSubscriptionMarker>())
         {
             _ = builder
                 .Services.AddSingleton<ServiceBusSubscriptionMarker>()
                 .AddSingleton<ServiceBusSubscriptionHealthCheck>()
                 .ConfigureOptions<ServiceBusSubscriptionOptionsConfigure>();
+
+            builder.Services.TryAddSingleton<ServiceBusClientFactory>();
         }
+
         if (builder.IsNameAlreadyUsed<ServiceBusSubscriptionHealthCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
+
         if (options is not null)
         {
             _ = builder.Services.Configure(name, options);
         }
+
         return builder.AddCheck<ServiceBusSubscriptionHealthCheck>(
             name,
             HealthStatus.Unhealthy,
@@ -129,21 +138,27 @@ public static class DependencyInjectionExtensions
         ArgumentNullException.ThrowIfNull(builder);
         Argument.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
+
         if (!builder.IsServiceTypeRegistered<ServiceBusTopicMarker>())
         {
             _ = builder
                 .Services.AddSingleton<ServiceBusTopicMarker>()
                 .AddSingleton<ServiceBusTopicHealthCheck>()
                 .ConfigureOptions<ServiceBusTopicOptionsConfigure>();
+
+            builder.Services.TryAddSingleton<ServiceBusClientFactory>();
         }
+
         if (builder.IsNameAlreadyUsed<ServiceBusTopicHealthCheck>(name))
         {
             throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
         }
+
         if (options is not null)
         {
             _ = builder.Services.Configure(name, options);
         }
+
         return builder.AddCheck<ServiceBusTopicHealthCheck>(
             name,
             HealthStatus.Unhealthy,

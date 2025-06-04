@@ -3,6 +3,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
@@ -25,7 +26,8 @@ internal sealed class ServiceBusTopicHealthCheck : ConfigurableHealthCheckBase<S
         CancellationToken cancellationToken
     )
     {
-        var client = ClientCreation.GetAdministrationClient(name, options, _serviceProvider);
+        var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
+        var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
         var (isValid, _) = await client
             .GetTopicRuntimePropertiesAsync(options.TopicName, cancellationToken: cancellationToken)
