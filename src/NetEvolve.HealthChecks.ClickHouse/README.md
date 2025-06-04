@@ -6,7 +6,7 @@
 This package provides a health check for ClickHouse, based on the [ClickHouse.Client](https://www.nuget.org/packages/ClickHouse.Client/) package.
 The main purpose is to check if the ClickHouse is available and if the database is online.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.

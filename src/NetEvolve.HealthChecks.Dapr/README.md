@@ -5,7 +5,7 @@
 
 This package provides a health check for Dapr, based on the [Dapr.Client](https://www.nuget.org/packages/Dapr.Client/) package. The main purpose is to check if the Dapr is available and if the sidecar is available.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.

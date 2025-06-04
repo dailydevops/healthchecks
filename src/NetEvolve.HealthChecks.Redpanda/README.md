@@ -6,7 +6,7 @@
 This package provides a health check for Redpanda, based on the [Confluent.Kafka](https://www.nuget.org/packages/Confluent.Kafka/) package. This is a temporary measure; if a dedicated Redpanda client is provided in the future, we will use it immediately.
 The main purpose is to check that the Kafka cluster is reachable and that the client can connect to it.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.

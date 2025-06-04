@@ -6,7 +6,7 @@
 This package provides a health check for AWS Simple Notification Service (SNS), based on the [AWS SDK for .NET](https://www.nuget.org/packages/AWSSDK.SimpleNotificationService/) package.
 The main purpose is to check that the SNS service is reachable and that the client can connect to it.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
