@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for various Azure services including Blob Storage, Queue Storage, Service Bus, and Table Storage.</Description>
+    <PackageTags>$(PackageTags);azure;bundle;</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
+  </ItemGroup>
+</Project>
