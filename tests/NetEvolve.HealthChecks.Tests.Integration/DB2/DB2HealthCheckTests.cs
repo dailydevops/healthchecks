@@ -7,9 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DB2;
+using TUnit.Core.Enums;
 
 [ClassDataSource<DB2Database>(Shared = SharedType.PerTestSession)]
 [TestGroup(nameof(DB2))]
+[RunOn(OS.Windows)]
 public class DB2HealthCheckTests : HealthCheckTestBase
 {
     private readonly DB2Database _database;
