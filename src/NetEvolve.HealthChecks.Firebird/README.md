@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Firebird
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Firebird?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Firebird/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Firebird?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Firebird/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Firebird?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Firebird/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Firebird?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Firebird/)
 
 This package provides a health check for Firebird databases, based on the [FirebirdSql.Data.FirebirdClient](https://www.nuget.org/packages/FirebirdSql.Data.FirebirdClient/) package. The main purpose is to check if the database is available and if the database is online.
 

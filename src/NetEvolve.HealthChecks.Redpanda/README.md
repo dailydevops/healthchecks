@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Redpanda
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redpanda?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Redpanda?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Redpanda?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Redpanda/)
 
 This package provides a health check for Redpanda, based on the [Confluent.Kafka](https://www.nuget.org/packages/Confluent.Kafka/) package. This is a temporary measure; if a dedicated Redpanda client is provided in the future, we will use it immediately.
 The main purpose is to check that the Kafka cluster is reachable and that the client can connect to it.

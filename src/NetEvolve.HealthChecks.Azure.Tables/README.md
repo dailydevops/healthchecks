@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Azure.Tables
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Tables?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Tables?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Tables?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/)
 
 This package provides a health check for Azure Tables, based on the [Azure.Storage.Tables](https://www.nuget.org/packages/Azure.Storage.Tables/) package. The main purpose is to check that the Azure Table Service is reachable and that the client can connect to it.
 

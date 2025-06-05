@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.MongoDb
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MongoDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MongoDb/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MongoDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MongoDb/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MongoDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MongoDb/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MongoDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MongoDb/)
 
 This package provides a health check for MongoDb databases, based on the [MongoDb.Driver](https://www.nuget.org/packages/MongoDb.Driver/) package. The main purpose is to check if the database is available and if the database is online.
 

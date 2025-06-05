@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Odbc
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Odbc?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Odbc/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Odbc?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Odbc/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Odbc?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Odbc/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Odbc?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Odbc/)
 
 This package provides a health check for all ODBC data sources, based on the [System.Data.Odbc](https://www.nuget.org/packages/System.Data.Odbc/) package.
 The main purpose is to check if the ODBC data source is available and if the database is online.

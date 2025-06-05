@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.ClickHouse
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ClickHouse?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ClickHouse?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ClickHouse?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.ClickHouse/)
 
 This package provides a health check for ClickHouse, based on the [ClickHouse.Client](https://www.nuget.org/packages/ClickHouse.Client/) package.
 The main purpose is to check if the ClickHouse is available and if the database is online.

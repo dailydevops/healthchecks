@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Azure.Queues
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Queues?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
 
 This package provides a health check for Azure Queues, based on the [Azure.Storage.Queues](https://www.nuget.org/packages/Azure.Storage.Queues/) package. The main purpose is to check that the Azure Queue Service is reachable and that the client can connect to it.
 

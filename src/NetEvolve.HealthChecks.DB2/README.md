@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.DB2
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.DB2?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DB2/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.DB2?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DB2/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.DB2?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DB2/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.DB2?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DB2/)
 
 This package provides a health check for IBM's DB2 databases, based on the [Net.IBM.Data.Db2 (Windows)](https://www.nuget.org/packages/Net.IBM.Data.Db2/), [Net.IBM.Data.Db2-lnx (Linux)](https://www.nuget.org/packages/Net.IBM.Data.Db2-lnx/) and [Net.IBM.Data.Db2-osx (OSX)](https://www.nuget.org/packages/Net.IBM.Data.Db2-osx/) packages. The main purpose is to check if the database is available and if the database is online.
 

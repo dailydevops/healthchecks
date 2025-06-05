@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.RabbitMQ
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.RabbitMQ?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RabbitMQ/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.RabbitMQ?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RabbitMQ/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.RabbitMQ?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RabbitMQ/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.RabbitMQ?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RabbitMQ/)
 
 This package provides a health check for RabbitMQ, based on the [RabbitMQ.Client](https://www.nuget.org/packages/RabbitMQ.Client/) package. The main purpose is to check that the RabbitMQ service is reachable and that the client can connect to it.
 

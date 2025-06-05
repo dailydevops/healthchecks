@@ -3,7 +3,7 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <DefineConstants>USE_CONFIGURABLE_HEALTHCHECK;$(DefineConstants)</DefineConstants>
     <Description>Contains HealthChecks for Redis, based on the NuGet package `StackExchange.Redis`.</Description>
-    <PackageTags>$(PackageTags);redis;stackexchange;</PackageTags>
+    <PackageTags>$(PackageTags);redis;stackexchange</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Arguments" />

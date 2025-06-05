@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Azure.Blobs
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.Blobs?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
 
 This package provides a health check for Azure Blobs, based on the [Azure.Storage.Blobs](https://www.nuget.org/packages/Azure.Storage.Blobs/) package. The main purpose is to check that the Azure Blob Service and the Storage Container is reachable and that the client can connect to it.
 

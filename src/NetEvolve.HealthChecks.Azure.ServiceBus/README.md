@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Azure.ServiceBus
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.ServiceBus?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.ServiceBus?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure.ServiceBus?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure.ServiceBus?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
 
 This package provides a health check for Azure Service Bus, based on the [Azure.Messaging.ServiceBus](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) package.
 The main purpose is to check that the Azure Service Bus namespace is reachable and that the client can connect to it.

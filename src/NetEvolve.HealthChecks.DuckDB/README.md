@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.DuckDB
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.DuckDB?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DuckDB/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.DuckDB?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DuckDB/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.DuckDB?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DuckDB/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.DuckDB?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.DuckDB/)
 
 This package provides a health check for DuckDB databases, based on the [DuckDB.NET.Data](https://www.nuget.org/packages/DuckDB.NET.Data/) package.
 The main purpose is to check if the DuckDB database is available and if the database is online.

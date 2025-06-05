@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.SqlServer
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.SqlServer?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.SqlServer/)
 
 This package provides a health check for SQL Server, based on the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) package.
 The main purpose is to check if the SQL Server is available and if the database is online.

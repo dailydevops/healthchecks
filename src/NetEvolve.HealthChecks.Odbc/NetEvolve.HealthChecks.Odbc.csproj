@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for ODBC data sources, based on the nuget package `System.Data.Odbc`.</Description>
-    <PackageTags>$(PackageTags);odbc;</PackageTags>
+    <PackageTags>$(PackageTags);odbc</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />

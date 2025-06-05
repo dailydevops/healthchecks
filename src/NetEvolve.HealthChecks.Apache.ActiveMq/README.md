@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Apache.ActiveMq
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.ActiveMq?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.ActiveMq/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.ActiveMq?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.ActiveMq/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.ActiveMq?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.ActiveMq/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.ActiveMq?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.ActiveMq/)
 
 This package provides a health check for Apache ActiveMQ, based on the [Apache.NMS.ActiveMQ](https://www.nuget.org/packages/Apache.NMS.ActiveMQ/) package.
 The main purpose is to check that the ActiveMQ broker is reachable and that the client can connect to it.

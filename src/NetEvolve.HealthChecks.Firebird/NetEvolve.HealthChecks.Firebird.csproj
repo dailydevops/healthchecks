@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Firebird, based on the nuget package `FirebirdSql.Data.FirebirdClient`.</Description>
-    <PackageTags>$(PackageTags);firebird;</PackageTags>
+    <PackageTags>$(PackageTags);firebird</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />

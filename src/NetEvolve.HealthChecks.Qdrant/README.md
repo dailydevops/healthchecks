@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Qdrant
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Qdrant?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Qdrant/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Qdrant?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Qdrant/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Qdrant?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Qdrant/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Qdrant?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Qdrant/)
 
 This package provides a health check for Qdrant, based on the [Qdrant.Client](https://www.nuget.org/packages/Qdrant.Client/) package. The main purpose is to check that the Qdrant service is reachable and that the client can connect to it.
 
