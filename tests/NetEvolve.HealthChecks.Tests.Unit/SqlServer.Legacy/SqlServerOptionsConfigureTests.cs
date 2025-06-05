@@ -1,11 +1,11 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.SqlServerLegacy;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.SqlServer.Legacy;
 
 using System;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 
-[TestGroup(nameof(SqlServerLegacy))]
+[TestGroup($"{nameof(SqlServer)}.{nameof(Legacy)}")]
 public sealed class SqlServerOptionsConfigureTests
 {
     [Test]

@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Integration.SQLiteLegacy;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.SQLite.Legacy;
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite.Legacy;
 
-[TestGroup(nameof(SQLiteLegacy))]
+[TestGroup($"{nameof(SQLite)}.{nameof(Legacy)}")]
 public class SQLiteLegacyHealthCheckTests : HealthCheckTestBase
 {
     private const string ConnectionString = "Data Source=:memory:";
