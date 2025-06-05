@@ -40,6 +40,7 @@ internal static class HealthCheckArchitecture
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,
             typeof(Npgsql.NpgsqlHealthCheck).Assembly,
+            typeof(Odbc.OdbcHealthCheck).Assembly,
             typeof(Oracle.OracleHealthCheck).Assembly,
             typeof(RabbitMQ.RabbitMQHealthCheck).Assembly,
             typeof(RavenDb.RavenDbHealthCheck).Assembly,

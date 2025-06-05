@@ -7,8 +7,8 @@ using NetEvolve.Extensions.XUnit;
 using Xunit;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
+[TestGroup(nameof(Architecture))]
 [TestGroup(nameof(HealthChecks))]
-[TestGroup("Architecture")]
 public class HealthCheckTests
 {
     private readonly IObjectProvider<Class> _healthChecks = Classes()
