@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Azure
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Azure?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Azure?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure/)
 
 This bundle package provides health checks for various Azure services. For specific information about the health checks, please refer to the documentation of the individual packages.
 

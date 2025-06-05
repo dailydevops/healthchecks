@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for various Azure services including Blob Storage, Queue Storage, Service Bus, and Table Storage.</Description>
-    <PackageTags>$(PackageTags);azure;bundle;</PackageTags>
+    <PackageTags>$(PackageTags);azure;bundle</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
