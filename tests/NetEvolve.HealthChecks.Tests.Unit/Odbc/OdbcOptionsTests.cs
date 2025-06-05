@@ -4,7 +4,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Odbc;
 
 [TestGroup(nameof(Odbc))]
-public class OdbcOptionsTests
+public sealed class OdbcOptionsTests
 {
     [Test]
     public async Task Options_NotTheSame_Expected()

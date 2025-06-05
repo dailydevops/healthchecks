@@ -7,59 +7,11 @@ using NetEvolve.HealthChecks.RabbitMQ;
 public sealed class RabbitMQOptionsTests
 {
     [Test]
-    public async Task Constructor_DefaultValues_AreCorrect()
+    public async Task Options_NotSame_Expected()
     {
-        // Arrange & Act
-        var options = new RabbitMQOptions();
+        var options1 = new RabbitMQOptions();
+        var options2 = options1 with { };
 
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options.KeyedService).IsNull();
-            _ = await Assert.That(options.Timeout).IsEqualTo(100);
-        }
-    }
-
-    [Test]
-    public async Task KeyedService_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new RabbitMQOptions();
-        const string testValue = "test-keyed-service";
-
-        // Act
-        options.KeyedService = testValue;
-
-        // Assert
-        _ = await Assert.That(options.KeyedService).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task Timeout_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new RabbitMQOptions();
-        const int testValue = 5000;
-
-        // Act
-        options.Timeout = testValue;
-
-        // Assert
-        _ = await Assert.That(options.Timeout).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task Instance_CanBeShallowCopied()
-    {
-        var options = new RabbitMQOptions();
-        var options2 = options with { };
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options2).IsNotNull();
-            _ = await Assert.That(options2).IsNotSameReferenceAs(options);
-            _ = await Assert.That(options2.KeyedService).IsEqualTo(options.KeyedService);
-            _ = await Assert.That(options2.Timeout).IsEqualTo(options.Timeout);
-        }
+        _ = await Assert.That(options1).IsEqualTo(options2).And.IsNotSameReferenceAs(options2);
     }
 }

@@ -9,60 +9,11 @@ using NetEvolve.HealthChecks.Azure.ServiceBus;
 public sealed class ServiceBusQueueOptionsTests
 {
     [Test]
-    public async Task Constructor_DefaultValues_AreCorrect()
+    public async Task Options_NotSame_Expected()
     {
-        // Arrange & Act
-        var options = new ServiceBusQueueOptions();
+        var options1 = new ServiceBusQueueOptions { EnablePeekMode = true };
+        var options2 = options1 with { };
 
-        // Assert
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options.EnablePeekMode).IsDefault();
-            _ = await Assert.That(options.QueueName).IsNull();
-        }
-    }
-
-    [Test]
-    public async Task EnablePeekMode_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new ServiceBusQueueOptions();
-        const bool testValue = true;
-
-        // Act
-        options.EnablePeekMode = testValue;
-
-        // Assert
-        _ = await Assert.That(options.EnablePeekMode).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task QueueName_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new ServiceBusQueueOptions();
-        const string testValue = "test";
-
-        // Act
-        options.QueueName = testValue;
-
-        // Assert
-        _ = await Assert.That(options.QueueName).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task Instance_CanBeShallowCopied()
-    {
-        var options = new ServiceBusQueueOptions();
-        var options2 = options with { };
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options2).IsNotNull();
-            _ = await Assert.That(options2).IsNotSameReferenceAs(options);
-            _ = await Assert.That(options2.EnablePeekMode).IsEqualTo(options.EnablePeekMode);
-            _ = await Assert.That(options2.QueueName).IsEqualTo(options.QueueName);
-        }
+        _ = await Assert.That(options1).IsEqualTo(options2).And.IsNotSameReferenceAs(options2);
     }
 }

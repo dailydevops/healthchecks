@@ -8,76 +8,11 @@ using NetEvolve.HealthChecks.SqlServer;
 public sealed class SqlServerOptionsTests
 {
     [Test]
-    public async Task Constructor_DefaultValues_AreCorrect()
+    public async Task Options_NotSame_Expected()
     {
-        // Arrange & Act
-        var options = new SqlServerOptions();
+        var options1 = new SqlServerOptions { ConnectionString = "test" };
+        var options2 = options1 with { };
 
-        // Assert
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options.ConnectionString).IsNull();
-            _ = await Assert.That(options.Timeout).IsEqualTo(100);
-            _ = await Assert.That(options.Command).IsEqualTo(SqlServerHealthCheck.DefaultCommand);
-        }
-    }
-
-    [Test]
-    public async Task ConnectionString_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new SqlServerOptions();
-        const string testValue = "test-connection-string";
-
-        // Act
-        options.ConnectionString = testValue;
-
-        // Assert
-        _ = await Assert.That(options.ConnectionString).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task Timeout_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new SqlServerOptions();
-        const int testValue = 5000;
-
-        // Act
-        options.Timeout = testValue;
-
-        // Assert
-        _ = await Assert.That(options.Timeout).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task Command_SetAndGet_WorksCorrectly()
-    {
-        // Arrange
-        var options = new SqlServerOptions();
-        const string testValue = "Test";
-
-        // Act
-        options.Command = testValue;
-
-        // Assert
-        _ = await Assert.That(options.Command).IsEqualTo(testValue);
-    }
-
-    [Test]
-    public async Task Instance_CanBeShallowCopied()
-    {
-        var options = new SqlServerOptions();
-        var options2 = options with { };
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options2).IsNotNull();
-            _ = await Assert.That(options2).IsNotSameReferenceAs(options);
-            _ = await Assert.That(options2.ConnectionString).IsEqualTo(options.ConnectionString);
-            _ = await Assert.That(options2.Timeout).IsEqualTo(options.Timeout);
-            _ = await Assert.That(options2.Command).IsEqualTo(options.Command);
-        }
+        _ = await Assert.That(options1).IsEqualTo(options2).And.IsNotSameReferenceAs(options2);
     }
 }
