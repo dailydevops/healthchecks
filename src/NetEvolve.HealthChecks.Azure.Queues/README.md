@@ -5,7 +5,7 @@
 
 This package provides a health check for Azure Queues, based on the [Azure.Storage.Queues](https://www.nuget.org/packages/Azure.Storage.Queues/) package. The main purpose is to check that the Azure Queue Service is reachable and that the client can connect to it.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.

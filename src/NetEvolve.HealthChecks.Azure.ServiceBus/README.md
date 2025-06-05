@@ -6,7 +6,7 @@
 This package provides a health check for Azure Service Bus, based on the [Azure.Messaging.ServiceBus](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) package.
 The main purpose is to check that the Azure Service Bus namespace is reachable and that the client can connect to it.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
