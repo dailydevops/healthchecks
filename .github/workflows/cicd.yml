@@ -25,7 +25,7 @@ on:
 jobs:
   all:
     name: Build & Tests
-    uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@0.14.96
+    uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@0.14.100
     with:
       enableCleanUpDockerDocker: true
       enableSonarQube: true
