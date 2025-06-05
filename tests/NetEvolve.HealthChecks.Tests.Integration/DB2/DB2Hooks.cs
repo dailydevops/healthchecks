@@ -22,9 +22,9 @@ public static class DB2Hooks
             var iccDirectory = Path.Combine(libDirectory, "icc");
 
             var envPATH = Environment.GetEnvironmentVariable("PATH", target);
-            Environment.SetEnvironmentVariable("PATH", $"{envPATH};{binDirectory}", target);
+            Environment.SetEnvironmentVariable("PATH", $"{envPATH}:{binDirectory}", target);
 
-            Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", $"{libDirectory};{iccDirectory}", target);
+            Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", $"{libDirectory}:{iccDirectory}", target);
 
             Environment.SetEnvironmentVariable("DB2_CLI_DRIVER_INSTALL_PATH", clidriverDirectory, target);
         }
