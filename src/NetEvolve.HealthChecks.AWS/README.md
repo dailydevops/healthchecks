@@ -7,6 +7,10 @@ This bundle package provides health checks for various AWS services. For specifi
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Supported AWS Services
+
+- [AWS Simple Notification Service (SNS)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

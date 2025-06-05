@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <Description>Contains HealthChecks for various AWS services including SNS and others.</Description>
+    <Description>Contains HealthChecks for various AWS services.</Description>
     <PackageTags>$(PackageTags);aws;bundle</PackageTags>
   </PropertyGroup>
   <ItemGroup>
