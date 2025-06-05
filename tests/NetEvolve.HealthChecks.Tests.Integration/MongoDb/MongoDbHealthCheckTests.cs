@@ -91,7 +91,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.CommandAsync = async (MongoClient client, CancellationToken cancellationToken) =>
+                        options.CommandAsync = async (client, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
 
@@ -118,7 +118,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.CommandAsync = async (MongoClient client, CancellationToken cancellationToken) =>
+                        options.CommandAsync = async (client, cancellationToken) =>
                         {
                             var database = client.GetDatabase("admin");
                             var invalidCommand = new BsonDocument("invalid", 1);

@@ -81,7 +81,7 @@ public sealed class MongoDbHealthCheckTests
         {
             KeyedService = "test-key",
             Timeout = 100,
-            CommandAsync = async (MongoClient _, CancellationToken cancellationToken) =>
+            CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
                 return new BsonDocument("test", 1);
@@ -123,7 +123,7 @@ public sealed class MongoDbHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1000,
-            CommandAsync = async (MongoClient _, CancellationToken cancellationToken) =>
+            CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
                 return new BsonDocument("test", 1);
@@ -165,7 +165,7 @@ public sealed class MongoDbHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1000,
-            CommandAsync = async (MongoClient _, CancellationToken cancellationToken) =>
+            CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
                 throw new MongoException("test");
@@ -208,7 +208,7 @@ public sealed class MongoDbHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (MongoClient _, CancellationToken cancellationToken) =>
+            CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(100, cancellationToken); // Simulate long-running command
                 return new BsonDocument("test", 1);
