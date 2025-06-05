@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.SqlServerLegacy;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.SqlServer.Legacy;
 
 using System;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 
-[TestGroup(nameof(SqlServerLegacy))]
+[TestGroup($"{nameof(SqlServer)}.{nameof(Legacy)}")]
 public class DependencyInjectionExtensionsTests
 {
     [Test]

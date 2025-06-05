@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.SQLiteLegacy;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.SQLite.Legacy;
 
 using System;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite.Legacy;
 
-[TestGroup(nameof(SQLiteLegacy))]
+[TestGroup($"{nameof(SQLite)}.{nameof(Legacy)}")]
 public class DependencyInjectionExtensionsTests
 {
     [Test]

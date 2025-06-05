@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Integration.SqlServerLegacy;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.SqlServer.Legacy;
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
 using NetEvolve.HealthChecks.Tests.Integration.SqlServer;
 
-[TestGroup(nameof(SqlServerLegacy))]
+[TestGroup($"{nameof(SqlServer)}.{nameof(Legacy)}")]
 [ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerTestSession)]
 public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
 {

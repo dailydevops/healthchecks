@@ -1,9 +1,9 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.SQLiteLegacy;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.SQLite.Legacy;
 
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite.Legacy;
 
-[TestGroup(nameof(SQLiteLegacy))]
+[TestGroup($"{nameof(SQLite)}.{nameof(Legacy)}")]
 public sealed class SQLiteLegacyOptionsTests
 {
     [Test]
