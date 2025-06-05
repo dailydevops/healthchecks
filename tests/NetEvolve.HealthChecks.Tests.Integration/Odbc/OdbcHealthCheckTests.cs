@@ -7,8 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Odbc;
+using TUnit.Core.Enums;
 
 [TestGroup(nameof(Odbc))]
+[RunOn(OS.Windows)]
 public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
 {
     protected abstract string GetConnectionString();
