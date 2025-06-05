@@ -1,0 +1,23 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message:
+Catalog Error: Scalar Function with name `__postfix does not exist!
+Did you mean "!__postfix"?
+
+LINE 1: SELECT 1 = `1`
+                     ^,
+        type: DuckDB.NET.Data.DuckDBException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        duckdb,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
