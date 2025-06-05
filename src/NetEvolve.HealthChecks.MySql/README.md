@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.MySql
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.MySql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.MySql?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.MySql/)
 
 This package provides a health check for MySql databases, based on the [MySql.Data](https://www.nuget.org/packages/MySql.Data/) package. The main purpose is to check if the database is available and if the database is online.
 

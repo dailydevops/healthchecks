@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Azure Queue Storage.</Description>
-    <PackageTags>$(PackageTags);azure;storage;queue;</PackageTags>
+    <PackageTags>$(PackageTags);azure;storage;queue</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

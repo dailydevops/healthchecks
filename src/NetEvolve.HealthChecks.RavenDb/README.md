@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.RavenDb
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.RavenDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RavenDb/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.RavenDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RavenDb/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.RavenDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RavenDb/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.RavenDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.RavenDb/)
 
 This package provides a health check for RavenDb databases, based on the [RavenDB.Client](https://www.nuget.org/packages/RavenDB.Client/) package. The main purpose is to check if the database is available and if the database is online.
 

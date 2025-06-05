@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Apache Kafka, based on the NuGet package `Confluent.Kafka`.</Description>
-    <PackageTags>$(PackageTags);apache;kafka;</PackageTags>
+    <PackageTags>$(PackageTags);apache;kafka</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" />

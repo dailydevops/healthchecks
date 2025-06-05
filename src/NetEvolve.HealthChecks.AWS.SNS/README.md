@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.AWS.SNS
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.AWS.SNS?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.AWS.SNS?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.AWS.SNS?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.AWS.SNS?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
 
 This package provides a health check for AWS Simple Notification Service (SNS), based on the [AWS SDK for .NET](https://www.nuget.org/packages/AWSSDK.SimpleNotificationService/) package.
 The main purpose is to check that the SNS service is reachable and that the client can connect to it.

@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Oracle
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Oracle?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Oracle?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Oracle/)
 
 This package provides a health check for Oracle databases, based on the [Oracle.ManagedDataAccess.Core](https://www.nuget.org/packages/Oracle.ManagedDataAccess.Core/) package.
 The main purpose is to check if the Oracle database is available and if the database is online.

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Azure Table Storage.</Description>
-    <PackageTags>$(PackageTags);azure;data;table;</PackageTags>
+    <PackageTags>$(PackageTags);azure;data;table</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Data.Tables" />

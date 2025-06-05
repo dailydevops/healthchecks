@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Apache.Kafka
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Kafka?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Kafka/)
 
 This package provides a health check for Apache Kafka, based on the [Confluent.Kafka](https://www.nuget.org/packages/Confluent.Kafka/) package.
 The main purpose is to check that the Kafka cluster is reachable and that the client can connect to it.

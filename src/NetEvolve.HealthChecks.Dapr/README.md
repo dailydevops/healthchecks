@@ -1,7 +1,7 @@
 # NetEvolve.HealthChecks.Dapr
 
-[![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/)
-[![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Dapr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Dapr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/)
 
 This package provides a health check for Dapr, based on the [Dapr.Client](https://www.nuget.org/packages/Dapr.Client/) package. The main purpose is to check if the Dapr is available and if the sidecar is available.
 
