@@ -81,5 +81,4 @@
   <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.IntegrationTestAttribute" />
   </ItemGroup>
-  <Import Project="NetEvolve.HealthChecks.Tests.Integration.targets" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
 </Project>
