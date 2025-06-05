@@ -4,7 +4,6 @@
     <Description>Contains HealthChecks for various Azure services.</Description>
     <PackageTags>$(PackageTags);azure;bundle</PackageTags>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
