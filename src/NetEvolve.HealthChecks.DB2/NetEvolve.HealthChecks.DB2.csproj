@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Db2, based on the nuget packages `Net.IBM.Data.Db2` (Windows), `Net.IBM.Data.Db2-lnx` (Linux) and `Net.IBM.Data.Db2-osx` (OSX).</Description>
+    <PackageTags>$(PackageTags);db2;</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference
+      Include="Net.IBM.Data.Db2"
+      Condition="$([MSBuild]::IsOSPlatform('Windows'))"
+      PrivateAssets="all"
+    />
+    <PackageReference
+      Include="Net.IBM.Data.Db2-lnx"
+      Condition="$([MSBuild]::IsOSPlatform('Linux'))"
+      PrivateAssets="all"
+    />
+    <PackageReference
+      Include="Net.IBM.Data.Db2-osx"
+      Condition="$([MSBuild]::IsOSPlatform('OSX'))"
+      PrivateAssets="all"
+    />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
