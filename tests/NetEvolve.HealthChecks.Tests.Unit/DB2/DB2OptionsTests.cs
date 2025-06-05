@@ -4,7 +4,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DB2;
 
 [TestGroup(nameof(DB2))]
-public class DB2OptionsTests
+public sealed class DB2OptionsTests
 {
     [Test]
     public async Task Options_NotTheSame_Expected()
