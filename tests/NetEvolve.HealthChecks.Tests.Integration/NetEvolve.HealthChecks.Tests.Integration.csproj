@@ -39,6 +39,15 @@
     <PackageReference Include="TUnit" />
     <PackageReference Include="Verify.TUnit" />
   </ItemGroup>
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <PackageReference Include="Net.IBM.Data.Db2-lnx" />
+  </ItemGroup>
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <PackageReference Include="Net.IBM.Data.Db2-osx" />
+  </ItemGroup>
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <PackageReference Include="Net.IBM.Data.Db2" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />

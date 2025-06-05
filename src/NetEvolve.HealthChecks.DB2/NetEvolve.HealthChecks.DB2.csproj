@@ -5,9 +5,9 @@
     <PackageTags>$(PackageTags);db2;</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Net.IBM.Data.Db2" />
-    <PackageReference Include="Net.IBM.Data.Db2-lnx" />
-    <PackageReference Include="Net.IBM.Data.Db2-osx" />
+    <PackageReference Include="Net.IBM.Data.Db2" PrivateAssets="all" />
+    <PackageReference Include="Net.IBM.Data.Db2-lnx" PrivateAssets="all" />
+    <PackageReference Include="Net.IBM.Data.Db2-osx" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
