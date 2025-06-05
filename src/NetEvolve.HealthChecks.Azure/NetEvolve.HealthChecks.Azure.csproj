@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <Description>Contains HealthChecks for various Azure services including Blob Storage, Queue Storage, Service Bus, and Table Storage.</Description>
+    <Description>Contains HealthChecks for various Azure services.</Description>
     <PackageTags>$(PackageTags);azure;bundle</PackageTags>
   </PropertyGroup>
 
