@@ -91,6 +91,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Odbc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.AWS", "src\NetEvolve.HealthChecks.AWS\NetEvolve.HealthChecks.AWS.csproj", "{C6F3E76E-0C98-4719-9869-051A2A783373}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azure", "src\NetEvolve.HealthChecks.Azure\NetEvolve.HealthChecks.Azure.csproj", "{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -497,6 +499,18 @@ Global
 		{C6F3E76E-0C98-4719-9869-051A2A783373}.Release|x64.Build.0 = Release|Any CPU
 		{C6F3E76E-0C98-4719-9869-051A2A783373}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6F3E76E-0C98-4719-9869-051A2A783373}.Release|x86.Build.0 = Release|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Debug|x64.Build.0 = Debug|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Debug|x86.Build.0 = Debug|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Release|x64.ActiveCfg = Release|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Release|x64.Build.0 = Release|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Release|x86.ActiveCfg = Release|Any CPU
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -535,6 +549,7 @@ Global
 		{4D6D5FB4-7570-4648-B9AF-816C284323E6} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{3074A915-2C7A-4C0B-A8E5-741E3DA5B0F2} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{C6F3E76E-0C98-4719-9869-051A2A783373} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
+		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
