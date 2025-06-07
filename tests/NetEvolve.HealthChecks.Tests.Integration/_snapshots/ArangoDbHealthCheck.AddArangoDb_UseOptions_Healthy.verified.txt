@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
+      status: Healthy,
+      tags: [
+        arangodb,
+        database
+      ]
+    }
+  ],
+  status: Healthy
+}

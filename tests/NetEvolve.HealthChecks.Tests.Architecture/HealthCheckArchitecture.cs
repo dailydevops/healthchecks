@@ -31,6 +31,7 @@ internal static class HealthCheckArchitecture
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             // others
             typeof(Abstractions.HealthCheckBase).Assembly,
+            typeof(ArangoDb.ArangoDbHealthCheck).Assembly,
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
             typeof(DB2.DB2HealthCheck).Assembly,
