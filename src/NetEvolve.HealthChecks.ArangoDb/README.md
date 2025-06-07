@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.ArangoDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.ArangoDb/)
 [![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.ArangoDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.ArangoDb/)
 
-This package provides a health check for ArangoDb databases, based on the [ArangoDBNetStandard](https://www.nuget.org/packages/ArangoDBNetStandard/) package. The main purpose is to check if the database is available and if the database is online.
+This package provides a health check for ArangoDb databases, based on the [ArangoDBNetStandard](https://www.nuget.org/packages/ArangoDBNetStandard/) package. The main purpose is to check if the server is available and the database is online.
 
 :bulb: This package is available for .NET 8.0 and later.
 
@@ -45,8 +45,8 @@ The configuration looks like this:
   "HealthChecks": {
     "ArangoDb": {
       "<name>": {
-        "ConnectionString": "<connection string>",
-        "Timeout": "<timeout>" // optional, default is 100 milliseconds
+        "KeyedService": "<key>", // Optional
+        "Timeout": "<timeout>" // Optional, defaults to 100 milliseconds
       }
     }
   }
@@ -60,8 +60,15 @@ var builder = services.AddHealthChecks();
 
 builder.AddArangoDb("<name>", options =>
 {
-    options.ConnectionString = "<connection string>";
-    options.Timeout = "<timeout>"; // optional, default is 100 milliseconds
+    options.KeyedService = "<key>"; // Optional
+    options.Timeout = <timeout>; // Optional, defaults to 100 milliseconds
+
+    // Optional, defaults to NetEvolve.HealthChecks.ArangoDb.DefaultCommandAsync
+    options.CommandAsync = async (client, cancellationToken) =>
+    {
+        // Your custom server pinging logic here.
+        // Should return true if the command result is valid, false otherwise.
+    };
 });
 ```
 
