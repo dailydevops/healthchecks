@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Azur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.ArangoDb", "src\NetEvolve.HealthChecks.ArangoDb\NetEvolve.HealthChecks.ArangoDb.csproj", "{2E4636CD-8F5E-48DC-BB4E-0981F665D295}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Keycloak", "src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj", "{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -525,6 +527,18 @@ Global
 		{2E4636CD-8F5E-48DC-BB4E-0981F665D295}.Release|x64.Build.0 = Release|Any CPU
 		{2E4636CD-8F5E-48DC-BB4E-0981F665D295}.Release|x86.ActiveCfg = Release|Any CPU
 		{2E4636CD-8F5E-48DC-BB4E-0981F665D295}.Release|x86.Build.0 = Release|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Debug|x64.Build.0 = Debug|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Debug|x86.Build.0 = Debug|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x64.ActiveCfg = Release|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x64.Build.0 = Release|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x86.ActiveCfg = Release|Any CPU
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -565,6 +579,7 @@ Global
 		{C6F3E76E-0C98-4719-9869-051A2A783373} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{2E4636CD-8F5E-48DC-BB4E-0981F665D295} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
+		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
