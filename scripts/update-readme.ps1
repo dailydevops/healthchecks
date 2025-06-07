@@ -36,13 +36,13 @@ function Get-Packages {
 
   $result = @"
 
-| Package Name | Current Version |
+| Package Name | NuGet Link      |
 |:-------------|:---------------:|
 
 "@
 
   foreach ($package in ($resultData | Sort-Object -Property id)) {
-    if ($package.projectUrl -ne $repositoryUrl) {
+    if (!$package.projectUrl.StartsWith($repositoryUrl, [System.StringComparison]::OrdinalIgnoreCase)) {
       continue
     }
 
@@ -52,7 +52,7 @@ function Get-Packages {
     }
     $result += "<br/><small>$($package.description)</small> "
 
-    $result += "| [![NuGet Version](https://img.shields.io/nuget/v/$($package.id)?&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/#versions-body-tab) "
+    $result += "| [![NuGet Downloads](https://img.shields.io/nuget/dt/$($package.id)?logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/$($package.id)/#readme-body-tab) "
     $result += "|`n"
 
   }
@@ -69,7 +69,6 @@ function Update-Readme {
   )
 
   $tagStart = '<!-- packages:start -->'
-  $tagStartLength = $tagStart.Length
   $tagEnd = '<!-- packages:end -->'
 
   $readmeFiles = Get-ChildItem -Path $workingDirectory -Filter 'README.*' -Recurse
@@ -81,7 +80,7 @@ function Update-Readme {
     if ($startIndex -eq -1) {
       continue
     }
-    $startIndex += $tagStartLength
+    $startIndex += $tagStart.Length
     $endIndex = $readmeContent.IndexOf($tagEnd, $startIndex)
 
     if ($endIndex -eq -1) {
