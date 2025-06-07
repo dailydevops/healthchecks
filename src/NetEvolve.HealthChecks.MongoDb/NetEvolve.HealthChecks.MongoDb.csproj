@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for MongoDb, based on the nuget package `MongoDB.Driver`.</Description>
-    <PackageTags>$(PackageTags);mongdb</PackageTags>
+    <PackageTags>$(PackageTags);mongodb</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" />
