@@ -7,21 +7,19 @@ using global::Keycloak.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Keycloak;
+using NetEvolve.HealthChecks.Tests.Integration.Keycloak.Container;
 
-[ClassDataSource<KeycloakDatabase>(Shared = SharedType.PerTestSession)]
-[TestGroup(nameof(Keycloak))]
-public class KeycloakHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
+public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsyncInitializer
 {
-    private readonly KeycloakDatabase _database;
+    private readonly ContainerBase _container;
     private KeycloakClient _client = default!;
 
-    public KeycloakHealthCheckTests(KeycloakDatabase database) => _database = database;
+    protected KeycloakHealthCheckBaseTests(ContainerBase container) => _container = container;
 
     public Task InitializeAsync()
     {
-        _client = new KeycloakClient(_database.BaseAddress, _database.Username, _database.Password);
+        _client = new KeycloakClient(_container.BaseAddress, _container.Username, _container.Password);
 
         return Task.CompletedTask;
     }
