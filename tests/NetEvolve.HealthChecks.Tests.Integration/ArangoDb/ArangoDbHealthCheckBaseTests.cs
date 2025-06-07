@@ -8,25 +8,23 @@ using ArangoDBNetStandard.Transport.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.ArangoDb;
+using NetEvolve.HealthChecks.Tests.Integration.ArangoDb.Container;
 
-[ClassDataSource<ArangoDbDatabase>(Shared = SharedType.PerTestSession)]
-[TestGroup(nameof(ArangoDb))]
-public class ArangoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
+public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
-    private readonly ArangoDbDatabase _database;
+    private readonly ContainerBase _container;
     private ArangoDBClient _client = default!;
     private bool _disposed;
 
-    public ArangoDbHealthCheckTests(ArangoDbDatabase database) => _database = database;
+    protected ArangoDbHealthCheckBaseTests(ContainerBase container) => _container = container;
 
     public Task InitializeAsync()
     {
         var transport = HttpApiTransport.UsingBasicAuth(
-            new Uri(_database.TransportAddress),
+            new Uri(_container.TransportAddress),
             "root",
-            _database.Password
+            _container.Password
         );
         _client = new ArangoDBClient(transport);
 
