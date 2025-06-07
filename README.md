@@ -5,10 +5,8 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/dailydevops/healthchecks?logo=github)
 [![GitHub Pipeline CI](https://github.com/dailydevops/healthchecks/actions/workflows/cicd.yml/badge.svg?branch=main&event=push)](https://github.com/dailydevops/healthchecks/actions/workflows/cicd.yml)
 
-![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/dailydevops/healthchecks/main?logo=codefactor)
-![Codecov](https://img.shields.io/codecov/c/github/dailydevops/healthchecks?logo=codecov)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dailydevops_healthchecks&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dailydevops_healthchecks)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=dailydevops_healthchecks&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=dailydevops_healthchecks)
+[![CodeFactor](https://www.codefactor.io/repository/github/dailydevops/healthchecks/badge)](https://www.codefactor.io/repository/github/dailydevops/healthchecks)
+[![codecov](https://codecov.io/gh/dailydevops/healthchecks/graph/badge.svg?token=IHV7ZTYZLY)](https://codecov.io/gh/dailydevops/healthchecks)
 
 ## What is this repository about?
 This is a mono repository for several NuGet packages based on the [Microsoft.Extensions.Diagnostics.HealthChecks](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.HealthChecks) package. The main goal of this repository is to provide a set of health checks for different services and frameworks, which are fully configurable either via code or configuration.
@@ -69,7 +67,7 @@ The package names are based on the following naming schema - `NetEvolve.HealthCh
 - `<ServiceName>` is the name of the service for which the health check is provided. It specifies the actual service that the health check is targeting.
 - `<ServiceVersion?>` is an optional suffix that identifies a specific implementation or version of the client library used to connect to the service. This is useful when there are multiple client libraries available for the same service, each with different implementations or approaches.
 
-### ServiceGroup and ServiceName
+#### ServiceGroup and ServiceName
 
 The `ServiceGroup` is optional and is used to group related services. For example, all azure platform services are grouped under `Azure`. The `ServiceName` is the name of the service for which the health check is provided. For example, `SqlServer` or `MySql`.
 
@@ -78,6 +76,8 @@ The following table lists all planned and used groups. We will add more groups m
 - AWS
 - Azure
 - GCP
+
+#### ServiceVersion
 
 The `ServiceVersion` in the package naming schema `NetEvolve.HealthChecks.<ServiceGroup?>.<ServiceName>.<ServiceVersion?>` refers to an optional suffix that identifies a specific implementation or version of the client library used to connect to the service.
 
