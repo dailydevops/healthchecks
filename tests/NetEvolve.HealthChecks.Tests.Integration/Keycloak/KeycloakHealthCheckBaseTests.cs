@@ -57,7 +57,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKeycloak(
-                    "TestContainerKeyedHealthy",
+                    "TestContainerInternalHealthy",
                     options =>
                     {
                         options.Mode = KeycloakClientCreationMode.Internal;
@@ -155,7 +155,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:Keycloak:TestContainerKeyedHealthy:KeyedService", serviceKey },
-                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "1500" },
+                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
