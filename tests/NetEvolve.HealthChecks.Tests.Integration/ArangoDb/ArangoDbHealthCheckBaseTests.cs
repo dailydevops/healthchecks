@@ -181,7 +181,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfigration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
