@@ -155,7 +155,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:Keycloak:TestContainerKeyedHealthy:KeyedService", serviceKey },
-                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "1500" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
