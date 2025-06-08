@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.Tests.Integration.ArangoDb.Container;
 
 public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
-    private readonly ContainerBase _container;
+    protected ContainerBase _container { get; }
     private ArangoDBClient _client = default!;
     private bool _disposed;
 
@@ -59,19 +59,41 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddArangoDb_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddArangoDb_UseOptionsWithKeyedService_Healthy()
+    {
+        const string serviceKey = "options-test-key";
+
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddArangoDb(
                     "TestContainerKeyedHealthy",
                     options =>
                     {
-                        options.KeyedService = "mongodb-test";
+                        options.KeyedService = serviceKey;
                         options.Timeout = 1000;
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+        );
+    }
+
+    [Test]
+    public async Task AddArangoDb_UseOptionsWithInternalMode_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddArangoDb(
+                    "TestContainerInternalHealthy",
+                    options =>
+                    {
+                        options.Mode = ArangoDbClientCreationMode.Internal;
+                        options.Timeout = 1000;
+                        options.TransportAddress = _container.TransportAddress;
+                        options.Username = "root";
+                        options.Password = _container.Password;
+                    }
+                ),
+            HealthStatus.Healthy
         );
 
     [Test]
@@ -148,7 +170,10 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddArangoDb_UseConfigurationWithKeyedService_Healthy()
+    {
+        const string serviceKey = "config-test-key";
+
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -156,13 +181,14 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:ArangoDb:TestContainerKeyedHealthy:KeyedService", "mongodb-test-config" },
+                    { "HealthChecks:ArangoDb:TestContainerKeyedHealthy:KeyedService", serviceKey },
                     { "HealthChecks:ArangoDb:TestContainerKeyedHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
         );
+    }
 
     [Test]
     public async Task AddArangoDb_UseConfiguration_Degraded() =>
@@ -181,7 +207,60 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_TransportAddressAddressEmpty_ThrowsException() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddArangoDb("TestNoValues"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:ArangoDb:TestNoValues:Mode", $"{ArangoDbClientCreationMode.Internal}" },
+                    { "HealthChecks:ArangoDb:TestNoValues:TransportAddress", "" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddKeycloak_UseConfiguration_UsernameNullWithPassword_ThrowsException() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddArangoDb("TestNoValues"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:ArangoDb:TestNoValues:Mode", $"{ArangoDbClientCreationMode.Internal}" },
+                    { "HealthChecks:ArangoDb:TestNoValues:BaseAddress", "base-address" },
+                    { "HealthChecks:ArangoDb:TestNoValues:Password", "password" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddKeycloak_UseConfiguration_PasswordNullWithUsername_ThrowsException() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddArangoDb("TestNoValues"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:ArangoDb:TestNoValues:Mode", $"{ArangoDbClientCreationMode.Internal}" },
+                    { "HealthChecks:ArangoDb:TestNoValues:BaseAddress", "base-address" },
+                    { "HealthChecks:ArangoDb:TestNoValues:Username", "username" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,

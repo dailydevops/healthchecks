@@ -34,9 +34,8 @@ internal sealed class ArangoDbHealthCheck : ConfigurableHealthCheckBase<ArangoDb
         CancellationToken cancellationToken
     )
     {
-        var client = string.IsNullOrWhiteSpace(options.KeyedService)
-            ? _serviceProvider.GetRequiredService<ArangoDBClient>()
-            : _serviceProvider.GetRequiredKeyedService<ArangoDBClient>(options.KeyedService);
+        var clientProvider = _serviceProvider.GetRequiredService<ArangoDbClientProvider>();
+        var client = clientProvider.GetClient(options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 

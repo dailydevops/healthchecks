@@ -45,8 +45,12 @@ The configuration looks like this:
   "HealthChecks": {
     "ArangoDb": {
       "<name>": {
-        "KeyedService": "<key>", // Optional
-        "Timeout": "<timeout>" // Optional, defaults to 100 milliseconds
+        "Mode": "<client_creation_mode>", // Optional, defaults to 'ArangoDbClientCreationMode.ServiceProvider'
+        "KeyedService": "<key>", // Optional, used when Mode set to 'ArangoDbClientCreationMode.ServiceProvider'
+        "TransportAddress": "<transport_address>", // Required when Mode set to 'ArangoDbClientCreationMode.Internal'
+        "Username": "<username>", // Used when Mode set to 'ArangoDbClientCreationMode.Internal' and required when Password is set
+        "Password": "<password>", // Used when Mode set to 'ArangoDbClientCreationMode.Internal' and required when Username is set
+        "Timeout": "<timeout>" // Optional, default is 100 milliseconds
       }
     }
   }
@@ -60,7 +64,11 @@ var builder = services.AddHealthChecks();
 
 builder.AddArangoDb("<name>", options =>
 {
-    options.KeyedService = "<key>"; // Optional
+    options.Mode = <client_creation_mode>; // Optional, defaults to 'ArangoDbClientCreationMode.ServiceProvider'
+    options.KeyedService = "<key>"; // Optional, used when Mode set to 'ArangoDbClientCreationMode.ServiceProvider'
+    options.TransportAddress = "<transport_address>"; // Required when Mode set to 'ArangoDbClientCreationMode.Internal'
+    options.Username = "<username>"; // Used when Mode set to 'ArangoDbClientCreationMode.Internal' and required when Password is set
+    options.Password = "<password>"; // Used when Mode set to 'ArangoDbClientCreationMode.Internal' and required when Username is set
     options.Timeout = <timeout>; // Optional, defaults to 100 milliseconds
 
     // Optional, defaults to NetEvolve.HealthChecks.ArangoDb.DefaultCommandAsync
