@@ -100,7 +100,7 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOdbc_UseConfigrationConnectionStringEmpty_ThrowException() =>
+    public async Task AddOdbc_UseConfigurationConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOdbc("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -115,7 +115,7 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOdbc_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddOdbc_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOdbc("TestNoValues"),
             HealthStatus.Unhealthy,

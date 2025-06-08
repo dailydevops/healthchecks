@@ -100,7 +100,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddPostgreSql_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -115,7 +115,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddPostgreSql_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestNoValues"),
             HealthStatus.Unhealthy,

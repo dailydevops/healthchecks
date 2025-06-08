@@ -102,7 +102,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -117,7 +117,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestNoValues"),
             HealthStatus.Unhealthy,

@@ -125,7 +125,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedis_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddRedis_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -141,7 +141,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddRedis_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddRedis_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestNoValues"),
             HealthStatus.Unhealthy,

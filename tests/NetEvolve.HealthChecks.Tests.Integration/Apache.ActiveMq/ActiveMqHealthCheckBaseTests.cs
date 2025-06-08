@@ -123,7 +123,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfigration_BrokerAddressStringEmpty_ThrowException() =>
+    public async Task AddActiveMq_UseConfiguration_BrokerAddressStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -138,7 +138,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddActiveMq_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestNoValues"),
             HealthStatus.Unhealthy,

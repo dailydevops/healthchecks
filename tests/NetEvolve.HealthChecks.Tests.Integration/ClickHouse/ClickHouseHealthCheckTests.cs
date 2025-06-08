@@ -101,7 +101,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddClickHouse_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddClickHouse_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -116,7 +116,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddClickHouse_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddClickHouse_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddClickHouse("TestNoValues"),
             HealthStatus.Unhealthy,

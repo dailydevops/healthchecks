@@ -102,7 +102,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMySql_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddMySql_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -117,7 +117,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMySql_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddMySql_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestNoValues"),
             HealthStatus.Unhealthy,
