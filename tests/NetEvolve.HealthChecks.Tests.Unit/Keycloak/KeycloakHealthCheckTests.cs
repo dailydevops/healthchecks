@@ -93,9 +93,10 @@ public sealed class KeycloakHealthCheckTests
         // Setup client mock that returns success
         var client = new KeycloakClient("http://localhost/test", "test");
 
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", client);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var serviceProvider = new ServiceCollection()
+            .AddKeyedSingleton("test-key", client)
+            .AddSingleton<KeycloakClientProvider>()
+            .BuildServiceProvider();
 
         var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext
@@ -133,11 +134,12 @@ public sealed class KeycloakHealthCheckTests
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that returns success
-        var client = new global::Keycloak.Net.KeycloakClient("http://localhost/test", "test");
+        var client = new KeycloakClient("http://localhost/test", "test");
 
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var serviceProvider = new ServiceCollection()
+            .AddSingleton(client)
+            .AddSingleton<KeycloakClientProvider>()
+            .BuildServiceProvider();
 
         var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext
@@ -177,9 +179,10 @@ public sealed class KeycloakHealthCheckTests
         // Setup connection mock that throws an exception
         var client = new KeycloakClient("http://localhost/test", "test");
 
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var serviceProvider = new ServiceCollection()
+            .AddSingleton(client)
+            .AddSingleton<KeycloakClientProvider>()
+            .BuildServiceProvider();
 
         var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext
@@ -220,9 +223,10 @@ public sealed class KeycloakHealthCheckTests
         // Setup connection mock that delays long enough to cause timeout
         var client = new KeycloakClient("http://localhost/test", "test");
 
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var serviceProvider = new ServiceCollection()
+            .AddSingleton(client)
+            .AddSingleton<KeycloakClientProvider>()
+            .BuildServiceProvider();
 
         var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext

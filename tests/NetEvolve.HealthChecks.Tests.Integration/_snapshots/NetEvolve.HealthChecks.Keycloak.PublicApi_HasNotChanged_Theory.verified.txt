@@ -4,11 +4,20 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddKeycloak([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>? options = null, params string[] tags) { }
     }
+    public enum KeycloakClientCreationMode
+    {
+        ServiceProvider = 0,
+        Internal = 1,
+    }
     public sealed class KeycloakOptions : System.IEquatable<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>
     {
         public KeycloakOptions() { }
-        public System.Func<Keycloak.Net.KeycloakClient, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; }
+        public string? BaseAddress { get; set; }
+        public System.Func<Keycloak.Net.KeycloakClient, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; set; }
         public string? KeyedService { get; set; }
+        public NetEvolve.HealthChecks.Keycloak.KeycloakClientCreationMode Mode { get; set; }
+        public string? Password { get; set; }
         public int Timeout { get; set; }
+        public string? Username { get; set; }
     }
 }

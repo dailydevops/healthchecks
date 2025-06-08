@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Keycloak?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Keycloak/)
 [![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Keycloak?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Keycloak/)
 
-This package provides a health check for Keycloak databases, based on the [Keycloak.Net.Core](https://www.nuget.org/packages/Keycloak.Net.Core/) package. The main purpose is to check if the server is available and the database is online.
+This package provides a health check for Keycloak services, based on the [Keycloak.Net.Core](https://www.nuget.org/packages/Keycloak.Net.Core/) package. The main purpose is to check if the server is available.
 
 :bulb: This package is available for .NET 8.0 and later.
 

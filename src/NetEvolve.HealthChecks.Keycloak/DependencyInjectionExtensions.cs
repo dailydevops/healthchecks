@@ -43,6 +43,7 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<KeycloakCheckMarker>()
                 .AddSingleton<KeycloakHealthCheck>()
+                .AddSingleton<KeycloakClientProvider>()
                 .ConfigureOptions<KeycloakConfigure>();
         }
 

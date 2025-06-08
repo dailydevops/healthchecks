@@ -33,19 +33,41 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddKeycloak_UseOptionsWithKeyedService_Healthy()
+    {
+        const string serviceKey = "options-test-key";
+
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKeycloak(
                     "TestContainerKeyedHealthy",
                     options =>
                     {
-                        options.KeyedService = "mongodb-test";
+                        options.KeyedService = serviceKey;
                         options.Timeout = 1000;
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+        );
+    }
+
+    [Test]
+    public async Task AddKeycloak_UseOptionsWithInternalMode_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddKeycloak(
+                    "TestContainerKeyedHealthy",
+                    options =>
+                    {
+                        options.Mode = KeycloakClientCreationMode.Internal;
+                        options.Timeout = 1000;
+                        options.BaseAddress = _container.BaseAddress;
+                        options.Username = _container.Username;
+                        options.Password = _container.Password;
+                    }
+                ),
+            HealthStatus.Healthy
         );
 
     [Test]
@@ -121,7 +143,10 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddKeycloak_UseConfigurationWithKeyedService_Healthy()
+    {
+        const string serviceKey = "config-test-key";
+
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -129,13 +154,14 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:KeyedService", "mongodb-test-config" },
+                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:KeyedService", serviceKey },
                     { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "1000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
         );
+    }
 
     [Test]
     public async Task AddKeycloak_UseConfiguration_Degraded() =>
@@ -154,7 +180,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_BaseAddressEmpty_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -162,7 +188,43 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Keycloak:TestNoValues:ConnectionString", "" },
+                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.Internal}" },
+                    { "HealthChecks:Keycloak:TestNoValues:BaseAddress", "" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddKeycloak_UseConfiguration_UsernameEmpty_ShouldThrowException() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddKeycloak("TestNoValues"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.Internal}" },
+                    { "HealthChecks:Keycloak:TestNoValues:BaseAddress", "base-address" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddKeycloak_UseConfiguration_PasswordEmpty_ShouldThrowException() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddKeycloak("TestNoValues"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.Internal}" },
+                    { "HealthChecks:Keycloak:TestNoValues:BaseAddress", "base-address" },
+                    { "HealthChecks:Keycloak:TestNoValues:Username", "username" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

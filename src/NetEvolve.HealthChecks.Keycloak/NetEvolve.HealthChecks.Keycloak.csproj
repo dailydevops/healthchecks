@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <Description>Contains HealthChecks for Keycloak, based on the nuget package `Keycloak.Net.Core`.</Description>
+    <Description>Contains HealthChecks for the Keycloak service, based on the nuget package `Keycloak.Net.Core`.</Description>
     <PackageTags>$(PackageTags);keycloak</PackageTags>
   </PropertyGroup>
   <ItemGroup>

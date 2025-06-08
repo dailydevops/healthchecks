@@ -1,0 +1,62 @@
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Keycloak;
+
+using NetEvolve.Extensions.TUnit;
+using NetEvolve.HealthChecks.Keycloak;
+
+[TestGroup(nameof(Keycloak))]
+public sealed class KeycloakClientProviderTests
+{
+    [Test]
+    [MethodDataSource(
+        typeof(KeycloakClientProviderTestsData),
+        nameof(KeycloakClientProviderTestsData.InvalidArgumentsTestData)
+    )]
+    public void CreateClient_Theory_Expected(
+        Type expectedException,
+        KeycloakClientCreationMode mode,
+        string? baseAddress,
+        string? username,
+        string? password
+    )
+    {
+        var options = new KeycloakOptions
+        {
+            Mode = mode,
+            BaseAddress = baseAddress,
+            Username = username,
+            Password = password,
+        };
+        _ = Assert.Throws(expectedException, () => KeycloakClientProvider.CreateClient(options));
+    }
+}
+
+public static class KeycloakClientProviderTestsData
+{
+    public static IEnumerable<
+        Func<(Type, KeycloakClientCreationMode, string?, string?, string?)>
+    > InvalidArgumentsTestData()
+    {
+        yield return () =>
+            (
+                typeof(ArgumentOutOfRangeException),
+                (KeycloakClientCreationMode)(-1),
+                "base-address",
+                "username",
+                "password"
+            );
+        yield return () =>
+            (
+                typeof(ArgumentOutOfRangeException),
+                KeycloakClientCreationMode.ServiceProvider,
+                "base-address",
+                "username",
+                "password"
+            );
+        yield return () =>
+            (typeof(ArgumentNullException), KeycloakClientCreationMode.Internal, null, "username", "password");
+        yield return () =>
+            (typeof(ArgumentNullException), KeycloakClientCreationMode.Internal, "base-address", null, "password");
+        yield return () =>
+            (typeof(ArgumentNullException), KeycloakClientCreationMode.Internal, "base-address", "username", null);
+    }
+}

@@ -33,9 +33,8 @@ internal sealed class KeycloakHealthCheck : ConfigurableHealthCheckBase<Keycloak
         CancellationToken cancellationToken
     )
     {
-        var client = string.IsNullOrWhiteSpace(options.KeyedService)
-            ? _serviceProvider.GetRequiredService<KeycloakClient>()
-            : _serviceProvider.GetRequiredKeyedService<KeycloakClient>(options.KeyedService);
+        var clientProvider = _serviceProvider.GetRequiredService<KeycloakClientProvider>();
+        var client = clientProvider.GetClient(options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
