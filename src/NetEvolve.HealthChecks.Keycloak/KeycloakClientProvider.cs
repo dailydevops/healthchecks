@@ -30,8 +30,8 @@ internal sealed class KeycloakClientProvider
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual((int)options.Mode, (int)KeycloakClientCreationMode.Internal);
         ArgumentNullException.ThrowIfNullOrEmpty(options.BaseAddress);
-        ArgumentNullException.ThrowIfNullOrEmpty(options.Username);
-        ArgumentNullException.ThrowIfNullOrEmpty(options.Password);
+        ArgumentNullException.ThrowIfNull(options.Username);
+        ArgumentNullException.ThrowIfNull(options.Password);
 
         return new KeycloakClient(options.BaseAddress, options.Username, options.Password);
     }

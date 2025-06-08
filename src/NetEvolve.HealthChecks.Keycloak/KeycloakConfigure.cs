@@ -87,18 +87,14 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
             );
         }
 
-        if (string.IsNullOrWhiteSpace(options.Username))
+        if (options.Username is null)
         {
-            return Fail(
-                $"The username cannot be null or whitespace when using the `{creationModeName}` client creation mode."
-            );
+            return Fail($"The username cannot be null when using the `{creationModeName}` client creation mode.");
         }
 
-        if (string.IsNullOrWhiteSpace(options.Password))
+        if (options.Password is null)
         {
-            return Fail(
-                $"The password cannot be null or whitespace when using the `{creationModeName}` client creation mode."
-            );
+            return Fail($"The password cannot be null when using the `{creationModeName}` client creation mode.");
         }
 
         return Success;

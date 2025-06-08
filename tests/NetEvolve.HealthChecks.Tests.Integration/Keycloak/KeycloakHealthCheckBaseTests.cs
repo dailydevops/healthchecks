@@ -180,7 +180,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_BaseAddressEmpty_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_BaseAddressEmpty_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -197,7 +197,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_UsernameEmpty_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_UsernameNull_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -214,7 +214,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_PasswordEmpty_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_PasswordNull_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -232,7 +232,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,

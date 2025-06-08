@@ -91,7 +91,7 @@ public sealed class KeycloakConfigureTests
         yield return () =>
             (
                 false,
-                "The username cannot be null or whitespace when using the `Internal` client creation mode.",
+                "The username cannot be null when using the `Internal` client creation mode.",
                 "name",
                 new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
                 {
@@ -102,7 +102,7 @@ public sealed class KeycloakConfigureTests
         yield return () =>
             (
                 false,
-                "The password cannot be null or whitespace when using the `Internal` client creation mode.",
+                "The password cannot be null when using the `Internal` client creation mode.",
                 "name",
                 new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
                 {

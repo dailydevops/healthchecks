@@ -7,10 +7,7 @@ using NetEvolve.HealthChecks.Keycloak;
 public sealed class KeycloakClientProviderTests
 {
     [Test]
-    [MethodDataSource(
-        typeof(KeycloakClientProviderTestsData),
-        nameof(KeycloakClientProviderTestsData.InvalidArgumentsTestData)
-    )]
+    [MethodDataSource(nameof(InvalidArgumentsTestData))]
     public void CreateClient_Theory_Expected(
         Type expectedException,
         KeycloakClientCreationMode mode,
@@ -28,10 +25,7 @@ public sealed class KeycloakClientProviderTests
         };
         _ = Assert.Throws(expectedException, () => KeycloakClientProvider.CreateClient(options));
     }
-}
 
-public static class KeycloakClientProviderTestsData
-{
     public static IEnumerable<
         Func<(Type, KeycloakClientCreationMode, string?, string?, string?)>
     > InvalidArgumentsTestData()
