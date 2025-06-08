@@ -154,7 +154,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfigration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -170,7 +170,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfigration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
