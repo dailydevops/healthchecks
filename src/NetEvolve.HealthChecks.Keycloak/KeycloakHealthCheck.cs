@@ -38,11 +38,11 @@ internal sealed class KeycloakHealthCheck : ConfigurableHealthCheckBase<Keycloak
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isHealthy, result) = await commandTask
+        var (isNotTimedOut, resultIsValid) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isHealthy && result, name);
+        return HealthCheckState(isNotTimedOut && resultIsValid, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(KeycloakClient client, CancellationToken cancellationToken)
