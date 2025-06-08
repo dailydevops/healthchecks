@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Keycloak?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Keycloak/)
 [![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Keycloak?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Keycloak/)
 
-This package provides a health check for Keycloak services, based on the [Keycloak.Net.Core](https://www.nuget.org/packages/Keycloak.Net.Core/) package. The main purpose is to check if the server is available.
+This package provides a health check for Keycloak services, based on the [Keycloak.Net.Core](https://www.nuget.org/packages/Keycloak.Net.Core/) package. The main purpose is to check if the server is available and the realms reachable.
 
 :bulb: This package is available for .NET 8.0 and later.
 
@@ -45,7 +45,11 @@ The configuration looks like this:
   "HealthChecks": {
     "Keycloak": {
       "<name>": {
-        "KeyedService": "<key>", // Optional
+        "Mode": "<client_creation_mode>", // Optional, defaults to 'KeycloakClientCreationMode.ServiceProvider'
+        "KeyedService": "<key>", // Optional, used when Mode set to 'KeycloakClientCreationMode.ServiceProvider'
+        "BaseAddress": "<base_address>", // Required when Mode set to 'KeycloakClientCreationMode.Internal'
+        "Username": "<username>", // Required when Mode set to 'KeycloakClientCreationMode.Internal'
+        "Password": "<password>", // Required when Mode set to 'KeycloakClientCreationMode.Internal'
         "Timeout": "<timeout>" // Optional, default is 100 milliseconds
       }
     }
@@ -60,7 +64,11 @@ var builder = services.AddHealthChecks();
 
 builder.AddKeycloak("<name>", options =>
 {
-    options.KeyedService = "<key>"; // Optional
+    options.Mode = <client_creation_mode>; // Optional, defaults to 'KeycloakClientCreationMode.ServiceProvider'
+    options.KeyedService = "<key>"; // Optional, used when Mode set to 'KeycloakClientCreationMode.ServiceProvider'
+    options.BaseAddress = "<base_address>"; // Required when Mode set to 'KeycloakClientCreationMode.Internal'
+    options.Username = "<username>"; // Required when Mode set to 'KeycloakClientCreationMode.Internal'
+    options.Password = "<password>"; // Required when Mode set to 'KeycloakClientCreationMode.Internal'
     options.Timeout = <timeout>; // Optional, defaults to 100 milliseconds
 
     // Optional, defaults to NetEvolve.HealthChecks.Keycloak.DefaultCommandAsync
