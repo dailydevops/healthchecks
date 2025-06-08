@@ -97,7 +97,7 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddDuckDB_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddDuckDB_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDuckDB("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -112,7 +112,7 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddDuckDB_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddDuckDB_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDuckDB("TestNoValues"),
             HealthStatus.Unhealthy,

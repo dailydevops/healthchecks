@@ -100,7 +100,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOracle_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddOracle_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -115,7 +115,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddOracle_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddOracle_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOracle("TestNoValues"),
             HealthStatus.Unhealthy,

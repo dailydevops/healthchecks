@@ -98,7 +98,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddFirebird_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddFirebird_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -113,7 +113,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddFirebird_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddFirebird_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestNoValues"),
             HealthStatus.Unhealthy,

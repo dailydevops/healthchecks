@@ -184,7 +184,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfigration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddMongoDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -200,7 +200,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfigration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddMongoDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestNoValues"),
             HealthStatus.Unhealthy,

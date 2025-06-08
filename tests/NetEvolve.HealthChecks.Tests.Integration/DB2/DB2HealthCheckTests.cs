@@ -102,7 +102,7 @@ public class DB2HealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddDB2_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddDB2_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDB2("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -117,7 +117,7 @@ public class DB2HealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddDB2_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddDB2_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddDB2("TestNoValues"),
             HealthStatus.Unhealthy,

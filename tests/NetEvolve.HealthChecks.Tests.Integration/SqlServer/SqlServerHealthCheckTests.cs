@@ -101,7 +101,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServer_UseConfigration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddSqlServer_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServer("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -116,7 +116,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSqlServer_UseConfigration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddSqlServer_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServer("TestNoValues"),
             HealthStatus.Unhealthy,

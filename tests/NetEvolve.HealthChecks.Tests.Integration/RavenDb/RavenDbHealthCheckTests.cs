@@ -186,7 +186,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfigration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddRavenDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -202,7 +202,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfigration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddRavenDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestNoValues"),
             HealthStatus.Unhealthy,
