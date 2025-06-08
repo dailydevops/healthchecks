@@ -223,7 +223,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_TransportAddressAddressEmpty_ThrowsException() =>
+    public async Task AddArangoDb_UseConfiguration_TransportAddressEmpty_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,

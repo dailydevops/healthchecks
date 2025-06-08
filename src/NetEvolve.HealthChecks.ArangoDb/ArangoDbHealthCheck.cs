@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.ArangoDb;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ArangoDBNetStandard;
 using ArangoDBNetStandard.CursorApi.Models;
