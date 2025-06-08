@@ -39,11 +39,11 @@ internal sealed class ArangoDbHealthCheck : ConfigurableHealthCheckBase<ArangoDb
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isHealthy, result) = await commandTask
+        var (isNotTimedOut, isResultValid) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isHealthy && result, name);
+        return HealthCheckState(isNotTimedOut && isResultValid, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(ArangoDBClient client, CancellationToken cancellationToken)

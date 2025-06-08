@@ -207,6 +207,22 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
+    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddArangoDb("TestNoValues"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:ArangoDb:TestNoValues:Timeout", "-2" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
     public async Task AddKeycloak_UseConfiguration_TransportAddressAddressEmpty_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
@@ -253,22 +269,6 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     { "HealthChecks:ArangoDb:TestNoValues:Mode", $"{ArangoDbClientCreationMode.Internal}" },
                     { "HealthChecks:ArangoDb:TestNoValues:BaseAddress", "base-address" },
                     { "HealthChecks:ArangoDb:TestNoValues:Username", "username" },
-                };
-                _ = config.AddInMemoryCollection(values);
-            },
-            serviceBuilder: services => services.AddSingleton(_client)
-        );
-
-    [Test]
-    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_ThrowsException() =>
-        await RunAndVerify(
-            healthChecks => healthChecks.AddArangoDb("TestNoValues"),
-            HealthStatus.Unhealthy,
-            config =>
-            {
-                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
-                {
-                    { "HealthChecks:ArangoDb:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
