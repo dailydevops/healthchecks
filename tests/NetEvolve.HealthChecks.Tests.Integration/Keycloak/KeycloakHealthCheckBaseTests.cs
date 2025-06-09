@@ -232,7 +232,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_ThrowsException() =>
+    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
