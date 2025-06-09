@@ -10,7 +10,7 @@ internal sealed class ArangoDbClientProvider
 {
     private ConcurrentDictionary<string, ArangoDBClient>? _arangoDbClients;
 
-    internal ArangoDBClient GetClient(ArangoDbOptions options, IServiceProvider serviceProvider)
+    internal ArangoDBClient GetClient(string name, ArangoDbOptions options, IServiceProvider serviceProvider)
     {
         if (options.Mode == ArangoDbClientCreationMode.ServiceProvider)
         {
@@ -21,12 +21,7 @@ internal sealed class ArangoDbClientProvider
 
         _arangoDbClients ??= new ConcurrentDictionary<string, ArangoDBClient>(StringComparer.OrdinalIgnoreCase);
 
-        var clientKey =
-            options.Username is not null && options.Password is not null
-                ? $"{options.TransportAddress}:{options.Username}-{options.Password}"
-                : $"{options.TransportAddress}";
-
-        return _arangoDbClients.GetOrAdd(clientKey, _ => CreateClient(options));
+        return _arangoDbClients.GetOrAdd(name, _ => CreateClient(options));
     }
 
     internal static ArangoDBClient CreateClient(ArangoDbOptions options)

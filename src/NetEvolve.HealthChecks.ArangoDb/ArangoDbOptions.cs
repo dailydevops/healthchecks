@@ -58,6 +58,8 @@ public sealed record ArangoDbOptions
     /// </summary>
     /// <remarks>
     /// Defaults to <c>100 milliseconds</c>.
+    /// <br/>
+    /// Values below <see cref="Timeout.Infinite"/> (-1) are invalid.
     /// </remarks>
     public int Timeout { get; set; } = 100;
 

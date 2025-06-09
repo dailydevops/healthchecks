@@ -36,7 +36,7 @@ internal sealed class ArangoDbHealthCheck : ConfigurableHealthCheckBase<ArangoDb
     )
     {
         var clientProvider = _serviceProvider.GetRequiredService<ArangoDbClientProvider>();
-        var client = clientProvider.GetClient(options, _serviceProvider);
+        var client = clientProvider.GetClient(name, options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
