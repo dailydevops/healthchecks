@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);CA1034;IDE1006</NoWarn>
+    <NoWarn>$(NoWarn);CA1034;IDE1006;MSB3270</NoWarn>
     <OutputType>Exe</OutputType>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
