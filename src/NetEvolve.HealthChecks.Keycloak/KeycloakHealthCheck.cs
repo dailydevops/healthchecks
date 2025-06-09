@@ -34,7 +34,7 @@ internal sealed class KeycloakHealthCheck : ConfigurableHealthCheckBase<Keycloak
     )
     {
         var clientProvider = _serviceProvider.GetRequiredService<KeycloakClientProvider>();
-        var client = clientProvider.GetClient(options, _serviceProvider);
+        var client = clientProvider.GetClient(name, options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 

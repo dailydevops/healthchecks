@@ -9,7 +9,7 @@ internal sealed class KeycloakClientProvider
 {
     private ConcurrentDictionary<string, KeycloakClient>? _keycloakClients;
 
-    internal KeycloakClient GetClient(KeycloakOptions options, IServiceProvider serviceProvider)
+    internal KeycloakClient GetClient(string name, KeycloakOptions options, IServiceProvider serviceProvider)
     {
         if (options.Mode == KeycloakClientCreationMode.ServiceProvider)
         {
@@ -20,10 +20,7 @@ internal sealed class KeycloakClientProvider
 
         _keycloakClients ??= new ConcurrentDictionary<string, KeycloakClient>(StringComparer.OrdinalIgnoreCase);
 
-        return _keycloakClients.GetOrAdd(
-            $"{options.BaseAddress}:{options.Username}-{options.Password}",
-            _ => CreateClient(options)
-        );
+        return _keycloakClients.GetOrAdd(name, _ => CreateClient(options));
     }
 
     internal static KeycloakClient CreateClient(KeycloakOptions options)
