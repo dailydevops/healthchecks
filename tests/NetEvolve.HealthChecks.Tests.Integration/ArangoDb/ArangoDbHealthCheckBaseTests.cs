@@ -240,7 +240,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_UsernameNullWithPassword_ThrowsException() =>
+    public async Task AddArangoDb_UseConfiguration_UsernameNullWithPassword_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -258,7 +258,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_PasswordNullWithUsername_ThrowsException() =>
+    public async Task AddArangoDb_UseConfiguration_PasswordNullWithUsername_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
