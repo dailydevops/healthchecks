@@ -36,6 +36,7 @@
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.3.0" />
     <PackageVersion Include="DuckDB.NET.Data" Version="1.3.0" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.3" />
+    <PackageVersion Include="Keycloak.Net.Core" Version="1.0.34" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.11.0" />
@@ -71,6 +72,7 @@
     <PackageVersion Include="Testcontainers.Db2" Version="4.5.0" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.5.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.5.0" />
+    <PackageVersion Include="Testcontainers.Keycloak" Version="4.5.0" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="4.5.0" />
     <PackageVersion Include="Testcontainers.MongoDb" Version="4.5.0" />
     <PackageVersion Include="Testcontainers.MsSql" Version="4.5.0" />
