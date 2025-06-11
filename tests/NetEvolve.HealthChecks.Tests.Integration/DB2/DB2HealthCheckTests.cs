@@ -41,7 +41,7 @@ public class DB2HealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1 FROM SYSIBM.SYSDUMMY1; DBMS_LOCK.SLEEP(1);";
+                        options.Command = "SELECT 1 FROM SYSIBM.SYSDUMMY1;";
                         options.Timeout = 0;
                     }
                 );

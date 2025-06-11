@@ -40,7 +40,7 @@ public class SQLiteLegacyHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = ConnectionString;
-                        options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
+                        options.Command = "SELECT 1;";
                         options.Timeout = 0;
                     }
                 );
