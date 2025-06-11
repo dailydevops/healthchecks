@@ -138,7 +138,7 @@ public sealed class KeycloakHealthCheckTests
         {
             KeyedService = null,
             Timeout = 1000,
-            CommandAsync = async (_, cancellationToken) =>
+            CommandAsync = async (_, _) =>
             {
                 await Task.CompletedTask;
                 return true;
