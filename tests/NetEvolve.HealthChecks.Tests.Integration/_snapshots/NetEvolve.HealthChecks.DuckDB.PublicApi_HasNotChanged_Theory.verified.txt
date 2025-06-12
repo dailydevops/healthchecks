@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddDuckDB([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.DuckDB.DuckDBOptions>? options = null, params string[] tags) { }
     }
-    public sealed class DuckDBOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.DuckDB.DuckDBOptions>
+    public sealed class DuckDBOptions : System.IEquatable<NetEvolve.HealthChecks.DuckDB.DuckDBOptions>
     {
         public DuckDBOptions() { }
         public string Command { get; }

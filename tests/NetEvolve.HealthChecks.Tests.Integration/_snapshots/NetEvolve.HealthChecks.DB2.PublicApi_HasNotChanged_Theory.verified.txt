@@ -1,6 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.DB2
 {
-    public sealed class DB2Options : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.DB2.DB2Options>
+    public sealed class DB2Options : System.IEquatable<NetEvolve.HealthChecks.DB2.DB2Options>
     {
         public DB2Options() { }
         public string Command { get; }

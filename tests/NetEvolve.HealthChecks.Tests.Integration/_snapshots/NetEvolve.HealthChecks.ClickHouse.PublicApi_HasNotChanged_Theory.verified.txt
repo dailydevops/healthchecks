@@ -1,6 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.ClickHouse
 {
-    public sealed class ClickHouseOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.ClickHouse.ClickHouseOptions>
+    public sealed class ClickHouseOptions : System.IEquatable<NetEvolve.HealthChecks.ClickHouse.ClickHouseOptions>
     {
         public ClickHouseOptions() { }
         public string Command { get; }
