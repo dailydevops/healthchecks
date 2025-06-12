@@ -8,7 +8,6 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 using Raven.Client.Documents;
-using Raven.Client.Documents.Operations;
 using Raven.Client.ServerWide.Operations;
 
 internal sealed class RavenDbHealthCheck : ConfigurableHealthCheckBase<RavenDbOptions>

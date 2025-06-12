@@ -1,19 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer;
 
-using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.SqlHealthCheck;
 
-internal sealed class SqlServerHealthCheck : SqlCheckBase<SqlServerOptions>
+[GenerateSqlHealthCheck(typeof(SqlConnection), typeof(SqlServerOptions), false)]
+internal sealed partial class SqlServerHealthCheck(IOptionsMonitor<SqlServerOptions> optionsMonitor)
+    : ConfigurableHealthCheckBase<SqlServerOptions>(optionsMonitor)
 {
     /// <summary>
     /// The default sql command.
     /// </summary>
     public const string DefaultCommand = "SELECT 1;";
-
-    public SqlServerHealthCheck(IOptionsMonitor<SqlServerOptions> optionsMonitor)
-        : base(optionsMonitor) { }
-
-    protected override DbConnection CreateConnection(string connectionString) => new SqlConnection(connectionString);
 }

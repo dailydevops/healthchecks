@@ -1,21 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.SqlServer.Legacy;
 
-using System.Data.Common;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.SqlHealthCheck;
 
-internal sealed class SqlServerLegacyHealthCheck : SqlCheckBase<SqlServerLegacyOptions>
+[GenerateSqlHealthCheck(typeof(SqlConnection), typeof(SqlServerLegacyOptions), false)]
+internal sealed partial class SqlServerLegacyHealthCheck(IOptionsMonitor<SqlServerLegacyOptions> optionsMonitor)
+    : ConfigurableHealthCheckBase<SqlServerLegacyOptions>(optionsMonitor)
 {
     /// <summary>
     /// The default sql command.
     /// </summary>
     public const string DefaultCommand = "SELECT 1;";
-
-    public SqlServerLegacyHealthCheck(IOptionsMonitor<SqlServerLegacyOptions> optionsMonitor)
-        : base(optionsMonitor) { }
-
-#pragma warning disable CS0618 // Type or member is obsolete
-    protected override DbConnection CreateConnection(string connectionString) => new SqlConnection(connectionString);
-#pragma warning restore CS0618 // Type or member is obsolete
 }

@@ -8,7 +8,7 @@
         protected abstract System.Threading.Tasks.ValueTask<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult> ExecuteHealthCheckAsync(string name, Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus, TConfiguration options, System.Threading.CancellationToken cancellationToken);
         protected static Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult HealthCheckDegraded(string name) { }
         protected static Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult HealthCheckState(bool condition, string name) { }
-        protected static Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult HealthCheckUnhealthy(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus, string name, string message = "Unhealthy") { }
+        protected static Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult HealthCheckUnhealthy(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus, string name, string message = "Unhealthy", System.Exception? ex = null) { }
     }
     public abstract class HealthCheckBase : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck
     {
@@ -28,12 +28,5 @@
         string Command { get; }
         string ConnectionString { get; set; }
         int Timeout { get; set; }
-    }
-    public abstract class SqlCheckBase<TConfiguration> : NetEvolve.HealthChecks.Abstractions.ConfigurableHealthCheckBase<TConfiguration>
-        where TConfiguration :  class, NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<TConfiguration>, new ()
-    {
-        protected SqlCheckBase(Microsoft.Extensions.Options.IOptionsMonitor<TConfiguration> optionsMonitor) { }
-        protected abstract System.Data.Common.DbConnection CreateConnection(string connectionString);
-        protected override sealed System.Threading.Tasks.ValueTask<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult> ExecuteHealthCheckAsync(string name, Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus, TConfiguration options, System.Threading.CancellationToken cancellationToken) { }
     }
 }

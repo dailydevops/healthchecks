@@ -33,6 +33,8 @@
     <PackageVersion Include="DuckDB.NET.Data" Version="1.3.0" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.3" />
     <PackageVersion Include="Keycloak.Net.Core" Version="1.0.34" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.11.0" />

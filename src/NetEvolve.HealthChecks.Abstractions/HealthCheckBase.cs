@@ -20,15 +20,7 @@ public abstract class HealthCheckBase : IHealthCheck
 
         var name = context.Registration.Name;
         var failureStatus = context.Registration.FailureStatus;
-        return await InternalAsync(name, failureStatus, cancellationToken).ConfigureAwait(false);
-    }
 
-    private async ValueTask<HealthCheckResult> InternalAsync(
-        string name,
-        HealthStatus failureStatus,
-        CancellationToken cancellationToken
-    )
-    {
         try
         {
             return await ExecuteHealthCheckAsync(name, failureStatus, cancellationToken).ConfigureAwait(false);

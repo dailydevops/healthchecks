@@ -1,7 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
-/// General options for <see cref="SqlCheckBase{TConfiguration}"/>.
+/// General options for .
 /// </summary>
 public interface ISqlCheckOptions
 {

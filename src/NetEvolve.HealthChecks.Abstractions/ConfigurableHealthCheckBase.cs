@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Abstractions;
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -10,14 +11,13 @@ using Microsoft.Extensions.Options;
 /// Configurable implementation of <see cref="IHealthCheck"/>.
 /// </summary>
 /// <typeparam name="TConfiguration">Type of Configuration</typeparam>
-public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
+public abstract class ConfigurableHealthCheckBase<TConfiguration>(IOptionsMonitor<TConfiguration> optionsMonitor)
+    : IHealthCheck
     where TConfiguration : class, IEquatable<TConfiguration>, new()
 {
-    private readonly IOptionsMonitor<TConfiguration> _optionsMonitor;
+    private readonly IOptionsMonitor<TConfiguration> _optionsMonitor = optionsMonitor;
 
-    /// <inheritdoc/>
-    protected ConfigurableHealthCheckBase(IOptionsMonitor<TConfiguration> optionsMonitor) =>
-        _optionsMonitor = optionsMonitor;
+    private readonly TConfiguration _defaultConfiguration = new TConfiguration();
 
     /// <inheritdoc/>
     public async Task<HealthCheckResult> CheckHealthAsync(
@@ -32,31 +32,22 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
 
         if (cancellationToken.IsCancellationRequested)
         {
-            return new HealthCheckResult(failureStatus, description: $"{name}: Cancellation requested.");
+            return HealthCheckUnhealthy(failureStatus, name, "Cancellation requested.");
         }
 
-        return await InternalAsync(name, failureStatus, cancellationToken).ConfigureAwait(false);
-    }
-
-    private async Task<HealthCheckResult> InternalAsync(
-        string name,
-        HealthStatus failureStatus,
-        CancellationToken cancellationToken
-    )
-    {
         try
         {
             var options = _optionsMonitor.Get(name);
-            if (options?.Equals(new TConfiguration()) != false)
+            if (options?.Equals(_defaultConfiguration) != false)
             {
-                return new HealthCheckResult(HealthStatus.Unhealthy, description: $"{name}: Missing configuration.");
+                return HealthCheckUnhealthy(failureStatus, name, "Missing configuration.");
             }
 
             return await ExecuteHealthCheckAsync(name, failureStatus, options, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            return new HealthCheckResult(failureStatus, description: $"{name}: Unexpected error.", exception: ex);
+            return HealthCheckUnhealthy(failureStatus, name, "Unexpected error.", ex);
         }
     }
 
@@ -86,6 +77,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     /// <returns>
     /// A <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Healthy"/> or <see cref="HealthStatus.Degraded"/>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected static HealthCheckResult HealthCheckState(bool condition, string name) =>
         condition ? HealthCheckResult.Healthy($"{name}: Healthy") : HealthCheckDegraded(name);
 
@@ -95,15 +87,18 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     /// <param name="failureStatus">The <see cref="HealthStatus"/> to use for the unhealthy result.</param>
     /// <param name="name">The name of the health check to include in the description.</param>
     /// <param name="message">Additional message to include in the description. Defaults to "Unhealthy".</param>
+    /// <param name="ex">Additional exception to include in the result, if any. Defaults to <see langword="null"/>.</param>
     /// <returns>
     /// A <see cref="HealthCheckResult"/> with the specified <paramref name="failureStatus"/> and a description
     /// formatted as "{name}: {message}".
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected static HealthCheckResult HealthCheckUnhealthy(
         HealthStatus failureStatus,
         string name,
-        string message = "Unhealthy"
-    ) => new HealthCheckResult(failureStatus, $"{name}: {message}");
+        string message = "Unhealthy",
+        Exception? ex = null
+    ) => new HealthCheckResult(failureStatus, $"{name}: {message}", exception: ex);
 
     /// <summary>
     /// Returns a <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Degraded"/>.
@@ -114,6 +109,7 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration> : IHealthCheck
     /// <returns>
     /// A <see cref="HealthCheckResult"/> with <see cref="HealthStatus.Degraded"/>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected static HealthCheckResult HealthCheckDegraded(string name) =>
         HealthCheckResult.Degraded($"{name}: Degraded");
 }
