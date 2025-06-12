@@ -17,6 +17,6 @@
     <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" Condition=" '$(TargetFramework)' != 'netstandard2.0' " />
   </ItemGroup>
 </Project>

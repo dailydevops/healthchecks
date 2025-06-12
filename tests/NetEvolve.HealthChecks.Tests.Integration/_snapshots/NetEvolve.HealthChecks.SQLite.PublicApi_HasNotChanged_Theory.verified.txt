@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSQLite([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.SQLite.SQLiteOptions>? options = null, params string[] tags) { }
     }
-    public sealed class SQLiteOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.SQLite.SQLiteOptions>
+    public sealed class SQLiteOptions : System.IEquatable<NetEvolve.HealthChecks.SQLite.SQLiteOptions>
     {
         public SQLiteOptions() { }
         public string Command { get; }

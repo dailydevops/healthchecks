@@ -1,19 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.DB2;
 
-using System.Data.Common;
 using IBM.Data.Db2;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.SqlHealthCheck;
 
-internal sealed class DB2HealthCheck : SqlCheckBase<DB2Options>
+[GenerateSqlHealthCheck(typeof(DB2Connection), typeof(DB2Options), true)]
+internal sealed partial class DB2HealthCheck(IOptionsMonitor<DB2Options> optionsMonitor)
+    : ConfigurableHealthCheckBase<DB2Options>(optionsMonitor)
 {
     /// <summary>
     /// The default sql command.
     /// </summary>
     public const string DefaultCommand = "SELECT 1 FROM SYSIBM.SYSDUMMY1;";
-
-    public DB2HealthCheck(IOptionsMonitor<DB2Options> optionsMonitor)
-        : base(optionsMonitor) { }
-
-    protected override DbConnection CreateConnection(string connectionString) => new DB2Connection(connectionString);
 }

@@ -8,7 +8,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
-using NSubstitute.ReceivedExtensions;
 
 [TestGroup(nameof(RabbitMQ))]
 public class DependencyInjectionExtensionsTests

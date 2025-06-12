@@ -1,19 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.SQLite.Legacy;
 
-using System.Data.Common;
 using System.Data.SQLite;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.SqlHealthCheck;
 
-internal sealed class SQLiteLegacyHealthCheck : SqlCheckBase<SQLiteLegacyOptions>
+[GenerateSqlHealthCheck(typeof(SQLiteConnection), typeof(SQLiteLegacyOptions), true)]
+internal sealed partial class SQLiteLegacyHealthCheck(IOptionsMonitor<SQLiteLegacyOptions> optionsMonitor)
+    : ConfigurableHealthCheckBase<SQLiteLegacyOptions>(optionsMonitor)
 {
     /// <summary>
     /// The default sql command.
     /// </summary>
     public const string DefaultCommand = "SELECT 1;";
-
-    public SQLiteLegacyHealthCheck(IOptionsMonitor<SQLiteLegacyOptions> optionsMonitor)
-        : base(optionsMonitor) { }
-
-    protected override DbConnection CreateConnection(string connectionString) => new SQLiteConnection(connectionString);
 }

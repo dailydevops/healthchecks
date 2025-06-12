@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Odbc;
 
 using System.Data.Odbc;
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using NetEvolve.HealthChecks.Tests.Integration.SqlServer;
 

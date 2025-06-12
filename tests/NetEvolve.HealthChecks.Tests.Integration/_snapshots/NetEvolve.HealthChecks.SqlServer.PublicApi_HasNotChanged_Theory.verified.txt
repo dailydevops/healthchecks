@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSqlServer([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.SqlServer.SqlServerOptions>? options = null, params string[] tags) { }
     }
-    public sealed class SqlServerOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.SqlServer.SqlServerOptions>
+    public sealed class SqlServerOptions : System.IEquatable<NetEvolve.HealthChecks.SqlServer.SqlServerOptions>
     {
         public SqlServerOptions() { }
         public string Command { get; }

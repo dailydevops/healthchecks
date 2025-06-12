@@ -1,18 +1,34 @@
 ﻿namespace NetEvolve.HealthChecks.SQLite;
 
-using NetEvolve.HealthChecks.Abstractions;
-
 /// <summary>
 /// Options for <see cref="SQLiteHealthCheck"/>
 /// </summary>
-public sealed record SQLiteOptions : ISqlCheckOptions
+public sealed record SQLiteOptions
 {
-    /// <inheritdoc cref="ISqlCheckOptions.ConnectionString"/>
+    /// <summary>
+    /// Gets or sets the connection string for the SQLite database to check.
+    /// </summary>
+    /// <value>
+    /// The connection string used to establish a connection to the SQLite database.
+    /// </value>
     public string ConnectionString { get; set; } = default!;
 
-    /// <inheritdoc cref="ISqlCheckOptions.Timeout"/>
+    /// <summary>
+    /// Gets or sets the timeout in milliseconds to use when connecting and executing tasks against the SQLite database.
+    /// </summary>
+    /// <value>
+    /// The timeout in milliseconds. Default value is 100 milliseconds.
+    /// </value>
     public int Timeout { get; set; } = 100;
 
-    /// <inheritdoc cref="ISqlCheckOptions.Command"/>
+    /// <summary>
+    /// Gets the SQL command to execute against the SQLite database.
+    /// </summary>
+    /// <value>
+    /// The SQL command to execute. Default value is defined by <see cref="SQLiteHealthCheck.DefaultCommand"/>.
+    /// </value>
+    /// <remarks>
+    /// This property is for internal use only.
+    /// </remarks>
     public string Command { get; internal set; } = SQLiteHealthCheck.DefaultCommand;
 }

@@ -4,7 +4,7 @@
     {
         public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddMySql([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.MySql.Connector.MySqlOptions>? options = null, params string[] tags) { }
     }
-    public sealed class MySqlOptions : NetEvolve.HealthChecks.Abstractions.ISqlCheckOptions, System.IEquatable<NetEvolve.HealthChecks.MySql.Connector.MySqlOptions>
+    public sealed class MySqlOptions : System.IEquatable<NetEvolve.HealthChecks.MySql.Connector.MySqlOptions>
     {
         public MySqlOptions() { }
         public string Command { get; }

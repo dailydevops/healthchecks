@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Aran
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.HealthChecks.Keycloak", "src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj", "{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceGenerator.SqlHealthCheck", "src\SourceGenerator.SqlHealthCheck\SourceGenerator.SqlHealthCheck.csproj", "{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -539,6 +541,18 @@ Global
 		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x64.Build.0 = Release|Any CPU
 		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x86.ActiveCfg = Release|Any CPU
 		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7}.Release|x86.Build.0 = Release|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Debug|x64.Build.0 = Debug|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Debug|x86.Build.0 = Debug|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Release|x64.ActiveCfg = Release|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Release|x64.Build.0 = Release|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Release|x86.ActiveCfg = Release|Any CPU
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -580,6 +594,7 @@ Global
 		{80FC5AB3-F512-4F3F-8326-B5AB3D62309F} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{2E4636CD-8F5E-48DC-BB4E-0981F665D295} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 		{49EB16EF-0492-49A6-A7BE-82C3C06E88F7} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
+		{BCD5D4D2-2E7D-4DA8-8253-FA5761FBB6F5} = {EF615D18-42E2-48A4-8EBA-E652DC574C56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28B4CC2B-39E8-49C0-9687-78121BD83A53}
