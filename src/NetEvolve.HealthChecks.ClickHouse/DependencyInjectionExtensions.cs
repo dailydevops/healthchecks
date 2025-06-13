@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<ClickHouseConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<ClickHouseHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ClickHouseHealthCheck>(name);
 
         if (options is not null)
         {

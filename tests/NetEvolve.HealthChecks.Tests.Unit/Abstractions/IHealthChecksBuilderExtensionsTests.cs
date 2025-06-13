@@ -56,72 +56,16 @@ public class IHealthChecksBuilderExtensionsTests
     }
 
     [Test]
-    public void IsNameAlreadyUsed_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void ThrowIfNameIsAlreadyUsed_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.IsNameAlreadyUsed<TestHealthCheck>("Test");
+        void Act() => builder.ThrowIfNameIsAlreadyUsed<TestHealthCheck>("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
-    }
-
-    [Test]
-    public async Task IsNameAlreadyUsed_WhenNameIsUsedForSameServiceType_ReturnsTrue()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<TestHealthCheck>();
-        var builder = services.AddHealthChecks();
-        const string? name = "Test";
-
-        // Add a health check with the given name and type
-        _ = builder.AddCheck<TestHealthCheck>(name, HealthStatus.Healthy);
-
-        // Act
-        var result = builder.IsNameAlreadyUsed<TestHealthCheck>(name);
-
-        // Assert
-        _ = await Assert.That(result).IsTrue();
-    }
-
-    [Test]
-    public async Task IsNameAlreadyUsed_WhenNameIsUsedForDifferentServiceType_ReturnsFalse()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<TestHealthCheck>();
-        _ = services.AddSingleton<AnotherTestHealthCheck>();
-        var builder = services.AddHealthChecks();
-        const string? name = "Test";
-
-        // Add a health check with the given name but different type
-        _ = builder.AddCheck<AnotherTestHealthCheck>(name, HealthStatus.Healthy);
-
-        // Act
-        var result = builder.IsNameAlreadyUsed<TestHealthCheck>(name);
-
-        // Assert
-        _ = await Assert.That(result).IsFalse();
-    }
-
-    [Test]
-    public async Task IsNameAlreadyUsed_WhenNameIsNotUsed_ReturnsFalse()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<TestHealthCheck>();
-        var builder = services.AddHealthChecks();
-
-        // No health check added with the name "Test"
-
-        // Act
-        var result = builder.IsNameAlreadyUsed<TestHealthCheck>("Test");
-
-        // Assert
-        _ = await Assert.That(result).IsFalse();
     }
 
     // Test health check classes

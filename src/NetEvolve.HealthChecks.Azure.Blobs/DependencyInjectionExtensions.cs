@@ -49,10 +49,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ClientCreation>();
         }
 
-        if (builder.IsNameAlreadyUsed<BlobContainerAvailableHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<BlobContainerAvailableHealthCheck>(name);
 
         if (options is not null)
         {
@@ -99,10 +96,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ClientCreation>();
         }
 
-        if (builder.IsNameAlreadyUsed<BlobServiceAvailableHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<BlobServiceAvailableHealthCheck>(name);
 
         if (options is not null)
         {

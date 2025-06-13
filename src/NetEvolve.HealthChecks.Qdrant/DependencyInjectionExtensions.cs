@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<QdrantOptionsConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<QdrantHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<QdrantHealthCheck>(name);
 
         if (options is not null)
         {

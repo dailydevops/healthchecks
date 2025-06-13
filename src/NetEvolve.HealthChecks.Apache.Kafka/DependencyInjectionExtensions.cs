@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<KafkaConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<KafkaHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<KafkaHealthCheck>(name);
 
         if (options is not null)
         {

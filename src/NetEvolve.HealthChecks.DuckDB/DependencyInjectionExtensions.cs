@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<DuckDBConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<DuckDBHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<DuckDBHealthCheck>(name);
 
         if (options is not null)
         {

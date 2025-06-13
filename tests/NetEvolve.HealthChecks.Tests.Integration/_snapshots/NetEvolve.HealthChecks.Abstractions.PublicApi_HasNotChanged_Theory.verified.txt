@@ -18,9 +18,9 @@
     }
     public static class IHealthChecksBuilderExtensions
     {
-        public static bool IsNameAlreadyUsed<T>(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name)
-            where T : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck { }
         public static bool IsServiceTypeRegistered<T>(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder)
             where T :  class { }
+        public static void ThrowIfNameIsAlreadyUsed<T>(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name)
+            where T : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck { }
     }
 }

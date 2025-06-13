@@ -47,10 +47,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<KeycloakConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<KeycloakHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<KeycloakHealthCheck>(name);
 
         if (options is not null)
         {

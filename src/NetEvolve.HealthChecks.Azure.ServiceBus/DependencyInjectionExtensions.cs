@@ -49,10 +49,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ServiceBusClientFactory>();
         }
 
-        if (builder.IsNameAlreadyUsed<ServiceBusQueueHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ServiceBusQueueHealthCheck>(name);
 
         if (options is not null)
         {
@@ -99,10 +96,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ServiceBusClientFactory>();
         }
 
-        if (builder.IsNameAlreadyUsed<ServiceBusSubscriptionHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ServiceBusSubscriptionHealthCheck>(name);
 
         if (options is not null)
         {
@@ -149,10 +143,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ServiceBusClientFactory>();
         }
 
-        if (builder.IsNameAlreadyUsed<ServiceBusTopicHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ServiceBusTopicHealthCheck>(name);
 
         if (options is not null)
         {

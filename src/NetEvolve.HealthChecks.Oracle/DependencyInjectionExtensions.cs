@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<OracleConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<OracleHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<OracleHealthCheck>(name);
 
         if (options is not null)
         {

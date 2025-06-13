@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<OdbcConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<OdbcHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<OdbcHealthCheck>(name);
 
         if (options is not null)
         {

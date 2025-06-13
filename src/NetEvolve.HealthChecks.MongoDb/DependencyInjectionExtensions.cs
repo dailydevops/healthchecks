@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<MongoDbConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<MongoDbHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<MongoDbHealthCheck>(name);
 
         if (options is not null)
         {

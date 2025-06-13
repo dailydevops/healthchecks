@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<RedpandaConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<RedpandaHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<RedpandaHealthCheck>(name);
 
         if (options is not null)
         {
