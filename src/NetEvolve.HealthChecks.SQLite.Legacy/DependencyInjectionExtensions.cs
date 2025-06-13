@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SQLiteLegacyConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<SQLiteLegacyHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<SQLiteLegacyHealthCheck>(name);
 
         if (options is not null)
         {

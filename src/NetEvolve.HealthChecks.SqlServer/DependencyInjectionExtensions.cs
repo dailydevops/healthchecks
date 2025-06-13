@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SqlServerConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<SqlServerHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<SqlServerHealthCheck>(name);
 
         if (options is not null)
         {

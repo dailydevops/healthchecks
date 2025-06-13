@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<DB2Configure>();
         }
 
-        if (builder.IsNameAlreadyUsed<DB2HealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<DB2HealthCheck>(name);
 
         if (options is not null)
         {

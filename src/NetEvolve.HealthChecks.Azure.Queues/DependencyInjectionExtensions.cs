@@ -49,10 +49,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ClientCreation>();
         }
 
-        if (builder.IsNameAlreadyUsed<QueueClientAvailableHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<QueueClientAvailableHealthCheck>(name);
 
         if (options is not null)
         {
@@ -99,10 +96,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ClientCreation>();
         }
 
-        if (builder.IsNameAlreadyUsed<QueueServiceAvailableHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<QueueServiceAvailableHealthCheck>(name);
 
         if (options is not null)
         {

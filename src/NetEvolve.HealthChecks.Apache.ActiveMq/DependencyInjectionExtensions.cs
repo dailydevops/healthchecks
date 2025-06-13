@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<ActiveMqConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<ActiveMqHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ActiveMqHealthCheck>(name);
 
         if (options is not null)
         {

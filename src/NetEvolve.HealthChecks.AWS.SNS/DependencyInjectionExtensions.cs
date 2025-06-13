@@ -45,10 +45,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SimpleNotificationServiceConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<SimpleNotificationServiceHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<SimpleNotificationServiceHealthCheck>(name);
 
         if (options is not null)
         {

@@ -47,10 +47,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<ArangoDbConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<ArangoDbHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ArangoDbHealthCheck>(name);
 
         if (options is not null)
         {

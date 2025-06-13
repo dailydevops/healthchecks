@@ -45,10 +45,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<RedisConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<RedisHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<RedisHealthCheck>(name);
 
         if (options is not null)
         {

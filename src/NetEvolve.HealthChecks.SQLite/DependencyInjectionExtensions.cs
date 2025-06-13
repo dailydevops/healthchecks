@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<SQLiteConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<SQLiteHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<SQLiteHealthCheck>(name);
 
         if (options is not null)
         {

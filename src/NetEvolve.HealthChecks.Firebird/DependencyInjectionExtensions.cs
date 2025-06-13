@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<FirebirdConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<FirebirdHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<FirebirdHealthCheck>(name);
 
         if (options is not null)
         {

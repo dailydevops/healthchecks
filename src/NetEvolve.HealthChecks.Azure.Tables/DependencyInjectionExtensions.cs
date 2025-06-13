@@ -49,10 +49,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ClientCreation>();
         }
 
-        if (builder.IsNameAlreadyUsed<TableClientAvailableHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<TableClientAvailableHealthCheck>(name);
 
         if (options is not null)
         {
@@ -99,10 +96,7 @@ public static class DependencyInjectionExtensions
             builder.Services.TryAddSingleton<ClientCreation>();
         }
 
-        if (builder.IsNameAlreadyUsed<TableServiceAvailableHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<TableServiceAvailableHealthCheck>(name);
 
         if (options is not null)
         {

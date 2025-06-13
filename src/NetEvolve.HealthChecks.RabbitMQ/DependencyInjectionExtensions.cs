@@ -46,10 +46,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<RabbitMQConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<RabbitMQHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<RabbitMQHealthCheck>(name);
 
         if (options is not null)
         {
