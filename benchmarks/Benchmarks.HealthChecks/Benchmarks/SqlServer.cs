@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using NetEvolve.HealthChecks.SqlServer;
+using NetEvolve.HealthChecks.SqlServer.Legacy;
 using Testcontainers.MsSql;
 
 public class SqlServer
@@ -17,6 +18,7 @@ public class SqlServer
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private BenchmarkHealthCheckService _netEvolveHealthCheckExecutor;
+    private BenchmarkHealthCheckService _netEvolveLegacyHealthCheckExecutor;
     private BenchmarkHealthCheckService _anotherHealthCheckExecutor;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
@@ -42,8 +44,18 @@ public class SqlServer
                 options => options.ConnectionString = _databaseTwo.GetConnectionString()
             );
         var netEvolveServiceProvider = netEvolveServices.BuildServiceProvider();
-
         _netEvolveHealthCheckExecutor = netEvolveServiceProvider.GetRequiredService<BenchmarkHealthCheckService>();
+
+        var netEvolveLegacyServices = new ServiceCollection()
+            .AddSingleton<IConfiguration>(configuration)
+            .AddSingleton<BenchmarkHealthCheckService>();
+        _ = netEvolveLegacyServices
+            .AddHealthChecks()
+            .AddSqlServerLegacy(nameof(_databaseOne), options => _databaseOne.GetConnectionString())
+            .AddSqlServerLegacy(nameof(_databaseTwo), options => _databaseTwo.GetConnectionString());
+        var netEvolveLegacyServiceProvider = netEvolveLegacyServices.BuildServiceProvider();
+        _netEvolveLegacyHealthCheckExecutor =
+            netEvolveLegacyServiceProvider.GetRequiredService<BenchmarkHealthCheckService>();
 
         var aspnetcoreServices = new ServiceCollection()
             .AddSingleton<IConfiguration>(configuration)
@@ -77,4 +89,7 @@ public class SqlServer
 
     [Benchmark(Description = "NetEvolve.HealthChecks.SqlServer")]
     public Task BenchmarkNetEvolveAsync() => _ = _netEvolveHealthCheckExecutor.CheckHealthAsync();
+
+    [Benchmark(Description = "NetEvolve.HealthChecks.SqlServer.Legacy")]
+    public Task BenchmarkNetEvolveLegacyAsync() => _ = _netEvolveLegacyHealthCheckExecutor.CheckHealthAsync();
 }
