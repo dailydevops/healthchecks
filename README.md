@@ -12,7 +12,15 @@
 This is a mono repository for several NuGet packages based on the [Microsoft.Extensions.Diagnostics.HealthChecks](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.HealthChecks) package. The main goal of this repository is to provide a set of health checks for different services and frameworks, which are fully configurable either via code or configuration.
 
 ### What is the difference between this repository and the [AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks) repository?
-The main difference is that we try to focus on providing packages that are fully configurable via code or configuration. This means that you can configure the health checks in your `Program.cs` file, or in your `appsettings.json` file, or in any other configuration provider. In some cases, we provide the same healthcheck for a service with an alternative implementation. For example, we provide a healthcheck for MySql that is based on `MySql.Data` and one that is based on `MySqlConnector`. This allows you to choose the implementation that best suits your needs or fits your existing dependencies.
+The main difference is that we try to focus on providing packages that are fully configurable via code or configuration. This means that you can configure the health checks in your `Program.cs` file, or in your `appsettings.json` file, or in any other configuration provider. While we continue to focus on configurability, we always consider the possibility of performance optimization. In some cases, we provide the same healthcheck for a service with an alternative implementation. For example, we provide a healthcheck for MySql that is based on `MySql.Data` and one that is based on `MySqlConnector`. This allows you to choose the implementation that best suits your needs or fits your existing dependencies.
+
+While we continue to focus on configurability, we always consider the possibility of performance optimization.
+<!-- benchmark:sqlserver -->
+| Method                            | Mean     | Error    | StdDev   | Ratio        | RatioSD | Allocated | Alloc Ratio |
+|---------------------------------- |---------:|---------:|---------:|-------------:|--------:|----------:|------------:|
+| AspNetCore.HealthChecks.SqlServer | 651.3 μs | 31.19 μs | 87.45 μs |     baseline |         |  10.42 KB |             |
+| NetEvolve.HealthChecks.SqlServer  | 596.6 μs | 23.81 μs | 70.22 μs | 1.11x faster |   0.20x |   5.25 KB |  1.98x less |
+<!-- /benchmark:sqlserver -->
 
 In addition, we try to support the latest LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)) as well as the latest preview version of .NET for at least 3 years, but we **can't guarantee** this. This depends on the support of related NuGet packages and the .NET platform itself. See the [Supported .NET Version](#supported-net-version) section for more details.
 
