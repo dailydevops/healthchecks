@@ -1,0 +1,65 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".filenesting.json" />
+    <File Path=".gitignore" />
+    <File Path=".gitmodules" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Solution.props" />
+    <File Path="GitVersion.yml" />
+    <File Path="LICENSE" />
+    <File Path="new-project.ps1" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+    <File Path="update-solution.ps1" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/NetEvolve.HealthChecks.Abstractions/NetEvolve.HealthChecks.Abstractions.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Apache.ActiveMq/NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Apache.Kafka/NetEvolve.HealthChecks.Apache.Kafka.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.ArangoDb/NetEvolve.HealthChecks.ArangoDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.AWS.SNS/NetEvolve.HealthChecks.AWS.SNS.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.AWS/NetEvolve.HealthChecks.AWS.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Azure.Blobs/NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Azure.Queues/NetEvolve.HealthChecks.Azure.Queues.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Azure.ServiceBus/NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Azure.Tables/NetEvolve.HealthChecks.Azure.Tables.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Azure/NetEvolve.HealthChecks.Azure.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.ClickHouse/NetEvolve.HealthChecks.ClickHouse.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Dapr/NetEvolve.HealthChecks.Dapr.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.DB2/NetEvolve.HealthChecks.DB2.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.DuckDB/NetEvolve.HealthChecks.DuckDB.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Firebird/NetEvolve.HealthChecks.Firebird.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Keycloak/NetEvolve.HealthChecks.Keycloak.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.MySql.Connector/NetEvolve.HealthChecks.MySql.Connector.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.MySql/NetEvolve.HealthChecks.MySql.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Npgsql/NetEvolve.HealthChecks.Npgsql.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Odbc/NetEvolve.HealthChecks.Odbc.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Oracle/NetEvolve.HealthChecks.Oracle.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Qdrant/NetEvolve.HealthChecks.Qdrant.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.RabbitMQ/NetEvolve.HealthChecks.RabbitMQ.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.RavenDb/NetEvolve.HealthChecks.RavenDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Redis/NetEvolve.HealthChecks.Redis.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Redpanda/NetEvolve.HealthChecks.Redpanda.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.SQLite.Legacy/NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.SQLite/NetEvolve.HealthChecks.SQLite.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.SqlServer.Devart/NetEvolve.HealthChecks.SqlServer.Devart.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.SqlServer.Legacy/NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.SqlServer/NetEvolve.HealthChecks.SqlServer.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks/NetEvolve.HealthChecks.csproj" />
+    <Project Path="src/SourceGenerator.SqlHealthCheck/SourceGenerator.SqlHealthCheck.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NetEvolve.HealthChecks.Tests.Architecture/NetEvolve.HealthChecks.Tests.Architecture.csproj" />
+    <Project Path="tests/NetEvolve.HealthChecks.Tests.Integration/NetEvolve.HealthChecks.Tests.Integration.csproj" />
+    <Project Path="tests/NetEvolve.HealthChecks.Tests.Unit/NetEvolve.HealthChecks.Tests.Unit.csproj" />
+  </Folder>
+</Solution>
