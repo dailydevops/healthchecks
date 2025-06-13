@@ -28,5 +28,5 @@ jobs:
       dotnet-logging: ${{ inputs.dotnet-logging }}
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      solution: ./HealthChecks.sln
+      solution: ./HealthChecks.slnx
     secrets: inherit
