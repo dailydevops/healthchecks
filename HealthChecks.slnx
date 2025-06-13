@@ -51,7 +51,6 @@
     <Project Path="src/NetEvolve.HealthChecks.Redpanda/NetEvolve.HealthChecks.Redpanda.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SQLite.Legacy/NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SQLite/NetEvolve.HealthChecks.SQLite.csproj" />
-    <Project Path="src/NetEvolve.HealthChecks.SqlServer.Devart/NetEvolve.HealthChecks.SqlServer.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SqlServer.Legacy/NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SqlServer/NetEvolve.HealthChecks.SqlServer.csproj" />
     <Project Path="src/NetEvolve.HealthChecks/NetEvolve.HealthChecks.csproj" />
