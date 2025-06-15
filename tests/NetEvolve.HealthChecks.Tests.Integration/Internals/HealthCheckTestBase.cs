@@ -82,9 +82,11 @@ public abstract class HealthCheckTestBase
     {
         context.Response.ContentType = "application/json; charset=utf-8";
 
-        using (var memoryStream = new MemoryStream())
+        var memoryStream = new MemoryStream();
+        await using (memoryStream.ConfigureAwait(false))
         {
-            using (var writer = new Utf8JsonWriter(memoryStream, _options))
+            var writer = new Utf8JsonWriter(memoryStream, _options);
+            await using (writer.ConfigureAwait(false))
             {
                 writer.WriteStartObject();
                 writer.WriteString("status", report.Status.ToString());
