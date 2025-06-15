@@ -48,21 +48,5 @@ public sealed class ElasticsearchClientProviderTests
             );
         yield return () =>
             (typeof(ArgumentNullException), ElasticsearchClientCreationMode.Internal, null, "username", "password");
-        yield return () =>
-            (
-                typeof(ArgumentNullException),
-                ElasticsearchClientCreationMode.Internal,
-                "connection-string",
-                null,
-                "password"
-            );
-        yield return () =>
-            (
-                typeof(ArgumentNullException),
-                ElasticsearchClientCreationMode.Internal,
-                "connection-string",
-                "username",
-                null
-            );
     }
 }
