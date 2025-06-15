@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["redpanda", "message-queue"];
+    private static readonly string[] _defaultTags = ["redpanda", "messeging"];
 
     /// <summary>
     /// Add a health check for Redpanda.

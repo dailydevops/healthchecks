@@ -6,7 +6,7 @@
       status: Degraded,
       tags: [
         kafka,
-        message-queue
+        messeging
       ]
     }
   ],
