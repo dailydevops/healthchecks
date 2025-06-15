@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
@@ -33,9 +32,9 @@ public static class DependencyInjectionExtensions
         params string[] tags
     )
     {
-        Argument.ThrowIfNull(builder);
-        Argument.ThrowIfNullOrEmpty(name);
-        Argument.ThrowIfNull(tags);
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<RedisDatabaseCheckMarker>())
         {

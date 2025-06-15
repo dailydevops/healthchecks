@@ -3,7 +3,6 @@
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class OdbcConfigure
@@ -17,7 +16,7 @@ internal sealed class OdbcConfigure
 
     public void Configure(string? name, OdbcOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Odbc:{name}", options);
     }
 

@@ -6,7 +6,6 @@ using global::Azure.Storage.Queues;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class QueueServiceAvailableConfigure
@@ -24,7 +23,7 @@ internal sealed class QueueServiceAvailableConfigure
 
     public void Configure(string? name, QueueServiceAvailableOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:AzureQueueService:{name}", options);
     }
 

@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class RedisConfigure : IConfigureNamedOptions<RedisOptions>, IValidateOptions<RedisOptions>
@@ -13,7 +12,7 @@ internal sealed class RedisConfigure : IConfigureNamedOptions<RedisOptions>, IVa
 
     public void Configure(string? name, RedisOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:RedisDatabase:{name}", options);
     }
 

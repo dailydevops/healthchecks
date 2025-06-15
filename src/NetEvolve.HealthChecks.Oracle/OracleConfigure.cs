@@ -3,7 +3,6 @@
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class OracleConfigure
@@ -17,7 +16,7 @@ internal sealed class OracleConfigure
 
     public void Configure(string? name, OracleOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Oracle:{name}", options);
     }
 

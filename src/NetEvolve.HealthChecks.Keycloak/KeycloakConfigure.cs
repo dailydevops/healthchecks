@@ -5,7 +5,6 @@ using global::Keycloak.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions>, IValidateOptions<KeycloakOptions>
@@ -27,7 +26,7 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
     /// <inheritdoc />
     public void Configure(string? name, KeycloakOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Keycloak:{name}", options);
     }
 

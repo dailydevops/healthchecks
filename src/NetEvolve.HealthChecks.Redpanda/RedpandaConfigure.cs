@@ -3,7 +3,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class RedpandaConfigure : IConfigureNamedOptions<RedpandaOptions>, IValidateOptions<RedpandaOptions>
@@ -14,7 +13,7 @@ internal sealed class RedpandaConfigure : IConfigureNamedOptions<RedpandaOptions
 
     public void Configure(string? name, RedpandaOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Redpanda:{name}", options);
     }
 

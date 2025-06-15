@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal class ServiceBusTopicOptionsConfigure
@@ -15,7 +14,7 @@ internal class ServiceBusTopicOptionsConfigure
 
     public void Configure(string? name, ServiceBusTopicOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:AzureServiceBusTopic:{name}", options);
     }
 
