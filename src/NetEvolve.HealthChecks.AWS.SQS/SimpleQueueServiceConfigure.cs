@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 
 internal sealed class SimpleQueueServiceConfigure
     : IConfigureNamedOptions<SimpleQueueServiceOptions>,
@@ -14,7 +13,7 @@ internal sealed class SimpleQueueServiceConfigure
 
     public void Configure(string? name, SimpleQueueServiceOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:AWSSQS:{name}", options);
     }
 

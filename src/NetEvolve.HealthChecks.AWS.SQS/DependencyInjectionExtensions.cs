@@ -3,7 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 using NetEvolve.HealthChecks.Abstractions;
 
 /// <summary>
@@ -33,7 +32,7 @@ public static class DependencyInjectionExtensions
     )
     {
         ArgumentNullException.ThrowIfNull(builder);
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<SimpleQueueServiceCheckMarker>())
