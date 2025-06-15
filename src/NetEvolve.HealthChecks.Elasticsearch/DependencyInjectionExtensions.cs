@@ -47,10 +47,7 @@ public static class DependencyInjectionExtensions
                 .ConfigureOptions<ElasticsearchConfigure>();
         }
 
-        if (builder.IsNameAlreadyUsed<ElasticsearchHealthCheck>(name))
-        {
-            throw new ArgumentException($"Name `{name}` already in use.", nameof(name), null);
-        }
+        builder.ThrowIfNameIsAlreadyUsed<ElasticsearchHealthCheck>(name);
 
         if (options is not null)
         {
