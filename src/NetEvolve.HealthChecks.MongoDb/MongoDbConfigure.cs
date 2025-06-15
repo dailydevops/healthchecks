@@ -4,7 +4,6 @@ using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class MongoDbConfigure : IConfigureNamedOptions<MongoDbOptions>, IValidateOptions<MongoDbOptions>
@@ -20,7 +19,7 @@ internal sealed class MongoDbConfigure : IConfigureNamedOptions<MongoDbOptions>,
     /// <inheritdoc />
     public void Configure(string? name, MongoDbOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:MongoDb:{name}", options);
     }
 

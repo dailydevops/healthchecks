@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 /// <summary>
@@ -21,7 +20,7 @@ internal sealed class RabbitMQConfigure : IConfigureNamedOptions<RabbitMQOptions
     /// <inheritdoc />
     public void Configure(string? name, RabbitMQOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:RabbitMQ:{name}", options);
     }
 

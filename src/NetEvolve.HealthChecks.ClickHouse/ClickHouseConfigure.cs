@@ -3,7 +3,6 @@
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class ClickHouseConfigure
@@ -17,7 +16,7 @@ internal sealed class ClickHouseConfigure
 
     public void Configure(string? name, ClickHouseOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:ClickHouse:{name}", options);
     }
 

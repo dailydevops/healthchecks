@@ -4,7 +4,6 @@ using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class RavenDbConfigure : IConfigureNamedOptions<RavenDbOptions>, IValidateOptions<RavenDbOptions>
@@ -20,7 +19,7 @@ internal sealed class RavenDbConfigure : IConfigureNamedOptions<RavenDbOptions>,
     /// <inheritdoc />
     public void Configure(string? name, RavenDbOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:RavenDb:{name}", options);
     }
 

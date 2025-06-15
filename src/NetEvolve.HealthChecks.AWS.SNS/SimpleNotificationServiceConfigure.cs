@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 
 internal sealed class SimpleNotificationServiceConfigure
     : IConfigureNamedOptions<SimpleNotificationServiceOptions>,
@@ -14,7 +13,7 @@ internal sealed class SimpleNotificationServiceConfigure
 
     public void Configure(string? name, SimpleNotificationServiceOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:AWSSNS:{name}", options);
     }
 
