@@ -5,9 +5,9 @@
       name: ServiceBusSubscriptionServiceProviderPeekHealthy,
       status: Healthy,
       tags: [
-        messaging,
         azure,
-        servicebus
+        servicebus,
+        messaging
       ]
     }
   ],

@@ -5,9 +5,9 @@
       name: ServiceBusQueueServiceProviderPeekDegraded,
       status: Degraded,
       tags: [
-        messaging,
         azure,
-        servicebus
+        servicebus,
+        messaging
       ]
     }
   ],

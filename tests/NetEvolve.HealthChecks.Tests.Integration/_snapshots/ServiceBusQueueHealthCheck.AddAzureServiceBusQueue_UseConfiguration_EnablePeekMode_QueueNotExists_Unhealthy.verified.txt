@@ -9,9 +9,9 @@
       name: ConfigurationUnhealthy,
       status: Unhealthy,
       tags: [
-        messaging,
         azure,
-        servicebus
+        servicebus,
+        messaging
       ]
     }
   ],
