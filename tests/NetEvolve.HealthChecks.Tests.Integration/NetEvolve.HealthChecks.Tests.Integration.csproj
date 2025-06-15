@@ -117,6 +117,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Legacy\NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Devart\NetEvolve.HealthChecks.SqlServer.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Legacy\NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
