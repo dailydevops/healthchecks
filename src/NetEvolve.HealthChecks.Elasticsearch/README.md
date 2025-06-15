@@ -47,7 +47,7 @@ The configuration looks like this:
       "<name>": {
         "Mode": "<client_creation_mode>", // Optional, defaults to 'ElasticsearchClientCreationMode.ServiceProvider'
         "KeyedService": "<key>", // Optional, used when Mode set to 'ElasticsearchClientCreationMode.ServiceProvider'
-        "ConnectionString": "<connection_string_>", // Required when Mode set to 'ElasticsearchClientCreationMode.Internal'
+        "ConnectionString": "<connection_string>", // Required when Mode set to 'ElasticsearchClientCreationMode.Internal'
         "Username": "<username>", // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Password is set
         "Password": "<password>", // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Username is set
         "Timeout": "<timeout>" // Optional, default is 100 milliseconds
@@ -66,7 +66,7 @@ builder.AddElasticsearch("<name>", options =>
 {
     options.Mode = <client_creation_mode>; // Optional, defaults to 'ElasticsearchClientCreationMode.ServiceProvider'
     options.KeyedService = "<key>"; // Optional, used when Mode set to 'ElasticsearchClientCreationMode.ServiceProvider'
-    options.ConnectionString = "<connection_string_>"; // Required when Mode set to 'ElasticsearchClientCreationMode.Internal'
+    options.ConnectionString = "<connection_string>"; // Required when Mode set to 'ElasticsearchClientCreationMode.Internal'
     options.Username = "<username>"; // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Password is set
     options.Password = "<password>"; // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Username is set
     options.Timeout = <timeout>; // Optional, defaults to 100 milliseconds

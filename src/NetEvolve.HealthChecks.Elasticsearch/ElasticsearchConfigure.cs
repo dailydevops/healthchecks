@@ -82,8 +82,6 @@ internal sealed class ElasticsearchConfigure
     private static ValidateOptionsResult ValidateCreationModeInternal(ElasticsearchOptions options)
     {
         const string creationModeName = nameof(ElasticsearchClientCreationMode.Internal);
-        var usernameNullOrEmpty = string.IsNullOrEmpty(options.Username);
-        var passwordNullOrEmpty = string.IsNullOrEmpty(options.Password);
 
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {
@@ -92,17 +90,20 @@ internal sealed class ElasticsearchConfigure
             );
         }
 
-        if (usernameNullOrEmpty && !passwordNullOrEmpty)
+        var usernameNullOrWhitespace = string.IsNullOrWhiteSpace(options.Username);
+        var passwordNullOrWhitespace = string.IsNullOrWhiteSpace(options.Password);
+
+        if (usernameNullOrWhitespace && !passwordNullOrWhitespace)
         {
             return Fail(
-                $"The username cannot be null when using the `{creationModeName}` client creation mode with a password."
+                $"The username cannot be null or whitespace when using the `{creationModeName}` client creation mode with a password."
             );
         }
 
-        if (passwordNullOrEmpty && !usernameNullOrEmpty)
+        if (passwordNullOrWhitespace && !usernameNullOrWhitespace)
         {
             return Fail(
-                $"The password cannot be null when using the `{creationModeName}` client creation mode with a username."
+                $"The password cannot be null or whitespace when using the `{creationModeName}` client creation mode with a username."
             );
         }
 

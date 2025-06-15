@@ -87,29 +87,19 @@ public sealed class ElasticsearchConfigureTests
         yield return () =>
             (
                 false,
-                "The CA certificate fingerprint cannot be null or whitespace when using the `Internal` client creation mode.",
+                "The username cannot be null or whitespace when using the `Internal` client creation mode with a password.",
                 "name",
                 new ElasticsearchOptions
                 {
                     Mode = ElasticsearchClientCreationMode.Internal,
                     ConnectionString = "connection-string",
+                    Password = "password",
                 }
             );
         yield return () =>
             (
                 false,
-                "The username cannot be null when using the `Internal` client creation mode.",
-                "name",
-                new ElasticsearchOptions
-                {
-                    Mode = ElasticsearchClientCreationMode.Internal,
-                    ConnectionString = "connection-string",
-                }
-            );
-        yield return () =>
-            (
-                false,
-                "The password cannot be null when using the `Internal` client creation mode.",
+                "The password cannot be null or whitespace when using the `Internal` client creation mode with a username.",
                 "name",
                 new ElasticsearchOptions
                 {
