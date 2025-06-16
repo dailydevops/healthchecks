@@ -13,7 +13,7 @@ public static class DependencyInjectionExtensions
     private static readonly string[] _defaultTags = ["aws", "sqs", "messaging"];
 
     /// <summary>
-    /// Add a health check for AWS Simple Notification Service (SNS).
+    /// Add a health check for AWS Simple Queue Service (SQS).
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="SimpleQueueServiceHealthCheck"/>.</param>
