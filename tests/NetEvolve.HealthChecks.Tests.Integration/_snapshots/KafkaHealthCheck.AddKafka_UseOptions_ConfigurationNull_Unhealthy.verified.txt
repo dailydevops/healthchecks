@@ -10,7 +10,7 @@
       status: Unhealthy,
       tags: [
         kafka,
-        messeging
+        messaging
       ]
     }
   ],

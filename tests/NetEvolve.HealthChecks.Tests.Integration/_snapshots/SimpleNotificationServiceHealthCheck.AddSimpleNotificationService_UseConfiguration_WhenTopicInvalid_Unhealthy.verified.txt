@@ -7,7 +7,7 @@
       tags: [
         aws,
         sns,
-        messeging
+        messaging
       ]
     }
   ],

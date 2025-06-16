@@ -7,7 +7,7 @@
       tags: [
         aws,
         sqs,
-        messeging
+        messaging
       ]
     }
   ],

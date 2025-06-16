@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["aws", "sns", "messeging"];
+    private static readonly string[] _defaultTags = ["aws", "sns", "messaging"];
 
     /// <summary>
     /// Add a health check for AWS Simple Notification Service (SNS).

@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["kafka", "messeging"];
+    private static readonly string[] _defaultTags = ["kafka", "messaging"];
 
     /// <summary>
     /// Add a health check for Apache Kafka.
