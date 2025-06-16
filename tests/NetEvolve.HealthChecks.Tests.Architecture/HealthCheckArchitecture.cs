@@ -24,6 +24,7 @@ internal static class HealthCheckArchitecture
             typeof(Apache.Kafka.KafkaHealthCheck).Assembly,
             // AWS
             typeof(AWS.SNS.SimpleNotificationServiceHealthCheck).Assembly,
+            typeof(AWS.SQS.SimpleQueueServiceHealthCheck).Assembly,
             // Azure
             typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,

@@ -40,7 +40,7 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<SimpleQueueServiceCheckMarker>()
                 .AddSingleton<SimpleQueueServiceHealthCheck>()
-                .ConfigureOptions<SimpleQueueServiceOptions>();
+                .ConfigureOptions<SimpleQueueServiceConfigure>();
         }
 
         builder.ThrowIfNameIsAlreadyUsed<SimpleQueueServiceHealthCheck>(name);

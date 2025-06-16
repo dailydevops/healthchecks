@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDegraded: Degraded,
+      name: TestContainerDegraded,
+      status: Degraded,
+      tags: [
+        aws,
+        sqs,
+        messeging
+      ]
+    }
+  ],
+  status: Degraded
+}
