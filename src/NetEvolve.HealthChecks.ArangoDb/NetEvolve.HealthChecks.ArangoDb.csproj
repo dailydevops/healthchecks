@@ -5,7 +5,11 @@
     <PackageTags>$(PackageTags);arangodb</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ArangoDBNetStandard" />
+    <PackageReference
+      Include="ArangoDBNetStandard"
+      VersionOverride="[3.0.0, 4.0.0)"
+      NoWarn="NU1901;NU1902;NU1903;NU1904"
+    />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
