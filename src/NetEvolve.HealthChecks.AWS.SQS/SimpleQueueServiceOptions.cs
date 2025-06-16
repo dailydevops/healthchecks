@@ -14,7 +14,7 @@ public sealed record SimpleQueueServiceOptions
     public string? AccessKey { get; set; }
 
     /// <summary>
-    /// Gets or sets the creation mode for the SNS client.
+    /// Gets or sets the creation mode for the SQS client.
     /// </summary>
     public CreationMode? Mode { get; set; }
 

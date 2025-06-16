@@ -78,5 +78,5 @@ builder.AddAWSSQS("<name>", options =>
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAWSSQS("<name>", options => ..., "sns");
+builder.AddAWSSQS("<name>", options => ..., "sqs");
 ```
