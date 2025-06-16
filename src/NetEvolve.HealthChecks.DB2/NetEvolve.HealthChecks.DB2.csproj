@@ -8,16 +8,22 @@
   <ItemGroup>
     <PackageReference
       Include="Net.IBM.Data.Db2"
+      VersionOverride="[9.0.0.200, 10.0.0)"
+      NoWarn="NU1901;NU1902;NU1903;NU1904"
       Condition="$([MSBuild]::IsOSPlatform('Windows'))"
       PrivateAssets="all"
     />
     <PackageReference
       Include="Net.IBM.Data.Db2-lnx"
+      VersionOverride="[9.0.0.200, 10.0.0)"
+      NoWarn="NU1901;NU1902;NU1903;NU1904"
       Condition="$([MSBuild]::IsOSPlatform('Linux'))"
       PrivateAssets="all"
     />
     <PackageReference
       Include="Net.IBM.Data.Db2-osx"
+      VersionOverride="[9.0.0.200, 10.0.0)"
+      NoWarn="NU1901;NU1902;NU1903;NU1904"
       Condition="$([MSBuild]::IsOSPlatform('OSX'))"
       PrivateAssets="all"
     />

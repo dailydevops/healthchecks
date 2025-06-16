@@ -27,7 +27,7 @@ internal sealed class ArangoDbClientProvider
     internal static ArangoDBClient CreateClient(ArangoDbOptions options)
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual((int)options.Mode, (int)ArangoDbClientCreationMode.Internal);
-        ArgumentNullException.ThrowIfNullOrEmpty(options.TransportAddress);
+        ArgumentException.ThrowIfNullOrEmpty(options.TransportAddress);
 
         if (options.Password is not null)
         {

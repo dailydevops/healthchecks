@@ -5,7 +5,11 @@
     <PackageTags>$(PackageTags);aws;sns</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AWSSDK.SimpleNotificationService" />
+    <PackageReference
+      Include="AWSSDK.SimpleNotificationService"
+      VersionOverride="[4.0.0, 5.0.0)"
+      NoWarn="NU1901;NU1902;NU1903;NU1904"
+    />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
   <ItemGroup>
