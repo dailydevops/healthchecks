@@ -25,7 +25,10 @@ internal sealed class KeycloakClientProvider
 
     internal static KeycloakClient CreateClient(KeycloakOptions options)
     {
-        ArgumentOutOfRangeException.ThrowIfNotEqual((int)options.Mode, (int)KeycloakClientCreationMode.Internal);
+        ArgumentOutOfRangeException.ThrowIfNotEqual(
+            (int)options.Mode,
+            (int)KeycloakClientCreationMode.UsernameAndPassword
+        );
         ArgumentException.ThrowIfNullOrEmpty(options.BaseAddress);
         ArgumentNullException.ThrowIfNull(options.Username);
         ArgumentNullException.ThrowIfNull(options.Password);

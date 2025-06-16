@@ -53,14 +53,14 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
     }
 
     [Test]
-    public async Task AddKeycloak_UseOptionsWithInternalMode_Healthy() =>
+    public async Task AddKeycloak_UseOptionsWithUsernameAndPasswordMode_Healthy() =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKeycloak(
                     "TestContainerInternalHealthy",
                     options =>
                     {
-                        options.Mode = KeycloakClientCreationMode.Internal;
+                        options.Mode = KeycloakClientCreationMode.UsernameAndPassword;
                         options.Timeout = 1000;
                         options.BaseAddress = _container.BaseAddress;
                         options.Username = _container.Username;
@@ -188,7 +188,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.Internal}" },
+                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.UsernameAndPassword}" },
                     { "HealthChecks:Keycloak:TestNoValues:BaseAddress", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -205,7 +205,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.Internal}" },
+                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.UsernameAndPassword}" },
                     { "HealthChecks:Keycloak:TestNoValues:BaseAddress", "base-address" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -222,7 +222,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.Internal}" },
+                    { "HealthChecks:Keycloak:TestNoValues:Mode", $"{KeycloakClientCreationMode.UsernameAndPassword}" },
                     { "HealthChecks:Keycloak:TestNoValues:BaseAddress", "base-address" },
                     { "HealthChecks:Keycloak:TestNoValues:Username", "username" },
                 };

@@ -29,7 +29,7 @@ public sealed record KeycloakOptions
     /// Gets or sets the address to the Keycloak instance to check.
     /// </summary>
     /// <remarks>
-    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.Internal"/>.
+    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.UsernameAndPassword"/>.
     /// </remarks>
     public string? BaseAddress { get; set; }
 
@@ -37,7 +37,7 @@ public sealed record KeycloakOptions
     /// Gets or sets the username for authenticating with the client.
     /// </summary>
     /// <remarks>
-    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.Internal"/>.
+    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.UsernameAndPassword"/>.
     /// </remarks>
     public string? Username { get; set; }
 
@@ -45,7 +45,7 @@ public sealed record KeycloakOptions
     /// Gets or sets the password for authenticating with the client.
     /// </summary>
     /// <remarks>
-    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.Internal"/>.
+    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.UsernameAndPassword"/>.
     /// </remarks>
     public string? Password { get; set; }
 
