@@ -6,7 +6,8 @@
       status: Healthy,
       tags: [
         sqlserver,
-        database
+        database,
+        devart
       ]
     }
   ],
