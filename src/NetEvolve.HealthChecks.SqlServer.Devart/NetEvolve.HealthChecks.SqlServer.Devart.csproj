@@ -5,6 +5,10 @@
     <PackageTags>$(PackageTags);sqlserver;mssql;devart</PackageTags>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="licenses.licx" />
+    <EmbeddedResource Include="licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
