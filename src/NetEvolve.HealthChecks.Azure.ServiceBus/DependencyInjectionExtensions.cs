@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["messaging", "azure", "servicebus"];
+    private static readonly string[] _defaultTags = ["azure", "servicebus", "messaging"];
 
     /// <summary>
     /// Adds a health check for an Azure Service Bus Queue.

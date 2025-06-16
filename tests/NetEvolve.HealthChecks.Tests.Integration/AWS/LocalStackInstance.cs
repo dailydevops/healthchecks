@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
+using Amazon.SQS;
 using Testcontainers.LocalStack;
 using TestContainer = Testcontainers.LocalStack.LocalStackContainer;
 
@@ -12,8 +13,10 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string AccessKey = "AKIAIOSFODNN7EXAMPLE";
     internal const string SecretKey = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
     internal const string TopicName = "TestTopic";
+    internal const string QueueName = "MuhKuh";
 
     private readonly TestContainer _container = new LocalStackBuilder()
+        .WithImage("localstack/localstack:stable")
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
         .WithEnvironment("AWS_SECRET_ACCESS_KEY", SecretKey)
         .Build();
@@ -26,20 +29,12 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
 
     public async Task InitializeAsync()
     {
-        await _container.StartAsync().ConfigureAwait(false);
+        var cancellationToken = TestContext.Current!.CancellationToken;
 
-        // Create SNS Topic & Subscription
-        using var client = new AmazonSimpleNotificationServiceClient(
-            AccessKey,
-            SecretKey,
-            new AmazonSimpleNotificationServiceConfig { ServiceURL = ConnectionString }
-        );
+        await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 
-        var topic = await client.CreateTopicAsync(TopicName).ConfigureAwait(false);
-        var subscription = await client.SubscribeAsync(topic.TopicArn, "email", "test@example.com");
-        Subscription = subscription
-            .SubscriptionArn.Replace(topic.TopicArn, string.Empty, StringComparison.Ordinal)
-            .Trim(':');
+        await Task.WhenAll(CreateSNSDefaults(cancellationToken), CreateSQSDefaults(cancellationToken))
+            .ConfigureAwait(false);
     }
 
     internal async Task<DisposableSubscription> CreateNumberOfSubscriptions(string topicName, int numberOfSubscriptions)
@@ -62,5 +57,38 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
         }
 
         return new DisposableSubscription(client, topic.TopicArn, subscription.SubscriptionArn);
+    }
+
+    private async Task CreateSNSDefaults(CancellationToken cancellationToken)
+    {
+        // Create SNS Topic & Subscription
+        using var snsClient = new AmazonSimpleNotificationServiceClient(
+            AccessKey,
+            SecretKey,
+            new AmazonSimpleNotificationServiceConfig { ServiceURL = ConnectionString }
+        );
+
+        var topic = await snsClient.CreateTopicAsync(TopicName, cancellationToken).ConfigureAwait(false);
+        var subscription = await snsClient.SubscribeAsync(
+            topic.TopicArn,
+            "email",
+            "test@example.com",
+            cancellationToken
+        );
+        Subscription = subscription
+            .SubscriptionArn.Replace(topic.TopicArn, string.Empty, StringComparison.Ordinal)
+            .Trim(':');
+    }
+
+    private async Task CreateSQSDefaults(CancellationToken cancellationToken)
+    {
+        // Create SQS Queue
+        using var sqsClient = new AmazonSQSClient(
+            AccessKey,
+            SecretKey,
+            new AmazonSQSConfig { ServiceURL = ConnectionString }
+        );
+
+        _ = await sqsClient.CreateQueueAsync(QueueName, cancellationToken).ConfigureAwait(false);
     }
 }

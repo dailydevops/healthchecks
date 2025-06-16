@@ -9,9 +9,9 @@
       name: ServiceBusSubscriptionTopicNotExistsPeekUnhealthy,
       status: Unhealthy,
       tags: [
-        messaging,
         azure,
-        servicebus
+        servicebus,
+        messaging
       ]
     }
   ],

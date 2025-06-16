@@ -5,9 +5,9 @@
       name: ServiceBusQueueServiceProviderHealthy,
       status: Healthy,
       tags: [
-        messaging,
         azure,
-        servicebus
+        servicebus,
+        messaging
       ]
     }
   ],

@@ -12,7 +12,7 @@ Configuration property "socket.timeout.ms" value 0 is outside allowed range 10..
       status: Unhealthy,
       tags: [
         redpanda,
-        message-queue
+        messaging
       ]
     }
   ],

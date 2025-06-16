@@ -11,10 +11,10 @@ using NetEvolve.HealthChecks.Abstractions;
 /// </summary>
 public static class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["aws", "sns", "message-queue"];
+    private static readonly string[] _defaultTags = ["aws", "sns", "messaging"];
 
     /// <summary>
-    /// Add a health check for AWS SimpleNotificationService (SNS).
+    /// Add a health check for AWS Simple Notification Service (SNS).
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
     /// <param name="name">The name of the <see cref="SimpleNotificationServiceHealthCheck"/>.</param>

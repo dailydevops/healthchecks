@@ -26,26 +26,26 @@ internal sealed class SimpleNotificationServiceHealthCheck
     {
         using var client = CreateClient(options);
 
-        var (isValid, topic) = await client
+        var (isTimelyResponse, topic) = await client
             .FindTopicAsync(options.TopicName)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
         if (string.IsNullOrWhiteSpace(topic?.TopicArn))
         {
-            return new HealthCheckResult(failureStatus, $"{name}: Topic `{options.TopicName}` not found.");
+            return HealthCheckUnhealthy(failureStatus, name, $"Topic `{options.TopicName}` not found.");
         }
 
-        var (isValid2, subscriptions) = await GetSubscriptionsAsync(client, topic, options, cancellationToken)
+        var (isTimelyResponse2, subscriptions) = await GetSubscriptionsAsync(client, topic, options, cancellationToken)
             .ConfigureAwait(false);
         var found = subscriptions.Any(x => x.EndsWith(options.Subscription!, StringComparison.Ordinal));
 
         if (!found)
         {
-            return new HealthCheckResult(failureStatus, $"{name}: Subscription `{options.Subscription}` not found.");
+            return HealthCheckUnhealthy(failureStatus, name, $"Subscription `{options.Subscription}` not found.");
         }
 
-        return HealthCheckState(isValid && isValid2, name);
+        return HealthCheckState(isTimelyResponse && isTimelyResponse2, name);
     }
 
     private static async Task<(bool, List<string>)> GetSubscriptionsAsync(
@@ -89,12 +89,14 @@ internal sealed class SimpleNotificationServiceHealthCheck
     {
         var config = new AmazonSimpleNotificationServiceConfig { ServiceURL = options.ServiceUrl };
 
-        return (options.GetCredentials() is not null, options.RegionEndpoint is not null) switch
+        var credentials = options.GetCredentials();
+
+        return (credentials is not null, options.RegionEndpoint is not null) switch
         {
-            (true, true) => new AmazonSimpleNotificationServiceClient(options.GetCredentials(), options.RegionEndpoint),
-            (true, false) => new AmazonSimpleNotificationServiceClient(options.GetCredentials(), config),
+            (true, true) => new AmazonSimpleNotificationServiceClient(credentials, options.RegionEndpoint),
+            (true, false) => new AmazonSimpleNotificationServiceClient(credentials, config),
             (false, true) => new AmazonSimpleNotificationServiceClient(options.RegionEndpoint),
-            _ => new AmazonSimpleNotificationServiceClient(),
+            _ => new AmazonSimpleNotificationServiceClient(config),
         };
     }
 }

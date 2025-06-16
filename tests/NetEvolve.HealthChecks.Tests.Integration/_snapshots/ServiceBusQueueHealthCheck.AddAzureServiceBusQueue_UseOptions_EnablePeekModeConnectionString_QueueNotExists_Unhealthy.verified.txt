@@ -9,9 +9,9 @@
       name: ServiceBusQueueConnectionStringPeekUnhealthy,
       status: Unhealthy,
       tags: [
-        messaging,
         azure,
-        servicebus
+        servicebus,
+        messaging
       ]
     }
   ],
