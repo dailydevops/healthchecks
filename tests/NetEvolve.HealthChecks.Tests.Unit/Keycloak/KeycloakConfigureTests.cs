@@ -80,33 +80,36 @@ public sealed class KeycloakConfigureTests
                 }
             );
 
-        // Mode: Internal
+        // Mode: UsernameAndPassword
         yield return () =>
             (
                 false,
-                "The base address cannot be null or whitespace when using the `Internal` client creation mode.",
+                "The base address cannot be null or whitespace when using the `UsernameAndPassword` client creation mode.",
                 "name",
-                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions { Mode = KeycloakClientCreationMode.Internal }
+                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
+                {
+                    Mode = KeycloakClientCreationMode.UsernameAndPassword,
+                }
             );
         yield return () =>
             (
                 false,
-                "The username cannot be null when using the `Internal` client creation mode.",
+                "The username cannot be null when using the `UsernameAndPassword` client creation mode.",
                 "name",
                 new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
                 {
-                    Mode = KeycloakClientCreationMode.Internal,
+                    Mode = KeycloakClientCreationMode.UsernameAndPassword,
                     BaseAddress = "base-address",
                 }
             );
         yield return () =>
             (
                 false,
-                "The password cannot be null when using the `Internal` client creation mode.",
+                "The password cannot be null when using the `UsernameAndPassword` client creation mode.",
                 "name",
                 new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
                 {
-                    Mode = KeycloakClientCreationMode.Internal,
+                    Mode = KeycloakClientCreationMode.UsernameAndPassword,
                     BaseAddress = "base-address",
                     Username = "username",
                 }
@@ -118,7 +121,7 @@ public sealed class KeycloakConfigureTests
                 "name",
                 new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
                 {
-                    Mode = KeycloakClientCreationMode.Internal,
+                    Mode = KeycloakClientCreationMode.UsernameAndPassword,
                     BaseAddress = "base-address",
                     Username = "username",
                     Password = "password",

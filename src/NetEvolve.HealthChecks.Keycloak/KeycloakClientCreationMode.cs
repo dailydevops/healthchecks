@@ -20,5 +20,9 @@ public enum KeycloakClientCreationMode
     /// The <see cref="KeycloakClient"/> instance is created using the <see cref="KeycloakOptions.BaseAddress"/>,
     /// the <see cref="KeycloakOptions.Username"/> and the <see cref="KeycloakOptions.Password"/>.
     /// </summary>
-    Internal = 1,
+    UsernameAndPassword = 1,
+
+    /// <inheritdoc cref="UsernameAndPassword" />
+    [Obsolete($"Use `{nameof(UsernameAndPassword)}` instead. This value will be removed in a future version.")]
+    Internal = UsernameAndPassword,
 }

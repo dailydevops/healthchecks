@@ -54,7 +54,7 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
         return options.Mode switch
         {
             KeycloakClientCreationMode.ServiceProvider => ValidateCreationModeServiceProvider(options),
-            KeycloakClientCreationMode.Internal => ValidateCreationModeInternal(options),
+            KeycloakClientCreationMode.UsernameAndPassword => ValidateCreationModeInternal(options),
             _ => Fail($"The mode `{options.Mode}` is not supported."),
         };
     }
@@ -77,7 +77,7 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
 
     private static ValidateOptionsResult ValidateCreationModeInternal(KeycloakOptions options)
     {
-        const string creationModeName = nameof(KeycloakClientCreationMode.Internal);
+        const string creationModeName = nameof(KeycloakClientCreationMode.UsernameAndPassword);
 
         if (string.IsNullOrWhiteSpace(options.BaseAddress))
         {

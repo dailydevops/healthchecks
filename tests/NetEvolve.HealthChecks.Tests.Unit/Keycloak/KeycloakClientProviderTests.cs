@@ -47,10 +47,28 @@ public sealed class KeycloakClientProviderTests
                 "password"
             );
         yield return () =>
-            (typeof(ArgumentNullException), KeycloakClientCreationMode.Internal, null, "username", "password");
+            (
+                typeof(ArgumentNullException),
+                KeycloakClientCreationMode.UsernameAndPassword,
+                null,
+                "username",
+                "password"
+            );
         yield return () =>
-            (typeof(ArgumentNullException), KeycloakClientCreationMode.Internal, "base-address", null, "password");
+            (
+                typeof(ArgumentNullException),
+                KeycloakClientCreationMode.UsernameAndPassword,
+                "base-address",
+                null,
+                "password"
+            );
         yield return () =>
-            (typeof(ArgumentNullException), KeycloakClientCreationMode.Internal, "base-address", "username", null);
+            (
+                typeof(ArgumentNullException),
+                KeycloakClientCreationMode.UsernameAndPassword,
+                "base-address",
+                "username",
+                null
+            );
     }
 }
