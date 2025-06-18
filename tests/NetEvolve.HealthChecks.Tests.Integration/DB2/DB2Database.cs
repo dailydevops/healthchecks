@@ -1,11 +1,15 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.DB2;
 
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.Db2;
 
 public sealed class DB2Database : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly Db2Container _database = new Db2Builder().WithAcceptLicenseAgreement(true).Build();
+    private readonly Db2Container _database = new Db2Builder()
+        .WithLogger(NullLogger.Instance)
+        .WithAcceptLicenseAgreement(true)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

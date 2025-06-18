@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.ActiveMq;
 
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.ActiveMq;
 
 public sealed class ActiveMqCustomCredentials : IAsyncInitializer, IAsyncDisposable, IActiveMQAccessor
@@ -14,7 +15,11 @@ public sealed class ActiveMqCustomCredentials : IAsyncInitializer, IAsyncDisposa
     public string? Password { get; } = $"{Guid.NewGuid():D}";
 
     public ActiveMqCustomCredentials() =>
-        _container = new ArtemisBuilder().WithUsername(Username).WithPassword(Password).Build();
+        _container = new ArtemisBuilder()
+            .WithUsername(Username)
+            .WithPassword(Password)
+            .WithLogger(NullLogger.Instance)
+            .Build();
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 

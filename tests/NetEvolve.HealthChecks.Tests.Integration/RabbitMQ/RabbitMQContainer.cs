@@ -2,11 +2,12 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.RabbitMq;
 
 public sealed class RabbitMQContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly RabbitMqContainer _container = new RabbitMqBuilder().Build();
+    private readonly RabbitMqContainer _container = new RabbitMqBuilder().WithLogger(NullLogger.Instance).Build();
 
     public Uri ConnectionString => new Uri(_container.GetConnectionString());
 

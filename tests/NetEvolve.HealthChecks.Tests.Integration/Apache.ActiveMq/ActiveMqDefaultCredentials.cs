@@ -1,11 +1,12 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.ActiveMq;
 
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.ActiveMq;
 
 public sealed class ActiveMqDefaultCredentials : IAsyncInitializer, IAsyncDisposable, IActiveMQAccessor
 {
-    private readonly ArtemisContainer _container = new ArtemisBuilder().Build();
+    private readonly ArtemisContainer _container = new ArtemisBuilder().WithLogger(NullLogger.Instance).Build();
 
     public string BrokerAddress => _container.GetBrokerAddress();
 
