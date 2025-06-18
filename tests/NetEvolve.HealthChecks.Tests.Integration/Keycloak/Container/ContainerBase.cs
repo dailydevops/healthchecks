@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.Keycloak;
 
 public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
@@ -13,7 +14,11 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
         string password = KeycloakBuilder.DefaultPassword
     )
     {
-        _container = new KeycloakBuilder().WithPassword(password).WithUsername(username).Build();
+        _container = new KeycloakBuilder()
+            .WithLogger(NullLogger.Instance)
+            .WithPassword(password)
+            .WithUsername(username)
+            .Build();
         Username = username;
         Password = password;
     }

@@ -1,11 +1,12 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Npgsql;
 
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.PostgreSql;
 
 public sealed class NpgsqlDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly PostgreSqlContainer _database = new PostgreSqlBuilder().Build();
+    private readonly PostgreSqlContainer _database = new PostgreSqlBuilder().WithLogger(NullLogger.Instance).Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

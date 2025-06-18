@@ -7,6 +7,7 @@ using global::Azure.Data.Tables.Sas;
 using global::Azure.Storage.Blobs;
 using global::Azure.Storage.Queues;
 using global::Azure.Storage.Sas;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.Azurite;
 
 public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
@@ -15,7 +16,10 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
     public const string AccountKey =
         "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
 
-    private readonly AzuriteContainer _container = new AzuriteBuilder().WithCommand("--skipApiVersionCheck").Build();
+    private readonly AzuriteContainer _container = new AzuriteBuilder()
+        .WithLogger(NullLogger.Instance)
+        .WithCommand("--skipApiVersionCheck")
+        .Build();
 
     public Uri BlobAccountSasUri { get; private set; } = default!;
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.ArangoDb;
 
 public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
@@ -10,7 +11,7 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
 
     protected ContainerBase(string? password = null)
     {
-        var builder = new ArangoDbBuilder();
+        var builder = new ArangoDbBuilder().WithLogger(NullLogger.Instance);
 
         if (password is null)
         {

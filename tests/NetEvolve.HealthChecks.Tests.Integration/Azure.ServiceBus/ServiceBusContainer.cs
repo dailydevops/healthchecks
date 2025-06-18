@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.ServiceBus;
 using TestContainer = Testcontainers.ServiceBus.ServiceBusContainer;
 
@@ -11,7 +12,10 @@ public sealed class ServiceBusContainer : IAsyncInitializer, IAsyncDisposable
     public const string SubscriptionName = "subscription.1";
     public const string TopicName = "topic.1";
 
-    private readonly TestContainer _container = new ServiceBusBuilder().WithAcceptLicenseAgreement(true).Build();
+    private readonly TestContainer _container = new ServiceBusBuilder()
+        .WithLogger(NullLogger.Instance)
+        .WithAcceptLicenseAgreement(true)
+        .Build();
 
     public string ConnectionString => _container.GetConnectionString();
 

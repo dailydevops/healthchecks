@@ -1,11 +1,12 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.MySql;
 
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.MySql;
 
 public sealed class MySqlDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly MySqlContainer _database = new MySqlBuilder().Build();
+    private readonly MySqlContainer _database = new MySqlBuilder().WithLogger(NullLogger.Instance).Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

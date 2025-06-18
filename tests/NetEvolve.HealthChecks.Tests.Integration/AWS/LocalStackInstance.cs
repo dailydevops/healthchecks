@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
 using Amazon.SQS;
+using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.LocalStack;
 using TestContainer = Testcontainers.LocalStack.LocalStackContainer;
 
@@ -16,6 +17,7 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string QueueName = "MuhKuh";
 
     private readonly TestContainer _container = new LocalStackBuilder()
+        .WithLogger(NullLogger.Instance)
         .WithImage("localstack/localstack:stable")
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
         .WithEnvironment("AWS_SECRET_ACCESS_KEY", SecretKey)
