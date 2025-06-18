@@ -1,10 +1,8 @@
 ﻿namespace Benchmarks.HealthChecks.Benchmarks;
 
-using System;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using global::Benchmarks.HealthChecks.Internals;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using NetEvolve.HealthChecks.SqlServer;
@@ -28,44 +26,35 @@ public class SqlServer
         await _databaseOne.StartAsync().ConfigureAwait(false);
         await _databaseTwo.StartAsync().ConfigureAwait(false);
 
-        var configuration = new ConfigurationBuilder().Build();
+        _netEvolveHealthCheckExecutor = BenchmarkServiceFactory.Create(builder =>
+            builder
+                .AddSqlServer(
+                    nameof(_databaseOne),
+                    options => options.ConnectionString = _databaseOne.GetConnectionString()
+                )
+                .AddSqlServer(
+                    nameof(_databaseTwo),
+                    options => options.ConnectionString = _databaseTwo.GetConnectionString()
+                )
+        );
 
-        var netEvolveServices = new ServiceCollection()
-            .AddSingleton<IConfiguration>(configuration)
-            .AddSingleton<BenchmarkHealthCheckService>();
-        _ = netEvolveServices
-            .AddHealthChecks()
-            .AddSqlServer(
-                nameof(_databaseOne),
-                options => options.ConnectionString = _databaseOne.GetConnectionString()
-            )
-            .AddSqlServer(
-                nameof(_databaseTwo),
-                options => options.ConnectionString = _databaseTwo.GetConnectionString()
-            );
-        var netEvolveServiceProvider = netEvolveServices.BuildServiceProvider();
-        _netEvolveHealthCheckExecutor = netEvolveServiceProvider.GetRequiredService<BenchmarkHealthCheckService>();
+        _netEvolveLegacyHealthCheckExecutor = BenchmarkServiceFactory.Create(builder =>
+            builder
+                .AddSqlServerLegacy(
+                    nameof(_databaseOne),
+                    options => options.ConnectionString = _databaseOne.GetConnectionString()
+                )
+                .AddSqlServerLegacy(
+                    nameof(_databaseTwo),
+                    options => options.ConnectionString = _databaseTwo.GetConnectionString()
+                )
+        );
 
-        var netEvolveLegacyServices = new ServiceCollection()
-            .AddSingleton<IConfiguration>(configuration)
-            .AddSingleton<BenchmarkHealthCheckService>();
-        _ = netEvolveLegacyServices
-            .AddHealthChecks()
-            .AddSqlServerLegacy(nameof(_databaseOne), options => _databaseOne.GetConnectionString())
-            .AddSqlServerLegacy(nameof(_databaseTwo), options => _databaseTwo.GetConnectionString());
-        var netEvolveLegacyServiceProvider = netEvolveLegacyServices.BuildServiceProvider();
-        _netEvolveLegacyHealthCheckExecutor =
-            netEvolveLegacyServiceProvider.GetRequiredService<BenchmarkHealthCheckService>();
-
-        var aspnetcoreServices = new ServiceCollection()
-            .AddSingleton<IConfiguration>(configuration)
-            .AddSingleton<BenchmarkHealthCheckService>();
-        _ = aspnetcoreServices
-            .AddHealthChecks()
-            .AddSqlServer(_databaseOne.GetConnectionString(), name: nameof(_databaseOne))
-            .AddSqlServer(_databaseTwo.GetConnectionString(), name: nameof(_databaseTwo));
-        var anotherServiceProvider = aspnetcoreServices.BuildServiceProvider();
-        _anotherHealthCheckExecutor = anotherServiceProvider.GetRequiredService<BenchmarkHealthCheckService>();
+        _anotherHealthCheckExecutor = BenchmarkServiceFactory.Create(builder =>
+            builder
+                .AddSqlServer(_databaseOne.GetConnectionString(), name: nameof(_databaseOne))
+                .AddSqlServer(_databaseTwo.GetConnectionString(), name: nameof(_databaseTwo))
+        );
     }
 
     [GlobalCleanup]
@@ -85,11 +74,11 @@ public class SqlServer
     }
 
     [Benchmark(Baseline = true, Description = "AspNetCore.HealthChecks.SqlServer")]
-    public Task BenchmarkAspNetCoreAsync() => _ = _anotherHealthCheckExecutor.CheckHealthAsync();
+    public Task BenchmarkAspNetCoreAsync() => _anotherHealthCheckExecutor.CheckHealthAsync();
 
     [Benchmark(Description = "NetEvolve.HealthChecks.SqlServer")]
-    public Task BenchmarkNetEvolveAsync() => _ = _netEvolveHealthCheckExecutor.CheckHealthAsync();
+    public Task BenchmarkNetEvolveAsync() => _netEvolveHealthCheckExecutor.CheckHealthAsync();
 
     [Benchmark(Description = "NetEvolve.HealthChecks.SqlServer.Legacy")]
-    public Task BenchmarkNetEvolveLegacyAsync() => _ = _netEvolveLegacyHealthCheckExecutor.CheckHealthAsync();
+    public Task BenchmarkNetEvolveLegacyAsync() => _netEvolveLegacyHealthCheckExecutor.CheckHealthAsync();
 }
