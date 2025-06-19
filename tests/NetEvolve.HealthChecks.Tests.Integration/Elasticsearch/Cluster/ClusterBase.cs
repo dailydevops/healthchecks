@@ -18,9 +18,9 @@ public abstract class ClusterBase<TContainer> : IContainerCluster
 
     public IEnumerable<string> ConnectionStrings => _containers.Select(container => container.ConnectionString);
 
-    public string? Username => _firstContainer?.Username;
+    public string? Username => FirstContainer?.Username;
 
-    public string? Password => _firstContainer?.Password;
+    public string? Password => FirstContainer?.Password;
 
     public async ValueTask DisposeAsync()
     {
@@ -43,5 +43,5 @@ public abstract class ClusterBase<TContainer> : IContainerCluster
             )
             .ConfigureAwait(false);
 
-    private ContainerBase? _firstContainer => _containers.FirstOrDefault();
+    private ContainerBase? FirstContainer => _containers.FirstOrDefault();
 }

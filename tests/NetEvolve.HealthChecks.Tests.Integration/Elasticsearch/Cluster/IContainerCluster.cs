@@ -7,7 +7,7 @@ public interface IContainerCluster : IAsyncInitializer, IAsyncDisposable
 {
     IEnumerable<string> ConnectionStrings { get; }
 
-    string Username { get; }
+    string? Username { get; }
 
-    string Password { get; }
+    string? Password { get; }
 }
