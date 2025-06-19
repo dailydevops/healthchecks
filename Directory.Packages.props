@@ -63,26 +63,26 @@
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Data.SQLite" Version="1.0.119" />
     <PackageVersion Include="System.Text.Json" Version="9.0.4" />
-    <PackageVersion Include="Testcontainers.ActiveMq" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.ArangoDb" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Azurite" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.ClickHouse" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Db2" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Kafka" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Keycloak" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.LocalStack" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.MongoDb" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.MsSql" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.MySql" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Oracle" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.PostgreSql" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Qdrant" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.RabbitMq" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.RavenDb" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Redis" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.Redpanda" Version="4.5.0" />
-    <PackageVersion Include="Testcontainers.ServiceBus" Version="4.5.0" />
+    <PackageVersion Include="Testcontainers.ActiveMq" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.ArangoDb" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Azurite" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.ClickHouse" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Db2" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Kafka" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Keycloak" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.LocalStack" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.MongoDb" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.MsSql" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.MySql" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Oracle" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.PostgreSql" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Qdrant" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.RabbitMq" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.RavenDb" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Redis" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Redpanda" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.ServiceBus" Version="4.6.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.11.4" />
     <PackageVersion Include="TUnit" Version="0.25.21" />
     <PackageVersion Include="Verify.TUnit" Version="30.4.0" />
