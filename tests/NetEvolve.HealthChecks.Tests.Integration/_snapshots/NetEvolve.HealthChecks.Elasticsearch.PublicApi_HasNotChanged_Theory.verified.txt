@@ -1,0 +1,23 @@
+﻿namespace NetEvolve.HealthChecks.Elasticsearch
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddElasticsearch([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Elasticsearch.ElasticsearchOptions>? options = null, params string[] tags) { }
+    }
+    public enum ElasticsearchClientCreationMode
+    {
+        ServiceProvider = 0,
+        UsernameAndPassword = 1,
+    }
+    public sealed class ElasticsearchOptions : System.IEquatable<NetEvolve.HealthChecks.Elasticsearch.ElasticsearchOptions>
+    {
+        public ElasticsearchOptions() { }
+        public System.Func<Elastic.Clients.Elasticsearch.ElasticsearchClient, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; }
+        public System.Collections.Generic.IList<string> ConnectionStrings { get; }
+        public string? KeyedService { get; set; }
+        public NetEvolve.HealthChecks.Elasticsearch.ElasticsearchClientCreationMode Mode { get; set; }
+        public string? Password { get; set; }
+        public int Timeout { get; set; }
+        public string? Username { get; set; }
+    }
+}
