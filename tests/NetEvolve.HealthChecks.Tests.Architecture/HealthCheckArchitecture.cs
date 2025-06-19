@@ -40,7 +40,6 @@ internal static class HealthCheckArchitecture
             typeof(DB2.DB2HealthCheck).Assembly,
             typeof(DuckDB.DuckDBHealthCheck).Assembly,
             typeof(Elasticsearch.ElasticsearchHealthCheck).Assembly,
-            typeof(Elasticsearch.Cluster.ElasticsearchClusterHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,

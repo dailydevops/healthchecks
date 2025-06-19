@@ -17,8 +17,8 @@ public enum ElasticsearchClientCreationMode
     ServiceProvider = 0,
 
     /// <summary>
-    /// The <see cref="ElasticsearchClient"/> instance is created using the <see cref="ElasticsearchOptions.ConnectionString"/>,
+    /// The <see cref="ElasticsearchClient"/> instance is created using the <see cref="ElasticsearchOptions.ConnectionStrings"/>,
     /// the <see cref="ElasticsearchOptions.Username"/> and the <see cref="ElasticsearchOptions.Password"/>.
     /// </summary>
-    Internal = 1,
+    UsernameAndPassword = 1,
 }

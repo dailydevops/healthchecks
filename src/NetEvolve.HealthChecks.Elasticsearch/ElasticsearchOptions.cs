@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Elasticsearch;
 
+using System.Collections.ObjectModel;
 using Elastic.Clients.Elasticsearch;
 
 /// <summary>
@@ -28,18 +29,21 @@ public sealed record ElasticsearchOptions
     public string? KeyedService { get; set; }
 
     /// <summary>
-    /// Gets or sets the connection string to the Elasticsearch instance to check.
+    /// Gets or sets the connection strings to the Elasticsearch instance(s) to check.
+    /// <br/>
+    /// If only one connection string is given, instanciates a new <see cref="ElasticsearchClient"/> with a node connection,
+    /// otherwise with a cluster connection.
     /// </summary>
     /// <remarks>
-    /// This option is only required when <see cref="Mode"/> is set to <see cref="ElasticsearchClientCreationMode.Internal"/>.
+    /// This option is only required when <see cref="Mode"/> is set to <see cref="ElasticsearchClientCreationMode.UsernameAndPassword"/>.
     /// </remarks>
-    public string? ConnectionString { get; set; }
+    public IList<string> ConnectionStrings { get; } = [];
 
     /// <summary>
     /// Gets or sets the username for authenticating with the testing client.
     /// </summary>
     /// <remarks>
-    /// This option is only used when <see cref="Mode"/> is set to <see cref="ElasticsearchClientCreationMode.Internal"/>
+    /// This option is only used when <see cref="Mode"/> is set to <see cref="ElasticsearchClientCreationMode.UsernameAndPassword"/>
     /// and <see cref="Password"/> is set.
     /// </remarks>
     public string? Username { get; set; }
@@ -48,7 +52,7 @@ public sealed record ElasticsearchOptions
     /// Gets or sets the password for authenticating with the testing client.
     /// </summary>
     /// <remarks>
-    /// This option is only used when <see cref="Mode"/> is set to <see cref="ElasticsearchClientCreationMode.Internal"/>
+    /// This option is only used when <see cref="Mode"/> is set to <see cref="ElasticsearchClientCreationMode.UsernameAndPassword"/>
     /// and <see cref="Username"/> is set.
     /// </remarks>
     public string? Password { get; set; }

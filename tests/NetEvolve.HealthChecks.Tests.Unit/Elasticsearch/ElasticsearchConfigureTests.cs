@@ -29,12 +29,21 @@ public sealed class ElasticsearchConfigureTests
         bool expectedResult,
         string? expectedMessage,
         string? name,
+        IList<string>? connectionStrings,
         ElasticsearchOptions options
     )
     {
         // Arrange
         var services = new ServiceCollection();
         var configure = new ElasticsearchConfigure(new ConfigurationBuilder().Build(), services.BuildServiceProvider());
+
+        if (options is not null)
+        {
+            foreach (var connectionString in connectionStrings ?? [])
+            {
+                options.ConnectionStrings.Add(connectionString);
+            }
+        }
 
         // Act
         var result = configure.Validate(name, options);
@@ -47,16 +56,19 @@ public sealed class ElasticsearchConfigureTests
         }
     }
 
-    public static IEnumerable<Func<(bool, string?, string?, ElasticsearchOptions)>> GetValidateTestCases()
+    public static IEnumerable<
+        Func<(bool, string?, string?, IList<string>?, ElasticsearchOptions)>
+    > GetValidateTestCases()
     {
-        yield return () => (false, "The name cannot be null or whitespace.", null, null!);
-        yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
-        yield return () => (false, "The options cannot be null.", "name", null!);
+        yield return () => (false, "The name cannot be null or whitespace.", null, null, null!);
+        yield return () => (false, "The name cannot be null or whitespace.", "\t", null, null!);
+        yield return () => (false, "The options cannot be null.", "name", null, null!);
         yield return () =>
             (
                 false,
                 "The timeout cannot be less than infinite (-1).",
                 "name",
+                null,
                 new ElasticsearchOptions { Timeout = -2 }
             );
         yield return () =>
@@ -64,6 +76,7 @@ public sealed class ElasticsearchConfigureTests
                 false,
                 "The mode `-1` is not supported.",
                 "name",
+                null,
                 new ElasticsearchOptions { Mode = (ElasticsearchClientCreationMode)(-1) }
             );
 
@@ -73,38 +86,40 @@ public sealed class ElasticsearchConfigureTests
                 false,
                 $"No service of type `{nameof(ElasticsearchClient)}` registered. Please execute `services.AddSingleton<ElasticsearchClient>()`.",
                 "name",
+                null,
                 new ElasticsearchOptions { Mode = ElasticsearchClientCreationMode.ServiceProvider }
             );
 
-        // Mode: Internal
+        // Mode: UsernameAndPassword
         yield return () =>
             (
                 false,
-                "The connection string cannot be null or whitespace when using the `Internal` client creation mode.",
+                "The connection strings list cannot be empty when using the `UsernameAndPassword` client creation mode.",
                 "name",
-                new ElasticsearchOptions { Mode = ElasticsearchClientCreationMode.Internal }
+                null,
+                new ElasticsearchOptions { Mode = ElasticsearchClientCreationMode.UsernameAndPassword }
             );
         yield return () =>
             (
                 false,
-                "The username cannot be null or whitespace when using the `Internal` client creation mode with a password.",
+                "The username cannot be null or whitespace when using the `UsernameAndPassword` client creation mode with a password.",
                 "name",
+                ["connection-string"],
                 new ElasticsearchOptions
                 {
-                    Mode = ElasticsearchClientCreationMode.Internal,
-                    ConnectionString = "connection-string",
+                    Mode = ElasticsearchClientCreationMode.UsernameAndPassword,
                     Password = "password",
                 }
             );
         yield return () =>
             (
                 false,
-                "The password cannot be null or whitespace when using the `Internal` client creation mode with a username.",
+                "The password cannot be null or whitespace when using the `UsernameAndPassword` client creation mode with a username.",
                 "name",
+                ["connection-string"],
                 new ElasticsearchOptions
                 {
-                    Mode = ElasticsearchClientCreationMode.Internal,
-                    ConnectionString = "connection-string",
+                    Mode = ElasticsearchClientCreationMode.UsernameAndPassword,
                     Username = "username",
                 }
             );
@@ -113,10 +128,10 @@ public sealed class ElasticsearchConfigureTests
                 true,
                 null,
                 "name",
+                ["connection-string"],
                 new ElasticsearchOptions
                 {
-                    Mode = ElasticsearchClientCreationMode.Internal,
-                    ConnectionString = "connection-string",
+                    Mode = ElasticsearchClientCreationMode.UsernameAndPassword,
                     Username = "username",
                     Password = "password",
                 }

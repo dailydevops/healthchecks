@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Cluster.ContainerCluster;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Cluster;
 
 using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Container;
 

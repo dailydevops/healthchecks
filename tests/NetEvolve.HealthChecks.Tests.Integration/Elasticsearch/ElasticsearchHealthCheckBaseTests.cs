@@ -8,26 +8,30 @@ using Elastic.Transport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.HealthChecks.Elasticsearch;
-using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Container;
+using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Cluster;
 
 public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, IAsyncInitializer
 {
-    protected ContainerBase _container { get; }
+    protected IContainerCluster _cluster { get; }
     private ElasticsearchClient _client = default!;
 
-    protected ElasticsearchHealthCheckBaseTests(ContainerBase container) => _container = container;
+    protected ElasticsearchHealthCheckBaseTests(IContainerCluster cluster) => _cluster = cluster;
 
     public async Task InitializeAsync()
     {
-        using var settings = new ElasticsearchClientSettings(new Uri(_container.ConnectionString));
+        var connectionStrings = _cluster.ConnectionStrings.ToArray();
 
-        if (!string.IsNullOrWhiteSpace(_container.Password))
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var clientSettings = new ElasticsearchClientSettings(new Uri(connectionStrings[0]));
+#pragma warning restore CA2000 // Dispose objects before losing scope
+
+        if (!string.IsNullOrWhiteSpace(_cluster.Password))
         {
-            _ = settings.Authentication(new BasicAuthentication(_container.Username, _container.Password));
+            _ = clientSettings.Authentication(new BasicAuthentication(_cluster.Username, _cluster.Password));
         }
 
         _client = new ElasticsearchClient(
-            settings.ServerCertificateValidationCallback(CertificateValidations.AllowAll)
+            clientSettings.ServerCertificateValidationCallback(CertificateValidations.AllowAll)
         );
 
         await Task.CompletedTask;
@@ -36,7 +40,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
     [Test]
     public async Task AddElasticsearch_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddElasticsearch("TestContainerHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddElasticsearch("TestContainerHealthy", options => options.Timeout = 5000),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
@@ -53,7 +57,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     options =>
                     {
                         options.KeyedService = serviceKey;
-                        options.Timeout = 1000;
+                        options.Timeout = 5000;
                     }
                 ),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
@@ -62,18 +66,18 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
     }
 
     [Test]
-    public async Task AddElasticsearch_UseOptionsWithInternalMode_Healthy() =>
+    public async Task AddElasticsearch_UseOptionsWithUsernameAndPasswordMode_Healthy() =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddElasticsearch(
-                    "TestContainerInternalHealthy",
+                    "TestContainerUsernameAndPasswordHealthy",
                     options =>
                     {
-                        options.Mode = ElasticsearchClientCreationMode.Internal;
-                        options.Timeout = 1000;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Username = _container.Username;
-                        options.Password = _container.Password;
+                        options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
+                        options.Timeout = 5000;
+                        options.Username = _cluster.Username;
+                        options.Password = _cluster.Password;
+                        options.ConnectionStrings.Add(_cluster.ConnectionStrings.ElementAt(0));
                     }
                 ),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy
@@ -102,8 +106,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     {
                         options.CommandAsync = async (client, cancellationToken) =>
                         {
-                            await Task.Delay(1000, cancellationToken);
-
+                            await Task.Delay(5000, cancellationToken);
                             return await ElasticsearchHealthCheck
                                 .DefaultCommandAsync(client, cancellationToken)
                                 .ConfigureAwait(false);
@@ -145,7 +148,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Elasticsearch:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:Elasticsearch:TestContainerHealthy:Timeout", "5000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -165,7 +168,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:Elasticsearch:TestContainerKeyedHealthy:KeyedService", serviceKey },
-                    { "HealthChecks:Elasticsearch:TestContainerKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:Elasticsearch:TestContainerKeyedHealthy:Timeout", "5000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -214,7 +217,10 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Elasticsearch:TestNoValues:Mode", $"{ElasticsearchClientCreationMode.Internal}" },
+                    {
+                        "HealthChecks:Elasticsearch:TestNoValues:Mode",
+                        $"{ElasticsearchClientCreationMode.UsernameAndPassword}"
+                    },
                     { "HealthChecks:Elasticsearch:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -231,7 +237,10 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Elasticsearch:TestNoValues:Mode", $"{ElasticsearchClientCreationMode.Internal}" },
+                    {
+                        "HealthChecks:Elasticsearch:TestNoValues:Mode",
+                        $"{ElasticsearchClientCreationMode.UsernameAndPassword}"
+                    },
                     { "HealthChecks:Elasticsearch:TestNoValues:ConnectionString", "connection-string" },
                     { "HealthChecks:Elasticsearch:TestNoValues:Password", "password" },
                 };
@@ -249,12 +258,87 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Elasticsearch:TestNoValues:Mode", $"{ElasticsearchClientCreationMode.Internal}" },
+                    {
+                        "HealthChecks:Elasticsearch:TestNoValues:Mode",
+                        $"{ElasticsearchClientCreationMode.UsernameAndPassword}"
+                    },
                     { "HealthChecks:Elasticsearch:TestNoValues:ConnectionString", "connection-string" },
                     { "HealthChecks:Elasticsearch:TestNoValues:Username", "username" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddElasticsearch_UseClusterClient_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddElasticsearch(
+                    "TestClusterHealthy",
+                    options =>
+                    {
+                        options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
+                        options.Timeout = 5000;
+                        options.Username = _cluster.Username;
+                        options.Password = _cluster.Password;
+
+                        foreach (var connectionString in _cluster.ConnectionStrings)
+                        {
+                            options.ConnectionStrings.Add(connectionString);
+                        }
+                    }
+                ),
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy
+        );
+
+    [Test]
+    public async Task AddElasticsearch_UseClusterClient_Degraded() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddElasticsearch(
+                    "TestClusterDegraded",
+                    options =>
+                    {
+                        options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
+                        options.Timeout = 0;
+                        options.Username = _cluster.Username;
+                        options.Password = _cluster.Password;
+
+                        foreach (var connectionString in _cluster.ConnectionStrings)
+                        {
+                            options.ConnectionStrings.Add(connectionString);
+                        }
+                    }
+                ),
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded
+        );
+
+    [Test]
+    public async Task AddElasticsearch_UseClusterClient_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddElasticsearch(
+                    "TestClusterUnhealthy",
+                    options =>
+                    {
+                        options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
+                        options.Timeout = 5000;
+                        options.Username = _cluster.Username;
+                        options.Password = _cluster.Password;
+
+                        foreach (var connectionString in _cluster.ConnectionStrings)
+                        {
+                            options.ConnectionStrings.Add(connectionString);
+                        }
+
+                        options.CommandAsync = async (_, _) =>
+                        {
+                            await Task.CompletedTask;
+                            throw new InvalidOperationException("test");
+                        };
+                    }
+                ),
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy
         );
 }
