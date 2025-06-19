@@ -18,15 +18,20 @@ on:
           - detailed
           - diagnostic
 
+permissions:
+  actions: read
+  contents: read
+  pull-requests: write
+  security-events: write
+
 jobs:
   all:
     name: Build & Tests
-    uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@0.14.110
+    uses: dailydevops/pipelines/.github/workflows/build-dotnet-single.yml@1.0.0
     with:
       enableCleanUpDockerDocker: true
-      enableSonarQube: false
-      dotnet-logging: ${{ inputs.dotnet-logging }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      dotnetLogging: ${{ inputs.dotnet-logging }}
+      dotnetVersion: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnetQuality: ${{ vars.NE_DOTNET_QUALITY }}
       solution: ./HealthChecks.sln
     secrets: inherit
