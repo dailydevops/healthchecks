@@ -5,7 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/benchmarks/">
-    <Project Path="benchmarks/benchmarks/Benchmarks.HealthChecks/Benchmarks.HealthChecks.csproj" />
+    <Project Path="benchmarks/Benchmarks.HealthChecks/Benchmarks.HealthChecks.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
