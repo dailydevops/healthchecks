@@ -70,6 +70,7 @@
     <PackageVersion Include="Testcontainers.Azurite" Version="4.6.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.6.0" />
     <PackageVersion Include="Testcontainers.Db2" Version="4.6.0" />
+    <PackageVersion Include="Testcontainers.Elasticsearch" Version="4.6.0" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.6.0" />
     <PackageVersion Include="Testcontainers.Kafka" Version="4.6.0" />
     <PackageVersion Include="Testcontainers.Keycloak" Version="4.6.0" />
