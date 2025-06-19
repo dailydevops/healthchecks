@@ -4,6 +4,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="benchmarks">
+    <Project Path="benchmarks/benchmarks/Benchmarks.HealthChecks/Benchmarks.HealthChecks.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".filenesting.json" />
@@ -26,6 +29,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Apache.Kafka/NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.ArangoDb/NetEvolve.HealthChecks.ArangoDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.AWS.SNS/NetEvolve.HealthChecks.AWS.SNS.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.AWS.SQS/NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.AWS/NetEvolve.HealthChecks.AWS.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.Blobs/NetEvolve.HealthChecks.Azure.Blobs.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.Queues/NetEvolve.HealthChecks.Azure.Queues.csproj" />
