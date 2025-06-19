@@ -1,13 +1,13 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Elasticsearch;
 
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Container;
+using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Cluster;
 
-[ClassDataSource<ContainerCustomPassword>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<ClusterCustomPassword>(Shared = SharedType.PerTestSession)]
 [InheritsTests]
 [TestGroup(nameof(Elasticsearch))]
 public sealed class ElasticsearchCustomPasswordHealthCheckTests : ElasticsearchHealthCheckBaseTests
 {
-    public ElasticsearchCustomPasswordHealthCheckTests(ContainerCustomPassword container)
-        : base(container) { }
+    public ElasticsearchCustomPasswordHealthCheckTests(ClusterCustomPassword cluster)
+        : base(cluster) { }
 }

@@ -47,9 +47,6 @@ The configuration looks like this:
       "<name>": {
         "Mode": "<client_creation_mode>", // Optional, defaults to 'ElasticsearchClientCreationMode.ServiceProvider'
         "KeyedService": "<key>", // Optional, used when Mode set to 'ElasticsearchClientCreationMode.ServiceProvider'
-        "ConnectionString": "<connection_string>", // Required when Mode set to 'ElasticsearchClientCreationMode.Internal'
-        "Username": "<username>", // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Password is set
-        "Password": "<password>", // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Username is set
         "Timeout": "<timeout>" // Optional, default is 100 milliseconds
       }
     }
@@ -58,7 +55,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you have only one server instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you only have one server instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -66,10 +63,13 @@ builder.AddElasticsearch("<name>", options =>
 {
     options.Mode = <client_creation_mode>; // Optional, defaults to 'ElasticsearchClientCreationMode.ServiceProvider'
     options.KeyedService = "<key>"; // Optional, used when Mode set to 'ElasticsearchClientCreationMode.ServiceProvider'
-    options.ConnectionString = "<connection_string>"; // Required when Mode set to 'ElasticsearchClientCreationMode.Internal'
-    options.Username = "<username>"; // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Password is set
-    options.Password = "<password>"; // Used when Mode set to 'ElasticsearchClientCreationMode.Internal' and required when Username is set
+    options.Username = "<username>"; // Used when Mode set to 'ElasticsearchClientCreationMode.UsernameAndPassword' and required when Password is set
+    options.Password = "<password>"; // Used when Mode set to 'ElasticsearchClientCreationMode.UsernameAndPassword' and required when Username is set
     options.Timeout = <timeout>; // Optional, defaults to 100 milliseconds
+    
+    foreach (var connectionString in connectionStrings) {
+        options.ConnectionStrings.Add(connectionString); // Required when Mode set to 'ElasticsearchClientCreationMode.UsernameAndPassword'
+    }
 
     // Optional, defaults to NetEvolve.HealthChecks.Elasticsearch.DefaultCommandAsync
     options.CommandAsync = async (client, cancellationToken) =>

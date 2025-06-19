@@ -41,13 +41,13 @@ internal sealed class ElasticsearchHealthCheck : ConfigurableHealthCheckBase<Ela
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isNotTimedOut, isResultValid) = await commandTask
+        var (isTimelyResponse, isResultValid) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
         return !isResultValid
             ? HealthCheckUnhealthy(failureStatus, name, "Invalid command result.")
-            : HealthCheckState(isNotTimedOut, name);
+            : HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(

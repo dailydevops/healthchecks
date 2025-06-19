@@ -58,7 +58,7 @@ internal sealed class ElasticsearchConfigure
         return options.Mode switch
         {
             ElasticsearchClientCreationMode.ServiceProvider => ValidateCreationModeServiceProvider(options),
-            ElasticsearchClientCreationMode.Internal => ValidateCreationModeInternal(options),
+            ElasticsearchClientCreationMode.UsernameAndPassword => ValidateCreationModeUsernameAndPassword(options),
             _ => Fail($"The mode `{options.Mode}` is not supported."),
         };
     }
@@ -79,14 +79,14 @@ internal sealed class ElasticsearchConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateCreationModeInternal(ElasticsearchOptions options)
+    private static ValidateOptionsResult ValidateCreationModeUsernameAndPassword(ElasticsearchOptions options)
     {
-        const string creationModeName = nameof(ElasticsearchClientCreationMode.Internal);
+        const string creationModeName = nameof(ElasticsearchClientCreationMode.UsernameAndPassword);
 
-        if (string.IsNullOrWhiteSpace(options.ConnectionString))
+        if (!options.ConnectionStrings.Any())
         {
             return Fail(
-                $"The connection string cannot be null or whitespace when using the `{creationModeName}` client creation mode."
+                $"The connection strings list cannot be empty when using the `{creationModeName}` client creation mode."
             );
         }
 

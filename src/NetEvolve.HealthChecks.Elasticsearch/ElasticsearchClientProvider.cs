@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Concurrent;
 using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Nodes;
 using Elastic.Transport;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,10 +27,15 @@ internal class ElasticsearchClientProvider
 
     internal static ElasticsearchClient CreateClient(ElasticsearchOptions options)
     {
-        ArgumentOutOfRangeException.ThrowIfNotEqual((int)options.Mode, (int)ElasticsearchClientCreationMode.Internal);
-        ArgumentNullException.ThrowIfNullOrEmpty(options.ConnectionString);
+        var nodes = options.ConnectionStrings.Select(connectionString => new Uri(connectionString)).ToArray();
 
-        using var settings = new ElasticsearchClientSettings(new Uri(options.ConnectionString));
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var settings =
+            options.ConnectionStrings.Count == 1
+                ? new ElasticsearchClientSettings(nodes[0])
+                : new ElasticsearchClientSettings(new StaticNodePool(nodes));
+#pragma warning restore CA2000 // Dispose objects before losing scope
+
         _ = settings.ServerCertificateValidationCallback(CertificateValidations.AllowAll);
 
         if (options.Username is not null && options.Password is not null)
