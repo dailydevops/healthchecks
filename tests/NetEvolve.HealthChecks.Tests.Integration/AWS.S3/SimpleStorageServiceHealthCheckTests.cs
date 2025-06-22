@@ -144,9 +144,11 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddAWSS3_UseConfiguration_WithAdditionalTags() =>
+    public async Task AddAWSS3_UseConfiguration_WithAdditionalTags()
+    {
+        string[] tags = ["storage", "custom-tag"];
         await RunAndVerify(
-            healthChecks => healthChecks.AddAWSS3("TestContainerWithTags", tags: ["storage", "custom-tag"]),
+            healthChecks => healthChecks.AddAWSS3("TestContainerWithTags", tags: tags),
             HealthStatus.Healthy,
             config =>
             {
@@ -163,4 +165,5 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             }
         );
+    }
 }
