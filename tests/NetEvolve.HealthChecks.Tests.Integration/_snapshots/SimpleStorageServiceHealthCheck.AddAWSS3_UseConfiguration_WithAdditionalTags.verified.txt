@@ -1,0 +1,16 @@
+﻿{
+  results: [
+    {
+      description: TestContainerWithTags: Healthy,
+      name: TestContainerWithTags,
+      status: Healthy,
+      tags: [
+        aws,
+        s3,
+        storage,
+        custom-tag
+      ]
+    }
+  ],
+  status: Healthy
+}

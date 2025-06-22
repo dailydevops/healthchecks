@@ -1,6 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 using System.Threading.Tasks;
+using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.SimpleNotificationService;
 using Amazon.SQS;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -13,8 +15,9 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
     /// <see href="https://docs.aws.amazon.com/STS/latest/APIReference/API_GetAccessKeyInfo.html" />
     internal const string AccessKey = "AKIAIOSFODNN7EXAMPLE";
     internal const string SecretKey = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
-    internal const string TopicName = "TestTopic";
-    internal const string QueueName = "MuhKuh";
+    internal const string BucketName = "test-bucket";
+    internal const string TopicName = "test-topic";
+    internal const string QueueName = "test-queue";
 
     private readonly TestContainer _container = new LocalStackBuilder()
         .WithLogger(NullLogger.Instance)
@@ -35,7 +38,11 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
 
         await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 
-        await Task.WhenAll(CreateSNSDefaults(cancellationToken), CreateSQSDefaults(cancellationToken))
+        await Task.WhenAll(
+                CreateSNSDefaults(cancellationToken),
+                CreateSQSDefaults(cancellationToken),
+                CreateS3Defaults(cancellationToken)
+            )
             .ConfigureAwait(false);
     }
 
@@ -92,5 +99,18 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
         );
 
         _ = await sqsClient.CreateQueueAsync(QueueName, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task CreateS3Defaults(CancellationToken cancellationToken)
+    {
+        // Create S3 Bucket
+        using var s3Client = new AmazonS3Client(
+            AccessKey,
+            SecretKey,
+            new AmazonS3Config { ServiceURL = ConnectionString, ForcePathStyle = true }
+        );
+
+        var putBucketRequest = new PutBucketRequest { BucketName = BucketName };
+        _ = await s3Client.PutBucketAsync(putBucketRequest, cancellationToken).ConfigureAwait(false);
     }
 }

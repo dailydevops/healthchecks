@@ -1,0 +1,22 @@
+﻿namespace NetEvolve.HealthChecks.AWS.S3
+{
+    public enum CreationMode
+    {
+        BasicAuthentication = 0,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAWSS3([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.AWS.S3.SimpleStorageServiceOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class SimpleStorageServiceOptions : System.IEquatable<NetEvolve.HealthChecks.AWS.S3.SimpleStorageServiceOptions>
+    {
+        public SimpleStorageServiceOptions() { }
+        public string? AccessKey { get; set; }
+        public string? BucketName { get; set; }
+        public NetEvolve.HealthChecks.AWS.S3.CreationMode? Mode { get; set; }
+        public Amazon.RegionEndpoint? RegionEndpoint { get; set; }
+        public string? SecretKey { get; set; }
+        public string? ServiceUrl { get; set; }
+        public int Timeout { get; set; }
+    }
+}
