@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ArangoDb\NetEvolve.HealthChecks.ArangoDb.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.S3\NetEvolve.HealthChecks.AWS.S3.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SNS\NetEvolve.HealthChecks.AWS.SNS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />

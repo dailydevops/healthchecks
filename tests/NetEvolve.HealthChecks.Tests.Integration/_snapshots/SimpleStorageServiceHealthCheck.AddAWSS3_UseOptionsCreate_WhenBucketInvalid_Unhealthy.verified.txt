@@ -1,0 +1,25 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.,
+            type: HttpErrorResponseException
+          }
+        ],
+        message: The specified bucket does not exist,
+        type: Amazon.S3.AmazonS3Exception
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        aws,
+        s3,
+        storage
+      ]
+    }
+  ],
+  status: Unhealthy
+}
