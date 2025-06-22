@@ -62,7 +62,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you have only one SQL Server instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you only have one SQL Server instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
