@@ -240,6 +240,25 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
         );
 
     [Test]
+    public async Task AddElasticsearch_UseConfiguration_ConnectionStringsEmpty_ThrowsException() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddElasticsearch("TestNoValues"),
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:Elasticsearch:TestNoValues:Mode",
+                        nameof(ElasticsearchClientCreationMode.UsernameAndPassword)
+                    },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
     public async Task AddElasticsearch_UseConfiguration_ConnectionStringEmpty_ThrowsException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestNoValues"),

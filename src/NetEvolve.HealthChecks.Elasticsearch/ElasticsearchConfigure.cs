@@ -90,6 +90,13 @@ internal sealed class ElasticsearchConfigure
             );
         }
 
+        if (options.ConnectionStrings.Any(string.IsNullOrWhiteSpace))
+        {
+            return Fail(
+                $"The connection strings list cannot contain a null or empty entry when using the `{creationModeName}` client creation mode."
+            );
+        }
+
         var usernameNullOrWhitespace = string.IsNullOrWhiteSpace(options.Username);
         var passwordNullOrWhitespace = string.IsNullOrWhiteSpace(options.Password);
 
