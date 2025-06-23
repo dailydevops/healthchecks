@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Elasticsearch;
 
-using System.Collections.ObjectModel;
 using Elastic.Clients.Elasticsearch;
 
 /// <summary>

@@ -110,10 +110,7 @@ public sealed class ElasticsearchHealthCheckTests
         var settings = Substitute.For<ElasticsearchClientSettings>(uri);
         var client = new ElasticsearchClient(settings);
 
-        var serviceProvider = new ServiceCollection()
-            .AddKeyedSingleton(serviceKey, client)
-            .AddSingleton<ElasticsearchClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, client).BuildServiceProvider();
 
         var healthCheck = new ElasticsearchHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext
@@ -164,10 +161,7 @@ public sealed class ElasticsearchHealthCheckTests
         var settings = Substitute.For<ElasticsearchClientSettings>(uri);
         var client = new ElasticsearchClient(settings);
 
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<ElasticsearchClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
         var healthCheck = new ElasticsearchHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext
@@ -218,10 +212,7 @@ public sealed class ElasticsearchHealthCheckTests
         var settings = Substitute.For<ElasticsearchClientSettings>(uri);
         var client = new ElasticsearchClient(settings);
 
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<ElasticsearchClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
         var healthCheck = new ElasticsearchHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext
@@ -275,10 +266,7 @@ public sealed class ElasticsearchHealthCheckTests
         var settings = Substitute.For<ElasticsearchClientSettings>(uri);
         var client = new ElasticsearchClient(settings);
 
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<ElasticsearchClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
         var healthCheck = new ElasticsearchHealthCheck(optionsMonitor, serviceProvider);
         var context = new HealthCheckContext

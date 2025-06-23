@@ -43,7 +43,6 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<ElasticsearchCheckMarker>()
                 .AddSingleton<ElasticsearchHealthCheck>()
-                .AddSingleton<ElasticsearchClientProvider>()
                 .ConfigureOptions<ElasticsearchConfigure>();
         }
 

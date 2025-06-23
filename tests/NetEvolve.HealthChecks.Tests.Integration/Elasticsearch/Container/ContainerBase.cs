@@ -25,7 +25,7 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
 
     public string? Password { get; }
 
-    public string ConnectionString => _container.GetConnectionString();
+    public Uri ConnectionString => new Uri(_container.GetConnectionString());
 
     public async ValueTask DisposeAsync()
     {
