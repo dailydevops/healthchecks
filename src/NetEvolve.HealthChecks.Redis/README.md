@@ -56,7 +56,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you have only one Redis instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you only have one Redis instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
