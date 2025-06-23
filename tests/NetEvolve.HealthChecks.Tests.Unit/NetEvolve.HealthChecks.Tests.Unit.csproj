@@ -35,6 +35,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DB2\NetEvolve.HealthChecks.DB2.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Elasticsearch\NetEvolve.HealthChecks.Elasticsearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
