@@ -33,7 +33,7 @@ internal sealed class RedpandaConfigure : IConfigureNamedOptions<RedpandaOptions
 
         if (options.Timeout < Timeout.Infinite)
         {
-            return Fail("The timeout cannot be less than infinite (-1).");
+            return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
         if (string.IsNullOrWhiteSpace(options.Topic))

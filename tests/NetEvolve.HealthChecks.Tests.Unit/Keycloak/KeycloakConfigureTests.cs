@@ -56,7 +56,7 @@ public sealed class KeycloakConfigureTests
         yield return () =>
             (
                 false,
-                "The timeout cannot be less than infinite (-1).",
+                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.",
                 "name",
                 new NetEvolve.HealthChecks.Keycloak.KeycloakOptions { Timeout = -2 }
             );

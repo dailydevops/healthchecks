@@ -83,7 +83,11 @@ public sealed class OdbcConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Failed).IsTrue();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
+                );
         }
     }
 
