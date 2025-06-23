@@ -33,7 +33,9 @@ internal sealed class SimpleStorageServiceConfigure
 
         if (options.Timeout < Timeout.Infinite)
         {
-            return ValidateOptionsResult.Fail("The timeout cannot be less than infinite (-1).");
+            return ValidateOptionsResult.Fail(
+                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
+            );
         }
 
         if (string.IsNullOrWhiteSpace(options.BucketName))

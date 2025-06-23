@@ -53,7 +53,12 @@ public sealed class ArangoDbConfigureTests
         yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
         yield return () => (false, "The options cannot be null.", "name", null!);
         yield return () =>
-            (false, "The timeout cannot be less than infinite (-1).", "name", new ArangoDbOptions { Timeout = -2 });
+            (
+                false,
+                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.",
+                "name",
+                new ArangoDbOptions { Timeout = -2 }
+            );
         yield return () =>
             (
                 false,

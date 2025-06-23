@@ -4,6 +4,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.ClickHouse;
+using NetEvolve.HealthChecks.Tests.Unit.Internals;
 
 [TestGroup(nameof(ClickHouse))]
 public sealed class ClickHouseOptionsConfigureTests
@@ -68,12 +69,13 @@ public sealed class ClickHouseOptionsConfigureTests
     }
 
     [Test]
-    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.TimeoutsInvalid))]
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException(int timeout)
     {
         // Arrange
         var configure = new ClickHouseConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new ClickHouseOptions { ConnectionString = "Test", Timeout = -2 };
+        var options = new ClickHouseOptions { ConnectionString = "Test", Timeout = timeout };
 
         // Act
         var result = configure.Validate(name, options);
@@ -82,7 +84,11 @@ public sealed class ClickHouseOptionsConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Failed).IsTrue();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout cannot be less than infinite (-1).");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
+                );
         }
     }
 

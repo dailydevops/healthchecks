@@ -4,6 +4,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.SNS;
+using NetEvolve.HealthChecks.Tests.Unit.Internals;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
 public sealed class SimpleNotificationServiceConfigureTests
@@ -12,9 +13,7 @@ public sealed class SimpleNotificationServiceConfigureTests
         new(configuration ?? new ConfigurationBuilder().Build());
 
     [Test]
-    [Arguments(null)]
-    [Arguments("")]
-    [Arguments("   ")]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.NullOrWhitespaces))]
     public async Task Validate_WhenNameIsNullOrWhiteSpace_ReturnsFail(string? name)
     {
         var configure = CreateConfigure();
@@ -34,9 +33,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     }
 
     [Test]
-    [Arguments(null)]
-    [Arguments("")]
-    [Arguments("   ")]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.NullOrWhitespaces))]
     public async Task Validate_WhenTopicNameIsNullOrWhiteSpace_ReturnsFail(string? topicName)
     {
         var configure = CreateConfigure();
@@ -47,9 +44,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     }
 
     [Test]
-    [Arguments(null)]
-    [Arguments("")]
-    [Arguments("   ")]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.NullOrWhitespaces))]
     public async Task Validate_WhenServiceUrlIsNullOrWhiteSpace_ReturnsFail(string? service)
     {
         var configure = CreateConfigure();
@@ -121,8 +116,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     }
 
     [Test]
-    [Arguments("")]
-    [Arguments("   ")]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.NullOrWhitespaces))]
     public void Configure_WithNullOrWhiteSpaceName_ThrowsArgumentException(string? name)
     {
         var configure = CreateConfigure();
@@ -162,9 +156,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     }
 
     [Test]
-    [Arguments(-2)]
-    [Arguments(-3)]
-    [Arguments(-100)]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.TimeoutsInvalid))]
     public async Task Validate_WhenTimeoutLessThanInfinite_ReturnsFail(int timeout)
     {
         var configure = CreateConfigure();
@@ -181,15 +173,15 @@ public sealed class SimpleNotificationServiceConfigureTests
             _ = await Assert.That(result.Failed).IsTrue();
             _ = await Assert
                 .That(result.FailureMessage)
-                .Contains("timeout cannot be less than infinite", StringComparison.OrdinalIgnoreCase);
+                .IsEqualTo(
+                    "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.",
+                    StringComparison.OrdinalIgnoreCase
+                );
         }
     }
 
     [Test]
-    [Arguments(-1)] // Timeout.Infinite
-    [Arguments(0)]
-    [Arguments(100)]
-    [Arguments(1000)]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.TimeoutsValid))]
     public async Task Validate_WhenTimeoutIsValidValue_ReturnsSuccess(int timeout)
     {
         var configure = CreateConfigure();
@@ -209,9 +201,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     }
 
     [Test]
-    [Arguments(null)]
-    [Arguments("")]
-    [Arguments("   ")]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.NullOrWhitespaces))]
     public async Task Validate_WhenModeIsBasicAuthentication_AndAccessKeyIsNullOrWhiteSpace_ReturnsFail(
         string? accessKey
     )
@@ -238,9 +228,7 @@ public sealed class SimpleNotificationServiceConfigureTests
     }
 
     [Test]
-    [Arguments(null)]
-    [Arguments("")]
-    [Arguments("   ")]
+    [MethodDataSource(typeof(DataSource), nameof(DataSource.NullOrWhitespaces))]
     public async Task Validate_WhenModeIsBasicAuthentication_AndSecretKeyIsNullOrWhiteSpace_ReturnsFail(
         string? secretKey
     )

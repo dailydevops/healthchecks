@@ -61,7 +61,7 @@ public sealed class QueueServiceAvailableConfigureTests
         yield return () =>
             (
                 false,
-                "The timeout cannot be less than infinite (-1).",
+                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.",
                 "name",
                 new QueueServiceAvailableOptions { Timeout = -2 }
             );
