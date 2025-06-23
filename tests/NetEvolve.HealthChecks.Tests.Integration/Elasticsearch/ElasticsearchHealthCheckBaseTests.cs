@@ -105,8 +105,8 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     {
                         options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
                         options.Timeout = 5000;
-                        options.Username = _container.Username;
                         options.Password = _container.Password;
+                        options.Username = _container.Username;
 
                         foreach (var connectionString in GetClusterConnectionStrings())
                         {
@@ -250,7 +250,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 {
                     {
                         "HealthChecks:Elasticsearch:TestNoValues:Mode",
-                        $"{ElasticsearchClientCreationMode.UsernameAndPassword}"
+                        nameof(ElasticsearchClientCreationMode.UsernameAndPassword)
                     },
                     { "HealthChecks:Elasticsearch:TestNoValues:ConnectionStrings:0", "" },
                 };
@@ -270,7 +270,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 {
                     {
                         "HealthChecks:Elasticsearch:TestNoValues:Mode",
-                        $"{ElasticsearchClientCreationMode.UsernameAndPassword}"
+                        nameof(ElasticsearchClientCreationMode.UsernameAndPassword)
                     },
                     { "HealthChecks:Elasticsearch:TestNoValues:ConnectionStrings:0", "connection-string" },
                     { "HealthChecks:Elasticsearch:TestNoValues:Password", "password" },
