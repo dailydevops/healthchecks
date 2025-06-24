@@ -10,7 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
 
 [TestGroup(nameof(RabbitMQ))]
-[ClassDataSource<RabbitMQContainer>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<RabbitMQContainer>(Shared = InstanceSharedType.RabbitMQ)]
 public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
 {
     private readonly RabbitMQContainer _container;

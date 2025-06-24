@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MySql;
 
 [TestGroup(nameof(MySql))]
-[ClassDataSource<MySqlDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<MySqlDatabase>(Shared = InstanceSharedType.MySql)]
 public class MySqlHealthCheckTests : HealthCheckTestBase
 {
     private readonly MySqlDatabase _database;

@@ -7,7 +7,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Blobs;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
-[ClassDataSource<AzuriteAccess>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<AzuriteAccess>(Shared = InstanceSharedType.Azure)]
 public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;

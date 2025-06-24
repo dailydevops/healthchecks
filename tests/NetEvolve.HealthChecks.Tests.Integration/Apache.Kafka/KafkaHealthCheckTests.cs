@@ -11,7 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
-[ClassDataSource<KafkaContainer>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<KafkaContainer>(Shared = InstanceSharedType.Kafka)]
 public class KafkaHealthCheckTests : HealthCheckTestBase
 {
     private readonly KafkaContainer _database;

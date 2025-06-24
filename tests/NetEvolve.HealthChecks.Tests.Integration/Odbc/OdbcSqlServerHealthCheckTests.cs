@@ -4,7 +4,7 @@ using System.Data.Odbc;
 using Microsoft.Data.SqlClient;
 using NetEvolve.HealthChecks.Tests.Integration.SqlServer;
 
-[ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 [InheritsTests]
 public class OdbcSqlServerHealthCheckTests : OdbcHealthCheckTestsBase
 {
