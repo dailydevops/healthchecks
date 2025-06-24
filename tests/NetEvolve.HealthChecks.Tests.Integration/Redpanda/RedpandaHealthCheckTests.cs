@@ -11,7 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Redpanda;
 
 [TestGroup(nameof(Redpanda))]
-[ClassDataSource<RedpandaDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<RedpandaDatabase>(Shared = InstanceSharedType.Redpanda)]
 public class RedpandaHealthCheckTests : HealthCheckTestBase
 {
     private readonly RedpandaDatabase _database;

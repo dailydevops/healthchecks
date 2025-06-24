@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.SQS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SQS)}")]
-[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<LocalStackInstance>(Shared = InstanceSharedType.AWS)]
 public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
 {
     private readonly LocalStackInstance _instance;

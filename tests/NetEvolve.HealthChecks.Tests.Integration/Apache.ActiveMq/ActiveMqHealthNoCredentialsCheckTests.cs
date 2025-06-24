@@ -2,7 +2,7 @@
 
 using NetEvolve.Extensions.TUnit;
 
-[ClassDataSource<ActiveMqNoCredentials>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<ActiveMqNoCredentials>(Shared = InstanceSharedType.ActiveMQ)]
 [InheritsTests]
 [TestGroup($"{nameof(Apache)}.{nameof(ActiveMq)}")]
 public sealed class ActiveMqHealthNoCredentialsCheckTests : ActiveMqHealthCheckBaseTests

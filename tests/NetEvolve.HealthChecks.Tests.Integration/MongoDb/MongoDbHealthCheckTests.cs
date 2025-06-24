@@ -11,7 +11,7 @@ using MongoDB.Driver;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
 
-[ClassDataSource<MongoDbDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<MongoDbDatabase>(Shared = InstanceSharedType.MongoDb)]
 [TestGroup(nameof(MongoDb))]
 public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {

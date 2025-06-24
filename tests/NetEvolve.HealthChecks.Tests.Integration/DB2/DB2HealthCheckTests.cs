@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DB2;
 using TUnit.Core.Enums;
 
-[ClassDataSource<DB2Database>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<DB2Database>(Shared = InstanceSharedType.DB2)]
 [TestGroup(nameof(DB2))]
 [RunOn(OS.Windows)]
 public class DB2HealthCheckTests : HealthCheckTestBase

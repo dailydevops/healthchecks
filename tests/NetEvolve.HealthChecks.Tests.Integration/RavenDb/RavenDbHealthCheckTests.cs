@@ -12,7 +12,7 @@ using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
 using Raven.Client.ServerWide.Operations;
 
-[ClassDataSource<RavenDbDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<RavenDbDatabase>(Shared = InstanceSharedType.RavenDb)]
 [TestGroup(nameof(RavenDb))]
 public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {

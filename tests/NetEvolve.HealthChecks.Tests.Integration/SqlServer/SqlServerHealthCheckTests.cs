@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer;
 
 [TestGroup(nameof(SqlServer))]
-[ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 public class SqlServerHealthCheckTests : HealthCheckTestBase
 {
     private readonly SqlServerDatabase _database;
