@@ -1,10 +1,43 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_TestTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CA1034;IDE1006;MSB3270</NoWarn>
     <OutputType>Exe</OutputType>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
+  <ItemGroup Label="Transitive Version Workaround">
+    <!-- Related to https://github.com/dependabot/dependabot-core/issues/12493 -->
+    <PackageReference Include="AWSSDK.S3" />
+    <PackageReference Include="AWSSDK.SQS" />
+    <PackageReference Include="AWSSDK.SimpleNotificationService" />
+    <PackageReference Include="Apache.NMS.ActiveMQ" />
+    <PackageReference Include="ArangoDBNetStandard" />
+    <PackageReference Include="Azure.Data.Tables" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="ClickHouse.Client" />
+    <PackageReference Include="Confluent.Kafka" />
+    <PackageReference Include="Dapr.Client" />
+    <PackageReference Include="DuckDB.NET.Data" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" />
+    <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
+    <PackageReference Include="Keycloak.Net.Core" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="MongoDB.Driver" />
+    <PackageReference Include="MySql.Data" />
+    <PackageReference Include="MySqlConnector" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" />
+    <PackageReference Include="Qdrant.Client" />
+    <PackageReference Include="RabbitMQ.Client" />
+    <PackageReference Include="RavenDB.Client" />
+    <PackageReference Include="StackExchange.Redis" />
+    <PackageReference Include="System.Data.Odbc" />
+    <PackageReference Include="System.Data.SQLite" />
+    <PackageReference Include="System.Data.SqlClient" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="CliWrap" />
