@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.SqlServer.Devart
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSqlServerDevart([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.SqlServer.Devart.SqlServerDevartOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class SqlServerDevartOptions : System.IEquatable<NetEvolve.HealthChecks.SqlServer.Devart.SqlServerDevartOptions>
+    {
+        public SqlServerDevartOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+}
