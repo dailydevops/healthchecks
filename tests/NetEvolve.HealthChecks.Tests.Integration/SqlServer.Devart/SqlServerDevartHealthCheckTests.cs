@@ -12,11 +12,11 @@ using TUnit.Core.Enums;
 [TestGroup($"{nameof(SqlServer)}.{nameof(Devart)}")]
 [ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 [RunOn(OS.Windows)]
-public class SqlServerHealthCheckTests : HealthCheckTestBase
+public class SqlServerDevartHealthCheckTests : HealthCheckTestBase
 {
     private readonly SqlServerDatabase _database;
 
-    public SqlServerHealthCheckTests(SqlServerDatabase database) => _database = database;
+    public SqlServerDevartHealthCheckTests(SqlServerDatabase database) => _database = database;
 
     [Test]
     public async Task AddSqlServerDevart_UseOptions_Healthy() =>
