@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.SqlServer.Devart;
 using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(SqlServer)}.{nameof(Devart)}")]
-[ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 [RunOn(OS.Windows)]
 public class SqlServerHealthCheckTests : HealthCheckTestBase
 {
