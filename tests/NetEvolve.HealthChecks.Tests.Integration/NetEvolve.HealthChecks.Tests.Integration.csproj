@@ -47,7 +47,6 @@
     </PackageReference>
     <PackageReference Include="coverlet.msbuild" />
     <PackageReference Include="DuckDB.NET.Bindings.Full" />
-    <PackageReference Include="Elastic.Clients.Elasticsearch" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
