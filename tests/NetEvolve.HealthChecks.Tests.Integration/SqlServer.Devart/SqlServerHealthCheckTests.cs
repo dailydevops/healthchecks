@@ -7,9 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Devart;
+using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(SqlServer)}.{nameof(Devart)}")]
 [ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerTestSession)]
+[RunOn(OS.Windows)]
 public class SqlServerHealthCheckTests : HealthCheckTestBase
 {
     private readonly SqlServerDatabase _database;
