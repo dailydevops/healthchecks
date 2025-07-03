@@ -49,6 +49,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Firebird/NetEvolve.HealthChecks.Firebird.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Http/NetEvolve.HealthChecks.Http.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Keycloak/NetEvolve.HealthChecks.Keycloak.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.LiteDB/NetEvolve.HealthChecks.LiteDB.csproj" Id="62a5cf73-c7ec-4677-bf63-6e0030939c13" />
     <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql.Connector/NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql/NetEvolve.HealthChecks.MySql.csproj" />
