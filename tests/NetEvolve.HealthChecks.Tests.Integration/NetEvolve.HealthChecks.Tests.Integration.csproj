@@ -19,6 +19,7 @@
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Dapr.Client" />
+    <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="DuckDB.NET.Data" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" />
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
