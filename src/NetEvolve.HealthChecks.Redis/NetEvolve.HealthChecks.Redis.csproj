@@ -7,11 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
-    <PackageReference
-      Include="StackExchange.Redis"
-      VersionOverride="[2.0.495, 3.0.0)"
-      NoWarn="NU1901;NU1902;NU1903;NU1904"
-    />
+    <PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
