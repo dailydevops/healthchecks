@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
-    <PackageReference Include="RabbitMQ.Client" VersionOverride="[7.0.0, 8.0.0)" NoWarn="NU1901;NU1902;NU1903;NU1904" />
+    <PackageReference Include="RabbitMQ.Client" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />

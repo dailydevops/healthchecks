@@ -6,11 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
-    <PackageReference
-      Include="Oracle.ManagedDataAccess.Core"
-      VersionOverride="[23.4.0, 24.0.0)"
-      NoWarn="NU1901;NU1902;NU1903;NU1904"
-    />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
