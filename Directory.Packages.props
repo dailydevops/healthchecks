@@ -60,7 +60,7 @@
     <PackageVersion Include="Qdrant.Client" Version="1.14.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageVersion Include="RavenDB.Client" Version="7.0.2" />
-    <PackageVersion Include="StackExchange.Redis" Version="2.8.37" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.8.41" />
     <PackageVersion Include="System.Data.Odbc" Version="9.0.5" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Data.SQLite" Version="1.0.119" />
