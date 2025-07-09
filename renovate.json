@@ -10,8 +10,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "\\.csproj$"
+      "managerFilePatterns": [
+        "/\\.csproj$/"
       ],
       "matchStrings": [
         "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\""
