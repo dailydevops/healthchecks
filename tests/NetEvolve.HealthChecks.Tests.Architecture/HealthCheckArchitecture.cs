@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using ArchUnitNET.Domain;
 using ArchUnitNET.Loader;
-using Raven.Client.Documents.Operations.ETL.ElasticSearch;
 
 internal static class HealthCheckArchitecture
 {
@@ -42,6 +41,7 @@ internal static class HealthCheckArchitecture
             typeof(Elasticsearch.ElasticsearchHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
+            typeof(LiteDB.LiteDBHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,
