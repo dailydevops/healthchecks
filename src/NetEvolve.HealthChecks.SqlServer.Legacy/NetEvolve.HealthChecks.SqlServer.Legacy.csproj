@@ -7,11 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
-    <PackageReference
-      Include="System.Data.SqlClient"
-      VersionOverride="[4.8.0, 5.0.0)"
-      NoWarn="NU1901;NU1902;NU1903;NU1904"
-    />
+    <PackageReference Include="System.Data.SqlClient" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />

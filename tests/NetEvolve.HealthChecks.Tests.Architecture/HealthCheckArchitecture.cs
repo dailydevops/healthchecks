@@ -56,6 +56,7 @@ internal static class HealthCheckArchitecture
             typeof(SQLite.SQLiteHealthCheck).Assembly,
             typeof(SQLite.Legacy.SQLiteLegacyHealthCheck).Assembly,
             typeof(SqlServer.SqlServerHealthCheck).Assembly,
+            typeof(SqlServer.Devart.SqlServerDevartHealthCheck).Assembly,
             typeof(SqlServer.Legacy.SqlServerLegacyHealthCheck).Assembly,
         ];
 
