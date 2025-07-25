@@ -9,11 +9,6 @@
     <NoWarn>$(NoWarn);CS8604;CA2007</NoWarn>
   </PropertyGroup>
   <Target Name="EnsureREADME" BeforeTargets="DispatchToInnerBuilds;BeforeBuild">
-    <Warning
-      Code="NEH0001"
-      Text="Missing README, please provide a package README.md for this package."
-      Condition=" '$(IsTestableProject)' == 'false' and '$(IsXampleProject)' == 'false' and !Exists('$(ProjectDir)README.md') "
-      File="$(ProjectName)"
-    />
+    <Warning Code="NEH0001" Text="Missing README, please provide a package README.md for this package." Condition=" '$(IsTestableProject)' == 'false' and '$(IsXampleProject)' == 'false' and !Exists('$(ProjectDir)README.md') " File="$(ProjectName)" />
   </Target>
 </Project>
