@@ -48,11 +48,7 @@
     </PackageReference>
     <PackageReference Include="coverlet.msbuild" />
     <PackageReference Include="DuckDB.NET.Bindings.Full" />
-    <PackageReference
-      Include="Microsoft.AspNetCore.TestHost"
-      Condition=" $(TargetFramework) == 'net8.0' "
-      VersionOverride="8.0.18"
-    />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Condition=" $(TargetFramework) == 'net8.0' " VersionOverride="8.0.18" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Condition=" $(TargetFramework) != 'net8.0' " />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
