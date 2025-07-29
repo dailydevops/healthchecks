@@ -12,6 +12,7 @@ using TUnit.Core.Enums;
 [TestGroup($"{nameof(SqlServer)}.{nameof(Devart)}")]
 [ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 [RunOn(OS.Windows)]
+[Skip("Devart.SqlServer requires a license.")]
 public class SqlServerDevartHealthCheckTests : HealthCheckTestBase
 {
     private readonly SqlServerDatabase _database;
