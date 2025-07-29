@@ -17,9 +17,9 @@
   <ItemGroup>
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.1" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
-    <PackageVersion Include="AWSSDK.S3" Version="4.0.1.7" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.0.1" />
-    <PackageVersion Include="AWSSDK.SQS" Version="4.0.0.9" />
+    <PackageVersion Include="AWSSDK.S3" Version="4.0.6.2" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.0.15" />
+    <PackageVersion Include="AWSSDK.SQS" Version="4.0.0.17" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.14.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.19.0" />
