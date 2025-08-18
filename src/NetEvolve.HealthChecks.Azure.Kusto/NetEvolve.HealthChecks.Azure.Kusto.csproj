@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Azure Kusto (Data Explorer).</Description>
+    <PackageTags>$(PackageTags);azure;kusto;data explorer</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Microsoft.Azure.Kusto.Data" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
