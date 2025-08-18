@@ -25,6 +25,7 @@
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.19.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.22.0" />
+    <PackageVersion Include="Azure.Analytics.Synapse.Artifacts" Version="1.0.0-preview.19" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.8.2" />
     <PackageVersion Include="Confluent.Kafka" Version="2.10.0" />
