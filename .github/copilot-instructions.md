@@ -4,6 +4,7 @@
 
 * Make only high confidence suggestions when reviewing code changes.
 * Always use the latest version C#, currently C# 13 features.
+* All commit messages must follow the guidelines for [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 * Never change `global.json` unless explicitly asked to.
 * Never change `Directory.Build.props` unless explicitly asked to.
 * Never change `Directory.Build.targets` unless explicitly asked to.
