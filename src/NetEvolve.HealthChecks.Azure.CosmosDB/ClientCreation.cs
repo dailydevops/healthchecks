@@ -37,8 +37,10 @@ internal class ClientCreation
             options.ConfigureClientOptions(clientOptions);
         }
 
+        var mode = options.Mode ?? CosmosDbClientCreationMode.ConnectionString;
+
 #pragma warning disable IDE0010 // Add missing cases
-        switch (options.Mode)
+        switch (mode)
         {
             case CosmosDbClientCreationMode.DefaultAzureCredentials:
                 var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
@@ -51,7 +53,7 @@ internal class ClientCreation
                 var servicePrincipalCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new CosmosClient(options.ServiceEndpoint, servicePrincipalCredential, clientOptions);
             default:
-                throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
+                throw new UnreachableException($"Invalid client creation mode `{mode}`.");
         }
 #pragma warning restore IDE0010 // Add missing cases
     }
