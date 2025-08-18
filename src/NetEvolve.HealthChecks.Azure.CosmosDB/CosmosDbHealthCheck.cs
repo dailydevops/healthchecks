@@ -30,57 +30,47 @@ internal sealed class CosmosDbHealthCheck : ConfigurableHealthCheckBase<CosmosDb
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var cosmosClient = clientCreation.GetCosmosClient(name, options, _serviceProvider);
 
-        try
+        // Check if the CosmosDB service is available by reading the account properties
+        var (serviceAvailable, _) = await cosmosClient
+            .ReadAccountAsync()
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (!serviceAvailable)
         {
-            // Check if the CosmosDB service is available by reading the account properties
-            var (serviceAvailable, _) = await cosmosClient
-                .ReadAccountAsync()
+            return HealthCheckState(false, name);
+        }
+
+        // If database name is specified, check database availability
+        if (!string.IsNullOrWhiteSpace(options.DatabaseName))
+        {
+            var database = cosmosClient.GetDatabase(options.DatabaseName);
+            var (databaseAvailable, _) = await database
+                .ReadAsync(cancellationToken: cancellationToken)
                 .WithTimeoutAsync(options.Timeout, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (!serviceAvailable)
+            if (!databaseAvailable)
             {
-                return HealthCheckState(false, name);
+                return HealthCheckResult.Unhealthy($"{name}: Database `{options.DatabaseName}` is not available.");
             }
 
-            // If database name is specified, check database availability
-            if (!string.IsNullOrWhiteSpace(options.DatabaseName))
+            // If container name is also specified, check container availability
+            if (!string.IsNullOrWhiteSpace(options.ContainerName))
             {
-                var database = cosmosClient.GetDatabase(options.DatabaseName);
-                var (databaseAvailable, _) = await database
-                    .ReadAsync(cancellationToken: cancellationToken)
+                var container = database.GetContainer(options.ContainerName);
+                var (containerAvailable, _) = await container
+                    .ReadContainerAsync(cancellationToken: cancellationToken)
                     .WithTimeoutAsync(options.Timeout, cancellationToken)
                     .ConfigureAwait(false);
 
-                if (!databaseAvailable)
+                if (!containerAvailable)
                 {
-                    return HealthCheckState(false, name);
-                }
-
-                // If container name is also specified, check container availability
-                if (!string.IsNullOrWhiteSpace(options.ContainerName))
-                {
-                    var container = database.GetContainer(options.ContainerName);
-                    var (containerAvailable, _) = await container
-                        .ReadContainerAsync(cancellationToken: cancellationToken)
-                        .WithTimeoutAsync(options.Timeout, cancellationToken)
-                        .ConfigureAwait(false);
-
-                    return HealthCheckState(containerAvailable, name);
+                    return HealthCheckResult.Unhealthy($"{name}: Container `{options.ContainerName}` is not available.");
                 }
             }
+        }
 
-            return HealthCheckState(true, name);
-        }
-        catch (CosmosException cosmosEx) when (cosmosEx.StatusCode == System.Net.HttpStatusCode.NotFound)
-        {
-            // Database or container not found
-            return HealthCheckState(false, name);
-        }
-        catch (Exception)
-        {
-            // Any other exception indicates unhealthy state
-            return HealthCheckState(false, name);
-        }
+        return HealthCheckState(true, name);
     }
 }
