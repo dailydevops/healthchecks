@@ -14,9 +14,7 @@ public sealed class HttpConfigureTests
     {
         // Arrange
         var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
-        );
+        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
 
         var serviceProvider = services.BuildServiceProvider();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -36,9 +34,7 @@ public sealed class HttpConfigureTests
     {
         // Arrange
         var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
-        );
+        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
 
         var serviceProvider = services.BuildServiceProvider();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -62,9 +58,7 @@ public sealed class HttpConfigureTests
 
         var services = new ServiceCollection();
         _ = services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder()
-                .AddInMemoryCollection([$"HealthChecks:Http:{key}:Uri"] = [uri])
-                .Build()
+            new ConfigurationBuilder().AddInMemoryCollection([$"HealthChecks:Http:{key}:Uri"] = [uri]).Build()
         );
 
         var serviceProvider = services.BuildServiceProvider();

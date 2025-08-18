@@ -59,9 +59,7 @@ public sealed class DependencyInjectionExtensionsTests
     {
         // Arrange
         var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
-        );
+        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
         var builder = services.AddHealthChecks();
         const string name = "Test";
 
@@ -80,9 +78,7 @@ public sealed class DependencyInjectionExtensionsTests
     {
         // Arrange
         var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
-        );
+        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
         var builder = services.AddHealthChecks();
         const string name = "Test";
 

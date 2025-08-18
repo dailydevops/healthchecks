@@ -1,5 +1,6 @@
-﻿namespace NetEvolve.HealthChecks.Http;
+namespace NetEvolve.HealthChecks.Http;
 
+using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -24,7 +25,7 @@ internal sealed class HttpConfigure : IConfigureNamedOptions<HttpOptions>
             return;
         }
 
-        _ = section.Bind(options);
+        section.Bind(options);
     }
 
     public void Configure(HttpOptions options) => Configure(Options.DefaultName, options);

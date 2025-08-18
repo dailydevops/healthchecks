@@ -40,8 +40,10 @@ public static class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<HttpMarker>()
                 .AddSingleton<HttpHealthCheck>()
-                .ConfigureOptions<HttpConfigure>()
-                .AddHttpClient(); // Ensure HttpClient is available
+                .ConfigureOptions<HttpConfigure>();
+            
+            // Ensure HttpClient is available
+            _ = builder.Services.AddHttpClient();
         }
 
         if (options is not null)
