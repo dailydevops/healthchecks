@@ -29,23 +29,22 @@ internal sealed class SynapseWorkspaceAvailableHealthCheck : ConfigurableHealthC
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var artifactsClient = clientCreation.GetArtifactsClient(name, options, _serviceProvider);
 
-        // Check workspace availability by trying to get pipeline service
-        var pipelineTask = Task.FromResult(true); // Simple connectivity check
         try
         {
-            // Try to call a simple method to test connectivity
-            var pipelineService = artifactsClient.Pipeline;
-            pipelineTask = Task.FromResult(pipelineService is not null);
+            // Test connectivity by trying to access the LinkedService service
+            // This is a basic connectivity check to the Synapse workspace
+            var linkedServiceClient = artifactsClient.LinkedService;
+            var healthCheckTask = Task.FromResult(linkedServiceClient is not null);
+
+            var (isValid, result) = await healthCheckTask
+                .WithTimeoutAsync(options.Timeout, cancellationToken)
+                .ConfigureAwait(false);
+
+            return HealthCheckState(isValid && result, name);
         }
-        catch
+        catch (Exception ex)
         {
-            pipelineTask = Task.FromResult(false);
+            return HealthCheckUnhealthy(failureStatus, name, ex: ex);
         }
-
-        var (isValid, result) = await pipelineTask
-            .WithTimeoutAsync(options.Timeout, cancellationToken)
-            .ConfigureAwait(false);
-
-        return HealthCheckState(isValid && result, name);
     }
 }

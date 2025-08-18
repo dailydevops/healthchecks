@@ -3,6 +3,7 @@ namespace NetEvolve.HealthChecks.Azure.Synapse;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using global::Azure.Analytics.Synapse.Artifacts;
 using global::Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,12 +41,34 @@ internal class ClientCreation
                 var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new ArtifactsClient(options.WorkspaceUri, tokenCredential);
             case SynapseClientCreationMode.ConnectionString:
-                // Note: For connection string mode, we'll need to parse the connection string to extract workspace URI
+                // For connection string mode, we extract the workspace URI from the connection string
                 // and use DefaultAzureCredential for authentication
+                var workspaceUri = ExtractWorkspaceUriFromConnectionString(options.ConnectionString);
                 var credential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
-                return new ArtifactsClient(options.WorkspaceUri, credential);
+                return new ArtifactsClient(workspaceUri, credential);
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }
+    }
+
+    private static Uri ExtractWorkspaceUriFromConnectionString(string? connectionString)
+    {
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
+        }
+
+        // Simple connection string parsing for Synapse
+        // Expected format: "Endpoint=https://myworkspace.dev.azuresynapse.net;..."
+        var parts = connectionString.Split(';', StringSplitOptions.RemoveEmptyEntries);
+        var endpointPart = parts.FirstOrDefault(p => p.Trim().StartsWith("Endpoint=", StringComparison.OrdinalIgnoreCase));
+        
+        if (endpointPart is null)
+        {
+            throw new ArgumentException("Connection string must contain an 'Endpoint=' parameter.", nameof(connectionString));
+        }
+
+        var endpointValue = endpointPart.Split('=', 2)[1];
+        return new Uri(endpointValue);
     }
 }

@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Azure.Synapse;
 
 using System;
+using System.Linq;
 using System.Threading;
 using global::Azure.Analytics.Synapse.Artifacts;
 using Microsoft.Extensions.Configuration;
@@ -82,6 +83,34 @@ internal sealed class SynapseWorkspaceAvailableConfigure
         {
             return Fail(
                 $"The connection string cannot be null or whitespace when using `{nameof(SynapseClientCreationMode.ConnectionString)}` mode."
+            );
+        }
+
+        // Validate that connection string contains an Endpoint parameter
+        try
+        {
+            var parts = options.ConnectionString.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            var endpointPart = parts.FirstOrDefault(p => p.Trim().StartsWith("Endpoint=", StringComparison.OrdinalIgnoreCase));
+            
+            if (endpointPart is null)
+            {
+                return Fail(
+                    "The connection string must contain an 'Endpoint=' parameter when using ConnectionString mode."
+                );
+            }
+
+            var endpointValue = endpointPart.Split('=', 2)[1];
+            if (!Uri.TryCreate(endpointValue, UriKind.Absolute, out _))
+            {
+                return Fail(
+                    "The Endpoint in the connection string must be a valid absolute URI."
+                );
+            }
+        }
+        catch (Exception)
+        {
+            return Fail(
+                "Invalid connection string format. Expected format: 'Endpoint=https://myworkspace.dev.azuresynapse.net;'"
             );
         }
 
