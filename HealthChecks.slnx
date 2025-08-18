@@ -40,6 +40,7 @@
     <Project Path="src/NetEvolve.HealthChecks.ClickHouse/NetEvolve.HealthChecks.ClickHouse.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Dapr/NetEvolve.HealthChecks.Dapr.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DB2/NetEvolve.HealthChecks.DB2.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Db2.Devart/NetEvolve.HealthChecks.Db2.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DuckDB/NetEvolve.HealthChecks.DuckDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Elasticsearch/NetEvolve.HealthChecks.Elasticsearch.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Firebird/NetEvolve.HealthChecks.Firebird.csproj" />
