@@ -1,58 +1,115 @@
 namespace NetEvolve.HealthChecks.Azure.CosmosDB;
 
+using System;
+using System.Threading;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
-using NetEvolve.HealthChecks.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class CosmosDbConfigure
-    : ConfigureOptionsBase<CosmosDbOptions, CosmosDbConfigure>
+    : IConfigureNamedOptions<CosmosDbOptions>,
+        IValidateOptions<CosmosDbOptions>
 {
-    public CosmosDbConfigure(IConfiguration configuration)
-        : base(configuration) { }
+    private readonly IConfiguration _configuration;
+    private readonly IServiceProvider _serviceProvider;
 
-    protected override string ConfigurationKey => "HealthChecks:CosmosDb";
-
-    protected override void Configure(CosmosDbOptions options, IConfiguration sectionConfig)
+    public CosmosDbConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
     {
-        var connectionString = sectionConfig.GetConnectionString("ConnectionString");
-        if (!string.IsNullOrWhiteSpace(connectionString))
+        _configuration = configuration;
+        _serviceProvider = serviceProvider;
+    }
+
+    public void Configure(string? name, CosmosDbOptions options)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        _configuration.Bind($"HealthChecks:CosmosDb:{name}", options);
+    }
+
+    public void Configure(CosmosDbOptions options) => Configure(Options.DefaultName, options);
+
+    public ValidateOptionsResult Validate(string? name, CosmosDbOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(name))
         {
-            options.ConnectionString = connectionString;
+            return Fail("The name cannot be null or whitespace.");
         }
 
-        var serviceEndpoint = sectionConfig["ServiceEndpoint"];
-        if (!string.IsNullOrWhiteSpace(serviceEndpoint))
+        if (options is null)
         {
-            options.ServiceEndpoint = serviceEndpoint;
+            return Fail("The option cannot be null.");
         }
 
-        var accountKey = sectionConfig["AccountKey"];
-        if (!string.IsNullOrWhiteSpace(accountKey))
+        if (options.Timeout < Timeout.Infinite)
         {
-            options.AccountKey = accountKey;
+            return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
-        var databaseName = sectionConfig["DatabaseName"];
-        if (!string.IsNullOrWhiteSpace(databaseName))
+        var mode = options.Mode ?? CosmosDbClientCreationMode.ConnectionString;
+
+        return mode switch
         {
-            options.DatabaseName = databaseName;
+            CosmosDbClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
+            CosmosDbClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
+            CosmosDbClientCreationMode.AccountKey => ValidateModeAccountKey(options),
+            CosmosDbClientCreationMode.ServicePrincipal => ValidateModeServicePrincipal(options),
+            _ => Fail($"The mode `{mode}` is not supported."),
+        };
+    }
+
+    private static ValidateOptionsResult ValidateModeConnectionString(CosmosDbOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(options.ConnectionString))
+        {
+            return Fail(
+                $"The connection string cannot be null or whitespace when using `{nameof(CosmosDbClientCreationMode.ConnectionString)}` mode."
+            );
         }
 
-        var containerName = sectionConfig["ContainerName"];
-        if (!string.IsNullOrWhiteSpace(containerName))
+        return Success;
+    }
+
+    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(CosmosDbOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(options.ServiceEndpoint))
         {
-            options.ContainerName = containerName;
+            return Fail(
+                $"The service endpoint cannot be null or whitespace when using `{nameof(CosmosDbClientCreationMode.DefaultAzureCredentials)}` mode."
+            );
         }
 
-        var timeout = sectionConfig["Timeout"];
-        if (!string.IsNullOrWhiteSpace(timeout) && int.TryParse(timeout, out var timeoutValue))
+        return Success;
+    }
+
+    private static ValidateOptionsResult ValidateModeAccountKey(CosmosDbOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(options.ServiceEndpoint))
         {
-            options.Timeout = timeoutValue;
+            return Fail(
+                $"The service endpoint cannot be null or whitespace when using `{nameof(CosmosDbClientCreationMode.AccountKey)}` mode."
+            );
         }
 
-        var mode = sectionConfig["Mode"];
-        if (!string.IsNullOrWhiteSpace(mode) && Enum.TryParse<CosmosDbClientCreationMode>(mode, true, out var modeValue))
+        if (string.IsNullOrWhiteSpace(options.AccountKey))
         {
-            options.Mode = modeValue;
+            return Fail(
+                $"The account key cannot be null or whitespace when using `{nameof(CosmosDbClientCreationMode.AccountKey)}` mode."
+            );
         }
+
+        return Success;
+    }
+
+    private static ValidateOptionsResult ValidateModeServicePrincipal(CosmosDbOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(options.ServiceEndpoint))
+        {
+            return Fail(
+                $"The service endpoint cannot be null or whitespace when using `{nameof(CosmosDbClientCreationMode.ServicePrincipal)}` mode."
+            );
+        }
+
+        return Success;
     }
 }
