@@ -26,7 +26,7 @@ public sealed record KustoOptions : IKustoOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public KustoClientCreationMode? Mode { get; set; }
+    public KustoClientCreationMode? Mode { get; set; } = KustoClientCreationMode.ConnectionString;
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against Kusto.
