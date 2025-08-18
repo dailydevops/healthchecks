@@ -360,3 +360,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Prevent nested .editorconfig files - only root .editorconfig should be used
+**/.editorconfig
+!/.editorconfig
