@@ -14,6 +14,7 @@
     <PackageReference Include="Apache.NMS.ActiveMQ" />
     <PackageReference Include="ArangoDBNetStandard" />
     <PackageReference Include="Azure.Data.Tables" />
+    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
@@ -104,6 +105,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ApplicationInsights\NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
