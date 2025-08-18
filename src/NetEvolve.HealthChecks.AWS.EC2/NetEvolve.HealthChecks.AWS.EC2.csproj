@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for AWS Elastic Compute Cloud (EC2).</Description>
+    <PackageTags>$(PackageTags);aws;ec2</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.EC2" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
