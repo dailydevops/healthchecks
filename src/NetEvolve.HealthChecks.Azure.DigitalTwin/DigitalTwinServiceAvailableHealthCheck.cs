@@ -9,7 +9,8 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class DigitalTwinServiceAvailableHealthCheck : ConfigurableHealthCheckBase<DigitalTwinServiceAvailableOptions>
+internal sealed class DigitalTwinServiceAvailableHealthCheck
+    : ConfigurableHealthCheckBase<DigitalTwinServiceAvailableOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
