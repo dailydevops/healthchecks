@@ -34,18 +34,9 @@ internal sealed class ApplicationInsightsAvailabilityHealthCheck
         var telemetryClient = clientCreation.GetTelemetryClient(name, options, _serviceProvider);
 
         // Create a custom event to test connectivity
-        var properties = new Dictionary<string, string>
-        {
-            { "HealthCheckName", name },
-            { "Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture) },
-        };
-
         var customEvent = new EventTelemetry("HealthCheck") { Properties = { { "source", "NetEvolve.HealthChecks" } } };
-
-        foreach (var property in properties)
-        {
-            customEvent.Properties[property.Key] = property.Value;
-        }
+        customEvent.Properties.Add("HealthCheckName", name);
+        customEvent.Properties.Add("Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture));
 
         try
         {
