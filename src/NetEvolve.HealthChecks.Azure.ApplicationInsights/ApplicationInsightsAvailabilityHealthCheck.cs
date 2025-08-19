@@ -38,26 +38,11 @@ internal sealed class ApplicationInsightsAvailabilityHealthCheck
         customEvent.Properties.Add("HealthCheckName", name);
         customEvent.Properties.Add("Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture));
 
-        try
-        {
-            // Test the telemetry client by tracking an event
-            var (isSuccessful, _) = await Task.Run(
-                    () =>
-                    {
-                        telemetryClient.TrackEvent(customEvent);
-                        telemetryClient.Flush();
-                        return true;
-                    },
-                    cancellationToken
-                )
-                .WithTimeoutAsync(options.Timeout, cancellationToken)
-                .ConfigureAwait(false);
+        // Test the telemetry client by tracking an event
+        telemetryClient.TrackEvent(customEvent);
+        var (isTimelyResponse, _) = await telemetryClient.FlushAsync(cancellationToken)
+                .WithTimeoutAsync(options.Timeout, cancellationToken).ConfigureAwait(false);
 
-            return HealthCheckState(isSuccessful, name);
-        }
-        catch (Exception)
-        {
-            return HealthCheckState(false, name);
-        }
+        return HealthCheckState(isTimelyResponse, name);
     }
 }
