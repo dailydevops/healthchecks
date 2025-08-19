@@ -1,0 +1,24 @@
+﻿{
+  results: [
+    {
+      description: TestInvalidUri: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: Der angegebene Host ist unbekannt.,
+            type: SocketException
+          }
+        ],
+        message: Der angegebene Host ist unbekannt. (invalid-domain-that-does-not-exist-12345.com:443),
+        type: System.Net.Http.HttpRequestException
+      },
+      name: TestInvalidUri,
+      status: Unhealthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Unhealthy
+}

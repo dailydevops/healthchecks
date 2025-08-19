@@ -36,60 +36,34 @@ internal sealed class HttpHealthCheck : ConfigurableHealthCheckBase<HttpOptions>
     )
     {
         var httpClient = _serviceProvider.GetRequiredService<HttpClient>();
+        using var request = new HttpRequestMessage(new HttpMethod(options.HttpMethod), options.Uri);
 
-        try
+        // Add headers
+        foreach (var header in options.Headers)
         {
-            using var request = new HttpRequestMessage(new System.Net.Http.HttpMethod(options.HttpMethod), options.Uri);
-
-            // Add headers
-            foreach (var header in options.Headers)
-            {
-                _ = request.Headers.TryAddWithoutValidation(header.Key, header.Value);
-            }
-
-            // Add content if provided
-            if (!string.IsNullOrEmpty(options.Content))
-            {
-                request.Content = new StringContent(options.Content, Encoding.UTF8, options.ContentType);
-            }
-
-            var (isNotTimedOut, response) = await httpClient
-                .SendAsync(request, cancellationToken)
-                .WithTimeoutAsync(options.Timeout, cancellationToken)
-                .ConfigureAwait(false);
-
-            if (!isNotTimedOut)
-            {
-                return HealthCheckDegraded(name);
-            }
-
-            if (response is null)
-            {
-                return HealthCheckUnhealthy(failureStatus, name, "No response received.");
-            }
-
-            var statusCode = (int)response.StatusCode;
-            var isHealthy = options.ExpectedHttpStatusCodes.Contains(statusCode);
-
-            return isHealthy
-                ? HealthCheckResult.Healthy($"{name}: Healthy")
-                : HealthCheckUnhealthy(
-                    failureStatus,
-                    name,
-                    $"Unexpected status code {statusCode}. Expected: {string.Join(", ", options.ExpectedHttpStatusCodes)}"
-                );
+            _ = request.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
-        catch (HttpRequestException ex)
+
+        // Add content if provided
+        if (!string.IsNullOrEmpty(options.Content))
         {
-            return HealthCheckUnhealthy(failureStatus, name, $"HTTP request failed: {ex.Message}", ex);
+            request.Content = new StringContent(options.Content, Encoding.UTF8, options.ContentType);
         }
-        catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
-        {
-            return HealthCheckDegraded(name);
-        }
-        catch (Exception ex)
-        {
-            return HealthCheckUnhealthy(failureStatus, name, "Unexpected error.", ex);
-        }
+
+        var (isTimelyResponse, response) = await httpClient
+            .SendAsync(request, cancellationToken)
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
+
+        var statusCode = (int)response.StatusCode;
+        var isHealthy = options.ExpectedHttpStatusCodes.Contains(statusCode);
+
+        return isHealthy
+            ? HealthCheckState(isTimelyResponse, name)
+            : HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                $"Unexpected status code {statusCode}. Expected: {string.Join(", ", options.ExpectedHttpStatusCodes)}"
+            );
     }
 }

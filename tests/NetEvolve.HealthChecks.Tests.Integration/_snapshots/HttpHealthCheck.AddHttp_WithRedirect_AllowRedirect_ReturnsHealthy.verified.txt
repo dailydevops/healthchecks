@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestRedirect: Healthy,
+      name: TestRedirect,
+      status: Healthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Healthy
+}
