@@ -20,7 +20,7 @@ If the cluster needs longer than the configured timeout to respond, the health c
 If the cluster is not reachable, the health check will return `Unhealthy`.
 
 ### Usage
-After adding the package, yo need to import the namespace `NetEvolve.HealthChecks.Redis` and add the health check to the service collection.
+After adding the package, you need to import the namespace `NetEvolve.HealthChecks.Redis` and add the health check to the service collection.
 ```csharp
 using NetEvolve.HealthChecks.Redis;
 ```

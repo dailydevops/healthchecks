@@ -17,7 +17,7 @@ dotnet add package NetEvolve.HealthChecks.Azure.Queues
 The health check is a liveness check. It will check that the Azure Queue Service is reachable and that the client can connect to it. If the service needs longer than the configured timeout to respond, the health check will return `Degraded`. If the service is not reachable, the health check will return `Unhealthy`.
 
 ### Usage
-After adding the package, yo need to import the namespace `NetEvolve.HealthChecks.Azure.Queues` and add the health check to the service collection.
+After adding the package, you need to import the namespace `NetEvolve.HealthChecks.Azure.Queues` and add the health check to the service collection.
 ```csharp
 using NetEvolve.HealthChecks.Azure.Queues;
 ```
