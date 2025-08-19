@@ -53,12 +53,12 @@ internal class ClientCreation
                 var connectionParts = options.ConnectionString!.Split(';');
                 var endpoint = connectionParts.FirstOrDefault(p => p.StartsWith("Endpoint=", StringComparison.OrdinalIgnoreCase))?.Substring(9);
                 var key = connectionParts.FirstOrDefault(p => p.StartsWith("ApiKey=", StringComparison.OrdinalIgnoreCase))?.Substring(7);
-                
+
                 if (string.IsNullOrWhiteSpace(endpoint) || string.IsNullOrWhiteSpace(key))
                 {
                     throw new InvalidOperationException("Connection string must contain both 'Endpoint' and 'ApiKey' parameters.");
                 }
-                
+
                 var connectionKeyCredential = new AzureKeyCredential(key);
                 return new SearchIndexClient(new Uri(endpoint), connectionKeyCredential, clientOptions);
             case SearchClientCreationMode.ApiKey:
