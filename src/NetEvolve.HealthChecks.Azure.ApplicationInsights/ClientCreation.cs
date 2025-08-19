@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Azure.ApplicationInsights;
 
 using System;
 using System.Collections.Concurrent;
@@ -32,7 +32,9 @@ internal class ClientCreation
             case ApplicationInsightsClientCreationMode.ServiceProvider:
                 return serviceProvider.GetRequiredService<TelemetryClient>();
             case ApplicationInsightsClientCreationMode.ConnectionString:
+#pragma warning disable CA2000 // Dispose objects before losing scope
                 var config = TelemetryConfiguration.CreateDefault();
+#pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.ConnectionString))
                 {
                     config.ConnectionString = options.ConnectionString;
@@ -41,10 +43,12 @@ internal class ClientCreation
                 options.ConfigureConfiguration?.Invoke(config);
                 return new TelemetryClient(config);
             case ApplicationInsightsClientCreationMode.InstrumentationKey:
+#pragma warning disable CA2000 // Dispose objects before losing scope
                 var configWithKey = TelemetryConfiguration.CreateDefault();
+#pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.InstrumentationKey))
                 {
-                    configWithKey.InstrumentationKey = options.InstrumentationKey;
+                    configWithKey.ConnectionString = options.InstrumentationKey;
                 }
 
                 options.ConfigureConfiguration?.Invoke(configWithKey);
