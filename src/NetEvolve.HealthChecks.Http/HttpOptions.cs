@@ -12,7 +12,9 @@ public sealed record HttpOptions
     /// <summary>
     /// The HTTP endpoint URI to check.
     /// </summary>
+#pragma warning disable CA1056 // URI-like properties should not be strings
     public string Uri { get; set; } = default!;
+#pragma warning restore CA1056 // URI-like properties should not be strings
 
     /// <summary>
     /// HTTP method to use for the health check. Default is GET.
@@ -22,12 +24,12 @@ public sealed record HttpOptions
     /// <summary>
     /// Expected HTTP status codes that indicate a healthy response. Default is 200.
     /// </summary>
-    public ICollection<int> ExpectedHttpStatusCodes { get; set; } = [200];
+    public IList<int> ExpectedHttpStatusCodes { get; } = [200];
 
     /// <summary>
     /// HTTP headers to include in the request.
     /// </summary>
-    public IDictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
+    public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
     /// <summary>
     /// Timeout in milliseconds for the HTTP request. Default is 5000ms (5 seconds).
