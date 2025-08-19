@@ -42,7 +42,7 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>("tags", () => builder.AddHttp(name, options: null, tags: null!));
+        _ = Assert.Throws<ArgumentNullException>("tags", () => builder.AddHttp(name, options: null, tags: null!));
     }
 
     [Test]

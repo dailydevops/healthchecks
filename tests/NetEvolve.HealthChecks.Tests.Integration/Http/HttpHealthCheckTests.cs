@@ -74,19 +74,13 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestValidEndpoint",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                    }
-                );
+                _ = healthChecks.AddHttp("TestValidEndpoint", options => options.Uri = testServerUrl);
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
                 // Register the test server's HttpClient to be used by the health check
-                services.AddSingleton(testServer.CreateClient());
+                _ = services.AddSingleton(testServer.CreateClient());
             }
         );
     }
@@ -122,10 +116,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                services.AddSingleton(testServer.CreateClient());
-            }
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
     }
 
@@ -160,10 +151,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services =>
-            {
-                services.AddSingleton(testServer.CreateClient());
-            }
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
     }
 
@@ -206,10 +194,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                services.AddSingleton(testServer.CreateClient());
-            }
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
     }
 
@@ -259,10 +244,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                services.AddSingleton(testServer.CreateClient());
-            }
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
     }
 
@@ -276,14 +258,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         using var testServer = new TestServer(
             new WebHostBuilder().Configure(app =>
             {
-                app.Use(
+                _ = app.Use(
                     async (context, next) =>
                     {
                         // Only check requests with content
                         if (context.Request.ContentLength > 0)
                         {
                             // Validate content type
-                            string? contentType = context.Request.ContentType;
+                            var contentType = context.Request.ContentType;
 
                             if (
                                 contentType != null
@@ -334,10 +316,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                services.AddSingleton(client);
-            }
+            serviceBuilder: services => _ = services.AddSingleton(client)
         );
     }
 
@@ -374,10 +353,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services =>
-            {
-                services.AddSingleton(testServer.CreateClient());
-            }
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
     }
 
@@ -388,7 +364,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         using var testServer = new TestServer(
             new WebHostBuilder().Configure(app =>
             {
-                app.Use(
+                _ = app.Use(
                     async (context, next) =>
                     {
                         if (context.Request.Path == "/")
@@ -409,9 +385,6 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             })
         );
-
-        // Create a client that allows redirects by using a HttpClientHandler with AllowAutoRedirect = true
-        var handler = new HttpClientHandler { AllowAutoRedirect = true };
 
         var client = testServer.CreateClient();
         client.DefaultRequestHeaders.Clear();
@@ -437,8 +410,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
             {
                 // Register a factory that creates HttpClient with the right settings
-                services.AddHttpClient();
-                services.AddSingleton(client);
+                _ = services.AddHttpClient();
+                _ = services.AddSingleton(client);
             }
         );
     }
