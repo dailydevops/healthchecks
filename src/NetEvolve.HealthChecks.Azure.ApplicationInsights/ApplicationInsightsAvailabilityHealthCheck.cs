@@ -1,7 +1,8 @@
-namespace NetEvolve.HealthChecks.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Azure.ApplicationInsights;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights.DataContracts;
@@ -36,7 +37,7 @@ internal sealed class ApplicationInsightsAvailabilityHealthCheck
         var properties = new Dictionary<string, string>
         {
             { "HealthCheckName", name },
-            { "Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
+            { "Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture) },
         };
 
         var customEvent = new EventTelemetry("HealthCheck") { Properties = { { "source", "NetEvolve.HealthChecks" } } };
