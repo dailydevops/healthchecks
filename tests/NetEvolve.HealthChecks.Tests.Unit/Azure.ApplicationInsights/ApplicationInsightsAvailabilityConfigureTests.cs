@@ -1,7 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
 
 using System;
-using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,13 +26,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
     }
 
     [Test]
-    [MethodDataSource(nameof(GetValidateTestCases))]
-    public async Task Validate_Theory_Expected(
-        bool expectedResult,
-        string? expectedMessage,
-        string? name,
-        ApplicationInsightsAvailabilityOptions options
-    )
+    public async Task Validate_WhenNameNull_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -43,141 +36,306 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         );
 
         // Act
-        var result = configure.Validate(name, options);
+        var result = configure.Validate(null, new ApplicationInsightsAvailabilityOptions());
 
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert.That(result.Succeeded).IsEqualTo(expectedResult);
-            _ = await Assert.That(result.FailureMessage).IsEqualTo(expectedMessage);
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
         }
     }
 
-    public static IEnumerable<
-        Func<(bool, string?, string?, ApplicationInsightsAvailabilityOptions)>
-    > GetValidateTestCases()
+    [Test]
+    public async Task Validate_WhenNameWhitespace_ThrowsArgumentException()
     {
-        yield return () => (false, "The name cannot be null or whitespace.", null, null!);
-        yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
-        yield return () => (false, "The option cannot be null.", "name", null!);
-        yield return () =>
-            (
-                false,
-                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.",
-                "name",
-                new ApplicationInsightsAvailabilityOptions { Timeout = -2 }
-            );
-
-        // ConnectionString mode validation
-        yield return () =>
-            (
-                false,
-                "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-                    ConnectionString = null,
-                }
-            );
-        yield return () =>
-            (
-                false,
-                "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-                    ConnectionString = "\t",
-                }
-            );
-        yield return () =>
-            (
-                true,
-                null,
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-                    ConnectionString =
-                        "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
-                }
-            );
-
-        // InstrumentationKey mode validation
-        yield return () =>
-            (
-                false,
-                "The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode.",
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-                    InstrumentationKey = null,
-                }
-            );
-        yield return () =>
-            (
-                false,
-                "The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode.",
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-                    InstrumentationKey = "\t",
-                }
-            );
-        yield return () =>
-            (
-                true,
-                null,
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-                    InstrumentationKey = "12345678-1234-1234-1234-123456789abc",
-                }
-            );
-
-        // ServiceProvider mode validation (without TelemetryClient registered)
-        yield return () =>
-            (
-                false,
-                "No service of type `TelemetryClient` registered. Please register Application Insights using AddApplicationInsightsTelemetry().",
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
-                }
-            );
-
-        // ServiceProvider mode validation (with TelemetryClient registered)
-        var servicesWithTelemetry = new ServiceCollection();
-        servicesWithTelemetry.AddSingleton<TelemetryClient>();
-        var providerWithTelemetry = servicesWithTelemetry.BuildServiceProvider();
-        var configureWithTelemetry = new ApplicationInsightsAvailabilityConfigure(
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
             new ConfigurationBuilder().Build(),
-            providerWithTelemetry
+            services.BuildServiceProvider()
         );
 
-        yield return () =>
-            (
-                true,
-                null,
-                "name",
-                new ApplicationInsightsAvailabilityOptions
-                {
-                    Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
-                }
-            );
+        // Act
+        var result = configure.Validate("\t", new ApplicationInsightsAvailabilityOptions());
 
-        // Unsupported mode
-        yield return () =>
-            (
-                false,
-                "The mode `` is not supported.",
-                "name",
-                new ApplicationInsightsAvailabilityOptions { Mode = null }
-            );
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenOptionsNull_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+
+        // Act
+        var result = configure.Validate("name", null!);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenInvalidTimeout_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions { Timeout = -2 };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenConnectionStringModeWithNullConnectionString_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.ConnectionString,
+            ConnectionString = null,
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenConnectionStringModeWithWhitespaceConnectionString_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.ConnectionString,
+            ConnectionString = "\t",
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenConnectionStringModeWithValidConnectionString_ReturnsSuccess()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.ConnectionString,
+            ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsNull();
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenInstrumentationKeyModeWithNullInstrumentationKey_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
+            InstrumentationKey = null,
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenInstrumentationKeyModeWithWhitespaceInstrumentationKey_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
+            InstrumentationKey = "\t",
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode.");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenInstrumentationKeyModeWithValidInstrumentationKey_ReturnsSuccess()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
+            InstrumentationKey = "12345678-1234-1234-1234-123456789abc",
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsNull();
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenServiceProviderModeWithoutTelemetryClient_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("No service of type `TelemetryClient` registered. Please register Application Insights using AddApplicationInsightsTelemetry().");
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenServiceProviderModeWithTelemetryClient_ReturnsSuccess()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        services.AddSingleton<TelemetryClient>();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions
+        {
+            Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
+        };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsNull();
+        }
+    }
+
+    [Test]
+    public async Task Validate_WhenUnsupportedMode_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var configure = new ApplicationInsightsAvailabilityConfigure(
+            new ConfigurationBuilder().Build(),
+            services.BuildServiceProvider()
+        );
+        var options = new ApplicationInsightsAvailabilityOptions { Mode = null };
+
+        // Act
+        var result = configure.Validate("name", options);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The mode `` is not supported.");
+        }
     }
 }

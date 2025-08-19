@@ -48,7 +48,7 @@ internal class ClientCreation
 #pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.InstrumentationKey))
                 {
-                    configWithKey.ConnectionString = options.InstrumentationKey;
+                    configWithKey.InstrumentationKey = options.InstrumentationKey;
                 }
 
                 options.ConfigureConfiguration?.Invoke(configWithKey);
