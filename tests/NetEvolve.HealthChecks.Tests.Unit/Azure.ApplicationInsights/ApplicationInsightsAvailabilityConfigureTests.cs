@@ -106,7 +106,11 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
+                );
         }
     }
 
@@ -132,7 +136,9 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
         }
     }
 
@@ -158,7 +164,9 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
         }
     }
 
@@ -174,7 +182,8 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         var options = new ApplicationInsightsAvailabilityOptions
         {
             Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-            ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
+            ConnectionString =
+                "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
         };
 
         // Act
@@ -210,7 +219,11 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode.");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode."
+                );
         }
     }
 
@@ -236,7 +249,11 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode.");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The instrumentation key cannot be null or whitespace when using `InstrumentationKey` mode."
+                );
         }
     }
 
@@ -287,7 +304,11 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("No service of type `TelemetryClient` registered. Please register Application Insights using AddApplicationInsightsTelemetry().");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "No service of type `TelemetryClient` registered. Please register Application Insights using AddApplicationInsightsTelemetry()."
+                );
         }
     }
 

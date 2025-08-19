@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
 
 using System;
 using Microsoft.ApplicationInsights;
@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.Azure.ApplicationInsights;
 public sealed class ClientCreationTests
 {
     [Test]
-    public void CreateTelemetryClient_WhenConnectionStringMode_ShouldReturnClient()
+    public async Task CreateTelemetryClient_WhenConnectionStringMode_ShouldReturnClient()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions
@@ -25,13 +25,16 @@ public sealed class ClientCreationTests
         var client = ClientCreation.CreateTelemetryClient(options, serviceProvider);
 
         // Assert
-        _ = Assert.That(client).IsNotNull();
-        _ = Assert.That(client).IsOfType<TelemetryClient>();
-        _ = Assert.That(client.TelemetryConfiguration.ConnectionString).IsEqualTo(options.ConnectionString);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(client).IsNotNull();
+            _ = await Assert.That(client).IsTypeOf<TelemetryClient>();
+            _ = await Assert.That(client.TelemetryConfiguration.ConnectionString).IsEqualTo(options.ConnectionString);
+        }
     }
 
     [Test]
-    public void CreateTelemetryClient_WhenInstrumentationKeyMode_ShouldReturnClient()
+    public async Task CreateTelemetryClient_WhenInstrumentationKeyMode_ShouldReturnClient()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions
@@ -45,13 +48,18 @@ public sealed class ClientCreationTests
         var client = ClientCreation.CreateTelemetryClient(options, serviceProvider);
 
         // Assert
-        _ = Assert.That(client).IsNotNull();
-        _ = Assert.That(client).IsOfType<TelemetryClient>();
-        _ = Assert.That(client.TelemetryConfiguration.InstrumentationKey).IsEqualTo(options.InstrumentationKey);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(client).IsNotNull();
+            _ = await Assert.That(client).IsTypeOf<TelemetryClient>();
+            _ = await Assert
+                .That(client.TelemetryConfiguration.InstrumentationKey)
+                .IsEqualTo(options.InstrumentationKey);
+        }
     }
 
     [Test]
-    public void CreateTelemetryClient_WhenServiceProviderMode_ShouldReturnRegisteredClient()
+    public async Task CreateTelemetryClient_WhenServiceProviderMode_ShouldReturnRegisteredClient()
     {
         // Arrange
         var expectedClient = new TelemetryClient();
@@ -68,8 +76,11 @@ public sealed class ClientCreationTests
         var client = ClientCreation.CreateTelemetryClient(options, serviceProvider);
 
         // Assert
-        _ = Assert.That(client).IsNotNull();
-        _ = Assert.That(client).IsEqualTo(expectedClient);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(client).IsNotNull();
+            _ = await Assert.That(client).IsEqualTo(expectedClient);
+        }
     }
 
     [Test]
@@ -86,7 +97,7 @@ public sealed class ClientCreationTests
     }
 
     [Test]
-    public void GetTelemetryClient_WhenCalledMultipleTimes_ShouldReturnSameInstance()
+    public async Task GetTelemetryClient_WhenCalledMultipleTimes_ShouldReturnSameInstance()
     {
         // Arrange
         var clientCreation = new ClientCreation();
@@ -104,8 +115,11 @@ public sealed class ClientCreationTests
         var client2 = clientCreation.GetTelemetryClient(name, options, serviceProvider);
 
         // Assert
-        _ = Assert.That(client1).IsNotNull();
-        _ = Assert.That(client2).IsNotNull();
-        _ = Assert.That(client1).IsEqualTo(client2);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(client1).IsNotNull();
+            _ = await Assert.That(client2).IsNotNull();
+            _ = await Assert.That(client1).IsEqualTo(client2);
+        }
     }
 }
