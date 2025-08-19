@@ -36,12 +36,17 @@ internal sealed class ApplicationInsightsAvailabilityHealthCheck
         // Create a custom event to test connectivity
         var customEvent = new EventTelemetry("HealthCheck") { Properties = { { "source", "NetEvolve.HealthChecks" } } };
         customEvent.Properties.Add("HealthCheckName", name);
-        customEvent.Properties.Add("Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture));
+        customEvent.Properties.Add(
+            "Timestamp",
+            DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture)
+        );
 
         // Test the telemetry client by tracking an event
         telemetryClient.TrackEvent(customEvent);
-        var (isTimelyResponse, _) = await telemetryClient.FlushAsync(cancellationToken)
-                .WithTimeoutAsync(options.Timeout, cancellationToken).ConfigureAwait(false);
+        var (isTimelyResponse, _) = await telemetryClient
+            .FlushAsync(cancellationToken)
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
 
         return HealthCheckState(isTimelyResponse, name);
     }
