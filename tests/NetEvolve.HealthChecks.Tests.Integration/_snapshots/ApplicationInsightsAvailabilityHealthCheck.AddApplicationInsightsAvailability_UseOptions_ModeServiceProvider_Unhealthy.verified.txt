@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: AppInsightsServiceProviderUnhealthy: Unexpected error.,
+      exception: {
+        message: No service of type `TelemetryClient` registered. Please register Application Insights using AddApplicationInsightsTelemetry().,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: AppInsightsServiceProviderUnhealthy,
+      status: Unhealthy,
+      tags: [
+        azure,
+        applicationinsights,
+        telemetry
+      ]
+    }
+  ],
+  status: Unhealthy
+}

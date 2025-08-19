@@ -1,0 +1,30 @@
+﻿namespace NetEvolve.HealthChecks.Azure.ApplicationInsights
+{
+    public sealed class ApplicationInsightsAvailabilityOptions : NetEvolve.HealthChecks.Azure.ApplicationInsights.IApplicationInsightsOptions, System.IEquatable<NetEvolve.HealthChecks.Azure.ApplicationInsights.ApplicationInsightsAvailabilityOptions>
+    {
+        public ApplicationInsightsAvailabilityOptions() { }
+        public System.Action<Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration>? ConfigureConfiguration { get; set; }
+        public string? ConnectionString { get; set; }
+        public string? InstrumentationKey { get; set; }
+        public NetEvolve.HealthChecks.Azure.ApplicationInsights.ApplicationInsightsClientCreationMode? Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+    public enum ApplicationInsightsClientCreationMode
+    {
+        ConnectionString = 0,
+        InstrumentationKey = 1,
+        ServiceProvider = 2,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddApplicationInsightsAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.ApplicationInsights.ApplicationInsightsAvailabilityOptions>? options = null, params string[] tags) { }
+    }
+    public interface IApplicationInsightsOptions
+    {
+        System.Action<Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration>? ConfigureConfiguration { get; set; }
+        string? ConnectionString { get; set; }
+        string? InstrumentationKey { get; set; }
+        NetEvolve.HealthChecks.Azure.ApplicationInsights.ApplicationInsightsClientCreationMode? Mode { get; set; }
+        int Timeout { get; set; }
+    }
+}

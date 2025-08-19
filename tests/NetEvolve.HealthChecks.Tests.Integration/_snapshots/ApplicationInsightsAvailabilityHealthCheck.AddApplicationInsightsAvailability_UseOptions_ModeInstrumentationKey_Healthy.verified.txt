@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: AppInsightsInstrumentationKeyHealthy: Healthy,
+      name: AppInsightsInstrumentationKeyHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        applicationinsights,
+        telemetry
+      ]
+    }
+  ],
+  status: Healthy
+}

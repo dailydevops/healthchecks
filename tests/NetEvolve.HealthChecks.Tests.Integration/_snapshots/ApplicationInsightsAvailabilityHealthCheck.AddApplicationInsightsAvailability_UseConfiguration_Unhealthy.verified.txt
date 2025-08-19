@@ -1,0 +1,25 @@
+﻿{
+  results: [
+    {
+      description: ConfigurationUnhealthy: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: Input contains invalid delimiters and cannot be parsed. Expected example: 'key1=value1;key2=value2;key3=value3'.,
+            type: ArgumentException
+          }
+        ],
+        message: There was an error parsing the Connection String: Input contains invalid delimiters and cannot be parsed. Expected example: 'key1=value1;key2=value2;key3=value3'.,
+        type: System.ArgumentException
+      },
+      name: ConfigurationUnhealthy,
+      status: Unhealthy,
+      tags: [
+        azure,
+        applicationinsights,
+        telemetry
+      ]
+    }
+  ],
+  status: Unhealthy
+}
