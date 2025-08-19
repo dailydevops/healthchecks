@@ -19,10 +19,9 @@ public sealed class ClientCreationTests
             ConnectionString =
                 "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
         };
-        var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act
-        var client = ClientCreation.CreateTelemetryClient(options, serviceProvider);
+        var client = ClientCreation.CreateTelemetryClient(options);
 
         // Assert
         using (Assert.Multiple())
@@ -42,10 +41,9 @@ public sealed class ClientCreationTests
             Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
             InstrumentationKey = "12345678-1234-1234-1234-123456789abc",
         };
-        var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act
-        var client = ClientCreation.CreateTelemetryClient(options, serviceProvider);
+        var client = ClientCreation.CreateTelemetryClient(options);
 
         // Assert
         using (Assert.Multiple())
@@ -59,40 +57,13 @@ public sealed class ClientCreationTests
     }
 
     [Test]
-    public async Task CreateTelemetryClient_WhenServiceProviderMode_ShouldReturnRegisteredClient()
-    {
-        // Arrange
-        var expectedClient = new TelemetryClient();
-        var services = new ServiceCollection().AddSingleton(expectedClient);
-        var serviceProvider = services.BuildServiceProvider();
-
-        var options = new ApplicationInsightsAvailabilityOptions
-        {
-            Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
-        };
-
-        // Act
-        var client = ClientCreation.CreateTelemetryClient(options, serviceProvider);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(client).IsNotNull();
-            _ = await Assert.That(client).IsEqualTo(expectedClient);
-        }
-    }
-
-    [Test]
     public void CreateTelemetryClient_WhenInvalidMode_ThrowsException()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions { Mode = (ApplicationInsightsClientCreationMode)999 };
-        var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<System.Diagnostics.UnreachableException>(() =>
-            ClientCreation.CreateTelemetryClient(options, serviceProvider)
-        );
+        _ = Assert.Throws<System.Diagnostics.UnreachableException>(() => ClientCreation.CreateTelemetryClient(options));
     }
 
     [Test]
