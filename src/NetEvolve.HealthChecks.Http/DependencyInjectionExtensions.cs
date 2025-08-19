@@ -41,7 +41,7 @@ public static class DependencyInjectionExtensions
                 .Services.AddSingleton<HttpMarker>()
                 .AddSingleton<HttpHealthCheck>()
                 .ConfigureOptions<HttpConfigure>();
-            
+
             // Ensure HttpClient is available
             _ = builder.Services.AddHttpClient();
         }
