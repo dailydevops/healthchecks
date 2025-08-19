@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Http;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Http;
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -11,21 +11,18 @@ using NetEvolve.HealthChecks.Http;
 public sealed class DependencyInjectionExtensionsTests
 {
     [Test]
-    public async Task AddHttp_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddHttp_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         IHealthChecksBuilder builder = null!;
         const string name = "Test";
 
         // Act & Assert
-        _ = await Assert
-            .That(() => builder.AddHttp(name))
-            .Throws<ArgumentNullException>()
-            .And.HasParameterName(nameof(builder));
+        _ = Assert.Throws<ArgumentNullException>(nameof(builder), () => builder.AddHttp(name));
     }
 
     [Test]
-    public async Task AddHttp_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddHttp_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -33,14 +30,11 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = null!;
 
         // Act & Assert
-        _ = await Assert
-            .That(() => builder.AddHttp(name))
-            .Throws<ArgumentNullException>()
-            .And.HasParameterName(nameof(name));
+        _ = Assert.Throws<ArgumentNullException>(nameof(name), () => builder.AddHttp(name));
     }
 
     [Test]
-    public async Task AddHttp_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddHttp_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -48,10 +42,7 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act & Assert
-        _ = await Assert
-            .That(() => builder.AddHttp(name, options: null, tags: null!))
-            .Throws<ArgumentNullException>()
-            .And.HasParameterName("tags");
+        Assert.Throws<ArgumentNullException>("tags", () => builder.AddHttp(name, options: null, tags: null!));
     }
 
     [Test]

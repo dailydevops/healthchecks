@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Http;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Http;
 
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit;
@@ -29,17 +29,13 @@ public sealed class HttpOptionsTests
     public async Task Options_DefaultValues_Expected()
     {
         var options = new HttpOptions();
-
-        _ = await Assert
-            .That(options.HttpMethod)
-            .IsEqualTo("GET")
-            .And.That(options.ExpectedHttpStatusCodes)
-            .ContainsValue(200)
-            .And.That(options.Timeout)
-            .IsEqualTo(5000)
-            .And.That(options.ContentType)
-            .IsEqualTo("application/json")
-            .And.That(options.AllowAutoRedirect)
-            .IsTrue();
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options.HttpMethod).IsEqualTo("GET");
+            _ = await Assert.That(options.ExpectedHttpStatusCodes).Contains(200);
+            _ = await Assert.That(options.Timeout).IsEqualTo(5000);
+            _ = await Assert.That(options.ContentType).IsEqualTo("application/json");
+            _ = await Assert.That(options.AllowAutoRedirect).IsTrue();
+        }
     }
 }
