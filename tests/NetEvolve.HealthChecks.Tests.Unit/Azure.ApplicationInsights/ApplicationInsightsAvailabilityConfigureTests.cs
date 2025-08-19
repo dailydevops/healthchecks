@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
 
 using System;
 using Microsoft.ApplicationInsights;
@@ -316,8 +316,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
     public async Task Validate_WhenServiceProviderModeWithTelemetryClient_ReturnsSuccess()
     {
         // Arrange
-        var services = new ServiceCollection();
-        services.AddSingleton<TelemetryClient>();
+        var services = new ServiceCollection().AddSingleton<TelemetryClient>();
         var configure = new ApplicationInsightsAvailabilityConfigure(
             new ConfigurationBuilder().Build(),
             services.BuildServiceProvider()

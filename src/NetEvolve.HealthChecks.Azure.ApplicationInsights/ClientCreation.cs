@@ -48,7 +48,9 @@ internal class ClientCreation
 #pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.InstrumentationKey))
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     configWithKey.InstrumentationKey = options.InstrumentationKey;
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
 
                 options.ConfigureConfiguration?.Invoke(configWithKey);

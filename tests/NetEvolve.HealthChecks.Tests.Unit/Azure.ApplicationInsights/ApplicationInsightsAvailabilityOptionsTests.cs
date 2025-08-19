@@ -1,6 +1,7 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
 
 using System;
+using Microsoft.ApplicationInsights.Extensibility;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ApplicationInsights;
 
@@ -8,21 +9,25 @@ using NetEvolve.HealthChecks.Azure.ApplicationInsights;
 public class ApplicationInsightsAvailabilityOptionsTests
 {
     [Test]
-    public void Create_WhenDefault_ShouldReturnEmptyOptions()
+    public async Task Create_WhenDefault_ShouldReturnEmptyOptions()
     {
         // Arrange & Act
         var options = new ApplicationInsightsAvailabilityOptions();
 
         // Assert
-        _ = Assert.That(options.ConnectionString).IsNull();
-        _ = Assert.That(options.InstrumentationKey).IsNull();
-        _ = Assert.That(options.Mode).IsNull();
-        _ = Assert.That(options.Timeout).IsEqualTo(100);
-        _ = Assert.That(options.ConfigureConfiguration).IsNull();
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(options).IsNotNull();
+            _ = await Assert.That(options.ConnectionString).IsNull();
+            _ = await Assert.That(options.InstrumentationKey).IsNull();
+            _ = await Assert.That(options.Mode).IsNull();
+            _ = await Assert.That(options.Timeout).IsEqualTo(100);
+            _ = await Assert.That(options.ConfigureConfiguration).IsNull();
+        }
     }
 
     [Test]
-    public void SetConnectionString_WhenProvidedValue_ShouldReturnCorrectValue()
+    public async Task SetConnectionString_WhenProvidedValue_ShouldReturnCorrectValue()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
@@ -33,11 +38,11 @@ public class ApplicationInsightsAvailabilityOptionsTests
         options.ConnectionString = connectionString;
 
         // Assert
-        _ = Assert.That(options.ConnectionString).IsEqualTo(connectionString);
+        _ = await Assert.That(options.ConnectionString).IsEqualTo(connectionString);
     }
 
     [Test]
-    public void SetInstrumentationKey_WhenProvidedValue_ShouldReturnCorrectValue()
+    public async Task SetInstrumentationKey_WhenProvidedValue_ShouldReturnCorrectValue()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
@@ -47,11 +52,11 @@ public class ApplicationInsightsAvailabilityOptionsTests
         options.InstrumentationKey = instrumentationKey;
 
         // Assert
-        _ = Assert.That(options.InstrumentationKey).IsEqualTo(instrumentationKey);
+        _ = await Assert.That(options.InstrumentationKey).IsEqualTo(instrumentationKey);
     }
 
     [Test]
-    public void SetMode_WhenProvidedValue_ShouldReturnCorrectValue()
+    public async Task SetMode_WhenProvidedValue_ShouldReturnCorrectValue()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
@@ -61,11 +66,11 @@ public class ApplicationInsightsAvailabilityOptionsTests
         options.Mode = mode;
 
         // Assert
-        _ = Assert.That(options.Mode).IsEqualTo(mode);
+        _ = await Assert.That(options.Mode).IsEqualTo(mode);
     }
 
     [Test]
-    public void SetTimeout_WhenProvidedValue_ShouldReturnCorrectValue()
+    public async Task SetTimeout_WhenProvidedValue_ShouldReturnCorrectValue()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
@@ -75,22 +80,20 @@ public class ApplicationInsightsAvailabilityOptionsTests
         options.Timeout = timeout;
 
         // Assert
-        _ = Assert.That(options.Timeout).IsEqualTo(timeout);
+        _ = await Assert.That(options.Timeout).IsEqualTo(timeout);
     }
 
     [Test]
-    public void SetConfigureConfiguration_WhenProvidedValue_ShouldReturnCorrectValue()
+    public async Task SetConfigureConfiguration_WhenProvidedValue_ShouldReturnCorrectValue()
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        static void ConfigureAction(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration config) { }
+        static void ConfigureAction(TelemetryConfiguration config) { }
 
         // Act
         options.ConfigureConfiguration = ConfigureAction;
 
         // Assert
-        _ = Assert
-            .That(options.ConfigureConfiguration)
-            .IsEqualTo((Action<Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration>)ConfigureAction);
+        _ = await Assert.That(options.ConfigureConfiguration).IsEqualTo(ConfigureAction);
     }
 }

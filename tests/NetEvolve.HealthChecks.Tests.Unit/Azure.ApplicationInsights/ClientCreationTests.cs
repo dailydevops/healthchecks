@@ -63,8 +63,7 @@ public sealed class ClientCreationTests
     {
         // Arrange
         var expectedClient = new TelemetryClient();
-        var services = new ServiceCollection();
-        services.AddSingleton(expectedClient);
+        var services = new ServiceCollection().AddSingleton(expectedClient);
         var serviceProvider = services.BuildServiceProvider();
 
         var options = new ApplicationInsightsAvailabilityOptions
