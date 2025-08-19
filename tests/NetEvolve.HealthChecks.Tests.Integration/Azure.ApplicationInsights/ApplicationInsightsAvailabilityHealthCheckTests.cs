@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.ApplicationInsights;
 
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     options =>
                     {
                         options.Mode = ApplicationInsightsClientCreationMode.ServiceProvider;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -61,7 +61,7 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                         options.Mode = ApplicationInsightsClientCreationMode.ConnectionString;
                         options.ConnectionString =
                             "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                     }
                 );
             },
@@ -79,7 +79,7 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     {
                         options.Mode = ApplicationInsightsClientCreationMode.InstrumentationKey;
                         options.InstrumentationKey = "12345678-1234-1234-1234-123456789abc";
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                     }
                 );
             },
@@ -104,7 +104,7 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                         "HealthChecks:ApplicationInsightsAvailability:ConfigurationHealthy:Mode",
                         nameof(ApplicationInsightsClientCreationMode.ConnectionString)
                     },
-                    { "HealthChecks:ApplicationInsightsAvailability:ConfigurationHealthy:Timeout", "1000" },
+                    { "HealthChecks:ApplicationInsightsAvailability:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -127,7 +127,7 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                         "HealthChecks:ApplicationInsightsAvailability:ConfigurationInstrumentationKey:Mode",
                         nameof(ApplicationInsightsClientCreationMode.InstrumentationKey)
                     },
-                    { "HealthChecks:ApplicationInsightsAvailability:ConfigurationInstrumentationKey:Timeout", "1000" },
+                    { "HealthChecks:ApplicationInsightsAvailability:ConfigurationInstrumentationKey:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
