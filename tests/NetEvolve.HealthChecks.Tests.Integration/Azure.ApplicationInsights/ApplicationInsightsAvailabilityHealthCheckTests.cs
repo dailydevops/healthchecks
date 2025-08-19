@@ -59,7 +59,8 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     options =>
                     {
                         options.Mode = ApplicationInsightsClientCreationMode.ConnectionString;
-                        options.ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
+                        options.ConnectionString =
+                            "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
                         options.Timeout = 1000;
                     }
                 );

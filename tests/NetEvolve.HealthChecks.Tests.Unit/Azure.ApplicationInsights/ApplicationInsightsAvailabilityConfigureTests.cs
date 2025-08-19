@@ -53,7 +53,9 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
         }
     }
 
-    public static IEnumerable<Func<(bool, string?, string?, ApplicationInsightsAvailabilityOptions)>> GetValidateTestCases()
+    public static IEnumerable<
+        Func<(bool, string?, string?, ApplicationInsightsAvailabilityOptions)>
+    > GetValidateTestCases()
     {
         yield return () => (false, "The name cannot be null or whitespace.", null, null!);
         yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
@@ -75,7 +77,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 new ApplicationInsightsAvailabilityOptions
                 {
                     Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-                    ConnectionString = null
+                    ConnectionString = null,
                 }
             );
         yield return () =>
@@ -86,7 +88,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 new ApplicationInsightsAvailabilityOptions
                 {
                     Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-                    ConnectionString = "\t"
+                    ConnectionString = "\t",
                 }
             );
         yield return () =>
@@ -97,7 +99,8 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 new ApplicationInsightsAvailabilityOptions
                 {
                     Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-                    ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/"
+                    ConnectionString =
+                        "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
                 }
             );
 
@@ -110,7 +113,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 new ApplicationInsightsAvailabilityOptions
                 {
                     Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-                    InstrumentationKey = null
+                    InstrumentationKey = null,
                 }
             );
         yield return () =>
@@ -121,7 +124,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 new ApplicationInsightsAvailabilityOptions
                 {
                     Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-                    InstrumentationKey = "\t"
+                    InstrumentationKey = "\t",
                 }
             );
         yield return () =>
@@ -132,7 +135,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 new ApplicationInsightsAvailabilityOptions
                 {
                     Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-                    InstrumentationKey = "12345678-1234-1234-1234-123456789abc"
+                    InstrumentationKey = "12345678-1234-1234-1234-123456789abc",
                 }
             );
 
@@ -144,11 +147,11 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 "name",
                 new ApplicationInsightsAvailabilityOptions
                 {
-                    Mode = ApplicationInsightsClientCreationMode.ServiceProvider
+                    Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
                 }
             );
 
-        // ServiceProvider mode validation (with TelemetryClient registered) 
+        // ServiceProvider mode validation (with TelemetryClient registered)
         var servicesWithTelemetry = new ServiceCollection();
         servicesWithTelemetry.AddSingleton<TelemetryClient>();
         var providerWithTelemetry = servicesWithTelemetry.BuildServiceProvider();
@@ -164,7 +167,7 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
                 "name",
                 new ApplicationInsightsAvailabilityOptions
                 {
-                    Mode = ApplicationInsightsClientCreationMode.ServiceProvider
+                    Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
                 }
             );
 

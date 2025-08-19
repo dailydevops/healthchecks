@@ -23,10 +23,7 @@ internal class ClientCreation
         return _telemetryClients.GetOrAdd(name, _ => CreateTelemetryClient(options, serviceProvider));
     }
 
-    internal static TelemetryClient CreateTelemetryClient<TOptions>(
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal static TelemetryClient CreateTelemetryClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, IApplicationInsightsOptions
     {
 #pragma warning disable IDE0010 // Add missing cases

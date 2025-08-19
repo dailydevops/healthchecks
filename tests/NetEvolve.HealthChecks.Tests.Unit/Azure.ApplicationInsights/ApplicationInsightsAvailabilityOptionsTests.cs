@@ -26,7 +26,8 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        var connectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
+        var connectionString =
+            "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
 
         // Act
         options.ConnectionString = connectionString;
@@ -88,6 +89,8 @@ public class ApplicationInsightsAvailabilityOptionsTests
         options.ConfigureConfiguration = ConfigureAction;
 
         // Assert
-        _ = Assert.That(options.ConfigureConfiguration).IsEqualTo((Action<Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration>)ConfigureAction);
+        _ = Assert
+            .That(options.ConfigureConfiguration)
+            .IsEqualTo((Action<Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration>)ConfigureAction);
     }
 }

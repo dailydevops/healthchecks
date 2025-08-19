@@ -16,7 +16,8 @@ public sealed class ClientCreationTests
         var options = new ApplicationInsightsAvailabilityOptions
         {
             Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-            ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/"
+            ConnectionString =
+                "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
@@ -36,7 +37,7 @@ public sealed class ClientCreationTests
         var options = new ApplicationInsightsAvailabilityOptions
         {
             Mode = ApplicationInsightsClientCreationMode.InstrumentationKey,
-            InstrumentationKey = "12345678-1234-1234-1234-123456789abc"
+            InstrumentationKey = "12345678-1234-1234-1234-123456789abc",
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
@@ -60,7 +61,7 @@ public sealed class ClientCreationTests
 
         var options = new ApplicationInsightsAvailabilityOptions
         {
-            Mode = ApplicationInsightsClientCreationMode.ServiceProvider
+            Mode = ApplicationInsightsClientCreationMode.ServiceProvider,
         };
 
         // Act
@@ -75,15 +76,13 @@ public sealed class ClientCreationTests
     public void CreateTelemetryClient_WhenInvalidMode_ThrowsException()
     {
         // Arrange
-        var options = new ApplicationInsightsAvailabilityOptions
-        {
-            Mode = (ApplicationInsightsClientCreationMode)999
-        };
+        var options = new ApplicationInsightsAvailabilityOptions { Mode = (ApplicationInsightsClientCreationMode)999 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<System.Diagnostics.UnreachableException>(() => 
-            ClientCreation.CreateTelemetryClient(options, serviceProvider));
+        _ = Assert.Throws<System.Diagnostics.UnreachableException>(() =>
+            ClientCreation.CreateTelemetryClient(options, serviceProvider)
+        );
     }
 
     [Test]
@@ -94,7 +93,8 @@ public sealed class ClientCreationTests
         var options = new ApplicationInsightsAvailabilityOptions
         {
             Mode = ApplicationInsightsClientCreationMode.ConnectionString,
-            ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/"
+            ConnectionString =
+                "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
         var name = "test";

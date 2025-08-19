@@ -11,7 +11,8 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ApplicationInsightsAvailabilityHealthCheck : ConfigurableHealthCheckBase<ApplicationInsightsAvailabilityOptions>
+internal sealed class ApplicationInsightsAvailabilityHealthCheck
+    : ConfigurableHealthCheckBase<ApplicationInsightsAvailabilityOptions>
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -35,13 +36,10 @@ internal sealed class ApplicationInsightsAvailabilityHealthCheck : ConfigurableH
         var properties = new Dictionary<string, string>
         {
             { "HealthCheckName", name },
-            { "Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") }
+            { "Timestamp", DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
         };
 
-        var customEvent = new EventTelemetry("HealthCheck")
-        {
-            Properties = { { "source", "NetEvolve.HealthChecks" } }
-        };
+        var customEvent = new EventTelemetry("HealthCheck") { Properties = { { "source", "NetEvolve.HealthChecks" } } };
 
         foreach (var property in properties)
         {
@@ -51,13 +49,15 @@ internal sealed class ApplicationInsightsAvailabilityHealthCheck : ConfigurableH
         try
         {
             // Test the telemetry client by tracking an event
-            var (isSuccessful, _) = await Task
-                .Run(() =>
-                {
-                    telemetryClient.TrackEvent(customEvent);
-                    telemetryClient.Flush();
-                    return true;
-                }, cancellationToken)
+            var (isSuccessful, _) = await Task.Run(
+                    () =>
+                    {
+                        telemetryClient.TrackEvent(customEvent);
+                        telemetryClient.Flush();
+                        return true;
+                    },
+                    cancellationToken
+                )
                 .WithTimeoutAsync(options.Timeout, cancellationToken)
                 .ConfigureAwait(false);
 
