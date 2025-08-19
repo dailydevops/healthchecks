@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Azure.Blobs;
 public sealed class BlobServiceAvailableConfigureTests
 {
     [Test]
-    public void Configue_OnlyOptions_ThrowsArgumentException()
+    public void Configure_OnlyOptions_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
