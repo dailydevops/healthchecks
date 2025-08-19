@@ -20,17 +20,22 @@ internal class ClientCreation
     {
         _telemetryClients ??= new ConcurrentDictionary<string, TelemetryClient>(StringComparer.Ordinal);
 
-        return _telemetryClients.GetOrAdd(name, _ => CreateTelemetryClient(options, serviceProvider));
+        if (options.Mode == ApplicationInsightsClientCreationMode.ServiceProvider)
+        {
+            // If the mode is ServiceProvider, we should not cache the TelemetryClient.
+            // Instead, we will retrieve it directly from the service provider each time.
+            return serviceProvider.GetRequiredService<TelemetryClient>();
+        }
+
+        return _telemetryClients.GetOrAdd(name, _ => CreateTelemetryClient(options));
     }
 
-    internal static TelemetryClient CreateTelemetryClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
+    private static TelemetryClient CreateTelemetryClient<TOptions>(TOptions options)
         where TOptions : class, IApplicationInsightsOptions
     {
 #pragma warning disable IDE0010 // Add missing cases
         switch (options.Mode)
         {
-            case ApplicationInsightsClientCreationMode.ServiceProvider:
-                return serviceProvider.GetRequiredService<TelemetryClient>();
             case ApplicationInsightsClientCreationMode.ConnectionString:
 #pragma warning disable CA2000 // Dispose objects before losing scope
                 var config = TelemetryConfiguration.CreateDefault();
