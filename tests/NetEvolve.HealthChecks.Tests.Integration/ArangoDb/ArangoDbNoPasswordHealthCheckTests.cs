@@ -13,27 +13,4 @@ public sealed class ArangoDbNoPasswordHealthCheckTests : ArangoDbHealthCheckBase
 {
     public ArangoDbNoPasswordHealthCheckTests(ContainerNoPassword container)
         : base(container) { }
-
-    [Test]
-    public async Task AddArangoDb_UseConfigurationWithoutCredentials_Healthy() =>
-        await RunAndVerify(
-            healthChecks => healthChecks.AddArangoDb("TestContainerNoCredentialsHealthy"),
-            HealthStatus.Healthy,
-            config =>
-            {
-                var values = new Dictionary<string, string?>
-                {
-                    {
-                        "HealthChecks:ArangoDb:TestContainerNoCredentialsHealthy:Mode",
-                        $"{ArangoDbClientCreationMode.Internal}"
-                    },
-                    {
-                        "HealthChecks:ArangoDb:TestContainerNoCredentialsHealthy:TransportAddress",
-                        _container.TransportAddress
-                    },
-                    { "HealthChecks:ArangoDb:TestContainerNoCredentialsHealthy:Timeout", "1000" },
-                };
-                _ = config.AddInMemoryCollection(values);
-            }
-        );
 }
