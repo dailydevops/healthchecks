@@ -88,7 +88,7 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        static void ConfigureAction(TelemetryConfiguration config) { }
+        static void ConfigureAction(TelemetryConfiguration config) => throw new NotImplementedException();
 
         // Act
         options.ConfigureConfiguration = ConfigureAction;
