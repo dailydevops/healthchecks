@@ -348,7 +348,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Uri = testServerUrl;
-                        options.Timeout = 500; // 500ms timeout
+                        options.Timeout = 1;
                     }
                 );
             },
