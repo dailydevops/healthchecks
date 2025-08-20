@@ -79,7 +79,7 @@ public sealed class DependencyInjectionExtensionsTests
             options =>
             {
                 options.Uri = "https://example.com";
-                options.Timeout = 3000;
+                options.Timeout = 10000;
             }
         );
 

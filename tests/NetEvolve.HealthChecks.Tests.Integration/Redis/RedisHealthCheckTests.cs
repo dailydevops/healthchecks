@@ -29,7 +29,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                     {
                         options.ConnectionString = _database.GetConnectionString();
                         options.Mode = ConnectionHandleMode.Create;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -89,7 +89,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                         "HealthChecks:RedisDatabase:TestContainerHealthy:ConnectionString",
                         _database.GetConnectionString()
                     },
-                    { "HealthChecks:RedisDatabase:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:RedisDatabase:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

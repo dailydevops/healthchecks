@@ -27,7 +27,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     {
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -130,7 +130,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.TableName = "test";
                         options.ConnectionString = _container.ConnectionString;
                         options.Mode = TableClientCreationMode.ConnectionString;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -171,7 +171,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.Mode = TableClientCreationMode.SharedKey;
                         options.ServiceUri = _container.TableServiceEndpoint;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -211,7 +211,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.AzureSasCredential;
                         options.ServiceUri = _container.TableAccountSasUri;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },

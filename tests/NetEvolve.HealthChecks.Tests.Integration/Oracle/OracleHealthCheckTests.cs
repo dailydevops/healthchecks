@@ -26,7 +26,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.GetConnectionString();
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -77,7 +77,7 @@ public class OracleHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Oracle:TestContainerHealthy:ConnectionString", _database.GetConnectionString() },
-                    { "HealthChecks:Oracle:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:Oracle:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

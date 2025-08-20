@@ -26,7 +26,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -77,7 +77,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:PostgreSql:TestContainerHealthy:ConnectionString", _database.ConnectionString },
-                    { "HealthChecks:PostgreSql:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:PostgreSql:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

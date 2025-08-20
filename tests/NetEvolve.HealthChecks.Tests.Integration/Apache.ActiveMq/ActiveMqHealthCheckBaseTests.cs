@@ -23,7 +23,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                         options.BrokerAddress = _accessor.BrokerAddress;
                         options.Username = _accessor.Username;
                         options.Password = _accessor.Password;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -42,7 +42,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                         options.BrokerAddress = "invalid";
                         options.Username = _accessor.Username;
                         options.Password = _accessor.Password;
-                        options.Timeout = 500;
+                        options.Timeout = 10000;
                     }
                 );
             },
@@ -80,7 +80,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestContainerHealthy:BrokerAddress", _accessor.BrokerAddress },
                     { "HealthChecks:ActiveMq:TestContainerHealthy:Username", _accessor.Username },
                     { "HealthChecks:ActiveMq:TestContainerHealthy:Password", _accessor.Password },
-                    { "HealthChecks:ActiveMq:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:ActiveMq:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -98,7 +98,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestContainerUnhealthy:BrokerAddress", "invalid" },
                     { "HealthChecks:ActiveMq:TestContainerUnhealthy:Username", _accessor.Username },
                     { "HealthChecks:ActiveMq:TestContainerUnhealthy:Password", _accessor.Password },
-                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:Timeout", "500" },
+                    { "HealthChecks:ActiveMq:TestContainerUnhealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

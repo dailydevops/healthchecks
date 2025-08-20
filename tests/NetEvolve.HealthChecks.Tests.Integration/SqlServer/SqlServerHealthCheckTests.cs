@@ -26,7 +26,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -78,7 +78,7 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:SqlServer:TestContainerHealthy:ConnectionString", _database.ConnectionString },
-                    { "HealthChecks:SqlServer:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:SqlServer:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

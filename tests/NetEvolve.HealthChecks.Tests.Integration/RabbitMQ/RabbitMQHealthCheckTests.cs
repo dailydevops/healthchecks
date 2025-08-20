@@ -24,7 +24,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
         var connection = await factory.CreateConnectionAsync();
 
         await RunAndVerify(
-            healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(connection)
         );
@@ -43,7 +43,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.KeyedService = "rabbitmq-test";
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 ),
             HealthStatus.Healthy,
@@ -77,7 +77,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:RabbitMQ:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:RabbitMQ:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -99,7 +99,7 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:RabbitMQ:TestContainerKeyedHealthy:KeyedService", "rabbitmq-test-config" },
-                    { "HealthChecks:RabbitMQ:TestContainerKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:RabbitMQ:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

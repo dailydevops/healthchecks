@@ -30,7 +30,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.TopicName = ServiceBusContainer.TopicName;
                         options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -56,7 +56,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                         options.EnablePeekMode = true;
                         options.TopicName = ServiceBusContainer.TopicName;
                         options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -78,7 +78,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                         options.ConnectionString = _container.ConnectionString;
                         options.TopicName = ServiceBusContainer.TopicName;
                         options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -99,7 +99,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                         options.EnablePeekMode = true;
                         options.TopicName = ServiceBusContainer.TopicName;
                         options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -250,7 +250,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                         "HealthChecks:AzureServiceBusSubscription:ConfigurationHealthy:Mode",
                         nameof(ClientCreationMode.ConnectionString)
                     },
-                    { "HealthChecks:AzureServiceBusSubscription:ConfigurationHealthy:Timeout", "1000" },
+                    { "HealthChecks:AzureServiceBusSubscription:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

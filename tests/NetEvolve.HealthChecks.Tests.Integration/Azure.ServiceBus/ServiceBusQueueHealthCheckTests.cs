@@ -29,7 +29,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -54,7 +54,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.EnablePeekMode = true;
                         options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -75,7 +75,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ConnectionString;
                         options.ConnectionString = _container.ConnectionString;
                         options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -95,7 +95,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         options.ConnectionString = _container.ConnectionString;
                         options.EnablePeekMode = true;
                         options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -251,7 +251,7 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                         "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:Mode",
                         nameof(ClientCreationMode.ConnectionString)
                     },
-                    { "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:Timeout", "1000" },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

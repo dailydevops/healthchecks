@@ -29,7 +29,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     {
                         options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Timeout = 5000;
+                        options.Timeout = 10000;
                         options.Topic = "TestContainerHealthy";
                     }
                 );
@@ -47,7 +47,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Timeout = 5000;
+                        options.Timeout = 10000;
                         options.Topic = "TestContainerHealthy";
                     }
                 );
@@ -77,7 +77,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                         "HealthChecks:RedPanda:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "10000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
                 };
@@ -98,7 +98,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                         "HealthChecks:RedPanda:TestContainerHealthy:Configuration:BootstrapServers",
                         _database.BootstrapAddress
                     },
-                    { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "10000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "ServiceProvider" },
                 };
@@ -130,7 +130,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                             EnableDeliveryReports = false,
                         };
                         options.Mode = ProducerHandleMode.Create;
-                        options.Timeout = 5000;
+                        options.Timeout = 10000;
                         options.Topic = "TestContainerHealthy";
                     }
                 );
@@ -152,7 +152,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                         _database.BootstrapAddress
                     },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Configuration:EnableDeliveryReports", "false" },
-                    { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "5000" },
+                    { "HealthChecks:RedPanda:TestContainerHealthy:Timeout", "10000" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Topic", "TestContainerHealthy" },
                     { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
                 };

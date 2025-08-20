@@ -39,7 +39,7 @@ public sealed class DaprHealthCheckTests
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
 
         _ = services.AddSingleton<DaprClient>(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 200);
+        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
@@ -144,7 +144,7 @@ public sealed class DaprHealthCheckTests
             .ThrowsAsync(new InvalidOperationException("Test exception"));
 
         _ = services.AddSingleton<DaprClient>(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 200);
+        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();

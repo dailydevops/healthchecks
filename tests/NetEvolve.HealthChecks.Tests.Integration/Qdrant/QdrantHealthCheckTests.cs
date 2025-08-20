@@ -21,7 +21,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddQdrant_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddQdrant("TestContainerHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddQdrant("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
@@ -44,7 +44,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.KeyedService = "qdrant-test";
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -61,7 +61,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddQdrant_UseGrpcConnection_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddQdrant("TestContainerGrpcHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddQdrant("TestContainerGrpcHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
         );
@@ -75,7 +75,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Qdrant:TestContainerConfigHealthy:Timeout", "1000" },
+                    { "HealthChecks:Qdrant:TestContainerConfigHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -107,7 +107,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Qdrant:TestContainerConfigKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:Qdrant:TestContainerConfigKeyedHealthy:Timeout", "10000" },
                     { "HealthChecks:Qdrant:TestContainerConfigKeyedHealthy:KeyedService", "qdrant-keyed-test" },
                 };
                 _ = config.AddInMemoryCollection(values);

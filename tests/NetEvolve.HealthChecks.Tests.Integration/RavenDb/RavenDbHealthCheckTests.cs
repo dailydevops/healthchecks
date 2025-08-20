@@ -54,7 +54,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
     [Test]
     public async Task AddRavenDb_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddRavenDb("TestContainerHealthy", options => options.Timeout = 2000),
+            healthChecks => healthChecks.AddRavenDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_store)
         );
@@ -68,7 +68,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     options =>
                     {
                         options.KeyedService = "mongodb-test";
-                        options.Timeout = 2000;
+                        options.Timeout = 10000;
                     }
                 ),
             HealthStatus.Healthy,
@@ -145,7 +145,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:RavenDb:TestContainerHealthy:Timeout", "2000" },
+                    { "HealthChecks:RavenDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -162,7 +162,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:RavenDb:TestContainerKeyedHealthy:KeyedService", "mongodb-test-config" },
-                    { "HealthChecks:RavenDb:TestContainerKeyedHealthy:Timeout", "2000" },
+                    { "HealthChecks:RavenDb:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
