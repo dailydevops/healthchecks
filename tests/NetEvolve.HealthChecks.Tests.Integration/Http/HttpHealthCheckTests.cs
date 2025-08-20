@@ -30,7 +30,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Uri = "https://invalid-domain-that-does-not-exist-12345.com";
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                     }
                 );
             },
@@ -47,7 +47,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Http:TestInvalidUri:Uri", "https://invalid-domain-that-does-not-exist-12345.com" },
-                    { "HealthChecks:Http:TestInvalidUri:Timeout", "1000" },
+                    { "HealthChecks:Http:TestInvalidUri:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

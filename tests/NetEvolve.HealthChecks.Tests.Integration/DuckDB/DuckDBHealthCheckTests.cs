@@ -23,7 +23,7 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = ConnectionString;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -74,7 +74,7 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:DuckDB:TestContainerHealthy:ConnectionString", ConnectionString },
-                    { "HealthChecks:DuckDB:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:DuckDB:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

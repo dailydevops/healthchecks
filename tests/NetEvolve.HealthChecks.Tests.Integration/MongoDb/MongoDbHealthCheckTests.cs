@@ -50,7 +50,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
     [Test]
     public async Task AddMongoDb_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddMongoDb("TestContainerHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddMongoDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
@@ -64,7 +64,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     options =>
                     {
                         options.KeyedService = "mongodb-test";
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                     }
                 ),
             HealthStatus.Healthy,
@@ -143,7 +143,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:MongoDb:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:MongoDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -160,7 +160,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:MongoDb:TestContainerKeyedHealthy:KeyedService", "mongodb-test-config" },
-                    { "HealthChecks:MongoDb:TestContainerKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:MongoDb:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

@@ -264,7 +264,7 @@ public sealed class SimpleNotificationServiceConfigureTests
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:ServiceUrl", "url"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:AccessKey", "access"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:SecretKey", "secret"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Timeout", "500"),
+                    new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Timeout", "10000"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Subscription", "sub123"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Mode", "BasicAuthentication"),
                 ]

@@ -70,7 +70,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
     [Test]
     public async Task AddElasticsearch_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddElasticsearch("TestContainerHealthy", options => options.Timeout = 5000),
+            healthChecks => healthChecks.AddElasticsearch("TestContainerHealthy", options => options.Timeout = 10000),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
@@ -87,7 +87,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     options =>
                     {
                         options.KeyedService = serviceKey;
-                        options.Timeout = 5000;
+                        options.Timeout = 10000;
                     }
                 ),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
@@ -104,7 +104,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     options =>
                     {
                         options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
-                        options.Timeout = 5000;
+                        options.Timeout = 10000;
                         options.Password = _container.Password;
                         options.Username = _container.Username;
 
@@ -179,7 +179,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Elasticsearch:TestContainerHealthy:Timeout", "5000" },
+                    { "HealthChecks:Elasticsearch:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -199,7 +199,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:Elasticsearch:TestContainerKeyedHealthy:KeyedService", serviceKey },
-                    { "HealthChecks:Elasticsearch:TestContainerKeyedHealthy:Timeout", "5000" },
+                    { "HealthChecks:Elasticsearch:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

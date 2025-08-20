@@ -118,7 +118,7 @@ public sealed class DaprConfigureTests
     public async Task Configure_WithNameParameter_BindsConfigurationCorrectly()
     {
         // Arrange
-        var configValues = new Dictionary<string, string?> { { "HealthChecks:TestDapr:Timeout", "500" } };
+        var configValues = new Dictionary<string, string?> { { "HealthChecks:TestDapr:Timeout", "10000" } };
 
         var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
 

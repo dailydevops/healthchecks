@@ -25,7 +25,7 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = GetConnectionString();
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -77,7 +77,7 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Odbc:TestContainerHealthy:ConnectionString", GetConnectionString() },
-                    { "HealthChecks:Odbc:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:Odbc:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

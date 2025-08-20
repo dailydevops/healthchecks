@@ -292,7 +292,7 @@ public sealed class SimpleStorageServiceConfigureTests
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:ServiceUrl", "url"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:AccessKey", "access"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:SecretKey", "secret"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Timeout", "500"),
+                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Timeout", "10000"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Mode", "BasicAuthentication"),
                 ]
             )
