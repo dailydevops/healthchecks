@@ -96,14 +96,14 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        _ = builder.AddQdrant(name, options => options.Timeout = 200);
+        _ = builder.AddQdrant(name, options => options.Timeout = 10000);
         var provider = services.BuildServiceProvider();
         var options = provider
             .GetRequiredService<Microsoft.Extensions.Options.IOptionsMonitor<QdrantOptions>>()
             .Get(name);
 
         // Assert
-        _ = await Assert.That(options.Timeout).IsEqualTo(200);
+        _ = await Assert.That(options.Timeout).IsEqualTo(10000);
     }
 
     [Test]

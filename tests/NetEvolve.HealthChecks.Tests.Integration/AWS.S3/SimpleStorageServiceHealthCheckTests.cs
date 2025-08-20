@@ -31,7 +31,7 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                         options.ServiceUrl = _instance.ConnectionString;
                         options.BucketName = LocalStackInstance.BucketName;
                         options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },

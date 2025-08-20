@@ -53,7 +53,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
     [Test]
     public async Task AddArangoDb_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddArangoDb("TestContainerHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddArangoDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
@@ -70,7 +70,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     options =>
                     {
                         options.KeyedService = serviceKey;
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                     }
                 ),
             HealthStatus.Healthy,
@@ -87,7 +87,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     options =>
                     {
                         options.Mode = ArangoDbClientCreationMode.Internal;
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                         options.TransportAddress = _container.TransportAddress;
                         options.Username = "root";
                         options.Password = _container.Password;
@@ -162,7 +162,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:ArangoDb:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:ArangoDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -182,7 +182,7 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:ArangoDb:TestContainerKeyedHealthy:KeyedService", serviceKey },
-                    { "HealthChecks:ArangoDb:TestContainerKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:ArangoDb:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

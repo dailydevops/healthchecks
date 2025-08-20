@@ -264,7 +264,7 @@ public sealed class SimpleNotificationServiceConfigureTests
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:ServiceUrl", "url"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:AccessKey", "access"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:SecretKey", "secret"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Timeout", "500"),
+                    new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Timeout", "10000"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Subscription", "sub123"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSSNS:Test:Mode", "BasicAuthentication"),
                 ]
@@ -281,7 +281,7 @@ public sealed class SimpleNotificationServiceConfigureTests
             _ = await Assert.That(options.ServiceUrl).IsEqualTo("url");
             _ = await Assert.That(options.AccessKey).IsEqualTo("access");
             _ = await Assert.That(options.SecretKey).IsEqualTo("secret");
-            _ = await Assert.That(options.Timeout).IsEqualTo(500);
+            _ = await Assert.That(options.Timeout).IsEqualTo(10000);
             _ = await Assert.That(options.Subscription).IsEqualTo("sub123");
             _ = await Assert.That(options.Mode).IsEqualTo(CreationMode.BasicAuthentication);
         }

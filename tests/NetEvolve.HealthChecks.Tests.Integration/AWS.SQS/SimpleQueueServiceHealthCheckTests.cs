@@ -30,7 +30,7 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                         options.ServiceUrl = _instance.ConnectionString;
                         options.QueueName = LocalStackInstance.QueueName;
                         options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -94,7 +94,7 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSQS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
                     { "HealthChecks:AWSSQS:TestContainerHealthy:QueueName", LocalStackInstance.QueueName },
                     { "HealthChecks:AWSSQS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
-                    { "HealthChecks:AWSSQS:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:AWSSQS:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

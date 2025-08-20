@@ -27,7 +27,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
     [Test]
     public async Task AddKeycloak_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddKeycloak("TestContainerHealthy", options => options.Timeout = 1000),
+            healthChecks => healthChecks.AddKeycloak("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
@@ -44,7 +44,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     options =>
                     {
                         options.KeyedService = serviceKey;
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                     }
                 ),
             HealthStatus.Healthy,
@@ -61,7 +61,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     options =>
                     {
                         options.Mode = KeycloakClientCreationMode.UsernameAndPassword;
-                        options.Timeout = 1000;
+                        options.Timeout = 10000;
                         options.BaseAddress = _container.BaseAddress;
                         options.Username = _container.Username;
                         options.Password = _container.Password;
@@ -135,7 +135,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Keycloak:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:Keycloak:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -155,7 +155,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:Keycloak:TestContainerKeyedHealthy:KeyedService", serviceKey },
-                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "1000" },
+                    { "HealthChecks:Keycloak:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

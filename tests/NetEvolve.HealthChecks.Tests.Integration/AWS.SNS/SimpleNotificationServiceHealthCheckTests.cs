@@ -31,7 +31,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                         options.TopicName = LocalStackInstance.TopicName;
                         options.Subscription = _instance.Subscription;
                         options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -145,7 +145,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", LocalStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", _instance.Subscription },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
-                    { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "1000" },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

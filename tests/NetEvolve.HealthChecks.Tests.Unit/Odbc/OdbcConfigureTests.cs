@@ -206,7 +206,7 @@ public sealed class OdbcConfigureTests
         var configValues = new Dictionary<string, string?>
         {
             { "HealthChecks:Odbc:TestSection:ConnectionString", "TestConnection" },
-            { "HealthChecks:Odbc:TestSection:Timeout", "200" },
+            { "HealthChecks:Odbc:TestSection:Timeout", "10000" },
         };
         var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
 
@@ -221,7 +221,7 @@ public sealed class OdbcConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(options.ConnectionString).IsEqualTo("TestConnection");
-            _ = await Assert.That(options.Timeout).IsEqualTo(200);
+            _ = await Assert.That(options.Timeout).IsEqualTo(10000);
         }
     }
 

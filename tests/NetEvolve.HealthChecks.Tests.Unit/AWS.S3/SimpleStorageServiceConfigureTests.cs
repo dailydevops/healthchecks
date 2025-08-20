@@ -292,7 +292,7 @@ public sealed class SimpleStorageServiceConfigureTests
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:ServiceUrl", "url"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:AccessKey", "access"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:SecretKey", "secret"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Timeout", "500"),
+                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Timeout", "10000"),
                     new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Mode", "BasicAuthentication"),
                 ]
             )
@@ -308,7 +308,7 @@ public sealed class SimpleStorageServiceConfigureTests
             _ = await Assert.That(options.ServiceUrl).IsEqualTo("url");
             _ = await Assert.That(options.AccessKey).IsEqualTo("access");
             _ = await Assert.That(options.SecretKey).IsEqualTo("secret");
-            _ = await Assert.That(options.Timeout).IsEqualTo(500);
+            _ = await Assert.That(options.Timeout).IsEqualTo(10000);
             _ = await Assert.That(options.Mode).IsEqualTo(CreationMode.BasicAuthentication);
         }
     }
