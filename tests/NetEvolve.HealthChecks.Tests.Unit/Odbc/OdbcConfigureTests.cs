@@ -221,7 +221,7 @@ public sealed class OdbcConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(options.ConnectionString).IsEqualTo("TestConnection");
-            _ = await Assert.That(options.Timeout).IsEqualTo(200);
+            _ = await Assert.That(options.Timeout).IsEqualTo(10000);
         }
     }
 

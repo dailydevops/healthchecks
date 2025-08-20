@@ -308,7 +308,7 @@ public sealed class SimpleStorageServiceConfigureTests
             _ = await Assert.That(options.ServiceUrl).IsEqualTo("url");
             _ = await Assert.That(options.AccessKey).IsEqualTo("access");
             _ = await Assert.That(options.SecretKey).IsEqualTo("secret");
-            _ = await Assert.That(options.Timeout).IsEqualTo(500);
+            _ = await Assert.That(options.Timeout).IsEqualTo(10000);
             _ = await Assert.That(options.Mode).IsEqualTo(CreationMode.BasicAuthentication);
         }
     }

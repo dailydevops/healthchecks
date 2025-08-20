@@ -103,7 +103,7 @@ public class DependencyInjectionExtensionsTests
             .Get(name);
 
         // Assert
-        _ = await Assert.That(options.Timeout).IsEqualTo(200);
+        _ = await Assert.That(options.Timeout).IsEqualTo(10000);
     }
 
     [Test]

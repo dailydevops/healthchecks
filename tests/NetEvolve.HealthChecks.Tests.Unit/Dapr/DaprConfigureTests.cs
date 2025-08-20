@@ -130,7 +130,7 @@ public sealed class DaprConfigureTests
         configure.Configure(name, options);
 
         // Assert
-        _ = await Assert.That(options.Timeout).IsEqualTo(500);
+        _ = await Assert.That(options.Timeout).IsEqualTo(10000);
     }
 
     [Test]
