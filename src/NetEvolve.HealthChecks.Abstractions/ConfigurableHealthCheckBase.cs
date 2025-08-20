@@ -46,16 +46,9 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration>(IOptionsMonito
 
             return await ExecuteHealthCheckAsync(name, failureStatus, options, cancellationToken).ConfigureAwait(false);
         }
-        catch (Exception wex) when (wex.InnerException is Win32Exception w32ex)
+        catch (Exception wex) when (wex.InnerException is Win32Exception)
         {
-            return HealthCheckUnhealthy(
-                failureStatus,
-                name,
-                $"""
-                Unexpected Win32 exception
-                - ErrorCode: {w32ex.ErrorCode}
-                """
-            );
+            return HealthCheckUnhealthy(failureStatus, name, "Unexpected Win32 exception");
         }
         catch (Exception ex)
         {
