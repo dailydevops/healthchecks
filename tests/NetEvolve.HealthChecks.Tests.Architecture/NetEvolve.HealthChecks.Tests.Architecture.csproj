@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.S3\NetEvolve.HealthChecks.AWS.S3.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SNS\NetEvolve.HealthChecks.AWS.SNS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ApplicationInsights\NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
@@ -35,6 +36,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Elasticsearch\NetEvolve.HealthChecks.Elasticsearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Http\NetEvolve.HealthChecks.Http.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />

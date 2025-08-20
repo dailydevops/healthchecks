@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using ArchUnitNET.Domain;
 using ArchUnitNET.Loader;
-using Raven.Client.Documents.Operations.ETL.ElasticSearch;
 
 internal static class HealthCheckArchitecture
 {
@@ -28,6 +27,7 @@ internal static class HealthCheckArchitecture
             typeof(AWS.SNS.SimpleNotificationServiceHealthCheck).Assembly,
             typeof(AWS.SQS.SimpleQueueServiceHealthCheck).Assembly,
             // Azure
+            typeof(Azure.ApplicationInsights.ApplicationInsightsAvailabilityHealthCheck).Assembly,
             typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
             typeof(Azure.ServiceBus.ServiceBusQueueHealthCheck).Assembly,
@@ -41,6 +41,7 @@ internal static class HealthCheckArchitecture
             typeof(DuckDB.DuckDBHealthCheck).Assembly,
             typeof(Elasticsearch.ElasticsearchHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
+            typeof(Http.HttpHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
