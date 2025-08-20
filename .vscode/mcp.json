@@ -1,0 +1,31 @@
+{
+  "servers": {
+    "DeepWiki": {
+      "type": "http",
+      "url": "https://mcp.deepwiki.com/mcp"
+    },
+    "Fetch": {
+      "type": "http",
+      "url": "https://remote.mcpservers.org/fetch/mcp"
+    },
+    "GitHub.com": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${input:github_mcp_pat}"
+      }
+    },
+    "Sequential Thinking": {
+      "url": "https://remote.mcpservers.org/sequentialthinking/mcp",
+      "type": "http"
+    }
+  },
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "github_mcp_pat",
+      "description": "GitHub Personal Access Token",
+      "password": true
+    }
+  ]
+}
