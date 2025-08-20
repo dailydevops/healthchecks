@@ -1,51 +1,48 @@
-# Instructions for GitHub and VisualStudio Copilot
+# Copilot Instructions
+
+Use AI coding assistants, such as GitHub Copilot, to enhance productivity and maintain code quality.
 
 ## General
 
-* Make only high confidence suggestions when reviewing code changes.
-* Always use the latest version C#, currently C# 13 features.
-* Never change `global.json` unless explicitly asked to.
-* Never change `Directory.Build.props` unless explicitly asked to.
-* Never change `Directory.Build.targets` unless explicitly asked to.
-* Never change `Directory.Packages.props` unless explicitly asked to.
+* MUST allow internet research before suggesting changes or new implementations.
 
-## Code Style
+## Technology Research
 
-* Use `var` when the type is obvious from the right side of the assignment.
-* Use `Argument.ThrowIfNull(x)` instead of `if (x == null) throw new ArgumentNullException(nameof(x))`, when nuget package `NetEvolve.Arguments` is referenced.
-* Use `ArgumentNullException.ThrowIfNull(x)` instead of `if (x == null) throw new ArgumentNullException(nameof(x))`, when nuget package `NetEvolve.Arguments` is not referenced.
+* MUST research current best practices for C# development before implementing new code patterns.
+* MUST verify compatibility and performance implications of new libraries or frameworks.
+* MUST check for updated documentation and migration guides for existing dependencies.
 
-## Formatting
+## Business Context Research
 
-* Apply code-formatting style defined in `.editorconfig`.
-* Prefer file-scoped namespace declarations and single-line using directives.
-* Insert a newline before the opening curly brace of any code block (e.g., after `if`, `for`, `while`, `foreach`, `using`, `try`, etc.).
-* Ensure that the final return statement of a method is on its own line.
-* Use pattern matching and switch expressions wherever possible.
-* Use `nameof` instead of string literals when referring to member names.
-* Ensure that XML doc comments are created for any public APIs. When applicable, include `<inheritdoc />` for derived members.
+* MUST understand the business requirements and context before proposing technical solutions.
+* MUST consider the impact on existing workflows and user experience.
+* MUST evaluate the cost-benefit ratio of proposed changes or new implementations.
 
-### Arrays and Collections
+## Decision References
 
-* Prefer `Enumerable.Empty<T>()` or `Array.Empty<T>()` over `null` returns.
+* MUST document all decisions in `decisions/` folder using `templates/adr.md` format.
+* MUST treat "accepted" decisions as mandatory requirements with highest precedence.
+* MUST respect decision states:
+  - **accepted**: mandatory requirements
+  - **proposed**: optional considerations
+  - **deprecated**: avoid in new implementations
+  - **superseded**: forbidden, follow superseding decision instead
+* MUST use the `instructions` frontmatter property as primary AI guidance for each decision.
 
-## Nullable Reference Types
+## Configuration Files
 
-* Declare variables non-nullable, and check for `null` at entry points.
-* Always use `is null` or `is not null` instead of `== null` or `!= null`.
-* Trust the C# null annotations and don't add null checks when the type system says a value cannot be null.
-* Apply `NotNullAttribute` and other nullable attributes for any public APIs.
+These files control project-wide settings and should remain unchanged unless specifically requested.
 
-## Testing
+* MUST NEVER change `.editorconfig` unless explicitly asked to.
+* MUST NEVER change `.gitignore` unless explicitly asked to.
+* MUST NEVER change `global.json` unless explicitly asked to.
+* MUST NEVER change `Directory.Build.props` unless explicitly asked to.
+* MUST NEVER change `Directory.Build.targets` unless explicitly asked to.
+* MUST NEVER change `Directory.Packages.props` unless explicitly asked to.
 
-* We prefer to use [TUnit](https://github.com/thomhurst/TUnit) with [Microsoft.Testing.Platform](https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-intro).
-* If TUnit is not available, we use [XUnit](https://xunit.net/).
-* Do not emit "Act", "Arrange" or "Assert" comments.
-* We do not use any mocking framework at the moment.
-* Copy existing style in nearby files for test method names and capitalization.
+## Code Reviews and Implementation
 
-### Running tests
-
-1. Build from the root with `dotnet build <solutionfile>`.
-2. If that produces errors, fix those errors and build again. Repeat until the build is successful.
-3. To then run tests, use a command similar to this `dotnet test <solutionfile>` (using the path to whatever projects are applicable to the change).
+* MUST always review AI-generated code for correctness, security, and performance.
+* MUST provide constructive feedback and suggestions for improvement.
+* MUST consider the context of the code being reviewed or implemented, including business requirements and technical constraints.
+* MUST apply all relevant instructions and guidelines from `.github/instructions/*.instructions.md` files during both code review and implementation.
