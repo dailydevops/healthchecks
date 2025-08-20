@@ -2,9 +2,8 @@
   results: [
     {
       description:
-TestInvalidUri: Unexpected win32 exception
-ErrorCode: 11001
-HResult: -2147467259,
+TestInvalidUri: Unexpected Win32 exception
+- ErrorCode: 11001,
       name: TestInvalidUri,
       status: Unhealthy,
       tags: [
