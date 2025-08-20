@@ -1,0 +1,19 @@
+﻿namespace NetEvolve.HealthChecks.Http
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddHttp([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Http.HttpOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class HttpOptions : System.IEquatable<NetEvolve.HealthChecks.Http.HttpOptions>
+    {
+        public HttpOptions() { }
+        public bool AllowAutoRedirect { get; set; }
+        public string? Content { get; set; }
+        public string ContentType { get; set; }
+        public System.Collections.Generic.IList<int> ExpectedHttpStatusCodes { get; }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get; }
+        public string HttpMethod { get; set; }
+        public int Timeout { get; set; }
+        public string Uri { get; set; }
+    }
+}

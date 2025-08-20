@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Abstractions;
 
 using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,6 +45,10 @@ public abstract class ConfigurableHealthCheckBase<TConfiguration>(IOptionsMonito
             }
 
             return await ExecuteHealthCheckAsync(name, failureStatus, options, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception wex) when (wex.InnerException is Win32Exception)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Unexpected Win32 exception");
         }
         catch (Exception ex)
         {

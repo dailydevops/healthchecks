@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestUnexpectedStatus: Unexpected status code 201. Expected: 200,
+      name: TestUnexpectedStatus,
+      status: Unhealthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Unhealthy
+}

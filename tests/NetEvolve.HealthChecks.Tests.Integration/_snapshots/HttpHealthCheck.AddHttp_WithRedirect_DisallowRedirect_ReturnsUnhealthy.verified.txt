@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestNoRedirect: Unexpected status code 302. Expected: 200,
+      name: TestNoRedirect,
+      status: Unhealthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Unhealthy
+}

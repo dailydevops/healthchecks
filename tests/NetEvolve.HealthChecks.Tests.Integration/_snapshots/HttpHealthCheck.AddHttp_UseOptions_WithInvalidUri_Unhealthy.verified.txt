@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestInvalidUri: Unexpected Win32 exception,
+      name: TestInvalidUri,
+      status: Unhealthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Unhealthy
+}

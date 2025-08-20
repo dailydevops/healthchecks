@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestTimeout: Degraded,
+      name: TestTimeout,
+      status: Degraded,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Degraded
+}
