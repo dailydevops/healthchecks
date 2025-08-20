@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Http;
+﻿namespace NetEvolve.HealthChecks.Http;
 
 using System;
 using System.Net.Http;
@@ -36,7 +36,9 @@ internal sealed class HttpHealthCheck : ConfigurableHealthCheckBase<HttpOptions>
     )
     {
         var httpClient = _serviceProvider.GetRequiredService<HttpClient>();
-        using var request = new HttpRequestMessage(new HttpMethod(options.HttpMethod), options.Uri);
+        var httpMethod = new HttpMethod(options.HttpMethod);
+
+        using var request = new HttpRequestMessage(httpMethod, options.Uri);
 
         // Add headers
         foreach (var header in options.Headers)
