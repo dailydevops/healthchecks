@@ -27,7 +27,7 @@ permissions:
 jobs:
   all:
     name: Build & Tests
-    uses: dailydevops/pipelines/.github/workflows/build-dotnet-single.yml@1.0.38
+    uses: dailydevops/pipelines/.github/workflows/build-dotnet-single.yml@1.0.45
     with:
       enableCleanUpDockerDocker: true
       dotnetLogging: ${{ inputs.dotnet-logging }}
