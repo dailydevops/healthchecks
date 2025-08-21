@@ -20,6 +20,7 @@
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Dapr.Client" />
+    <PackageReference Include="Devart.Data.PostgreSql" />
     <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="DuckDB.NET.Data" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" />
@@ -118,6 +119,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql.Devart\NetEvolve.HealthChecks.Npgsql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
