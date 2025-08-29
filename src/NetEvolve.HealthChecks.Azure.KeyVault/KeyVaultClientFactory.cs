@@ -22,7 +22,7 @@ internal sealed class KeyVaultClientFactory
         {
             KeyVaultClientCreationMode.ServiceProvider => GetFromServiceProvider(serviceProvider),
             KeyVaultClientCreationMode.DefaultAzureCredentials => CreateWithDefaultCredentials(options),
-            _ => throw new NotSupportedException($"Creation mode `{options.Mode}` is not supported.")
+            _ => throw new NotSupportedException($"Creation mode `{options.Mode}` is not supported."),
         };
     }
 
@@ -43,9 +43,7 @@ internal sealed class KeyVaultClientFactory
     {
         if (options.VaultUri is null)
         {
-            throw new InvalidOperationException(
-                "VaultUri cannot be null when using DefaultAzureCredentials mode."
-            );
+            throw new InvalidOperationException("VaultUri cannot be null when using DefaultAzureCredentials mode.");
         }
 
         var credential = new DefaultAzureCredential();
