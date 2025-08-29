@@ -1,0 +1,14 @@
+namespace NetEvolve.HealthChecks.Oracle.Devart
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddOracleDevart([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Oracle.Devart.OracleDevartOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class OracleDevartOptions : System.IEquatable<NetEvolve.HealthChecks.Oracle.Devart.OracleDevartOptions>
+    {
+        public OracleDevartOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+}
