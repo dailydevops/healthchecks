@@ -13,10 +13,7 @@ internal sealed class KeyVaultHealthCheck : ConfigurableHealthCheckBase<KeyVault
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public KeyVaultHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<KeyVaultOptions> optionsMonitor
-    )
+    public KeyVaultHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<KeyVaultOptions> optionsMonitor)
         : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -31,7 +28,9 @@ internal sealed class KeyVaultHealthCheck : ConfigurableHealthCheckBase<KeyVault
         try
         {
             // Try to list secrets to verify connectivity and permissions
-            var secretsEnumerator = client.GetPropertiesOfSecretsAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
+            var secretsEnumerator = client
+                .GetPropertiesOfSecretsAsync(cancellationToken)
+                .GetAsyncEnumerator(cancellationToken);
 
             var (isValid, _) = await secretsEnumerator
                 .MoveNextAsync()

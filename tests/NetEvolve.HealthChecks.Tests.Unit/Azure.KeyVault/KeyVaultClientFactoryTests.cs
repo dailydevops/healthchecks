@@ -18,7 +18,9 @@ public sealed class KeyVaultClientFactoryTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<ArgumentException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 
     [Test]
@@ -30,7 +32,9 @@ public sealed class KeyVaultClientFactoryTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<ArgumentException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 
     [Test]
@@ -42,7 +46,9 @@ public sealed class KeyVaultClientFactoryTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<ArgumentNullException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<ArgumentNullException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 
     [Test]
@@ -54,7 +60,9 @@ public sealed class KeyVaultClientFactoryTests
         var serviceProvider = default(IServiceProvider)!;
 
         // Act & Assert
-        _ = Assert.Throws<ArgumentNullException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<ArgumentNullException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 
     [Test]
@@ -66,7 +74,9 @@ public sealed class KeyVaultClientFactoryTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<InvalidOperationException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<InvalidOperationException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 
     [Test]
@@ -74,15 +84,17 @@ public sealed class KeyVaultClientFactoryTests
     {
         // Arrange
         var name = "Test";
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
-            VaultUri = null
+            VaultUri = null,
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<InvalidOperationException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<InvalidOperationException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 
     [Test]
@@ -90,10 +102,10 @@ public sealed class KeyVaultClientFactoryTests
     {
         // Arrange
         var name = "Test";
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
-            VaultUri = new Uri("https://test.vault.azure.net/")
+            VaultUri = new Uri("https://test.vault.azure.net/"),
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
@@ -114,6 +126,8 @@ public sealed class KeyVaultClientFactoryTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
         // Act & Assert
-        _ = Assert.Throws<NotSupportedException>(() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider));
+        _ = Assert.Throws<NotSupportedException>(() =>
+            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
+        );
     }
 }

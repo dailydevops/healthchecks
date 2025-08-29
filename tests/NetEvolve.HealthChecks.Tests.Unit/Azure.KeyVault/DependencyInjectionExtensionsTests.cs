@@ -95,11 +95,14 @@ public sealed class DependencyInjectionExtensionsTests
         var name = "Test";
 
         // Act
-        var result = builder.AddAzureKeyVault(name, options =>
-        {
-            options.VaultUri = new Uri("https://test.vault.azure.net/");
-            options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
-        });
+        var result = builder.AddAzureKeyVault(
+            name,
+            options =>
+            {
+                options.VaultUri = new Uri("https://test.vault.azure.net/");
+                options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
+            }
+        );
 
         // Assert
         _ = Assert.That(result).IsNotNull();

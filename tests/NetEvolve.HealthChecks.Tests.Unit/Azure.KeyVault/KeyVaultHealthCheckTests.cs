@@ -36,11 +36,11 @@ public sealed class KeyVaultHealthCheckTests
         var testName = "TestHealthCheck";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<KeyVaultOptions>>();
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
             VaultUri = new Uri("https://test.vault.azure.net/"),
-            Timeout = 100
+            Timeout = 100,
         };
 
         _ = optionsMonitor.Get(testName).Returns(options);
@@ -99,11 +99,11 @@ public sealed class KeyVaultHealthCheckTests
         var testName = "TestHealthCheck";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<KeyVaultOptions>>();
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
             VaultUri = new Uri("https://invalid-vault.vault.azure.net/"),
-            Timeout = 100
+            Timeout = 100,
         };
 
         _ = optionsMonitor.Get(testName).Returns(options);
