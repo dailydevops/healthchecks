@@ -123,10 +123,10 @@ public sealed class KeyVaultOptionsConfigureTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
         var configure = new KeyVaultOptionsConfigure(configuration, serviceProvider);
         var name = "Test";
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
-            VaultUri = null
+            VaultUri = null,
         };
 
         // Act
@@ -144,10 +144,10 @@ public sealed class KeyVaultOptionsConfigureTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
         var configure = new KeyVaultOptionsConfigure(configuration, serviceProvider);
         var name = "Test";
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
-            VaultUri = new Uri("/relative", UriKind.Relative)
+            VaultUri = new Uri("/relative", UriKind.Relative),
         };
 
         // Act
@@ -165,10 +165,10 @@ public sealed class KeyVaultOptionsConfigureTests
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
         var configure = new KeyVaultOptionsConfigure(configuration, serviceProvider);
         var name = "Test";
-        var options = new KeyVaultOptions 
-        { 
+        var options = new KeyVaultOptions
+        {
             Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
-            VaultUri = new Uri("https://test.vault.azure.net/")
+            VaultUri = new Uri("https://test.vault.azure.net/"),
         };
 
         // Act

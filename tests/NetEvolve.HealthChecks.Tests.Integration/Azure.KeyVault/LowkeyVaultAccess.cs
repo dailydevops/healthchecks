@@ -10,9 +10,7 @@ using Testcontainers.LowkeyVault;
 
 public sealed class LowkeyVaultAccess : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly LowkeyVaultContainer _container = new LowkeyVaultBuilder()
-        .WithLogger(NullLogger.Instance)
-        .Build();
+    private readonly LowkeyVaultContainer _container = new LowkeyVaultBuilder().WithLogger(NullLogger.Instance).Build();
 
     public Uri VaultUri { get; private set; } = default!;
 
