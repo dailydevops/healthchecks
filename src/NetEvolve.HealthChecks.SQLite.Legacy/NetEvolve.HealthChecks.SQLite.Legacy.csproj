@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
     <PackageReference Include="System.Data.SQLite" />
+    <PackageReference Include="System.Drawing.Common" VersionOverride="4.7.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
