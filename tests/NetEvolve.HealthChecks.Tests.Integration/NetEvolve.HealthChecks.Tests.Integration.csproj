@@ -17,6 +17,7 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Microsoft.Azure.Devices" />
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Dapr.Client" />
@@ -59,6 +60,7 @@
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="NetEvolve.Extensions.TUnit" />
     <PackageReference Include="PublicApiGenerator" />
+    <PackageReference Include="Testcontainers" />
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.ArangoDb" />
     <PackageReference Include="Testcontainers.Azurite" />
@@ -104,6 +106,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ApplicationInsights\NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.IotHub\NetEvolve.HealthChecks.Azure.IotHub.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
