@@ -10,7 +10,7 @@
           }
         ],
         message: The specified bucket does not exist,
-        type: Amazon.S3.AmazonS3Exception
+        type: Amazon.S3.Model.NoSuchBucketException
       },
       name: TestContainerUnhealthy,
       status: Unhealthy,
