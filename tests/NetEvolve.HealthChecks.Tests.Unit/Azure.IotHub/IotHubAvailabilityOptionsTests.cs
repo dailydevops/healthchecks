@@ -56,17 +56,17 @@ public class IotHubAvailabilityOptionsTests
     {
         // Arrange
         const string name = "Test";
-        var options = new IotHubAvailabilityOptions
-        {
-            Timeout = -2
-        };
+        var options = new IotHubAvailabilityOptions { Timeout = -2 };
 
         // Act
         var result = IotHubOptionsBase.InternalValidate(name, options);
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.FailureMessage, Is.EqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."));
+        Assert.That(
+            result.FailureMessage,
+            Is.EqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.")
+        );
     }
 
     [Test]
@@ -74,10 +74,7 @@ public class IotHubAvailabilityOptionsTests
     {
         // Arrange
         const string name = "Test";
-        var options = new IotHubAvailabilityOptions
-        {
-            Mode = null
-        };
+        var options = new IotHubAvailabilityOptions { Mode = null };
 
         // Act
         var result = IotHubOptionsBase.InternalValidate(name, options);
@@ -95,7 +92,7 @@ public class IotHubAvailabilityOptionsTests
         var options = new IotHubAvailabilityOptions
         {
             Mode = ClientCreationMode.DefaultAzureCredentials,
-            FullyQualifiedHostname = null
+            FullyQualifiedHostname = null,
         };
 
         // Act
@@ -103,7 +100,10 @@ public class IotHubAvailabilityOptionsTests
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.FailureMessage, Is.EqualTo("The fully qualified hostname cannot be null or whitespace when using DefaultAzureCredentials."));
+        Assert.That(
+            result.FailureMessage,
+            Is.EqualTo("The fully qualified hostname cannot be null or whitespace when using DefaultAzureCredentials.")
+        );
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class IotHubAvailabilityOptionsTests
         var options = new IotHubAvailabilityOptions
         {
             Mode = ClientCreationMode.ConnectionString,
-            ConnectionString = null
+            ConnectionString = null,
         };
 
         // Act
@@ -122,7 +122,10 @@ public class IotHubAvailabilityOptionsTests
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.FailureMessage, Is.EqualTo("The connection string cannot be null or whitespace when using ConnectionString."));
+        Assert.That(
+            result.FailureMessage,
+            Is.EqualTo("The connection string cannot be null or whitespace when using ConnectionString.")
+        );
     }
 
     [Test]
@@ -133,7 +136,7 @@ public class IotHubAvailabilityOptionsTests
         var options = new IotHubAvailabilityOptions
         {
             Mode = ClientCreationMode.ConnectionString,
-            ConnectionString = "HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test"
+            ConnectionString = "HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test",
         };
 
         // Act
@@ -151,7 +154,7 @@ public class IotHubAvailabilityOptionsTests
         var options = new IotHubAvailabilityOptions
         {
             Mode = ClientCreationMode.DefaultAzureCredentials,
-            FullyQualifiedHostname = "test.azure-devices.net"
+            FullyQualifiedHostname = "test.azure-devices.net",
         };
 
         // Act

@@ -17,7 +17,11 @@ internal sealed class IotHubClientFactory
         StringComparer.OrdinalIgnoreCase
     );
 
-    internal RegistryManager GetRegistryManager<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
+    internal RegistryManager GetRegistryManager<TOptions>(
+        string name,
+        TOptions options,
+        IServiceProvider serviceProvider
+    )
         where TOptions : IotHubOptionsBase
     {
         if (options.Mode == ClientCreationMode.ServiceProvider)
@@ -25,10 +29,7 @@ internal sealed class IotHubClientFactory
             return serviceProvider.GetRequiredService<RegistryManager>();
         }
 
-        return _registryManagers.GetOrAdd(
-            name,
-            _ => CreateRegistryManager(options, serviceProvider)
-        );
+        return _registryManagers.GetOrAdd(name, _ => CreateRegistryManager(options, serviceProvider));
     }
 
     internal ServiceClient GetServiceClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
@@ -39,10 +40,7 @@ internal sealed class IotHubClientFactory
             return serviceProvider.GetRequiredService<ServiceClient>();
         }
 
-        return _serviceClients.GetOrAdd(
-            name,
-            _ => CreateServiceClient(options, serviceProvider)
-        );
+        return _serviceClients.GetOrAdd(name, _ => CreateServiceClient(options, serviceProvider));
     }
 
     private static RegistryManager CreateRegistryManager<TOptions>(TOptions options, IServiceProvider serviceProvider)
@@ -53,7 +51,9 @@ internal sealed class IotHubClientFactory
                 options.FullyQualifiedHostname!,
                 serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential()
             ),
-            ClientCreationMode.ConnectionString => RegistryManager.CreateFromConnectionString(options.ConnectionString!),
+            ClientCreationMode.ConnectionString => RegistryManager.CreateFromConnectionString(
+                options.ConnectionString!
+            ),
             _ => throw new UnreachableException($"Invalid client creation mode `{options.Mode}`."),
         };
 
