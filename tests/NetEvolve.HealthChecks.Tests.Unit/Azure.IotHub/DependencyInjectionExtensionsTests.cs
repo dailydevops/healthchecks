@@ -90,7 +90,8 @@ public class DependencyInjectionExtensionsTests
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
-        var healthCheckService = serviceProvider.GetService<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService>();
+        var healthCheckService =
+            serviceProvider.GetService<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService>();
         Assert.That(healthCheckService, Is.Not.Null);
     }
 
@@ -107,7 +108,8 @@ public class DependencyInjectionExtensionsTests
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
-        var healthCheckService = serviceProvider.GetService<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService>();
+        var healthCheckService =
+            serviceProvider.GetService<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService>();
         Assert.That(healthCheckService, Is.Not.Null);
     }
 }

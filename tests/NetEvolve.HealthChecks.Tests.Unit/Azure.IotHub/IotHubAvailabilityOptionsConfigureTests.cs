@@ -34,10 +34,11 @@ public class IotHubAvailabilityOptionsConfigureTests
             .AddInMemoryCollection(
                 new Dictionary<string, string?>
                 {
-                    ["HealthChecks:AzureIotHubAvailability:Test:ConnectionString"] = "HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test",
+                    ["HealthChecks:AzureIotHubAvailability:Test:ConnectionString"] =
+                        "HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test",
                     ["HealthChecks:AzureIotHubAvailability:Test:FullyQualifiedHostname"] = "test.azure-devices.net",
                     ["HealthChecks:AzureIotHubAvailability:Test:Mode"] = "ConnectionString",
-                    ["HealthChecks:AzureIotHubAvailability:Test:Timeout"] = "1000"
+                    ["HealthChecks:AzureIotHubAvailability:Test:Timeout"] = "1000",
                 }
             )
             .Build();
@@ -48,7 +49,10 @@ public class IotHubAvailabilityOptionsConfigureTests
         configure.Configure("Test", options);
 
         // Assert
-        Assert.That(options.ConnectionString, Is.EqualTo("HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test"));
+        Assert.That(
+            options.ConnectionString,
+            Is.EqualTo("HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test")
+        );
         Assert.That(options.FullyQualifiedHostname, Is.EqualTo("test.azure-devices.net"));
         Assert.That(options.Mode, Is.EqualTo(ClientCreationMode.ConnectionString));
         Assert.That(options.Timeout, Is.EqualTo(1000));
@@ -79,7 +83,7 @@ public class IotHubAvailabilityOptionsConfigureTests
         var options = new IotHubAvailabilityOptions
         {
             Mode = ClientCreationMode.ConnectionString,
-            ConnectionString = "HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test"
+            ConnectionString = "HostName=test.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=test",
         };
 
         // Act
