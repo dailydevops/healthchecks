@@ -8,9 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class CosmosDbConfigure
-    : IConfigureNamedOptions<CosmosDbOptions>,
-        IValidateOptions<CosmosDbOptions>
+internal sealed class CosmosDbConfigure : IConfigureNamedOptions<CosmosDbOptions>, IValidateOptions<CosmosDbOptions>
 {
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;

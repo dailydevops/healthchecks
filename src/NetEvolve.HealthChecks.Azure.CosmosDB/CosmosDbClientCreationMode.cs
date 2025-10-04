@@ -23,5 +23,5 @@ public enum CosmosDbClientCreationMode
     /// <summary>
     /// Use service endpoint with Azure Active Directory (token credential).
     /// </summary>
-    ServicePrincipal
+    ServicePrincipal,
 }
