@@ -23,6 +23,7 @@
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.1.5" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.16.0" />
+    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.51.0" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.25.1" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.23.0" />
@@ -74,6 +75,7 @@
     <PackageVersion Include="Testcontainers.ArangoDb" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.7.0" />
+    <PackageVersion Include="Testcontainers.CosmosDb" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.Db2" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.7.0" />

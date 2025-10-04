@@ -14,10 +14,7 @@ internal sealed class CosmosDbHealthCheck : ConfigurableHealthCheckBase<CosmosDb
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public CosmosDbHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<CosmosDbOptions> optionsMonitor
-    )
+    public CosmosDbHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<CosmosDbOptions> optionsMonitor)
         : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -66,7 +63,9 @@ internal sealed class CosmosDbHealthCheck : ConfigurableHealthCheckBase<CosmosDb
 
                 if (!containerAvailable)
                 {
-                    return HealthCheckResult.Unhealthy($"{name}: Container `{options.ContainerName}` is not available.");
+                    return HealthCheckResult.Unhealthy(
+                        $"{name}: Container `{options.ContainerName}` is not available."
+                    );
                 }
             }
         }

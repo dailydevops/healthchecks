@@ -12,11 +12,7 @@ internal class ClientCreation
 {
     private ConcurrentDictionary<string, CosmosClient>? _cosmosClients;
 
-    internal CosmosClient GetCosmosClient<TOptions>(
-        string name,
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal CosmosClient GetCosmosClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, ICosmosDbOptions
     {
         _cosmosClients ??= new ConcurrentDictionary<string, CosmosClient>();
@@ -24,10 +20,7 @@ internal class ClientCreation
         return _cosmosClients.GetOrAdd(name, _ => CreateCosmosClient(options, serviceProvider));
     }
 
-    internal static CosmosClient CreateCosmosClient<TOptions>(
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal static CosmosClient CreateCosmosClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, ICosmosDbOptions
     {
         CosmosClientOptions? clientOptions = null;
@@ -50,7 +43,8 @@ internal class ClientCreation
             case CosmosDbClientCreationMode.AccountKey:
                 return new CosmosClient(options.ServiceEndpoint, options.AccountKey, clientOptions);
             case CosmosDbClientCreationMode.ServicePrincipal:
-                var servicePrincipalCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                var servicePrincipalCredential =
+                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new CosmosClient(options.ServiceEndpoint, servicePrincipalCredential, clientOptions);
             default:
                 throw new UnreachableException($"Invalid client creation mode `{mode}`.");
