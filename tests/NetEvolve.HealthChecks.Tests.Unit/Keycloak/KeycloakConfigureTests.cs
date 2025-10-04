@@ -134,10 +134,7 @@ public sealed class KeycloakConfigureTests
                 false,
                 "The base address cannot be null or whitespace when using the `ClientSecret` client creation mode.",
                 "name",
-                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
-                {
-                    Mode = KeycloakClientCreationMode.ClientSecret,
-                }
+                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions { Mode = KeycloakClientCreationMode.ClientSecret }
             );
         yield return () =>
             (

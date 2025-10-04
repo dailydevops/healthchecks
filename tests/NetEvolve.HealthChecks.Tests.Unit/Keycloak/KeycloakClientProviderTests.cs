@@ -78,22 +78,8 @@ public sealed class KeycloakClientProviderTests
                 null
             );
         yield return () =>
-            (
-                typeof(ArgumentException),
-                KeycloakClientCreationMode.ClientSecret,
-                null,
-                null,
-                null,
-                "client-secret"
-            );
+            (typeof(ArgumentException), KeycloakClientCreationMode.ClientSecret, null, null, null, "client-secret");
         yield return () =>
-            (
-                typeof(ArgumentNullException),
-                KeycloakClientCreationMode.ClientSecret,
-                "base-address",
-                null,
-                null,
-                null
-            );
+            (typeof(ArgumentNullException), KeycloakClientCreationMode.ClientSecret, "base-address", null, null, null);
     }
 }
