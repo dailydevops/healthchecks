@@ -48,7 +48,7 @@ public class CosmosDbOptionsTests
             DatabaseName = expectedDatabaseName,
             ContainerName = expectedContainerName,
             Timeout = expectedTimeout,
-            ConfigureClientOptions = _ => { }
+            ConfigureClientOptions = _ => { },
         };
 
         // Assert
