@@ -25,14 +25,28 @@ internal sealed class KeycloakClientProvider
 
     internal static KeycloakClient CreateClient(KeycloakOptions options)
     {
-        ArgumentOutOfRangeException.ThrowIfNotEqual(
-            (int)options.Mode,
-            (int)KeycloakClientCreationMode.UsernameAndPassword
-        );
         ArgumentException.ThrowIfNullOrEmpty(options.BaseAddress);
+
+        return options.Mode switch
+        {
+            KeycloakClientCreationMode.UsernameAndPassword => CreateClientWithUsernameAndPassword(options),
+            KeycloakClientCreationMode.ClientSecret => CreateClientWithClientSecret(options),
+            _ => throw new ArgumentOutOfRangeException(nameof(options), options.Mode, "The mode is not supported."),
+        };
+    }
+
+    private static KeycloakClient CreateClientWithUsernameAndPassword(KeycloakOptions options)
+    {
         ArgumentNullException.ThrowIfNull(options.Username);
         ArgumentNullException.ThrowIfNull(options.Password);
 
-        return new KeycloakClient(options.BaseAddress, options.Username, options.Password);
+        return new KeycloakClient(options.BaseAddress!, options.Username, options.Password);
+    }
+
+    private static KeycloakClient CreateClientWithClientSecret(KeycloakOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options.ClientSecret);
+
+        return new KeycloakClient(options.BaseAddress!, options.ClientSecret);
     }
 }

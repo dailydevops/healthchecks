@@ -13,7 +13,8 @@ public sealed class KeycloakClientProviderTests
         KeycloakClientCreationMode mode,
         string? baseAddress,
         string? username,
-        string? password
+        string? password,
+        string? clientSecret
     )
     {
         var options = new KeycloakOptions
@@ -22,12 +23,13 @@ public sealed class KeycloakClientProviderTests
             BaseAddress = baseAddress,
             Username = username,
             Password = password,
+            ClientSecret = clientSecret,
         };
         _ = Assert.Throws(expectedException, () => KeycloakClientProvider.CreateClient(options));
     }
 
     public static IEnumerable<
-        Func<(Type, KeycloakClientCreationMode, string?, string?, string?)>
+        Func<(Type, KeycloakClientCreationMode, string?, string?, string?, string?)>
     > InvalidArgumentsTestData()
     {
         yield return () =>
@@ -36,7 +38,8 @@ public sealed class KeycloakClientProviderTests
                 (KeycloakClientCreationMode)(-1),
                 "base-address",
                 "username",
-                "password"
+                "password",
+                null
             );
         yield return () =>
             (
@@ -44,15 +47,17 @@ public sealed class KeycloakClientProviderTests
                 KeycloakClientCreationMode.ServiceProvider,
                 "base-address",
                 "username",
-                "password"
+                "password",
+                null
             );
         yield return () =>
             (
-                typeof(ArgumentNullException),
+                typeof(ArgumentException),
                 KeycloakClientCreationMode.UsernameAndPassword,
                 null,
                 "username",
-                "password"
+                "password",
+                null
             );
         yield return () =>
             (
@@ -60,7 +65,8 @@ public sealed class KeycloakClientProviderTests
                 KeycloakClientCreationMode.UsernameAndPassword,
                 "base-address",
                 null,
-                "password"
+                "password",
+                null
             );
         yield return () =>
             (
@@ -68,6 +74,25 @@ public sealed class KeycloakClientProviderTests
                 KeycloakClientCreationMode.UsernameAndPassword,
                 "base-address",
                 "username",
+                null,
+                null
+            );
+        yield return () =>
+            (
+                typeof(ArgumentException),
+                KeycloakClientCreationMode.ClientSecret,
+                null,
+                null,
+                null,
+                "client-secret"
+            );
+        yield return () =>
+            (
+                typeof(ArgumentNullException),
+                KeycloakClientCreationMode.ClientSecret,
+                "base-address",
+                null,
+                null,
                 null
             );
     }

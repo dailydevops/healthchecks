@@ -50,6 +50,14 @@ public sealed record KeycloakOptions
     public string? Password { get; set; }
 
     /// <summary>
+    /// Gets or sets the client secret for authenticating with the client.
+    /// </summary>
+    /// <remarks>
+    /// This option is only required when <see cref="Mode"/> is set to <see cref="KeycloakClientCreationMode.ClientSecret"/>.
+    /// </remarks>
+    public string? ClientSecret { get; set; }
+
+    /// <summary>
     /// Gets or sets the timeout to use when connecting and executing tasks against the service.
     /// </summary>
     /// <remarks>

@@ -47,9 +47,10 @@ The configuration looks like this:
       "<name>": {
         "Mode": "<client_creation_mode>", // Optional, defaults to 'KeycloakClientCreationMode.ServiceProvider'
         "KeyedService": "<key>", // Optional, used when Mode set to 'KeycloakClientCreationMode.ServiceProvider'
-        "BaseAddress": "<base_address>", // Required when Mode set to 'KeycloakClientCreationMode.Internal'
-        "Username": "<username>", // Required when Mode set to 'KeycloakClientCreationMode.Internal'
-        "Password": "<password>", // Required when Mode set to 'KeycloakClientCreationMode.Internal'
+        "BaseAddress": "<base_address>", // Required when Mode set to 'KeycloakClientCreationMode.UsernameAndPassword' or 'KeycloakClientCreationMode.ClientSecret'
+        "Username": "<username>", // Required when Mode set to 'KeycloakClientCreationMode.UsernameAndPassword'
+        "Password": "<password>", // Required when Mode set to 'KeycloakClientCreationMode.UsernameAndPassword'
+        "ClientSecret": "<client_secret>", // Required when Mode set to 'KeycloakClientCreationMode.ClientSecret'
         "Timeout": "<timeout>" // Optional, default is 100 milliseconds
       }
     }
@@ -66,9 +67,10 @@ builder.AddKeycloak("<name>", options =>
 {
     options.Mode = <client_creation_mode>; // Optional, defaults to 'KeycloakClientCreationMode.ServiceProvider'
     options.KeyedService = "<key>"; // Optional, used when Mode set to 'KeycloakClientCreationMode.ServiceProvider'
-    options.BaseAddress = "<base_address>"; // Required when Mode set to 'KeycloakClientCreationMode.Internal'
-    options.Username = "<username>"; // Required when Mode set to 'KeycloakClientCreationMode.Internal'
-    options.Password = "<password>"; // Required when Mode set to 'KeycloakClientCreationMode.Internal'
+    options.BaseAddress = "<base_address>"; // Required when Mode set to 'KeycloakClientCreationMode.UsernameAndPassword' or 'KeycloakClientCreationMode.ClientSecret'
+    options.Username = "<username>"; // Required when Mode set to 'KeycloakClientCreationMode.UsernameAndPassword'
+    options.Password = "<password>"; // Required when Mode set to 'KeycloakClientCreationMode.UsernameAndPassword'
+    options.ClientSecret = "<client_secret>"; // Required when Mode set to 'KeycloakClientCreationMode.ClientSecret'
     options.Timeout = <timeout>; // Optional, defaults to 100 milliseconds
 
     // Optional, defaults to NetEvolve.HealthChecks.Keycloak.DefaultCommandAsync
