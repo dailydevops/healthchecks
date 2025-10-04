@@ -122,28 +122,17 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
 
         using (Assert.Multiple())
         {
-            _ = await Assert
-                .That(_response.Entries)
-                .HasCount()
-                .EqualTo(1);
+            _ = await Assert.That(_response.Entries).HasCount().EqualTo(1);
 
             var (name, healthReportEntry) = _response.Entries.Single();
 
             _ = await Assert.That(name).IsEqualTo("TestContainerHealthy");
             _ = await Assert.That(healthReportEntry.Status).IsEqualTo(HealthStatus.Healthy);
 
-            _ = await Assert
-                .That(healthReportEntry.Tags)
-                .ContainsValue("aws");
-            _ = await Assert
-                .That(healthReportEntry.Tags)
-                .ContainsValue("ec2");
-            _ = await Assert
-                .That(healthReportEntry.Tags)
-                .ContainsValue("compute");
-            _ = await Assert
-                .That(healthReportEntry.Tags)
-                .ContainsValue("custom");
+            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("aws");
+            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("ec2");
+            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("compute");
+            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("custom");
         }
     }
 }
