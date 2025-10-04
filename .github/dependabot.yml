@@ -55,6 +55,9 @@ updates:
        patterns:
          - "xunit"
          - "xunit*"
+       exclude-patterns:
+         - "xunit.v3"
+         - "xunit.v3*"
 
   - package-ecosystem: "devcontainers"
     directory: "/"
