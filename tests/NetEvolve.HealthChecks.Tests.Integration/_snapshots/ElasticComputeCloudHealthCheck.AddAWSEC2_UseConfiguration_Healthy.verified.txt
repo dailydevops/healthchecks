@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
+      status: Healthy,
+      tags: [
+        aws,
+        ec2,
+        compute
+      ]
+    }
+  ],
+  status: Healthy
+}

@@ -9,6 +9,7 @@ This bundle package provides health checks for various AWS services. For specifi
 
 ## Supported AWS Services
 
+- [AWS Elastic Compute Cloud (EC2)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.EC2/)
 - [AWS Simple Notification Service (SNS)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
 - [AWS Simple Queue Service (SQS)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SQS/)
 - [AWS Simple Storage Service (S3)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.S3/)

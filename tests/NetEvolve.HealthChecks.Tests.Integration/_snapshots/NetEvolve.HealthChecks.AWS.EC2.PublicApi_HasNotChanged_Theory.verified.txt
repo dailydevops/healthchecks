@@ -1,0 +1,22 @@
+﻿namespace NetEvolve.HealthChecks.AWS.EC2
+{
+    public enum CreationMode
+    {
+        BasicAuthentication = 0,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAWSEC2([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.AWS.EC2.ElasticComputeCloudOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class ElasticComputeCloudOptions : System.IEquatable<NetEvolve.HealthChecks.AWS.EC2.ElasticComputeCloudOptions>
+    {
+        public ElasticComputeCloudOptions() { }
+        public string? AccessKey { get; set; }
+        public string? KeyName { get; set; }
+        public NetEvolve.HealthChecks.AWS.EC2.CreationMode? Mode { get; set; }
+        public Amazon.RegionEndpoint? RegionEndpoint { get; set; }
+        public string? SecretKey { get; set; }
+        public string? ServiceUrl { get; set; }
+        public int Timeout { get; set; }
+    }
+}

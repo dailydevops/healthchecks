@@ -1,6 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 using System.Threading.Tasks;
+using Amazon.EC2;
+using Amazon.EC2.Model;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.SimpleNotificationService;
@@ -39,6 +41,7 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
         await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 
         await Task.WhenAll(
+                CreateEC2DEfaults(cancellationToken),
                 CreateSNSDefaults(cancellationToken),
                 CreateSQSDefaults(cancellationToken),
                 CreateS3Defaults(cancellationToken)
@@ -112,5 +115,24 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
 
         var putBucketRequest = new PutBucketRequest { BucketName = BucketName };
         _ = await s3Client.PutBucketAsync(putBucketRequest, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task CreateEC2DEfaults(CancellationToken cancellationToken)
+    {
+        // Create EC2 Defaults if needed
+        using var ec2Client = new AmazonEC2Client(
+            AccessKey,
+            SecretKey,
+            new AmazonEC2Config { ServiceURL = ConnectionString }
+        );
+
+        var request = new RunInstancesRequest()
+        {
+            InstanceType = InstanceType.T1Micro,
+            MinCount = 1,
+            MaxCount = 1,
+            KeyName = "development",
+        };
+        _ = await ec2Client.RunInstancesAsync(request, cancellationToken).ConfigureAwait(false);
     }
 }
