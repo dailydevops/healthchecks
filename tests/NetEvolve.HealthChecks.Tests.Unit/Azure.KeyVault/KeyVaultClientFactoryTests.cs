@@ -98,7 +98,7 @@ public sealed class KeyVaultClientFactoryTests
     }
 
     [Test]
-    public void CreateSecretClient_WhenModeDefaultCredentialsAndVaultUriValid_ReturnSecretClient()
+    public async Task CreateSecretClient_WhenModeDefaultCredentialsAndVaultUriValid_ReturnSecretClient()
     {
         // Arrange
         var name = "Test";
@@ -113,8 +113,11 @@ public sealed class KeyVaultClientFactoryTests
         var result = KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
 
         // Assert
-        _ = Assert.That(result).IsNotNull();
-        _ = Assert.That(result).IsInstanceOf<SecretClient>();
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result).IsNotNull();
+            _ = await Assert.That(result).IsTypeOf<SecretClient>();
+        }
     }
 
     [Test]

@@ -52,7 +52,7 @@ public sealed class KeyVaultHealthCheckTests
         };
 
         using var cancellationToken = new CancellationTokenSource();
-        cancellationToken.Cancel();
+        await cancellationToken.CancelAsync();
 
         // Act
         var result = await healthCheck.CheckHealthAsync(context, cancellationToken.Token);

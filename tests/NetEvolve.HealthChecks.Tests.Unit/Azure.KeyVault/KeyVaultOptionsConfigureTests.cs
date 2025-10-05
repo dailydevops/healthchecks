@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Azure.KeyVault;
 public sealed class KeyVaultOptionsConfigureTests
 {
     [Test]
-    public void Validate_WhenArgumentNameNull_ThrowArgumentNullException()
+    public async Task Validate_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -25,11 +25,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
+    public async Task Validate_WhenArgumentOptionsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -42,11 +42,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
+    public async Task Validate_WhenArgumentTimeoutLessThanInfinite_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -59,11 +59,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenModeIsNull_ThrowArgumentException()
+    public async Task Validate_WhenModeIsNull_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -76,11 +76,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenModeServiceProviderAndServiceNotRegistered_ThrowArgumentException()
+    public async Task Validate_WhenModeServiceProviderAndServiceNotRegistered_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -93,16 +93,15 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenModeServiceProviderAndServiceRegistered_ReturnSuccess()
+    public async Task Validate_WhenModeServiceProviderAndServiceRegistered_ReturnSuccess()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddSingleton<SecretClient>();
+        var serviceCollection = new ServiceCollection().AddSingleton<SecretClient>();
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var configure = new KeyVaultOptionsConfigure(configuration, serviceProvider);
         var name = "Test";
@@ -112,11 +111,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Succeeded).IsTrue();
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenModeDefaultCredentialsAndVaultUriNull_ThrowArgumentException()
+    public async Task Validate_WhenModeDefaultCredentialsAndVaultUriNull_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -133,11 +132,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenModeDefaultCredentialsAndVaultUriRelative_ThrowArgumentException()
+    public async Task Validate_WhenModeDefaultCredentialsAndVaultUriRelative_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -154,11 +153,11 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.Failed).IsTrue();
     }
 
     [Test]
-    public void Validate_WhenModeDefaultCredentialsAndVaultUriAbsolute_ReturnSuccess()
+    public async Task Validate_WhenModeDefaultCredentialsAndVaultUriAbsolute_ReturnSuccess()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -175,7 +174,7 @@ public sealed class KeyVaultOptionsConfigureTests
         var result = configure.Validate(name, options);
 
         // Assert
-        _ = Assert.That(result.Succeeded).IsTrue();
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 
     [Test]

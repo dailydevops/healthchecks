@@ -72,7 +72,7 @@ public sealed class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public void AddAzureKeyVault_WhenNameIsValidAndNotUsed_ReturnBuilder()
+    public async Task AddAzureKeyVault_WhenNameIsValidAndNotUsed_ReturnBuilder()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -83,11 +83,11 @@ public sealed class DependencyInjectionExtensionsTests
         var result = builder.AddAzureKeyVault(name);
 
         // Assert
-        _ = Assert.That(result).IsNotNull();
+        _ = await Assert.That(result).IsNotNull();
     }
 
     [Test]
-    public void AddAzureKeyVault_WhenNameIsValidAndOptionsProvided_ReturnBuilder()
+    public async Task AddAzureKeyVault_WhenNameIsValidAndOptionsProvided_ReturnBuilder()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -105,11 +105,11 @@ public sealed class DependencyInjectionExtensionsTests
         );
 
         // Assert
-        _ = Assert.That(result).IsNotNull();
+        _ = await Assert.That(result).IsNotNull();
     }
 
     [Test]
-    public void AddAzureKeyVault_WhenNameIsValidAndTagsProvided_ReturnBuilder()
+    public async Task AddAzureKeyVault_WhenNameIsValidAndTagsProvided_ReturnBuilder()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -121,6 +121,6 @@ public sealed class DependencyInjectionExtensionsTests
         var result = builder.AddAzureKeyVault(name, tags: tags);
 
         // Assert
-        _ = Assert.That(result).IsNotNull();
+        _ = await Assert.That(result).IsNotNull();
     }
 }
