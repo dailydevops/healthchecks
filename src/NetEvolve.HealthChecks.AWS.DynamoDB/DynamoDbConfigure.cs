@@ -3,9 +3,7 @@ namespace NetEvolve.HealthChecks.AWS.DynamoDB;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-internal sealed class DynamoDbConfigure
-    : IConfigureNamedOptions<DynamoDbOptions>,
-        IValidateOptions<DynamoDbOptions>
+internal sealed class DynamoDbConfigure : IConfigureNamedOptions<DynamoDbOptions>, IValidateOptions<DynamoDbOptions>
 {
     private readonly IConfiguration _configuration;
 
