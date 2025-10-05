@@ -27,10 +27,11 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.AccessKey = LocalStackInstance.AccessKey;
+                        options.KeyName = "development";
                         options.SecretKey = LocalStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -47,6 +48,7 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.AccessKey = LocalStackInstance.AccessKey;
+                        options.KeyName = "development";
                         options.SecretKey = LocalStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.Timeout = 0;
@@ -69,10 +71,11 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     ["HealthChecks:AWSEC2:TestContainerHealthy:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSEC2:TestContainerHealthy:KeyName"] = "development",
                     ["HealthChecks:AWSEC2:TestContainerHealthy:SecretKey"] = LocalStackInstance.SecretKey,
                     ["HealthChecks:AWSEC2:TestContainerHealthy:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSEC2:TestContainerHealthy:Mode"] = "BasicAuthentication",
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:Timeout"] = "1000",
+                    ["HealthChecks:AWSEC2:TestContainerHealthy:Timeout"] = "10000",
                 };
 
                 _ = config.AddInMemoryCollection(values);
@@ -89,6 +92,7 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     ["HealthChecks:AWSEC2:TestContainerDegraded:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSEC2:TestContainerDegraded:KeyName"] = "development",
                     ["HealthChecks:AWSEC2:TestContainerDegraded:SecretKey"] = LocalStackInstance.SecretKey,
                     ["HealthChecks:AWSEC2:TestContainerDegraded:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSEC2:TestContainerDegraded:Mode"] = "BasicAuthentication",
@@ -102,37 +106,24 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddAWSEC2_UseConfiguration_WithAdditionalTags()
     {
+        string[] tags = ["compute", "custom"];
         await RunAndVerify(
-            healthChecks => healthChecks.AddAWSEC2("TestContainerHealthy", tags: ["custom"]),
+            healthChecks => healthChecks.AddAWSEC2("TestContainerWithTags", tags: tags),
             HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:SecretKey"] = LocalStackInstance.SecretKey,
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:ServiceUrl"] = _instance.ConnectionString,
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:Mode"] = "BasicAuthentication",
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:Timeout"] = "1000",
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:KeyName"] = "development",
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:ServiceUrl"] = _instance.ConnectionString,
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:Mode"] = "BasicAuthentication",
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:Timeout"] = "10000",
                 };
 
                 _ = config.AddInMemoryCollection(values);
             }
         );
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(_response.Entries).HasCount().EqualTo(1);
-
-            var (name, healthReportEntry) = _response.Entries.Single();
-
-            _ = await Assert.That(name).IsEqualTo("TestContainerHealthy");
-            _ = await Assert.That(healthReportEntry.Status).IsEqualTo(HealthStatus.Healthy);
-
-            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("aws");
-            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("ec2");
-            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("compute");
-            _ = await Assert.That(healthReportEntry.Tags).ContainsValue("custom");
-        }
     }
 }

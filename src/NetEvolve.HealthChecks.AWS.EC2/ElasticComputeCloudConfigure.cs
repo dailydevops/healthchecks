@@ -50,6 +50,11 @@ internal sealed class ElasticComputeCloudConfigure
             }
         }
 
+        if (string.IsNullOrWhiteSpace(options.KeyName))
+        {
+            return ValidateOptionsResult.Fail("The key name cannot be null or whitespace.");
+        }
+
         return ValidateOptionsResult.Success;
     }
 }

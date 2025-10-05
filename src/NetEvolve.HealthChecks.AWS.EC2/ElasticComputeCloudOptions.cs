@@ -14,6 +14,11 @@ public sealed record ElasticComputeCloudOptions
     public string? AccessKey { get; set; }
 
     /// <summary>
+    /// Gets or sets the name of the EC2 instance to check.
+    /// </summary>
+    public string? KeyName { get; set; }
+
+    /// <summary>
     /// Gets or sets the creation mode for the EC2 client.
     /// </summary>
     public CreationMode? Mode { get; set; }

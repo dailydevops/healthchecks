@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.EC2;
+using Amazon.EC2.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
@@ -21,8 +22,14 @@ internal sealed class ElasticComputeCloudHealthCheck(IOptionsMonitor<ElasticComp
     {
         using var client = CreateClient(options);
 
+        var request = new DescribeInstancesRequest
+        {
+            MaxResults = 1,
+            Filters = [new Filter("key-name", [options.KeyName])],
+        };
+
         var (isTimelyResponse, response) = await client
-            .DescribeInstanceStatusAsync(cancellationToken)
+            .DescribeInstancesAsync(request, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
@@ -35,12 +42,10 @@ internal sealed class ElasticComputeCloudHealthCheck(IOptionsMonitor<ElasticComp
             );
         }
 
-        if (response.InstanceStatuses is null)
-        {
-            return HealthCheckUnhealthy(failureStatus, name, "No instance statuses returned.");
-        }
+        var isHealthy = response
+            .Reservations.SelectMany(x => x.Instances)
+            .Any(x => x.State.Name == InstanceStateName.Running || x.State.Name == InstanceStateName.Pending);
 
-        var isHealthy = response.InstanceStatuses.Any(x => x.InstanceState.Code == 16);
         if (!isHealthy)
         {
             return HealthCheckUnhealthy(failureStatus, name, "No running instances found.");
