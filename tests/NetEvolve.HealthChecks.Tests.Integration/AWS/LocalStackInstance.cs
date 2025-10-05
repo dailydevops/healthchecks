@@ -152,10 +152,7 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
         var createTableRequest = new CreateTableRequest
         {
             TableName = TableName,
-            KeySchema =
-            [
-                new KeySchemaElement { AttributeName = "Id", KeyType = KeyType.HASH },
-            ],
+            KeySchema = [new KeySchemaElement { AttributeName = "Id", KeyType = Amazon.DynamoDBv2.KeyType.HASH }],
             AttributeDefinitions =
             [
                 new AttributeDefinition { AttributeName = "Id", AttributeType = ScalarAttributeType.S },
