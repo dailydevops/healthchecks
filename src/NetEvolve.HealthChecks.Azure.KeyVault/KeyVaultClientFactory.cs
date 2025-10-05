@@ -1,12 +1,11 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.KeyVault;
 
 using System;
-using System.Threading;
 using global::Azure.Identity;
 using global::Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.DependencyInjection;
 
-internal sealed class KeyVaultClientFactory
+internal static class KeyVaultClientFactory
 {
     public static SecretClient CreateSecretClient(
         string name,
