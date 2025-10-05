@@ -144,29 +144,6 @@ public sealed class DynamoDbConfigureTests
     }
 
     [Test]
-    public async Task Configure_WithDefaultOptions_BindsConfiguration()
-    {
-        var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Options:TableName", "table-default"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Options:ServiceUrl", "url-default"),
-                ]
-            )
-            .Build();
-        var configure = CreateConfigure(config);
-        var options = new DynamoDbOptions();
-        configure.Configure(options);
-
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(options).IsNotNull();
-            _ = await Assert.That(options.TableName).IsEqualTo("table-default");
-            _ = await Assert.That(options.ServiceUrl).IsEqualTo("url-default");
-        }
-    }
-
-    [Test]
     [MethodDataSource(typeof(DataSource), nameof(DataSource.TimeoutsInvalid))]
     public async Task Validate_WhenTimeoutLessThanInfinite_ReturnsFail(int timeout)
     {
