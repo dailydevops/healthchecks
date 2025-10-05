@@ -9,9 +9,6 @@
         ServiceProvider = 0,
         UsernameAndPassword = 1,
         ClientSecret = 2,
-        [System.Obsolete("Use `UsernameAndPassword` instead. This value will be removed in a future version" +
-            ".")]
-        Internal = 1,
     }
     public sealed class KeycloakOptions : System.IEquatable<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>
     {
