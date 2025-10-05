@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using global::Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.KeyVault;
@@ -67,27 +68,17 @@ public class KeyVaultHealthCheckTests : HealthCheckTestBase
                     _ = healthChecks.AddAzureKeyVault("KeyVaultConfigurationHealthy");
                 },
                 HealthStatus.Healthy,
-                config: configBuilder =>
+                config =>
                 {
-                    _ = configBuilder.AddJsonStream(
-                        new System.IO.MemoryStream(
-                            System.Text.Encoding.UTF8.GetBytes(
-                                $$$"""
-                                {
-                                  "HealthChecks": {
-                                    "AzureKeyVault": {
-                                      "KeyVaultConfigurationHealthy": {
-                                        "VaultUri": "{{{_container.VaultUri}}}",
-                                        "Mode": "DefaultAzureCredentials",
-                                        "Timeout": 5000
-                                      }
-                                    }
-                                  }
-                                }
-                                """
-                            )
-                        )
-                    );
+                    var values = new Dictionary<string, string?>(System.StringComparer.Ordinal)
+                    {
+                        ["HealthChecks:AzureKeyVault:KeyVaultConfigurationHealthy:VaultUri"] =
+                            _container.VaultUri.ToString(),
+                        ["HealthChecks:AzureKeyVault:KeyVaultConfigurationHealthy:Mode"] = "DefaultAzureCredentials",
+                        ["HealthChecks:AzureKeyVault:KeyVaultConfigurationHealthy:Timeout"] = "5000",
+                    };
+
+                    _ = config.AddInMemoryCollection(values);
                 }
             )
             .ConfigureAwait(false);
