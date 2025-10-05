@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Architecture;
 
 using ArchUnitNET.Domain;
+using ArchUnitNET.TUnit;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;

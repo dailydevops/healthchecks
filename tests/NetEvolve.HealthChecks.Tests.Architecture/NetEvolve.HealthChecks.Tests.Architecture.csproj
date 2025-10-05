@@ -11,7 +11,7 @@
     <PackageReference Include="coverlet.msbuild" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="NetEvolve.Extensions.TUnit" />
-    <PackageReference Include="TngTech.ArchUnitNET" />
+    <PackageReference Include="TngTech.ArchUnitNET.TUnit" />
     <PackageReference Include="TUnit" />
   </ItemGroup>
   <ItemGroup>
