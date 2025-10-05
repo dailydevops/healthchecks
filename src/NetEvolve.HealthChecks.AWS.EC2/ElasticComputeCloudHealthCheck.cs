@@ -21,8 +21,8 @@ internal sealed class ElasticComputeCloudHealthCheck(IOptionsMonitor<ElasticComp
     {
         using var client = CreateClient(options);
 
-        var (isTimelyResponse, response) = await client.
-            DescribeInstanceStatusAsync(cancellationToken)
+        var (isTimelyResponse, response) = await client
+            .DescribeInstanceStatusAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
