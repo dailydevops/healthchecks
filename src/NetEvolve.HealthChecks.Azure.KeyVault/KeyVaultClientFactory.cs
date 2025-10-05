@@ -26,18 +26,8 @@ internal sealed class KeyVaultClientFactory
         };
     }
 
-    private static SecretClient GetFromServiceProvider(IServiceProvider serviceProvider)
-    {
-        var client = serviceProvider.GetService<SecretClient>();
-        if (client is null)
-        {
-            throw new InvalidOperationException(
-                $"No service of type `{nameof(SecretClient)}` registered. Please register a SecretClient instance."
-            );
-        }
-
-        return client;
-    }
+    private static SecretClient GetFromServiceProvider(IServiceProvider serviceProvider) =>
+        serviceProvider.GetRequiredService<SecretClient>();
 
     private static SecretClient CreateWithDefaultCredentials(KeyVaultOptions options)
     {
