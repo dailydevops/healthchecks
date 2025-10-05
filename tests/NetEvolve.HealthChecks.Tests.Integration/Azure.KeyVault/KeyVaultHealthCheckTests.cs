@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.KeyVault;
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using global::Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Azure;
@@ -68,7 +69,7 @@ public class KeyVaultHealthCheckTests : HealthCheckTestBase
                     _ = healthChecks.AddAzureKeyVault("KeyVaultConfigurationHealthy");
                 },
                 HealthStatus.Healthy,
-                config =>
+                config: config =>
                 {
                     var values = new Dictionary<string, string?>(System.StringComparer.Ordinal)
                     {
