@@ -8,6 +8,7 @@
     {
         ServiceProvider = 0,
         UsernameAndPassword = 1,
+        ClientSecret = 2,
         [System.Obsolete("Use `UsernameAndPassword` instead. This value will be removed in a future version" +
             ".")]
         Internal = 1,
@@ -16,6 +17,7 @@
     {
         public KeycloakOptions() { }
         public string? BaseAddress { get; set; }
+        public string? ClientSecret { get; set; }
         public System.Func<Keycloak.Net.KeycloakClient, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; set; }
         public string? KeyedService { get; set; }
         public NetEvolve.HealthChecks.Keycloak.KeycloakClientCreationMode Mode { get; set; }
