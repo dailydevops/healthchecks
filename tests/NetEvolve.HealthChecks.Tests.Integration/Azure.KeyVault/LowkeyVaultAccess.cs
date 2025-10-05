@@ -21,7 +21,7 @@ public sealed class LowkeyVaultAccess : IAsyncInitializer, IAsyncDisposable
         await _container.StartAsync().ConfigureAwait(false);
 
         // LowkeyVault typically exposes the vault at a specific endpoint
-        var baseUri = new Uri(_container.GetConnectionString());
+        var baseUri = new Uri(_container.GetBaseAddress());
         VaultUri = new Uri(baseUri, "/vault/test-vault");
 
         // For test containers, we might need to use a mock credential or configure differently
