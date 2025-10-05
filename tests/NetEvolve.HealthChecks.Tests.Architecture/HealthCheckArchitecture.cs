@@ -23,6 +23,7 @@ internal static class HealthCheckArchitecture
             typeof(Apache.ActiveMq.ActiveMqHealthCheck).Assembly,
             typeof(Apache.Kafka.KafkaHealthCheck).Assembly,
             // AWS
+            typeof(AWS.EC2.ElasticComputeCloudHealthCheck).Assembly,
             typeof(AWS.S3.SimpleStorageServiceHealthCheck).Assembly,
             typeof(AWS.SNS.SimpleNotificationServiceHealthCheck).Assembly,
             typeof(AWS.SQS.SimpleQueueServiceHealthCheck).Assembly,
