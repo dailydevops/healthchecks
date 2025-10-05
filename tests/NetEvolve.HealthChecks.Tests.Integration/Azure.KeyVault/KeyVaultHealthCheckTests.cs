@@ -52,10 +52,7 @@ public class KeyVaultHealthCheckTests : HealthCheckTestBase
                 HealthStatus.Healthy,
                 serviceBuilder: services =>
                 {
-                    _ = services.AddAzureClients(azureClientFactoryBuilder =>
-                    {
-                        _ = azureClientFactoryBuilder.AddSecretClient(_container.VaultUri);
-                    });
+                    services.AddAzureClients(azureClientFactoryBuilder => _ = azureClientFactoryBuilder.AddSecretClient(_container.VaultUri));
                 }
             )
             .ConfigureAwait(false);
