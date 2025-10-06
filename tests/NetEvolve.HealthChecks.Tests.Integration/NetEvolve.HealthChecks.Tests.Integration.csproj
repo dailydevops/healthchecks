@@ -20,6 +20,7 @@
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Dapr.Client" />
+    <PackageReference Include="Devart.Data.Oracle" />
     <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="DuckDB.NET.Data" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" />
@@ -120,6 +121,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle.Devart\NetEvolve.HealthChecks.Oracle.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RabbitMQ\NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />

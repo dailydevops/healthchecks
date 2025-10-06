@@ -53,6 +53,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Npgsql/NetEvolve.HealthChecks.Npgsql.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Odbc/NetEvolve.HealthChecks.Odbc.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Oracle/NetEvolve.HealthChecks.Oracle.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Oracle.Devart/NetEvolve.HealthChecks.Oracle.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Qdrant/NetEvolve.HealthChecks.Qdrant.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.RabbitMQ/NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.RavenDb/NetEvolve.HealthChecks.RavenDb.csproj" />
