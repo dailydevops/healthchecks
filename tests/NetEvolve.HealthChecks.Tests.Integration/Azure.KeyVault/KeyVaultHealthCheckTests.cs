@@ -93,7 +93,7 @@ public class KeyVaultHealthCheckTests : HealthCheckTestBase
                         "KeyVaultDefaultCredentialsUnhealthy",
                         options =>
                         {
-                            options.VaultUri = new System.Uri("https://invalid-vault.vault.azure.net/");
+                            options.VaultUri = new Uri("https://invalid-vault.vault.azure.net/");
                             options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
                             options.Timeout = 100; // Short timeout for unhealthy test
                         }

@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.HealthChecks.Abstractions;
 

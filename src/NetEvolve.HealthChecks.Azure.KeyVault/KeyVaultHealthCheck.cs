@@ -3,7 +3,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
@@ -34,7 +33,6 @@ internal sealed class KeyVaultHealthCheck : ConfigurableHealthCheckBase<KeyVault
 
             var (isValid, _) = await secretsEnumerator
                 .MoveNextAsync()
-                .AsTask()
                 .WithTimeoutAsync(options.Timeout, cancellationToken)
                 .ConfigureAwait(false);
 
