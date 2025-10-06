@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Azure.CosmosDB;
+﻿namespace NetEvolve.HealthChecks.Azure.CosmosDB;
 
 using System;
 using System.Collections.Concurrent;
