@@ -1,8 +1,7 @@
-namespace NetEvolve.HealthChecks.Azure.CosmosDB;
+﻿namespace NetEvolve.HealthChecks.Azure.CosmosDB;
 
 using System;
 using System.Threading;
-using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -11,12 +10,10 @@ using static Microsoft.Extensions.Options.ValidateOptionsResult;
 internal sealed class CosmosDbConfigure : IConfigureNamedOptions<CosmosDbOptions>, IValidateOptions<CosmosDbOptions>
 {
     private readonly IConfiguration _configuration;
-    private readonly IServiceProvider _serviceProvider;
 
-    public CosmosDbConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
+    public CosmosDbConfigure(IConfiguration configuration)
     {
         _configuration = configuration;
-        _serviceProvider = serviceProvider;
     }
 
     public void Configure(string? name, CosmosDbOptions options)

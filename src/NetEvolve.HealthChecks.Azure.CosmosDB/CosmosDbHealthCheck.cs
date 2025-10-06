@@ -1,9 +1,8 @@
-namespace NetEvolve.HealthChecks.Azure.CosmosDB;
+﻿namespace NetEvolve.HealthChecks.Azure.CosmosDB;
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
