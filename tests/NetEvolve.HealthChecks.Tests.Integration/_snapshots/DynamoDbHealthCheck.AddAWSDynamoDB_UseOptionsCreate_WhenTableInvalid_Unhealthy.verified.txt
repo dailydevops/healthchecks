@@ -1,0 +1,25 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.,
+            type: HttpErrorResponseException
+          }
+        ],
+        message: Cannot do operations on a non-existent table,
+        type: Amazon.DynamoDBv2.Model.ResourceNotFoundException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        aws,
+        dynamodb,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
