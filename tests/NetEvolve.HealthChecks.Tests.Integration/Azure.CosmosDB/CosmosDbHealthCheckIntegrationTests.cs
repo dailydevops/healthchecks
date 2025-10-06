@@ -74,17 +74,19 @@ public class CosmosDbHealthCheckIntegrationTests : HealthCheckTestBase, IAsyncIn
         );
 
     [Test]
-    public async Task AddCosmosDb_UseOptionsDoubleRegistered_ThrowsException() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddCosmosDb("TestContainerHealthy").AddCosmosDb("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
-                )
+    public async Task AddCosmosDb_UseOptionsDoubleRegistered_ThrowsException()
+    {
+        var exception = await Assert.ThrowsAsync<ArgumentException>(async () =>
+            await RunAndVerify(
+                healthChecks =>
+                    healthChecks.AddCosmosDb("TestContainerHealthy").AddCosmosDb("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_client)
+            )
         );
+
+        await Assert.That(exception.ParamName).IsEqualTo("name");
+    }
 
     [Test]
     public async Task AddCosmosDb_UseOptions_WithDatabaseName_Healthy() =>
@@ -251,5 +253,61 @@ public class CosmosDbHealthCheckIntegrationTests : HealthCheckTestBase, IAsyncIn
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddCosmosDb_UseOptions_WithMultipleDatabases_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddCosmosDb(
+                    "TestMultipleDb",
+                    options =>
+                    {
+                        options.DatabaseName = "TestDatabase";
+                        options.Timeout = 5000;
+                    }
+                ),
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddCosmosDb_UseConfiguration_WithContainerName_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddCosmosDb("TestContainerFullConfigHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:CosmosDb:TestContainerFullConfigHealthy:DatabaseName", "TestDatabase" },
+                    { "HealthChecks:CosmosDb:TestContainerFullConfigHealthy:ContainerName", "TestContainer" },
+                    { "HealthChecks:CosmosDb:TestContainerFullConfigHealthy:Timeout", "5000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddCosmosDb_UseOptions_WithTags_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+                healthChecks.AddCosmosDb(
+                    "TestContainerWithTags",
+                    options => options.Timeout = 5000,
+                    "cosmosdb",
+                    "azure",
+                    "database"
+                ),
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddSingleton(_client)
+        );
+
+    [Test]
+    public async Task AddCosmosDb_ClientNotRegistered_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddCosmosDb("TestNoClient", options => options.Timeout = 5000),
+            HealthStatus.Unhealthy
         );
 }

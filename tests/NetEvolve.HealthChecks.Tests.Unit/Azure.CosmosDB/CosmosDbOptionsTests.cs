@@ -7,27 +7,24 @@ using NetEvolve.HealthChecks.Azure.CosmosDB;
 public class CosmosDbOptionsTests
 {
     [Test]
-    public void Constructor_WhenParametersDefault_ExpectedValues()
+    public async Task Constructor_WhenParametersDefault_ExpectedValues()
     {
         // Arrange / Act
         var options = new CosmosDbOptions();
 
         // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(options.ConnectionString, Is.Null);
-            Assert.That(options.ServiceEndpoint, Is.Null);
-            Assert.That(options.AccountKey, Is.Null);
-            Assert.That(options.Mode, Is.Null);
-            Assert.That(options.DatabaseName, Is.Null);
-            Assert.That(options.ContainerName, Is.Null);
-            Assert.That(options.Timeout, Is.EqualTo(100));
-            Assert.That(options.ConfigureClientOptions, Is.Null);
-        });
+        await Assert.That(options.ConnectionString).IsNull();
+        await Assert.That(options.ServiceEndpoint).IsNull();
+        await Assert.That(options.AccountKey).IsNull();
+        await Assert.That(options.Mode).IsNull();
+        await Assert.That(options.DatabaseName).IsNull();
+        await Assert.That(options.ContainerName).IsNull();
+        await Assert.That(options.Timeout).IsEqualTo(100);
+        await Assert.That(options.ConfigureClientOptions).IsNull();
     }
 
     [Test]
-    public void Properties_WhenSet_ExpectedValues()
+    public async Task Properties_WhenSet_ExpectedValues()
     {
         // Arrange
         var expectedConnectionString = "AccountEndpoint=https://test.documents.azure.com:443/;AccountKey=test;";
@@ -52,16 +49,66 @@ public class CosmosDbOptionsTests
         };
 
         // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(options.ConnectionString, Is.EqualTo(expectedConnectionString));
-            Assert.That(options.ServiceEndpoint, Is.EqualTo(expectedServiceEndpoint));
-            Assert.That(options.AccountKey, Is.EqualTo(expectedAccountKey));
-            Assert.That(options.Mode, Is.EqualTo(expectedMode));
-            Assert.That(options.DatabaseName, Is.EqualTo(expectedDatabaseName));
-            Assert.That(options.ContainerName, Is.EqualTo(expectedContainerName));
-            Assert.That(options.Timeout, Is.EqualTo(expectedTimeout));
-            Assert.That(options.ConfigureClientOptions, Is.Not.Null);
-        });
+        await Assert.That(options.ConnectionString).IsEqualTo(expectedConnectionString);
+        await Assert.That(options.ServiceEndpoint).IsEqualTo(expectedServiceEndpoint);
+        await Assert.That(options.AccountKey).IsEqualTo(expectedAccountKey);
+        await Assert.That(options.Mode).IsEqualTo(expectedMode);
+        await Assert.That(options.DatabaseName).IsEqualTo(expectedDatabaseName);
+        await Assert.That(options.ContainerName).IsEqualTo(expectedContainerName);
+        await Assert.That(options.Timeout).IsEqualTo(expectedTimeout);
+        await Assert.That(options.ConfigureClientOptions).IsNotNull();
+    }
+
+    [Test]
+    public async Task ConnectionString_WhenSetToNull_ExpectedValue()
+    {
+        // Arrange
+        var options = new CosmosDbOptions { ConnectionString = "test" };
+
+        // Act
+        options.ConnectionString = null;
+
+        // Assert
+        await Assert.That(options.ConnectionString).IsNull();
+    }
+
+    [Test]
+    public async Task Mode_WhenSetToDefaultCredentials_ExpectedValue()
+    {
+        // Arrange / Act
+        var options = new CosmosDbOptions { Mode = CosmosDbClientCreationMode.DefaultAzureCredentials };
+
+        // Assert
+        await Assert.That(options.Mode).IsEqualTo(CosmosDbClientCreationMode.DefaultAzureCredentials);
+    }
+
+    [Test]
+    public async Task Mode_WhenSetToServicePrincipal_ExpectedValue()
+    {
+        // Arrange / Act
+        var options = new CosmosDbOptions { Mode = CosmosDbClientCreationMode.ServicePrincipal };
+
+        // Assert
+        await Assert.That(options.Mode).IsEqualTo(CosmosDbClientCreationMode.ServicePrincipal);
+    }
+
+    [Test]
+    public async Task Timeout_WhenSetToZero_ExpectedValue()
+    {
+        // Arrange / Act
+        var options = new CosmosDbOptions { Timeout = 0 };
+
+        // Assert
+        await Assert.That(options.Timeout).IsEqualTo(0);
+    }
+
+    [Test]
+    public async Task Timeout_WhenSetToNegative_ExpectedValue()
+    {
+        // Arrange / Act
+        var options = new CosmosDbOptions { Timeout = -1 };
+
+        // Assert
+        await Assert.That(options.Timeout).IsEqualTo(-1);
     }
 }

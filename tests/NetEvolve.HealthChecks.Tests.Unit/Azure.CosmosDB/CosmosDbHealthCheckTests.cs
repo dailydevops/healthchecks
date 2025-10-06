@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Azure.CosmosDB;
 
+using System;
 using System.Threading;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
@@ -19,8 +20,35 @@ public class CosmosDbHealthCheckTests
         // Act & Assert
         // Note: This will fail in real execution due to missing CosmosDB connection,
         // but it should not throw during construction
-        Assert.That(healthCheck, Is.Not.Null);
-        await Task.CompletedTask;
+        await Assert.That(healthCheck).IsNotNull();
+    }
+
+    [Test]
+    public async Task Constructor_WhenServiceProviderNull_ShouldThrow()
+    {
+        // Arrange
+        IServiceProvider serviceProvider = null!;
+        var optionsMonitor = new MockOptionsMonitor<CosmosDbOptions>();
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(
+            () => new CosmosDbHealthCheck(serviceProvider, optionsMonitor)
+        );
+        await Assert.That(exception.ParamName).IsEqualTo("serviceProvider");
+    }
+
+    [Test]
+    public async Task Constructor_WhenOptionsMonitorNull_ShouldThrow()
+    {
+        // Arrange
+        var serviceProvider = new MockServiceProvider();
+        IOptionsMonitor<CosmosDbOptions> optionsMonitor = null!;
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(
+            () => new CosmosDbHealthCheck(serviceProvider, optionsMonitor)
+        );
+        await Assert.That(exception.ParamName).IsEqualTo("optionsMonitor");
     }
 
     private class MockServiceProvider : IServiceProvider
