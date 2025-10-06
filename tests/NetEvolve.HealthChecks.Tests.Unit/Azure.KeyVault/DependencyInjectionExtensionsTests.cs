@@ -13,23 +13,28 @@ public sealed class DependencyInjectionExtensionsTests
     public void AddAzureKeyVault_WhenBuilderIsNull_ThrowArgumentNullException()
     {
         // Arrange
-        IHealthChecksBuilder builder = null!;
-        var name = "Test";
+        var builder = default(IHealthChecksBuilder);
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentNullException>(() => builder.AddAzureKeyVault(name));
+        // Act
+        void Act() => builder.AddAzureKeyVault("Test");
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Test]
-    public void AddAzureKeyVault_WhenNameIsNull_ThrowArgumentException()
+    public void AddAzureKeyVault_WhenNameIsNull_ThrowArgumentNullException()
     {
         // Arrange
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
-        var name = default(string)!;
+        const string? name = default;
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() => builder.AddAzureKeyVault(name));
+        // Act
+        void Act() => builder.AddAzureKeyVault(name!);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Test]
@@ -40,8 +45,11 @@ public sealed class DependencyInjectionExtensionsTests
         var builder = services.AddHealthChecks();
         var name = string.Empty;
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() => builder.AddAzureKeyVault(name));
+        // Act
+        void Act() => builder.AddAzureKeyVault(name);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Test]
@@ -53,8 +61,11 @@ public sealed class DependencyInjectionExtensionsTests
         var name = "Test";
         var tags = default(string[])!;
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentNullException>(() => builder.AddAzureKeyVault(name, tags: tags));
+        // Act
+        void Act() => builder.AddAzureKeyVault(name, tags: tags);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Test]
@@ -67,8 +78,11 @@ public sealed class DependencyInjectionExtensionsTests
 
         _ = builder.AddAzureKeyVault(name);
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() => builder.AddAzureKeyVault(name));
+        // Act
+        void Act() => builder.AddAzureKeyVault(name);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(nameof(name), Act);
     }
 
     [Test]

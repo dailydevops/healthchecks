@@ -187,7 +187,10 @@ public sealed class KeyVaultOptionsConfigureTests
         var name = default(string);
         var options = new KeyVaultOptions();
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() => configure.Configure(name, options));
+        // Act
+        void Act() => configure.Configure(name, options);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(Act);
     }
 }

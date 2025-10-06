@@ -13,14 +13,15 @@ public sealed class KeyVaultClientFactoryTests
     public void CreateSecretClient_WhenNameIsNull_ThrowArgumentException()
     {
         // Arrange
-        var name = default(string)!;
+        const string? name = default;
         var options = new KeyVaultOptions();
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name!, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Test]
@@ -31,10 +32,11 @@ public sealed class KeyVaultClientFactoryTests
         var options = new KeyVaultOptions();
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Test]
@@ -45,10 +47,11 @@ public sealed class KeyVaultClientFactoryTests
         var options = default(KeyVaultOptions)!;
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentNullException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("options", Act);
     }
 
     [Test]
@@ -59,10 +62,11 @@ public sealed class KeyVaultClientFactoryTests
         var options = new KeyVaultOptions();
         var serviceProvider = default(IServiceProvider)!;
 
-        // Act & Assert
-        _ = Assert.Throws<ArgumentNullException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>("serviceProvider", Act);
     }
 
     [Test]
@@ -73,10 +77,11 @@ public sealed class KeyVaultClientFactoryTests
         var options = new KeyVaultOptions { Mode = KeyVaultClientCreationMode.ServiceProvider };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        // Act & Assert
-        _ = Assert.Throws<InvalidOperationException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<InvalidOperationException>(Act);
     }
 
     [Test]
@@ -91,10 +96,11 @@ public sealed class KeyVaultClientFactoryTests
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        // Act & Assert
-        _ = Assert.Throws<InvalidOperationException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<InvalidOperationException>(Act);
     }
 
     [Test]
@@ -128,9 +134,10 @@ public sealed class KeyVaultClientFactoryTests
         var options = new KeyVaultOptions { Mode = (KeyVaultClientCreationMode)999 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        // Act & Assert
-        _ = Assert.Throws<NotSupportedException>(() =>
-            KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider)
-        );
+        // Act
+        void Act() => KeyVaultClientFactory.CreateSecretClient(name, options, serviceProvider);
+
+        // Assert
+        _ = Assert.Throws<NotSupportedException>(Act);
     }
 }
