@@ -127,5 +127,37 @@ public sealed class KeycloakConfigureTests
                     Password = "password",
                 }
             );
+
+        // Mode: ClientSecret
+        yield return () =>
+            (
+                false,
+                "The base address cannot be null or whitespace when using the `ClientSecret` client creation mode.",
+                "name",
+                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions { Mode = KeycloakClientCreationMode.ClientSecret }
+            );
+        yield return () =>
+            (
+                false,
+                "The client secret cannot be null when using the `ClientSecret` client creation mode.",
+                "name",
+                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
+                {
+                    Mode = KeycloakClientCreationMode.ClientSecret,
+                    BaseAddress = "base-address",
+                }
+            );
+        yield return () =>
+            (
+                true,
+                null,
+                "name",
+                new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
+                {
+                    Mode = KeycloakClientCreationMode.ClientSecret,
+                    BaseAddress = "base-address",
+                    ClientSecret = "client-secret",
+                }
+            );
     }
 }

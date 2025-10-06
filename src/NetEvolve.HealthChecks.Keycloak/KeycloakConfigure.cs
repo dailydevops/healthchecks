@@ -54,7 +54,8 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
         return options.Mode switch
         {
             KeycloakClientCreationMode.ServiceProvider => ValidateCreationModeServiceProvider(options),
-            KeycloakClientCreationMode.UsernameAndPassword => ValidateCreationModeInternal(options),
+            KeycloakClientCreationMode.UsernameAndPassword => ValidateCreationModeUsernameAndPassword(options),
+            KeycloakClientCreationMode.ClientSecret => ValidateCreationModeClientSecret(options),
             _ => Fail($"The mode `{options.Mode}` is not supported."),
         };
     }
@@ -75,7 +76,7 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateCreationModeInternal(KeycloakOptions options)
+    private static ValidateOptionsResult ValidateCreationModeUsernameAndPassword(KeycloakOptions options)
     {
         const string creationModeName = nameof(KeycloakClientCreationMode.UsernameAndPassword);
 
@@ -94,6 +95,25 @@ internal sealed class KeycloakConfigure : IConfigureNamedOptions<KeycloakOptions
         if (options.Password is null)
         {
             return Fail($"The password cannot be null when using the `{creationModeName}` client creation mode.");
+        }
+
+        return Success;
+    }
+
+    private static ValidateOptionsResult ValidateCreationModeClientSecret(KeycloakOptions options)
+    {
+        const string creationModeName = nameof(KeycloakClientCreationMode.ClientSecret);
+
+        if (string.IsNullOrWhiteSpace(options.BaseAddress))
+        {
+            return Fail(
+                $"The base address cannot be null or whitespace when using the `{creationModeName}` client creation mode."
+            );
+        }
+
+        if (options.ClientSecret is null)
+        {
+            return Fail($"The client secret cannot be null when using the `{creationModeName}` client creation mode.");
         }
 
         return Success;
