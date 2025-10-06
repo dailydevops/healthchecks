@@ -3,8 +3,8 @@ namespace NetEvolve.HealthChecks.Azure.CosmosDB;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using Azure.Core;
-using Azure.Identity;
+using global::Azure.Core;
+using global::Azure.Identity;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 
