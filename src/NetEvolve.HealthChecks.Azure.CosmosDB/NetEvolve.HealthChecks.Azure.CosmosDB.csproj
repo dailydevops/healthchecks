@@ -3,6 +3,7 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Azure Cosmos DB.</Description>
     <PackageTags>$(PackageTags);azure;cosmosdb;database</PackageTags>
+    <AzureCosmosDisableNewtonsoftJsonCheck>true</AzureCosmosDisableNewtonsoftJsonCheck>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
