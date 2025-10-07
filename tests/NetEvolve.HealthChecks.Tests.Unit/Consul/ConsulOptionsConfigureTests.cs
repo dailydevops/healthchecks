@@ -36,7 +36,9 @@ public sealed class ConsulOptionsConfigureTests
 
         // Assert
         var ex = Assert.Throws<ArgumentException>("name", Act);
-        _ = await Assert.That(ex.Message).StartsWith("The value cannot be an empty string or composed entirely of whitespace.");
+        _ = await Assert
+            .That(ex.Message)
+            .StartsWith("The value cannot be an empty string or composed entirely of whitespace.");
     }
 
     [Test]
@@ -51,7 +53,9 @@ public sealed class ConsulOptionsConfigureTests
 
         // Assert
         var ex = Assert.Throws<ArgumentException>("name", Act);
-        _ = await Assert.That(ex.Message).StartsWith("The value cannot be an empty string or composed entirely of whitespace.");
+        _ = await Assert
+            .That(ex.Message)
+            .StartsWith("The value cannot be an empty string or composed entirely of whitespace.");
     }
 
     [Test]
@@ -103,7 +107,11 @@ public sealed class ConsulOptionsConfigureTests
         using (Assert.Multiple())
         {
             _ = Assert.That(result.Failed).IsTrue();
-            _ = Assert.That(result.FailureMessage).IsEqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
+            _ = Assert
+                .That(result.FailureMessage)
+                .IsEqualTo(
+                    "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
+                );
         }
     }
 
