@@ -29,6 +29,7 @@
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.9.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.11.1" />
+    <PackageVersion Include="Consul" Version="1.7.14.9" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Dapr.Client" Version="1.16.0" />
@@ -74,6 +75,7 @@
     <PackageVersion Include="Testcontainers.ArangoDb" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.Azurite" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.7.0" />
+    <PackageVersion Include="Testcontainers.Consul" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.Db2" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="4.7.0" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.7.0" />

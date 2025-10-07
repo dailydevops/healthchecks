@@ -19,6 +19,7 @@
     <PackageReference Include="Azure.Storage.Queues" />
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
+    <PackageReference Include="Consul" />
     <PackageReference Include="Dapr.Client" />
     <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="DuckDB.NET.Data" />
@@ -63,6 +64,7 @@
     <PackageReference Include="Testcontainers.ArangoDb" />
     <PackageReference Include="Testcontainers.Azurite" />
     <PackageReference Include="Testcontainers.ClickHouse" />
+    <PackageReference Include="Testcontainers.Consul" />
     <PackageReference Include="Testcontainers.Db2" />
     <PackageReference Include="Testcontainers.Elasticsearch" />
     <PackageReference Include="Testcontainers.FirebirdSql" />
@@ -108,6 +110,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ClickHouse\NetEvolve.HealthChecks.ClickHouse.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Consul\NetEvolve.HealthChecks.Consul.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DB2\NetEvolve.HealthChecks.DB2.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />
