@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for HashiCorp Consul, based on the nuget package `Consul`.</Description>
+    <PackageTags>$(PackageTags);consul;servicediscovery</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Consul" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
