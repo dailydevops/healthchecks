@@ -94,6 +94,6 @@
     <PackageVersion Include="Testcontainers.ServiceBus" Version="4.7.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.12.3" />
     <PackageVersion Include="TUnit" Version="0.67.10" />
-    <PackageVersion Include="Verify.TUnit" Version="30.20.0" />
+    <PackageVersion Include="Verify.TUnit" Version="30.20.1" />
   </ItemGroup>
 </Project>
