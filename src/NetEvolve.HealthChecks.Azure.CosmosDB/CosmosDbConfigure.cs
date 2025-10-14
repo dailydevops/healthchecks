@@ -11,10 +11,7 @@ internal sealed class CosmosDbConfigure : IConfigureNamedOptions<CosmosDbOptions
 {
     private readonly IConfiguration _configuration;
 
-    public CosmosDbConfigure(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    public CosmosDbConfigure(IConfiguration configuration) => _configuration = configuration;
 
     public void Configure(string? name, CosmosDbOptions options)
     {
