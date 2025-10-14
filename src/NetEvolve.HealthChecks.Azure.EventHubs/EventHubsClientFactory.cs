@@ -12,10 +12,7 @@ internal sealed class EventHubsClientFactory
 {
     private static readonly EventHubProducerClientOptions _clientOptions = new EventHubProducerClientOptions
     {
-        RetryOptions =
-        {
-            MaximumRetries = 0,
-        },
+        RetryOptions = { MaximumRetries = 0 },
     };
 
     private readonly ConcurrentDictionary<string, EventHubProducerClient> _eventHubClients = new(
