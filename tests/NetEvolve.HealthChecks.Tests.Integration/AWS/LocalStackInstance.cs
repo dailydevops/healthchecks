@@ -1,6 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 using System.Threading.Tasks;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.Model;
 using Amazon.EC2;
 using Amazon.EC2.Model;
 using Amazon.S3;
@@ -20,6 +22,7 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string BucketName = "test-bucket";
     internal const string TopicName = "test-topic";
     internal const string QueueName = "test-queue";
+    internal const string TableName = "test-table";
 
     private readonly TestContainer _container = new LocalStackBuilder()
         .WithLogger(NullLogger.Instance)
@@ -44,7 +47,8 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
                 CreateEC2DEfaults(cancellationToken),
                 CreateSNSDefaults(cancellationToken),
                 CreateSQSDefaults(cancellationToken),
-                CreateS3Defaults(cancellationToken)
+                CreateS3Defaults(cancellationToken),
+                CreateDynamoDBDefaults(cancellationToken)
             )
             .ConfigureAwait(false);
     }
@@ -134,5 +138,27 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
             KeyName = "development",
         };
         _ = await ec2Client.RunInstancesAsync(request, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task CreateDynamoDBDefaults(CancellationToken cancellationToken)
+    {
+        // Create DynamoDB Table
+        using var dynamoDbClient = new AmazonDynamoDBClient(
+            AccessKey,
+            SecretKey,
+            new AmazonDynamoDBConfig { ServiceURL = ConnectionString }
+        );
+
+        var createTableRequest = new CreateTableRequest
+        {
+            TableName = TableName,
+            KeySchema = [new KeySchemaElement { AttributeName = "Id", KeyType = Amazon.DynamoDBv2.KeyType.HASH }],
+            AttributeDefinitions =
+            [
+                new AttributeDefinition { AttributeName = "Id", AttributeType = ScalarAttributeType.S },
+            ],
+            BillingMode = BillingMode.PAY_PER_REQUEST,
+        };
+        _ = await dynamoDbClient.CreateTableAsync(createTableRequest, cancellationToken).ConfigureAwait(false);
     }
 }

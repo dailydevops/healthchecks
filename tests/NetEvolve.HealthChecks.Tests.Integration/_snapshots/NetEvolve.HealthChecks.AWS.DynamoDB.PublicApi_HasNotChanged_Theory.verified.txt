@@ -1,0 +1,22 @@
+﻿namespace NetEvolve.HealthChecks.AWS.DynamoDB
+{
+    public enum CreationMode
+    {
+        BasicAuthentication = 0,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAWSDynamoDB([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.AWS.DynamoDB.DynamoDbOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class DynamoDbOptions : System.IEquatable<NetEvolve.HealthChecks.AWS.DynamoDB.DynamoDbOptions>
+    {
+        public DynamoDbOptions() { }
+        public string? AccessKey { get; set; }
+        public NetEvolve.HealthChecks.AWS.DynamoDB.CreationMode? Mode { get; set; }
+        public Amazon.RegionEndpoint? RegionEndpoint { get; set; }
+        public string? SecretKey { get; set; }
+        public string? ServiceUrl { get; set; }
+        public string? TableName { get; set; }
+        public int Timeout { get; set; }
+    }
+}

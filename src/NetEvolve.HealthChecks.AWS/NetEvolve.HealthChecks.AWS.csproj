@@ -5,6 +5,7 @@
     <PackageTags>$(PackageTags);aws;bundle</PackageTags>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.AWS.DynamoDB\NetEvolve.HealthChecks.AWS.DynamoDB.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.AWS.EC2\NetEvolve.HealthChecks.AWS.EC2.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.AWS.S3\NetEvolve.HealthChecks.AWS.S3.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.AWS.SNS\NetEvolve.HealthChecks.AWS.SNS.csproj" />
