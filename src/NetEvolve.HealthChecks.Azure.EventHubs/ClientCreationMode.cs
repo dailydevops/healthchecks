@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.EventHubs;
 
+using global::Azure.Messaging.EventHubs.Producer;
 using System;
 
 /// <summary>
