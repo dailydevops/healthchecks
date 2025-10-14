@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.CosmosDB;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.CosmosDB;
 
 using System;
 using Microsoft.Extensions.Configuration;
@@ -71,7 +71,7 @@ public class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public void AddCosmosDb_WhenParametersValid_RegisterHealthCheck()
+    public async Task AddCosmosDb_WhenParametersValid_RegisterHealthCheck()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -82,7 +82,10 @@ public class DependencyInjectionExtensionsTests
         var result = builder.AddCosmosDb("Test");
 
         // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result, Is.SameAs(builder));
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result).IsNotNull();
+            _ = await Assert.That(result).IsSameReferenceAs(builder);
+        }
     }
 }

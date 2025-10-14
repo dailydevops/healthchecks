@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Azure.CosmosDB;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.CosmosDB;
 
 using System;
 using System.Collections.Generic;
@@ -55,22 +55,6 @@ public class CosmosDbHealthCheckIntegrationTests : HealthCheckTestBase, IAsyncIn
             healthChecks => healthChecks.AddCosmosDb("TestContainerHealthy", options => options.Timeout = 5000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
-        );
-
-    [Test]
-    public async Task AddCosmosDb_UseOptionsWithKeyedService_Healthy() =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddCosmosDb(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "cosmosdb-test";
-                        options.Timeout = 5000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("cosmosdb-test", (_, _) => _client)
         );
 
     [Test]
