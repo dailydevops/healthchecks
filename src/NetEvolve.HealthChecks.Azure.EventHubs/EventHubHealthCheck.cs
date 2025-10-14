@@ -13,10 +13,7 @@ internal sealed class EventHubHealthCheck : ConfigurableHealthCheckBase<EventHub
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public EventHubHealthCheck(
-        IOptionsMonitor<EventHubOptions> optionsMonitor,
-        IServiceProvider serviceProvider
-    )
+    public EventHubHealthCheck(IOptionsMonitor<EventHubOptions> optionsMonitor, IServiceProvider serviceProvider)
         : base(optionsMonitor) => _serviceProvider = serviceProvider;
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(

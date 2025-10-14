@@ -10,14 +10,14 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.EventHubs;
 
 [TestGroup($"{nameof(Azure)}.{nameof(EventHubs)}")]
-[ClassDataSource<EventHubsContainer>(Shared = InstanceSharedType.AzureEventHubs)]
+[ClassDataSource<EventHubsContainer>(Shared = InstanceSharedType.Azure)]
 public class EventHubHealthCheckTests : HealthCheckTestBase
 {
     private readonly EventHubsContainer _container;
 
     public EventHubHealthCheckTests(EventHubsContainer container) => _container = container;
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -28,7 +28,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
                         options.EventHubName = EventHubsContainer.EventHubName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
@@ -41,7 +41,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeConnectionString_Healthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -53,14 +53,14 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ConnectionString;
                         options.ConnectionString = _container.ConnectionString;
                         options.EventHubName = EventHubsContainer.EventHubName;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
             HealthStatus.Healthy
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeServiceProvider_EventHubNotExists_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -83,7 +83,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeConnectionString_EventHubNotExists_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -101,7 +101,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeServiceProvider_Timeout_Degraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -125,7 +125,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeConnectionString_Timeout_Degraded() =>
         await RunAndVerify(
             healthChecks =>
@@ -144,7 +144,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseOptions_ModeDefaultAzureCredentials_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -164,7 +164,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
 
     // Configuration-based tests
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureEventHub("ConfigurationHealthy"),
@@ -173,25 +173,19 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    {
-                        "HealthChecks:AzureEventHub:ConfigurationHealthy:ConnectionString",
-                        _container.ConnectionString
-                    },
-                    {
-                        "HealthChecks:AzureEventHub:ConfigurationHealthy:EventHubName",
-                        EventHubsContainer.EventHubName
-                    },
+                    { "HealthChecks:AzureEventHub:ConfigurationHealthy:ConnectionString", _container.ConnectionString },
+                    { "HealthChecks:AzureEventHub:ConfigurationHealthy:EventHubName", EventHubsContainer.EventHubName },
                     {
                         "HealthChecks:AzureEventHub:ConfigurationHealthy:Mode",
                         nameof(ClientCreationMode.ConnectionString)
                     },
-                    { "HealthChecks:AzureEventHub:ConfigurationHealthy:Timeout", "1000" },
+                    { "HealthChecks:AzureEventHub:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseConfiguration_EventHubNotExists_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureEventHub("ConfigurationUnhealthy"),
@@ -214,7 +208,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureEventHub("ConfigurationDegraded"),
@@ -241,7 +235,7 @@ public class EventHubHealthCheckTests : HealthCheckTestBase
             }
         );
 
-    [Test, Skip("No EventHubs emulator available. Requires actual Azure EventHubs connection string.")]
+    [Test]
     public async Task AddAzureEventHub_UseConfiguration_DefaultAzureCredentials_Unhealthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureEventHub("ConfigurationCredentialsUnhealthy"),

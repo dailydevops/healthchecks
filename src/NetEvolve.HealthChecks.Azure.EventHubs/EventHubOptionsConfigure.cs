@@ -1,21 +1,25 @@
-namespace NetEvolve.HealthChecks.Azure.EventHubs;
+﻿namespace NetEvolve.HealthChecks.Azure.EventHubs;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
 
 internal sealed class EventHubOptionsConfigure
-    : ConfigurableOptionsBase<EventHubOptions, EventHubOptionsConfigure>
+    : IConfigureNamedOptions<EventHubOptions>,
+        IValidateOptions<EventHubOptions>
 {
-    public EventHubOptionsConfigure(IConfiguration configuration)
-        : base(configuration) { }
+    private readonly IConfiguration _configuration;
 
-    protected override string SectionName => "HealthChecks:AzureEventHub";
+    public EventHubOptionsConfigure(IConfiguration configuration) => _configuration = configuration;
 
-    protected override void Configure(EventHubOptions options, string name) =>
-        options.Mode ??= ClientCreationMode.ServiceProvider;
+    public void Configure(string? name, EventHubOptions options)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        _configuration.Bind($"HealthChecks:AzureEventHub:{name}", options);
+    }
 
-    protected override ValidateOptionsResult? Validate(string? name, EventHubOptions options)
+    public void Configure(EventHubOptions options) => Configure(Options.DefaultName, options);
+
+    public ValidateOptionsResult Validate(string? name, EventHubOptions options)
     {
         var validationResult = EventHubsOptionsBase.InternalValidate(name, options);
         if (validationResult is not null)
@@ -23,10 +27,7 @@ internal sealed class EventHubOptionsConfigure
             return validationResult;
         }
 
-        if (
-            options.Mode is not ClientCreationMode.ServiceProvider
-            && string.IsNullOrWhiteSpace(options.EventHubName)
-        )
+        if (options.Mode is not ClientCreationMode.ServiceProvider && string.IsNullOrWhiteSpace(options.EventHubName))
         {
             return ValidateOptionsResult.Fail("The Event Hub name cannot be null or whitespace.");
         }
