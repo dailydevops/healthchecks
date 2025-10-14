@@ -110,6 +110,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                         options.TableName = "test";
                         options.Mode = TableClientCreationMode.ServiceProvider;
                         options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
