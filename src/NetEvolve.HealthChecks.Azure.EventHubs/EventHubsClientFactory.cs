@@ -10,16 +10,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class EventHubsClientFactory
 {
-    private static readonly EventHubProducerClientOptions _clientOptions = new EventHubProducerClientOptions();
+    private static readonly EventHubProducerClientOptions _clientOptions = new EventHubProducerClientOptions
+    {
+        RetryOptions =
+        {
+            MaximumRetries = 0,
+        },
+    };
 
     private readonly ConcurrentDictionary<string, EventHubProducerClient> _eventHubClients = new(
         StringComparer.OrdinalIgnoreCase
     );
-
-    static EventHubsClientFactory()
-    {
-        _clientOptions.RetryOptions.MaximumRetries = 0;
-    }
 
     internal EventHubProducerClient GetClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
         where TOptions : EventHubsOptionsBase
