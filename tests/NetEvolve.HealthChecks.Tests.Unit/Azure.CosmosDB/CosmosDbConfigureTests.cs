@@ -1,6 +1,7 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.CosmosDB;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.CosmosDB;
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
@@ -10,7 +11,7 @@ using NetEvolve.HealthChecks.Azure.CosmosDB;
 public class CosmosDbConfigureTests
 {
     [Test]
-    public void Configure_WhenConnectionStringMode_ShouldSucceed()
+    public async Task Configure_WhenConnectionStringMode_ShouldSucceed()
     {
         // Arrange
         var configuration = new ConfigurationBuilder()
@@ -26,11 +27,7 @@ public class CosmosDbConfigureTests
             )
             .Build();
 
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton<IConfiguration>(configuration)
-            .BuildServiceProvider();
-
-        var configure = new CosmosDbConfigure(configuration, serviceProvider);
+        var configure = new CosmosDbConfigure(configuration);
         var options = new CosmosDbOptions();
 
         // Act
@@ -38,51 +35,55 @@ public class CosmosDbConfigureTests
         var result = configure.Validate("Test", options);
 
         // Assert
-        Assert.That(result.Succeeded, Is.True);
-        Assert.That(
-            options.ConnectionString,
-            Is.EqualTo("AccountEndpoint=https://test.documents.azure.com:443/;AccountKey=test;")
-        );
-        Assert.That(options.Mode, Is.EqualTo(CosmosDbClientCreationMode.ConnectionString));
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsTrue();
+            _ = await Assert
+                .That(options.ConnectionString)
+                .IsEqualTo("AccountEndpoint=https://test.documents.azure.com:443/;AccountKey=test;");
+            _ = await Assert.That(options.Mode).IsEqualTo(CosmosDbClientCreationMode.ConnectionString);
+        }
     }
 
     [Test]
-    public void Validate_WhenMissingConnectionString_ShouldFail()
+    public async Task Validate_WhenMissingConnectionString_ShouldFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var serviceProvider = new ServiceCollection().BuildServiceProvider();
-        var configure = new CosmosDbConfigure(configuration, serviceProvider);
+        var configure = new CosmosDbConfigure(configuration);
         var options = new CosmosDbOptions { Mode = CosmosDbClientCreationMode.ConnectionString };
 
         // Act
         var result = configure.Validate("Test", options);
 
         // Assert
-        Assert.That(result.Succeeded, Is.False);
-        Assert.That(
-            result.Failures,
-            Contains.Item("The connection string cannot be null or whitespace when using `ConnectionString` mode.")
-        );
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert
+                .That(result.Failures)
+                .Contains("The connection string cannot be null or whitespace when using `ConnectionString` mode.");
+        }
     }
 
     [Test]
-    public void Validate_WhenAccountKeyModeWithMissingEndpoint_ShouldFail()
+    public async Task Validate_WhenAccountKeyModeWithMissingEndpoint_ShouldFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var serviceProvider = new ServiceCollection().BuildServiceProvider();
-        var configure = new CosmosDbConfigure(configuration, serviceProvider);
+        var configure = new CosmosDbConfigure(configuration);
         var options = new CosmosDbOptions { Mode = CosmosDbClientCreationMode.AccountKey, AccountKey = "test-key" };
 
         // Act
         var result = configure.Validate("Test", options);
 
         // Assert
-        Assert.That(result.Succeeded, Is.False);
-        Assert.That(
-            result.Failures,
-            Contains.Item("The service endpoint cannot be null or whitespace when using `AccountKey` mode.")
-        );
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Succeeded).IsFalse();
+            _ = await Assert
+                .That(result.Failures)
+                .Contains("The service endpoint cannot be null or whitespace when using `AccountKey` mode.");
+        }
     }
 }
