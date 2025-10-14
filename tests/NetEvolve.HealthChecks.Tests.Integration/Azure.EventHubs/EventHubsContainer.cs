@@ -18,8 +18,5 @@ public sealed class EventHubsContainer : IAsyncInitializer, IAsyncDisposable
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
-    public async Task InitializeAsync()
-    {
-        await _container.StartAsync().ConfigureAwait(false);
-    }
+    public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
 }
