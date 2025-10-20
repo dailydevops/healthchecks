@@ -2,6 +2,7 @@ namespace NetEvolve.HealthChecks.Tests.Unit.Consul;
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
@@ -59,7 +60,7 @@ public sealed class ConsulOptionsConfigureTests
     }
 
     [Test]
-    public void Validate_WhenNameNull_ReturnFailure()
+    public async Task Validate_WhenNameNull_ReturnFailure()
     {
         // Arrange
         var configure = new ConsulOptionsConfigure(new ConfigurationBuilder().Build());
@@ -71,13 +72,13 @@ public sealed class ConsulOptionsConfigureTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = Assert.That(result.Failed).IsTrue();
-            _ = Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
         }
     }
 
     [Test]
-    public void Validate_WhenOptionsNull_ReturnFailure()
+    public async Task Validate_WhenOptionsNull_ReturnFailure()
     {
         // Arrange
         var configure = new ConsulOptionsConfigure(new ConfigurationBuilder().Build());
@@ -88,13 +89,13 @@ public sealed class ConsulOptionsConfigureTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = Assert.That(result.Failed).IsTrue();
-            _ = Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
         }
     }
 
     [Test]
-    public void Validate_WhenTimeoutLessThanInfinite_ReturnFailure()
+    public async Task Validate_WhenTimeoutLessThanInfinite_ReturnFailure()
     {
         // Arrange
         var configure = new ConsulOptionsConfigure(new ConfigurationBuilder().Build());
@@ -106,8 +107,8 @@ public sealed class ConsulOptionsConfigureTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = Assert.That(result.Failed).IsTrue();
-            _ = Assert
+            _ = await Assert.That(result.Failed).IsTrue();
+            _ = await Assert
                 .That(result.FailureMessage)
                 .IsEqualTo(
                     "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
@@ -116,7 +117,7 @@ public sealed class ConsulOptionsConfigureTests
     }
 
     [Test]
-    public void Validate_WhenOptionsValid_ReturnSuccess()
+    public async Task Validate_WhenOptionsValid_ReturnSuccess()
     {
         // Arrange
         var configure = new ConsulOptionsConfigure(new ConfigurationBuilder().Build());
@@ -126,7 +127,7 @@ public sealed class ConsulOptionsConfigureTests
         var result = configure.Validate("Test", options);
 
         // Assert
-        _ = Assert.That(result).IsEqualTo(ValidateOptionsResult.Success);
+        _ = await Assert.That(result).IsEqualTo(ValidateOptionsResult.Success);
     }
 
     [Test]

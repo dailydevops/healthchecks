@@ -21,6 +21,8 @@ internal static class InstanceSharedType
 
     public const SharedType ClickHouse = SharedType.PerClass;
 
+    public const SharedType Consul = SharedType.PerClass;
+
     public const SharedType DB2 = SharedType.PerClass;
 
     public const SharedType Elasticsearch = SharedType.PerClass;

@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Consul;
 
+using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Consul;
 
@@ -7,7 +8,7 @@ using NetEvolve.HealthChecks.Consul;
 public sealed class ConsulOptionsTests
 {
     [Test]
-    public void Ctor_Default_ExpectedValues()
+    public async Task Ctor_Default_ExpectedValues()
     {
         // Arrange / Act
         var options = new ConsulOptions();
@@ -15,8 +16,8 @@ public sealed class ConsulOptionsTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = Assert.That(options.Timeout).IsEqualTo(100);
-            _ = Assert.That(options.KeyedService).IsNull();
+            _ = await Assert.That(options.Timeout).IsEqualTo(100);
+            _ = await Assert.That(options.KeyedService).IsNull();
         }
     }
 }

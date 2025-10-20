@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Consul;
+﻿namespace NetEvolve.HealthChecks.Consul;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ internal sealed class ConsulHealthCheck : ConfigurableHealthCheckBase<ConsulOpti
 
     protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthStatus failureStatus,
+        Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus,
         ConsulOptions options,
         CancellationToken cancellationToken
     )

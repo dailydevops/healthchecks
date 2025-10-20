@@ -22,22 +22,22 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
     public async Task AddConsul_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerHealthy", options => options.Timeout = 10000),
-            HealthStatus.Healthy,
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddSingleton<IConsulClient>(
-                    _ => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
-                )
+                services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
+                    config.Address = new Uri(_database.HttpEndpoint)
+                ))
         );
 
     [Test]
     public async Task AddConsul_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerDegraded", options => options.Timeout = 0),
-            HealthStatus.Degraded,
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
             serviceBuilder: services =>
-                services.AddSingleton<IConsulClient>(
-                    _ => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
-                )
+                services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
+                    config.Address = new Uri(_database.HttpEndpoint)
+                ))
         );
 
     [Test]
@@ -54,7 +54,7 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy,
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             serviceBuilder: services =>
             {
                 _ = services.AddKeyedSingleton<IConsulClient>(
@@ -68,7 +68,7 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
     public async Task AddConsul_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerConfigHealthy"),
-            HealthStatus.Healthy,
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -78,16 +78,16 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddSingleton<IConsulClient>(
-                    _ => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
-                )
+                services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
+                    config.Address = new Uri(_database.HttpEndpoint)
+                ))
         );
 
     [Test]
     public async Task AddConsul_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerConfigDegraded"),
-            HealthStatus.Degraded,
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
@@ -97,16 +97,16 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddSingleton<IConsulClient>(
-                    _ => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
-                )
+                services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
+                    config.Address = new Uri(_database.HttpEndpoint)
+                ))
         );
 
     [Test]
     public async Task AddConsul_UseConfiguration_WithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerConfigKeyedHealthy"),
-            HealthStatus.Healthy,
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
