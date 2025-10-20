@@ -27,7 +27,7 @@ internal sealed class ConsulHealthCheck : ConfigurableHealthCheckBase<ConsulOpti
             ? _serviceProvider.GetRequiredService<IConsulClient>()
             : _serviceProvider.GetRequiredKeyedService<IConsulClient>(options.KeyedService);
 
-        var (isValid, response) = await client
+        var (isTimelyResponse, response) = await client
             .Status.Leader(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
@@ -37,6 +37,6 @@ internal sealed class ConsulHealthCheck : ConfigurableHealthCheckBase<ConsulOpti
             return HealthCheckUnhealthy(failureStatus, name);
         }
 
-        return HealthCheckState(isValid, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }
