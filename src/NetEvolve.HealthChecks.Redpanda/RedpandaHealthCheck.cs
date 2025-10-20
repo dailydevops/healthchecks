@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
@@ -67,6 +68,11 @@ internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<Redpanda
     private static IProducer<string, string> CreateProducer(RedpandaOptions options) =>
         new ProducerBuilder<string, string>(options.Configuration).Build();
 
+    [SuppressMessage(
+        "Blocker Code Smell",
+        "S2953:Methods named \"Dispose\" should implement \"IDisposable.Dispose\"",
+        Justification = "As designed."
+    )]
     private void Dispose(bool disposing)
     {
         if (!_disposedValue)
@@ -80,7 +86,7 @@ internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<Redpanda
         }
     }
 
-    public void Dispose()
+    void IDisposable.Dispose()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: true);
