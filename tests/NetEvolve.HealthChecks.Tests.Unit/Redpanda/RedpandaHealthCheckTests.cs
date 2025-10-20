@@ -18,7 +18,7 @@ public sealed class RedpandaHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedpandaOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new RedpandaHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new RedpandaHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -33,7 +33,7 @@ public sealed class RedpandaHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedpandaOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new RedpandaHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new RedpandaHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -54,7 +54,7 @@ public sealed class RedpandaHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedpandaOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new RedpandaHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new RedpandaHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
