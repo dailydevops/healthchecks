@@ -1,0 +1,25 @@
+﻿namespace NetEvolve.HealthChecks.Azure.IotHub
+{
+    public enum ClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        ConnectionString = 2,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAzureIotHubAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.IotHub.IotHubAvailabilityOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class IotHubAvailabilityOptions : NetEvolve.HealthChecks.Azure.IotHub.IotHubOptionsBase, System.IEquatable<NetEvolve.HealthChecks.Azure.IotHub.IotHubAvailabilityOptions>
+    {
+        public IotHubAvailabilityOptions() { }
+    }
+    public abstract class IotHubOptionsBase : System.IEquatable<NetEvolve.HealthChecks.Azure.IotHub.IotHubOptionsBase>
+    {
+        protected IotHubOptionsBase() { }
+        public string? ConnectionString { get; set; }
+        public string? FullyQualifiedHostname { get; set; }
+        public NetEvolve.HealthChecks.Azure.IotHub.ClientCreationMode? Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+}
