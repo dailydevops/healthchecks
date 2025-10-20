@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Files;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Files;
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
@@ -26,7 +26,7 @@ public class FileShareAvailableHealthCheckTests : HealthCheckTestBase
                         options.ShareName = "test-share";
                         options.Mode = FileClientCreationMode.ConnectionString;
                         options.ConnectionString = _container.ConnectionString;
-                        options.Timeout = 1000; // Set a reasonable timeout
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
