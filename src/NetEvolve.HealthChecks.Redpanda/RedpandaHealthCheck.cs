@@ -67,7 +67,6 @@ internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<Redpanda
     private static IProducer<string, string> CreateProducer(RedpandaOptions options) =>
         new ProducerBuilder<string, string>(options.Configuration).Build();
 
-
     private void Dispose(bool disposing)
     {
         if (!_disposedValue)
