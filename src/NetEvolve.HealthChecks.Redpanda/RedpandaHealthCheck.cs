@@ -11,10 +11,11 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<RedpandaOptions>
+internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<RedpandaOptions>, IDisposable
 {
     private readonly IServiceProvider _serviceProvider;
     private ConcurrentDictionary<string, IProducer<string, string>>? _producers;
+    private bool _disposedValue;
 
     private static readonly Message<string, string> _message = new Message<string, string>()
     {
@@ -65,4 +66,25 @@ internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<Redpanda
 
     private static IProducer<string, string> CreateProducer(RedpandaOptions options) =>
         new ProducerBuilder<string, string>(options.Configuration).Build();
+
+
+    private void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing && _producers is not null)
+            {
+                _ = Parallel.ForEach(_producers.Values, producer => producer.Dispose());
+                _producers.Clear();
+            }
+            _disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 }
