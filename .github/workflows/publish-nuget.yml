@@ -10,6 +10,10 @@ permissions:
   actions: read
   contents: write
 
+concurrency:
+  group: publish-nuget
+  cancel-in-progress: true
+
 jobs:
   nuget:
     name: Publish
