@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ApplicationInsights;
 
-using System;
 using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
