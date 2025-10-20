@@ -78,10 +78,7 @@ public sealed class FileServiceAvailableConfigureTests
                 false,
                 $"No service of type `{nameof(ShareServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new FileServiceAvailableOptions
-                {
-                    Mode = FileClientCreationMode.ServiceProvider,
-                }
+                new FileServiceAvailableOptions { Mode = FileClientCreationMode.ServiceProvider }
             );
 
         // Mode: DefaultAzureCredentials
@@ -90,10 +87,7 @@ public sealed class FileServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
-                new FileServiceAvailableOptions
-                {
-                    Mode = FileClientCreationMode.DefaultAzureCredentials,
-                }
+                new FileServiceAvailableOptions { Mode = FileClientCreationMode.DefaultAzureCredentials }
             );
         yield return () =>
             (
@@ -124,10 +118,7 @@ public sealed class FileServiceAvailableConfigureTests
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
-                new FileServiceAvailableOptions
-                {
-                    Mode = FileClientCreationMode.ConnectionString,
-                }
+                new FileServiceAvailableOptions { Mode = FileClientCreationMode.ConnectionString }
             );
         yield return () =>
             (
@@ -154,8 +145,8 @@ public sealed class FileServiceAvailableConfigureTests
                 false,
                 "The service url must be an absolute url when using `SharedKey` mode.",
                 "name",
-                new FileServiceAvailableOptions 
-                { 
+                new FileServiceAvailableOptions
+                {
                     Mode = FileClientCreationMode.SharedKey,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
@@ -203,10 +194,7 @@ public sealed class FileServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
-                new FileServiceAvailableOptions
-                {
-                    Mode = FileClientCreationMode.AzureSasCredential,
-                }
+                new FileServiceAvailableOptions { Mode = FileClientCreationMode.AzureSasCredential }
             );
         yield return () =>
             (

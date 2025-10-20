@@ -80,11 +80,7 @@ public sealed class FileShareAvailableConfigureTests
                 false,
                 $"No service of type `{nameof(ShareServiceClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new FileShareAvailableOptions
-                {
-                    Mode = FileClientCreationMode.ServiceProvider,
-                    ShareName = "test",
-                }
+                new FileShareAvailableOptions { Mode = FileClientCreationMode.ServiceProvider, ShareName = "test" }
             );
 
         // Mode: DefaultAzureCredentials
@@ -130,11 +126,7 @@ public sealed class FileShareAvailableConfigureTests
                 false,
                 "The connection string cannot be null or whitespace when using `ConnectionString` mode.",
                 "name",
-                new FileShareAvailableOptions
-                {
-                    ShareName = "test",
-                    Mode = FileClientCreationMode.ConnectionString,
-                }
+                new FileShareAvailableOptions { ShareName = "test", Mode = FileClientCreationMode.ConnectionString }
             );
         yield return () =>
             (
@@ -162,9 +154,9 @@ public sealed class FileShareAvailableConfigureTests
                 false,
                 "The service url must be an absolute url when using `SharedKey` mode.",
                 "name",
-                new FileShareAvailableOptions 
-                { 
-                    ShareName = "test", 
+                new FileShareAvailableOptions
+                {
+                    ShareName = "test",
                     Mode = FileClientCreationMode.SharedKey,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
                 }
@@ -215,11 +207,7 @@ public sealed class FileShareAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureSasCredential` mode.",
                 "name",
-                new FileShareAvailableOptions
-                {
-                    ShareName = "test",
-                    Mode = FileClientCreationMode.AzureSasCredential,
-                }
+                new FileShareAvailableOptions { ShareName = "test", Mode = FileClientCreationMode.AzureSasCredential }
             );
         yield return () =>
             (

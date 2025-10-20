@@ -14,7 +14,9 @@ public class ClientCreationTests
         var options = new FileShareAvailableOptions { Mode = (FileClientCreationMode)13 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateShareServiceClient(options, serviceProvider));
+        _ = Assert.Throws<UnreachableException>(() =>
+            ClientCreation.CreateShareServiceClient(options, serviceProvider)
+        );
     }
 
     [Test]
@@ -23,6 +25,8 @@ public class ClientCreationTests
         var options = new FileShareAvailableOptions { Mode = FileClientCreationMode.ServiceProvider };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateShareServiceClient(options, serviceProvider));
+        _ = Assert.Throws<UnreachableException>(() =>
+            ClientCreation.CreateShareServiceClient(options, serviceProvider)
+        );
     }
 }
