@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.Consul
+{
+    public sealed class ConsulOptions : System.IEquatable<NetEvolve.HealthChecks.Consul.ConsulOptions>
+    {
+        public ConsulOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddConsul([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Consul.ConsulOptions>? options = null, params string[] tags) { }
+    }
+}

@@ -41,17 +41,22 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
 
-        var blobServiceClient = new BlobServiceClient(ConnectionString);
+        await Task.WhenAll(PrepareBlobRequirements(), PrepareQueueRequirements(), PrepareTableRequirements())
+            .ConfigureAwait(false);
+    }
 
-        var blobContainerClient = blobServiceClient.GetBlobContainerClient("test");
-        _ = await blobContainerClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+    private async Task PrepareTableRequirements()
+    {
+        var tableServiceClient = new TableServiceClient(ConnectionString);
 
-        BlobAccountSasUri = blobServiceClient.GenerateAccountSasUri(
-            AccountSasPermissions.All,
-            DateTimeOffset.UtcNow.AddDays(1),
-            AccountSasResourceTypes.All
-        );
+        var tableClient = tableServiceClient.GetTableClient("test");
+        _ = await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false);
 
+        TableAccountSasUri = tableClient.GenerateSasUri(TableSasPermissions.All, DateTimeOffset.UtcNow.AddDays(1));
+    }
+
+    private async Task PrepareQueueRequirements()
+    {
         var queueServiceClient = new QueueServiceClient(ConnectionString);
 
         var queueClient = queueServiceClient.GetQueueClient("test");
@@ -62,12 +67,19 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
             DateTimeOffset.UtcNow.AddDays(1),
             AccountSasResourceTypes.All
         );
+    }
 
-        var tableServiceClient = new TableServiceClient(ConnectionString);
+    private async Task PrepareBlobRequirements()
+    {
+        var blobServiceClient = new BlobServiceClient(ConnectionString);
 
-        var tableClient = tableServiceClient.GetTableClient("test");
-        _ = await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+        var blobContainerClient = blobServiceClient.GetBlobContainerClient("test");
+        _ = await blobContainerClient.CreateIfNotExistsAsync().ConfigureAwait(false);
 
-        TableAccountSasUri = tableClient.GenerateSasUri(TableSasPermissions.All, DateTimeOffset.UtcNow.AddDays(1));
+        BlobAccountSasUri = blobServiceClient.GenerateAccountSasUri(
+            AccountSasPermissions.All,
+            DateTimeOffset.UtcNow.AddDays(1),
+            AccountSasResourceTypes.All
+        );
     }
 }

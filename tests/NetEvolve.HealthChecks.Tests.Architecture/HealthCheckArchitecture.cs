@@ -38,6 +38,7 @@ internal static class HealthCheckArchitecture
             typeof(Abstractions.HealthCheckBase).Assembly,
             typeof(ArangoDb.ArangoDbHealthCheck).Assembly,
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
+            typeof(Consul.ConsulHealthCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
             typeof(DB2.DB2HealthCheck).Assembly,
             typeof(DuckDB.DuckDBHealthCheck).Assembly,

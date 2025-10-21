@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: TestContainerHealthyKeyed: Healthy,
+      name: TestContainerHealthyKeyed,
+      status: Healthy,
+      tags: [
+        consul,
+        servicediscovery
+      ]
+    }
+  ],
+  status: Healthy
+}

@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerConfigHealthy: Healthy,
+      name: TestContainerConfigHealthy,
+      status: Healthy,
+      tags: [
+        consul,
+        servicediscovery
+      ]
+    }
+  ],
+  status: Healthy
+}
