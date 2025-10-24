@@ -1,7 +1,10 @@
-<Project>
+<Project TreatAsLocalProperty="VersionTestContainers">
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VersionTestContainers>4.8.1</VersionTestContainers>
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.1.2" />
@@ -71,28 +74,29 @@
     <PackageVersion Include="System.Data.SQLite" Version="2.0.2" />
     <PackageVersion Include="System.Drawing.Common" Version="9.0.9" />
     <PackageVersion Include="System.Text.Json" Version="9.0.9" />
-    <PackageVersion Include="Testcontainers.ActiveMq" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.ArangoDb" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Azurite" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.ClickHouse" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Consul" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Db2" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Elasticsearch" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Kafka" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Keycloak" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.LocalStack" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.MongoDb" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.MsSql" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.MySql" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Oracle" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.PostgreSql" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Qdrant" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.RabbitMq" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.RavenDb" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Redis" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.Redpanda" Version="4.7.0" />
-    <PackageVersion Include="Testcontainers.ServiceBus" Version="4.7.0" />
+    <PackageVersion Include="Testcontainers" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.ActiveMq" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.ArangoDb" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Azurite" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.ClickHouse" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Consul" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Keycloak" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.LocalStack" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.MongoDb" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.MsSql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.MySql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Oracle" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.PostgreSql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Qdrant" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.RabbitMq" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.RavenDb" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Redis" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Redpanda" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.ServiceBus" Version="$(VersionTestContainers)" />
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.12.3" />
     <PackageVersion Include="TUnit" Version="0.73.19" />
     <PackageVersion Include="Verify.TUnit" Version="31.0.2" />
