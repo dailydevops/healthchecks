@@ -30,7 +30,7 @@
     <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.8.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.25.1" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.23.0" />
-    <PackageVersion Include="AzureKeyVaultEmulator.TestContainers" Version="0.6.0" />
+    <PackageVersion Include="AzureKeyVaultEmulator.TestContainers" Version="2.3.3" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.9.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.11.1" />

@@ -5,6 +5,7 @@
     <NoWarn>$(NoWarn);CA1024</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +32,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ApplicationInsights\NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.KeyVault\NetEvolve.HealthChecks.Azure.KeyVault.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
