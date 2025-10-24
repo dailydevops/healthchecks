@@ -12,6 +12,7 @@ To use this package, you need to add the package to your project. You can do thi
 ```powershell
 dotnet add package NetEvolve.HealthChecks.Abstractions
 ```
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://raw.githubusercontent.com/dailydevops/healthchecks/refs/heads/main/LICENSE) file for details.

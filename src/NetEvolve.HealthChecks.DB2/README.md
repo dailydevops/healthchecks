@@ -80,6 +80,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddDB2("<name>", options => ..., "DB2", "database");
 ```
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://raw.githubusercontent.com/dailydevops/healthchecks/refs/heads/main/LICENSE) file for details.
