@@ -73,3 +73,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddOdbc("<name>", options => ..., "sqlserver", "database");
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://raw.githubusercontent.com/dailydevops/healthchecks/refs/heads/main/LICENSE) file for details.

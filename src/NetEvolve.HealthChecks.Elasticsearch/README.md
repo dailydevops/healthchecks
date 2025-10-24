@@ -87,3 +87,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddElasticsearch("<name>", options => ..., "Elasticsearch", "elastic");
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://raw.githubusercontent.com/dailydevops/healthchecks/refs/heads/main/LICENSE) file for details.
