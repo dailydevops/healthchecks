@@ -86,6 +86,7 @@
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Keycloak" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Kusto" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MongoDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MsSql" Version="$(VersionTestContainers)" />
