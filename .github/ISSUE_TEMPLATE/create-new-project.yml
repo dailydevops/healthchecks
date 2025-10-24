@@ -1,0 +1,106 @@
+name: "Create New Project"
+description: "Template for creating a new project, including build and test validation steps for Copilot automation."
+title: "Project Setup: [ProjectName]"
+labels: ["project", "setup", "copilot"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Create New HealthChecks Project
+
+        Use this template to create a new health check project. Copilot will assist with validation of project creation, package restoration, build, and test execution.
+
+  - type: input
+    id: project-name
+    attributes:
+      label: "Project Name"
+      description: "Enter the name of the new project (e.g., 'Redis', 'Memcached', 'CouchDB')"
+      placeholder: "e.g., Redis"
+    validations:
+      required: true
+
+  - type: input
+    id: project-description
+    attributes:
+      label: "Project Description"
+      description: "Briefly describe the purpose of this health check project"
+      placeholder: "Health check for Redis server connectivity and operations"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: testcontainer-needed
+    attributes:
+      label: "TestContainer Package Required?"
+      description: "Does this project need a specific TestContainer package for integration tests?"
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+
+  - type: input
+    id: testcontainer-package
+    attributes:
+      label: "TestContainer Package Name"
+      description: "If yes above, specify the TestContainer package (e.g., 'Testcontainers.Redis')"
+      placeholder: "e.g., Testcontainers.Redis"
+    validations:
+      required: false
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: "Required NuGet Dependencies"
+      description: "List any specific NuGet packages that need to be added (one per line)"
+      placeholder: |
+        StackExchange.Redis
+        Microsoft.Extensions.Diagnostics.HealthChecks
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: validation-steps
+    attributes:
+      label: "Validation Steps"
+      description: "These steps will be performed by Copilot during project creation"
+      options:
+        - label: "Create project structure in `src/NetEvolve.HealthChecks.<ProjectName>/`"
+          required: false
+        - label: "Follow naming conventions from decision documentation"
+          required: false
+        - label: "Include a clear README.md describing the project purpose"
+          required: false
+        - label: "Restore NuGet packages (`dotnet restore`)"
+          required: false
+        - label: "Build the solution (`dotnet build --no-restore`)"
+          required: false
+        - label: "Add unit tests to `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/` folder"
+          required: false
+        - label: "Add integration tests to `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/` folder"
+          required: false
+        - label: "Run project-specific tests (`dotnet test --filter FullyQualifiedName~<ProjectName>`)"
+          required: false
+        - label: "Verify all tests pass successfully"
+          required: false
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: "Additional Notes"
+      description: "Any special considerations, dependencies, or requirements for this project?"
+      placeholder: "e.g., Requires Docker for integration tests, specific configuration settings, etc."
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **Note for Copilot:**
+        - Use the project name to create `src/NetEvolve.HealthChecks.<ProjectName>/`
+        - Add TestContainer package if specified
+        - Run tests filtered by: `dotnet test --filter FullyQualifiedName~<ProjectName>`
+        - Ensure all validation steps complete successfully
