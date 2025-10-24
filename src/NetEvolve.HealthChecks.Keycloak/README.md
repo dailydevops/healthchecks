@@ -88,3 +88,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddKeycloak("<name>", options => ..., "Keycloak", "auth");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

@@ -72,3 +72,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddQdrant("<name>", options => ..., "qdrant");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

@@ -94,3 +94,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddHttp("<name>", options => ..., "http", "api");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

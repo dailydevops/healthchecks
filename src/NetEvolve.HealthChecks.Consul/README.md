@@ -75,6 +75,11 @@ The check returns:
 - `Degraded` if the operation times out
 - `Unhealthy` if the server is unreachable or returns an invalid response
 
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

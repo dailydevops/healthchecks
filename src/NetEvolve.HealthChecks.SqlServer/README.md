@@ -75,3 +75,15 @@ var builder = services.AddHealthChecks();
 
 builder.AddSqlServer("<name>", options => ..., "sqlserver", "database");
 ```
+
+## Related Packages
+
+### Alternative Implementations
+- <a>`NetEvolve.HealthChecks.SqlServer.Legacy`</a> - Uses System.Data.SqlClient for older applications
+- <a>`NetEvolve.HealthChecks.SqlServer.Devart`</a> - Commercial provider with enhanced features
+
+### Configuration Compatibility
+This package uses configuration compatible with `SqlServer.Legacy` and `SqlServer.Devart`. You can switch implementations without changing your appsettings.json.
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

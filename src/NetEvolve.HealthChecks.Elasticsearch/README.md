@@ -87,3 +87,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddElasticsearch("<name>", options => ..., "Elasticsearch", "elastic");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

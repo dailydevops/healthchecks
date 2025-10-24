@@ -76,3 +76,14 @@ var builder = services.AddHealthChecks();
 
 builder.AddSQLiteLegacy("<name>", options => ..., "sqlite", "database");
 ```
+
+## Related Packages
+
+### Alternative Implementations
+- <a>`NetEvolve.HealthChecks.SQLite`</a> - Modern implementation using Microsoft.Data.Sqlite (recommended)
+
+### Configuration Compatibility
+This package uses configuration compatible with `SQLite`. You can switch implementations without changing your appsettings.json.
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

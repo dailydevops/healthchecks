@@ -80,3 +80,17 @@ var builder = services.AddHealthChecks();
 
 builder.AddAWSSQS("<name>", options => ..., "sqs");
 ```
+
+## Related Packages
+
+### Other AWS Services
+- <a>`NetEvolve.HealthChecks.AWS.EC2`</a> - Health checks for AWS EC2
+- <a>`NetEvolve.HealthChecks.AWS.S3`</a> - Health checks for AWS S3
+- <a>`NetEvolve.HealthChecks.AWS.DynamoDB`</a> - Health checks for AWS DynamoDB
+- <a>`NetEvolve.HealthChecks.AWS.SNS`</a> - Health checks for AWS SNS
+
+### Bundle Package
+- <a>`NetEvolve.HealthChecks.AWS`</a> - Includes all AWS service health checks
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

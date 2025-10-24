@@ -80,3 +80,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddDB2("<name>", options => ..., "DB2", "database");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

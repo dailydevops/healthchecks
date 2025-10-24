@@ -74,3 +74,17 @@ var builder = services.AddHealthChecks();
 
 builder.AddAzureTableClient("<name>", options => ..., "azure");
 ```
+
+## Related Packages
+
+### Related Azure Services
+- <a>`NetEvolve.HealthChecks.Azure.Blobs`</a> - Health checks for Azure Blob Storage
+- <a>`NetEvolve.HealthChecks.Azure.Queues`</a> - Health checks for Azure Storage Queues
+- <a>`NetEvolve.HealthChecks.Azure.ServiceBus`</a> - Health checks for Azure Service Bus
+- <a>`NetEvolve.HealthChecks.Azure.ApplicationInsights`</a> - Health checks for Azure Application Insights
+
+### Bundle Package
+- <a>`NetEvolve.HealthChecks.Azure`</a> - Includes all Azure service health checks
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

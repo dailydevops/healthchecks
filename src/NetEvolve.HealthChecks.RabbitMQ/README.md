@@ -72,3 +72,14 @@ var builder = services.AddHealthChecks();
 
 builder.AddRabbitMQ("<name>", options => ..., "rabbitmq");
 ```
+
+## Related Packages
+
+### Other Messaging Services
+- <a>`NetEvolve.HealthChecks.Apache.ActiveMq`</a> - Health checks for Apache ActiveMQ
+- <a>`NetEvolve.HealthChecks.Azure.ServiceBus`</a> - Health checks for Azure Service Bus
+- <a>`NetEvolve.HealthChecks.AWS.SNS`</a> - Health checks for AWS SNS
+- <a>`NetEvolve.HealthChecks.AWS.SQS`</a> - Health checks for AWS SQS
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

@@ -79,3 +79,17 @@ var builder = services.AddHealthChecks();
 
 builder.AddAWSDynamoDB("<name>", options => ..., "dynamodb");
 ```
+
+## Related Packages
+
+### Other AWS Services
+- <a>`NetEvolve.HealthChecks.AWS.EC2`</a> - Health checks for AWS EC2
+- <a>`NetEvolve.HealthChecks.AWS.S3`</a> - Health checks for AWS S3
+- <a>`NetEvolve.HealthChecks.AWS.SQS`</a> - Health checks for AWS SQS
+- <a>`NetEvolve.HealthChecks.AWS.SNS`</a> - Health checks for AWS SNS
+
+### Bundle Package
+- <a>`NetEvolve.HealthChecks.AWS`</a> - Includes all AWS service health checks
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

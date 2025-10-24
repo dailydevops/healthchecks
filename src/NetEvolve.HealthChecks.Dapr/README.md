@@ -67,3 +67,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddDapr(options => ..., "Dapr");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

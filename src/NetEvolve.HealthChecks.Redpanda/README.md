@@ -80,3 +80,11 @@ var builder = services.AddHealthChecks();
 
 builder.AddRedpanda("<name>", options => ..., "redpanda");
 ```
+
+## Related Packages
+
+### Related Kafka-Compatible Services
+- <a>`NetEvolve.HealthChecks.Apache.Kafka`</a> - Health checks for Apache Kafka
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

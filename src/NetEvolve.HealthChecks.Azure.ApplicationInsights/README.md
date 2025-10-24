@@ -172,3 +172,17 @@ var builder = services.AddHealthChecks();
 
 builder.AddApplicationInsightsAvailability("<name>", options => ..., "custom", "azure");
 ```
+
+## Related Packages
+
+### Related Azure Services
+- <a>`NetEvolve.HealthChecks.Azure.Blobs`</a> - Health checks for Azure Blob Storage
+- <a>`NetEvolve.HealthChecks.Azure.Queues`</a> - Health checks for Azure Storage Queues
+- <a>`NetEvolve.HealthChecks.Azure.Tables`</a> - Health checks for Azure Table Storage
+- <a>`NetEvolve.HealthChecks.Azure.ServiceBus`</a> - Health checks for Azure Service Bus
+
+### Bundle Package
+- <a>`NetEvolve.HealthChecks.Azure`</a> - Includes all Azure service health checks
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

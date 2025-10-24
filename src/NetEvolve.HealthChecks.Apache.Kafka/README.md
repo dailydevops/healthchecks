@@ -80,3 +80,12 @@ var builder = services.AddHealthChecks();
 
 builder.AddKafka("<name>", options => ..., "kafka");
 ```
+
+## Related Packages
+
+### Related Apache Messaging Services
+- <a>`NetEvolve.HealthChecks.Apache.ActiveMq`</a> - Health checks for Apache ActiveMQ
+- <a>`NetEvolve.HealthChecks.Redpanda`</a> - Health checks for Redpanda (Kafka-compatible)
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

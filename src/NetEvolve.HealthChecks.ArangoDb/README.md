@@ -87,3 +87,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddArangoDb("<name>", options => ..., "ArangoDb", "graph");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

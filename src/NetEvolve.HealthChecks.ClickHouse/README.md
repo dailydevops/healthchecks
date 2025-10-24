@@ -73,3 +73,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddClickHouse("<name>", options => ..., "clickhouse", "database");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

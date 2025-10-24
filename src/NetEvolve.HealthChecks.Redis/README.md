@@ -75,3 +75,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddRedis("<name>", options => ..., "redis");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

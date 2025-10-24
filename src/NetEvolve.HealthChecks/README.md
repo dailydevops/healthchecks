@@ -45,3 +45,18 @@ var builder = services.AddHealthChecks();
 
 builder.AddApplicationReady("readiness");
 ```
+
+## Related Packages
+
+### Core Abstractions
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks
+
+### Specific Health Check Implementations
+For health checks targeting specific services and databases, see:
+- <a>`NetEvolve.HealthChecks.AWS`</a> - AWS service health checks bundle
+- <a>`NetEvolve.HealthChecks.Azure`</a> - Azure service health checks bundle
+- <a>`NetEvolve.HealthChecks.SqlServer`</a> - SQL Server health checks
+- <a>`NetEvolve.HealthChecks.Redis`</a> - Redis health checks
+- <a>`NetEvolve.HealthChecks.RabbitMQ`</a> - RabbitMQ health checks
+
+For a complete list, see the [repository](https://github.com/dailydevops/healthchecks).

@@ -74,3 +74,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddFirebird("<name>", options => ..., "Firebird", "database");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

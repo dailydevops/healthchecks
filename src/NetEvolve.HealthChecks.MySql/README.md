@@ -74,3 +74,14 @@ var builder = services.AddHealthChecks();
 
 builder.AddMySql("<name>", options => ..., "MySql", "database");
 ```
+
+## Related Packages
+
+### Alternative Implementations
+- <a>`NetEvolve.HealthChecks.MySql.Connector`</a> - Modern connector implementation using MySqlConnector
+
+### Migration Guide
+This package is compatible with `NetEvolve.HealthChecks.MySql.Connector`. Configuration format is identical, only the package reference needs to be changed.
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks

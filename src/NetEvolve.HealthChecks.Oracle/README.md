@@ -73,3 +73,8 @@ var builder = services.AddHealthChecks();
 
 builder.AddOracle("<name>", options => ..., "oracle", "database");
 ```
+
+## Related Packages
+
+### See Also
+- <a>`NetEvolve.HealthChecks.Abstractions`</a> - Base abstractions for creating custom health checks
