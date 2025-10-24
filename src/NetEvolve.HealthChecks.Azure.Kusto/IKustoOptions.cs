@@ -1,7 +1,7 @@
-namespace NetEvolve.HealthChecks.Azure.Kusto;
+﻿namespace NetEvolve.HealthChecks.Azure.Kusto;
 
 using System;
-using Kusto.Data.Common;
+using global::Kusto.Data;
 
 internal interface IKustoOptions
 {

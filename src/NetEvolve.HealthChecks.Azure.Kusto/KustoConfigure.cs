@@ -1,8 +1,8 @@
-namespace NetEvolve.HealthChecks.Azure.Kusto;
+﻿namespace NetEvolve.HealthChecks.Azure.Kusto;
 
 using System;
 using System.Threading;
-using Kusto.Data.Net.Client;
+using global::Kusto.Data.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

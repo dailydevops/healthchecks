@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Azure.Kusto;
+﻿namespace NetEvolve.HealthChecks.Azure.Kusto;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -44,8 +44,6 @@ public static class DependencyInjectionExtensions
                 .Services.AddSingleton<AzureKustoCheckMarker>()
                 .AddSingleton<KustoHealthCheck>()
                 .ConfigureOptions<KustoConfigure>();
-
-            builder.Services.TryAddSingleton<ClientCreation>();
         }
 
         builder.ThrowIfNameIsAlreadyUsed<KustoHealthCheck>(name);

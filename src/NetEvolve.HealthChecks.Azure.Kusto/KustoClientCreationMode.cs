@@ -1,7 +1,6 @@
-namespace NetEvolve.HealthChecks.Azure.Kusto;
+﻿namespace NetEvolve.HealthChecks.Azure.Kusto;
 
 using System;
-using Kusto.Data.Common;
 
 /// <summary>
 /// Describes the mode used to create the Kusto client.

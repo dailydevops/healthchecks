@@ -1,63 +1,72 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Kusto;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Kusto;
 
 using System;
 using System.Threading.Tasks;
+using global::NetEvolve.HealthChecks.Azure.Kusto;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.Azure.Kusto;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Kusto)}")]
 public sealed class DependencyInjectionExtensionsTests
 {
     [Test]
-    public async Task AddKusto_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddKusto_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
-        // Arrange & Act & Assert
-        _ = await Assert
-            .That(() => DependencyInjectionExtensions.AddKusto(null!, "Test"))
-            .Throws<ArgumentNullException>()
-            .And.HasParameterName("builder");
+        // Arrange
+        IHealthChecksBuilder? builder = null;
+
+        // Act & Assert
+        _ = Assert.Throws<ArgumentNullException>(
+            "builder",
+            () =>
+            {
+                _ = builder.AddKusto(null!);
+            }
+        );
     }
 
     [Test]
-    public async Task AddKusto_WhenArgumentNameNull_ThrowArgumentException()
+    public void AddKusto_WhenArgumentNameNull_ThrowArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
         // Act & Assert
-        _ = await Assert
-            .That(() => builder.AddKusto(null!))
-            .Throws<ArgumentException>()
-            .And.HasParameterName("name");
+        _ = Assert.Throws<ArgumentException>(
+            "name",
+            () =>
+            {
+                _ = builder.AddKusto(null!);
+            }
+        );
     }
 
     [Test]
-    public async Task AddKusto_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddKusto_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
         // Act & Assert
-        _ = await Assert
-            .That(() => builder.AddKusto(string.Empty))
-            .Throws<ArgumentException>()
-            .And.HasParameterName("name");
+        _ = Assert.Throws<ArgumentException>("name", () => builder.AddKusto(""));
     }
 
     [Test]
-    public async Task AddKusto_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddKusto_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
 
         // Act & Assert
-        _ = await Assert
-            .That(() => builder.AddKusto("Test", null, null!))
-            .Throws<ArgumentNullException>()
-            .And.HasParameterName("tags");
+        _ = Assert.Throws<ArgumentNullException>(
+            "tags",
+            () =>
+            {
+                _ = builder.AddKusto("Test", null, null!);
+            }
+        );
     }
 }
