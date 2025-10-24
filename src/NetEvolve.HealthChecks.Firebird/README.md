@@ -74,3 +74,107 @@ var builder = services.AddHealthChecks();
 
 builder.AddFirebird("<name>", options => ..., "Firebird", "database");
 ```
+
+## Troubleshooting
+
+### Connection Timeouts
+
+**Symptom**: Health check returns `Degraded` status with "The operation has timed out" or similar message.
+
+**Possible Causes**:
+- Network latency between application and database server exceeds configured timeout
+- Database server is slow to respond under load
+- Firewall or network configuration blocking connectivity
+- DNS resolution delays
+
+**Solutions**:
+- Increase the `Timeout` value in health check configuration
+- Check network connectivity using `ping` or `telnet`
+- Verify database server performance and resource availability
+- Review firewall rules and security group settings
+- Check DNS resolution for database server hostname
+
+### Authentication Failures
+
+**Symptom**: Health check returns `Unhealthy` with authentication or login failed errors.
+
+**Possible Causes**:
+- Incorrect credentials in connection string
+- User account locked or disabled
+- Insufficient permissions for health check operations
+- Connection string format issues
+
+**Solutions**:
+- Verify username and password in connection string
+- Check if user account is active and not locked
+- Ensure user has `CONNECT` permission to the database
+- Validate connection string format according to provider documentation
+- Test credentials using database management tools
+
+### Connection Pool Exhausted
+
+**Symptom**: Health check intermittently fails with timeout or "connection pool exhausted" errors.
+
+**Possible Causes**:
+- Application not properly disposing database connections
+- Connection pool size too small for application load
+- Long-running queries blocking connections
+- Connection leaks in application code
+
+**Solutions**:
+- Review application code for proper connection disposal
+- Increase `Max Pool Size` in connection string
+- Implement connection timeout in queries
+- Monitor active connections using database tools
+- Use `using` statements or `IDisposable` pattern properly
+
+### SSL/TLS Certificate Issues
+
+**Symptom**: Health check fails with SSL/TLS or certificate validation errors.
+
+**Possible Causes**:
+- Self-signed certificates not trusted
+- Certificate expired or not yet valid
+- Hostname mismatch in certificate
+- TLS version incompatibility
+
+**Solutions**:
+- Add `TrustServerCertificate=True` to connection string (development only)
+- Install proper CA certificates on the application server
+- Verify certificate validity dates and hostname
+- Update connection string to use correct hostname from certificate
+- Ensure TLS 1.2 or higher is supported by both client and server
+
+### Database Unavailable
+
+**Symptom**: Health check returns `Unhealthy` with "database not found" or "cannot open database" errors.
+
+**Possible Causes**:
+- Database does not exist or is offline
+- Incorrect database name in connection string
+- Database is in recovery or maintenance mode
+- Insufficient permissions to access database
+
+**Solutions**:
+- Verify database exists and is online
+- Check database name spelling in connection string
+- Wait for database recovery or maintenance to complete
+- Ensure user has permission to access the specific database
+- Check database server logs for errors
+
+### Configuration Not Found
+
+**Symptom**: `InvalidOperationException` during startup with "Configuration for health check '<name>' not found" message.
+
+**Possible Causes**:
+- Configuration section missing from `appsettings.json`
+- Mismatch between health check name and configuration section name
+- Typos in configuration keys
+- Wrong configuration file loaded
+
+**Solutions**:
+- Ensure configuration section exists in `appsettings.json`
+- Verify the name used in `Add<Database>("<name>")` matches the configuration section name
+- Check for typos in configuration keys (case-sensitive)
+- Verify correct `appsettings.json` file is being loaded for the environment
+

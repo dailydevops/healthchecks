@@ -80,3 +80,108 @@ var builder = services.AddHealthChecks();
 
 builder.AddRedpanda("<name>", options => ..., "redpanda");
 ```
+
+## Troubleshooting
+
+### Connection Timeouts
+
+**Symptom**: Health check returns `Degraded` status with timeout errors.
+
+**Possible Causes**:
+- Network latency to message broker exceeds configured timeout
+- Broker is slow to respond under load
+- Firewall or network configuration blocking connectivity
+- DNS resolution delays
+
+**Solutions**:
+- Increase the `Timeout` value in health check configuration
+- Check network connectivity to broker endpoints
+- Verify broker performance and resource availability
+- Review firewall rules and security group settings
+- Check DNS resolution for broker hostnames
+
+### Authentication Failures
+
+**Symptom**: Health check returns `Unhealthy` with authentication or authorization errors.
+
+**Possible Causes**:
+- Incorrect credentials or tokens in configuration
+- Authentication method not supported or misconfigured
+- Expired certificates or keys
+- Insufficient permissions for health check operations
+
+**Solutions**:
+- Verify authentication credentials in configuration
+- Check supported authentication methods (SASL, SSL, etc.)
+- Renew expired certificates or authentication tokens
+- Ensure service account has necessary permissions (describe, list topics/queues)
+- Review broker logs for detailed authentication failures
+
+### Topic/Queue Does Not Exist
+
+**Symptom**: Health check fails with "topic not found", "queue does not exist" or similar errors.
+
+**Possible Causes**:
+- Topic/queue name incorrect or typo
+- Topic/queue not created yet
+- Case sensitivity in naming
+- Different namespace/cluster being accessed
+
+**Solutions**:
+- Verify topic/queue exists using broker management console
+- Create topic/queue before starting application
+- Check exact naming including case sensitivity
+- Validate broker endpoint matches where topic/queue exists
+- Use broker CLI tools to list available topics/queues
+
+### Message Broker Unreachable
+
+**Symptom**: Health check consistently returns `Unhealthy` with connection errors.
+
+**Possible Causes**:
+- Broker service not running
+- Incorrect broker address or port
+- Network or firewall issues
+- Broker at capacity or rejecting connections
+
+**Solutions**:
+- Verify broker service is running and healthy
+- Validate broker address and port in configuration
+- Test network connectivity using `telnet` or `nc`
+- Check broker logs for connection rejections
+- Monitor broker resource usage (CPU, memory, connections)
+- Verify broker connection limits not exceeded
+
+### SSL/TLS Connection Failures
+
+**Symptom**: Health check fails with SSL/TLS handshake or certificate errors.
+
+**Possible Causes**:
+- SSL/TLS not enabled on broker
+- Certificate validation failing
+- Incompatible SSL/TLS protocols
+- Missing or incorrect CA certificates
+
+**Solutions**:
+- Verify SSL/TLS is enabled on broker
+- Configure certificate validation settings appropriately
+- Install required CA certificates on client
+- Check SSL/TLS protocol versions match between client and broker
+- Review broker SSL/TLS configuration
+
+### Configuration Not Found
+
+**Symptom**: `InvalidOperationException` during startup with "Configuration for health check '<name>' not found" message.
+
+**Possible Causes**:
+- Configuration section missing from `appsettings.json`
+- Mismatch between health check name and configuration section name
+- Typos in configuration keys
+- Wrong configuration file loaded
+
+**Solutions**:
+- Ensure configuration section exists in `appsettings.json`
+- Verify the name used in `Add<Broker>("<name>")` matches the configuration section name
+- Check for typos in configuration keys (case-sensitive)
+- Verify correct `appsettings.json` file is being loaded for the environment
+

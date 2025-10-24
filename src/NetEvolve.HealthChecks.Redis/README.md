@@ -75,3 +75,107 @@ var builder = services.AddHealthChecks();
 
 builder.AddRedis("<name>", options => ..., "redis");
 ```
+
+## Troubleshooting
+
+### Connection Timeouts
+
+**Symptom**: Health check returns `Degraded` status with timeout errors.
+
+**Possible Causes**:
+- Network latency to cache server exceeds configured timeout
+- Cache server is slow to respond under load
+- Firewall or network configuration blocking connectivity
+- DNS resolution delays
+
+**Solutions**:
+- Increase the `Timeout` value in health check configuration
+- Check network connectivity using `ping` or `telnet`
+- Verify cache server performance and resource availability
+- Review firewall rules and security group settings
+- Check DNS resolution for cache server hostname
+
+### Authentication Failures
+
+**Symptom**: Health check returns `Unhealthy` with authentication errors.
+
+**Possible Causes**:
+- Incorrect password in connection string
+- Authentication not enabled on server but password provided
+- Password authentication disabled on server
+- Connection string format issues
+
+**Solutions**:
+- Verify password in connection string if authentication is enabled
+- Remove password from connection string if authentication is disabled
+- Check server authentication configuration
+- Validate connection string format according to provider documentation
+- Test connection using cache client tools (e.g., `redis-cli`)
+
+### Cluster Configuration Issues
+
+**Symptom**: Health check fails with cluster connectivity or configuration errors.
+
+**Possible Causes**:
+- Incorrect cluster endpoints
+- Cluster mode vs standalone mode mismatch
+- SSL/TLS configuration issues
+- Cluster undergoing reconfiguration
+
+**Solutions**:
+- Verify cluster endpoint addresses and ports
+- Ensure client configuration matches server mode (cluster/standalone)
+- Configure SSL/TLS settings correctly if enabled
+- Check cluster health and node status
+- Review cluster configuration for recent changes
+
+### Connection Pool Exhausted
+
+**Symptom**: Health check intermittently fails with "connection pool exhausted" or similar errors.
+
+**Possible Causes**:
+- Application not properly disposing cache connections
+- Connection pool size too small for application load
+- Connection leaks in application code
+- Too many concurrent operations
+
+**Solutions**:
+- Review application code for proper connection disposal
+- Increase connection pool size in configuration
+- Monitor active connections using cache server tools
+- Use connection multiplexing where supported
+- Check for connection leaks in application code
+
+### SSL/TLS Connection Failures
+
+**Symptom**: Health check fails with SSL/TLS handshake or certificate errors.
+
+**Possible Causes**:
+- SSL/TLS not enabled on server
+- Certificate validation failing
+- Incompatible SSL/TLS protocols
+- Self-signed certificates not trusted
+
+**Solutions**:
+- Verify SSL/TLS is enabled on cache server
+- Configure certificate validation settings appropriately
+- Install required CA certificates on client
+- Check SSL/TLS protocol versions compatibility
+- Add `ssl=true` to connection string if required
+
+### Configuration Not Found
+
+**Symptom**: `InvalidOperationException` during startup with "Configuration for health check '<name>' not found" message.
+
+**Possible Causes**:
+- Configuration section missing from `appsettings.json`
+- Mismatch between health check name and configuration section name
+- Typos in configuration keys
+- Wrong configuration file loaded
+
+**Solutions**:
+- Ensure configuration section exists in `appsettings.json`
+- Verify the name used in `AddRedis("<name>")` matches the configuration section name
+- Check for typos in configuration keys (case-sensitive)
+- Verify correct `appsettings.json` file is being loaded for the environment
+
