@@ -1,79 +1,76 @@
 # NetEvolve.HealthChecks.Consul
 
-![Nuget](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Consul?logo=nuget)
-![Nuget](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Consul?logo=nuget)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Consul?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Consul/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Consul?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Consul/)
 
 This package provides health checks for HashiCorp Consul, based on the `Consul` NuGet package.
 
-## Installation
+:bulb: This package is available for .NET 8.0 and later.
 
-```bash
+## Installation
+To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
+```powershell
 dotnet add package NetEvolve.HealthChecks.Consul
 ```
 
+## Health Check - Consul Liveness
+The health check is a liveness check. It verifies connectivity to the Consul server and the ability to query the Consul leader status.
+If the operation needs longer than the configured timeout, the health check will return `Degraded`.
+If the server is unreachable or returns an invalid response, the health check will return `Unhealthy`.
+
 ## Usage
-
-### Basic Setup
-
-Register the Consul health check in your application:
-
+After adding the package, you need to import the namespace and add the health check to the health check builder.
 ```csharp
-services
-    .AddHealthChecks()
-    .AddConsul("Consul");
+using NetEvolve.HealthChecks.Consul;
+```
+Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
+
+### Parameters
+- `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `tags`: The tags for the health check. The tags `consul` and `service-discovery` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
+
+### Variant 1: Configuration based
+The first one is to use the configuration based approach. This approach is recommended if you have multiple Consul instances to check.
+```csharp
+var builder = services.AddHealthChecks();
+
+builder.AddConsul("<name>");
 ```
 
-### Configuration
-
-The health check can be configured using the `ConsulOptions` class:
-
-```csharp
-services
-    .AddHealthChecks()
-    .AddConsul("Consul", options =>
-    {
-        options.Timeout = 1000; // Timeout in milliseconds
-    });
-```
-
-#### Configuration via appsettings.json
-
+The configuration looks like this:
 ```json
 {
+  ..., // other configuration
   "HealthChecks": {
     "Consul": {
-      "MyConsulCheck": {
-        "Timeout": 1000
+      "<name>": {
+        "Timeout": 1000 // Optional, timeout in milliseconds, default is 100 milliseconds
       }
     }
   }
 }
 ```
 
-### Keyed Services
-
-The health check supports keyed services for scenarios where multiple Consul clients are registered:
-
+### Variant 2: Builder based
+The second approach is to use the builder based approach. This approach is recommended if you only have one Consul instance to check or dynamic programmatic values.
 ```csharp
-services
-    .AddKeyedSingleton<IConsulClient>("consul-primary", ...)
-    .AddHealthChecks()
-    .AddConsul("Consul", options =>
-    {
-        options.KeyedService = "consul-primary";
-    });
+var builder = services.AddHealthChecks();
+
+builder.AddConsul("<name>", options =>
+{
+    options.Timeout = 1000; // Optional, timeout in milliseconds, default is 100 milliseconds
+    options.KeyedService = "<key>"; // Optional, used when multiple Consul clients are registered
+});
 ```
 
-## Health Check Behavior
+### :bulb: You can always provide tags to all health checks, for grouping or filtering.
 
-The health check verifies:
-- Connectivity to the Consul server
-- Ability to query the Consul leader status
+```csharp
+var builder = services.AddHealthChecks();
 
-The check returns:
-- `Healthy` if the Consul server responds successfully within the timeout period
-- `Degraded` if the operation times out
-- `Unhealthy` if the server is unreachable or returns an invalid response
+builder.AddConsul("<name>", options => ..., "consul", "service-discovery");
+```
 
 ## License
 
