@@ -46,6 +46,7 @@ internal static class HealthCheckArchitecture
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Http.HttpHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
+            typeof(LiteDB.LiteDBHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,
