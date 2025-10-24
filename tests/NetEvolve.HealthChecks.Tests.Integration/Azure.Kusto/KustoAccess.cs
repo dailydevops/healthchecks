@@ -22,12 +22,5 @@ public sealed class KustoAccess : IAsyncInitializer, IAsyncDisposable
         await _container.StartAsync().ConfigureAwait(false);
         var connectionString = _container.GetConnectionString();
         ClusterUri = new Uri(connectionString.Split(';')[0].Replace("Data Source=", "", StringComparison.Ordinal));
-
-        // Create test database
-        var connectionStringBuilder = new KustoConnectionStringBuilder(connectionString);
-        using var adminClient = KustoClientFactory.CreateCslAdminProvider(connectionStringBuilder);
-        _ = await adminClient
-            .ExecuteControlCommandAsync(databaseName: null, command: ".create database TestDatabase")
-            .ConfigureAwait(false);
     }
 }

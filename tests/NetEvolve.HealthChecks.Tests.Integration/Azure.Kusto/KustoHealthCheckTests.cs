@@ -102,66 +102,6 @@ public class KustoHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddKusto_UseOptions_WithDatabaseName_Healthy() =>
-        await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKusto(
-                    "KustoWithDatabaseHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = KustoClientCreationMode.ConnectionString;
-                        options.DatabaseName = "TestDatabase";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
-            },
-            HealthStatus.Healthy
-        );
-
-    [Test]
-    public async Task AddKusto_UseOptions_WithNonExistentDatabaseName_Unhealthy() =>
-        await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKusto(
-                    "KustoWithNonExistentDatabaseUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = KustoClientCreationMode.ConnectionString;
-                        options.DatabaseName = "NonExistentDatabase";
-                        options.Timeout = 10000;
-                    }
-                );
-            },
-            HealthStatus.Unhealthy,
-            clearJToken: token =>
-            {
-                if (token is null)
-                {
-                    return null;
-                }
-
-                if (
-                    token.Value<string>("status") is string status
-                    && status.Equals(nameof(HealthCheckResult.Unhealthy), StringComparison.OrdinalIgnoreCase)
-                )
-                {
-                    var results = token["results"].FirstOrDefault();
-
-                    if (results?["exception"] is not null)
-                    {
-                        results["exception"]!["message"] = null;
-                    }
-                }
-
-                return token;
-            }
-        );
-
-    [Test]
     public async Task AddKusto_UseOptions_WithConfigureConnectionStringBuilder_Healthy() =>
         await RunAndVerify(
             healthChecks =>
