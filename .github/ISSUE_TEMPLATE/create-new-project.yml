@@ -1,4 +1,4 @@
-name: "Create New Project"
+name: "🆕 Create New Project"
 description: "Template for creating a new project, including build and test validation steps for Copilot automation."
 title: "Project Setup: [ProjectName]"
 labels: ["project", "setup", "copilot"]
