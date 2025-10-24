@@ -70,7 +70,7 @@ internal sealed class KustoHealthCheck : ConfigurableHealthCheckBase<KustoOption
         }
     }
 
-    internal ICslQueryProvider GetKustoClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
+    private ICslQueryProvider GetKustoClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, IKustoOptions
     {
         if (options.Mode == KustoClientCreationMode.ServiceProvider)
@@ -86,7 +86,7 @@ internal sealed class KustoHealthCheck : ConfigurableHealthCheckBase<KustoOption
         return _kustoClients.GetOrAdd(name, _ => CreateKustoClient(options, serviceProvider));
     }
 
-    internal static ICslQueryProvider CreateKustoClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
+    private static ICslQueryProvider CreateKustoClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, IKustoOptions
     {
         KustoConnectionStringBuilder connectionStringBuilder;
