@@ -7,6 +7,13 @@ This package provides a health check for Qdrant, based on the [Qdrant.Client](ht
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Qdrant 1.0 or later (recommended: 1.7+)
+- Network connectivity to Qdrant instance
+- Valid API key if authentication is enabled
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

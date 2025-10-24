@@ -8,6 +8,14 @@ The main purpose is to check that the S3 service is reachable and that the clien
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active AWS account
+- Amazon S3 bucket created and accessible
+- IAM credentials with `s3:GetBucketLocation` permission
+- AWS SDK for .NET configured (via environment variables, AWS Profile, or instance role)
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

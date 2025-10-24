@@ -7,6 +7,13 @@ This package provides a health check for Keycloak services, based on the [Keyclo
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Keycloak 18.0 or later (recommended: 22.0+)
+- Network connectivity to Keycloak server
+- Valid admin credentials or service account
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

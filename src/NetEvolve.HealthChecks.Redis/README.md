@@ -8,6 +8,13 @@ The main purpose is to check that the Redis is reachable and that the client can
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Redis 5.0 or later (recommended: 7.0+)
+- Network connectivity to Redis instance
+- Valid credentials if authentication is enabled
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

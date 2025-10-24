@@ -8,6 +8,13 @@ The main purpose is to check that the ActiveMQ broker is reachable and that the 
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Apache ActiveMQ 5.15 or later (recommended: 5.17+)
+- Network connectivity to ActiveMQ broker
+- Valid credentials if authentication is enabled
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

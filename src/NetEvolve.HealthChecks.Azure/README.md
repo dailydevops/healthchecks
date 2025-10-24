@@ -7,6 +7,13 @@ This bundle package provides health checks for various Azure services. For speci
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active Azure subscription
+- Valid Azure credentials configured
+- Network connectivity to Azure endpoints
+
 ## Supported Azure Services
 
 - [Azure Blob Storage](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)

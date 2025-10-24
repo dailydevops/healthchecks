@@ -8,6 +8,14 @@ The main purpose is to check that the DynamoDB service is reachable and that the
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active AWS account
+- Amazon DynamoDB table created and accessible
+- IAM credentials with `dynamodb:DescribeTable` permission
+- AWS SDK for .NET configured (via environment variables, AWS Profile, or instance role)
+
 ## Installation
 To use this package, you need to install the `NetEvolve.HealthChecks.AWS.DynamoDB` NuGet package. You can do this by running the following command:
 

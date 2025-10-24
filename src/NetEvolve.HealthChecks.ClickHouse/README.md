@@ -8,6 +8,13 @@ The main purpose is to check if the ClickHouse is available and if the database 
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- ClickHouse 21.1 or later (recommended: 23.0+)
+- Network connectivity to ClickHouse instance
+- Valid database credentials with SELECT permissions
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

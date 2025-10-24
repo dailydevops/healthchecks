@@ -5,7 +5,15 @@
 
 This package provides health checks for Azure Application Insights, allowing you to monitor the availability and connectivity of your telemetry tracking.
 
-:bulb: This package is available for .NET 6.0 and later.
+:bulb: This package is available for .NET 8.0 and later.
+
+## Prerequisites
+
+- .NET 8.0 or later
+- Active Azure subscription
+- Azure Application Insights resource created
+- Instrumentation key or connection string
+- Network connectivity to Azure Application Insights endpoints
 
 ## Installation
 

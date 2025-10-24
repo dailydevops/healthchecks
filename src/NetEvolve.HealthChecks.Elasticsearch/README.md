@@ -7,6 +7,13 @@ This package provides a health check for Elasticsearch services, based on the [E
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Elasticsearch 7.0 or later (recommended: 8.0+)
+- Network connectivity to Elasticsearch cluster
+- Valid credentials if security is enabled
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

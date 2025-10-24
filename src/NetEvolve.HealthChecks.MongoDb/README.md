@@ -7,6 +7,13 @@ This package provides a health check for MongoDb databases, based on the [MongoD
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- MongoDB 4.0 or later (recommended: 6.0+)
+- Network connectivity to MongoDB instance
+- Valid database credentials with read permissions
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

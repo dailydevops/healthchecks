@@ -7,6 +7,13 @@ This bundle package provides health checks for various AWS services. For specifi
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active AWS account
+- IAM credentials configured
+- AWS SDK for .NET configured (via environment variables, AWS Profile, or instance role)
+
 ## Supported AWS Services
 
 - [AWS Elastic Compute Cloud (EC2)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.EC2/)

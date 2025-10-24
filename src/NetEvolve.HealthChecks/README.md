@@ -8,6 +8,11 @@ Primarily for testing the healthiness of the own application, like application s
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- ASP.NET Core application
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 

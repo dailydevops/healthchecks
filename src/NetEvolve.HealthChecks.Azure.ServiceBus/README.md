@@ -8,6 +8,15 @@ The main purpose is to check that the Azure Service Bus namespace is reachable a
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active Azure subscription
+- Azure Service Bus namespace created
+- Queue or topic created
+- Valid connection string or managed identity configured
+- Network connectivity to Azure Service Bus endpoints
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

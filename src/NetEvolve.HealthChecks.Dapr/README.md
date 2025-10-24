@@ -7,6 +7,13 @@ This package provides a health check for Dapr, based on the [Dapr.Client](https:
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Dapr runtime 1.9 or later (recommended: 1.12+) installed and running
+- Dapr sidecar configured for the application
+- Network connectivity to Dapr sidecar endpoint (default: http://localhost:3500)
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

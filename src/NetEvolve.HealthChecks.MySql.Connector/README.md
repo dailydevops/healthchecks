@@ -7,6 +7,13 @@ This package provides a health check for MySql databases, based on the [MySqlCon
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- MySQL Server 5.7 or later (recommended: 8.0+)
+- Network connectivity to MySQL instance
+- Valid database credentials with SELECT permissions
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

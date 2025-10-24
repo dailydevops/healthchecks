@@ -8,6 +8,13 @@ The main purpose is to check if the SQL Server is available and if the database 
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- SQL Server 2012 or later
+- Network connectivity to SQL Server instance
+- Valid database credentials with SELECT permissions
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

@@ -8,6 +8,14 @@ The main purpose is to check that the SQS service is reachable and that the clie
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active AWS account
+- Amazon SQS queue created
+- IAM credentials with `sqs:GetQueueAttributes` permission
+- AWS SDK for .NET configured (via environment variables, AWS Profile, or instance role)
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

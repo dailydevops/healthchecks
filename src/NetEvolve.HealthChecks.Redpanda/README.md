@@ -8,6 +8,13 @@ The main purpose is to check that the Redpanda cluster is reachable and that the
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Redpanda 22.1 or later (recommended: 23.0+)
+- Network connectivity to Redpanda brokers
+- Topic creation permissions (if auto-create is disabled)
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

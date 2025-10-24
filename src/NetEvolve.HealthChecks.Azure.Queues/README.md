@@ -7,6 +7,15 @@ This package provides a health check for Azure Queues, based on the [Azure.Stora
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- Active Azure subscription
+- Azure Storage Account created
+- Queue created (or permissions to create queues)
+- Valid connection string or managed identity configured
+- Network connectivity to Azure Storage endpoints
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell

@@ -5,6 +5,15 @@
 
 This package provides health checks for HashiCorp Consul, based on the `Consul` NuGet package.
 
+:bulb: This package is available for .NET 8.0 and later.
+
+## Prerequisites
+
+- .NET 8.0 or later
+- HashiCorp Consul 1.10 or later (recommended: 1.16+)
+- Network connectivity to Consul agent
+- Valid ACL token if ACL is enabled
+
 ## Installation
 
 ```bash

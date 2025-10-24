@@ -7,6 +7,13 @@ This package provides a health check for ArangoDb databases, based on the [Arang
 
 :bulb: This package is available for .NET 8.0 and later.
 
+## Prerequisites
+
+- .NET 8.0 or later
+- ArangoDB 3.8 or later (recommended: 3.11+)
+- Network connectivity to ArangoDB instance
+- Valid database credentials
+
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell
