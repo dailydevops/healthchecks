@@ -14,7 +14,7 @@ To use this package, you need to add the package to your project. You can do thi
 dotnet add package NetEvolve.HealthChecks.SqlServer
 ```
 
-## Health Check - SqlServerLegacy Liveness
+## Health Check - SqlServer Liveness
 The health check is a liveness check. It checks if the SQL Server is available and if the database is online.
 If the query needs longer than the configured timeout, the health check will return `Degraded`.
 If the query fails, for whatever reason, the health check will return `Unhealthy`.
