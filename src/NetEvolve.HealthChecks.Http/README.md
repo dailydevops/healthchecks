@@ -94,3 +94,6 @@ var builder = services.AddHealthChecks();
 
 builder.AddHttp("<name>", options => ..., "http", "api");
 ```
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

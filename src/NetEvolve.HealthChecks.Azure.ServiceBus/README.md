@@ -176,3 +176,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddAzureServiceBus("<name>", options => ..., "azure-servicebus");
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

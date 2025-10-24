@@ -75,3 +75,6 @@ var builder = services.AddHealthChecks();
 
 builder.AddRedis("<name>", options => ..., "redis");
 ```
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

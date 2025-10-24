@@ -72,3 +72,6 @@ var builder = services.AddHealthChecks();
 
 builder.AddQdrant("<name>", options => ..., "qdrant");
 ```
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

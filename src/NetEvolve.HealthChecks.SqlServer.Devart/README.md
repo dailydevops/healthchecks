@@ -75,3 +75,6 @@ var builder = services.AddHealthChecks();
 
 builder.AddSqlServerDevart("<name>", options => ..., "sqlserver", "database");
 ```
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

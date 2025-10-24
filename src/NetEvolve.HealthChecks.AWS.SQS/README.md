@@ -80,3 +80,6 @@ var builder = services.AddHealthChecks();
 
 builder.AddAWSSQS("<name>", options => ..., "sqs");
 ```
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.
