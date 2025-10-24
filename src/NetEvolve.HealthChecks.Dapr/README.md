@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Dapr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/)
 [![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Dapr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Dapr/)
 
-This package provides a health check for Dapr, based on the [Dapr.Client](https://www.nuget.org/packages/Dapr.Client/) package. The main purpose is to check if the Dapr is available and if the sidecar is available.
+This package provides a health check for Dapr, based on the [Dapr.Client](https://www.nuget.org/packages/Dapr.Client/) package. The main purpose is to check if the Dapr sidecar is available and responding to requests.
 
 :bulb: This package is available for .NET 8.0 and later.
 
@@ -14,7 +14,7 @@ dotnet add package NetEvolve.HealthChecks.Dapr
 ```
 
 ## Health Check - Dapr Liveness
-The health check is a liveness check. It checks if the Dapr is available and if the database is online.
+The health check is a liveness check. It checks if the Dapr sidecar is available and responding to requests.
 If the query needs longer than the configured timeout, the health check will return `Degraded`.
 If the query fails, for whatever reason, the health check will return `Unhealthy`.
 
@@ -23,14 +23,14 @@ After adding the package, you need to import the namespace and add the health ch
 ```csharp
 using NetEvolve.HealthChecks.Dapr;
 ```
-Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
+Therefore, you can use two different approaches.
 
 ### Parameters
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
-- `tags`: The tags for the health check. The tags `Dapr` and `database` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
+- `tags`: The tags for the health check. The tag `dapr` is always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. This approach is recommended if you have multiple Dapr instances to check.
+The first one is to use the configuration based approach. This approach is recommended if you want to configure the health check through your application settings.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -50,7 +50,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you only have one Dapr instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you want to configure the health check programmatically with dynamic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -65,5 +65,5 @@ builder.AddDapr(options =>
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddDapr(options => ..., "Dapr");
+builder.AddDapr(options => ..., "dapr", "sidecar");
 ```
