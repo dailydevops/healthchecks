@@ -9,7 +9,7 @@ public sealed class FirestoreDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly FirestoreContainer _database = new FirestoreBuilder().WithLogger(NullLogger.Instance).Build();
 
-    public string ProjectId => _database.GetProjectId();
+    public string ProjectId => "test-project";
 
     public string EmulatorHost => _database.GetEmulatorEndpoint();
 
