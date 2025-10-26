@@ -28,11 +28,14 @@ internal sealed class FirestoreHealthCheck : ConfigurableHealthCheckBase<Firesto
             ? _serviceProvider.GetRequiredService<FirestoreDb>()
             : _serviceProvider.GetRequiredKeyedService<FirestoreDb>(options.KeyedService);
 
-        var (isValid, _) = await client
-            .ListRootCollectionsAsync()
-            .GetAsyncEnumerator(cancellationToken)
-            .MoveNextAsync()
-            .AsTask()
+        // Use a simple operation to check if the database is accessible
+        // Creating a document reference is a local operation that validates the client is configured
+        var testCollection = client.Collection("healthcheck");
+        var testDoc = testCollection.Document("test");
+
+        // Attempt a lightweight operation with timeout
+        var (isValid, _) = await testDoc
+            .GetSnapshotAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 

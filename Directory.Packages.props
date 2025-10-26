@@ -85,6 +85,7 @@
     <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Firestore" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Keycloak" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="$(VersionTestContainers)" />
