@@ -39,7 +39,7 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
 
     public async Task InitializeAsync()
     {
-        var cancellationToken = TestContext.Current!.CancellationToken;
+        var cancellationToken = TestContext.Current!.Execution.CancellationToken;
 
         await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 

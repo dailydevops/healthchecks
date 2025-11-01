@@ -14,7 +14,9 @@ using NetEvolve.HealthChecks.Tests.Integration.ArangoDb.Container;
 public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     protected ContainerBase _container { get; }
+#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
     private ArangoDBClient _client = default!;
+#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
     protected ArangoDbHealthCheckBaseTests(ContainerBase container) => _container = container;

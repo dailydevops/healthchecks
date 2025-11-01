@@ -16,7 +16,9 @@ using NetEvolve.HealthChecks.MongoDb;
 public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly MongoDbDatabase _database;
+#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
     private MongoClient _client = default!;
+#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
     public MongoDbHealthCheckTests(MongoDbDatabase database) => _database = database;

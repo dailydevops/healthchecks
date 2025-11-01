@@ -106,10 +106,7 @@ public class DependencyInjectionExtensionsTests
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>();
         var registrations = options?.Value?.Registrations;
 
-        _ = await Assert
-            .That(registrations)
-            .IsNotNull()
-            .And.Contains<ICollection<HealthCheckRegistration>, HealthCheckRegistration>(r => r.Name == name);
+        _ = await Assert.That(registrations).IsNotNull().And.Contains(r => r.Name == name);
     }
 
     [Test]
@@ -189,7 +186,7 @@ public class DependencyInjectionExtensionsTests
         _ = await Assert
             .That(registrations)
             .IsNotNull()
-            .And.Contains<ICollection<HealthCheckRegistration>, HealthCheckRegistration>(r => r.Name == name1)
-            .And.Contains<ICollection<HealthCheckRegistration>, HealthCheckRegistration>(r => r.Name == name2);
+            .And.Contains(r => r.Name == name1)
+            .And.Contains(r => r.Name == name2);
     }
 }
