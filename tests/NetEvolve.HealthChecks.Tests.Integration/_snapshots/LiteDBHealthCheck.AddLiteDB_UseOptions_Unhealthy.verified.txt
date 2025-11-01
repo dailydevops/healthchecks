@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Collection 'NonExistentCollection' does not exist in the database.,
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        litedb,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}

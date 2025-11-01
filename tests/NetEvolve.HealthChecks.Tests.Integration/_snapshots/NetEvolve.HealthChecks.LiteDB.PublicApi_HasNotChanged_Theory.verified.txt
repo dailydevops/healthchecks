@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.LiteDB
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddLiteDB([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.LiteDB.LiteDBOptions>? options = null, params string[] tags) { }
+    }
+    public class LiteDBOptions : System.IEquatable<NetEvolve.HealthChecks.LiteDB.LiteDBOptions>
+    {
+        public LiteDBOptions() { }
+        public string CollectionName { get; set; }
+        public string ConnectionString { get; set; }
+        public double Timeout { get; set; }
+    }
+}
