@@ -29,6 +29,8 @@ internal static class InstanceSharedType
 
     public const SharedType Firebird = SharedType.PerClass;
 
+    public const SharedType Firestore = SharedType.PerClass;
+
     public const SharedType Kafka = SharedType.PerClass;
 
     public const SharedType Keycloak = SharedType.PerClass;

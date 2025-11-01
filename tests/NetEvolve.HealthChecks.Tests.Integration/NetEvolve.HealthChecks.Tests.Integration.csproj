@@ -25,6 +25,7 @@
     <PackageReference Include="DuckDB.NET.Data" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" />
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
+    <PackageReference Include="Google.Cloud.Firestore" />
     <PackageReference Include="Keycloak.Net.Core" />
     <PackageReference Include="LiteDB" />
     <PackageReference Include="Microsoft.Data.SqlClient" />
@@ -69,6 +70,7 @@
     <PackageReference Include="Testcontainers.Db2" />
     <PackageReference Include="Testcontainers.Elasticsearch" />
     <PackageReference Include="Testcontainers.FirebirdSql" />
+    <PackageReference Include="Testcontainers.Firestore" />
     <PackageReference Include="Testcontainers.Kafka" />
     <PackageReference Include="Testcontainers.Keycloak" />
     <PackageReference Include="Testcontainers.LocalStack" />
@@ -117,6 +119,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Elasticsearch\NetEvolve.HealthChecks.Elasticsearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Firestore\NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Http\NetEvolve.HealthChecks.Http.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />

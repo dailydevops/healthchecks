@@ -41,6 +41,7 @@
     <PackageVersion Include="DuckDB.NET.Data" Version="1.4.1" />
     <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.0" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.3" />
+    <PackageVersion Include="Google.Cloud.Firestore" Version="3.10.0" />
     <PackageVersion Include="Keycloak.Net.Core" Version="1.0.37" />
     <PackageVersion Include="LiteDB" Version="5.0.21" />
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
@@ -84,6 +85,7 @@
     <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Firestore" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Keycloak" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="$(VersionTestContainers)" />
