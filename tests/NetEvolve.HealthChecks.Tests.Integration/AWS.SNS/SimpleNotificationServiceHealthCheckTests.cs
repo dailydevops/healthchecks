@@ -121,6 +121,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                         options.TopicName = topicName;
                         options.Subscription = subcription.SubscriptionArn;
                         options.Mode = CreationMode.BasicAuthentication;
+                        options.Timeout = 10000; // Set a reasonable timeout
                     }
                 );
             },
