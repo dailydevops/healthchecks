@@ -13,7 +13,7 @@ description: 'This file contains instructions for Blazor development.
 * MUST write idiomatic and efficient Blazor and C# code.
 * MUST follow .NET and Blazor conventions and best practices.
 * MUST use Razor Components appropriately for component-based UI development.
-* MUST use the latest version C#, currently C# 13 features like record types, pattern matching, and global usings.
+* MUST use the latest version C#, currently C# 13 features like record types, pattern matching, and global usings (see [.NET 10 and C# 13 Adoption](../../decisions/2025-07-11-dotnet-10-csharp-13-adoption.md)).
 * MUST use async/await where applicable to ensure non-blocking UI operations.
 
 ## Code Style and Structure

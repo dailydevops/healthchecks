@@ -21,8 +21,26 @@ description: 'This file contains instructions for C# development.
 Follow these C# coding conventions for consistency across the project.
 
 * MUST use `var` when the type is obvious from the right side of the assignment.
-* MUST use `Argument.ThrowIfNull(x)` instead of `if (x == null) throw new ArgumentNullException(nameof(x))`, when nuget package `NetEvolve.Arguments` is referenced.
-* MUST use `ArgumentNullException.ThrowIfNull(x)` instead of `if (x == null) throw new ArgumentNullException(nameof(x))`, when nuget package `NetEvolve.Arguments` is not referenced.
+* MUST use appropriate null-checking pattern based on package availability:
+  - When `NetEvolve.Arguments` package is referenced in project: Use `Argument.ThrowIfNull(x)`
+  - When `NetEvolve.Arguments` package is NOT referenced: Use `ArgumentNullException.ThrowIfNull(x)`
+  - Check `Directory.Packages.props` for `NetEvolve.Arguments` availability
+  - Example with NetEvolve.Arguments:
+    ```csharp
+    public void ProcessData(string data)
+    {
+        Argument.ThrowIfNull(data);
+        // process data
+    }
+    ```
+  - Example without NetEvolve.Arguments:
+    ```csharp
+    public void ProcessData(string data)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+        // process data
+    }
+    ```
 
 ## Formatting
 

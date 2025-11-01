@@ -132,7 +132,8 @@ If decisions appear to conflict:
 1. **Check states**: "accepted" decisions override "proposed" ones
 2. **Check dates**: More recent decisions (`lastModified`) take precedence
 3. **Check specificity**: More specific `applyTo` patterns override generic ones
-4. **Ask user**: If conflict remains unclear, request user clarification
+4. **Decisions vs. Instructions**: Accepted decisions from `decisions/` folder override technical instructions from `.github/instructions/` when both apply to the same situation
+5. **Ask user**: If conflict remains unclear, request user clarification
 
 ## Decision Updates
 

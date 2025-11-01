@@ -38,7 +38,10 @@ These files control project-wide settings and should remain unchanged unless spe
 * MUST NEVER change `global.json` unless explicitly asked to.
 * MUST NEVER change `Directory.Build.props` unless explicitly asked to.
 * MUST NEVER change `Directory.Build.targets` unless explicitly asked to.
-* MUST NEVER change `Directory.Packages.props` unless explicitly asked to.
+* MUST NEVER change `Directory.Packages.props` structure or properties unless explicitly asked to.
+  - MAY add new `<PackageVersion>` entries for required NuGet packages.
+  - MUST NOT modify existing package versions without explicit user request.
+  - MUST NOT change MSBuild properties like `ManagePackageVersionsCentrally`.
 
 ## Code Reviews and Implementation
 
