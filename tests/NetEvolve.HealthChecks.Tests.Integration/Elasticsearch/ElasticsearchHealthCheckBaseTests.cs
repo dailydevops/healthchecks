@@ -15,7 +15,9 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
 {
     private readonly ContainerBase _container;
     private readonly bool _isCluster;
+#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
     private ElasticsearchClientSettings _clientSettings;
+#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private ElasticsearchClient _client = default!;
 
     protected ElasticsearchHealthCheckBaseTests(ContainerBase container, bool isCluster = false)
