@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.GCP.Firestore;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.GCP.Firestore;
 
 using System;
 using System.Collections.Generic;
@@ -87,7 +87,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
     public async Task AddFirestore_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestNoValues"),
-            HealthStatus.Degraded,
+            HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)

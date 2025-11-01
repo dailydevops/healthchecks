@@ -1,11 +1,12 @@
-namespace NetEvolve.HealthChecks.GCP.Firestore;
+﻿namespace NetEvolve.HealthChecks.GCP.Firestore;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class FirestoreOptionsConfigure
     : IConfigureNamedOptions<FirestoreOptions>,
-        IPostConfigureOptions<FirestoreOptions>
+        IValidateOptions<FirestoreOptions>
 {
     private readonly IConfiguration _configuration;
 
@@ -20,11 +21,23 @@ internal sealed class FirestoreOptionsConfigure
 
     public void Configure(FirestoreOptions options) => Configure(Options.DefaultName, options);
 
-    public void PostConfigure(string? name, FirestoreOptions options)
+    public ValidateOptionsResult Validate(string? name, FirestoreOptions options)
     {
-        if (options.Timeout < -1)
+        if (string.IsNullOrWhiteSpace(name))
         {
-            options.Timeout = -1;
+            return Fail("The name cannot be null or whitespace.");
         }
+
+        if (options is null)
+        {
+            return Fail("The option cannot be null.");
+        }
+
+        if (options.Timeout < Timeout.Infinite)
+        {
+            return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
+        }
+
+        return Success;
     }
 }
