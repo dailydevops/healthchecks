@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerKeyedServiceHealthy: Healthy,
+      name: TestContainerKeyedServiceHealthy,
+      status: Healthy,
+      tags: [
+        firestore,
+        gcp
+      ]
+    }
+  ],
+  status: Healthy
+}
