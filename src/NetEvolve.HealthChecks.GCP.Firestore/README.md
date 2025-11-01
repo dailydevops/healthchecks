@@ -46,7 +46,7 @@ The configuration looks like this:
     "GCP": {
       "Firestore": {
         "<name>": {
-          "Timeout": "<timeout>" // optional, default is 100 milliseconds
+          "Timeout": <timeout> // optional, default is 100 milliseconds
         }
       }
     }
@@ -61,7 +61,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddFirestore("<name>", options =>
 {
-    options.Timeout = "<timeout>"; // optional, default is 100 milliseconds
+    options.Timeout = <timeout>; // optional, default is 100 milliseconds
 });
 ```
 
@@ -72,3 +72,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddFirestore("<name>", options => ..., "firestore", "gcp");
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://raw.githubusercontent.com/dailydevops/healthchecks/refs/heads/main/LICENSE) file for details.
