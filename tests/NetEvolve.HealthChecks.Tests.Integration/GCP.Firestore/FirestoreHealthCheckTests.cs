@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Firestore;
 
-[TestGroup(nameof(Firestore))]
+[TestGroup($"GCP.{nameof(Firestore)}")]
 [ClassDataSource<FirestoreDatabase>(Shared = InstanceSharedType.Firestore)]
 public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
 {

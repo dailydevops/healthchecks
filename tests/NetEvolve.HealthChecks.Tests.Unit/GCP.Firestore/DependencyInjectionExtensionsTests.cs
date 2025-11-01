@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.GCP.Firestore;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.GCP.Firestore;
 
 using System;
 using System.Linq;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Firestore;
 
-[TestGroup(nameof(Firestore))]
+[TestGroup($"GCP.{nameof(Firestore)}")]
 public sealed class DependencyInjectionExtensionsTests
 {
     [Test]

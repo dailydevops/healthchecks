@@ -1,10 +1,10 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.GCP.Firestore;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.GCP.Firestore;
 
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Firestore;
 
-[TestGroup(nameof(Firestore))]
+[TestGroup($"GCP.{nameof(Firestore)}")]
 public sealed class FirestoreOptionsTests
 {
     [Test]

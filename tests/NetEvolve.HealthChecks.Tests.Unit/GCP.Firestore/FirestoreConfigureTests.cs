@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Firestore;
 
-[TestGroup(nameof(Firestore))]
+[TestGroup($"GCP.{nameof(Firestore)}")]
 public sealed class FirestoreConfigureTests
 {
     [Test]
