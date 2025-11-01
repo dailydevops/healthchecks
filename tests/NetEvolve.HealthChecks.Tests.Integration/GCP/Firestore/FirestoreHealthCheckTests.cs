@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.Tests.Integration.GCP.Firestore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using global::Google.Cloud.Firestore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -23,11 +22,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", _database.EmulatorHost);
-                _ = services.AddSingleton(_ => FirestoreDb.Create(_database.ProjectId));
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
         );
 
     [Test]
@@ -35,11 +30,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services =>
-            {
-                Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", _database.EmulatorHost);
-                _ = services.AddSingleton(_ => FirestoreDb.Create(_database.ProjectId));
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
         );
 
     [Test]
@@ -57,11 +48,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", _database.EmulatorHost);
-                _ = services.AddKeyedSingleton("firestore", (_, _) => FirestoreDb.Create(_database.ProjectId));
-            }
+            serviceBuilder: services => _ = services.AddKeyedSingleton("firestore", (_, _) => _database.Database)
         );
 
     [Test]
@@ -77,11 +64,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-            {
-                Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", _database.EmulatorHost);
-                _ = services.AddSingleton(_ => FirestoreDb.Create(_database.ProjectId));
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
         );
 
     [Test]
@@ -97,11 +80,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-            {
-                Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", _database.EmulatorHost);
-                _ = services.AddSingleton(_ => FirestoreDb.Create(_database.ProjectId));
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
         );
 
     [Test]
@@ -117,10 +96,6 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-            {
-                Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", _database.EmulatorHost);
-                _ = services.AddSingleton(_ => FirestoreDb.Create(_database.ProjectId));
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
         );
 }
