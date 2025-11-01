@@ -15,10 +15,6 @@
         "Authorization": "Bearer ${input:github_mcp_pat}"
       }
     },
-    "Sequential Thinking": {
-      "url": "https://remote.mcpservers.org/sequentialthinking/mcp",
-      "type": "http"
-    },
     "Microsoft Docs": {
       "url": "https://learn.microsoft.com/api/mcp",
       "type": "sse"
