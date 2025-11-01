@@ -22,6 +22,7 @@ internal sealed class LiteDBHealthCheck(IOptionsMonitor<LiteDBOptions> optionsMo
 
         var sw = Stopwatch.StartNew();
         var collectionExists = db.CollectionExists(options.CollectionName);
+        sw.Stop();
         var isTimelyResponse = options.Timeout >= sw.Elapsed.TotalMilliseconds;
 
         if (!collectionExists)
