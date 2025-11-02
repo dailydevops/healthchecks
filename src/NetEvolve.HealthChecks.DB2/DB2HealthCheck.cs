@@ -3,7 +3,7 @@
 using IBM.Data.Db2;
 using SourceGenerator.Attributes;
 
-[GenerateSqlHealthCheck(typeof(DB2Connection), typeof(DB2Options), true)]
+[GenerateSqlHealthCheck(typeof(DB2Connection), typeof(DB2Options), false)]
 internal sealed partial class DB2HealthCheck
 {
     /// <summary>
