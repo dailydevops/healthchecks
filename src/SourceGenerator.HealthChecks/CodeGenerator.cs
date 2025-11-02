@@ -30,7 +30,7 @@ internal static class CodeGenerator
         _ = cb.AppendLine(
                 $"partial class {candidate.Name}(IOptionsMonitor<{candidate.OptionsTypeName}> optionsMonitor)"
             )
-            .Append(' ', 4)
+            .Intend()
             .AppendLine(": IHealthCheck");
 
         using (cb.Scope())
@@ -45,10 +45,9 @@ internal static class CodeGenerator
                 .AppendXmlDocInheritDoc();
 
             using (
-                cb.AppendLine(
-                        "public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)"
-                    )
-                    .Scope()
+                cb.ScopeLine(
+                    "public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)"
+                )
             )
             {
                 _ = cb.AppendLine("ArgumentNullException.ThrowIfNull(context);")
@@ -57,18 +56,18 @@ internal static class CodeGenerator
                     .AppendLine("var failureStatus = context.Registration.FailureStatus;")
                     .AppendLine();
 
-                using (cb.AppendLine("if (cancellationToken.IsCancellationRequested)").Scope())
+                using (cb.ScopeLine("if (cancellationToken.IsCancellationRequested)"))
                 {
                     _ = cb.HealthCheckUnhealthy("Cancellation requested.");
                 }
 
                 _ = cb.AppendLine();
 
-                using (cb.AppendLine("try").Scope())
+                using (cb.ScopeLine("try"))
                 {
                     _ = cb.AppendLine("var options = _optionsMonitor.Get(name);");
 
-                    using (cb.AppendLine($"if (options?.Equals(_defaultConfiguration) != false)").Scope())
+                    using (cb.ScopeLine($"if (options?.Equals(_defaultConfiguration) != false)"))
                     {
                         _ = cb.HealthCheckUnhealthy("Missing configuration.");
                     }
@@ -80,12 +79,12 @@ internal static class CodeGenerator
                 }
                 if (withWin32ExceptionHandling)
                 {
-                    using (cb.AppendLine("catch (Exception wex) when (wex.InnerException is Win32Exception)").Scope())
+                    using (cb.ScopeLine("catch (Exception wex) when (wex.InnerException is Win32Exception)"))
                     {
                         _ = cb.HealthCheckUnhealthy("Unexpected Win32 exception");
                     }
                 }
-                using (cb.AppendLine("catch (Exception ex)").Scope())
+                using (cb.ScopeLine("catch (Exception ex)"))
                 {
                     _ = cb.HealthCheckUnhealthy("Unexpected error.", "ex");
                 }
