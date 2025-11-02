@@ -59,7 +59,9 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
 
                 using (builder.ScopeLine("await using (connection.ConfigureAwait(false))"))
                 {
-                    _ = builder.AppendLine("var command = connection.CreateCommand();");
+                    _ = builder
+                        .AppendLine("await connection.OpenAsync(cancellationToken).ConfigureAwait(false);")
+                        .AppendLine("var command = connection.CreateCommand();");
 
                     using (builder.ScopeLine("await using (command.ConfigureAwait(false))"))
                     {
