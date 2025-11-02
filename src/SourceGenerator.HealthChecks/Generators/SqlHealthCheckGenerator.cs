@@ -2,6 +2,7 @@
 
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using NetEvolve.CodeBuilder;
@@ -19,7 +20,7 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
             )
             .Where(c => c is not null);
 
-        context.RegisterSourceOutput(toBeImplemented, static (ctx, source) => Generate(ctx, source));
+        context.RegisterSourceOutput(toBeImplemented, static (ctx, candidate) => Generate(ctx, candidate));
     }
 
     private static void Generate(SourceProductionContext context, Candidate candidate)
@@ -38,14 +39,14 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
             .Append("private ")
             .AppendIf(candidate.AsyncImplementation, "async ")
             .AppendLine("ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(")
-            .Append(' ', 4)
+            .Intend()
             .AppendLine("string name,")
-            .Append(' ', 4)
+            .Intend()
             .AppendLine("HealthStatus failureStatus,")
-            .Append(' ', 4)
+            .Intend()
             .Append(candidate.OptionsTypeName)
             .AppendLine(" options,")
-            .Append(' ', 4)
+            .Intend()
             .AppendLine("CancellationToken cancellationToken)");
         using (builder.Scope())
         {
@@ -56,11 +57,11 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
                     $"var connection = new global::{candidate.ConnectionTypeNamespace}.{candidate.ConnectionTypeName}(options.ConnectionString);"
                 );
 
-                using (builder.AppendLine("await using (connection.ConfigureAwait(false))").Scope())
+                using (builder.ScopeLine("await using (connection.ConfigureAwait(false))"))
                 {
                     _ = builder.AppendLine("var command = connection.CreateCommand();");
 
-                    using (builder.AppendLine("await using (command.ConfigureAwait(false))").Scope())
+                    using (builder.ScopeLine("await using (command.ConfigureAwait(false))"))
                     {
                         _ = builder
                             .AppendLine(
@@ -149,7 +150,8 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
     }
 
     private static bool IsTargetForGeneration(SyntaxNode node) =>
-        node is ClassDeclarationSyntax { AttributeLists.Count: > 0 };
+        node is ClassDeclarationSyntax { AttributeLists.Count: > 0 } classNode
+        && classNode.Modifiers.Any(m => m.IsKind(SyntaxKind.PartialKeyword));
 
     private sealed record Candidate : ICandidate
     {
