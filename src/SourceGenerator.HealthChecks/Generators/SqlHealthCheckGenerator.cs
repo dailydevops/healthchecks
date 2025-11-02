@@ -1,4 +1,4 @@
-﻿namespace SourceGenerator.HealthChecks;
+﻿namespace SourceGenerator.HealthChecks.Generators;
 
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -12,7 +12,7 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var toBeImplemented = context
-            .SyntaxProvider.ForAttributeWithMetadataName<Candidate>(
+            .SyntaxProvider.ForAttributeWithMetadataName(
                 AttributeName.Namespace + AttributeName.GenerateSqlHealthCheck,
                 static (s, _) => IsTargetForGeneration(s),
                 static (ctx, _) => GetCandidate(ctx)!
