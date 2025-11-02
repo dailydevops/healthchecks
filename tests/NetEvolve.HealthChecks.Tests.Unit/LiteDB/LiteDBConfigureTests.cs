@@ -2,7 +2,6 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.LiteDB;
 

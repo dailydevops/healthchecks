@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.LiteDB;
 
-using System;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.LiteDB;
 
