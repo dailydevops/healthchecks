@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using NetEvolve.Extensions.TUnit;
 using PublicApiGenerator;
+using SourceGenerator.Attributes;
 
 [TestGroup(nameof(HealthChecks))]
 [TestGroup("PublicAPI")]
@@ -21,6 +22,7 @@ public class PublicApiTests
         typeof(AssemblyMetadataAttribute).FullName!,
         typeof(NeutralResourcesLanguageAttribute).FullName!,
         typeof(AttributeUsageAttribute).FullName!,
+        typeof(HealthCheckHelperAttribute).FullName!,
     ];
 
     [Test]
