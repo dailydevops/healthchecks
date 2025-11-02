@@ -9,7 +9,6 @@
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
     <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" />
     <ProjectReference
       Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
