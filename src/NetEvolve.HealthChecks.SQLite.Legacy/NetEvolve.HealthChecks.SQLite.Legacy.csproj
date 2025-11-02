@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for SQLite, based on the nuget package `System.Data.Sqlite`.</Description>
@@ -10,14 +10,13 @@
     <PackageReference Include="System.Drawing.Common" VersionOverride="4.7.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
     <ProjectReference
       Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj"
       PrivateAssets="all"
       PublicAssets="runtime; build; native; contentfiles; analyzers"
     />
     <ProjectReference
-      Include="..\SourceGenerator.SqlHealthCheck\SourceGenerator.SqlHealthCheck.csproj"
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
     />

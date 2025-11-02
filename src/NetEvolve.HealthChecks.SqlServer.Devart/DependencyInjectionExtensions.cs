@@ -7,11 +7,12 @@ using global::Devart.Data.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Arguments;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
 /// </summary>
+[HealthCheckHelper]
 public static class DependencyInjectionExtensions
 {
     private static readonly string[] _defaultTags = ["sqlserver", "database", "devart"];

@@ -1,6 +1,5 @@
 ﻿namespace SourceGenerator.HealthChecks.Generators;
 
-using System;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;

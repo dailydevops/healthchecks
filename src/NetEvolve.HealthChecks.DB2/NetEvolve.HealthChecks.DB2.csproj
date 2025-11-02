@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Db2, based on the nuget packages `Net.IBM.Data.Db2` (Windows), `Net.IBM.Data.Db2-lnx` (Linux) and `Net.IBM.Data.Db2-osx` (OSX).</Description>
@@ -27,12 +27,9 @@
       PublicAssets="runtime; build; native; contentfiles; analyzers"
     />
     <ProjectReference
-      Include="..\SourceGenerator.SqlHealthCheck\SourceGenerator.SqlHealthCheck.csproj"
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
     />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
   </ItemGroup>
 </Project>
