@@ -13,7 +13,7 @@ using SourceGenerator.Attributes;
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
 /// </summary>
 [HealthCheckHelper]
-public static class DependencyInjectionExtensions
+public static partial class DependencyInjectionExtensions
 {
     private static readonly string[] _defaultTags = ["sqlserver", "database", "devart"];
 
