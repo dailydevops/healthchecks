@@ -3,7 +3,7 @@
 using global::ClickHouse.Client.ADO;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(ClickHouseConnection), typeof(ClickHouseOptions), true)]
 internal sealed partial class ClickHouseHealthCheck(IOptionsMonitor<ClickHouseOptions> optionsMonitor)

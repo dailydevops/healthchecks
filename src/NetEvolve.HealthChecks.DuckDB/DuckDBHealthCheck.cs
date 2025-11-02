@@ -3,7 +3,7 @@
 using global::DuckDB.NET.Data;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(DuckDBConnection), typeof(DuckDBOptions), true)]
 internal sealed partial class DuckDBHealthCheck(IOptionsMonitor<DuckDBOptions> optionsMonitor)

@@ -69,6 +69,8 @@
     <Project Path="src/NetEvolve.HealthChecks.SqlServer.Legacy/NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SqlServer/NetEvolve.HealthChecks.SqlServer.csproj" />
     <Project Path="src/NetEvolve.HealthChecks/NetEvolve.HealthChecks.csproj" />
+    <Project Path="src/SourceGenerator.Attributes/SourceGenerator.Attributes.csproj" />
+    <Project Path="src/SourceGenerator.HealthChecks/SourceGenerator.HealthChecks.csproj" />
     <Project Path="src/SourceGenerator.SqlHealthCheck/SourceGenerator.SqlHealthCheck.csproj" />
   </Folder>
   <Folder Name="/tests/">

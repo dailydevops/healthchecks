@@ -1,4 +1,4 @@
-﻿namespace SourceGenerator.SqlHealthCheck;
+﻿namespace SourceGenerator.Attributes;
 
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -8,30 +8,11 @@ using Microsoft.CodeAnalysis.Text;
 [Generator(LanguageNames.CSharp)]
 internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
 {
-    public static string Attribute =>
-        """
-namespace SourceGenerator.SqlHealthCheck;
-
-using System;
-using System.Diagnostics.CodeAnalysis;
-
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-[ExcludeFromCodeCoverage]
-#pragma warning disable CS9113, CA1019 // Parameter is unread.
-internal sealed class GenerateSqlHealthCheckAttribute(Type connectionType, Type optionsType, bool asyncImplementation)
-#pragma warning restore CS9113, CA1019 // Parameter is unread.
-    : Attribute;
-""";
-
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        context.RegisterPostInitializationOutput(context =>
-            context.AddSource("GenerateSqlHealthCheckAttribute.g.cs", SourceText.From(Attribute, Encoding.UTF8))
-        );
-
         var toBeImplemented = context
             .SyntaxProvider.ForAttributeWithMetadataName<Candidate>(
-                "SourceGenerator.SqlHealthCheck.GenerateSqlHealthCheckAttribute",
+                "SourceGenerator.Attributes.GenerateSqlHealthCheckAttribute",
                 static (s, _) => IsTargetForGeneration(s),
                 static (ctx, _) => GetCandidate(ctx)!
             )

@@ -22,6 +22,11 @@
       PrivateAssets="all"
     />
     <ProjectReference
+      Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj"
+      PrivateAssets="all"
+      PublicAssets="runtime; build; native; contentfiles; analyzers"
+    />
+    <ProjectReference
       Include="..\SourceGenerator.SqlHealthCheck\SourceGenerator.SqlHealthCheck.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"

@@ -3,7 +3,7 @@
 using IBM.Data.Db2;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(DB2Connection), typeof(DB2Options), true)]
 internal sealed partial class DB2HealthCheck(IOptionsMonitor<DB2Options> optionsMonitor)

@@ -3,7 +3,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(SqliteConnection), typeof(SQLiteOptions), true)]
 internal sealed partial class SQLiteHealthCheck(IOptionsMonitor<SQLiteOptions> optionsMonitor)

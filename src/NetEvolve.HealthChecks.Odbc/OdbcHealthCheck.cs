@@ -3,7 +3,7 @@
 using System.Data.Odbc;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(OdbcConnection), typeof(OdbcOptions), true)]
 internal sealed partial class OdbcHealthCheck(IOptionsMonitor<OdbcOptions> optionsMonitor)

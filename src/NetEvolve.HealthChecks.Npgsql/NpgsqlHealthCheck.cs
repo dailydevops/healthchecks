@@ -3,7 +3,7 @@
 using global::Npgsql;
 using Microsoft.Extensions.Options;
 using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(NpgsqlConnection), typeof(NpgsqlOptions), true)]
 internal sealed partial class NpgsqlHealthCheck(IOptionsMonitor<NpgsqlOptions> optionsMonitor)
