@@ -3,7 +3,7 @@
 using Microsoft.Data.SqlClient;
 using SourceGenerator.Attributes;
 
-[GenerateSqlHealthCheck(typeof(SqlConnection), typeof(SqlServerOptions), false)]
+[GenerateSqlHealthCheck(typeof(SqlConnection), typeof(SqlServerOptions), true)]
 internal sealed partial class SqlServerHealthCheck
 {
     /// <summary>
