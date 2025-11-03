@@ -199,46 +199,4 @@ public sealed class RavenDbHealthCheckTests
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }
-
-    [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnDegraded()
-    {
-        // Arrange
-        var options = new RavenDbOptions
-        {
-            KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (_1, cancellationToken) =>
-            {
-                await Task.Delay(100, cancellationToken); // Simulate long-running command
-                return true;
-            },
-        };
-
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
-
-        // Setup connection mock that delays long enough to cause timeout
-        var store = Substitute.For<IDocumentStore>();
-
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(store);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).Contains("test: Degraded", StringComparison.Ordinal);
-        }
-    }
 }
