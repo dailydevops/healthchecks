@@ -71,7 +71,6 @@
     <Project Path="src/NetEvolve.HealthChecks/NetEvolve.HealthChecks.csproj" />
     <Project Path="src/SourceGenerator.Attributes/SourceGenerator.Attributes.csproj" />
     <Project Path="src/SourceGenerator.HealthChecks/SourceGenerator.HealthChecks.csproj" />
-    <Project Path="src/SourceGenerator.SqlHealthCheck/SourceGenerator.SqlHealthCheck.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/NetEvolve.HealthChecks.Tests.Architecture/NetEvolve.HealthChecks.Tests.Architecture.csproj" />
