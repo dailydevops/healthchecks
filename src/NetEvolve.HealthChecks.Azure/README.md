@@ -9,6 +9,7 @@ This bundle package provides health checks for various Azure services. For speci
 
 ## Supported Azure Services
 
+- [Azure Application Insights](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ApplicationInsights/)
 - [Azure Blob Storage](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
 - [Azure Service Bus](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
 - [Azure Storage Queues](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)

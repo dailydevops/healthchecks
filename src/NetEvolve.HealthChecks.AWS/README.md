@@ -9,6 +9,7 @@ This bundle package provides health checks for various AWS services. For specifi
 
 ## Supported AWS Services
 
+- [AWS DynamoDB](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.DynamoDB/)
 - [AWS Elastic Compute Cloud (EC2)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.EC2/)
 - [AWS Simple Notification Service (SNS)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SNS/)
 - [AWS Simple Queue Service (SQS)](https://www.nuget.org/packages/NetEvolve.HealthChecks.AWS.SQS/)
