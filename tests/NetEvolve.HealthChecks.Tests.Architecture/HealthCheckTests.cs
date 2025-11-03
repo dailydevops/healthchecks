@@ -68,13 +68,11 @@ public class HealthCheckTests
     [Test]
     public void HealthCheckMembers_ShouldNotBePublic_Expected()
     {
-        var healthCheckMembers = MethodMembers().That().AreDeclaredIn(typeof(IHealthCheck));
-
         var rule = MethodMembers()
             .That()
             .AreDeclaredIn(_healthChecks)
             .And()
-            .AreNot(healthCheckMembers)
+            .DoNotHaveNameContaining("CheckHealthAsync")
             .And()
             .AreNoConstructors()
             .Should()
