@@ -1,6 +1,6 @@
 name: "🆕 Create New Project"
 description: "Template for creating a new project, including build and test validation steps for Copilot automation."
-title: "Project Setup: [ProjectName]"
+title: "NetEvolve.HealthChecks.[ProjectName]"
 labels: ["project", "setup", "copilot"]
 assignees: []
 
@@ -73,15 +73,15 @@ body:
           required: false
         - label: "Include a clear README.md describing the project purpose"
           required: false
-        - label: "Restore NuGet packages (`dotnet restore`)"
+        - label: "Restore NuGet packages (`dotnet restore HealthChecks.slnx`)"
           required: false
-        - label: "Build the solution (`dotnet build --no-restore`)"
+        - label: "Build the solution (`dotnet build HealthChecks.slnx --no-restore`)"
           required: false
         - label: "Add unit tests to `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/` folder"
           required: false
         - label: "Add integration tests to `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/` folder"
           required: false
-        - label: "Run project-specific tests (`dotnet test --filter FullyQualifiedName~<ProjectName>`)"
+        - label: "Run project-specific tests (`dotnet test HealthChecks.slnx --filter FullyQualifiedName~<ProjectName>`)"
           required: false
         - label: "Verify all tests pass successfully"
           required: false
@@ -102,5 +102,5 @@ body:
         **Note for Copilot:**
         - Use the project name to create `src/NetEvolve.HealthChecks.<ProjectName>/`
         - Add TestContainer package if specified
-        - Run tests filtered by: `dotnet test --filter FullyQualifiedName~<ProjectName>`
+        - Run tests filtered by: `dotnet test HealthChecks.slnx --filter FullyQualifiedName~<ProjectName>`
         - Ensure all validation steps complete successfully
