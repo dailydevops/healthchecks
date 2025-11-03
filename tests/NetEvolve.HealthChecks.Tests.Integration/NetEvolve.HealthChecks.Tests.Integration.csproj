@@ -140,6 +140,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Legacy\NetEvolve.HealthChecks.SqlServer.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
+    <ProjectReference Include="..\..\src\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.IntegrationTestAttribute" />

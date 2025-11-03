@@ -5,9 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ApplicationReadyCheck : HealthCheckBase
+internal sealed partial class ApplicationReadyCheck : IHealthCheck
 {
     private bool _applicationReady;
 
@@ -19,18 +18,30 @@ internal sealed class ApplicationReadyCheck : HealthCheckBase
         _ = lifetime.ApplicationStopping.Register(OnStopped);
     }
 
-    protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
-        string name,
-        HealthStatus failureStatus,
-        CancellationToken cancellationToken
+    public Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default
     )
     {
-        if (cancellationToken.IsCancellationRequested || !_applicationReady)
-        {
-            return new ValueTask<HealthCheckResult>(HealthCheckResult.Unhealthy($"{name}: Unhealthy"));
-        }
+        ArgumentNullException.ThrowIfNull(context);
 
-        return new ValueTask<HealthCheckResult>(HealthCheckResult.Healthy($"{name}: Healthy"));
+        var failureStatus = context.Registration.FailureStatus;
+
+        try
+        {
+            if (cancellationToken.IsCancellationRequested || !_applicationReady)
+            {
+                return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationReady: Unhealthy"));
+            }
+
+            return Task.FromResult(HealthCheckResult.Healthy("ApplicationReady: Healthy"));
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(
+                new HealthCheckResult(failureStatus, description: "ApplicationReady: Unexpected error.", exception: ex)
+            );
+        }
     }
 
     private void OnStarted() => _applicationReady = true;

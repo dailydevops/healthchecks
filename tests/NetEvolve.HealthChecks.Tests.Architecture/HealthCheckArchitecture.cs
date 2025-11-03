@@ -37,7 +37,6 @@ internal static class HealthCheckArchitecture
             // GCP
             typeof(GCP.Firestore.FirestoreHealthCheck).Assembly,
             // others
-            typeof(Abstractions.HealthCheckBase).Assembly,
             typeof(ArangoDb.ArangoDbHealthCheck).Assembly,
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(Consul.ConsulHealthCheck).Assembly,
