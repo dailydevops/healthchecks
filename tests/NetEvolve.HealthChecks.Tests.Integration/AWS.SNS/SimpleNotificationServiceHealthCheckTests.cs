@@ -232,7 +232,7 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", topicName },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", subscription.SubscriptionArn },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
-                        { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "60000" } // Set a reasonable timeout
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "60000" }, // Set a reasonable timeout
                     };
                     _ = config.AddInMemoryCollection(values);
                 }
