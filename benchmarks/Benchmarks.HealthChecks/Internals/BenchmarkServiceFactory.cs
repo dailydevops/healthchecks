@@ -17,9 +17,7 @@ internal static class BenchmarkServiceFactory
         var healthCheckBuilder = serviceCollection.AddHealthChecks();
         builder.Invoke(healthCheckBuilder);
 
-        using (var serviceProvider = serviceCollection.BuildServiceProvider())
-        {
-            return serviceProvider.GetRequiredService<BenchmarkHealthCheckService>();
-        }
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        return serviceProvider.GetRequiredService<BenchmarkHealthCheckService>();
     }
 }
