@@ -10,11 +10,7 @@
     <PackageReference Include="System.Data.SqlClient" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference
-      Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj"
-      PrivateAssets="all"
-      PublicAssets="runtime; build; native; contentfiles; analyzers"
-    />
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
     <ProjectReference
       Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
       ReferenceOutputAssembly="false"
