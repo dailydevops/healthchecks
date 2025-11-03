@@ -69,21 +69,35 @@ body:
       options:
         - label: "Create project structure in `src/NetEvolve.HealthChecks.<ProjectName>/`"
           required: false
-        - label: "Follow naming conventions from decision documentation"
+        - label: "Add project to solution (`dotnet sln HealthChecks.slnx add`)"
           required: false
-        - label: "Include a clear README.md describing the project purpose"
+        - label: "Add project reference to Test projects"
+          required: false
+        - label: "Add required NuGet packages to `Directory.Packages.props`"
+          required: false
+        - label: "Follow naming conventions from ADR decisions"
+          required: false
+        - label: "Create README.md based on Redis project template"
+          required: false
+        - label: "Create unit test project in `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/`"
+          required: false
+        - label: "Create integration test project in `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/`"
+          required: false
+        - label: "Add test projects to solution"
+          required: false
+        - label: "Add TestContainer package if specified"
           required: false
         - label: "Restore NuGet packages (`dotnet restore HealthChecks.slnx`)"
           required: false
         - label: "Build the solution (`dotnet build HealthChecks.slnx --no-restore`)"
           required: false
-        - label: "Add unit tests to `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/` folder"
-          required: false
-        - label: "Add integration tests to `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/` folder"
-          required: false
         - label: "Run project-specific tests (`dotnet test HealthChecks.slnx --filter FullyQualifiedName~<ProjectName>`)"
           required: false
-        - label: "Verify all tests pass successfully"
+        - label: "Verify all tests pass successfully (>80% coverage recommended)"
+          required: false
+        - label: "Comment on issue with build/test results"
+          required: false
+        - label: "Create pull request linking to this issue"
           required: false
 
   - type: textarea
@@ -99,8 +113,49 @@ body:
     attributes:
       value: |
         ---
-        **Note for Copilot:**
-        - Use the project name to create `src/NetEvolve.HealthChecks.<ProjectName>/`
-        - Add TestContainer package if specified
-        - Run tests filtered by: `dotnet test HealthChecks.slnx --filter FullyQualifiedName~<ProjectName>`
-        - Ensure all validation steps complete successfully
+        **Implementation Instructions for Copilot:**
+
+        ### 1. Project Structure & Setup
+        - Create project in: `src/NetEvolve.HealthChecks.<ProjectName>/`
+        - Use `src/NetEvolve.HealthChecks.Redis/` as reference implementation template
+        - Add project to solution: `dotnet sln HealthChecks.slnx add src/NetEvolve.HealthChecks.<ProjectName>/`
+        - Add project reference to Abstractions: `dotnet add src/NetEvolve.HealthChecks.<ProjectName>/ reference src/NetEvolve.HealthChecks.Abstractions/`
+
+        ### 2. Required Decisions & Guidelines
+        - MUST follow ADR: `decisions/2025-07-10-folder-structure-and-naming-conventions.md`
+        - MUST follow ADR: `decisions/2025-07-10-centralized-package-version-management.md`
+        - MUST respect all instructions from `AGENTS.md`
+        - Package versions MUST be added to `Directory.Packages.props` only
+
+        ### 3. Implementation Requirements
+        - Health check class MUST inherit from base classes in `NetEvolve.HealthChecks.Abstractions`
+        - Configuration options MUST follow the pattern from reference projects
+        - MUST implement both configuration-based and builder-based approaches
+        - Default timeout SHOULD be 100 milliseconds unless otherwise specified
+
+        ### 4. Test Structure (MANDATORY)
+        - Unit tests MUST be created in: `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/`
+        - Integration tests MUST be created in: `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/`
+        - Test projects MUST be added to solution
+        - Test coverage SHOULD be >80%
+        - Use TestContainers for integration tests when specified
+
+        ### 5. Documentation Requirements
+        - Copy README.md structure from `src/NetEvolve.HealthChecks.Redis/README.md`
+        - Update project-specific content (badges, descriptions, examples)
+        - Include installation instructions, usage examples, and license information
+
+        ### 6. Build & Validation Commands
+        - Restore packages: `dotnet restore HealthChecks.slnx`
+        - Build solution: `dotnet build HealthChecks.slnx --no-restore`
+        - Run project tests: `dotnet test HealthChecks.slnx --no-build --filter FullyQualifiedName~<ProjectName>`
+        - All tests MUST pass before completion
+
+        ### 7. Completion & Reporting
+        - Comment on this issue with:
+          - Build success/failure status
+          - Test results summary
+          - List of created files
+          - Any warnings or issues encountered
+        - Create a pull request linking to this issue
+        - Mark all validation steps as complete
