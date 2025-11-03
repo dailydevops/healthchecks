@@ -25,23 +25,12 @@ internal sealed partial class ApplicationReadyCheck : IHealthCheck
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        var failureStatus = context.Registration.FailureStatus;
-
-        try
+        if (cancellationToken.IsCancellationRequested || !_applicationReady)
         {
-            if (cancellationToken.IsCancellationRequested || !_applicationReady)
-            {
-                return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationReady: Unhealthy"));
-            }
+            return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationReady: Unhealthy"));
+        }
 
-            return Task.FromResult(HealthCheckResult.Healthy("ApplicationReady: Healthy"));
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(
-                new HealthCheckResult(failureStatus, description: "ApplicationReady: Unexpected error.", exception: ex)
-            );
-        }
+        return Task.FromResult(HealthCheckResult.Healthy("ApplicationReady: Healthy"));
     }
 
     private void OnStarted() => _applicationReady = true;

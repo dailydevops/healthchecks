@@ -13,26 +13,11 @@ internal sealed class ApplicationHealthyCheck : IHealthCheck
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        var failureStatus = context.Registration.FailureStatus;
-
-        try
+        if (cancellationToken.IsCancellationRequested)
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationHealthy: Unhealthy"));
-            }
+            return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationHealthy: Unhealthy"));
+        }
 
-            return Task.FromResult(HealthCheckResult.Healthy("ApplicationHealthy: Healthy"));
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(
-                new HealthCheckResult(
-                    failureStatus,
-                    description: "ApplicationHealthy: Unexpected error.",
-                    exception: ex
-                )
-            );
-        }
+        return Task.FromResult(HealthCheckResult.Healthy("ApplicationHealthy: Healthy"));
     }
 }
