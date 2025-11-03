@@ -40,11 +40,11 @@ internal sealed class RavenDbHealthCheck : ConfigurableHealthCheckBase<RavenDbOp
 
         var commandTask = options.CommandAsync.Invoke(store, cancellationToken);
 
-        var (isHealthy, result) = await commandTask
+        var (isTimelyResponse, result) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isHealthy && result, name);
+        return HealthCheckState(isTimelyResponse && result, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(IDocumentStore store, CancellationToken cancellationToken)

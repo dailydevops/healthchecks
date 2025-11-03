@@ -40,11 +40,11 @@ internal sealed class MongoDbHealthCheck : ConfigurableHealthCheckBase<MongoDbOp
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isHealthy, result) = await commandTask
+        var (isTimelyResponse, _) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isHealthy && result is not null, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<BsonDocument> DefaultCommandAsync(

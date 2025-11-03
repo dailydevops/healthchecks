@@ -40,11 +40,11 @@ internal sealed class ArangoDbHealthCheck : ConfigurableHealthCheckBase<ArangoDb
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isNotTimedOut, isResultValid) = await commandTask
+        var (isTimelyResponse, isResultValid) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isNotTimedOut && isResultValid, name);
+        return HealthCheckState(isTimelyResponse && isResultValid, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(ArangoDBClient client, CancellationToken cancellationToken)
@@ -53,6 +53,6 @@ internal sealed class ArangoDbHealthCheck : ConfigurableHealthCheckBase<ArangoDb
             .Cursor.PostCursorAsync<int>(new PostCursorBody { Query = "RETURN 1" }, null, cancellationToken)
             .ConfigureAwait(false);
 
-        return cursor is not null && cursor.Result?.Any() == true;
+        return cursor?.Result?.Any() == true;
     }
 }
