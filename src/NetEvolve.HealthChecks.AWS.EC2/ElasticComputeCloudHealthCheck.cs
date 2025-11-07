@@ -8,10 +8,12 @@ using Amazon.EC2.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
+using SourceGenerator.Attributes;
 
+[ConfigurableHealthCheck(typeof(ElasticComputeCloudOptions))]
 internal sealed partial class ElasticComputeCloudHealthCheck
 {
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         ElasticComputeCloudOptions options,

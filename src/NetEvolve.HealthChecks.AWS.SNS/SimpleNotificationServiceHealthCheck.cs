@@ -13,7 +13,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(SimpleNotificationServiceOptions))]
 internal sealed partial class SimpleNotificationServiceHealthCheck
 {
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         SimpleNotificationServiceOptions options,

@@ -13,7 +13,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(SimpleStorageServiceOptions))]
 internal sealed partial class SimpleStorageServiceHealthCheck
 {
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         SimpleStorageServiceOptions options,

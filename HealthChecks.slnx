@@ -24,7 +24,6 @@
     <File Path="update-solution.ps1" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/NetEvolve.HealthChecks.Abstractions/NetEvolve.HealthChecks.Abstractions.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Apache.ActiveMq/NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Apache.Kafka/NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.ArangoDb/NetEvolve.HealthChecks.ArangoDb.csproj" />

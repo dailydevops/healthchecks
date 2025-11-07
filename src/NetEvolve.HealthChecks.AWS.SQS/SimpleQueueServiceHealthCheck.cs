@@ -9,7 +9,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(SimpleQueueServiceOptions))]
 internal sealed partial class SimpleQueueServiceHealthCheck
 {
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         SimpleQueueServiceOptions options,

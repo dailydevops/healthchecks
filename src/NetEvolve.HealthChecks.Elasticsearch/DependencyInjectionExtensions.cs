@@ -36,7 +36,7 @@ public static partial class DependencyInjectionExtensions
     )
     {
         ArgumentNullException.ThrowIfNull(builder);
-        Argument.ThrowIfNullOrEmpty(name);
+        ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<ElasticsearchCheckMarker>())

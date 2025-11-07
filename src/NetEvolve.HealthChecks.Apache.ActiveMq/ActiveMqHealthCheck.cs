@@ -8,18 +8,18 @@ using global::Apache.NMS.ActiveMQ;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ActiveMqHealthCheck : ConfigurableHealthCheckBase<ActiveMqOptions>
+[ConfigurableHealthCheck(typeof(ActiveMqOptions))]
+internal sealed partial class ActiveMqHealthCheck
 {
     private readonly ConcurrentDictionary<string, ConnectionFactory> _factories = new(StringComparer.OrdinalIgnoreCase);
 
-    public ActiveMqHealthCheck(IOptionsMonitor<ActiveMqOptions> optionsMonitor)
-        : base(optionsMonitor) { }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         ActiveMqOptions options,
         CancellationToken cancellationToken
     )

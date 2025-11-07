@@ -12,7 +12,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(DynamoDbOptions))]
 internal sealed partial class DynamoDbHealthCheck
 {
-    private async static ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         DynamoDbOptions options,

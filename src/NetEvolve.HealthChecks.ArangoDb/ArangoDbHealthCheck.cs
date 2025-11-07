@@ -1,36 +1,22 @@
 ﻿namespace NetEvolve.HealthChecks.ArangoDb;
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ArangoDBNetStandard;
 using ArangoDBNetStandard.CursorApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ArangoDbHealthCheck : ConfigurableHealthCheckBase<ArangoDbOptions>
+[ConfigurableHealthCheck(typeof(ArangoDbOptions))]
+internal sealed partial class ArangoDbHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ArangoDbHealthCheck"/> class.
-    /// </summary>
-    /// <param name="optionsMonitor">The <see cref="IOptionsMonitor{TOptions}"/> instance used to access named options.</param>
-    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to resolve dependencies.</param>
-    public ArangoDbHealthCheck(IOptionsMonitor<ArangoDbOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        _serviceProvider = serviceProvider;
-    }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         ArangoDbOptions options,
         CancellationToken cancellationToken
     )

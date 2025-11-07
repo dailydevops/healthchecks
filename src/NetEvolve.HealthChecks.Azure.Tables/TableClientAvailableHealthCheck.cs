@@ -8,12 +8,14 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
-[ConfigurableHealthCheck(typeof(TableServiceAvailableOptions))]
+[ConfigurableHealthCheck(typeof(TableClientAvailableOptions))]
 internal sealed partial class TableClientAvailableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         TableClientAvailableOptions options,
         CancellationToken cancellationToken
     )

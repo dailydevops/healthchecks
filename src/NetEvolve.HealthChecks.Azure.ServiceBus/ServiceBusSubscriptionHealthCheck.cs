@@ -12,7 +12,9 @@ internal sealed partial class ServiceBusSubscriptionHealthCheck
 {
     private ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         ServiceBusSubscriptionOptions options,
         CancellationToken cancellationToken
     ) =>
