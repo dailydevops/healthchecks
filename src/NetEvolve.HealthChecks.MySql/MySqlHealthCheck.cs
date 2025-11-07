@@ -1,13 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.MySql;
 
 using global::MySql.Data.MySqlClient;
-using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(MySqlConnection), typeof(MySqlOptions), true)]
-internal sealed partial class MySqlHealthCheck(IOptionsMonitor<MySqlOptions> optionsMonitor)
-    : ConfigurableHealthCheckBase<MySqlOptions>(optionsMonitor)
+internal sealed partial class MySqlHealthCheck
 {
     /// <summary>
     /// The default sql command.

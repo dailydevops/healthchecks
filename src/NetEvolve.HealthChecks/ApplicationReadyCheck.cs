@@ -5,9 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ApplicationReadyCheck : HealthCheckBase
+internal sealed partial class ApplicationReadyCheck : IHealthCheck
 {
     private bool _applicationReady;
 
@@ -19,18 +18,19 @@ internal sealed class ApplicationReadyCheck : HealthCheckBase
         _ = lifetime.ApplicationStopping.Register(OnStopped);
     }
 
-    protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
-        string name,
-        HealthStatus failureStatus,
-        CancellationToken cancellationToken
+    public Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default
     )
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         if (cancellationToken.IsCancellationRequested || !_applicationReady)
         {
-            return new ValueTask<HealthCheckResult>(HealthCheckResult.Unhealthy($"{name}: Unhealthy"));
+            return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationReady: Unhealthy"));
         }
 
-        return new ValueTask<HealthCheckResult>(HealthCheckResult.Healthy($"{name}: Healthy"));
+        return Task.FromResult(HealthCheckResult.Healthy("ApplicationReady: Healthy"));
     }
 
     private void OnStarted() => _applicationReady = true;

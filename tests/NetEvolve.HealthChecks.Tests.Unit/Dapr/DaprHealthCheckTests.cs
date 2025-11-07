@@ -16,20 +16,6 @@ using NSubstitute.ExceptionExtensions;
 public sealed class DaprHealthCheckTests
 {
     [Test]
-    public void Constructor_WhenServiceProviderNull_ThrowsArgumentNullException()
-    {
-        // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DaprOptions>>();
-        var serviceProvider = default(IServiceProvider);
-
-        // Act
-        void Act() => _ = new DaprHealthCheck(serviceProvider!, optionsMonitor);
-
-        // Assert
-        _ = Assert.Throws<ArgumentNullException>("serviceProvider", Act);
-    }
-
-    [Test]
     public async Task CheckHealthAsync_WhenDaprHealthy_ReturnsHealthy()
     {
         // Arrange

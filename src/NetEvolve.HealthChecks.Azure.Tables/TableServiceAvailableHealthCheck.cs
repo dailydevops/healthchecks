@@ -1,27 +1,22 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Tables;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class TableServiceAvailableHealthCheck : ConfigurableHealthCheckBase<TableServiceAvailableOptions>
+[ConfigurableHealthCheck(typeof(TableServiceAvailableOptions))]
+internal sealed partial class TableServiceAvailableHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public TableServiceAvailableHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<TableServiceAvailableOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable RCS1163 // Unused parameter
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
+#pragma warning restore RCS1163 // Unused parameter
         TableServiceAvailableOptions options,
         CancellationToken cancellationToken
     )

@@ -4,23 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ServiceBusSubscriptionHealthCheck : ConfigurableHealthCheckBase<ServiceBusSubscriptionOptions>
+[ConfigurableHealthCheck(typeof(ServiceBusSubscriptionOptions))]
+internal sealed partial class ServiceBusSubscriptionHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public ServiceBusSubscriptionHealthCheck(
-        IOptionsMonitor<ServiceBusSubscriptionOptions> optionsMonitor,
-        IServiceProvider serviceProvider
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         ServiceBusSubscriptionOptions options,
         CancellationToken cancellationToken
     ) =>

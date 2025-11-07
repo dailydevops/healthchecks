@@ -17,7 +17,8 @@ public sealed class ElasticComputeCloudHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticComputeCloudOptions>>();
-        var check = new ElasticComputeCloudHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new ElasticComputeCloudHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -31,7 +32,8 @@ public sealed class ElasticComputeCloudHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticComputeCloudOptions>>();
-        var check = new ElasticComputeCloudHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new ElasticComputeCloudHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -51,7 +53,8 @@ public sealed class ElasticComputeCloudHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticComputeCloudOptions>>();
-        var check = new ElasticComputeCloudHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new ElasticComputeCloudHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

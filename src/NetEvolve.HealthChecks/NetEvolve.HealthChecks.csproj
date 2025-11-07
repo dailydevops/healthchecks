@@ -1,10 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains general application HealthChecks.</Description>
     <PackageTags>$(PackageTags);application;self;readiness</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
   </ItemGroup>
 </Project>

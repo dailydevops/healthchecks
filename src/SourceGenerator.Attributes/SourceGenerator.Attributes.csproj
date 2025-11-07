@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <IsXampleProject>true</IsXampleProject>
+    <DevelopmentDependency>true</DevelopmentDependency>
+  </PropertyGroup>
+</Project>

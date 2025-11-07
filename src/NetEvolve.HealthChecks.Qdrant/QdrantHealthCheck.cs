@@ -5,18 +5,13 @@ using System.Threading.Tasks;
 using global::Qdrant.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class QdrantHealthCheck : ConfigurableHealthCheckBase<QdrantOptions>
+[ConfigurableHealthCheck(typeof(QdrantOptions))]
+internal sealed partial class QdrantHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public QdrantHealthCheck(IOptionsMonitor<QdrantOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         QdrantOptions options,
@@ -27,7 +22,7 @@ internal sealed class QdrantHealthCheck : ConfigurableHealthCheckBase<QdrantOpti
             ? _serviceProvider.GetRequiredService<QdrantClient>()
             : _serviceProvider.GetRequiredKeyedService<QdrantClient>(options.KeyedService);
 
-        var (isValid, response) = await client
+        var (isTimelyResponse, response) = await client
             .HealthAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
@@ -37,6 +32,6 @@ internal sealed class QdrantHealthCheck : ConfigurableHealthCheckBase<QdrantOpti
             return HealthCheckUnhealthy(failureStatus, name);
         }
 
-        return HealthCheckState(isValid, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

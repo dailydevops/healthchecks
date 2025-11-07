@@ -1,16 +1,17 @@
-namespace NetEvolve.HealthChecks.GCP.Firestore;
+﻿namespace NetEvolve.HealthChecks.GCP.Firestore;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
 /// <summary>
 /// Extension methods for registering Firestore health checks.
 /// </summary>
-public static class DependencyInjectionExtensions
+[HealthCheckHelper]
+public static partial class DependencyInjectionExtensions
 {
     private static readonly string[] _defaultTags = ["firestore", "gcp"];
 

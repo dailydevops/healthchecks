@@ -1,13 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.ClickHouse;
 
 using global::ClickHouse.Client.ADO;
-using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(ClickHouseConnection), typeof(ClickHouseOptions), true)]
-internal sealed partial class ClickHouseHealthCheck(IOptionsMonitor<ClickHouseOptions> optionsMonitor)
-    : ConfigurableHealthCheckBase<ClickHouseOptions>(optionsMonitor)
+internal sealed partial class ClickHouseHealthCheck
 {
     /// <summary>
     /// The default sql command.

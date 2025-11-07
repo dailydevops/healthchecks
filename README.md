@@ -16,10 +16,10 @@ The main difference is that we try to focus on providing packages that are fully
 
 While we continue to focus on configurability, we always consider the possibility of performance optimization.
 <!-- benchmark:sqlserver -->
-| Method                            | Mean     | Error    | StdDev   | Ratio        | RatioSD | Allocated | Alloc Ratio |
-|---------------------------------- |---------:|---------:|---------:|-------------:|--------:|----------:|------------:|
-| AspNetCore.HealthChecks.SqlServer | 651.3 μs | 31.19 μs | 87.45 μs |     baseline |         |  10.42 KB |             |
-| NetEvolve.HealthChecks.SqlServer  | 596.6 μs | 23.81 μs | 70.22 μs | 1.11x faster |   0.20x |   5.25 KB |  1.98x less |
+| Method                                  | Mean     | Error    | StdDev    | Median   | Ratio        | RatioSD | Allocated | Alloc Ratio |
+|---------------------------------------- |---------:|---------:|----------:|---------:|-------------:|--------:|----------:|------------:|
+| AspNetCore.HealthChecks.SqlServer       | 722.9 μs | 43.67 μs | 127.38 μs | 704.4 μs |     baseline |         |    9.7 KB |             |
+| NetEvolve.HealthChecks.SqlServer        | 592.6 μs | 15.79 μs |  43.49 μs | 585.7 μs | 1.23x faster |   0.23x |    5.2 KB |  1.98x less |
 <!-- /benchmark:sqlserver -->
 
 In addition, we try to support the latest LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)) as well as the latest preview version of .NET for at least 3 years, but we **can't guarantee** this. This depends on the support of related NuGet packages and the .NET platform itself. See the [Supported .NET Version](#supported-net-version) section for more details.

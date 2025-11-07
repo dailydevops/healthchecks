@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for PostgreSQL, based on the nuget package `Npgsql`.</Description>
@@ -9,9 +9,9 @@
     <PackageReference Include="Npgsql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
     <ProjectReference
-      Include="..\SourceGenerator.SqlHealthCheck\SourceGenerator.SqlHealthCheck.csproj"
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
     />

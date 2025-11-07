@@ -1,30 +1,21 @@
 ﻿namespace NetEvolve.HealthChecks.Dapr;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Dapr.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class DaprHealthCheck : ConfigurableHealthCheckBase<DaprOptions>
+[ConfigurableHealthCheck(typeof(DaprOptions))]
+internal sealed partial class DaprHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public DaprHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<DaprOptions> optionsMonitor)
-        : base(optionsMonitor)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        _serviceProvider = serviceProvider;
-    }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         DaprOptions options,
         CancellationToken cancellationToken
     )

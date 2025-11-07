@@ -1,13 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Firebird;
 
 using FirebirdSql.Data.FirebirdClient;
-using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
-using SourceGenerator.SqlHealthCheck;
+using SourceGenerator.Attributes;
 
 [GenerateSqlHealthCheck(typeof(FbConnection), typeof(FirebirdOptions), true)]
-internal sealed partial class FirebirdHealthCheck(IOptionsMonitor<FirebirdOptions> optionsMonitor)
-    : ConfigurableHealthCheckBase<FirebirdOptions>(optionsMonitor)
+internal sealed partial class FirebirdHealthCheck
 {
     /// <summary>
     /// The default sql command.

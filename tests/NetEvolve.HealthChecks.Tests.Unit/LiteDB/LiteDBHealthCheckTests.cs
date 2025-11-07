@@ -3,7 +3,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using global::LiteDB;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
@@ -18,7 +17,8 @@ public sealed class LiteDBHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<LiteDBOptions>>();
-        var check = new LiteDBHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new LiteDBHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -32,7 +32,8 @@ public sealed class LiteDBHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<LiteDBOptions>>();
-        var check = new LiteDBHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new LiteDBHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -52,7 +53,8 @@ public sealed class LiteDBHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<LiteDBOptions>>();
-        var check = new LiteDBHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new LiteDBHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

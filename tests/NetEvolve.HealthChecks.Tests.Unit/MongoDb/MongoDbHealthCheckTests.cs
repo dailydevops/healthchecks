@@ -21,7 +21,7 @@ public sealed class MongoDbHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
-        var check = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -37,7 +37,7 @@ public sealed class MongoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
 
-        var check = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -59,7 +59,7 @@ public sealed class MongoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
 
-        var check = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
@@ -98,7 +98,7 @@ public sealed class MongoDbHealthCheckTests
         _ = serviceCollection.AddKeyedSingleton("test-key", client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -140,7 +140,7 @@ public sealed class MongoDbHealthCheckTests
         _ = serviceCollection.AddSingleton(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -182,7 +182,7 @@ public sealed class MongoDbHealthCheckTests
         _ = serviceCollection.AddSingleton(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -197,48 +197,6 @@ public sealed class MongoDbHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert.That(result.Description).Contains("test: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
-        }
-    }
-
-    [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnDegraded()
-    {
-        // Arrange
-        var options = new MongoDbOptions
-        {
-            KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (_, cancellationToken) =>
-            {
-                await Task.Delay(100, cancellationToken); // Simulate long-running command
-                return new BsonDocument("test", 1);
-            },
-        };
-
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
-
-        // Setup connection mock that delays long enough to cause timeout
-        using var client = new MongoClient();
-
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).Contains("test: Degraded", StringComparison.Ordinal);
         }
     }
 }

@@ -7,24 +7,17 @@ using System.Threading.Tasks;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ApplicationInsightsAvailabilityHealthCheck
-    : ConfigurableHealthCheckBase<ApplicationInsightsAvailabilityOptions>
+[ConfigurableHealthCheck(typeof(ApplicationInsightsAvailabilityOptions))]
+internal sealed partial class ApplicationInsightsAvailabilityHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public ApplicationInsightsAvailabilityHealthCheck(
-        IOptionsMonitor<ApplicationInsightsAvailabilityOptions> optionsMonitor,
-        IServiceProvider serviceProvider
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         ApplicationInsightsAvailabilityOptions options,
         CancellationToken cancellationToken
     )

@@ -1,35 +1,23 @@
 ﻿namespace NetEvolve.HealthChecks.MongoDb;
 
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class MongoDbHealthCheck : ConfigurableHealthCheckBase<MongoDbOptions>
+[ConfigurableHealthCheck(typeof(MongoDbOptions))]
+internal sealed partial class MongoDbHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
+    private static readonly BsonDocument _defaultCommand = new BsonDocument("ping", 1);
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="MongoDbHealthCheck"/> class.
-    /// </summary>
-    /// <param name="optionsMonitor">The <see cref="IOptionsMonitor{TOptions}"/> instance used to access named options.</param>
-    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to resolve dependencies.</param>
-    public MongoDbHealthCheck(IOptionsMonitor<MongoDbOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        _serviceProvider = serviceProvider;
-    }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         MongoDbOptions options,
         CancellationToken cancellationToken
     )
@@ -40,11 +28,11 @@ internal sealed class MongoDbHealthCheck : ConfigurableHealthCheckBase<MongoDbOp
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isHealthy, result) = await commandTask
+        var (isTimelyResponse, _) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isHealthy && result is not null, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<BsonDocument> DefaultCommandAsync(
@@ -53,8 +41,9 @@ internal sealed class MongoDbHealthCheck : ConfigurableHealthCheckBase<MongoDbOp
     )
     {
         var database = client.GetDatabase("admin");
-        var command = new BsonDocument("ping", 1);
 
-        return await database.RunCommandAsync<BsonDocument>(command, null, cancellationToken).ConfigureAwait(false);
+        return await database
+            .RunCommandAsync<BsonDocument>(_defaultCommand, null, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

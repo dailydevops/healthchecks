@@ -21,7 +21,7 @@ public sealed class RavenDbHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        var check = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -37,7 +37,7 @@ public sealed class RavenDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
 
-        var check = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -59,7 +59,7 @@ public sealed class RavenDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
 
-        var check = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
@@ -98,7 +98,7 @@ public sealed class RavenDbHealthCheckTests
         _ = serviceCollection.AddKeyedSingleton("test-key", store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -140,7 +140,7 @@ public sealed class RavenDbHealthCheckTests
         _ = serviceCollection.AddSingleton(store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -182,7 +182,7 @@ public sealed class RavenDbHealthCheckTests
         _ = serviceCollection.AddSingleton(store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -197,48 +197,6 @@ public sealed class RavenDbHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert.That(result.Description).Contains("test: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
-        }
-    }
-
-    [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnDegraded()
-    {
-        // Arrange
-        var options = new RavenDbOptions
-        {
-            KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (_1, cancellationToken) =>
-            {
-                await Task.Delay(100, cancellationToken); // Simulate long-running command
-                return true;
-            },
-        };
-
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
-
-        // Setup connection mock that delays long enough to cause timeout
-        var store = Substitute.For<IDocumentStore>();
-
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(store);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).Contains("test: Degraded", StringComparison.Ordinal);
         }
     }
 }

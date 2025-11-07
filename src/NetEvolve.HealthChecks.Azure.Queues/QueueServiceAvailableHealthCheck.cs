@@ -1,27 +1,20 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Queues;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class QueueServiceAvailableHealthCheck : ConfigurableHealthCheckBase<QueueServiceAvailableOptions>
+[ConfigurableHealthCheck(typeof(QueueServiceAvailableOptions))]
+internal sealed partial class QueueServiceAvailableHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public QueueServiceAvailableHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<QueueServiceAvailableOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         QueueServiceAvailableOptions options,
         CancellationToken cancellationToken
     )

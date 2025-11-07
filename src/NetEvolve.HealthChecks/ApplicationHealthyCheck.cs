@@ -3,21 +3,21 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ApplicationHealthyCheck : HealthCheckBase
+internal sealed class ApplicationHealthyCheck : IHealthCheck
 {
-    protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
-        string name,
-        HealthStatus failureStatus,
-        CancellationToken cancellationToken
+    public Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default
     )
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         if (cancellationToken.IsCancellationRequested)
         {
-            return new ValueTask<HealthCheckResult>(HealthCheckResult.Unhealthy($"{name}: Unhealthy"));
+            return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationHealthy: Unhealthy"));
         }
 
-        return new ValueTask<HealthCheckResult>(HealthCheckResult.Healthy($"{name}: Healthy"));
+        return Task.FromResult(HealthCheckResult.Healthy("ApplicationHealthy: Healthy"));
     }
 }

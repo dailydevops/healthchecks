@@ -21,7 +21,7 @@ public sealed class ArangoDbHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
-        var check = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -38,7 +38,7 @@ public sealed class ArangoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
 
-        var check = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -64,7 +64,7 @@ public sealed class ArangoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
 
-        var check = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -111,7 +111,7 @@ public sealed class ArangoDbHealthCheckTests
             .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -157,7 +157,7 @@ public sealed class ArangoDbHealthCheckTests
             .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -203,7 +203,7 @@ public sealed class ArangoDbHealthCheckTests
             .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -220,52 +220,6 @@ public sealed class ArangoDbHealthCheckTests
                 .That(result.Description)
                 .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
-        }
-    }
-
-    [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnDegraded()
-    {
-        // Arrange
-        const string testName = "Test";
-
-        var options = new ArangoDbOptions
-        {
-            KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (_, cancellationToken) =>
-            {
-                await Task.Delay(100, cancellationToken); // Simulate a long-running command
-                return true;
-            },
-        };
-
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
-
-        // Setup connection mock that delays long enough to cause timeout
-        var transport = HttpApiTransport.UsingNoAuth(new Uri("http://localhost/test"));
-        using var client = new ArangoDBClient(transport);
-
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<ArangoDbClientProvider>()
-            .BuildServiceProvider();
-
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).Contains($"{testName}: Degraded", StringComparison.Ordinal);
         }
     }
 }

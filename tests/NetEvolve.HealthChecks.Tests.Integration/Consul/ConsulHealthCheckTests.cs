@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Consul;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Consul;
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using global::Consul;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Consul;
 

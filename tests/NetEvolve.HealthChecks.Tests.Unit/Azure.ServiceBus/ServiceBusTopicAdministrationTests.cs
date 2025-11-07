@@ -32,7 +32,7 @@ public sealed class ServiceBusTopicAdministrationTests
         _ = optionsMonitor.Get("test").Returns(options);
 
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var healthCheck = new ServiceBusTopicHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
 
         var context = new HealthCheckContext
         {
@@ -65,7 +65,7 @@ public sealed class ServiceBusTopicAdministrationTests
         _ = serviceCollection.AddSingleton(mockAdminClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new ServiceBusTopicHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
 
         var context = new HealthCheckContext
         {
@@ -115,7 +115,7 @@ public sealed class ServiceBusTopicAdministrationTests
         _ = serviceCollection.AddSingleton(mockAdminClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new ServiceBusTopicHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
 
         var context = new HealthCheckContext
         {

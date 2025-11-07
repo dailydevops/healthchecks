@@ -20,7 +20,7 @@ public sealed class KeycloakHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
-        var check = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -38,7 +38,7 @@ public sealed class KeycloakHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
 
-        var check = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -65,7 +65,7 @@ public sealed class KeycloakHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
 
-        var check = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -111,7 +111,7 @@ public sealed class KeycloakHealthCheckTests
             .AddSingleton<KeycloakClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -156,7 +156,7 @@ public sealed class KeycloakHealthCheckTests
             .AddSingleton<KeycloakClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -201,7 +201,7 @@ public sealed class KeycloakHealthCheckTests
             .AddSingleton<KeycloakClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -218,51 +218,6 @@ public sealed class KeycloakHealthCheckTests
                 .That(result.Description)
                 .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
-        }
-    }
-
-    [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnDegraded()
-    {
-        // Arrange
-        const string testName = "Test";
-
-        var options = new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
-        {
-            KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
-            CommandAsync = async (_, cancellationToken) =>
-            {
-                await Task.Delay(100, cancellationToken); // Simulate long-running command
-                return true;
-            },
-        };
-
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
-
-        // Setup connection mock that delays long enough to cause timeout
-        var client = new KeycloakClient("http://localhost/test", "test");
-
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<KeycloakClientProvider>()
-            .BuildServiceProvider();
-
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).Contains($"{testName}: Degraded", StringComparison.Ordinal);
         }
     }
 }

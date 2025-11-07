@@ -17,7 +17,8 @@ public sealed class ActiveMqHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ActiveMqOptions>>();
-        var check = new ActiveMqHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new ActiveMqHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -31,7 +32,8 @@ public sealed class ActiveMqHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ActiveMqOptions>>();
-        var check = new ActiveMqHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new ActiveMqHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -51,7 +53,8 @@ public sealed class ActiveMqHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ActiveMqOptions>>();
-        var check = new ActiveMqHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new ActiveMqHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
