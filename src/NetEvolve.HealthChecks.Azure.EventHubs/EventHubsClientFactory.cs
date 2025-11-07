@@ -3,19 +3,22 @@ namespace NetEvolve.HealthChecks.Azure.EventHubs;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using global::Azure.Core;
 using global::Azure.Identity;
 using global::Azure.Messaging.EventHubs.Producer;
 using Microsoft.Extensions.DependencyInjection;
 
-internal sealed class EventHubsClientFactory : IAsyncDisposable
+internal sealed class EventHubsClientFactory : IDisposable
 {
     private static readonly EventHubProducerClientOptions _clientOptions = new EventHubProducerClientOptions();
 
     private readonly ConcurrentDictionary<string, EventHubProducerClient> _eventHubClients = new(
         StringComparer.OrdinalIgnoreCase
     );
+
+    private bool _disposedValue;
 
     static EventHubsClientFactory() => _clientOptions.RetryOptions.MaximumRetries = 0;
 
@@ -46,13 +49,32 @@ internal sealed class EventHubsClientFactory : IAsyncDisposable
             _ => throw new UnreachableException($"Invalid client creation mode `{options.Mode}`."),
         };
 
-    public async ValueTask DisposeAsync()
+    [SuppressMessage(
+        "Blocker Code Smell",
+        "S2953:Methods named \"Dispose\" should implement \"IDisposable.Dispose\"",
+        Justification = "As designed."
+    )]
+    private void Dispose(bool disposing)
     {
-        foreach (var client in _eventHubClients.Values)
+        if (!_disposedValue)
         {
-            await client.DisposeAsync().ConfigureAwait(false);
-        }
+            if (disposing)
+            {
+                foreach (var client in _eventHubClients.Values)
+                {
+                    client.DisposeAsync().AsTask().GetAwaiter().GetResult();
+                }
 
-        _eventHubClients.Clear();
+                _eventHubClients.Clear();
+            }
+
+            _disposedValue = true;
+        }
+    }
+
+    void IDisposable.Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }
