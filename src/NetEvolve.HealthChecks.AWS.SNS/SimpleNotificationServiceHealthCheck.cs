@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class SimpleNotificationServiceHealthCheck
-    : ConfigurableHealthCheckBase<SimpleNotificationServiceOptions>
+[ConfigurableHealthCheck(typeof(SimpleNotificationServiceOptions))]
+internal sealed partial class SimpleNotificationServiceHealthCheck
 {
-    public SimpleNotificationServiceHealthCheck(IOptionsMonitor<SimpleNotificationServiceOptions> optionsMonitor)
-        : base(optionsMonitor) { }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         SimpleNotificationServiceOptions options,

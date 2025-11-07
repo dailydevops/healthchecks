@@ -3,7 +3,6 @@
 using System.Net;
 using Amazon.SQS;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
