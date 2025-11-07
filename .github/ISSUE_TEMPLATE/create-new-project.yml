@@ -79,11 +79,13 @@ body:
           required: false
         - label: "Create README.md based on Redis project template"
           required: false
-        - label: "Create unit test project in `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/`"
+        - label: "Create unit test folder in `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/`"
           required: false
-        - label: "Create integration test project in `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/`"
+        - label: "Create integration test folder in `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/`"
           required: false
-        - label: "Add test projects to solution"
+        - label: "Add project reference to the solution file"
+          required: false
+        - label: "Add project reference to existing test projects"
           required: false
         - label: "Add TestContainer package if specified"
           required: false
@@ -91,7 +93,7 @@ body:
           required: false
         - label: "Build the solution (`dotnet build HealthChecks.slnx --no-restore`)"
           required: false
-        - label: "Run project-specific tests (`dotnet test HealthChecks.slnx --filter FullyQualifiedName~<ProjectName>`)"
+        - label: "Run tests for the new project (`dotnet test HealthChecks.slnx --no-build`)"
           required: false
         - label: "Verify all tests pass successfully (>80% coverage recommended)"
           required: false
@@ -134,9 +136,11 @@ body:
         - Default timeout SHOULD be 100 milliseconds unless otherwise specified
 
         ### 4. Test Structure (MANDATORY)
-        - Unit tests MUST be created in: `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/`
-        - Integration tests MUST be created in: `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/`
-        - Test projects MUST be added to solution
+        - Unit tests MUST be created in: `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/` as a subfolder
+        - Integration tests MUST be created in: `tests/NetEvolve.HealthChecks.Tests.Integration/<ProjectName>/` as a subfolder
+        - Test projects already exist - add project references to them:
+          - `dotnet add tests/NetEvolve.HealthChecks.Tests.Unit/ reference src/NetEvolve.HealthChecks.<ProjectName>/`
+          - `dotnet add tests/NetEvolve.HealthChecks.Tests.Integration/ reference src/NetEvolve.HealthChecks.<ProjectName>/`
         - Test coverage SHOULD be >80%
         - Use TestContainers for integration tests when specified
 
@@ -148,7 +152,7 @@ body:
         ### 6. Build & Validation Commands
         - Restore packages: `dotnet restore HealthChecks.slnx`
         - Build solution: `dotnet build HealthChecks.slnx --no-restore`
-        - Run project tests: `dotnet test HealthChecks.slnx --no-build --filter FullyQualifiedName~<ProjectName>`
+        - Run tests: `dotnet test HealthChecks.slnx --no-build`
         - All tests MUST pass before completion
 
         ### 7. Completion & Reporting
