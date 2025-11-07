@@ -77,7 +77,7 @@ body:
           required: false
         - label: "Follow naming conventions from ADR decisions"
           required: false
-        - label: "Create README.md based on Redis project template"
+        - label: "Create README.md based on other projects"
           required: false
         - label: "Create unit test folder in `tests/NetEvolve.HealthChecks.Tests.Unit/<ProjectName>/`"
           required: false
