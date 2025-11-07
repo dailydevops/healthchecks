@@ -7,32 +7,15 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ElasticsearchHealthCheck : ConfigurableHealthCheckBase<ElasticsearchOptions>
+[ConfigurableHealthCheck(typeof(ElasticsearchOptions))]
+internal sealed partial class ElasticsearchHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
     private ConcurrentDictionary<string, ElasticsearchClient>? _clients;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ElasticsearchHealthCheck"/> class.
-    /// </summary>
-    /// <param name="optionsMonitor">The <see cref="IOptionsMonitor{TOptions}"/> instance used to access named options.</param>
-    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to resolve dependencies.</param>
-    public ElasticsearchHealthCheck(
-        IOptionsMonitor<ElasticsearchOptions> optionsMonitor,
-        IServiceProvider serviceProvider
-    )
-        : base(optionsMonitor)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        _serviceProvider = serviceProvider;
-    }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus,
         ElasticsearchOptions options,
