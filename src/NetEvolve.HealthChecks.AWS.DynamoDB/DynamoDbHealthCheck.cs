@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.AWS.DynamoDB;
+﻿namespace NetEvolve.HealthChecks.AWS.DynamoDB;
 
 using System.Net;
 using System.Threading;
@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class DynamoDbHealthCheck(IOptionsMonitor<DynamoDbOptions> optionsMonitor)
-    : ConfigurableHealthCheckBase<DynamoDbOptions>(optionsMonitor)
+[ConfigurableHealthCheck(typeof(DynamoDbOptions))]
+internal sealed partial class DynamoDbHealthCheck
 {
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async static ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         DynamoDbOptions options,
