@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Http;
 
-using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading;

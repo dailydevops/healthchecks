@@ -1,10 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.RavenDb;
 
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using Raven.Client.Documents;
 using Raven.Client.ServerWide.Operations;

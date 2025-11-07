@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.GCP.Firestore;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Google.Cloud.Firestore;

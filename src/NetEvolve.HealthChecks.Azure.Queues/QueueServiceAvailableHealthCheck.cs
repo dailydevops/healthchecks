@@ -1,11 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Queues;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
