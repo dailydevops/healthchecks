@@ -11,6 +11,7 @@ This bundle package provides health checks for various Azure services. For speci
 
 - [Azure Application Insights](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ApplicationInsights/)
 - [Azure Blob Storage](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
+- [Azure Event Hubs](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.EventHubs/)
 - [Azure Service Bus](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
 - [Azure Storage Queues](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Queues/)
 - [Azure Table Storage](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Tables/)
