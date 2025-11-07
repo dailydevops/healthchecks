@@ -3,12 +3,13 @@ namespace NetEvolve.HealthChecks.Azure.EventHubs;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using global::Azure.Core;
 using global::Azure.Identity;
 using global::Azure.Messaging.EventHubs.Producer;
 using Microsoft.Extensions.DependencyInjection;
 
-internal sealed class EventHubsClientFactory
+internal sealed class EventHubsClientFactory : IAsyncDisposable
 {
     private static readonly EventHubProducerClientOptions _clientOptions = new EventHubProducerClientOptions();
 
@@ -44,4 +45,14 @@ internal sealed class EventHubsClientFactory
             ),
             _ => throw new UnreachableException($"Invalid client creation mode `{options.Mode}`."),
         };
+
+    public async ValueTask DisposeAsync()
+    {
+        foreach (var client in _eventHubClients.Values)
+        {
+            await client.DisposeAsync().ConfigureAwait(false);
+        }
+
+        _eventHubClients.Clear();
+    }
 }
