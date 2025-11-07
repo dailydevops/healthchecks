@@ -6,35 +6,28 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 using StackExchange.Redis;
 
-internal sealed class RedisHealthCheck : ConfigurableHealthCheckBase<RedisOptions>
+[ConfigurableHealthCheck(typeof(RedisOptions))]
+internal sealed partial class RedisHealthCheck
 {
     private ConcurrentDictionary<string, IConnectionMultiplexer>? _connections;
-    private readonly IServiceProvider _serviceProvider;
 
-    public RedisHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<RedisOptions> optionsMonitor)
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthStatus failureStatus,
+#pragma warning disable S1172 // Unused method parameters should be removed
+        HealthStatus _,
+#pragma warning restore S1172 // Unused method parameters should be removed
         RedisOptions options,
         CancellationToken cancellationToken
     )
     {
         var connection = GetConnection(name, options, _serviceProvider);
 
-        var result = await connection.GetDatabase().PingAsync().ConfigureAwait(false);
-        var isDegraded = IsDegraded(result);
+        var result = await connection.GetDatabase().PingAsync().WaitAsync(cancellationToken).ConfigureAwait(false);
 
-        return isDegraded
-            ? HealthCheckResult.Degraded($"{name}: Degraded")
-            : HealthCheckResult.Healthy($"{name}: Healthy");
-
-        bool IsDegraded(TimeSpan elapsedTime) => elapsedTime.TotalMilliseconds >= options.Timeout;
+        return HealthCheckState(result.TotalMilliseconds >= options.Timeout, name);
     }
 
     private IConnectionMultiplexer GetConnection(string name, RedisOptions options, IServiceProvider serviceProvider)

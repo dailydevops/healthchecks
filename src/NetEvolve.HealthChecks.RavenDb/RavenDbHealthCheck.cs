@@ -6,30 +6,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
 using Raven.Client.Documents;
 using Raven.Client.ServerWide.Operations;
+using SourceGenerator.Attributes;
 
-internal sealed class RavenDbHealthCheck : ConfigurableHealthCheckBase<RavenDbOptions>
+[ConfigurableHealthCheck(typeof(RavenDbOptions))]
+internal sealed partial class RavenDbHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="RavenDbHealthCheck"/> class.
-    /// </summary>
-    /// <param name="optionsMonitor">The <see cref="IOptionsMonitor{TOptions}"/> instance used to access named options.</param>
-    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to resolve dependencies.</param>
-    public RavenDbHealthCheck(IOptionsMonitor<RavenDbOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        _serviceProvider = serviceProvider;
-    }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        HealthStatus failureStatus,
+#pragma warning disable S1172 // Unused method parameters should be removed
+        HealthStatus _,
+#pragma warning restore S1172 // Unused method parameters should be removed
         RavenDbOptions options,
         CancellationToken cancellationToken
     )
