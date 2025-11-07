@@ -106,8 +106,10 @@ public sealed class OpenSearchHealthCheckTests
         _ = optionsMonitor.Get(testName).Returns(options);
 
         // Setup client mock that returns success
-        var uri = Substitute.For<Uri>("http://localhost/test");
-        var settings = Substitute.For<ConnectionSettings>(uri);
+        var uri = new Uri("http://localhost:9200");
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var settings = new ConnectionSettings(uri);
+#pragma warning restore CA2000 // Dispose objects before losing scope
         var client = new OpenSearchClient(settings);
 
         var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, client).BuildServiceProvider();
@@ -157,8 +159,10 @@ public sealed class OpenSearchHealthCheckTests
         _ = optionsMonitor.Get(testName).Returns(options);
 
         // Setup connection mock that returns success
-        var uri = Substitute.For<Uri>("http://localhost/test");
-        var settings = Substitute.For<ConnectionSettings>(uri);
+        var uri = new Uri("http://localhost:9200");
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var settings = new ConnectionSettings(uri);
+#pragma warning restore CA2000 // Dispose objects before losing scope
         var client = new OpenSearchClient(settings);
 
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
@@ -208,8 +212,10 @@ public sealed class OpenSearchHealthCheckTests
         _ = optionsMonitor.Get(testName).Returns(options);
 
         // Setup connection mock that throws an exception
-        var uri = Substitute.For<Uri>("http://localhost/test");
-        var settings = Substitute.For<ConnectionSettings>(uri);
+        var uri = new Uri("http://localhost:9200");
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var settings = new ConnectionSettings(uri);
+#pragma warning restore CA2000 // Dispose objects before losing scope
         var client = new OpenSearchClient(settings);
 
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
