@@ -7,19 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class QueueServiceAvailableHealthCheck : ConfigurableHealthCheckBase<QueueServiceAvailableOptions>
+[ConfigurableHealthCheck(typeof(QueueServiceAvailableOptions))]
+internal sealed partial class QueueServiceAvailableHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public QueueServiceAvailableHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<QueueServiceAvailableOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         QueueServiceAvailableOptions options,
