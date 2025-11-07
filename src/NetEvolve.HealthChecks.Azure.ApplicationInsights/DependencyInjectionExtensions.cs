@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Azure.ApplicationInsights;
+﻿namespace NetEvolve.HealthChecks.Azure.ApplicationInsights;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -6,12 +6,13 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
 /// <summary>
 /// Extensions methods for <see cref="IHealthChecksBuilder"/> with custom Health Checks.
 /// </summary>
-public static class DependencyInjectionExtensions
+[HealthCheckHelper]
+public static partial class DependencyInjectionExtensions
 {
     private static readonly string[] _defaultTags = ["azure", "applicationinsights", "telemetry"];
 
