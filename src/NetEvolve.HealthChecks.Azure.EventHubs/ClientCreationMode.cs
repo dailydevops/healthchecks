@@ -1,7 +1,7 @@
 namespace NetEvolve.HealthChecks.Azure.EventHubs;
 
 using System;
-using global::Azure.Messaging.EventHubs;
+using global::Azure.Messaging.EventHubs.Producer;
 
 /// <summary>
 /// Describes the mode to create or retrieve an <see cref="EventHubProducerClient"/>.
