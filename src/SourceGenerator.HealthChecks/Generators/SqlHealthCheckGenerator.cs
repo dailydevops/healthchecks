@@ -163,6 +163,6 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
         public string? ConnectionTypeName { get; set; }
         public string? ConnectionTypeNamespace { get; set; }
         public string OptionsTypeName { get; internal set; } = default!;
-        public string? OptionsTypeNamespace { get; internal set; }
+        public string OptionsTypeNamespace { get; internal set; } = default!;
     }
 }

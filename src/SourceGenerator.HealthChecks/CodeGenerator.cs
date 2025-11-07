@@ -7,7 +7,8 @@ internal static class CodeGenerator
     public static CSharpCodeBuilder ConfigurableHealthCheck(
         ICandidate candidate,
         Action<CSharpCodeBuilder>? additionalCode = null,
-        bool withWin32ExceptionHandling = false
+        bool withWin32ExceptionHandling = false,
+        bool includeServiceProvider = false
     )
     {
         var cb = new CSharpCodeBuilder(500)
@@ -27,8 +28,14 @@ internal static class CodeGenerator
             .AppendLine("using NetEvolve.Extensions.Tasks;")
             .AppendLine();
 
-        _ = cb.AppendLine(
-                $"partial class {candidate.Name}(IOptionsMonitor<{candidate.OptionsTypeName}> optionsMonitor)"
+        _ = cb.AppendLine("#nullable enable")
+            .AppendLineIf(
+                !includeServiceProvider,
+                $"partial class {candidate.Name}(IOptionsMonitor<{candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName}> optionsMonitor)"
+            )
+            .AppendLineIf(
+                includeServiceProvider,
+                $"partial class {candidate.Name}(IServiceProvider serviceProvider, IOptionsMonitor<{candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName}> optionsMonitor)"
             )
             .Intend()
             .AppendLine(": IHealthCheck");
@@ -36,10 +43,14 @@ internal static class CodeGenerator
         using (cb.Scope())
         {
             _ = cb.AppendLine(
-                    $"private readonly IOptionsMonitor<{candidate.OptionsTypeName}> _optionsMonitor = optionsMonitor;"
+                    $"private readonly IOptionsMonitor<{candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName}> _optionsMonitor = optionsMonitor;"
+                )
+                .AppendLineIf(
+                    includeServiceProvider,
+                    $"private readonly IServiceProvider _serviceProvider = serviceProvider;"
                 )
                 .AppendLine(
-                    $"private readonly {candidate.OptionsTypeName} _defaultConfiguration = new {candidate.OptionsTypeName}();"
+                    $"private readonly {candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName} _defaultConfiguration = new {candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName}();"
                 )
                 .AppendLine()
                 .AppendXmlDocInheritDoc();
@@ -97,6 +108,7 @@ internal static class CodeGenerator
                 additionalCode(cb);
             }
         }
+        _ = cb.AppendLine("#nullable disable");
 
         return cb;
     }

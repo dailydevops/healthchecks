@@ -4,6 +4,6 @@ internal interface ICandidate
 {
     string Namespace { get; }
     string Name { get; }
-
     string OptionsTypeName { get; }
+    string OptionsTypeNamespace { get; }
 }
