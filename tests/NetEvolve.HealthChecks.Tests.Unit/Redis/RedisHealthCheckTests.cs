@@ -18,7 +18,7 @@ public sealed class RedisHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedisOptions>>();
-        var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!);
@@ -33,7 +33,7 @@ public sealed class RedisHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedisOptions>>();
-        var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -54,7 +54,7 @@ public sealed class RedisHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RedisOptions>>();
-        var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
