@@ -11,7 +11,7 @@ using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(SimpleStorageServiceOptions))]
-internal sealed partial class SimpleStorageServiceHealthCheck(IOptionsMonitor<SimpleStorageServiceOptions> optionsMonitor)
+internal sealed partial class SimpleStorageServiceHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,

@@ -8,12 +8,10 @@ using Amazon.EC2.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
 
-internal sealed class ElasticComputeCloudHealthCheck(IOptionsMonitor<ElasticComputeCloudOptions> optionsMonitor)
-    : ConfigurableHealthCheckBase<ElasticComputeCloudOptions>(optionsMonitor)
+internal sealed partial class ElasticComputeCloudHealthCheck
 {
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         ElasticComputeCloudOptions options,

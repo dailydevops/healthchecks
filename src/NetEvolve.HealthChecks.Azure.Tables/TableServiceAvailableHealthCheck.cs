@@ -8,7 +8,7 @@ using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(TableServiceAvailableOptions))]
-internal sealed partial class TableServiceAvailableHealthCheck 
+internal sealed partial class TableServiceAvailableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
