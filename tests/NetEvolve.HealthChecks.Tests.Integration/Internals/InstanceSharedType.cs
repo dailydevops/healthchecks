@@ -39,6 +39,8 @@ internal static class InstanceSharedType
 
     public const SharedType MySql = SharedType.PerAssembly;
 
+    public const SharedType OpenSearch = SharedType.PerClass;
+
     public const SharedType Oracle = SharedType.PerClass;
 
     public const SharedType PostgreSql = SharedType.PerClass;
