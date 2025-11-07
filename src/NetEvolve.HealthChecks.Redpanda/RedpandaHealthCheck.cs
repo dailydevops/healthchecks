@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<RedpandaOptions>, IDisposable
+[ConfigurableHealthCheck(typeof(RedpandaOptions))]
+internal sealed partial class RedpandaHealthCheck : IDisposable
 {
-    private readonly IServiceProvider _serviceProvider;
     private ConcurrentDictionary<string, IProducer<string, string>>? _producers;
     private bool _disposedValue;
 
@@ -24,10 +23,7 @@ internal sealed class RedpandaHealthCheck : ConfigurableHealthCheckBase<Redpanda
         Value = "HealthCheck",
     };
 
-    public RedpandaHealthCheck(IServiceProvider serviceProvider, IOptionsMonitor<RedpandaOptions> optionsMonitor)
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         RedpandaOptions options,
