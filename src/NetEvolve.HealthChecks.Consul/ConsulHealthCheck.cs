@@ -5,18 +5,13 @@ using System.Threading.Tasks;
 using global::Consul;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ConsulHealthCheck : ConfigurableHealthCheckBase<ConsulOptions>
+[ConfigurableHealthCheck(typeof(ConsulOptions))]
+internal sealed partial class ConsulHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public ConsulHealthCheck(IOptionsMonitor<ConsulOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus,
         ConsulOptions options,
