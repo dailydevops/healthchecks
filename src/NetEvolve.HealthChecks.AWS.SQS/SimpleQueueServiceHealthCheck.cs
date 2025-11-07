@@ -5,19 +5,17 @@ using Amazon.SQS;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class SimpleQueueServiceHealthCheck : ConfigurableHealthCheckBase<SimpleQueueServiceOptions>
+[ConfigurableHealthCheck(typeof(SimpleQueueServiceOptions))]
+internal sealed partial class SimpleQueueServiceHealthCheck
 {
-    public SimpleQueueServiceHealthCheck(IOptionsMonitor<SimpleQueueServiceOptions> optionsMonitor)
-        : base(optionsMonitor) { }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
-        string name,
-        HealthStatus failureStatus,
-        SimpleQueueServiceOptions options,
-        CancellationToken cancellationToken
-    )
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+           string name,
+           HealthStatus failureStatus,
+           SimpleQueueServiceOptions options,
+           CancellationToken cancellationToken
+       )
     {
         using var client = CreateClient(options);
         var (isTimelyResponse, response) = await client
