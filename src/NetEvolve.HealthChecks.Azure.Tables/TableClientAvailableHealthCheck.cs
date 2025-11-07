@@ -1,26 +1,17 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Tables;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class TableClientAvailableHealthCheck : ConfigurableHealthCheckBase<TableClientAvailableOptions>
+[ConfigurableHealthCheck(typeof(TableServiceAvailableOptions))]
+internal sealed partial class TableClientAvailableHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public TableClientAvailableHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<TableClientAvailableOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         TableClientAvailableOptions options,
