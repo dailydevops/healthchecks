@@ -1,25 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.ServiceBus;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class ServiceBusQueueHealthCheck : ConfigurableHealthCheckBase<ServiceBusQueueOptions>
+[ConfigurableHealthCheck(typeof(ServiceBusQueueOptions))]
+internal sealed partial class ServiceBusQueueHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public ServiceBusQueueHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<ServiceBusQueueOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         ServiceBusQueueOptions options,
