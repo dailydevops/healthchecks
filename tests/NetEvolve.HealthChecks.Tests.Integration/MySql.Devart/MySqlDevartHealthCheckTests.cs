@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.MySql.Devart;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.MySql.Devart;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,6 @@ using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
 [ClassDataSource<MySqlDatabase>(Shared = InstanceSharedType.MySql)]
-[RunOn(OS.Windows)]
 [Skip("Devart.Data.MySql requires a license.")]
 public class MySqlDevartHealthCheckTests : HealthCheckTestBase
 {
