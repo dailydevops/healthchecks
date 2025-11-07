@@ -1,32 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.Keycloak;
 
-using System;
 using System.Threading.Tasks;
 using global::Keycloak.Net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class KeycloakHealthCheck : ConfigurableHealthCheckBase<KeycloakOptions>
+[ConfigurableHealthCheck(typeof(KeycloakOptions))]
+internal sealed partial class KeycloakHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="KeycloakHealthCheck"/> class.
-    /// </summary>
-    /// <param name="optionsMonitor">The <see cref="IOptionsMonitor{TOptions}"/> instance used to access named options.</param>
-    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to resolve dependencies.</param>
-    public KeycloakHealthCheck(IOptionsMonitor<KeycloakOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        _serviceProvider = serviceProvider;
-    }
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         KeycloakOptions options,
@@ -42,7 +26,12 @@ internal sealed class KeycloakHealthCheck : ConfigurableHealthCheckBase<Keycloak
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isTimelyResponse && resultIsValid, name);
+        if (!resultIsValid)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "The command did not return a valid result.");
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(KeycloakClient client, CancellationToken cancellationToken)
