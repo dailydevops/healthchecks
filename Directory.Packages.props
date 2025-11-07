@@ -36,6 +36,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Dapr.Client" Version="1.16.0" />
+    <PackageVersion Include="Devart.Data.MySql" Version="9.4.190" />
     <PackageVersion Include="Devart.Data.SqlServer" Version="5.2.290" />
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.4.1" />
     <PackageVersion Include="DuckDB.NET.Data" Version="1.4.1" />
