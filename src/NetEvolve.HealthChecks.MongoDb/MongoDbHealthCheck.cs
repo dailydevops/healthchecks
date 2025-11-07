@@ -42,6 +42,8 @@ internal sealed partial class MongoDbHealthCheck
     {
         var database = client.GetDatabase("admin");
 
-        return await database.RunCommandAsync<BsonDocument>(_defaultCommand, null, cancellationToken).ConfigureAwait(false);
+        return await database
+            .RunCommandAsync<BsonDocument>(_defaultCommand, null, cancellationToken)
+            .ConfigureAwait(false);
     }
 }
