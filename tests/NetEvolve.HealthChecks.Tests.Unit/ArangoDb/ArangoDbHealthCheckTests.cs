@@ -21,7 +21,7 @@ public sealed class ArangoDbHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
-        var check = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -38,7 +38,7 @@ public sealed class ArangoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
 
-        var check = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -64,7 +64,7 @@ public sealed class ArangoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
 
-        var check = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -111,7 +111,7 @@ public sealed class ArangoDbHealthCheckTests
             .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -157,7 +157,7 @@ public sealed class ArangoDbHealthCheckTests
             .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -203,7 +203,7 @@ public sealed class ArangoDbHealthCheckTests
             .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new ArangoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),

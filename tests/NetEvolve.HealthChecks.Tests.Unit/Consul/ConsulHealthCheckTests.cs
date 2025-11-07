@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Consul;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Consul;
 
 using System;
 using System.Threading;
@@ -18,7 +18,7 @@ public sealed class ConsulHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ConsulOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new ConsulHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ConsulHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -33,7 +33,7 @@ public sealed class ConsulHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ConsulOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new ConsulHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ConsulHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -54,7 +54,7 @@ public sealed class ConsulHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ConsulOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new ConsulHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ConsulHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

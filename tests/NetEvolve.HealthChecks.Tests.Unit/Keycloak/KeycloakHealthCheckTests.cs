@@ -20,7 +20,7 @@ public sealed class KeycloakHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
-        var check = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -38,7 +38,7 @@ public sealed class KeycloakHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
 
-        var check = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -65,7 +65,7 @@ public sealed class KeycloakHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
 
-        var check = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -111,7 +111,7 @@ public sealed class KeycloakHealthCheckTests
             .AddSingleton<KeycloakClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -156,7 +156,7 @@ public sealed class KeycloakHealthCheckTests
             .AddSingleton<KeycloakClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
@@ -201,7 +201,7 @@ public sealed class KeycloakHealthCheckTests
             .AddSingleton<KeycloakClientProvider>()
             .BuildServiceProvider();
 
-        var healthCheck = new KeycloakHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),

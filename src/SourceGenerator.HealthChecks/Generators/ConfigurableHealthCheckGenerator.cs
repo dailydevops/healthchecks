@@ -26,7 +26,8 @@ internal sealed class ConfigurableHealthCheckGenerator : IIncrementalGenerator
     {
         var codeBuilder = CodeGenerator.ConfigurableHealthCheck(
             candidate,
-            builder => GenerateHelperMethods(builder),
+            GenerateHelperMethods,
+            withWin32ExceptionHandling: candidate.IncludeWin32Handling,
             includeServiceProvider: true
         );
         context.AddSource($"{candidate.Name}.g.cs", SourceText.From(codeBuilder.ToString(), Encoding.UTF8));
@@ -96,6 +97,7 @@ internal sealed class ConfigurableHealthCheckGenerator : IIncrementalGenerator
             Name = classDeclaration.Identifier.Text,
             OptionsTypeName = optionsType.Name,
             OptionsTypeNamespace = optionsType.ContainingNamespace.ToDisplayString(),
+            IncludeWin32Handling = attributeData.ConstructorArguments[1].Value is true,
         };
     }
 
@@ -109,5 +111,7 @@ internal sealed class ConfigurableHealthCheckGenerator : IIncrementalGenerator
         public string Name { get; set; } = default!;
         public string OptionsTypeName { get; internal set; } = default!;
         public string OptionsTypeNamespace { get; internal set; } = default!;
+
+        public bool IncludeWin32Handling { get; set; }
     }
 }

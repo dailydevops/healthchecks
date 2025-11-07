@@ -27,7 +27,7 @@ internal sealed partial class RedisHealthCheck
 
         var result = await connection.GetDatabase().PingAsync().WaitAsync(cancellationToken).ConfigureAwait(false);
 
-        return HealthCheckState(result.TotalMilliseconds >= options.Timeout, name);
+        return HealthCheckState(result.TotalMilliseconds <= options.Timeout, name);
     }
 
     private IConnectionMultiplexer GetConnection(string name, RedisOptions options, IServiceProvider serviceProvider)

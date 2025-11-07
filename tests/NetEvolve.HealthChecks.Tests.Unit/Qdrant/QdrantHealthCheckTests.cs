@@ -18,7 +18,7 @@ public sealed class QdrantHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<QdrantOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new QdrantHealthCheck(optionsMonitor, serviceProvider);
+        var check = new QdrantHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -33,7 +33,7 @@ public sealed class QdrantHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<QdrantOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new QdrantHealthCheck(optionsMonitor, serviceProvider);
+        var check = new QdrantHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -54,7 +54,7 @@ public sealed class QdrantHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<QdrantOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new QdrantHealthCheck(optionsMonitor, serviceProvider);
+        var check = new QdrantHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

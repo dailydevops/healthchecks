@@ -21,7 +21,7 @@ public sealed class RavenDbHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        var check = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -37,7 +37,7 @@ public sealed class RavenDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
 
-        var check = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -59,7 +59,7 @@ public sealed class RavenDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
 
-        var check = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
@@ -98,7 +98,7 @@ public sealed class RavenDbHealthCheckTests
         _ = serviceCollection.AddKeyedSingleton("test-key", store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -140,7 +140,7 @@ public sealed class RavenDbHealthCheckTests
         _ = serviceCollection.AddSingleton(store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -182,7 +182,7 @@ public sealed class RavenDbHealthCheckTests
         _ = serviceCollection.AddSingleton(store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RavenDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),

@@ -98,7 +98,6 @@
     <PackageReference Include="Net.IBM.Data.Db2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Abstractions\NetEvolve.HealthChecks.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ArangoDb\NetEvolve.HealthChecks.ArangoDb.csproj" />

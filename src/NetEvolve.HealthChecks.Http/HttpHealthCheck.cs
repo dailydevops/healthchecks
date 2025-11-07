@@ -10,7 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
-[ConfigurableHealthCheck(typeof(HttpOptions))]
+[ConfigurableHealthCheck(typeof(HttpOptions), true)]
 internal sealed partial class HttpHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(

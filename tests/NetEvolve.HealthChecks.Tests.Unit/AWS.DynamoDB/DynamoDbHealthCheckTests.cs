@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.AWS.DynamoDB;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.AWS.DynamoDB;
 
 using System;
 using System.Threading;
@@ -17,7 +17,8 @@ public sealed class DynamoDbHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<DynamoDbOptions>>();
-        var check = new DynamoDbHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new DynamoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -31,7 +32,8 @@ public sealed class DynamoDbHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<DynamoDbOptions>>();
-        var check = new DynamoDbHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new DynamoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -51,7 +53,8 @@ public sealed class DynamoDbHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<DynamoDbOptions>>();
-        var check = new DynamoDbHealthCheck(optionsMonitor);
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        var check = new DynamoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

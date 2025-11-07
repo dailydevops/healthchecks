@@ -34,7 +34,7 @@ public sealed class RabbitMQHealthCheckTests
         _ = serviceCollection.AddKeyedSingleton<IConnection>("test-key", mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RabbitMQHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -70,7 +70,7 @@ public sealed class RabbitMQHealthCheckTests
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RabbitMQHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -106,7 +106,7 @@ public sealed class RabbitMQHealthCheckTests
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RabbitMQHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -151,7 +151,7 @@ public sealed class RabbitMQHealthCheckTests
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new RabbitMQHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),

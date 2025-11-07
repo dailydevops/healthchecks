@@ -19,7 +19,7 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusSubscriptionOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new ServiceBusSubscriptionHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ServiceBusSubscriptionHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -34,7 +34,7 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusSubscriptionOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new ServiceBusSubscriptionHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ServiceBusSubscriptionHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -56,7 +56,7 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusSubscriptionOptions>>();
         _ = optionsMonitor.Get("Test").Returns((ServiceBusSubscriptionOptions)null!);
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var check = new ServiceBusSubscriptionHealthCheck(optionsMonitor, serviceProvider);
+        var check = new ServiceBusSubscriptionHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

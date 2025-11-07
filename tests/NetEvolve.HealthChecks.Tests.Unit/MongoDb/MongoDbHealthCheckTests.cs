@@ -21,7 +21,7 @@ public sealed class MongoDbHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
-        var check = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -37,7 +37,7 @@ public sealed class MongoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
 
-        var check = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -59,7 +59,7 @@ public sealed class MongoDbHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
 
-        var check = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act
@@ -98,7 +98,7 @@ public sealed class MongoDbHealthCheckTests
         _ = serviceCollection.AddKeyedSingleton("test-key", client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -140,7 +140,7 @@ public sealed class MongoDbHealthCheckTests
         _ = serviceCollection.AddSingleton(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -182,7 +182,7 @@ public sealed class MongoDbHealthCheckTests
         _ = serviceCollection.AddSingleton(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new MongoDbHealthCheck(optionsMonitor, serviceProvider);
+        var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
