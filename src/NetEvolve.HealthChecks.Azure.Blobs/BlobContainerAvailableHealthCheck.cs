@@ -1,25 +1,16 @@
 ﻿namespace NetEvolve.HealthChecks.Azure.Blobs;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class BlobContainerAvailableHealthCheck : ConfigurableHealthCheckBase<BlobContainerAvailableOptions>
+[ConfigurableHealthCheck(typeof(BlobContainerAvailableOptions))]
+internal sealed partial class BlobContainerAvailableHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public BlobContainerAvailableHealthCheck(
-        IServiceProvider serviceProvider,
-        IOptionsMonitor<BlobContainerAvailableOptions> optionsMonitor
-    )
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         BlobContainerAvailableOptions options,
