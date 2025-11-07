@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.GCP.Firestore;
+﻿namespace NetEvolve.HealthChecks.GCP.Firestore;
 
 using System;
 using System.Threading;
@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 using global::Google.Cloud.Firestore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class FirestoreHealthCheck : ConfigurableHealthCheckBase<FirestoreOptions>
+[ConfigurableHealthCheck(typeof(FirestoreOptions))]
+internal sealed partial class FirestoreHealthCheck
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public FirestoreHealthCheck(IOptionsMonitor<FirestoreOptions> optionsMonitor, IServiceProvider serviceProvider)
-        : base(optionsMonitor) => _serviceProvider = serviceProvider;
-
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
+#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
+#pragma warning restore S1172 // Unused method parameters should be removed
         FirestoreOptions options,
         CancellationToken cancellationToken
     )
@@ -34,11 +31,11 @@ internal sealed class FirestoreHealthCheck : ConfigurableHealthCheckBase<Firesto
         var testDoc = testCollection.Document("test");
 
         // Attempt a lightweight operation with timeout
-        var (isValid, _) = await testDoc
+        var (isTimelyResponse, _) = await testDoc
             .GetSnapshotAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }
