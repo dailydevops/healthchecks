@@ -8,12 +8,12 @@ using Amazon.S3.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Tasks;
-using NetEvolve.HealthChecks.Abstractions;
+using SourceGenerator.Attributes;
 
-internal sealed class SimpleStorageServiceHealthCheck(IOptionsMonitor<SimpleStorageServiceOptions> optionsMonitor)
-    : ConfigurableHealthCheckBase<SimpleStorageServiceOptions>(optionsMonitor)
+[ConfigurableHealthCheck(typeof(SimpleStorageServiceOptions))]
+internal sealed partial class SimpleStorageServiceHealthCheck(IOptionsMonitor<SimpleStorageServiceOptions> optionsMonitor)
 {
-    protected override async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         SimpleStorageServiceOptions options,

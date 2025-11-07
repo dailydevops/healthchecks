@@ -10,11 +10,11 @@ using SourceGenerator.Attributes;
 internal sealed partial class SimpleQueueServiceHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
-           string name,
-           HealthStatus failureStatus,
-           SimpleQueueServiceOptions options,
-           CancellationToken cancellationToken
-       )
+        string name,
+        HealthStatus failureStatus,
+        SimpleQueueServiceOptions options,
+        CancellationToken cancellationToken
+    )
     {
         using var client = CreateClient(options);
         var (isTimelyResponse, response) = await client
