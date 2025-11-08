@@ -22,6 +22,7 @@
     <PackageReference Include="Consul" />
     <PackageReference Include="Dapr.Client" />
     <PackageReference Include="Devart.Data.SqlServer" />
+    <PackageReference Include="Devart.Data.SQLite" />
     <PackageReference Include="DuckDB.NET.Data" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" />
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
@@ -136,6 +137,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Devart\NetEvolve.HealthChecks.SQLite.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Legacy\NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Devart\NetEvolve.HealthChecks.SqlServer.Devart.csproj" />

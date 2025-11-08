@@ -63,6 +63,7 @@
     <Project Path="src/NetEvolve.HealthChecks.RavenDb/NetEvolve.HealthChecks.RavenDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Redis/NetEvolve.HealthChecks.Redis.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Redpanda/NetEvolve.HealthChecks.Redpanda.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.SQLite.Devart/NetEvolve.HealthChecks.SQLite.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SQLite.Legacy/NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SQLite/NetEvolve.HealthChecks.SQLite.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.SqlServer.Devart/NetEvolve.HealthChecks.SqlServer.Devart.csproj" />
