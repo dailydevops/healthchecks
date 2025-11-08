@@ -60,7 +60,10 @@ internal sealed class EventHubsClientFactory : IDisposable
             if (disposing)
             {
 #pragma warning disable VSTHRD101 // Avoid unsupported async delegates
-                _ = Parallel.ForEach(_eventHubClients.Values, async client => await client.DisposeAsync().ConfigureAwait(false));
+                _ = Parallel.ForEach(
+                    _eventHubClients.Values,
+                    async client => await client.DisposeAsync().ConfigureAwait(false)
+                );
 #pragma warning restore VSTHRD101 // Avoid unsupported async delegates
                 _eventHubClients.Clear();
             }
