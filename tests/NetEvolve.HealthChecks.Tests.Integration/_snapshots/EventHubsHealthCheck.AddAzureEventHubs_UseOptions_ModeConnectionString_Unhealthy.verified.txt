@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: EventHubsConnectionStringUnhealthy: Unexpected error.,
+      exception: {
+        message: Der angegebene Host ist unbekannt.,
+        type: System.Net.Sockets.SocketException
+      },
+      name: EventHubsConnectionStringUnhealthy,
+      status: Unhealthy,
+      tags: [
+        azure,
+        eventhubs,
+        messaging
+      ]
+    }
+  ],
+  status: Unhealthy
+}

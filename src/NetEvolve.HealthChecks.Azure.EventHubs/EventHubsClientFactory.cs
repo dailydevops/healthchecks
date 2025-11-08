@@ -1,10 +1,9 @@
-namespace NetEvolve.HealthChecks.Azure.EventHubs;
+﻿namespace NetEvolve.HealthChecks.Azure.EventHubs;
 
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using global::Azure.Core;
 using global::Azure.Identity;
 using global::Azure.Messaging.EventHubs.Producer;

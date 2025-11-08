@@ -6,9 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.EventHubs;
+using TUnit.Core.Executors;
 
 [TestGroup($"{nameof(Azure)}.{nameof(EventHubs)}")]
 [ClassDataSource<EventHubsContainer>(Shared = InstanceSharedType.AzureEventHubs)]
+[Culture("en-US")]
 public class EventHubsHealthCheckTests : HealthCheckTestBase
 {
     private readonly EventHubsContainer _container;

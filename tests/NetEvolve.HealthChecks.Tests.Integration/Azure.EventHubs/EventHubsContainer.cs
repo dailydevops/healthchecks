@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Azure.EventHubs;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.EventHubs;
 
 using System;
 using System.Threading.Tasks;
@@ -13,6 +13,7 @@ public sealed class EventHubsContainer : IAsyncInitializer, IAsyncDisposable
     private readonly TestContainer _container = new EventHubsBuilder()
         .WithLogger(NullLogger.Instance)
         .WithAcceptLicenseAgreement(true)
+        .WithConfigurationBuilder(EventHubsServiceConfiguration.Create().WithEntity(EventHubName, 2))
         .Build();
 
     public string ConnectionString => _container.GetConnectionString();

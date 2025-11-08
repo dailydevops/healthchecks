@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: EventHubsServiceProviderHealthy: Healthy,
+      name: EventHubsServiceProviderHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        eventhubs,
+        messaging
+      ]
+    }
+  ],
+  status: Healthy
+}
