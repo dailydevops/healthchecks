@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.EventHubs;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.EventHubs;
 
 using System;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +29,7 @@ public sealed class EventHubsOptionsConfigureTests
         // Arrange
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(
-                new System.Collections.Generic.Dictionary<string, string?>
+                new Dictionary<string, string?>
                 {
                     ["HealthChecks:AzureEventHubs:Test:Mode"] = "ConnectionString",
                     ["HealthChecks:AzureEventHubs:Test:ConnectionString"] = "Test",

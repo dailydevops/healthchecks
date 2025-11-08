@@ -272,7 +272,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                             )
                             {
                                 // Read the body content
-                                using var reader = new System.IO.StreamReader(context.Request.Body, Encoding.UTF8);
+                                using var reader = new StreamReader(context.Request.Body, Encoding.UTF8);
 
                                 var body = await reader.ReadToEndAsync();
 

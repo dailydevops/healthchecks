@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.OpenSearch;
+﻿namespace NetEvolve.HealthChecks.OpenSearch;
 
 using System;
 using System.Collections.Concurrent;
@@ -16,7 +16,7 @@ internal sealed partial class OpenSearchHealthCheck
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-        Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus failureStatus,
+        HealthStatus failureStatus,
         OpenSearchOptions options,
         CancellationToken cancellationToken
     )

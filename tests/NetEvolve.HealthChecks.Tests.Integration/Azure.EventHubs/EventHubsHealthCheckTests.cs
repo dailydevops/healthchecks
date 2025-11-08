@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Azure.EventHubs;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.EventHubs;
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
@@ -59,7 +59,7 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddAzureEventHubs_UseConfiguration_ModeConnectionString_Healthy()
     {
-        var configValues = new System.Collections.Generic.Dictionary<string, string?>
+        var configValues = new Dictionary<string, string?>
         {
             ["HealthChecks:AzureEventHubs:EventHubsConfigHealthy:Mode"] = "ConnectionString",
             ["HealthChecks:AzureEventHubs:EventHubsConfigHealthy:ConnectionString"] = _container.ConnectionString,
