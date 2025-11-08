@@ -21,6 +21,7 @@
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Consul" />
     <PackageReference Include="Dapr.Client" />
+    <PackageReference Include="Devart.Data.MySql" />
     <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="Devart.Data.SQLite" />
     <PackageReference Include="DuckDB.NET.Data" />
@@ -127,6 +128,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Devart\NetEvolve.HealthChecks.MySql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />

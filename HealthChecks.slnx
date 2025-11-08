@@ -53,6 +53,7 @@
     <Project Path="src/NetEvolve.HealthChecks.LiteDB/NetEvolve.HealthChecks.LiteDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql.Connector/NetEvolve.HealthChecks.MySql.Connector.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.MySql.Devart/NetEvolve.HealthChecks.MySql.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql/NetEvolve.HealthChecks.MySql.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Npgsql/NetEvolve.HealthChecks.Npgsql.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Odbc/NetEvolve.HealthChecks.Odbc.csproj" />
