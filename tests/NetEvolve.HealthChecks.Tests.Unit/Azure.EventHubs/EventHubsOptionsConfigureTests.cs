@@ -574,7 +574,7 @@ public sealed class EventHubsOptionsConfigureTests
     }
 
     [Test]
-    public async Task Configure_WithDefaultName_BindsFromConfiguration()
+    public void Configure_WithDefaultName_BindsFromConfiguration()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
