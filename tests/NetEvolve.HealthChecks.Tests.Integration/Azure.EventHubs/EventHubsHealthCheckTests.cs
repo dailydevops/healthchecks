@@ -86,8 +86,7 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString =
-                            "Endpoint=sb://invalid.servicebus.windows.net/;SharedAccessKeyName=invalid;SharedAccessKey=invalid";
+                        options.ConnectionString = _container.ConnectionString;
                         options.EventHubName = "invalid";
                         options.Timeout = 1000;
                     }

@@ -3,8 +3,8 @@
     {
       description: EventHubsConnectionStringUnhealthy: Unexpected error.,
       exception: {
-        message: Der angegebene Host ist unbekannt.,
-        type: System.Net.Sockets.SocketException
+        message: The service was unable to process the request; please retry the operation. For more information on exception types and proper exception handling, please refer to http://go.microsoft.com/fwlink/?LinkId=761101 (invalid).  For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot,
+        type: Azure.Messaging.EventHubs.EventHubsException
       },
       name: EventHubsConnectionStringUnhealthy,
       status: Unhealthy,
