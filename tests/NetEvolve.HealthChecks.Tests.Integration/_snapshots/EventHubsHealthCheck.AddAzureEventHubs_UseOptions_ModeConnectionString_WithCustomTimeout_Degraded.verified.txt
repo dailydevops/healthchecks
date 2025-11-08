@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: EventHubsTimeoutDegraded: Degraded,
+      name: EventHubsTimeoutDegraded,
+      status: Degraded,
+      tags: [
+        azure,
+        eventhubs,
+        messaging
+      ]
+    }
+  ],
+  status: Degraded
+}

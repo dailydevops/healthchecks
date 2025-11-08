@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: EventHubsInvalidName: Unexpected error.,
+      exception: {
+        message: The service was unable to process the request; please retry the operation. For more information on exception types and proper exception handling, please refer to http://go.microsoft.com/fwlink/?LinkId=761101 (nonexistent-hub).  For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot,
+        type: Azure.Messaging.EventHubs.EventHubsException
+      },
+      name: EventHubsInvalidName,
+      status: Unhealthy,
+      tags: [
+        azure,
+        eventhubs,
+        messaging
+      ]
+    }
+  ],
+  status: Unhealthy
+}

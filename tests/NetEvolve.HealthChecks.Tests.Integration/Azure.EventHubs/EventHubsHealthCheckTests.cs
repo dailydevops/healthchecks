@@ -94,4 +94,84 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Unhealthy
         );
+
+    [Test]
+    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_WithCustomTimeout_Degraded() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureEventHubs(
+                    "EventHubsTimeoutDegraded",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ConnectionString;
+                        options.ConnectionString = _container.ConnectionString;
+                        options.EventHubName = EventHubsContainer.EventHubName;
+                        options.Timeout = 1;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
+
+    [Test]
+    public async Task AddAzureEventHubs_UseOptions_WithTags_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureEventHubs(
+                    "EventHubsWithTags",
+                    options =>
+                    {
+                        options.Mode = ClientCreationMode.ConnectionString;
+                        options.ConnectionString = _container.ConnectionString;
+                        options.EventHubName = EventHubsContainer.EventHubName;
+                        options.Timeout = 10000;
+                    },
+                    "custom-tag",
+                    "integration-test"
+                );
+            },
+            HealthStatus.Healthy
+        );
+
+    [Test]
+    public async Task AddAzureEventHubs_UseConfiguration_ModeServiceProvider_Healthy()
+    {
+        var configValues = new Dictionary<string, string?>
+        {
+            ["HealthChecks:AzureEventHubs:EventHubsServiceProviderConfig:Mode"] = "ServiceProvider",
+            ["HealthChecks:AzureEventHubs:EventHubsServiceProviderConfig:EventHubName"] =
+                EventHubsContainer.EventHubName,
+            ["HealthChecks:AzureEventHubs:EventHubsServiceProviderConfig:Timeout"] = "10000",
+        };
+
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddAzureEventHubs("EventHubsServiceProviderConfig"),
+            HealthStatus.Healthy,
+            config: configBuilder => configBuilder.AddInMemoryCollection(configValues),
+            serviceBuilder: services =>
+                services.AddAzureClients(clients =>
+                    _ = clients.AddEventHubProducerClient(_container.ConnectionString, EventHubsContainer.EventHubName)
+                )
+        );
+    }
+
+    [Test]
+    public async Task AddAzureEventHubs_UseConfiguration_InvalidEventHubName_Unhealthy()
+    {
+        var configValues = new Dictionary<string, string?>
+        {
+            ["HealthChecks:AzureEventHubs:EventHubsInvalidName:Mode"] = "ConnectionString",
+            ["HealthChecks:AzureEventHubs:EventHubsInvalidName:ConnectionString"] = _container.ConnectionString,
+            ["HealthChecks:AzureEventHubs:EventHubsInvalidName:EventHubName"] = "nonexistent-hub",
+            ["HealthChecks:AzureEventHubs:EventHubsInvalidName:Timeout"] = "5000",
+        };
+
+        await RunAndVerify(
+            healthChecks => _ = healthChecks.AddAzureEventHubs("EventHubsInvalidName"),
+            HealthStatus.Unhealthy,
+            config: configBuilder => configBuilder.AddInMemoryCollection(configValues)
+        );
+    }
 }
