@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ApplicationInsights\NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
@@ -41,15 +42,18 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Devart\NetEvolve.HealthChecks.MySql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.OpenSearch\NetEvolve.HealthChecks.OpenSearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RabbitMQ\NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Devart\NetEvolve.HealthChecks.SQLite.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Legacy\NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer.Devart\NetEvolve.HealthChecks.SqlServer.Devart.csproj" />
