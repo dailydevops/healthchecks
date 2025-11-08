@@ -1,0 +1,17 @@
+﻿{
+  results: [
+    {
+      description: EventHubsWithTags: Healthy,
+      name: EventHubsWithTags,
+      status: Healthy,
+      tags: [
+        azure,
+        eventhubs,
+        messaging,
+        custom-tag,
+        integration-test
+      ]
+    }
+  ],
+  status: Healthy
+}

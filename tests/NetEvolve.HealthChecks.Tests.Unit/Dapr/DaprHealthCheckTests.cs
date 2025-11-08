@@ -24,7 +24,7 @@ public sealed class DaprHealthCheckTests
         var mockClient = Substitute.For<DaprClient>();
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
 
-        _ = services.AddSingleton<DaprClient>(mockClient);
+        _ = services.AddSingleton(mockClient);
         _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -56,7 +56,7 @@ public sealed class DaprHealthCheckTests
         var mockClient = Substitute.For<DaprClient>();
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(false);
 
-        _ = services.AddSingleton<DaprClient>(mockClient);
+        _ = services.AddSingleton(mockClient);
         _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 0);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -95,7 +95,7 @@ public sealed class DaprHealthCheckTests
                 return true;
             });
 
-        _ = services.AddSingleton<DaprClient>(mockClient);
+        _ = services.AddSingleton(mockClient);
         _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = options.Timeout);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -129,7 +129,7 @@ public sealed class DaprHealthCheckTests
             .CheckHealthAsync(Arg.Any<CancellationToken>())
             .ThrowsAsync(new InvalidOperationException("Test exception"));
 
-        _ = services.AddSingleton<DaprClient>(mockClient);
+        _ = services.AddSingleton(mockClient);
         _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -165,7 +165,7 @@ public sealed class DaprHealthCheckTests
         var mockClient = Substitute.For<DaprClient>();
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
 
-        _ = services.AddSingleton<DaprClient>(mockClient);
+        _ = services.AddSingleton(mockClient);
         _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = options.Timeout);
 
         var serviceProvider = services.BuildServiceProvider();

@@ -28,10 +28,10 @@ public sealed class RabbitMQHealthCheckTests
         var mockConnection = Substitute.For<IConnection>();
         _ = mockConnection
             .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult<IChannel>(Substitute.For<IChannel>()));
+            .Returns(Task.FromResult(Substitute.For<IChannel>()));
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton<IConnection>("test-key", mockConnection);
+        _ = serviceCollection.AddKeyedSingleton("test-key", mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -64,10 +64,10 @@ public sealed class RabbitMQHealthCheckTests
         var mockConnection = Substitute.For<IConnection>();
         _ = mockConnection
             .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult<IChannel>(Substitute.For<IChannel>()));
+            .Returns(Task.FromResult(Substitute.For<IChannel>()));
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
+        _ = serviceCollection.AddSingleton(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -103,7 +103,7 @@ public sealed class RabbitMQHealthCheckTests
             .ThrowsAsync(new InvalidOperationException("Connection failed"));
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
+        _ = serviceCollection.AddSingleton(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -148,7 +148,7 @@ public sealed class RabbitMQHealthCheckTests
             });
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
+        _ = serviceCollection.AddSingleton(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);

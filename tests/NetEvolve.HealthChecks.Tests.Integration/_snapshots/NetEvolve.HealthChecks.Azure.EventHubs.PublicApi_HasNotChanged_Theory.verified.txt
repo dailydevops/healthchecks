@@ -1,0 +1,22 @@
+﻿namespace NetEvolve.HealthChecks.Azure.EventHubs
+{
+    public enum ClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        ConnectionString = 2,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAzureEventHubs([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.EventHubs.EventHubsOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class EventHubsOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.EventHubs.EventHubsOptions>
+    {
+        public EventHubsOptions() { }
+        public string? ConnectionString { get; set; }
+        public string? EventHubName { get; set; }
+        public string? FullyQualifiedNamespace { get; set; }
+        public NetEvolve.HealthChecks.Azure.EventHubs.ClientCreationMode? Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+}

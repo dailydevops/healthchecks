@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading.Tasks;
-using global::Google.Cloud.Firestore;
-using global::Google.Cloud.Firestore.V1;
-using global::Grpc.Core;
+using Google.Cloud.Firestore;
+using Google.Cloud.Firestore.V1;
+using Grpc.Core;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.Firestore;
 using TUnit.Core.Interfaces;

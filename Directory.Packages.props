@@ -26,6 +26,7 @@
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.2" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.17.0" />
+    <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
@@ -88,6 +89,7 @@
     <PackageVersion Include="Testcontainers.Consul" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.EventHubs" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Firestore" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />

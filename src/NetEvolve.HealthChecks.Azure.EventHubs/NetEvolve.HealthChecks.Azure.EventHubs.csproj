@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Azure Event Hubs.</Description>
+    <PackageTags>$(PackageTags);azure;eventhubs</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
+  </ItemGroup>
+</Project>

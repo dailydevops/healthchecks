@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.OpenSearch;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.OpenSearch;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -48,7 +48,7 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton<OpenSearchClient>(services =>
+                _ = builder.AddSingleton(services =>
                 {
                     var uri = new Uri(_database.GetConnectionString());
                     var settings = new ConnectionSettings(uri);
