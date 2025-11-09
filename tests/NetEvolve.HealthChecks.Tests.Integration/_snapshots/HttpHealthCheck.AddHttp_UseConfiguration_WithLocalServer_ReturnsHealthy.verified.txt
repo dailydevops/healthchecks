@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestConfigurationHealthy: Healthy,
+      name: TestConfigurationHealthy,
+      status: Healthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Healthy
+}

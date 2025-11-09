@@ -65,6 +65,7 @@ public sealed class HttpConfigureTests
         // Arrange
         const string expectedUri = "https://example.com";
         const string expectedMethod = "POST";
+        const string expectedKeyedService = "test-key";
         const int expectedTimeout = 10000;
         const string expectedContentType = "application/xml";
         const bool expectedAllowAutoRedirect = false;
@@ -73,6 +74,7 @@ public sealed class HttpConfigureTests
         {
             new("HealthChecks:Http:TestService:Uri", expectedUri),
             new("HealthChecks:Http:TestService:HttpMethod", expectedMethod),
+            new("HealthChecks:Http:TestService:KeyedService", expectedKeyedService),
             new("HealthChecks:Http:TestService:Timeout", expectedTimeout.ToString(CultureInfo.InvariantCulture)),
             new("HealthChecks:Http:TestService:ContentType", expectedContentType),
             new(
@@ -95,6 +97,7 @@ public sealed class HttpConfigureTests
         {
             _ = await Assert.That(options.Uri).IsEqualTo(expectedUri);
             _ = await Assert.That(options.HttpMethod).IsEqualTo(expectedMethod);
+            _ = await Assert.That(options.KeyedService).IsEqualTo(expectedKeyedService);
             _ = await Assert.That(options.Timeout).IsEqualTo(expectedTimeout);
             _ = await Assert.That(options.ContentType).IsEqualTo(expectedContentType);
             _ = await Assert.That(options.AllowAutoRedirect).IsEqualTo(expectedAllowAutoRedirect);

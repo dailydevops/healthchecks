@@ -33,6 +33,7 @@ public sealed class HttpOptionsTests
         {
             _ = await Assert.That(options.HttpMethod).IsEqualTo("GET");
             _ = await Assert.That(options.ExpectedHttpStatusCodes).Contains(200);
+            _ = await Assert.That(options.KeyedService).IsNull();
             _ = await Assert.That(options.Timeout).IsEqualTo(5000);
             _ = await Assert.That(options.ContentType).IsEqualTo("application/json");
             _ = await Assert.That(options.AllowAutoRedirect).IsTrue();

@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestValidKeyedEndpoint: Healthy,
+      name: TestValidKeyedEndpoint,
+      status: Healthy,
+      tags: [
+        http,
+        endpoint
+      ]
+    }
+  ],
+  status: Healthy
+}
