@@ -417,13 +417,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.Redirect;
                                 context.Response.Headers.Location = "/redirected";
-                                return;
                             }
                             else if (context.Request.Path == "/redirected")
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                                 await context.Response.WriteAsync("Redirected OK");
-                                return;
                             }
                         });
                     });
