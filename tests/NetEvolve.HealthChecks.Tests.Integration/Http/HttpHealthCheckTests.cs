@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Http;
 using NetEvolve.HealthChecks.Tests.Integration.Internals;
@@ -56,17 +57,24 @@ public class HttpHealthCheckTests : HealthCheckTestBase
     public async Task AddHttp_WithLocalServer_ReturnsHealthy()
     {
         // Set up a test server that responds with HTTP 200 OK
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                app.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
-                    await context.Response.WriteAsync("OK");
-                });
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                    {
+                        app.Run(async context =>
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.OK;
+                            await context.Response.WriteAsync("OK");
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
 
         // Run the health check against the test server
@@ -82,23 +90,32 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 _ = services.AddSingleton(testServer.CreateClient());
             }
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
     public async Task AddHttp_WithNon200StatusCode_ConfiguredToAccept_ReturnsHealthy()
     {
         // Set up a test server that returns HTTP 201 Created
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                app.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.Created;
-                    await context.Response.WriteAsync("Created");
-                });
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                    {
+                        app.Run(async context =>
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.Created;
+                            await context.Response.WriteAsync("Created");
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
 
         // Run the health check against the test server
@@ -117,23 +134,32 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
     public async Task AddHttp_WithNon200StatusCode_NotConfiguredToAccept_ReturnsUnhealthy()
     {
         // Set up a test server that returns HTTP 201 Created
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                app.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.Created;
-                    await context.Response.WriteAsync("Created");
-                });
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                    {
+                        app.Run(async context =>
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.Created;
+                            await context.Response.WriteAsync("Created");
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
 
         // Run the health check against the test server
@@ -152,31 +178,40 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
     public async Task AddHttp_WithPostMethod_ReturnsHealthy()
     {
         // Set up a test server that validates POST method
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                app.Run(context =>
-                {
-                    if (context.Request.Method == "POST")
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        return context.Response.WriteAsync("OK");
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
-                        return context.Response.WriteAsync("Method not allowed");
-                    }
-                });
+                        app.Run(async context =>
+                        {
+                            if (context.Request.Method == "POST")
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                await context.Response.WriteAsync("OK");
+                            }
+                            else
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                                await context.Response.WriteAsync("Method not allowed");
+                            }
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
 
         // Run the health check against the test server
@@ -195,6 +230,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -204,29 +241,36 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         var expectedHeader = "X-Test-Header";
         var expectedValue = "TestValue";
 
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                app.Run(context =>
-                {
-                    if (
-                        context.Request.Headers.TryGetValue(expectedHeader, out var values)
-                        && values.Count == 1
-                        && values[0] == expectedValue
-                    )
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        return context.Response.WriteAsync("OK");
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        return context.Response.WriteAsync("Missing or invalid header");
-                    }
-                });
+                        app.Run(async context =>
+                        {
+                            if (
+                                context.Request.Headers.TryGetValue(expectedHeader, out var values)
+                                && values.Count == 1
+                                && values[0] == expectedValue
+                            )
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                await context.Response.WriteAsync("OK");
+                            }
+                            else
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                                await context.Response.WriteAsync("Missing or invalid header");
+                            }
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
 
         // Run the health check against the test server
@@ -245,6 +289,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -254,47 +300,48 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         var expectedContentType = "application/json";
         var expectedContent = "{\"test\":\"value\"}";
 
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                _ = app.Use(
-                    async (context, next) =>
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
                     {
-                        // Only check requests with content
-                        if (context.Request.ContentLength > 0)
+                        app.Run(async context =>
                         {
-                            // Validate content type
-                            var contentType = context.Request.ContentType;
-
-                            if (
-                                contentType != null
-                                && contentType.StartsWith(expectedContentType, StringComparison.OrdinalIgnoreCase)
-                            )
+                            // Only check requests with content
+                            if (context.Request.ContentLength > 0)
                             {
-                                // Read the body content
-                                using var reader = new StreamReader(context.Request.Body, Encoding.UTF8);
-
-                                var body = await reader.ReadToEndAsync();
-
-                                if (body == expectedContent)
+                                // Validate content type
+                                var contentType = context.Request.ContentType;
+                                if (
+                                    contentType != null
+                                    && contentType.StartsWith(expectedContentType, StringComparison.OrdinalIgnoreCase)
+                                )
                                 {
-                                    context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                    await context.Response.WriteAsync("OK");
-                                    return;
+                                    // Read the body content
+                                    using var reader = new StreamReader(context.Request.Body, Encoding.UTF8);
+                                    var body = await reader.ReadToEndAsync();
+                                    if (body == expectedContent)
+                                    {
+                                        context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                        await context.Response.WriteAsync("OK");
+                                        return;
+                                    }
                                 }
+                                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                                await context.Response.WriteAsync("Invalid content or content type");
+                                return;
                             }
-
                             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                            await context.Response.WriteAsync("Invalid content or content type");
-                            return;
-                        }
-
-                        await next();
-                    }
-                );
+                            await context.Response.WriteAsync("No content");
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         // Create a client for the TestServer
         var client = testServer.CreateClient();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -317,25 +364,34 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(client)
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
     public async Task AddHttp_WithSlowEndpoint_TimeoutExceeded_ReturnsDegraded()
     {
         // Set up a test server that has a delayed response
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                app.Run(async context =>
-                {
-                    // Delay for 1 second
-                    await Task.Delay(1000);
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
-                    await context.Response.WriteAsync("OK but slow");
-                });
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                    {
+                        app.Run(async context =>
+                        {
+                            // Delay for 1 second
+                            await Task.Delay(1000);
+                            context.Response.StatusCode = (int)HttpStatusCode.OK;
+                            await context.Response.WriteAsync("OK but slow");
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
 
         // Run the health check against the test server with a 500ms timeout
@@ -354,37 +410,40 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
     public async Task AddHttp_WithRedirect_AllowRedirect_ReturnsHealthy()
     {
         // Set up a test server that redirects
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                _ = app.Use(
-                    async (context, next) =>
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
                     {
-                        if (context.Request.Path == "/")
+                        app.Run(async context =>
                         {
-                            context.Response.StatusCode = (int)HttpStatusCode.Redirect;
-                            context.Response.Headers.Location = "/redirected";
-                            return;
-                        }
-                        else if (context.Request.Path == "/redirected")
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("Redirected OK");
-                            return;
-                        }
-
-                        await next();
-                    }
-                );
+                            if (context.Request.Path == "/")
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.Redirect;
+                                context.Response.Headers.Location = "/redirected";
+                            }
+                            else if (context.Request.Path == "/redirected")
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                await context.Response.WriteAsync("Redirected OK");
+                            }
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         var client = testServer.CreateClient();
         client.DefaultRequestHeaders.Clear();
 
@@ -413,37 +472,40 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 _ = services.AddSingleton(client);
             }
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
     public async Task AddHttp_WithRedirect_DisallowRedirect_ReturnsUnhealthy()
     {
         // Set up a test server that redirects
-        using var testServer = new TestServer(
-            new WebHostBuilder().Configure(app =>
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
             {
-                _ = app.Use(
-                    async (context, next) =>
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
                     {
-                        if (context.Request.Path == "/")
+                        app.Run(async context =>
                         {
-                            context.Response.StatusCode = (int)HttpStatusCode.Redirect;
-                            context.Response.Headers.Location = "/redirected";
-                            return;
-                        }
-                        else if (context.Request.Path == "/redirected")
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("Redirected OK");
-                            return;
-                        }
-
-                        await next();
-                    }
-                );
+                            if (context.Request.Path == "/")
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.Redirect;
+                                context.Response.Headers.Location = "/redirected";
+                            }
+                            else if (context.Request.Path == "/redirected")
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                await context.Response.WriteAsync("Redirected OK");
+                            }
+                        });
+                    });
             })
-        );
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
+        using var testServer = host.GetTestServer();
         // Create client from test server
         var client = testServer.CreateClient();
         client.DefaultRequestHeaders.Clear();
@@ -471,5 +533,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 _ = services.AddSingleton(client);
             }
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 }
