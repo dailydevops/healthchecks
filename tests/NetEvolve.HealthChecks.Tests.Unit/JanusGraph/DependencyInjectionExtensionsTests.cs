@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.JanusGraph;
 
 using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
@@ -68,8 +69,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddJanusGraph_WhenArgumentsAreValid_AddHealthCheck()
     {
         // Arrange
+        var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
-        var builder = services.AddHealthChecks();
+        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
 
         // Act
         _ = builder.AddJanusGraph("Test");
@@ -87,8 +89,9 @@ public sealed class DependencyInjectionExtensionsTests
     public void AddJanusGraph_WhenNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
+        var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
-        var builder = services.AddHealthChecks();
+        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
 
         // Act
         void Act() => _ = builder.AddJanusGraph("Test").AddJanusGraph("Test");
@@ -101,8 +104,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddJanusGraph_WhenOptionsAreProvided_ConfigureOptions()
     {
         // Arrange
+        var configuration = new ConfigurationBuilder().Build();
         var services = new ServiceCollection();
-        var builder = services.AddHealthChecks();
+        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
 
         // Act
         _ = builder.AddJanusGraph("Test", options => options.Timeout = 1000);
