@@ -33,7 +33,7 @@ The first one is to use the configuration based approach. Therefore, you have to
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureQueueClint("<name>");
+builder.AddQueueClientAvailability("<name>");
 ```
 
 The configuration looks like this:
@@ -54,11 +54,11 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Options based
-The second one is to use the options based approach. Therefore, you have to create an instance of `AzureQueueClientOptions` and provide the configuration.
+The second one is to use the options based approach. Therefore, you have to create an instance of `QueueClientAvailableOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureQueueClient("<name>", options =>
+builder.AddQueueClientAvailability("<name>", options =>
 {
     options.ConnectionString = "<connection-string>";
     options.QueueName = "<queue-name>";
@@ -72,7 +72,7 @@ builder.AddAzureQueueClient("<name>", options =>
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureQueueClient("<name>", options => ..., "azure");
+builder.AddQueueClientAvailability("<name>", options => ..., "azure");
 ```
 
 ## License
