@@ -58,6 +58,7 @@ The configuration looks like this:
                     "Authorization": "Bearer <token>",
                     "User-Agent": "HealthCheck/1.0"
                 },
+                "KeyedService": "<key>", // optional, default is null
                 "Timeout": "<timeout-in-ms>", // optional, default is 5000 milliseconds
                 "Content": "<request-body>", // optional, default is null
                 "ContentType": "<content-type>", // optional, default is "application/json"
@@ -80,6 +81,7 @@ builder.AddHttp("<name>", options =>
     options.HttpMethod = "<http-method>"; // optional, default is "GET"
     options.ExpectedHttpStatusCodes = [200, 201]; // optional, default is [200]
     options.Headers["Authorization"] = "Bearer <token>"; // optional
+    options.KeyedService = "<key>"; // optional, default is null"
     options.Timeout = 3000; // optional, default is 5000 milliseconds
     options.Content = "<request-body>"; // optional, default is null
     options.ContentType = "application/json"; // optional, default is "application/json"
