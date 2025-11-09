@@ -90,6 +90,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 _ = services.AddSingleton(testServer.CreateClient());
             }
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -132,6 +134,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -174,6 +178,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -224,6 +230,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -281,6 +289,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -354,6 +364,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(client)
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -398,6 +410,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             HealthStatus.Degraded,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -458,6 +472,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 _ = services.AddSingleton(client);
             }
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -517,5 +533,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 _ = services.AddSingleton(client);
             }
         );
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 }

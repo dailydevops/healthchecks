@@ -88,6 +88,8 @@ public abstract class HealthCheckTestBase
                 .IgnoreParametersForVerified()
                 .ConfigureAwait(true);
         }
+
+        await host.StopAsync().ConfigureAwait(false);   
     }
 
     private static async Task WriteResponse(HttpContext context, HealthReport report)
