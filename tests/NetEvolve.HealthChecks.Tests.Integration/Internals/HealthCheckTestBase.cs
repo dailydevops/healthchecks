@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 
 public abstract class HealthCheckTestBase
 {
@@ -32,7 +33,7 @@ public abstract class HealthCheckTestBase
         Func<Argon.JToken?, Argon.JToken?>? clearJToken = null
     )
     {
-        var builder = new WebHostBuilder()
+        using var host = new HostBuilder()
             .ConfigureAppConfiguration((_, configBuilder) => config?.Invoke(configBuilder))
             .ConfigureServices(services =>
             {
@@ -40,44 +41,52 @@ public abstract class HealthCheckTestBase
                 var healthChecksBuilder = services.AddHealthChecks();
                 healthChecks?.Invoke(healthChecksBuilder);
             })
-            .Configure(app =>
-                _ = app.UseHealthChecks(HealthCheckPath, new HealthCheckOptions { ResponseWriter = WriteResponse })
-            );
+            .ConfigureWebHost(webBuilder =>
+            {
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                        _ = app.UseHealthChecks(
+                            HealthCheckPath,
+                            new HealthCheckOptions { ResponseWriter = WriteResponse }
+                        )
+                    );
+            })
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
 
-        using (var server = new TestServer(builder))
+        using var server = host.GetTestServer();
+        using var client = server.CreateClient();
+
+        serverConfiguration?.Invoke(server);
+
+        var response = await client.GetAsync(new Uri(HealthCheckPath, UriKind.Relative)).ConfigureAwait(false);
+        var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
+
+        if (clearJToken is not null)
         {
-            var client = server.CreateClient();
+            content = clearJToken.Invoke(content);
+        }
 
-            serverConfiguration?.Invoke(server);
-
-            var response = await client.GetAsync(new Uri(HealthCheckPath, UriKind.Relative)).ConfigureAwait(false);
-            var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
-
-            if (clearJToken is not null)
+        using (Assert.Multiple())
+        {
+            if (content is not null)
             {
-                content = clearJToken.Invoke(content);
-            }
+                var statusValue = content["status"]?.ToString();
 
-            using (Assert.Multiple())
-            {
-                if (content is not null)
+                if (!Enum.TryParse<HealthStatus>(statusValue, out var actualStatus))
                 {
-                    var statusValue = content["status"]?.ToString();
-
-                    if (!Enum.TryParse<HealthStatus>(statusValue, out var actualStatus))
-                    {
-                        Assert.Fail($"Invalid Health status `{statusValue}`.");
-                    }
-
-                    _ = await Assert.That(actualStatus).IsEqualTo(expectedStatus);
+                    Assert.Fail($"Invalid Health status `{statusValue}`.");
                 }
 
-                _ = await Verify(content)
-                    .UseSplitModeForUniqueDirectory()
-                    .IgnoreParametersForVerified()
-                    .ConfigureAwait(true);
+                _ = await Assert.That(actualStatus).IsEqualTo(expectedStatus);
             }
+
+            _ = await Verify(content)
+                .UseSplitModeForUniqueDirectory()
+                .IgnoreParametersForVerified()
+                .ConfigureAwait(true);
         }
     }
 
