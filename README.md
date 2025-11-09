@@ -125,13 +125,13 @@ The `ServiceVersion` is particularly valuable in scenarios where:
 ## Supported .NET version
 We try to support the LTS and STS versions of .NET ([.NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)), as well as the latest preview version of .NET. We will try to support each framework version for at least 3 years, but we can't guarantee it. This depends on the support of related NuGet packages and the .NET platform itself.
 
-| .NET Version                     | Supported                                                        |
-|----------------------------------|:-----------------------------------------------------------------|
-| **.NET Standard**                | :x: No                                                           |
-| **.NET 7.0 or earlier versions** | :x: No                                                           |
-| **.NET 8.0**                     | :white_check_mark: Yes                                           |
-| **.NET 9.0**                     | :white_check_mark: Yes                                           |
-| **.NET 10.0**                    | :white_square_button: Early stage of planning, not yet supported |
+| .NET Version                     | Supported              |
+|----------------------------------|:-----------------------|
+| **.NET Standard**                | :x: No                 |
+| **.NET 7.0 or earlier versions** | :x: No                 |
+| **.NET 8.0**                     | :white_check_mark: Yes |
+| **.NET 9.0**                     | :white_check_mark: Yes |
+| **.NET 10.0**                    | :white_check_mark: Yes |
 
 Why did we choose this approach? Because we want to be able to take advantage of the latest language features of the .NET platform and the performance gains that come with them. We know that not all of our NuGet packages will gain performance from this, but this is our general strategy and nobody knows what the future will bring.
 
