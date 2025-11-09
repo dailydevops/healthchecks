@@ -89,7 +89,7 @@ public abstract class HealthCheckTestBase
                 .ConfigureAwait(true);
         }
 
-        await host.StopAsync().ConfigureAwait(false);   
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     private static async Task WriteResponse(HttpContext context, HealthReport report)
