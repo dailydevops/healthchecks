@@ -9,6 +9,15 @@ using global::Azure.Storage.Queues;
 public sealed record QueueServiceAvailableOptions : IQueueOptions
 {
     /// <summary>
+    /// Gets or sets the key used to resolve the <c>QueueServiceClient</c> from the service provider.
+    /// </summary>
+    /// <remarks>
+    /// When specified, the health check will resolve the <c>QueueServiceClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>QueueServiceClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// </remarks>
+    public string? KeyedService { get; set; }
+
+    /// <summary>
     /// Gets or sets the connection string.
     /// </summary>
     public string? ConnectionString { get; set; }

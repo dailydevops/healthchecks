@@ -5,6 +5,8 @@ using global::Azure.Storage.Queues;
 
 internal interface IQueueOptions
 {
+    string? KeyedService { get; }
+
     Uri? ServiceUri { get; }
 
     string? ConnectionString { get; }
