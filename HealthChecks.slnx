@@ -52,6 +52,7 @@
     <Project Path="src/NetEvolve.HealthChecks.GCP.Firestore/NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.GCP/NetEvolve.HealthChecks.GCP.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Http/NetEvolve.HealthChecks.Http.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.InfluxDB/NetEvolve.HealthChecks.InfluxDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Keycloak/NetEvolve.HealthChecks.Keycloak.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.LiteDB/NetEvolve.HealthChecks.LiteDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
