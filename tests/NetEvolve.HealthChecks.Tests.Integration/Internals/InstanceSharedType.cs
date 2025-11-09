@@ -29,6 +29,8 @@ internal static class InstanceSharedType
 
     public const SharedType Elasticsearch = SharedType.PerClass;
 
+    public const SharedType EventStoreDb = SharedType.PerClass;
+
     public const SharedType Firebird = SharedType.PerClass;
 
     public const SharedType Firestore = SharedType.PerClass;

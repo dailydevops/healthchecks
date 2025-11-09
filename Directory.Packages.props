@@ -44,6 +44,7 @@
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.4.1" />
     <PackageVersion Include="DuckDB.NET.Data" Version="1.4.1" />
     <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.1" />
+    <PackageVersion Include="EventStore.Client.Grpc.Streams" Version="23.3.9" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.3" />
     <PackageVersion Include="Google.Cloud.Firestore" Version="3.10.0" />
     <PackageVersion Include="Keycloak.Net.Core" Version="1.0.37" />
@@ -91,6 +92,7 @@
     <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.EventHubs" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.EventStoreDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Firestore" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
