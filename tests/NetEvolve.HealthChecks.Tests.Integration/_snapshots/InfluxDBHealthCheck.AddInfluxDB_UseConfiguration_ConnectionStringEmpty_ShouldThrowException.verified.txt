@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestNoValues: Missing configuration.,
+      name: TestNoValues,
+      status: Unhealthy,
+      tags: [
+        influxdb,
+        timeseries
+      ]
+    }
+  ],
+  status: Unhealthy
+}

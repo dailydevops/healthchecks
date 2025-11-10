@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for InfluxDB, based on the nuget package `InfluxDB.Client`.</Description>
+    <PackageTags>$(PackageTags);influxdb;timeseries</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="InfluxDB.Client" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
+  </ItemGroup>
+</Project>

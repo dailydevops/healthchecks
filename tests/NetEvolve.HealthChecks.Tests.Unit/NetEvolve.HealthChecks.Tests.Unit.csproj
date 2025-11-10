@@ -44,6 +44,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Firestore\NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Http\NetEvolve.HealthChecks.Http.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.InfluxDB\NetEvolve.HealthChecks.InfluxDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />

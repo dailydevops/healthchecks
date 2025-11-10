@@ -31,6 +31,7 @@
     <PackageReference Include="EventStore.Client.Grpc.Streams" />
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
     <PackageReference Include="Google.Cloud.Firestore" />
+    <PackageReference Include="InfluxDB.Client" />
     <PackageReference Include="Keycloak.Net.Core" />
     <PackageReference Include="LiteDB" />
     <PackageReference Include="Milvus.Client" />
@@ -80,6 +81,7 @@
     <PackageReference Include="Testcontainers.EventStoreDb" />
     <PackageReference Include="Testcontainers.FirebirdSql" />
     <PackageReference Include="Testcontainers.Firestore" />
+    <PackageReference Include="Testcontainers.InfluxDb" />
     <PackageReference Include="Testcontainers.Kafka" />
     <PackageReference Include="Testcontainers.Keycloak" />
     <PackageReference Include="Testcontainers.LocalStack" />
@@ -133,6 +135,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Firestore\NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Http\NetEvolve.HealthChecks.Http.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.InfluxDB\NetEvolve.HealthChecks.InfluxDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />

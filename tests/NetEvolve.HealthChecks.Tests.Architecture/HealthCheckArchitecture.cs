@@ -49,6 +49,7 @@ internal static class HealthCheckArchitecture
             typeof(EventStoreDb.EventStoreDbHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Http.HttpHealthCheck).Assembly,
+            typeof(InfluxDB.InfluxDBHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
             typeof(LiteDB.LiteDBHealthCheck).Assembly,
             typeof(Milvus.MilvusHealthCheck).Assembly,
