@@ -21,9 +21,9 @@ internal sealed partial class PulsarHealthCheck
         string name,
 #pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
         PulsarOptions options,
         CancellationToken cancellationToken
+#pragma warning restore S1172 // Unused method parameters should be removed
     )
     {
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
