@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.Pulsar
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddPulsar(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Pulsar.PulsarOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class PulsarOptions : System.IEquatable<NetEvolve.HealthChecks.Pulsar.PulsarOptions>
+    {
+        public PulsarOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}
