@@ -83,7 +83,7 @@ public sealed class JanusGraphHealthCheckTests
             CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
-                return new object();
+                return true;
             },
         };
 
@@ -124,7 +124,7 @@ public sealed class JanusGraphHealthCheckTests
             CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
-                return new object();
+                return true;
             },
         };
 

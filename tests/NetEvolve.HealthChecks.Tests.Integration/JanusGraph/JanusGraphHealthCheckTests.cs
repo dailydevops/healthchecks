@@ -115,7 +115,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.CommandAsync = async (client, _) => false;
+                        options.CommandAsync = (client, _) => Task.FromResult(false);
                     }
                 );
             },
