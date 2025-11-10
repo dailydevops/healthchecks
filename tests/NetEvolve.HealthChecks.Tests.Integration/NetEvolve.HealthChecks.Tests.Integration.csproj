@@ -23,6 +23,7 @@
     <PackageReference Include="Consul" />
     <PackageReference Include="Dapr.Client" />
     <PackageReference Include="Devart.Data.MySql" />
+    <PackageReference Include="DotPulsar" />
     <PackageReference Include="Devart.Data.SqlServer" />
     <PackageReference Include="Devart.Data.SQLite" />
     <PackageReference Include="DuckDB.NET.Data" />
@@ -85,6 +86,7 @@
     <PackageReference Include="Testcontainers.OpenSearch" />
     <PackageReference Include="Testcontainers.Oracle" />
     <PackageReference Include="Testcontainers.PostgreSql" />
+    <PackageReference Include="Testcontainers.Pulsar" />
     <PackageReference Include="Testcontainers.Qdrant" />
     <PackageReference Include="Testcontainers.RabbitMq" />
     <PackageReference Include="Testcontainers.RavenDb" />
@@ -136,6 +138,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.OpenSearch\NetEvolve.HealthChecks.OpenSearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Pulsar\NetEvolve.HealthChecks.Pulsar.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RabbitMQ\NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />
