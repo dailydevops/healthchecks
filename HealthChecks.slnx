@@ -66,6 +66,7 @@
     <Project Path="src/NetEvolve.HealthChecks.MySql/NetEvolve.HealthChecks.MySql.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Npgsql/NetEvolve.HealthChecks.Npgsql.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Odbc/NetEvolve.HealthChecks.Odbc.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Ollama/NetEvolve.HealthChecks.Ollama.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.OpenSearch/NetEvolve.HealthChecks.OpenSearch.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Oracle/NetEvolve.HealthChecks.Oracle.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Apache.Pulsar/NetEvolve.HealthChecks.Apache.Pulsar.csproj" />

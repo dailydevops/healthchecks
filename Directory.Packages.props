@@ -77,6 +77,7 @@
     <PackageVersion Include="Npgsql" Version="9.0.4" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
+    <PackageVersion Include="OllamaSharp" Version="5.4.9" />
     <PackageVersion Include="OpenSearch.Client" Version="1.8.0" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.0" />
     <PackageVersion Include="PublicApiGenerator" Version="11.5.0" />
@@ -113,6 +114,7 @@
     <PackageVersion Include="Testcontainers.MongoDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MsSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MySql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Ollama" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.OpenSearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Oracle" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="$(VersionTestContainers)" />
