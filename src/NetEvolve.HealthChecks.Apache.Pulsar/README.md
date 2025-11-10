@@ -1,7 +1,7 @@
-# NetEvolve.HealthChecks.Pulsar
+# NetEvolve.HealthChecks.Apache.Pulsar
 
-[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Pulsar?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Pulsar/)
-[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Pulsar?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Pulsar/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.Apache.Pulsar?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Pulsar/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Pulsar?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Pulsar/)
 
 This package provides a health check for Apache Pulsar, based on the [DotPulsar](https://www.nuget.org/packages/DotPulsar/) package. The main purpose is to check that the Pulsar service is reachable and that the client can connect to it.
 
@@ -10,16 +10,16 @@ This package provides a health check for Apache Pulsar, based on the [DotPulsar]
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell
-dotnet add package NetEvolve.HealthChecks.Pulsar
+dotnet add package NetEvolve.HealthChecks.Apache.Pulsar
 ```
 
 ## Health Check - Pulsar Service Availability
 The health check is a liveness check. It will check that the Pulsar service is reachable and that the client can connect to it. If the service needs longer than the configured timeout to respond, the health check will return `Degraded`. If the service is not reachable, the health check will return `Unhealthy`.
 
 ### Usage
-After adding the package, you need to import the namespace `NetEvolve.HealthChecks.Pulsar` and add the health check to the service collection.
+After adding the package, you need to import the namespace `NetEvolve.HealthChecks.Apache.Pulsar` and add the health check to the service collection.
 ```csharp
-using NetEvolve.HealthChecks.Pulsar;
+using NetEvolve.HealthChecks.Apache.Pulsar;
 ```
 Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 

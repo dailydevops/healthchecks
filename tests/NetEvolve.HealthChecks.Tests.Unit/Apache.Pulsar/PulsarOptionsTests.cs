@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Pulsar;
 
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.Pulsar;
+using NetEvolve.HealthChecks.Apache.Pulsar;
 
-[TestGroup(nameof(Pulsar))]
+[TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
 public sealed class PulsarOptionsTests
 {
     [Test]

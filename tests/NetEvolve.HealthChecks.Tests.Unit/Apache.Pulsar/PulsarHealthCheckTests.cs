@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.Pulsar;
+using NetEvolve.HealthChecks.Apache.Pulsar;
 
-[TestGroup(nameof(Pulsar))]
+[TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
 public sealed class PulsarHealthCheckTests
 {
     [Test]

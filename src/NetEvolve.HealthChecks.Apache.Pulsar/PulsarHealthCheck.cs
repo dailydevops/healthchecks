@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Pulsar;
+﻿namespace NetEvolve.HealthChecks.Apache.Pulsar;
 
 using System.Diagnostics;
 using System.Threading;

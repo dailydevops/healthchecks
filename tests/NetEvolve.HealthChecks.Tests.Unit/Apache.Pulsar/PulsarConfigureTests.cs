@@ -4,9 +4,9 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.Pulsar;
+using NetEvolve.HealthChecks.Apache.Pulsar;
 
-[TestGroup(nameof(Pulsar))]
+[TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
 public sealed class PulsarConfigureTests
 {
     [Test]

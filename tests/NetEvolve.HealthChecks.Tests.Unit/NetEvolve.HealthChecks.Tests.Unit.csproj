@@ -53,7 +53,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.OpenSearch\NetEvolve.HealthChecks.OpenSearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
-    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Pulsar\NetEvolve.HealthChecks.Pulsar.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Pulsar\NetEvolve.HealthChecks.Apache.Pulsar.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RabbitMQ\NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />

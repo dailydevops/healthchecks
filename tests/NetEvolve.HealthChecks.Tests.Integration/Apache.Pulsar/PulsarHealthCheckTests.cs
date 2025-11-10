@@ -8,9 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.Pulsar;
+using NetEvolve.HealthChecks.Apache.Pulsar;
 
-[TestGroup(nameof(Pulsar))]
+[TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
 [ClassDataSource<PulsarContainer>(Shared = SharedType.PerTestSession)]
 public sealed class PulsarHealthCheckTests : HealthCheckTestBase
 {
