@@ -9,7 +9,7 @@ public sealed class MilvusDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly MilvusContainer _database = new MilvusBuilder().WithLogger(NullLogger.Instance).Build();
 
-    public string GrpcConnectionString => _database.GetEndpoint().ToString();
+    public Uri GrpcConnectionString => _database.GetEndpoint();
 
     public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 
