@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Mosquitto;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Mosquitto;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,11 +22,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public async Task AddMosquitto_UseOptions_Healthy()
     {
         var mqttFactory = new MqttFactory();
-        var mqttClient = mqttFactory.CreateMqttClient();
+        using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
 
-        await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerHealthy", options => options.Timeout = 10000),
@@ -39,11 +39,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public async Task AddMosquitto_UseOptionsWithKeyedService_Healthy()
     {
         var mqttFactory = new MqttFactory();
-        var mqttClient = mqttFactory.CreateMqttClient();
+        using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
 
-        await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks =>
@@ -64,11 +64,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public async Task AddMosquitto_UseOptions_Degraded()
     {
         var mqttFactory = new MqttFactory();
-        var mqttClient = mqttFactory.CreateMqttClient();
+        using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
 
-        await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerDegraded", options => options.Timeout = 0),
@@ -81,11 +81,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public async Task AddMosquitto_UseConfiguration_Healthy()
     {
         var mqttFactory = new MqttFactory();
-        var mqttClient = mqttFactory.CreateMqttClient();
+        using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
 
-        await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerHealthy"),
@@ -106,11 +106,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public async Task AddMosquitto_UseConfigurationWithKeyedService_Healthy()
     {
         var mqttFactory = new MqttFactory();
-        var mqttClient = mqttFactory.CreateMqttClient();
+        using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
 
-        await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerKeyedHealthy"),
@@ -133,11 +133,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public async Task AddMosquitto_UseConfiguration_Degraded()
     {
         var mqttFactory = new MqttFactory();
-        var mqttClient = mqttFactory.CreateMqttClient();
+        using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
 
-        await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerDegraded"),
