@@ -7,6 +7,8 @@
     ":automergePatch",
     ":rebaseStalePrs"
   ],
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
   "enabledManagers": [
     "nuget",
     "custom.regex"
