@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.EventStoreDb;
 
 using System;
 using System.Collections.Generic;
@@ -95,20 +95,6 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
                         options.CommandAsync = async (client, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
-
-                            var readStream = client.ReadStreamAsync(
-                                Direction.Backwards,
-                                "$all",
-                                StreamPosition.End,
-                                maxCount: 1,
-                                resolveLinkTos: false,
-                                cancellationToken: cancellationToken
-                            );
-
-                            await foreach (var _ in readStream.ConfigureAwait(false))
-                            {
-                                return true;
-                            }
 
                             return true;
                         };

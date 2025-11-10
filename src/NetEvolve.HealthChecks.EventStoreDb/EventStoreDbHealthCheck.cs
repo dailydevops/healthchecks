@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.EventStoreDb;
 
 using System.Threading.Tasks;
 using EventStore.Client;
@@ -12,9 +12,7 @@ internal sealed partial class EventStoreDbHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         EventStoreDbOptions options,
         CancellationToken cancellationToken
     )
@@ -29,28 +27,34 @@ internal sealed partial class EventStoreDbHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isTimelyResponse && result, name);
+        if (!result)
+        {
+            return HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                "The EventStoreDB health check command returned a failed result."
+            );
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(EventStoreClient client, CancellationToken cancellationToken)
     {
         try
         {
-            var readStream = client.ReadStreamAsync(
+            var result = client.ReadAllAsync(
                 Direction.Backwards,
-                "$all",
-                StreamPosition.End,
+                Position.End,
                 maxCount: 1,
-                resolveLinkTos: false,
                 cancellationToken: cancellationToken
             );
 
-            await foreach (var _ in readStream.ConfigureAwait(false))
-            {
-                return true;
-            }
-
-            return true;
+            // Refactored to avoid single-iteration loop: check if any message exists
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
+            await using var enumerator = result.Messages.WithCancellation(cancellationToken).GetAsyncEnumerator();
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
+            return await enumerator.MoveNextAsync();
         }
         catch
         {
