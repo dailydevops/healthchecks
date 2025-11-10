@@ -45,6 +45,7 @@ The configuration looks like this:
   "HealthChecks": {
     "AzureServiceBusQueue": {
       "<name>": {
+        "KeyedService": "<key>", // optional, must be given if you want to access a keyed service
         "ConnectionString": "<connection-string>", // required
         "Mode": "<mode>", // required, to specify the client creation mode, either `ServiceProvider`, `DefaultAzureCredentials` or `ConnectionString`
         "QueueName": "<queue-name>", // required
@@ -62,6 +63,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddAzureServiceBusQueue("<name>", options =>
 {
+    options.KeyedService = "<key>"; // optional, must be given if you want to access a keyed service
     options.ConnectionString = "<connection-string>";
     options.Mode = ClientCreationMode.ServiceProvider; // or DefaultAzureCredentials or ConnectionString
     options.QueueName = "<queue-name>";
@@ -93,6 +95,7 @@ The configuration looks like this:
   "HealthChecks": {
     "AzureServiceBusSubscription": {
       "<name>": {
+        "KeyedService": "<key>", // optional, must be given if you want to access a keyed service
         "ConnectionString": "<connection-string>", // required
         "Mode": "<mode>", // required, to specify the client creation mode, either `ServiceProvider`, `DefaultAzureCredentials` or `ConnectionString`
         "TopicName": "<topic-name>", // required
@@ -112,6 +115,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddAzureServiceBusSubscription("<name>", options =>
 {
+    options.KeyedService = "<key>"; // optional, must be given if you want to access a keyed service
     options.ConnectionString = "<connection-string>";
     options.Mode = ClientCreationMode.ServiceProvider; // or DefaultAzureCredentials or ConnectionString
     options.TopicName = "<topic-name>";
@@ -144,6 +148,7 @@ The configuration looks like this:
   "HealthChecks": {
     "AzureServiceBusTopic": {
       "<name>": {
+        "KeyedService": "<key>", // optional, must be given if you want to access a keyed service
         "ConnectionString": "<connection-string>", // required
         "Mode": "<mode>", // required, to specify the client creation mode, either `ServiceProvider`, `DefaultAzureCredentials` or `ConnectionString`
         "TopicName": "<topic-name>", // required
@@ -162,6 +167,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddAzureServiceBusTopic("<name>", options =>
 {
+    options.KeyedService = "<key>"; // optional, must be given if you want to access a keyed service
     options.ConnectionString = "<connection-string>";
     options.Mode = ClientCreationMode.ServiceProvider; // or DefaultAzureCredentials or ConnectionString
     options.TopicName = "<topic-name>";

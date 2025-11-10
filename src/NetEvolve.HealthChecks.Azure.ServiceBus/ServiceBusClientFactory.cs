@@ -32,7 +32,9 @@ internal sealed class ServiceBusClientFactory
     {
         if (options.Mode == ClientCreationMode.ServiceProvider)
         {
-            return serviceProvider.GetRequiredService<ServiceBusClient>();
+            return string.IsNullOrWhiteSpace(options.KeyedService)
+                ? serviceProvider.GetRequiredService<ServiceBusClient>()
+                : serviceProvider.GetRequiredKeyedService<ServiceBusClient>(options.KeyedService);
         }
 
         return _serviceBusClients.GetOrAdd(name, _ => CreateClient(options, serviceProvider));
@@ -47,7 +49,9 @@ internal sealed class ServiceBusClientFactory
     {
         if (options.Mode == ClientCreationMode.ServiceProvider)
         {
-            return serviceProvider.GetRequiredService<ServiceBusAdministrationClient>();
+            return string.IsNullOrWhiteSpace(options.KeyedService)
+                ? serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                : serviceProvider.GetRequiredKeyedService<ServiceBusAdministrationClient>(options.KeyedService);
         }
 
         return _serviceBusAdministrationClients.GetOrAdd(

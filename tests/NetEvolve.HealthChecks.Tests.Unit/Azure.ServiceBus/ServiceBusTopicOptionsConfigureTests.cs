@@ -257,6 +257,7 @@ public sealed class ServiceBusTopicOptionsConfigureTests
         const string? name = "Test";
         var options = new ServiceBusTopicOptions
         {
+            KeyedService = "test-key",
             Timeout = 100,
             Mode = ClientCreationMode.ServiceProvider,
             TopicName = "TestTopic",

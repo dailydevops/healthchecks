@@ -1,8 +1,8 @@
 ﻿{
   results: [
     {
-      description: ServiceBusQueueServiceProviderPeekHealthy: Healthy,
-      name: ServiceBusQueueServiceProviderPeekHealthy,
+      description: ServiceBusQueueKeyedServicePeekHealthy: Healthy,
+      name: ServiceBusQueueKeyedServicePeekHealthy,
       status: Healthy,
       tags: [
         azure,

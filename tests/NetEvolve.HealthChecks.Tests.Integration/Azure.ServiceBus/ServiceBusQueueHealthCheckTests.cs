@@ -3,8 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::Azure.Messaging.ServiceBus;
+using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
@@ -42,13 +45,42 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
             }
         );
 
+    [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddAzureServiceBusQueue_UseOptions_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusQueue(
+                    "ServiceBusQueueKeyedServiceHealthy",
+                    options =>
+                    {
+                        options.KeyedService = "test-key";
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.QueueName = ServiceBusContainer.QueueName;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients =>
+                    _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
+                );
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                );
+            }
+        );
+
     [Test]
     public async Task AddAzureServiceBusQueue_UseOptions_EnablePeekModeServiceProvider_Healthy() =>
         await RunAndVerify(
             healthChecks =>
             {
                 _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderHealthy",
+                    "ServiceBusQueueServiceProviderPeekHealthy",
                     options =>
                     {
                         options.Mode = ClientCreationMode.ServiceProvider;
@@ -61,6 +93,34 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddAzureServiceBusQueue_UseOptions_EnablePeekModeKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusQueue(
+                    "ServiceBusQueueKeyedServicePeekHealthy",
+                    options =>
+                    {
+                        options.KeyedService = "test-key";
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.EnablePeekMode = true;
+                        options.QueueName = ServiceBusContainer.QueueName;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
+                );
+            }
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
@@ -254,6 +314,39 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureServiceBusQueue:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Test]
+    public async Task AddAzureServiceBusQueue_UseConfiguration_EnablePeekModeKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddAzureServiceBusQueue("ConfigurationKeyedHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationKeyedHealthy:KeyedService", "test-key" },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationKeyedHealthy:Mode",
+                        nameof(ClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationKeyedHealthy:EnablePeekMode", "true" },
+                    {
+                        "HealthChecks:AzureServiceBusQueue:ConfigurationKeyedHealthy:QueueName",
+                        ServiceBusContainer.QueueName
+                    },
+                    { "HealthChecks:AzureServiceBusQueue:ConfigurationKeyedHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
+                );
             }
         );
 

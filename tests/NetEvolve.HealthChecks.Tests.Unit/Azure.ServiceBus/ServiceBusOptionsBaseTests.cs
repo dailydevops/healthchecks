@@ -19,6 +19,7 @@ public sealed class ServiceBusOptionsBaseTests
         {
             _ = await Assert.That(options2).IsNotNull();
             _ = await Assert.That(options2).IsNotSameReferenceAs(options);
+            _ = await Assert.That(options2.KeyedService).IsEqualTo(options.KeyedService);
             _ = await Assert.That(options2.Mode).IsEqualTo(options.Mode);
             _ = await Assert.That(options2.ConnectionString).IsEqualTo(options.ConnectionString);
             _ = await Assert.That(options2.FullyQualifiedNamespace).IsEqualTo(options.FullyQualifiedNamespace);

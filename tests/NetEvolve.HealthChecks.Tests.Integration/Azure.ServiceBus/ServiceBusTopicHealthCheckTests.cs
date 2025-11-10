@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
@@ -38,6 +40,35 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
             {
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
+                );
+            }
+        );
+
+    [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddAzureServiceBusTopic_UseOptions_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddAzureServiceBusTopic(
+                    "ServiceBusTopicKeyedServiceHealthy",
+                    options =>
+                    {
+                        options.KeyedService = "test-key";
+                        options.Mode = ClientCreationMode.ServiceProvider;
+                        options.TopicName = ServiceBusContainer.TopicName;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients =>
+                    _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
+                );
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
                 );
             }
         );
@@ -189,6 +220,40 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
+    public async Task AddAzureServiceBusTopic_UseConfiguration_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddAzureServiceBusTopic("ConfigurationKeyedHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:KeyedService", "test-key" },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Mode",
+                        nameof(ClientCreationMode.ServiceProvider)
+                    },
+                    {
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:TopicName",
+                        ServiceBusContainer.TopicName
+                    },
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients =>
+                    _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
+                );
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                );
             }
         );
 

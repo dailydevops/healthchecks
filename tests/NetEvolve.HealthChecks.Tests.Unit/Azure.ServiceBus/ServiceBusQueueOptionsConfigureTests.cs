@@ -261,6 +261,7 @@ public sealed class ServiceBusQueueOptionsConfigureTests
         const string? name = "Test";
         var options = new ServiceBusQueueOptions
         {
+            KeyedService = "test-key",
             Timeout = 100,
             Mode = ClientCreationMode.ServiceProvider,
             QueueName = "TestQueue",
