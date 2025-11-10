@@ -14,7 +14,6 @@ public sealed class PulsarHealthCheckTests
     [Test]
     public void CheckHealthAsync_WhenClientNotRegistered_ThrowsException()
     {
-        // Arrange
         var options = new PulsarOptions { KeyedService = null, Timeout = 1000 };
 
         var configuration = new ConfigurationBuilder().Build();
@@ -37,7 +36,6 @@ public sealed class PulsarHealthCheckTests
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
         };
 
-        // Act & Assert
         _ = Assert.ThrowsAsync<InvalidOperationException>(async () =>
             await healthCheck.CheckHealthAsync(context, default)
         );

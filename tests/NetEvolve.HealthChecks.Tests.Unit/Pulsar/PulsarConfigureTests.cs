@@ -12,7 +12,6 @@ public sealed class PulsarConfigureTests
     [Test]
     public async Task Configure_WithNameAndOptions_BindsConfigurationCorrectly()
     {
-        // Arrange
         var configValues = new Dictionary<string, string?>
         {
             ["HealthChecks:Pulsar:TestName:KeyedService"] = "test-key",
@@ -24,10 +23,8 @@ public sealed class PulsarConfigureTests
         var options = new PulsarOptions();
         var configure = new PulsarConfigure(configuration);
 
-        // Act
         configure.Configure("TestName", options);
 
-        // Assert
         using (Assert.Multiple())
         {
             _ = await Assert.That(options.KeyedService).IsEqualTo("test-key");
@@ -38,56 +35,46 @@ public sealed class PulsarConfigureTests
     [Test]
     public void Configure_WithNullName_ThrowsArgumentException()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var options = new PulsarOptions();
         var configure = new PulsarConfigure(configuration);
         const string? name = null;
 
-        // Act & Assert
         _ = Assert.Throws<ArgumentNullException>(() => configure.Configure(name, options));
     }
 
     [Test]
     public void Configure_WithEmptyName_ThrowsArgumentException()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var options = new PulsarOptions();
         var configure = new PulsarConfigure(configuration);
         var name = string.Empty;
 
-        // Act & Assert
         _ = Assert.Throws<ArgumentException>(() => configure.Configure(name, options));
     }
 
     [Test]
     public async Task Validate_WithValidOptions_ReturnsSuccess()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var options = new PulsarOptions { Timeout = 100 };
         var configure = new PulsarConfigure(configuration);
 
-        // Act
         var result = configure.Validate("TestName", options);
 
-        // Assert
         _ = await Assert.That(result).IsEqualTo(ValidateOptionsResult.Success);
     }
 
     [Test]
     public async Task Validate_WithNullName_ReturnsFail()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var options = new PulsarOptions();
         var configure = new PulsarConfigure(configuration);
 
-        // Act
         var result = configure.Validate(null, options);
 
-        // Assert
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
@@ -98,15 +85,12 @@ public sealed class PulsarConfigureTests
     [Test]
     public async Task Validate_WithEmptyName_ReturnsFail()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var options = new PulsarOptions();
         var configure = new PulsarConfigure(configuration);
 
-        // Act
         var result = configure.Validate("", options);
 
-        // Assert
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
@@ -117,14 +101,11 @@ public sealed class PulsarConfigureTests
     [Test]
     public async Task Validate_WithNullOptions_ReturnsFail()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var configure = new PulsarConfigure(configuration);
 
-        // Act
         var result = configure.Validate("TestName", null!);
 
-        // Assert
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();
@@ -135,7 +116,6 @@ public sealed class PulsarConfigureTests
     [Test]
     public async Task Validate_WithInvalidTimeout_ReturnsFail()
     {
-        // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var options = new PulsarOptions
         {
@@ -143,10 +123,8 @@ public sealed class PulsarConfigureTests
         };
         var configure = new PulsarConfigure(configuration);
 
-        // Act
         var result = configure.Validate("TestName", options);
 
-        // Assert
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Succeeded).IsFalse();

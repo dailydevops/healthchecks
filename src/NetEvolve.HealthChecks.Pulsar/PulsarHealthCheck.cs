@@ -19,11 +19,11 @@ internal sealed partial class PulsarHealthCheck
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
+#pragma warning disable S1172, RCS1163, IDE0060 // Unused method parameters should be removed
         HealthStatus _,
         PulsarOptions options,
         CancellationToken cancellationToken
-#pragma warning restore S1172 // Unused method parameters should be removed
+#pragma warning restore S1172, RCS1163, IDE0060 // Unused method parameters should be removed
     )
     {
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
