@@ -38,6 +38,7 @@ internal static class HealthCheckArchitecture
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             // GCP
             typeof(GCP.Firestore.FirestoreHealthCheck).Assembly,
+            typeof(GCP.PubSub.PubSubHealthCheck).Assembly,
             // others
             typeof(ArangoDb.ArangoDbHealthCheck).Assembly,
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
