@@ -46,6 +46,7 @@ internal static class HealthCheckArchitecture
             typeof(DB2.DB2HealthCheck).Assembly,
             typeof(DuckDB.DuckDBHealthCheck).Assembly,
             typeof(Elasticsearch.ElasticsearchHealthCheck).Assembly,
+            typeof(EventStoreDb.EventStoreDbHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Http.HttpHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
