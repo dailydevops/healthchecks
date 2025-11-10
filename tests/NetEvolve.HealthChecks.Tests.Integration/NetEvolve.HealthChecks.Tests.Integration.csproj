@@ -61,7 +61,7 @@
     <PackageReference
       Include="Microsoft.AspNetCore.TestHost"
       Condition=" $(TargetFramework) == 'net8.0' "
-      VersionOverride="8.0.21"
+      VersionOverride="9.0.10"
     />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Condition=" $(TargetFramework) != 'net8.0' " />
     <PackageReference Include="Microsoft.Extensions.Azure" />
