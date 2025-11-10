@@ -120,14 +120,12 @@ public sealed class SimpleStorageServiceConfigureTests
     public async Task Configure_WithValidName_BindsConfiguration()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:BucketName", "bucket"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:ServiceUrl", "url"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:AccessKey", "access"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:SecretKey", "secret"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:BucketName", "bucket"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:ServiceUrl", "url"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:AccessKey", "access"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:SecretKey", "secret"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new SimpleStorageServiceOptions();
@@ -164,12 +162,10 @@ public sealed class SimpleStorageServiceConfigureTests
     public async Task Configure_Parameterless_UsesDefaultName()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Default:BucketName", "bucket-default"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Default:ServiceUrl", "url-default"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Default:BucketName", "bucket-default"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Default:ServiceUrl", "url-default"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new SimpleStorageServiceOptions();
@@ -286,16 +282,14 @@ public sealed class SimpleStorageServiceConfigureTests
     public async Task Configure_BindsAllConfigurationProperties()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:BucketName", "bucket"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:ServiceUrl", "url"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:AccessKey", "access"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:SecretKey", "secret"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Timeout", "10000"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Mode", "BasicAuthentication"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:BucketName", "bucket"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:ServiceUrl", "url"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:AccessKey", "access"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:SecretKey", "secret"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Timeout", "10000"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSS3:Test:Mode", "BasicAuthentication"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new SimpleStorageServiceOptions();

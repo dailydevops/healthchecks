@@ -7,7 +7,7 @@
     <VersionTestContainers>4.8.1</VersionTestContainers>
   </PropertyGroup>
   <ItemGroup>
-    <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.1.2" />
+    <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.2.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="4.14.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />

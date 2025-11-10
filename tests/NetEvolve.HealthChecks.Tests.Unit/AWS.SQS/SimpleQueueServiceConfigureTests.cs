@@ -92,14 +92,12 @@ public sealed class SimpleQueueServiceConfigureTests
     public async Task Configure_WithValidName_BindsConfiguration()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:QueueName", "topic"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:ServiceUrl", "url"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:AccessKey", "access"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:SecretKey", "secret"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:QueueName", "topic"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:ServiceUrl", "url"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:AccessKey", "access"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Test:SecretKey", "secret"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new SimpleQueueServiceOptions();
@@ -136,12 +134,10 @@ public sealed class SimpleQueueServiceConfigureTests
     public async Task Configure_Parameterless_UsesDefaultName()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Default:QueueName", "topic-default"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Default:ServiceUrl", "url-default"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Default:QueueName", "topic-default"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSSQS:Default:ServiceUrl", "url-default"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new SimpleQueueServiceOptions();

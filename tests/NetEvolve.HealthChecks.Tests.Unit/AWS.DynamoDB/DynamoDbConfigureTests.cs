@@ -120,14 +120,12 @@ public sealed class DynamoDbConfigureTests
     public async Task Configure_WithValidName_BindsConfiguration()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:TableName", "table"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:ServiceUrl", "url"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:AccessKey", "access"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:SecretKey", "secret"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:TableName", "table"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:ServiceUrl", "url"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:AccessKey", "access"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:SecretKey", "secret"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new DynamoDbOptions();
@@ -246,16 +244,14 @@ public sealed class DynamoDbConfigureTests
     public async Task Configure_BindsAllConfigurationProperties()
     {
         var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(
-                [
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:TableName", "table"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:ServiceUrl", "url"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:AccessKey", "access"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:SecretKey", "secret"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:Timeout", "10000"),
-                    new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:Mode", "BasicAuthentication"),
-                ]
-            )
+            .AddInMemoryCollection([
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:TableName", "table"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:ServiceUrl", "url"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:AccessKey", "access"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:SecretKey", "secret"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:Timeout", "10000"),
+                new KeyValuePair<string, string?>("HealthChecks:AWSDynamoDB:Test:Mode", "BasicAuthentication"),
+            ])
             .Build();
         var configure = CreateConfigure(config);
         var options = new DynamoDbOptions();
