@@ -34,7 +34,7 @@ internal static class InstanceSharedType
     public const SharedType Firebird = SharedType.PerClass;
 
     public const SharedType Firestore = SharedType.PerClass;
-    
+
     public const SharedType InfluxDB = SharedType.PerClass;
 
     public const SharedType JanusGraph = SharedType.PerClass;
