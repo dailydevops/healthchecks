@@ -112,7 +112,7 @@
     <PackageVersion Include="Testcontainers.Redpanda" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.ServiceBus" Version="$(VersionTestContainers)" />
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.12.3" />
-    <PackageVersion Include="TUnit" Version="0.87.8" />
-    <PackageVersion Include="Verify.TUnit" Version="31.4.3" />
+    <PackageVersion Include="TUnit" Version="1.0.48" />
+    <PackageVersion Include="Verify.TUnit" Version="31.5.1" />
   </ItemGroup>
 </Project>
