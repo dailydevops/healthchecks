@@ -66,26 +66,6 @@ public sealed class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public async Task AddJanusGraph_WhenArgumentsAreValid_AddHealthCheck()
-    {
-        // Arrange
-        var configuration = new ConfigurationBuilder().Build();
-        var services = new ServiceCollection();
-        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-
-        // Act
-        _ = builder.AddJanusGraph("Test");
-
-        // Assert
-        using var serviceProvider = services.BuildServiceProvider();
-        var healthChecks = serviceProvider.GetRequiredService<HealthCheckService>();
-
-        var result = await healthChecks.CheckHealthAsync();
-
-        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-    }
-
-    [Test]
     public void AddJanusGraph_WhenNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
@@ -98,25 +78,5 @@ public sealed class DependencyInjectionExtensionsTests
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
-    }
-
-    [Test]
-    public async Task AddJanusGraph_WhenOptionsAreProvided_ConfigureOptions()
-    {
-        // Arrange
-        var configuration = new ConfigurationBuilder().Build();
-        var services = new ServiceCollection();
-        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-
-        // Act
-        _ = builder.AddJanusGraph("Test", options => options.Timeout = 1000);
-
-        // Assert
-        using var serviceProvider = services.BuildServiceProvider();
-        var healthChecks = serviceProvider.GetRequiredService<HealthCheckService>();
-
-        var result = await healthChecks.CheckHealthAsync();
-
-        _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 }

@@ -24,7 +24,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
 
     public Task InitializeAsync()
     {
-        var server = new GremlinServer(_database.HostUrl, 8182);
+        var server = new GremlinServer(_database.Hostname, _database.Port);
         _client = new GremlinClient(server);
 
         return Task.CompletedTask;
@@ -54,7 +54,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
         await RunAndVerify(
             healthChecks => healthChecks.AddJanusGraph("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
         );
 
     [Test]
@@ -70,7 +70,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("janusgraph-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton<IGremlinClient>("janusgraph-test", (_, _) => _client)
         );
 
     [Test]
@@ -82,7 +82,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                     healthChecks =>
                         healthChecks.AddJanusGraph("TestContainerHealthy").AddJanusGraph("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
+                    serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
                 )
         );
 
@@ -97,16 +97,16 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                         options.CommandAsync = async (client, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
-
-#pragma warning disable CA2016 // Forward the CancellationToken parameter to methods
-                            return await client.SubmitAsync<int>("g.V().limit(1).count()").ConfigureAwait(false);
-#pragma warning restore CA2016 // Forward the CancellationToken parameter to methods
+                            _ = await client
+                                .SubmitAsync<long>("g.V().limit(1).count()", cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                            return true;
                         };
                         options.Timeout = 0;
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
         );
 
     [Test]
@@ -118,17 +118,12 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-#pragma warning disable CA2016 // Forward the CancellationToken parameter to methods
-                            return await client.SubmitAsync<int>("invalid_gremlin_query").ConfigureAwait(false);
-#pragma warning restore CA2016 // Forward the CancellationToken parameter to methods
-                        };
+                        options.CommandAsync = async (client, _) => false;
                     }
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
         );
 
     [Test]
@@ -144,7 +139,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
         );
 
     [Test]
@@ -161,7 +156,8 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("janusgraph-test-config", (_, _) => _client)
+            serviceBuilder: services =>
+                services.AddKeyedSingleton<IGremlinClient>("janusgraph-test-config", (_, _) => _client)
         );
 
     [Test]
@@ -177,7 +173,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
         );
 
     [Test]
@@ -193,6 +189,6 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
         );
 }

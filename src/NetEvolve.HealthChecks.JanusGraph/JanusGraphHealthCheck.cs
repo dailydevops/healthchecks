@@ -12,9 +12,7 @@ internal sealed partial class JanusGraphHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         JanusGraphOptions options,
         CancellationToken cancellationToken
     )
@@ -25,23 +23,24 @@ internal sealed partial class JanusGraphHealthCheck
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isTimelyResponse, _) = await commandTask
+        var (isTimelyResponse, result) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "The command did not return a successful result.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<object> DefaultCommandAsync(
-#pragma warning disable S1172 // Unused method parameters should be removed
-        IGremlinClient client, CancellationToken cancellationToken
-#pragma warning restore S1172 // Unused method parameters should be removed
-    )
+    internal static async Task<bool> DefaultCommandAsync(IGremlinClient client, CancellationToken cancellationToken)
     {
-#pragma warning disable CA2016 // Forward the CancellationToken parameter to methods
-        var result = await client.SubmitAsync<int>("g.V().limit(1).count()").ConfigureAwait(false);
-#pragma warning restore CA2016 // Forward the CancellationToken parameter to methods
+        _ = await client
+            .SubmitAsync<long>("g.V().limit(1).count()", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
-        return result;
+        return true;
     }
 }

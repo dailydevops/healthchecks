@@ -8,9 +8,9 @@ public sealed class JanusGraphDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly JanusGraphContainer _database = new JanusGraphBuilder().WithLogger(NullLogger.Instance).Build();
 
-#pragma warning disable CA1056 // URI-like properties should not be strings
-    public string HostUrl => _database.Hostname;
-#pragma warning restore CA1056 // URI-like properties should not be strings
+    public string Hostname => _database.Hostname;
+
+    public int Port => _database.GetMappedPublicPort(JanusGraphBuilder.JanusGraphPort);
 
     public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 

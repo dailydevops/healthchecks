@@ -25,6 +25,6 @@ public sealed record JanusGraphOptions
     /// The command to execute against the database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<IGremlinClient, CancellationToken, Task<object>> CommandAsync { get; internal set; } =
+    public Func<IGremlinClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
         JanusGraphHealthCheck.DefaultCommandAsync;
 }
