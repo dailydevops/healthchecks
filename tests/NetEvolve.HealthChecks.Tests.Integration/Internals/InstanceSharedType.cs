@@ -39,6 +39,8 @@ internal static class InstanceSharedType
 
     public const SharedType Keycloak = SharedType.PerClass;
 
+    public const SharedType Milvus = SharedType.PerClass;
+
     public const SharedType MongoDb = SharedType.PerClass;
 
     public const SharedType MySql = SharedType.PerAssembly;

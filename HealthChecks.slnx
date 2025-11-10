@@ -54,6 +54,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Http/NetEvolve.HealthChecks.Http.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Keycloak/NetEvolve.HealthChecks.Keycloak.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.LiteDB/NetEvolve.HealthChecks.LiteDB.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Milvus/NetEvolve.HealthChecks.Milvus.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql.Connector/NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql.Devart/NetEvolve.HealthChecks.MySql.Devart.csproj" />

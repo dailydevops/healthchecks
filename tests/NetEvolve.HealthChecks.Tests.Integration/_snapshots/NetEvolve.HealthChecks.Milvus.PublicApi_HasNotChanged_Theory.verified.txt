@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.Milvus
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddMilvus([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Milvus.MilvusOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class MilvusOptions : System.IEquatable<NetEvolve.HealthChecks.Milvus.MilvusOptions>
+    {
+        public MilvusOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}

@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerConfigDegraded: Degraded,
+      name: TestContainerConfigDegraded,
+      status: Degraded,
+      tags: [
+        milvus,
+        database
+      ]
+    }
+  ],
+  status: Degraded
+}

@@ -51,6 +51,7 @@ internal static class HealthCheckArchitecture
             typeof(Http.HttpHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
             typeof(LiteDB.LiteDBHealthCheck).Assembly,
+            typeof(Milvus.MilvusHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Devart.MySqlDevartHealthCheck).Assembly,
