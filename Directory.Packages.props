@@ -50,6 +50,7 @@
     <PackageVersion Include="Keycloak.Net.Core" Version="1.0.37" />
     <PackageVersion Include="LiteDB" Version="5.0.21" />
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
+    <PackageVersion Include="Milvus.Client" Version="2.3.0-preview.1" />
     <PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="9.0.10" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" />
@@ -98,6 +99,7 @@
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Keycloak" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Milvus" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MongoDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MsSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MySql" Version="$(VersionTestContainers)" />
