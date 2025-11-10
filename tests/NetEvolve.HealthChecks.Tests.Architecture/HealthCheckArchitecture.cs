@@ -50,6 +50,7 @@ internal static class HealthCheckArchitecture
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Http.HttpHealthCheck).Assembly,
             typeof(InfluxDB.InfluxDBHealthCheck).Assembly,
+            typeof(JanusGraph.JanusGraphHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
             typeof(LiteDB.LiteDBHealthCheck).Assembly,
             typeof(Milvus.MilvusHealthCheck).Assembly,

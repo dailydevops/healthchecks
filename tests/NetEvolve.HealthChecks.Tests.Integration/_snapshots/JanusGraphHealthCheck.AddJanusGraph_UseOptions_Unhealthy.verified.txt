@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: The command did not return a successful result.,
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        janusgraph,
+        graph
+      ]
+    }
+  ],
+  status: Unhealthy
+}
