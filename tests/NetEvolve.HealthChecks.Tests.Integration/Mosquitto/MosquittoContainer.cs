@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Mosquitto;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Mosquitto;
 
 using System;
 using System.Threading.Tasks;
