@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.InfluxDB;
+﻿namespace NetEvolve.HealthChecks.InfluxDB;
 
 using System.Threading.Tasks;
 using global::InfluxDB.Client;
@@ -12,9 +12,7 @@ internal sealed partial class InfluxDBHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         InfluxDBOptions options,
         CancellationToken cancellationToken
     )
@@ -25,18 +23,18 @@ internal sealed partial class InfluxDBHealthCheck
 
         var pingTask = options.PingAsync.Invoke(client, cancellationToken);
 
-        var (isTimelyResponse, _) = await pingTask
+        var (isTimelyResponse, result) = await pingTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Command execution failed.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultPingAsync(IInfluxDBClient client, CancellationToken cancellationToken)
-    {
-        _ = cancellationToken; // InfluxDB client doesn't support cancellation token in PingAsync
-        var pingResult = await client.PingAsync().ConfigureAwait(false);
-
-        return pingResult;
-    }
+    internal static async Task<bool> DefaultPingAsync(IInfluxDBClient client, CancellationToken _) =>
+        await client.PingAsync().ConfigureAwait(false);
 }

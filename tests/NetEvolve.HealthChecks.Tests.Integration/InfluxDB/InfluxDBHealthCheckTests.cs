@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.InfluxDB;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.InfluxDB;
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
 {
     private readonly InfluxDBDatabase _database;
 #pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-    private InfluxDBClient _client = default!;
+    private IInfluxDBClient _client = default!;
 #pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
@@ -41,7 +41,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
         {
             if (disposing)
             {
-                _client.Dispose();
+                _client?.Dispose();
             }
 
             _disposed = true;
