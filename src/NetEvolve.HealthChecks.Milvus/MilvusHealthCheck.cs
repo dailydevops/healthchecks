@@ -29,7 +29,7 @@ internal sealed partial class MilvusHealthCheck
 
         if (!response.IsHealthy)
         {
-            return HealthCheckUnhealthy(failureStatus, name);
+            return HealthCheckUnhealthy(failureStatus, name, response.ErrorMsg);
         }
 
         return HealthCheckState(isTimelyResponse, name);
