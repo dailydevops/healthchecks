@@ -7,6 +7,9 @@
     ":automergePatch",
     ":rebaseStalePrs"
   ],
+  "ignorePresets": [
+    "group:monorepos"
+  ],
   "automergeType": "pr",
   "automergeStrategy": "squash",
   "enabledManagers": [
