@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.GCP.PubSub
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddPubSub([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.GCP.PubSub.PubSubOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class PubSubOptions : System.IEquatable<NetEvolve.HealthChecks.GCP.PubSub.PubSubOptions>
+    {
+        public PubSubOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}
