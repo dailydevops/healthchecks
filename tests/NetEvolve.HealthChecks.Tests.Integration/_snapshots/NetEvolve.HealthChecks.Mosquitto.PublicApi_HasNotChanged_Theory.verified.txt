@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.Mosquitto
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddMosquitto(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Mosquitto.MosquittoOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class MosquittoOptions : System.IEquatable<NetEvolve.HealthChecks.Mosquitto.MosquittoOptions>
+    {
+        public MosquittoOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}
