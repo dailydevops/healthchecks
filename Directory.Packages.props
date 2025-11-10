@@ -38,6 +38,7 @@
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Dapr.Client" Version="1.16.0" />
     <PackageVersion Include="Devart.Data.MySql" Version="9.4.290" />
+    <PackageVersion Include="DotPulsar" Version="5.0.0" />
     <PackageVersion Include="Devart.Data.SqlServer" Version="5.2.290" />
     <PackageVersion Include="Devart.Data.SQLite" Version="6.4.290" />
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.4.1" />
@@ -101,6 +102,7 @@
     <PackageVersion Include="Testcontainers.OpenSearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Oracle" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Pulsar" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Qdrant" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.RabbitMq" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.RavenDb" Version="$(VersionTestContainers)" />
