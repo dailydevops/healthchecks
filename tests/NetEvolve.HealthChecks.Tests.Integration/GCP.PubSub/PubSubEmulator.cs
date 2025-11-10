@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.GCP.PubSub;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.GCP.PubSub;
 
 using System;
 using System.Threading.Tasks;
@@ -31,7 +31,6 @@ public sealed class PubSubEmulator : IAsyncInitializer, IAsyncDisposable
         {
             Endpoint = endpoint,
             ChannelCredentials = ChannelCredentials.Insecure,
-            EmulatorDetection = EmulatorDetection.EmulatorOnly,
         };
 
         _client = await clientBuilder.BuildAsync().ConfigureAwait(false);
