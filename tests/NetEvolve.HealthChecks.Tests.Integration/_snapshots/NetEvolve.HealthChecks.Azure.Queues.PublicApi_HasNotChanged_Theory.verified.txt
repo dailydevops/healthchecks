@@ -12,6 +12,7 @@
         public string? AccountName { get; set; }
         public System.Action<Azure.Storage.Queues.QueueClientOptions>? ConfigureClientOptions { get; set; }
         public string? ConnectionString { get; set; }
+        public string? KeyedService { get; set; }
         public NetEvolve.HealthChecks.Azure.Queues.QueueClientCreationMode? Mode { get; set; }
         public string? QueueName { get; set; }
         public System.Uri? ServiceUri { get; set; }
@@ -32,6 +33,7 @@
         public string? AccountName { get; set; }
         public System.Action<Azure.Storage.Queues.QueueClientOptions>? ConfigureClientOptions { get; set; }
         public string? ConnectionString { get; set; }
+        public string? KeyedService { get; set; }
         public NetEvolve.HealthChecks.Azure.Queues.QueueClientCreationMode? Mode { get; set; }
         public System.Uri? ServiceUri { get; set; }
         public int Timeout { get; set; }

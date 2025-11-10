@@ -23,7 +23,9 @@ internal class ClientCreation
     {
         if (options.Mode == QueueClientCreationMode.ServiceProvider)
         {
-            return serviceProvider.GetRequiredService<QueueServiceClient>();
+            return string.IsNullOrWhiteSpace(options.KeyedService)
+                ? serviceProvider.GetRequiredService<QueueServiceClient>()
+                : serviceProvider.GetRequiredKeyedService<QueueServiceClient>(options.KeyedService);
         }
 
         if (_queueServiceClients is null)

@@ -1,7 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Queues;
 
 using System.Threading.Tasks;
+using global::Azure.Storage.Queues;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
@@ -31,6 +34,32 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddQueueServiceAvailability_UseOptions_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddQueueServiceAvailability(
+                    "KeyedServiceServiceProviderHealthy",
+                    options =>
+                    {
+                        options.Mode = QueueClientCreationMode.ServiceProvider;
+                        options.KeyedService = "azure-queue-service-test";
+                        options.Timeout = 10000;
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "azure-queue-service-test",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<QueueServiceClient>()
+                );
+            }
         );
 
     [Test]
@@ -182,5 +211,57 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded
+        );
+
+    [Test]
+    public async Task AddQueueServiceAvailability_UseConfiguration_ModeServiceProvider_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddQueueServiceAvailability("ServiceServiceProviderHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureQueueService:ServiceServiceProviderHealthy:Mode",
+                        nameof(QueueClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureQueueService:ServiceServiceProviderHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddQueueServiceAvailability_UseConfiguration_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddQueueServiceAvailability("KeyedServiceServiceProviderHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureQueueService:KeyedServiceServiceProviderHealthy:Mode",
+                        nameof(QueueClientCreationMode.ServiceProvider)
+                    },
+                    {
+                        "HealthChecks:AzureQueueService:KeyedServiceServiceProviderHealthy:KeyedService",
+                        "azure-queue-service-test"
+                    },
+                    { "HealthChecks:AzureQueueService:KeyedServiceServiceProviderHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "azure-queue-service-test",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<QueueServiceClient>()
+                );
+            }
         );
 }
