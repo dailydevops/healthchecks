@@ -31,6 +31,7 @@
     <PackageReference Include="EventStore.Client.Grpc.Streams" />
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
     <PackageReference Include="Google.Cloud.Firestore" />
+    <PackageReference Include="Google.Cloud.PubSub.V1" />
     <PackageReference Include="InfluxDB.Client" />
     <PackageReference Include="JanusGraph.Net" />
     <PackageReference Include="Keycloak.Net.Core" />
@@ -51,6 +52,7 @@
     <PackageReference Include="System.Data.Odbc" />
     <PackageReference Include="System.Data.SQLite" />
     <PackageReference Include="System.Data.SqlClient" />
+    <PackageReference Include="Testcontainers.PubSub" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
@@ -167,6 +169,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
     <ProjectReference Include="..\..\src\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.PubSub\NetEvolve.HealthChecks.GCP.PubSub.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.IntegrationTestAttribute" />
