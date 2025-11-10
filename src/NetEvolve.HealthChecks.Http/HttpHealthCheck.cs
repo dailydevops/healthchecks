@@ -19,7 +19,9 @@ internal sealed partial class HttpHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var httpClient = _serviceProvider.GetRequiredService<HttpClient>();
+        var httpClient = string.IsNullOrWhiteSpace(options.KeyedService)
+            ? _serviceProvider.GetRequiredService<HttpClient>()
+            : _serviceProvider.GetRequiredKeyedService<HttpClient>(options.KeyedService);
         var httpMethod = new HttpMethod(options.HttpMethod);
 
         using var request = new HttpRequestMessage(httpMethod, options.Uri);

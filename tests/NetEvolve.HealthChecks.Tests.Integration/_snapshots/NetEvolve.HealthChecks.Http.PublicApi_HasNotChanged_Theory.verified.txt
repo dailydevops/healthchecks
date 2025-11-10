@@ -13,6 +13,7 @@
         public System.Collections.Generic.IList<int> ExpectedHttpStatusCodes { get; }
         public System.Collections.Generic.IDictionary<string, string> Headers { get; }
         public string HttpMethod { get; set; }
+        public string? KeyedService { get; set; }
         public int Timeout { get; set; }
         public string Uri { get; set; }
     }

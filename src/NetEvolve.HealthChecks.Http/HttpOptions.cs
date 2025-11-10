@@ -31,6 +31,15 @@ public sealed record HttpOptions
     public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
     /// <summary>
+    /// Gets or sets the key used to resolve the <c>HttpClient</c> from the service provider.
+    /// </summary>
+    /// <remarks>
+    /// When specified, the health check will resolve the <c>HttpClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>HttpClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// </remarks>
+    public string? KeyedService { get; set; }
+
+    /// <summary>
     /// Timeout in milliseconds for the HTTP request. Default is 5000ms (5 seconds).
     /// </summary>
     public int Timeout { get; set; } = 5000;
