@@ -38,69 +38,6 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddHttp_UseConfiguration_WithInvalidUri_Unhealthy() =>
-        await RunAndVerify(
-            healthChecks => healthChecks.AddHttp("TestInvalidUri"),
-            HealthStatus.Unhealthy,
-            config =>
-            {
-                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
-                {
-                    { "HealthChecks:Http:TestInvalidUri:Uri", "https://invalid-domain-that-does-not-exist-12345.com" },
-                    { "HealthChecks:Http:TestInvalidUri:Timeout", "10000" },
-                };
-                _ = config.AddInMemoryCollection(values);
-            }
-        );
-
-    [Test]
-    public async Task AddHttp_UseConfiguration_WithLocalServer_ReturnsHealthy()
-    {
-        // Set up a test server that responds with HTTP 200 OK
-        using var host = new HostBuilder()
-            .ConfigureWebHost(webBuilder =>
-            {
-                _ = webBuilder
-                    .UseTestServer()
-                    .Configure(app =>
-                    {
-                        app.Run(async context =>
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("OK");
-                        });
-                    });
-            })
-            .Build();
-        await host.StartAsync().ConfigureAwait(false);
-
-        using var testServer = host.GetTestServer();
-        var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
-
-        // Run the health check against the test server
-        await RunAndVerify(
-            healthChecks => healthChecks.AddHttp("TestConfigurationHealthy"),
-            HealthStatus.Healthy,
-            config =>
-            {
-                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
-                {
-                    { "HealthChecks:Http:TestConfigurationHealthy:Uri", testServerUrl },
-                    { "HealthChecks:Http:TestConfigurationHealthy:Timeout", "10000" },
-                };
-                _ = config.AddInMemoryCollection(values);
-            },
-            serviceBuilder: services =>
-            {
-                // Register the test server's HttpClient to be used by the health check as a keyed service
-                _ = services.AddSingleton(testServer.CreateClient());
-            }
-        );
-
-        await host.StopAsync().ConfigureAwait(false);
-    }
-
-    [Test]
     public async Task AddHttp_WithLocalServer_ReturnsHealthy()
     {
         // Set up a test server that responds with HTTP 200 OK
@@ -627,6 +564,117 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             {
                 _ = services.AddHttpClient();
                 _ = services.AddSingleton(client);
+            }
+        );
+
+        await host.StopAsync().ConfigureAwait(false);
+    }
+
+    [Test]
+    public async Task AddHttp_UseConfiguration_WithInvalidUri_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddHttp("TestInvalidUri"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:Http:TestInvalidUri:Uri", "https://invalid-domain-that-does-not-exist-12345.com" },
+                    { "HealthChecks:Http:TestInvalidUri:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Test]
+    public async Task AddHttp_UseConfiguration_WithLocalServer_ReturnsHealthy()
+    {
+        // Set up a test server that responds with HTTP 200 OK
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
+            {
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                    {
+                        app.Run(async context =>
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.OK;
+                            await context.Response.WriteAsync("OK");
+                        });
+                    });
+            })
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
+
+        using var testServer = host.GetTestServer();
+        var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
+
+        // Run the health check against the test server
+        await RunAndVerify(
+            healthChecks => healthChecks.AddHttp("TestConfigurationHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:Http:TestConfigurationHealthy:Uri", testServerUrl },
+                    { "HealthChecks:Http:TestConfigurationHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                // Register the test server's HttpClient to be used by the health check
+                _ = services.AddSingleton(testServer.CreateClient());
+            }
+        );
+
+        await host.StopAsync().ConfigureAwait(false);
+    }
+
+    [Test]
+    public async Task AddHttp_UseConfiguration_WithKeyedLocalServer_ReturnsHealthy()
+    {
+        // Set up a test server that responds with HTTP 200 OK
+        using var host = new HostBuilder()
+            .ConfigureWebHost(webBuilder =>
+            {
+                _ = webBuilder
+                    .UseTestServer()
+                    .Configure(app =>
+                    {
+                        app.Run(async context =>
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.OK;
+                            await context.Response.WriteAsync("OK");
+                        });
+                    });
+            })
+            .Build();
+        await host.StartAsync().ConfigureAwait(false);
+
+        using var testServer = host.GetTestServer();
+        var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
+
+        // Run the health check against the test server
+        await RunAndVerify(
+            healthChecks => healthChecks.AddHttp("TestConfigurationKeyedHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:Http:TestConfigurationKeyedHealthy:KeyedService", "http-test" },
+                    { "HealthChecks:Http:TestConfigurationKeyedHealthy:Uri", testServerUrl },
+                    { "HealthChecks:Http:TestConfigurationKeyedHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                // Register the test server's HttpClient to be used by the health check as a keyed service
+                _ = services.AddKeyedSingleton("http-test", testServer.CreateClient());
             }
         );
 
