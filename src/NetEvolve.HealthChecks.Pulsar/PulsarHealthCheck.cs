@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Pulsar;
 
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using DotPulsar;
@@ -7,7 +8,6 @@ using DotPulsar.Abstractions;
 using DotPulsar.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 /// <summary>
@@ -31,15 +31,18 @@ internal sealed partial class PulsarHealthCheck
             : _serviceProvider.GetRequiredKeyedService<IPulsarClient>(options.KeyedService);
 
         // Create a temporary reader to test connectivity
+        var sw = Stopwatch.StartNew();
         var reader = client
             .NewReader(Schema.String)
             .Topic("persistent://public/default/healthcheck")
             .StartMessageId(MessageId.Earliest)
             .Create();
 
+        var isTimelyResponse = options.Timeout >= sw.Elapsed.TotalMilliseconds;
+
         // If we can create the reader, the client is connected
         await reader.DisposeAsync().ConfigureAwait(false);
 
-        return HealthCheckState(true, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

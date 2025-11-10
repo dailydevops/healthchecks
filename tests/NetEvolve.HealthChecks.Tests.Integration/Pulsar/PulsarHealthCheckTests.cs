@@ -26,7 +26,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddPulsar("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client as IPulsarClient)
+            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
         );
     }
 
@@ -46,8 +46,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-                services.AddKeyedSingleton<IPulsarClient>("pulsar-test", (_, _) => client as IPulsarClient)
+            serviceBuilder: services => services.AddKeyedSingleton<IPulsarClient>("pulsar-test", (_, _) => client)
         );
     }
 
@@ -59,7 +58,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddPulsar("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client as IPulsarClient)
+            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
         );
     }
 
@@ -79,7 +78,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client as IPulsarClient)
+            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
         );
     }
 
@@ -121,7 +120,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client as IPulsarClient)
+            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
         );
     }
 }
