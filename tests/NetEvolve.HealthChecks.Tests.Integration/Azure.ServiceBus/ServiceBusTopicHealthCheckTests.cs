@@ -232,16 +232,16 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:KeyedService", "test-key" },
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationKeyedHealthy:KeyedService", "test-key" },
                     {
-                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Mode",
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationKeyedHealthy:Mode",
                         nameof(ClientCreationMode.ServiceProvider)
                     },
                     {
-                        "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:TopicName",
+                        "HealthChecks:AzureServiceBusTopic:ConfigurationKeyedHealthy:TopicName",
                         ServiceBusContainer.TopicName
                     },
-                    { "HealthChecks:AzureServiceBusTopic:ConfigurationHealthy:Timeout", "10000" },
+                    { "HealthChecks:AzureServiceBusTopic:ConfigurationKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
