@@ -57,6 +57,7 @@ internal static class HealthCheckArchitecture
             typeof(OpenSearch.OpenSearchHealthCheck).Assembly,
             typeof(Odbc.OdbcHealthCheck).Assembly,
             typeof(Oracle.OracleHealthCheck).Assembly,
+            typeof(Pulsar.PulsarHealthCheck).Assembly,
             typeof(RabbitMQ.RabbitMQHealthCheck).Assembly,
             typeof(RavenDb.RavenDbHealthCheck).Assembly,
             typeof(Redis.RedisHealthCheck).Assembly,
