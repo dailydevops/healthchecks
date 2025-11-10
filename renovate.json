@@ -14,8 +14,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "\\.csproj$"
+      "managerFilePatterns": [
+        "/\\.csproj$/"
       ],
       "matchStrings": [
         "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\""
@@ -26,8 +26,13 @@
   ],
   "packageRules": [
     {
-      "matchManagers":["nuget", "custom.regex"],
-      "labels": ["dependency:nuget"]
+      "matchManagers": [
+        "nuget",
+        "custom.regex"
+      ],
+      "labels": [
+        "dependency:nuget"
+      ]
     }
   ]
 }
