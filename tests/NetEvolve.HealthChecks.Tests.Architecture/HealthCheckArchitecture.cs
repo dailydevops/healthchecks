@@ -53,6 +53,7 @@ internal static class HealthCheckArchitecture
             typeof(JanusGraph.JanusGraphHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
             typeof(LiteDB.LiteDBHealthCheck).Assembly,
+            typeof(MariaDb.MariaDbHealthCheck).Assembly,
             typeof(Milvus.MilvusHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
