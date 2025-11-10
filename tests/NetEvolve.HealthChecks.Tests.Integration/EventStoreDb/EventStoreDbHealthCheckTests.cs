@@ -15,7 +15,9 @@ using NetEvolve.HealthChecks.EventStoreDb;
 public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly EventStoreDbDatabase _database;
+#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
     private EventStoreClient _client = default!;
+#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
     public EventStoreDbHealthCheckTests(EventStoreDbDatabase database) => _database = database;
