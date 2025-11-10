@@ -16,7 +16,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
 {
     private readonly InfluxDBDatabase _database;
 #pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-    private IInfluxDBClient _client = default!;
+    private InfluxDBClient _client = default!;
 #pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
@@ -53,7 +53,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 
     [Test]
@@ -69,7 +69,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("influxdb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test", (_, _) => _client)
         );
 
     [Test]
@@ -81,7 +81,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                     healthChecks =>
                         healthChecks.AddInfluxDB("TestContainerHealthy").AddInfluxDB("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
+                    serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
                 )
         );
 
@@ -103,7 +103,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 
     [Test]
@@ -124,7 +124,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 
     [Test]
@@ -140,7 +140,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 
     [Test]
@@ -157,7 +157,8 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("influxdb-test-config", (_, _) => _client)
+            serviceBuilder: services =>
+                services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test-config", (_, _) => _client)
         );
 
     [Test]
@@ -173,7 +174,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 
     [Test]
@@ -189,7 +190,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 
     [Test]
@@ -205,6 +206,6 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
         );
 }

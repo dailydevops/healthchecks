@@ -3,7 +3,7 @@
     {
       description: TestContainerUnhealthy: Unexpected error.,
       exception: {
-        message: No service for type 'InfluxDB.Client.IInfluxDBClient' has been registered.,
+        message: test,
         type: System.InvalidOperationException
       },
       name: TestContainerUnhealthy,
