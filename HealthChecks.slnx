@@ -66,6 +66,7 @@
     <Project Path="src/NetEvolve.HealthChecks.MariaDb/NetEvolve.HealthChecks.MariaDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Milvus/NetEvolve.HealthChecks.Milvus.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Mosquitto/NetEvolve.HealthChecks.Mosquitto.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql.Connector/NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql.Devart/NetEvolve.HealthChecks.MySql.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MySql/NetEvolve.HealthChecks.MySql.csproj" />
