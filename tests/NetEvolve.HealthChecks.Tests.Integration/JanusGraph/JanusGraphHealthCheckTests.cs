@@ -97,9 +97,6 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                         options.CommandAsync = async (client, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
-                            _ = await client
-                                .SubmitAsync<long>("g.V().limit(1).count()", cancellationToken: cancellationToken)
-                                .ConfigureAwait(false);
                             return true;
                         };
                         options.Timeout = 0;
