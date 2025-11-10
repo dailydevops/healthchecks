@@ -48,6 +48,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.JanusGraph\NetEvolve.HealthChecks.JanusGraph.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MariaDb\NetEvolve.HealthChecks.MariaDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Milvus\NetEvolve.HealthChecks.Milvus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
