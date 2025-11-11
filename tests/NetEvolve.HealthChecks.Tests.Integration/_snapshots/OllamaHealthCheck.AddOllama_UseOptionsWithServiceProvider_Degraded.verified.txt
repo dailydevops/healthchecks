@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerServiceProviderDegraded: Degraded,
+      name: TestContainerServiceProviderDegraded,
+      status: Degraded,
+      tags: [
+        ollama,
+        ai
+      ]
+    }
+  ],
+  status: Degraded
+}
