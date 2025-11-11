@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.CouchDb;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.CouchDb;
 
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.ConnectionString;
+                        options.DatabaseName = "db";
                         options.Timeout = 10000;
                     }
                 ),
@@ -39,16 +40,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
             "name",
             async () =>
                 await RunAndVerify(
-                    healthChecks =>
-                        healthChecks
-                            .AddCouchDb(
-                                "TestContainerHealthy",
-                                options => options.ConnectionString = _database.ConnectionString
-                            )
-                            .AddCouchDb(
-                                "TestContainerHealthy",
-                                options => options.ConnectionString = _database.ConnectionString
-                            ),
+                    healthChecks => healthChecks.AddCouchDb("TestContainerHealthy").AddCouchDb("TestContainerHealthy"),
                     HealthStatus.Healthy
                 )
         );
@@ -62,6 +54,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.ConnectionString = _database.ConnectionString;
+                        options.DatabaseName = "db";
                         options.CommandAsync = async (client, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
@@ -100,6 +93,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:CouchDb:TestContainerHealthy:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:CouchDb:TestContainerHealthy:DatabaseName", "db" },
                     { "HealthChecks:CouchDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -116,6 +110,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:CouchDb:TestContainerDegraded:ConnectionString", _database.ConnectionString },
+                    { "HealthChecks:CouchDb:TestContainerDegraded:DatabaseName", "db" },
                     { "HealthChecks:CouchDb:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -132,6 +127,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:CouchDb:TestNoValues:ConnectionString", "" },
+                    { "HealthChecks:CouchDb:TestNoValues:DatabaseName", "db" },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

@@ -1,10 +1,11 @@
-namespace NetEvolve.HealthChecks.CouchDb;
+﻿namespace NetEvolve.HealthChecks.CouchDb;
 
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MyCouch;
+using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(CouchDbOptions))]
@@ -19,18 +20,13 @@ internal sealed partial class CouchDbHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var dbUri = new Uri(options.ConnectionString!);
-        var connectionInfo = new DbConnectionInfo(
-            dbUri.GetLeftPart(UriPartial.Authority),
-            dbUri.AbsolutePath.Trim('/')
-        );
+        var connectionInfo = new DbConnectionInfo(options.ConnectionString, options.DatabaseName);
         using var client = new MyCouchClient(connectionInfo);
 
-        var sw = Stopwatch.StartNew();
-        await options.CommandAsync.Invoke(client, cancellationToken).ConfigureAwait(false);
-        sw.Stop();
-
-        var isTimelyResponse = options.Timeout >= sw.Elapsed.TotalMilliseconds;
+        var isTimelyResponse = await options
+            .CommandAsync.Invoke(client, cancellationToken)
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
 
         return HealthCheckState(isTimelyResponse, name);
     }
