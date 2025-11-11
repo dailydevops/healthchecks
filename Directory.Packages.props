@@ -34,6 +34,7 @@
     <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
     <PackageVersion Include="CassandraCSharpDriver" Version="3.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
+    <PackageVersion Include="Microsoft.Azure.Kusto.Data" Version="14.0.2" />
     <PackageVersion Include="CliWrap" Version="3.9.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.12.0" />
     <PackageVersion Include="Consul" Version="1.7.14.9" />
@@ -115,6 +116,7 @@
     <PackageVersion Include="Testcontainers.JanusGraph" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Kafka" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Keycloak" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Kusto" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.LocalStack" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MariaDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Milvus" Version="$(VersionTestContainers)" />
