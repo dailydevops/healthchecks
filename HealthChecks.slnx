@@ -41,6 +41,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Azure.ServiceBus/NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.Tables/NetEvolve.HealthChecks.Azure.Tables.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure/NetEvolve.HealthChecks.Azure.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Cassandra/NetEvolve.HealthChecks.Cassandra.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.ClickHouse/NetEvolve.HealthChecks.ClickHouse.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.CockroachDb/NetEvolve.HealthChecks.CockroachDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Consul/NetEvolve.HealthChecks.Consul.csproj" />
