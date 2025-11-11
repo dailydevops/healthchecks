@@ -3,6 +3,7 @@
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
     <Description>Contains HealthChecks for Milvus, based on the nuget package `Milvus.Client`.</Description>
     <PackageTags>$(PackageTags);milvus;database;vector-database</PackageTags>
+    <NoWarn>$(NoWarn);NU5104;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Milvus.Client" />
