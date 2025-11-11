@@ -44,7 +44,7 @@ internal static class HealthCheckArchitecture
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(CockroachDb.CockroachDbHealthCheck).Assembly,
             typeof(Consul.ConsulHealthCheck).Assembly,
-            typeof(CockroachDb.CockroachDbHealthCheck).Assembly,
+            typeof(Couchbase.CouchbaseHealthCheck).Assembly,
             typeof(Dapr.DaprHealthCheck).Assembly,
             typeof(DB2.DB2HealthCheck).Assembly,
             typeof(DuckDB.DuckDBHealthCheck).Assembly,
