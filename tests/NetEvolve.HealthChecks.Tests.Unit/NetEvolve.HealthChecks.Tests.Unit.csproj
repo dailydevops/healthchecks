@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.CockroachDb\NetEvolve.HealthChecks.CockroachDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Consul\NetEvolve.HealthChecks.Consul.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Couchbase\NetEvolve.HealthChecks.Couchbase.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.CouchDb\NetEvolve.HealthChecks.CouchDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DB2\NetEvolve.HealthChecks.DB2.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />
