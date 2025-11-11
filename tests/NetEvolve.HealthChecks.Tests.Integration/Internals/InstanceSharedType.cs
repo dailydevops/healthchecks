@@ -19,6 +19,8 @@ internal static class InstanceSharedType
 
     public const SharedType AzureEventHubs = SharedType.PerAssembly;
 
+    public const SharedType Bigtable = SharedType.PerClass;
+
     public const SharedType AzureServiceBus = SharedType.PerAssembly;
 
     public const SharedType ClickHouse = SharedType.PerClass;
