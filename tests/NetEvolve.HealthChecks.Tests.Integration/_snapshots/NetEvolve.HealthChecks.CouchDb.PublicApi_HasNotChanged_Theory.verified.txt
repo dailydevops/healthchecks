@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.CouchDb
+{
+    public sealed class CouchDbOptions : System.IEquatable<NetEvolve.HealthChecks.CouchDb.CouchDbOptions>
+    {
+        public CouchDbOptions() { }
+        public System.Func<MyCouch.MyCouchClient, System.Threading.CancellationToken, System.Threading.Tasks.Task> CommandAsync { get; }
+        public string? ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddCouchDb([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.CouchDb.CouchDbOptions>? options = null, params string[] tags) { }
+    }
+}
