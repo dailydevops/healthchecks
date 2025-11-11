@@ -1,11 +1,12 @@
-namespace NetEvolve.HealthChecks.Ollama;
+﻿namespace NetEvolve.HealthChecks.Ollama;
 
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.Tasks;
 using OllamaSharp;
 using SourceGenerator.Attributes;
 
@@ -17,24 +18,35 @@ internal sealed partial class OllamaHealthCheck : IDisposable
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         OllamaOptions options,
         CancellationToken cancellationToken
     )
     {
         var client = GetClient(name, options);
 
-        var stopwatch = Stopwatch.StartNew();
-        var isRunning = await client.IsRunningAsync(cancellationToken).ConfigureAwait(false);
-        stopwatch.Stop();
+        var (isTimelyResponse, isRunning) = await client
+            .IsRunningAsync(cancellationToken)
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
 
-        return HealthCheckState(isRunning && stopwatch.ElapsedMilliseconds <= options.Timeout, name);
+        if (!isRunning)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Ollama service is not running.");
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     private OllamaApiClient GetClient(string name, OllamaOptions options)
     {
+        if (options.ClientMode == ClientMode.ServiceProvider)
+        {
+            return string.IsNullOrWhiteSpace(options.KeyedService)
+                ? _serviceProvider.GetRequiredService<OllamaApiClient>()
+                : _serviceProvider.GetRequiredKeyedService<OllamaApiClient>(options.KeyedService);
+        }
+
         _clients ??= new ConcurrentDictionary<string, OllamaApiClient>(StringComparer.OrdinalIgnoreCase);
 
         return _clients.GetOrAdd(name, _ => new OllamaApiClient(options.Uri!));
@@ -51,10 +63,7 @@ internal sealed partial class OllamaHealthCheck : IDisposable
         {
             if (disposing && _clients is not null)
             {
-                foreach (var client in _clients.Values)
-                {
-                    client.Dispose();
-                }
+                _ = Parallel.ForEach(_clients.Values, client => client.Dispose());
                 _clients.Clear();
             }
             _disposedValue = true;

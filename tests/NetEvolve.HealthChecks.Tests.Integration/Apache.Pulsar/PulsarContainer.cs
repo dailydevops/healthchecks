@@ -7,7 +7,7 @@ using Testcontainers.Pulsar;
 
 public sealed class PulsarContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly global::Testcontainers.Pulsar.PulsarContainer _container = new PulsarBuilder()
+    private readonly Testcontainers.Pulsar.PulsarContainer _container = new PulsarBuilder()
         .WithLogger(NullLogger.Instance)
         .Build();
 

@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Ollama;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Ollama;
 
 using System;
 using Microsoft.Extensions.Configuration;
@@ -52,7 +52,7 @@ public sealed class OllamaConfigureTests
         // Arrange
         var configure = new OllamaConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new OllamaOptions { Uri = default };
+        var options = new OllamaOptions { Uri = default, ClientMode = ClientMode.ServiceUrl };
 
         // Act
         var result = configure.Validate(name, options);
@@ -71,7 +71,7 @@ public sealed class OllamaConfigureTests
         // Arrange
         var configure = new OllamaConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new OllamaOptions { Uri = new System.Uri("http://localhost:11434"), Timeout = -2 };
+        var options = new OllamaOptions { Uri = new Uri("http://localhost:11434"), Timeout = -2 };
 
         // Act
         var result = configure.Validate(name, options);

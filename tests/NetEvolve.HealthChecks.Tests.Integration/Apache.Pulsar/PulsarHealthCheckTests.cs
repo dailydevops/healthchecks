@@ -26,7 +26,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddPulsar("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
+            serviceBuilder: services => services.AddSingleton(client)
         );
     }
 
@@ -46,7 +46,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<IPulsarClient>("pulsar-test", (_, _) => client)
+            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test", (_, _) => client)
         );
     }
 
@@ -58,7 +58,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddPulsar("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
+            serviceBuilder: services => services.AddSingleton(client)
         );
     }
 
@@ -78,7 +78,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
+            serviceBuilder: services => services.AddSingleton(client)
         );
     }
 
@@ -99,8 +99,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-                services.AddKeyedSingleton<IPulsarClient>("pulsar-test-config", (_, _) => client)
+            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test-config", (_, _) => client)
         );
     }
 
@@ -120,7 +119,7 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IPulsarClient>(client)
+            serviceBuilder: services => services.AddSingleton(client)
         );
     }
 }

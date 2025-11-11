@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Ollama;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Ollama;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,8 +24,9 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.Uri = new System.Uri(_container.BaseAddress);
+                        options.Uri = new Uri(_container.BaseAddress);
                         options.Timeout = 10000; // Set a reasonable timeout
+                        options.ClientMode = ClientMode.ServiceUrl;
                     }
                 );
             },
@@ -41,8 +42,9 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.Uri = new System.Uri(_container.BaseAddress);
+                        options.Uri = new Uri(_container.BaseAddress);
                         options.Timeout = 0;
+                        options.ClientMode = ClientMode.ServiceUrl;
                     }
                 );
             },
@@ -60,6 +62,7 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                 {
                     { "HealthChecks:Ollama:TestContainerHealthy:Uri", _container.BaseAddress },
                     { "HealthChecks:Ollama:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:Ollama:TestContainerHealthy:ClientMode", nameof(ClientMode.ServiceUrl) },
                 };
                 _ = config.AddInMemoryCollection(values);
             }
@@ -76,6 +79,7 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                 {
                     { "HealthChecks:Ollama:TestContainerDegraded:Uri", _container.BaseAddress },
                     { "HealthChecks:Ollama:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:Ollama:TestContainerDegraded:ClientMode", nameof(ClientMode.ServiceUrl) },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Ollama;
+﻿namespace NetEvolve.HealthChecks.Ollama;
 
 using System;
 using System.Linq;
@@ -12,7 +12,7 @@ using SourceGenerator.Attributes;
 [HealthCheckHelper]
 public static partial class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["ollama", "ai", "llm"];
+    private static readonly string[] _defaultTags = ["ollama", "ai"];
 
     /// <summary>
     /// Add a health check for Ollama.

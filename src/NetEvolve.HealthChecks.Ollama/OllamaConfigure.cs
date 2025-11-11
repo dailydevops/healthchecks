@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Ollama;
+﻿namespace NetEvolve.HealthChecks.Ollama;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -35,9 +35,24 @@ internal sealed class OllamaConfigure : IConfigureNamedOptions<OllamaOptions>, I
             return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
+        return options.ClientMode switch
+        {
+            ClientMode.ServiceProvider => Success,
+            ClientMode.ServiceUrl => ValidateServiceUrlMode(options),
+            _ => Fail("The ClientMode value is invalid."),
+        };
+    }
+
+    private static ValidateOptionsResult ValidateServiceUrlMode(OllamaOptions options)
+    {
         if (options.Uri is null)
         {
             return Fail("The property Uri cannot be null.");
+        }
+
+        if (!options.Uri.IsAbsoluteUri)
+        {
+            return Fail("The property Uri must be an absolute URI.");
         }
 
         return Success;
