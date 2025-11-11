@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.CouchDb;
+﻿namespace NetEvolve.HealthChecks.CouchDb;
 
 using MyCouch;
 
@@ -11,6 +11,11 @@ public sealed record CouchDbOptions
     /// Gets or sets the connection string for the CouchDb server.
     /// </summary>
     public string? ConnectionString { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database name to connect to.
+    /// </summary>
+    public string? DatabaseName { get; set; }
 
     /// <summary>
     /// The timeout to use when connecting and executing tasks against database.
