@@ -44,6 +44,7 @@
     <Project Path="src/NetEvolve.HealthChecks.ClickHouse/NetEvolve.HealthChecks.ClickHouse.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.CockroachDb/NetEvolve.HealthChecks.CockroachDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Consul/NetEvolve.HealthChecks.Consul.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Couchbase/NetEvolve.HealthChecks.Couchbase.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Dapr/NetEvolve.HealthChecks.Dapr.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DB2/NetEvolve.HealthChecks.DB2.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DuckDB/NetEvolve.HealthChecks.DuckDB.csproj" />
