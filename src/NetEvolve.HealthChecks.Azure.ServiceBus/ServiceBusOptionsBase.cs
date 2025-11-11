@@ -9,6 +9,15 @@ using static Microsoft.Extensions.Options.ValidateOptionsResult;
 public abstract record ServiceBusOptionsBase
 {
     /// <summary>
+    /// Gets or sets the key used to resolve the <c>ServiceBusClient</c> from the service provider.
+    /// </summary>
+    /// <remarks>
+    /// When specified, the health check will resolve the <c>ServiceBusClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>ServiceBusClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// </remarks>
+    public string? KeyedService { get; set; }
+
+    /// <summary>
     /// Gets or sets the client creation mode. Default is <see cref="ClientCreationMode.ServiceProvider"/>.
     /// </summary>
     public ClientCreationMode? Mode { get; set; }

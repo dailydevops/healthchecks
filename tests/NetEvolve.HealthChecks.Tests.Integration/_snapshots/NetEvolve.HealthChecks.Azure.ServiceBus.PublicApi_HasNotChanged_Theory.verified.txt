@@ -17,6 +17,7 @@
         protected ServiceBusOptionsBase() { }
         public string? ConnectionString { get; set; }
         public string? FullyQualifiedNamespace { get; set; }
+        public string? KeyedService { get; set; }
         public NetEvolve.HealthChecks.Azure.ServiceBus.ClientCreationMode? Mode { get; set; }
         public int Timeout { get; set; }
     }
