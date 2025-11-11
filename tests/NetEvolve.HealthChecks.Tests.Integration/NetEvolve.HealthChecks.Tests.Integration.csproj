@@ -32,6 +32,7 @@
     <PackageReference Include="Elastic.Clients.Elasticsearch" />
     <PackageReference Include="EventStore.Client.Grpc.Streams" />
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" />
+    <PackageReference Include="Google.Cloud.BigQuery.V2" />
     <PackageReference Include="Google.Cloud.Firestore" />
     <PackageReference Include="Google.Cloud.PubSub.V1" />
     <PackageReference Include="InfluxDB.Client" />
@@ -80,6 +81,7 @@
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.ArangoDb" />
     <PackageReference Include="Testcontainers.Azurite" />
+    <PackageReference Include="Testcontainers.BigQuery" />
     <PackageReference Include="Testcontainers.Cassandra" />
     <PackageReference Include="Testcontainers.ClickHouse" />
     <PackageReference Include="Testcontainers.CockroachDb" />
@@ -152,6 +154,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Elasticsearch\NetEvolve.HealthChecks.Elasticsearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.EventStoreDb\NetEvolve.HealthChecks.EventStoreDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.BigQuery\NetEvolve.HealthChecks.GCP.BigQuery.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Firestore\NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Http\NetEvolve.HealthChecks.Http.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.InfluxDB\NetEvolve.HealthChecks.InfluxDB.csproj" />
