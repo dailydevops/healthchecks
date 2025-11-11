@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.CockroachDb
+{
+    public sealed class CockroachDbOptions : System.IEquatable<NetEvolve.HealthChecks.CockroachDb.CockroachDbOptions>
+    {
+        public CockroachDbOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddCockroachDb([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.CockroachDb.CockroachDbOptions>? options = null, params string[] tags) { }
+    }
+}
