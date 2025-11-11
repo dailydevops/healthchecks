@@ -54,6 +54,7 @@
     <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.2" />
     <PackageVersion Include="EventStore.Client.Grpc.Streams" Version="23.3.9" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.4" />
+    <PackageVersion Include="Google.Cloud.BigQuery.V2" Version="3.11.0" />
     <PackageVersion Include="Google.Cloud.Bigtable.Admin.V2" Version="3.30.0" />
     <PackageVersion Include="Google.Cloud.Firestore" Version="3.13.0" />
     <PackageVersion Include="Google.Cloud.PubSub.V1" Version="3.30.0" />
@@ -122,6 +123,7 @@
     <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.EventHubs" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.BigQuery" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.EventStoreDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Firestore" Version="$(VersionTestContainers)" />

@@ -23,6 +23,8 @@ internal static class InstanceSharedType
 
     public const SharedType AzureServiceBus = SharedType.PerAssembly;
 
+    public const SharedType BigQuery = SharedType.PerClass;
+
     public const SharedType ClickHouse = SharedType.PerClass;
 
     public const SharedType Consul = SharedType.PerClass;
