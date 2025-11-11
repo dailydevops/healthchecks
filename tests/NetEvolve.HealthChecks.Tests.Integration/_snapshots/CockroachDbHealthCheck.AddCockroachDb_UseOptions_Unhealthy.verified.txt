@@ -1,0 +1,21 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message:
+42601: at or near "`": syntax error
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.,
+        type: Npgsql.PostgresException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        cockroachdb,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
