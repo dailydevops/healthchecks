@@ -92,6 +92,7 @@
     <PackageVersion Include="Testcontainers.ArangoDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Azurite" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.CockroachDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Consul" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Db2" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
