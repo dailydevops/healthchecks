@@ -64,6 +64,7 @@ internal static class HealthCheckArchitecture
             typeof(Npgsql.NpgsqlHealthCheck).Assembly,
             typeof(OpenSearch.OpenSearchHealthCheck).Assembly,
             typeof(Odbc.OdbcHealthCheck).Assembly,
+            typeof(Ollama.OllamaHealthCheck).Assembly,
             typeof(Oracle.OracleHealthCheck).Assembly,
             typeof(RabbitMQ.RabbitMQHealthCheck).Assembly,
             typeof(RavenDb.RavenDbHealthCheck).Assembly,
