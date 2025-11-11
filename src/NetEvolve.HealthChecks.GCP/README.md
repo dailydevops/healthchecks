@@ -10,6 +10,7 @@ This bundle package provides health checks for various GCP (Google Cloud Platfor
 ## Supported GCP Services
 
 - [Google Cloud Firestore](https://www.nuget.org/packages/NetEvolve.HealthChecks.GCP.Firestore/)
+- [Google Cloud Pub/Sub](https://www.nuget.org/packages/NetEvolve.HealthChecks.GCP.PubSub/)
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.

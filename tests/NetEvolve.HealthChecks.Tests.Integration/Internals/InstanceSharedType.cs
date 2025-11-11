@@ -55,6 +55,8 @@ internal static class InstanceSharedType
 
     public const SharedType PostgreSql = SharedType.PerClass;
 
+    public const SharedType PubSub = SharedType.PerClass;
+
     public const SharedType Qdrant = SharedType.PerClass;
 
     public const SharedType RabbitMQ = SharedType.PerClass;

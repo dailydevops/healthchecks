@@ -11,6 +11,7 @@
     </PackageReference>
     <PackageReference Include="coverlet.msbuild" />
     <PackageReference Include="Google.Cloud.Firestore" />
+    <PackageReference Include="Google.Cloud.PubSub.V1" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="NetEvolve.Extensions.TUnit" />
     <PackageReference Include="NSubstitute" />
@@ -72,6 +73,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SqlServer\NetEvolve.HealthChecks.SqlServer.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.PubSub\NetEvolve.HealthChecks.GCP.PubSub.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.UnitTestAttribute" />
