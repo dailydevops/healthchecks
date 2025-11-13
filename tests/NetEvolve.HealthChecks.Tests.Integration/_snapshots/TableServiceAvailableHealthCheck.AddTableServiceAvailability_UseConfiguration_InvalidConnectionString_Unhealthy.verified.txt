@@ -1,0 +1,33 @@
+﻿{
+  results: [
+    {
+      description: ServiceConfigurationUnhealthy: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: No such host is known. (invalid.table.core.windows.net:443),
+            type: RequestFailedException
+          },
+          {
+            message: No such host is known. (invalid.table.core.windows.net:443),
+            type: HttpRequestException
+          },
+          {
+            message: No such host is known.,
+            type: SocketException
+          }
+        ],
+        message: Retry failed after 4 tries. Retry settings can be adjusted in ClientOptions.Retry or by configuring a custom retry policy in ClientOptions.RetryPolicy. (No such host is known. (invalid.table.core.windows.net:443)) (No such host is known. (invalid.table.core.windows.net:443)) (No such host is known. (invalid.table.core.windows.net:443)) (No such host is known. (invalid.table.core.windows.net:443)),
+        type: System.AggregateException
+      },
+      name: ServiceConfigurationUnhealthy,
+      status: Unhealthy,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Unhealthy
+}

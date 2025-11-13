@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TableConfigurationKeyedHealthy: Healthy,
+      name: TableConfigurationKeyedHealthy,
+      status: Healthy,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Healthy
+}

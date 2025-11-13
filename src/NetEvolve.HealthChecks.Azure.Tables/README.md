@@ -26,7 +26,7 @@ Therefore, you can use two different approaches. In both approaches you have to 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
-- `tags`: The tags for the health check. The tags `azure`, `storage` and `blob` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
+- `tags`: The tags for the health check. The tags `azure`, `storage` and `table` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
 The first one is to use the configuration based approach. Therefore, you have to add the configuration section `HealthChecks:AzureTableClient` to your `appsettings.json` file.
@@ -43,6 +43,7 @@ The configuration looks like this:
   "HealthChecks": {
     "AzureTableClient": {
       "<name>": {
+        "KeyedService": "<key>" // optional, used when multiple clients are registered
         "ConnectionString": "<connection-string>", // required
         "ContainerName": "<container-name>", // required
         ..., // other configuration
@@ -60,6 +61,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddAzureTableClient("<name>", options =>
 {
+    options.KeyedService = "<key>"; // optional, used when multiple clients are registered
     options.ConnectionString = "<connection-string>";
     options.ContainerName = "<container-name>";
     ...
