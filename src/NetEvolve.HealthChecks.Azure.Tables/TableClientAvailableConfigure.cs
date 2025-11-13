@@ -48,7 +48,7 @@ internal sealed class TableClientAvailableConfigure
 
         if (string.IsNullOrWhiteSpace(options.TableName))
         {
-            return Fail("The container name cannot be null or whitespace.");
+            return Fail("The table name cannot be null or whitespace.");
         }
 
         var mode = options.Mode;

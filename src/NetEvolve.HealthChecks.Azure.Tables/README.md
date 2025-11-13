@@ -33,7 +33,7 @@ The first one is to use the configuration based approach. Therefore, you have to
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureTableClint("<name>");
+builder.AddTableClientAvailability("<name>");
 ```
 
 The configuration looks like this:
@@ -41,11 +41,11 @@ The configuration looks like this:
 {
   ..., // other configuration
   "HealthChecks": {
-    "AzureTableClient": {
+    "AddTableClientAvailability": {
       "<name>": {
         "KeyedService": "<key>" // optional, used when multiple clients are registered
         "ConnectionString": "<connection-string>", // required
-        "ContainerName": "<container-name>", // required
+        "TableName": "<table-name>", // required
         ..., // other configuration
         "Timeout": "<timeout>" // optional, default is 100 milliseconds
       }
@@ -59,11 +59,11 @@ The second one is to use the options based approach. Therefore, you have to crea
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureTableClient("<name>", options =>
+builder.AddTableClientAvailability("<name>", options =>
 {
     options.KeyedService = "<key>"; // optional, used when multiple clients are registered
     options.ConnectionString = "<connection-string>";
-    options.ContainerName = "<container-name>";
+    options.TableName = "<table-name>";
     ...
     options.Timeout = "<timeout>";
 });
@@ -74,7 +74,7 @@ builder.AddAzureTableClient("<name>", options =>
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddAzureTableClient("<name>", options => ..., "azure");
+builder.AddTableClientAvailability("<name>", options => ..., "azure");
 ```
 
 ## License
