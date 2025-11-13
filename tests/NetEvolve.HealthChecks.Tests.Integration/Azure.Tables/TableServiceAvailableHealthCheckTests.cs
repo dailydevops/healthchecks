@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Tables;
 
 using System.Threading.Tasks;
-using Amazon.Runtime.Internal.Transform;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
