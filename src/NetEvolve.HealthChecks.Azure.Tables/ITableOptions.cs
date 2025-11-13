@@ -5,6 +5,8 @@ using global::Azure.Data.Tables;
 
 internal interface ITableOptions
 {
+    string? KeyedService { get; }
+
     Uri? ServiceUri { get; }
 
     string? ConnectionString { get; }
