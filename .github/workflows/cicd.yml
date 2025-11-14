@@ -95,7 +95,7 @@ jobs:
       dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      execution-name: "integration-${{ matrix.testgroups }}"
+      execution-name: "tests-${{ matrix.testgroups }}"
       runs-on: 'ubuntu-latest'
       solution: ./HealthChecks.slnx
       solution-version: ${{ needs.version.outputs.solution-version }}
