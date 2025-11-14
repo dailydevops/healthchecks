@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
 
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
@@ -8,7 +9,7 @@ using NetEvolve.HealthChecks.Cassandra;
 public class CassandraConfigureTests
 {
     [Test]
-    public void Validate_WhenArgumentNameNull_ReturnFail()
+    public async Task Validate_WhenArgumentNameNull_ReturnFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -19,12 +20,12 @@ public class CassandraConfigureTests
         var result = configure.Validate(name, new CassandraOptions());
 
         // Assert
-        Assert.That(result.Failed, Is.True);
-        Assert.That(result.FailureMessage, Is.EqualTo("The name cannot be null or whitespace."));
+        _ = await Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.FailureMessage).IsEqualTo("The name cannot be null or whitespace.");
     }
 
     [Test]
-    public void Validate_WhenArgumentOptionsNull_ReturnFail()
+    public async Task Validate_WhenArgumentOptionsNull_ReturnFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -35,12 +36,12 @@ public class CassandraConfigureTests
         var result = configure.Validate(name, null!);
 
         // Assert
-        Assert.That(result.Failed, Is.True);
-        Assert.That(result.FailureMessage, Is.EqualTo("The option cannot be null."));
+        _ = await Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(result.FailureMessage).IsEqualTo("The option cannot be null.");
     }
 
     [Test]
-    public void Validate_WhenArgumentTimeoutMinusTwo_ReturnFail()
+    public async Task Validate_WhenArgumentTimeoutMinusTwo_ReturnFail()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -51,17 +52,16 @@ public class CassandraConfigureTests
         var result = configure.Validate(name, new CassandraOptions { Timeout = -2 });
 
         // Assert
-        Assert.That(result.Failed, Is.True);
-        Assert.That(
-            result.FailureMessage,
-            Is.EqualTo(
-                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
-            )
+        _ = await Assert.That(result.Failed).IsTrue();
+        _ = await Assert.That(
+            result.FailureMessage
+        ).IsEqualTo(
+            "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
         );
     }
 
     [Test]
-    public void Validate_WhenArgumentsValid_ReturnSuccess()
+    public async Task Validate_WhenArgumentsValid_ReturnSuccess()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -72,6 +72,6 @@ public class CassandraConfigureTests
         var result = configure.Validate(name, new CassandraOptions());
 
         // Assert
-        Assert.That(result.Succeeded, Is.True);
+        _ = await Assert.That(result.Succeeded).IsTrue();
     }
 }
