@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.Cassandra;
 
 [ClassDataSource<CassandraDatabase>]
 [TestGroup(nameof(Cassandra))]
+[TestGroup("Z04TestGroup")]
 public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly CassandraDatabase _database;
