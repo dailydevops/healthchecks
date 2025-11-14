@@ -33,7 +33,7 @@ $testGroups = Get-ChildItem -Path "tests/NetEvolve.HealthChecks.Tests.Integratio
 
     $nestedTestGroupContent = (Get-Content -Path $nestedTestGroupFile -Raw).Trim()
 
-    if ($nestedTestGroupContent -ne 'Disable')
+    if ($nestedTestGroupContent -ine 'Disable')
     {
       $nestedTestGroupContent
     }
