@@ -59,7 +59,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Options based
-The second one is to use the options based approach. Therefore, you have to create an instance of `AzureTableClientOptions` and provide the configuration.
+The second one is to use the options based approach. Therefore, you have to create an instance of `TableClientAvailableOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -122,7 +122,7 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Options based
-The second one is to use the options based approach. Therefore, you have to create an instance of `AzureTableClientOptions` and provide the configuration.
+The second one is to use the options based approach. Therefore, you have to create an instance of `TableServiceAvailableOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
