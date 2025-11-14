@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Graph;
 using Elastic.Transport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -11,9 +13,10 @@ using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(ElasticsearchOptions))]
-internal sealed partial class ElasticsearchHealthCheck
+internal sealed partial class ElasticsearchHealthCheck : IDisposable
 {
     private ConcurrentDictionary<string, ElasticsearchClient>? _clients;
+    private bool _disposedValue;
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
@@ -78,5 +81,28 @@ internal sealed partial class ElasticsearchHealthCheck
         }
 
         return new ElasticsearchClient(settings);
+    }
+
+    [SuppressMessage(
+        "Blocker Code Smell",
+        "S2953:Methods named \"Dispose\" should implement \"IDisposable.Dispose\"",
+        Justification = "As designed."
+    )]
+    private void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing && _clients is not null)
+            {
+                _clients.Clear();
+            }
+            _disposedValue = true;
+        }
+    }
+
+    void IDisposable.Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }
