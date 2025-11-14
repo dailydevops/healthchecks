@@ -24,7 +24,7 @@
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.9.5" />
     <PackageVersion Include="AWSSDK.EC2" Version="4.0.54" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.11.3" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.4" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.5" />
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.3" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.17.0" />
