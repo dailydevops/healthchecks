@@ -43,6 +43,7 @@
     <PackageReference Include="MySql.Data" />
     <PackageReference Include="MySqlConnector" />
     <PackageReference Include="Npgsql" />
+    <PackageReference Include="OllamaSharp" />
     <PackageReference Include="OpenSearch.Client" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" />
     <PackageReference Include="Qdrant.Client" />
@@ -96,6 +97,7 @@
     <PackageReference Include="Testcontainers.MongoDb" />
     <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="Testcontainers.MySql" />
+    <PackageReference Include="Testcontainers.Ollama" />
     <PackageReference Include="Testcontainers.OpenSearch" />
     <PackageReference Include="Testcontainers.Oracle" />
     <PackageReference Include="Testcontainers.PostgreSql" />
@@ -156,6 +158,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Odbc\NetEvolve.HealthChecks.Odbc.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Ollama\NetEvolve.HealthChecks.Ollama.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.OpenSearch\NetEvolve.HealthChecks.OpenSearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Pulsar\NetEvolve.HealthChecks.Apache.Pulsar.csproj" />

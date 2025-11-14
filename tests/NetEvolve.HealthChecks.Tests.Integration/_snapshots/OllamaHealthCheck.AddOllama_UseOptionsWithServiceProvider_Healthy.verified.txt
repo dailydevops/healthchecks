@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerServiceProviderHealthy: Healthy,
+      name: TestContainerServiceProviderHealthy,
+      status: Healthy,
+      tags: [
+        ollama,
+        ai
+      ]
+    }
+  ],
+  status: Healthy
+}

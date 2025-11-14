@@ -1,0 +1,20 @@
+﻿namespace NetEvolve.HealthChecks.Ollama
+{
+    public enum ClientMode
+    {
+        ServiceProvider = 0,
+        ServiceUrl = 1,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddOllama(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Ollama.OllamaOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class OllamaOptions : System.IEquatable<NetEvolve.HealthChecks.Ollama.OllamaOptions>
+    {
+        public OllamaOptions() { }
+        public NetEvolve.HealthChecks.Ollama.ClientMode ClientMode { get; set; }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+        public System.Uri? Uri { get; set; }
+    }
+}

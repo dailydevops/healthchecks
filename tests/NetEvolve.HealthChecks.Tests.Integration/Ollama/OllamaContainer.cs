@@ -1,17 +1,16 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Integration.Pulsar;
+namespace NetEvolve.HealthChecks.Tests.Integration.Ollama;
 
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
-using Testcontainers.Pulsar;
+using Testcontainers.Ollama;
 
-public sealed class PulsarContainer : IAsyncInitializer, IAsyncDisposable
+public sealed class OllamaContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly Testcontainers.Pulsar.PulsarContainer _container = new PulsarBuilder()
+    private readonly Testcontainers.Ollama.OllamaContainer _container = new OllamaBuilder()
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    public Uri ServiceUrl => new Uri(_container.GetBrokerAddress());
+    public string BaseAddress => _container.GetBaseAddress();
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
