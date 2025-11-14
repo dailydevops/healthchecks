@@ -78,6 +78,7 @@
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.ArangoDb" />
     <PackageReference Include="Testcontainers.Azurite" />
+    <PackageReference Include="Testcontainers.Cassandra" />
     <PackageReference Include="Testcontainers.ClickHouse" />
     <PackageReference Include="Testcontainers.CockroachDb" />
     <PackageReference Include="Testcontainers.Consul" />
