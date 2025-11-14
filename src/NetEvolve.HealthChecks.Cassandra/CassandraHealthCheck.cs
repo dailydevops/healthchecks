@@ -1,7 +1,7 @@
-namespace NetEvolve.HealthChecks.Cassandra;
+﻿namespace NetEvolve.HealthChecks.Cassandra;
 
 using System.Threading.Tasks;
-using Cassandra;
+using global::Cassandra;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
@@ -32,12 +32,9 @@ internal sealed partial class CassandraHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(
-        ICluster cluster,
-        CancellationToken cancellationToken
-    )
+    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken cancellationToken)
     {
-        await using var session = await cluster.ConnectAsync().ConfigureAwait(false);
+        using var session = await cluster.ConnectAsync().ConfigureAwait(false);
 
         var result = await session
             .ExecuteAsync(new SimpleStatement("SELECT release_version FROM system.local"))

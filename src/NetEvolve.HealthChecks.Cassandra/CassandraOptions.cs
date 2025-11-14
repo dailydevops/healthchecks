@@ -1,6 +1,6 @@
-namespace NetEvolve.HealthChecks.Cassandra;
+﻿namespace NetEvolve.HealthChecks.Cassandra;
 
-using Cassandra;
+using global::Cassandra;
 
 /// <summary>
 /// Options for <see cref="CassandraHealthCheck"/>
