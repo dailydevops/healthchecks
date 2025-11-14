@@ -22,7 +22,9 @@ internal class ClientCreation
     {
         if (options.Mode == TableClientCreationMode.ServiceProvider)
         {
-            return serviceProvider.GetRequiredService<TableServiceClient>();
+            return string.IsNullOrWhiteSpace(options.KeyedService)
+                ? serviceProvider.GetRequiredService<TableServiceClient>()
+                : serviceProvider.GetRequiredKeyedService<TableServiceClient>(options.KeyedService);
         }
 
         if (_tableServiceClients is null)
