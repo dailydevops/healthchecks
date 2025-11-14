@@ -76,7 +76,18 @@ jobs:
       env:
         TUNIT_DISABLE_GITHUB_REPORTER: true
       run: |
-        dotnet test --project ${{ inputs.test-path }} -c Release -v ${{ inputs.dotnet-logging || 'minimal' }} --no-build --no-restore /p:Version=${{ inputs.solution-version }} --results-directory ./TestResults ${{ inputs.test-filter != '' && format('--treenode-filter "{0}"', inputs.test-filter) || ''}} -- --coverage --coverage-output-format cobertura
+        dotnet test \
+          --project ${{ inputs.test-path }} \
+          -c Release \
+          -v ${{ inputs.dotnet-logging || 'minimal' }} \
+          --no-build \
+          --no-restore \
+          /p:Version=${{ inputs.solution-version }} \
+          --results-directory ./TestResults \
+          ${{ inputs.test-filter != '' && format('--treenode-filter "{0}"', inputs.test-filter) || ''}} \
+          -- \
+          --coverage \
+          --coverage-output-format cobertura
 
     - name: Upload Coverage Reports
       uses: actions/upload-artifact@v5.0.0
