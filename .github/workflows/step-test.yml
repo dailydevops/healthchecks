@@ -1,0 +1,86 @@
+on:
+  workflow_call:
+    inputs:
+      dotnet-logging:
+        required: false
+        type: string
+        default: quiet
+      dotnet-version:
+        required: false
+        type: string
+        default: 8.x
+      dotnet-quality:
+        required: false
+        type: string
+        default: ga
+      execution-name:
+        required: true
+        type: string
+        default: default
+      runs-on:
+        required: false
+        type: string
+        default: ubuntu-latest
+      solution:
+        required: true
+        type: string
+      solution-version:
+        required: true
+        type: string
+      test-filter:
+        required: false
+        type: string
+        default: ''
+      test-path:
+        required: true
+        type: string
+    secrets:
+      CODECOV_TOKEN:
+        required: false
+
+permissions:
+  contents: write
+
+env:
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+
+jobs:
+  testing:
+    name: Testing .NET solution
+    runs-on: ${{ inputs.runs-on || 'ubuntu-latest' }}
+    env:
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5.0.0
+      with:
+        fetch-depth: 0
+        submodules: recursive
+        token: ${{ github.token }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5.0.0
+      with:
+        dotnet-version: ${{ inputs.dotnet-version || '10.x' }}
+        global-json-file: ./global.json
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.solution }} -v ${{ inputs.dotnet-logging || 'minimal' }}
+
+    - name: Build
+      run: dotnet build ${{ inputs.solution }} -c Release -v ${{ inputs.dotnet-logging || 'minimal' }} --no-restore /p:GeneratePackageOnBuild=false /p:Version=${{ inputs.solution-version }}
+
+    - name: Test
+      id: test
+      env:
+        TUNIT_DISABLE_GITHUB_REPORTER: true
+      run: |
+        dotnet test --project ${{ inputs.test-path }} -c Release -v ${{ inputs.dotnet-logging || 'minimal' }} --no-build --no-restore /p:Version=${{ inputs.solution-version }} --results-directory ./TestResults ${{ inputs.test-filter != '' && format('--treenode-filter "{0}"', inputs.test-filter) || ''}} -- --coverage --coverage-output-format cobertura
+
+    - name: Upload Coverage Reports
+      uses: actions/upload-artifact@v5.0.0
+      with:
+        name: coverage-${{ inputs.runs-on || 'ubuntu-latest' }}-${{ hashFiles(inputs.solution) }}-${{ inputs.execution-name }}
+        path: |
+          **/*.cobertura.xml
