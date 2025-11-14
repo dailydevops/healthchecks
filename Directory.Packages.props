@@ -14,7 +14,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
-    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.4.55" />
+    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.4.59" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.14.1" />
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
   </ItemGroup>
@@ -22,7 +22,7 @@
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.1.1" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.9.6" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.54" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.55" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.11.3" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.5" />
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.3" />
@@ -90,7 +90,7 @@
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="System.Data.SQLite" Version="2.0.2" />
     <PackageVersion Include="System.Drawing.Common" Version="9.0.11" />
-    <PackageVersion Include="System.Text.Json" Version="9.0.10" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.11" />
     <PackageVersion Include="Testcontainers" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.ActiveMq" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.ArangoDb" Version="$(VersionTestContainers)" />
