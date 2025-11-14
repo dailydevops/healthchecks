@@ -190,4 +190,38 @@ public sealed class DaprHealthCheckTests
             _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Cancellation requested.");
         }
     }
+
+    [Test]
+    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
+    {
+        // Arrange
+        const string testName = "Test";
+        const string serviceKey = "test-key";
+
+        var options = new DaprOptions { KeyedService = serviceKey, Timeout = 100 };
+
+        var optionsMonitor = Substitute.For<IOptionsMonitor<DaprOptions>>();
+        _ = optionsMonitor.Get(testName).Returns(options);
+
+        var mockClient = Substitute.For<DaprClient>();
+        _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
+
+        var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, mockClient).BuildServiceProvider();
+
+        var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+        };
+
+        // Act
+        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+        }
+    }
 }
