@@ -1,0 +1,62 @@
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: ubuntu-latest
+      solution:
+        required: true
+        type: string
+    secrets:
+      CODECOV_TOKEN:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  testing:
+    name: Testing .NET solution
+    runs-on: ${{ inputs.runs-on || 'ubuntu-latest' }}
+    env:
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
+
+    steps:
+    - name: Download Build files
+      uses: actions/download-artifact@v5.0.0
+      with:
+        pattern: coverage-*
+        merge-multiple: true
+
+    - name: List all Files
+      run: |
+        ls -r ${{ github.workspace }}
+
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18
+      with:
+        reports: '${{ github.workspace }}/**/*.cobertura.xml'
+        targetdir: '${{ github.workspace }}/coveragereports'
+        reporttypes: 'Cobertura;MarkdownSummaryGithub'
+
+    - name: Upload coverage into summary
+      if: ${{ runner.os != 'Windows' }}
+      run: |
+        cat $GITHUB_WORKSPACE/coveragereports/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
+    - name: Update codecov
+      uses: codecov/codecov-action@v5.5.1
+      if: ${{ env.codecov_token != '' }}
+      with:
+        token: ${{ env.codecov_token }}
+        fail_ci_if_error: true
+        files: ${{ github.workspace }}/coveragereports/Cobertura.xml
+
+    - name: Upload ReportGenerator
+      uses: actions/upload-artifact@v5.0.0
+      if: always()
+      with:
+        name: reportgenerator-${{ inputs.runs-on || 'ubuntu-latest' }}-${{ hashFiles(inputs.solution) }}
+        path: |
+          ${{ github.workspace }}/coveragereports/**/*.*

@@ -18,20 +18,175 @@ on:
           - detailed
           - diagnostic
 
+concurrency:
+  group: ${{ github.workflow_ref }}@${{ github.ref }}-healthchecks
+  cancel-in-progress: true
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: true
+
 permissions:
   actions: read
-  contents: read
+  contents: write
   pull-requests: write
   security-events: write
 
 jobs:
-  all:
-    name: Build & Tests
-    uses: dailydevops/pipelines/.github/workflows/build-dotnet-single.yml@1.2.26
+  commitlinter:
+    name: Commit Linter
+    uses: dailydevops/pipelines/.github/workflows/step-node-commitlint.yml@1.2.26
+    secrets: inherit
+
+  version:
+    name: Version Management
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-version.yml@1.2.26
     with:
-      enableCleanUpDockerDocker: true
-      dotnetLogging: ${{ inputs.dotnet-logging }}
-      dotnetVersion: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnetQuality: ${{ vars.NE_DOTNET_QUALITY }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+    secrets: inherit
+
+  format:
+    name: Code Formatting
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-format.yml@1.2.26
+    needs:
+      - commitlinter
+    with:
+      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      runs-on: 'ubuntu-latest'
+    secrets: inherit
+
+  collect:
+    name: Collect TestGroups
+    runs-on: ubuntu-latest
+    outputs:
+      testgroups: ${{ steps.collect.outputs.testgroups }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5.0.0
+        with:
+          submodules: recursive
+          token: ${{ github.token }}
+
+      - name: Collect TestGroups
+        id: collect
+        shell: pwsh
+        run: |
+          $testGroups = .github/scripts/Collect-TestProjects.ps1
+          echo $testGroups
+          echo "testgroups=$testGroups" >> $env:GITHUB_OUTPUT
+
+  tests-architecture:
+    name: TestGroup 'Architecture'
+    needs:
+      - commitlinter
+      - collect
+      - version
+    uses: ./.github/workflows/step-test.yml
+    with:
+      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      execution-name: "Architecture"
+      runs-on: 'ubuntu-latest'
+      solution: ./HealthChecks.slnx
+      solution-version: ${{ needs.version.outputs.solution-version }}
+      test-path: ./tests/NetEvolve.HealthChecks.Tests.Architecture/NetEvolve.HealthChecks.Tests.Architecture.csproj
+    secrets: inherit
+
+  tests-unit:
+    name: TestGroup 'Unit'
+    needs:
+      - commitlinter
+      - collect
+      - version
+    uses: ./.github/workflows/step-test.yml
+    with:
+      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      execution-name: "Unit"
+      runs-on: 'ubuntu-latest'
+      solution: ./HealthChecks.slnx
+      solution-version: ${{ needs.version.outputs.solution-version }}
+      test-path: ./tests/NetEvolve.HealthChecks.Tests.Unit/NetEvolve.HealthChecks.Tests.Unit.csproj
+    secrets: inherit
+
+  tests-integration:
+    name: TestGroup '${{ matrix.testgroups }}'
+    needs:
+      - commitlinter
+      - collect
+      - version
+    if: ${{ needs.collect.outputs.testgroups != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        testgroups: ${{ fromJson(needs.collect.outputs.testgroups) }}
+    uses: ./.github/workflows/step-test.yml
+    with:
+      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      execution-name: "integration-${{ matrix.testgroups }}"
+      runs-on: 'ubuntu-latest'
+      solution: ./HealthChecks.slnx
+      solution-version: ${{ needs.version.outputs.solution-version }}
+      test-filter: "/*/*/*/*[TestGroup=${{ matrix.testgroups }}]"
+      test-path: ./tests/NetEvolve.HealthChecks.Tests.Integration/NetEvolve.HealthChecks.Tests.Integration.csproj
+    secrets: inherit
+
+  coverage:
+    name: Collect Code Coverage
+    needs:
+      - tests-architecture
+      - tests-integration
+      - tests-unit
+    uses: ./.github/workflows/step-coverage.yml
+    with:
+      runs-on: 'ubuntu-latest'
       solution: ./HealthChecks.slnx
     secrets: inherit
+
+  build:
+    name: Build Solution
+    if: ${{ !cancelled() && !failure() }}
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-build.yml@1.2.26
+    needs:
+      - coverage
+      - format
+      - version
+    with:
+      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
+      runs-on: 'ubuntu-latest'
+      solution: ./HealthChecks.slnx
+      solution-version: ${{ needs.version.outputs.solution-version }}
+    secrets: inherit
+
+  cleanup:
+    name: Cleanup Build Files
+    runs-on: ubuntu-latest
+    needs:
+      - coverage
+    if: ${{ always() }}
+    steps:
+      - name: Delete Build Artifact
+        uses: geekyeggo/delete-artifact@v5.1.0
+        with:
+          name: |
+            build-files
+          failOnError: false
+
+  dependabot:
+    name: Dependabot Merge
+    if: ${{ !cancelled() && !failure() && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
+    uses: dailydevops/pipelines/.github/workflows/step-dependabot-merge.yml@1.2.26
+    needs:
+      - build
+    secrets: inherit
+
