@@ -25,6 +25,8 @@ internal static class InstanceSharedType
 
     public const SharedType Consul = SharedType.PerClass;
 
+    public const SharedType Couchbase = SharedType.PerClass;
+
     public const SharedType DB2 = SharedType.PerClass;
 
     public const SharedType Elasticsearch = SharedType.PerClass;
