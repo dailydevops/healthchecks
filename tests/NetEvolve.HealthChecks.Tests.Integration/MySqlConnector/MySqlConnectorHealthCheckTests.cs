@@ -10,6 +10,7 @@ using NetEvolve.HealthChecks.MySql.Connector;
 using NetEvolve.HealthChecks.Tests.Integration.MySql;
 
 [TestGroup(nameof(MySqlConnector))]
+[TestGroup("Z00TestGroup")]
 [ClassDataSource<MySqlDatabase>(Shared = InstanceSharedType.MySql)]
 public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
 {

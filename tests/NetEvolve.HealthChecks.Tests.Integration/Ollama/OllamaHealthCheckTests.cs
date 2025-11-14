@@ -11,6 +11,7 @@ using NetEvolve.HealthChecks.Ollama;
 using OllamaSharp;
 
 [TestGroup(nameof(Ollama))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<OllamaContainer>]
 public class OllamaHealthCheckTests : HealthCheckTestBase
 {

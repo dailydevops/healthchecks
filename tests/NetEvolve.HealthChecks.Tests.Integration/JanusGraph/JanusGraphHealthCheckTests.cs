@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.JanusGraph;
 
 [ClassDataSource<JanusGraphDatabase>(Shared = InstanceSharedType.JanusGraph)]
 [TestGroup(nameof(JanusGraph))]
+[TestGroup("Z03TestGroup")]
 public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly JanusGraphDatabase _database;

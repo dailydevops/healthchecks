@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.InfluxDB;
 
 [ClassDataSource<InfluxDBDatabase>(Shared = InstanceSharedType.InfluxDB)]
 [TestGroup(nameof(InfluxDB))]
+[TestGroup("Z03TestGroup")]
 public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly InfluxDBDatabase _database;

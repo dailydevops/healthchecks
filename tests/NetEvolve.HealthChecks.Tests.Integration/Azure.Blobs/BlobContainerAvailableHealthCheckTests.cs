@@ -8,6 +8,7 @@ using NetEvolve.HealthChecks.Azure.Blobs;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Blobs)}")]
 [ClassDataSource<AzuriteAccess>(Shared = InstanceSharedType.Azure)]
+[TestGroup("Z02TestGroup")]
 public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;

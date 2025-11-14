@@ -18,6 +18,7 @@ using NetEvolve.HealthChecks.Http;
 using NetEvolve.HealthChecks.Tests.Integration.Internals;
 
 [TestGroup(nameof(Http))]
+[TestGroup("Z03TestGroup")]
 public class HttpHealthCheckTests : HealthCheckTestBase
 {
     [Test]

@@ -10,6 +10,7 @@ using NetEvolve.HealthChecks.SqlServer.Legacy;
 using NetEvolve.HealthChecks.Tests.Integration.SqlServer;
 
 [TestGroup($"{nameof(SqlServer)}.{nameof(Legacy)}")]
+[TestGroup("Z00TestGroup")]
 [ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
 {

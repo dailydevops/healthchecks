@@ -11,6 +11,7 @@ using TUnit.Core.Enums;
 
 [ClassDataSource<DB2Database>(Shared = InstanceSharedType.DB2)]
 [TestGroup(nameof(DB2))]
+[TestGroup("Z01TestGroup")]
 [RunOn(OS.Windows)]
 public class DB2HealthCheckTests : HealthCheckTestBase
 {

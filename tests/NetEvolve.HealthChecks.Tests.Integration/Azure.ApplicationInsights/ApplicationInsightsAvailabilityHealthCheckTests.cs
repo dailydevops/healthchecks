@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.Azure.ApplicationInsights;
 using NetEvolve.HealthChecks.Tests.Integration.Internals;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ApplicationInsights)}")]
+[TestGroup("Z02TestGroup")]
 public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBase
 {
     [Test]

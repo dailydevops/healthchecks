@@ -10,6 +10,7 @@ using NetEvolve.HealthChecks.AWS.DynamoDB;
 using NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(DynamoDB)}")]
+[TestGroup("Z01TestGroup")]
 [ClassDataSource<LocalStackInstance>(Shared = InstanceSharedType.AWS)]
 public class DynamoDbHealthCheckTests : HealthCheckTestBase
 {

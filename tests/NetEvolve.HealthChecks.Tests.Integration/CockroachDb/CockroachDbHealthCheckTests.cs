@@ -9,6 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.CockroachDb;
 
 [TestGroup(nameof(CockroachDb))]
+[TestGroup("Z01TestGroup")]
 [ClassDataSource<CockroachDbDatabase>(Shared = SharedType.PerClass)]
 public class CockroachDbHealthCheckTests : HealthCheckTestBase
 {

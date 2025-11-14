@@ -11,6 +11,7 @@ using NetEvolve.HealthChecks.Redis;
 using StackExchange.Redis;
 
 [TestGroup(nameof(Redis))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<RedisContainer>(Shared = InstanceSharedType.Redis)]
 public class RedisHealthCheckTests : HealthCheckTestBase
 {

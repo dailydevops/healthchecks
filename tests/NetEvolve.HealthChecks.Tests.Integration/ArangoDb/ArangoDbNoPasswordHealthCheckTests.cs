@@ -6,6 +6,7 @@ using NetEvolve.HealthChecks.Tests.Integration.ArangoDb.Container;
 [ClassDataSource<ContainerNoPassword>(Shared = InstanceSharedType.ArangoDb)]
 [InheritsTests]
 [TestGroup(nameof(ArangoDb))]
+[TestGroup("Z01TestGroup")]
 public sealed class ArangoDbNoPasswordHealthCheckTests : ArangoDbHealthCheckBaseTests
 {
     public ArangoDbNoPasswordHealthCheckTests(ContainerNoPassword container)

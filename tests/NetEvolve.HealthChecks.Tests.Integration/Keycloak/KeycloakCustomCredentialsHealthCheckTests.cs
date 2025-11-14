@@ -6,6 +6,7 @@ using NetEvolve.HealthChecks.Tests.Integration.Keycloak.Container;
 [ClassDataSource<ContainerCustomCredentials>(Shared = InstanceSharedType.Keycloak)]
 [InheritsTests]
 [TestGroup(nameof(Keycloak))]
+[TestGroup("Z03TestGroup")]
 public sealed class KeycloakCustomCredentialsHealthCheckTests : KeycloakHealthCheckBaseTests
 {
     public KeycloakCustomCredentialsHealthCheckTests(ContainerCustomCredentials container)

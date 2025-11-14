@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Firestore;
 
 [TestGroup($"GCP.{nameof(Firestore)}")]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<FirestoreDatabase>(Shared = InstanceSharedType.Firestore)]
 public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
 {

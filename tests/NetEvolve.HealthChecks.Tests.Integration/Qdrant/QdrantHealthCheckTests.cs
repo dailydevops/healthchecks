@@ -11,6 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Qdrant;
 
 [TestGroup(nameof(Qdrant))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<QdrantDatabase>(Shared = InstanceSharedType.Qdrant)]
 public sealed class QdrantHealthCheckTests : HealthCheckTestBase
 {

@@ -10,6 +10,7 @@ using NetEvolve.HealthChecks.SqlServer.Devart;
 using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(SqlServer)}.{nameof(Devart)}")]
+[TestGroup("Z00TestGroup")]
 [ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
 [RunOn(OS.Windows)]
 [Skip("Devart.SqlServer requires a license.")]

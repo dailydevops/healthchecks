@@ -11,6 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.OpenSearch;
 
 [TestGroup(nameof(OpenSearch))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<OpenSearchContainer>(Shared = InstanceSharedType.OpenSearch)]
 public class OpenSearchHealthCheckTests : HealthCheckTestBase
 {

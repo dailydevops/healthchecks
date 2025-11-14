@@ -79,43 +79,7 @@ jobs:
           echo $testGroups
           echo "testgroups=$testGroups" >> $env:GITHUB_OUTPUT
 
-  tests-architecture:
-    name: TestGroup 'Architecture'
-    needs:
-      - commitlinter
-      - collect
-      - version
-    uses: ./.github/workflows/step-test.yml
-    with:
-      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      execution-name: "Architecture"
-      runs-on: 'ubuntu-latest'
-      solution: ./HealthChecks.slnx
-      solution-version: ${{ needs.version.outputs.solution-version }}
-      test-path: ./tests/NetEvolve.HealthChecks.Tests.Architecture/NetEvolve.HealthChecks.Tests.Architecture.csproj
-    secrets: inherit
-
-  tests-unit:
-    name: TestGroup 'Unit'
-    needs:
-      - commitlinter
-      - collect
-      - version
-    uses: ./.github/workflows/step-test.yml
-    with:
-      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      execution-name: "Unit"
-      runs-on: 'ubuntu-latest'
-      solution: ./HealthChecks.slnx
-      solution-version: ${{ needs.version.outputs.solution-version }}
-      test-path: ./tests/NetEvolve.HealthChecks.Tests.Unit/NetEvolve.HealthChecks.Tests.Unit.csproj
-    secrets: inherit
-
-  tests-integration:
+  tests:
     name: TestGroup '${{ matrix.testgroups }}'
     needs:
       - commitlinter
@@ -136,15 +100,12 @@ jobs:
       solution: ./HealthChecks.slnx
       solution-version: ${{ needs.version.outputs.solution-version }}
       test-filter: "/*/*/*/*[TestGroup=${{ matrix.testgroups }}]"
-      test-path: ./tests/NetEvolve.HealthChecks.Tests.Integration/NetEvolve.HealthChecks.Tests.Integration.csproj
     secrets: inherit
 
   coverage:
     name: Collect Code Coverage
     needs:
-      - tests-architecture
-      - tests-integration
-      - tests-unit
+      - tests
     uses: ./.github/workflows/step-coverage.yml
     with:
       runs-on: 'ubuntu-latest'
@@ -167,20 +128,6 @@ jobs:
       solution: ./HealthChecks.slnx
       solution-version: ${{ needs.version.outputs.solution-version }}
     secrets: inherit
-
-  cleanup:
-    name: Cleanup Build Files
-    runs-on: ubuntu-latest
-    needs:
-      - coverage
-    if: ${{ always() }}
-    steps:
-      - name: Delete Build Artifact
-        uses: geekyeggo/delete-artifact@v5.1.0
-        with:
-          name: |
-            build-files
-          failOnError: false
 
   dependabot:
     name: Dependabot Merge

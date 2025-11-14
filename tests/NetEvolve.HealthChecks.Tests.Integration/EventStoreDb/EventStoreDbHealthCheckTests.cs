@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.EventStoreDb;
 
 [ClassDataSource<EventStoreDbDatabase>(Shared = InstanceSharedType.EventStoreDb)]
 [TestGroup(nameof(EventStoreDb))]
+[TestGroup("Z03TestGroup")]
 public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly EventStoreDbDatabase _database;
