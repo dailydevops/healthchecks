@@ -5,6 +5,7 @@
         public CouchDbOptions() { }
         public System.Func<MyCouch.MyCouchClient, System.Threading.CancellationToken, System.Threading.Tasks.Task> CommandAsync { get; }
         public string? ConnectionString { get; set; }
+        public string? DatabaseName { get; set; }
         public int Timeout { get; set; }
     }
     public static class DependencyInjectionExtensions
