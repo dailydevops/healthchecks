@@ -5,6 +5,7 @@
     <NoWarn>$(NoWarn);CA1024</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="CassandraCSharpDriver" />
     <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -35,6 +36,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Cassandra\NetEvolve.HealthChecks.Cassandra.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ClickHouse\NetEvolve.HealthChecks.ClickHouse.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.CockroachDb\NetEvolve.HealthChecks.CockroachDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Consul\NetEvolve.HealthChecks.Consul.csproj" />
