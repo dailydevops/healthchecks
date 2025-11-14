@@ -5,6 +5,7 @@
     <PackageTags>$(PackageTags);gcp;google-cloud;bundle</PackageTags>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NetEvolve.HealthChecks.GCP.Bigtable\NetEvolve.HealthChecks.GCP.Bigtable.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.GCP.Firestore\NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.GCP.PubSub\NetEvolve.HealthChecks.GCP.PubSub.csproj" />
   </ItemGroup>
