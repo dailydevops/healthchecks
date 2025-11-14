@@ -3,14 +3,14 @@ namespace NetEvolve.HealthChecks.Tests.Integration.Cassandra;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CassandraDriver = global::Cassandra;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
+using CassandraDriver = global::Cassandra;
 
-[ClassDataSource<CassandraDatabase>]
+[ClassDataSource<CassandraDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(Cassandra))]
 [TestGroup("Z04TestGroup")]
 public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
@@ -81,7 +81,8 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
             "name",
             async () =>
                 await RunAndVerify(
-                    healthChecks => healthChecks.AddCassandra("TestContainerHealthy").AddCassandra("TestContainerHealthy"),
+                    healthChecks =>
+                        healthChecks.AddCassandra("TestContainerHealthy").AddCassandra("TestContainerHealthy"),
                     HealthStatus.Healthy,
                     serviceBuilder: services => services.AddSingleton(_cluster)
                 )
@@ -101,7 +102,9 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
 
                             using var session = await cluster.ConnectAsync().ConfigureAwait(false);
                             var result = await session
-                                .ExecuteAsync(new CassandraDriver.SimpleStatement("SELECT release_version FROM system.local"))
+                                .ExecuteAsync(
+                                    new CassandraDriver.SimpleStatement("SELECT release_version FROM system.local")
+                                )
                                 .ConfigureAwait(false);
 
                             return result is not null && result.Any();

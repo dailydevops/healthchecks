@@ -4,11 +4,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CassandraDriver = global::Cassandra;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
 using NSubstitute;
+using CassandraDriver = global::Cassandra;
 
 [TestGroup(nameof(Cassandra))]
 public class CassandraHealthCheckTests

@@ -53,11 +53,9 @@ public class CassandraConfigureTests
 
         // Assert
         _ = await Assert.That(result.Failed).IsTrue();
-        _ = await Assert.That(
-            result.FailureMessage
-        ).IsEqualTo(
-            "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
-        );
+        _ = await Assert
+            .That(result.FailureMessage)
+            .IsEqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
     }
 
     [Test]
