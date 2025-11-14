@@ -9,6 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite;
 
 [TestGroup(nameof(SQLite))]
+[TestGroup("Z00TestGroup")]
 public class SQLiteHealthCheckTests : HealthCheckTestBase
 {
     private const string ConnectionString = "Data Source=:memory:";

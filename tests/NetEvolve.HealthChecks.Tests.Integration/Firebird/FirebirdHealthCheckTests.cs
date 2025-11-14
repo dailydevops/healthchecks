@@ -6,6 +6,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Firebird;
 
 [TestGroup(nameof(Firebird))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<FirebirdDatabase>(Shared = InstanceSharedType.Firebird)]
 public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
 {

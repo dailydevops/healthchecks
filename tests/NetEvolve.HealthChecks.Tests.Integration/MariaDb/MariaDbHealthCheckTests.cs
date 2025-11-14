@@ -9,6 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MariaDb;
 
 [TestGroup(nameof(MariaDb))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<MariaDbDatabase>(Shared = InstanceSharedType.MySql)]
 public class MariaDbHealthCheckTests : HealthCheckTestBase
 {

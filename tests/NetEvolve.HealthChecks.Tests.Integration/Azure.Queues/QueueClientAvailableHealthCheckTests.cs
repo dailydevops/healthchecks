@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Queues;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
+[TestGroup("Z02TestGroup")]
 [ClassDataSource<AzuriteAccess>(Shared = InstanceSharedType.Azure)]
 public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
 {

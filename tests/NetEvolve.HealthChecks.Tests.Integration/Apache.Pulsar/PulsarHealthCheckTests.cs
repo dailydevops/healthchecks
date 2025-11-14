@@ -11,6 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Pulsar;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
+[TestGroup("Z00TestGroup")]
 [ClassDataSource<PulsarContainer>(Shared = SharedType.PerTestSession)]
 public sealed class PulsarHealthCheckTests : HealthCheckTestBase
 {

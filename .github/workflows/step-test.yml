@@ -31,9 +31,6 @@ on:
         required: false
         type: string
         default: ''
-      test-path:
-        required: true
-        type: string
     secrets:
       CODECOV_TOKEN:
         required: false
@@ -77,7 +74,7 @@ jobs:
         TUNIT_DISABLE_GITHUB_REPORTER: true
       run: |
         dotnet test \
-          --project ${{ inputs.test-path }} \
+          --solution ${{ inputs.solution }} \
           -c Release \
           -v ${{ inputs.dotnet-logging || 'minimal' }} \
           --no-build \

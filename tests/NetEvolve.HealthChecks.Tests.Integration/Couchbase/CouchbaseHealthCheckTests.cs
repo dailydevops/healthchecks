@@ -13,6 +13,7 @@ using NetEvolve.HealthChecks.Couchbase;
 
 [ClassDataSource<CouchbaseDatabase>(Shared = InstanceSharedType.Couchbase)]
 [TestGroup(nameof(Couchbase))]
+[TestGroup("Z01TestGroup")]
 public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IAsyncDisposable
 {
     private readonly CouchbaseDatabase _database;

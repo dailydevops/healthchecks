@@ -10,6 +10,7 @@ using NetEvolve.HealthChecks.AWS.S3;
 using NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(S3)}")]
+[TestGroup("Z01TestGroup")]
 [ClassDataSource<LocalStackInstance>(Shared = InstanceSharedType.AWS)]
 public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
 {

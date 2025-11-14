@@ -5,6 +5,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 
 [TestGroup(nameof(HealthChecks))]
+[TestGroup("Z03TestGroup")]
 public class ApplicationHealthyCheckTests : HealthCheckTestBase
 {
     [Test]

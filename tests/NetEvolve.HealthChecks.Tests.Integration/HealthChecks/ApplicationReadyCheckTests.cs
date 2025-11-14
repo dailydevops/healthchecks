@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.TUnit;
 
 [TestGroup(nameof(HealthChecks))]
+[TestGroup("Z03TestGroup")]
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Test]

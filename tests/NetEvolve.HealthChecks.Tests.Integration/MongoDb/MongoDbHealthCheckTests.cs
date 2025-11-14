@@ -13,6 +13,7 @@ using NetEvolve.HealthChecks.MongoDb;
 
 [ClassDataSource<MongoDbDatabase>(Shared = InstanceSharedType.MongoDb)]
 [TestGroup(nameof(MongoDb))]
+[TestGroup("Z03TestGroup")]
 public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly MongoDbDatabase _database;

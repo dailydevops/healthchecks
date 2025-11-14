@@ -9,6 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
+[TestGroup("Z02TestGroup")]
 [ClassDataSource<AzuriteAccess>(Shared = InstanceSharedType.Azure)]
 public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
 {

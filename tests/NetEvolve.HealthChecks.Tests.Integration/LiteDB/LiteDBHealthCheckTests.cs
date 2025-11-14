@@ -11,6 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.LiteDB;
 
 [TestGroup(nameof(LiteDB))]
+[TestGroup("Z03TestGroup")]
 public class LiteDBHealthCheckTests : HealthCheckTestBase
 {
     private static string CreateTempDatabase()

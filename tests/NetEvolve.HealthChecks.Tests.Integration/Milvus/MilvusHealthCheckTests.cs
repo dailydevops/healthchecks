@@ -11,6 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Milvus;
 
 [TestGroup(nameof(Milvus))]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<MilvusDatabase>(Shared = InstanceSharedType.Milvus)]
 public sealed class MilvusHealthCheckTests : HealthCheckTestBase
 {

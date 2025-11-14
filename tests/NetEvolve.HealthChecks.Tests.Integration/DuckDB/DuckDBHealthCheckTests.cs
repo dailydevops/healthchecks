@@ -9,6 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DuckDB;
 
 [TestGroup(nameof(DuckDB))]
+[TestGroup("Z01TestGroup")]
 public class DuckDBHealthCheckTests : HealthCheckTestBase
 {
     private const string ConnectionString = "Data Source=:memory:";

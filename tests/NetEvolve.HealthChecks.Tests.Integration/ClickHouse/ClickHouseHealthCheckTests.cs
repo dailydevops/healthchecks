@@ -9,6 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.ClickHouse;
 
 [TestGroup(nameof(ClickHouse))]
+[TestGroup("Z01TestGroup")]
 [ClassDataSource<ClickHouseDatabase>(Shared = InstanceSharedType.ClickHouse)]
 public class ClickHouseHealthCheckTests : HealthCheckTestBase
 {

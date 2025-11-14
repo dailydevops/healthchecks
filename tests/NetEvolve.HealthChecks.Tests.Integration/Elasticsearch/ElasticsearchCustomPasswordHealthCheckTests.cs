@@ -6,6 +6,7 @@ using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Container;
 [ClassDataSource<ContainerNoPassword>(Shared = InstanceSharedType.Elasticsearch)]
 [InheritsTests]
 [TestGroup(nameof(Elasticsearch))]
+[TestGroup("Z04TestGroup")]
 public sealed class ElasticsearchCustomPasswordHealthCheckTests : ElasticsearchHealthCheckBaseTests
 {
     public ElasticsearchCustomPasswordHealthCheckTests(ContainerNoPassword cluster)

@@ -14,6 +14,7 @@ using Raven.Client.ServerWide.Operations;
 
 [ClassDataSource<RavenDbDatabase>(Shared = InstanceSharedType.RavenDb)]
 [TestGroup(nameof(RavenDb))]
+[TestGroup("Z03TestGroup")]
 public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly RavenDbDatabase _database;

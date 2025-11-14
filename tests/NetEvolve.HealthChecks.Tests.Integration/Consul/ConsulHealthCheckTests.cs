@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Consul;
 
 [TestGroup(nameof(Consul))]
+[TestGroup("Z01TestGroup")]
 [ClassDataSource<ConsulDatabase>(Shared = InstanceSharedType.Consul)]
 public sealed class ConsulHealthCheckTests : HealthCheckTestBase
 {

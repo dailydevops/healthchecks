@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.PubSub;
 
 [TestGroup($"GCP.{nameof(PubSub)}")]
+[TestGroup("Z03TestGroup")]
 [ClassDataSource<PubSubEmulator>(Shared = InstanceSharedType.PubSub)]
 public sealed class PubSubHealthCheckTests : HealthCheckTestBase
 {

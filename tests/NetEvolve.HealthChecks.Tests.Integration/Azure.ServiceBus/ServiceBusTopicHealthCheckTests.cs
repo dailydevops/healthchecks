@@ -13,6 +13,7 @@ using NetEvolve.HealthChecks.Azure.ServiceBus;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Topic")]
+[TestGroup("Z02TestGroup")]
 [ClassDataSource<ServiceBusContainer>(Shared = InstanceSharedType.AzureServiceBus)]
 public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
 {
