@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.CouchDb;
 
 [ClassDataSource<CouchDbDatabase>]
 [TestGroup(nameof(CouchDb))]
+[TestGroup("Z04TestGroup")]
 public class CouchDbHealthCheckTests : HealthCheckTestBase
 {
     private readonly CouchDbDatabase _database;
