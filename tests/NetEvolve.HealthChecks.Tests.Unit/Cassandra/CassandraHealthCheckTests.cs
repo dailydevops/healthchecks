@@ -1,9 +1,10 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cassandra;
+using CassandraDriver = global::Cassandra;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
@@ -16,18 +17,18 @@ public class CassandraHealthCheckTests
     public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue()
     {
         // Arrange
-        var cluster = Substitute.For<ICluster>();
-        var session = Substitute.For<ISession>();
-        var rowSet = Substitute.For<RowSet>();
+        var cluster = Substitute.For<CassandraDriver.ICluster>();
+        var session = Substitute.For<CassandraDriver.ISession>();
+        var rowSet = Substitute.For<CassandraDriver.RowSet>();
 
         _ = cluster.ConnectAsync().Returns(Task.FromResult(session));
-        _ = session.ExecuteAsync(Arg.Any<IStatement>()).Returns(Task.FromResult(rowSet));
-        _ = rowSet.GetEnumerator().Returns(new System.Collections.Generic.List<Row> { new Row() }.GetEnumerator());
+        _ = session.ExecuteAsync(Arg.Any<CassandraDriver.IStatement>()).Returns(Task.FromResult(rowSet));
+        _ = rowSet.GetEnumerator().Returns(Enumerable.Repeat(Substitute.For<CassandraDriver.Row>(), 1).GetEnumerator());
 
         // Act
         var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
 
         // Assert
-        Assert.That(result, Is.True);
+        _ = await Assert.That(result).IsTrue();
     }
 }

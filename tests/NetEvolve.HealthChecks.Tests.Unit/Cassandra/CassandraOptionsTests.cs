@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
 
+using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
 
@@ -7,14 +8,14 @@ using NetEvolve.HealthChecks.Cassandra;
 public class CassandraOptionsTests
 {
     [Test]
-    public void CassandraOptions_DefaultConstructor_ExpectDefaultValues()
+    public async Task CassandraOptions_DefaultConstructor_ExpectDefaultValues()
     {
         // Arrange
         var options = new CassandraOptions();
 
         // Assert
-        Assert.That(options.Timeout, Is.EqualTo(100));
-        Assert.That(options.KeyedService, Is.Null);
-        Assert.That(options.CommandAsync, Is.Not.Null);
+        _ = await Assert.That(options.Timeout).IsEqualTo(100);
+        _ = await Assert.That(options.KeyedService).IsNull();
+        _ = await Assert.That(options.CommandAsync).IsNotNull();
     }
 }
