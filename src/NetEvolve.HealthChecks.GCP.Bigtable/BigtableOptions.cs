@@ -20,4 +20,9 @@ public sealed record BigtableOptions
     /// The keyed service name, or <c>null</c> if using the default service registration.
     /// </value>
     public string? KeyedService { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Google Cloud Project Name.
+    /// </summary>
+    public string? ProjectName { get; set; }
 }
