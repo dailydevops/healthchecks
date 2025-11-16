@@ -20,7 +20,7 @@ public sealed class ElasticsearchHealthCheckTests
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
-        var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -37,7 +37,7 @@ public sealed class ElasticsearchHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
 
-        var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -65,7 +65,7 @@ public sealed class ElasticsearchHealthCheckTests
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
 
-        var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
+        using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(testName, check, null, null),
@@ -112,7 +112,7 @@ public sealed class ElasticsearchHealthCheckTests
 
         var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, client).BuildServiceProvider();
 
-        var healthCheck = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
+        using var healthCheck = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(
@@ -163,7 +163,7 @@ public sealed class ElasticsearchHealthCheckTests
 
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
-        var healthCheck = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
+        using var healthCheck = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(
@@ -214,7 +214,7 @@ public sealed class ElasticsearchHealthCheckTests
 
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
-        var healthCheck = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
+        using var healthCheck = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(
