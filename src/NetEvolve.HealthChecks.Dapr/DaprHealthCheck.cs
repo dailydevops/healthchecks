@@ -11,12 +11,6 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(DaprOptions))]
 internal sealed partial class DaprHealthCheck
 {
-    /// <summary>
-    /// Performs the Dapr health probe and produces a HealthCheckResult for the specified check name.
-    /// </summary>
-    /// <param name="name">The health check name used when constructing the result.</param>
-    /// <param name="options">DaprOptions that configure the probe (e.g., Timeout and KeyedService).</param>
-    /// <returns>`HealthCheckResult` representing a healthy state only if the Dapr client reports healthy and the probe result is true; otherwise an unhealthy result for the given name.</returns>
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
 #pragma warning disable S1172 // Unused method parameters should be removed
