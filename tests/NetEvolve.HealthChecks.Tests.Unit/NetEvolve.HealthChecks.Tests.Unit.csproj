@@ -84,17 +84,5 @@
     <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.TestGroupAttribute">
       <_Parameter1>Z00TestGroup</_Parameter1>
     </AssemblyAttribute>
-    <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.TestGroupAttribute">
-      <_Parameter1>Z01TestGroup</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.TestGroupAttribute">
-      <_Parameter1>Z02TestGroup</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.TestGroupAttribute">
-      <_Parameter1>Z03TestGroup</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.TestGroupAttribute">
-      <_Parameter1>Z04TestGroup</_Parameter1>
-    </AssemblyAttribute>
   </ItemGroup>
 </Project>
