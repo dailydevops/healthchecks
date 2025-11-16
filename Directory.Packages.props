@@ -48,7 +48,7 @@
     <PackageVersion Include="DuckDB.NET.Data" Version="1.4.1" />
     <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.1" />
     <PackageVersion Include="EventStore.Client.Grpc.Streams" Version="23.3.9" />
-    <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.3" />
+    <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.4" />
     <PackageVersion Include="Google.Cloud.Firestore" Version="3.12.0" />
     <PackageVersion Include="Google.Cloud.PubSub.V1" Version="3.30.0" />
     <PackageVersion Include="JanusGraph.Net" Version="1.1.0" />
