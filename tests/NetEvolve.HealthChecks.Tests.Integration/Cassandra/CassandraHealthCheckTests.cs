@@ -203,4 +203,35 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
             },
             serviceBuilder: services => services.AddSingleton(_cluster)
         );
+
+    [Test]
+    public async Task AddCassandra_UseOptions_CommandReturnsFalse_UnhealthyWithMessage() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCassandra(
+                    "TestContainerInvalidResult",
+                    options =>
+                    {
+                        options.CommandAsync = async (_, cancellationToken) =>
+                        {
+                            await Task.Delay(0, cancellationToken);
+                            return false;
+                        };
+                    }
+                );
+            },
+            HealthStatus.Unhealthy,
+            serviceBuilder: services => services.AddSingleton(_cluster),
+            clearJToken: token =>
+            {
+                // Verify the error message is present
+                if (token?["results"]?[0]?["description"]?.ToString() is string description
+                    && !description.Contains("The Cassandra command did not return a valid result.", StringComparison.Ordinal))
+                {
+                    throw new InvalidOperationException($"Expected error message not found. Actual: {description}");
+                }
+                return token;
+            }
+        );
 }
