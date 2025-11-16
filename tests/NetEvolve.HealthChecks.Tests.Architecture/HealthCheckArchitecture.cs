@@ -41,6 +41,7 @@ internal static class HealthCheckArchitecture
             typeof(GCP.PubSub.PubSubHealthCheck).Assembly,
             // others
             typeof(ArangoDb.ArangoDbHealthCheck).Assembly,
+            typeof(Cassandra.CassandraHealthCheck).Assembly,
             typeof(ClickHouse.ClickHouseHealthCheck).Assembly,
             typeof(CockroachDb.CockroachDbHealthCheck).Assembly,
             typeof(Consul.ConsulHealthCheck).Assembly,
