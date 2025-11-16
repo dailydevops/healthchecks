@@ -9,6 +9,7 @@ This bundle package provides health checks for various GCP (Google Cloud Platfor
 
 ## Supported GCP Services
 
+- [Google Cloud Bigtable](https://www.nuget.org/packages/NetEvolve.HealthChecks.GCP.Bigtable/)
 - [Google Cloud Firestore](https://www.nuget.org/packages/NetEvolve.HealthChecks.GCP.Firestore/)
 - [Google Cloud Pub/Sub](https://www.nuget.org/packages/NetEvolve.HealthChecks.GCP.PubSub/)
 
