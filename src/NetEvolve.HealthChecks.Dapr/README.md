@@ -26,11 +26,11 @@ using NetEvolve.HealthChecks.Dapr;
 Therefore, you can use two different approaches.
 
 ### Parameters
-- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration-based approach.
 - `tags`: The tags for the health check. The tag `dapr` is always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
-### Variant 1: Configuration based
-The first one is to use the configuration based approach. This approach is recommended if you want to configure the health check through your application settings.
+### Variant 1: Configuration-based
+The first one is to use the configuration-based approach. This approach is recommended if you want to configure the health check through your application settings.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -49,8 +49,8 @@ The configuration looks like this:
 }
 ```
 
-### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you want to configure the health check programmatically with dynamic values.
+### Variant 2: Builder-based
+The second approach is to use the builder-based approach. This approach is recommended if you want to configure the health check programmatically with dynamic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
