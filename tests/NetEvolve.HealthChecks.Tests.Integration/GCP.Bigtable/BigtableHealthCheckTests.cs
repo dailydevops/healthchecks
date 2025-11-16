@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Bigtable;
 
 [TestGroup($"GCP.{nameof(Bigtable)}")]
+[TestGroup("Z05TestGroup")]
 [ClassDataSource<BigtableDatabase>(Shared = InstanceSharedType.Bigtable)]
 public sealed class BigtableHealthCheckTests : HealthCheckTestBase
 {
