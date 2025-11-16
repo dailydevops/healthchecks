@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
     <PackageReference Include="System.Data.SQLite" />
-    <PackageReference Include="System.Drawing.Common" VersionOverride="4.7.3" />
+    <PackageReference Include="System.Drawing.Common" VersionOverride="10.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
