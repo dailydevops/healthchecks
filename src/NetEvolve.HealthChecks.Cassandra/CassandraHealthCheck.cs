@@ -12,9 +12,7 @@ internal sealed partial class CassandraHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         CassandraOptions options,
         CancellationToken cancellationToken
     )
@@ -25,9 +23,18 @@ internal sealed partial class CassandraHealthCheck
 
         var commandTask = options.CommandAsync.Invoke(cluster, cancellationToken);
 
-        var (isTimelyResponse, _) = await commandTask
+        var (isTimelyResponse, result) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                "The Cassandra command did not return a successful result."
+            );
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }

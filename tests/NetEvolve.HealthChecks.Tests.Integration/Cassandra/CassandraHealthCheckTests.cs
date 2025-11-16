@@ -1,24 +1,24 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Cassandra;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Cassandra;
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::Cassandra;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
-using CassandraDriver = global::Cassandra;
 
 [ClassDataSource<CassandraDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(Cassandra))]
-[TestGroup("Z04TestGroup")]
+[TestGroup("Z05TestGroup")]
 public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly CassandraDatabase _database;
 #pragma warning disable TUnit0023 // Member should be disposed within a clean up method
 #pragma warning disable CA1859 // Use concrete types when possible for improved performance
-    private CassandraDriver.Cluster _cluster = default!;
+    private ICluster _cluster = default!;
 #pragma warning restore CA1859 // Use concrete types when possible for improved performance
 #pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
@@ -27,7 +27,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
 
     public Task InitializeAsync()
     {
-        _cluster = CassandraDriver.Cluster.Builder().AddContactPoint(_database.ConnectionString).Build();
+        _cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         return Task.CompletedTask;
     }
@@ -102,9 +102,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
 
                             using var session = await cluster.ConnectAsync().ConfigureAwait(false);
                             var result = await session
-                                .ExecuteAsync(
-                                    new CassandraDriver.SimpleStatement("SELECT release_version FROM system.local")
-                                )
+                                .ExecuteAsync(new SimpleStatement("SELECT release_version FROM system.local"))
                                 .ConfigureAwait(false);
 
                             return result is not null && result.Any();
@@ -129,7 +127,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                         {
                             using var session = await cluster.ConnectAsync().ConfigureAwait(false);
                             var result = await session
-                                .ExecuteAsync(new CassandraDriver.SimpleStatement("SELECT invalid FROM system.local"))
+                                .ExecuteAsync(new SimpleStatement("SELECT invalid FROM system.local"))
                                 .ConfigureAwait(false);
 
                             return result is not null && result.Any();
