@@ -10,7 +10,7 @@ using MyCouch;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.CouchDb;
 
-[ClassDataSource<CouchDbDatabase>]
+[ClassDataSource<CouchDbDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(CouchDb))]
 [TestGroup("Z04TestGroup")]
 public class CouchDbHealthCheckTests : HealthCheckTestBase

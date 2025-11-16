@@ -8,7 +8,7 @@ using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 [TestGroup(nameof(Architecture))]
 [TestGroup(nameof(HealthChecks))]
-[TestGroup("Z01TestGroup")]
+[TestGroup("Z00TestGroup")]
 public class HealthCheckTests
 {
     private readonly IObjectProvider<Class> _healthChecks = Classes()
