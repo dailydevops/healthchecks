@@ -21,6 +21,7 @@
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Consul" />
+    <PackageReference Include="MyCouch" />
     <PackageReference Include="Dapr.Client" />
     <PackageReference Include="Devart.Data.MySql" />
     <PackageReference Include="DotPulsar" />
@@ -55,6 +56,12 @@
     <PackageReference Include="System.Data.SqlClient" />
     <PackageReference Include="Testcontainers.PubSub" />
   </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework) == 'net8.0' ">
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" VersionOverride="8.0.22" />
+  </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework) == 'net9.0' ">
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" VersionOverride="9.0.11" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="CliWrap" />
@@ -64,12 +71,6 @@
     </PackageReference>
     <PackageReference Include="coverlet.msbuild" />
     <PackageReference Include="DuckDB.NET.Bindings.Full" />
-    <PackageReference
-      Include="Microsoft.AspNetCore.TestHost"
-      Condition=" $(TargetFramework) == 'net8.0' "
-      VersionOverride="8.0.22"
-    />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Condition=" $(TargetFramework) != 'net8.0' " />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="NetEvolve.Extensions.TUnit" />
@@ -81,6 +82,7 @@
     <PackageReference Include="Testcontainers.CockroachDb" />
     <PackageReference Include="Testcontainers.Consul" />
     <PackageReference Include="Testcontainers.Couchbase" />
+    <PackageReference Include="Testcontainers.CouchDb" />
     <PackageReference Include="Testcontainers.Db2" />
     <PackageReference Include="Testcontainers.Elasticsearch" />
     <PackageReference Include="Testcontainers.EventHubs" />
@@ -138,6 +140,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.CockroachDb\NetEvolve.HealthChecks.CockroachDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Consul\NetEvolve.HealthChecks.Consul.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Couchbase\NetEvolve.HealthChecks.Couchbase.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.CouchDb\NetEvolve.HealthChecks.CouchDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Dapr\NetEvolve.HealthChecks.Dapr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DB2\NetEvolve.HealthChecks.DB2.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />

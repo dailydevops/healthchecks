@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Oracle;
 
 [TestGroup(nameof(Oracle))]
-[TestGroup("Z03TestGroup")]
+[TestGroup("Z04TestGroup")]
 [ClassDataSource<OracleDatabase>(Shared = InstanceSharedType.Oracle)]
 public class OracleHealthCheckTests : HealthCheckTestBase
 {

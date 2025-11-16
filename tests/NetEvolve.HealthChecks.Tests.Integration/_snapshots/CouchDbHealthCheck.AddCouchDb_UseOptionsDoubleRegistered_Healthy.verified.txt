@@ -1,0 +1,23 @@
+﻿{
+  results: [
+    {
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
+      status: Healthy,
+      tags: [
+        couchdb,
+        nosql
+      ]
+    },
+    {
+      description: TestContainerHealthy2: Healthy,
+      name: TestContainerHealthy2,
+      status: Healthy,
+      tags: [
+        couchdb,
+        nosql
+      ]
+    }
+  ],
+  status: Healthy
+}

@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite.Devart;
 
 [TestGroup($"{nameof(SQLite)}.{nameof(Devart)}")]
+[TestGroup("Z01TestGroup")]
 [Skip("Devart.SQLite requires a license.")]
 public class SQLiteDevartHealthCheckTests : HealthCheckTestBase
 {
