@@ -12,7 +12,7 @@ using OllamaSharp;
 
 [TestGroup(nameof(Ollama))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<OllamaContainer>]
+[ClassDataSource<OllamaContainer>(Shared = SharedType.PerClass)]
 public class OllamaHealthCheckTests : HealthCheckTestBase
 {
     private readonly OllamaContainer _container;
