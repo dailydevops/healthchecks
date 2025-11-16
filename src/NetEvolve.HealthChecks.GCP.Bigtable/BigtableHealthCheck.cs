@@ -24,13 +24,8 @@ internal sealed partial class BigtableHealthCheck
             ? _serviceProvider.GetRequiredService<BigtableInstanceAdminClient>()
             : _serviceProvider.GetRequiredKeyedService<BigtableInstanceAdminClient>(options.KeyedService);
 
-        // Use a simple operation to check if the Bigtable service is accessible
-        // Get the project path from environment or use a default
-        var projectId = System.Environment.GetEnvironmentVariable("BIGTABLE_PROJECT_ID") ?? "test-project";
-        var projectName = $"projects/{projectId}";
-
         var (isTimelyResponse, _) = await client
-            .ListInstancesAsync(new ListInstancesRequest { Parent = projectName }, cancellationToken)
+            .ListInstancesAsync(new ListInstancesRequest { Parent = options.ProjectName }, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
