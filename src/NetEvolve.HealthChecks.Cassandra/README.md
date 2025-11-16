@@ -27,11 +27,11 @@ Therefore, you can use two different approaches. In both approaches you have to 
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
-- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration-based approach.
 - `tags`: The tags for the health check. The tags `cassandra` and `nosql` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
-### Variant 1: Configuration based
-The first one is to use the configuration based approach. This approach is recommended if you have multiple Cassandra instances to check.
+### Variant 1: Configuration-based
+The first one is to use the configuration-based approach. This approach is recommended if you have multiple Cassandra instances to check.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -53,8 +53,8 @@ The configuration looks like this:
 }
 ```
 
-### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you only have one NoSQL Server instance to check or dynamic programmatic values.
+### Variant 2: Builder-based
+The second approach is to use the builder-based approach. This approach is recommended if you only have one NoSQL Server instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
