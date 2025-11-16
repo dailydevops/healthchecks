@@ -26,11 +26,11 @@ The health check is a liveness check. It will check that the Azure Table client 
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
-- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration-based approach.
 - `tags`: The tags for the health check. The tags `azure`, `storage` and `table` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
-### Variant 1: Configuration based
-The first one is to use the configuration based approach. Therefore, you have to add the configuration section `HealthChecks:AzureTableClient` to your `appsettings.json` file.
+### Variant 1: Configuration-based
+The first one is to use the configuration-based approach. Therefore, you have to add the configuration section `HealthChecks:AzureTableClient` to your `appsettings.json` file.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -58,8 +58,8 @@ The configuration looks like this:
 }
 ```
 
-### Variant 2: Options based
-The second one is to use the options based approach. Therefore, you have to create an instance of `TableClientAvailableOptions` and provide the configuration.
+### Variant 2: Options-based
+The second one is to use the options-based approach. Therefore, you have to create an instance of `TableClientAvailableOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -90,11 +90,11 @@ The health check is a liveness check. It will check that the Azure Table service
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
-- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration-based approach.
 - `tags`: The tags for the health check. The tags `azure`, `storage` and `table` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
-### Variant 1: Configuration based
-The first one is to use the configuration based approach. Therefore, you have to add the configuration section `HealthChecks:AzureTableService` to your `appsettings.json` file.
+### Variant 1: Configuration-based
+The first one is to use the configuration-based approach. Therefore, you have to add the configuration section `HealthChecks:AzureTableService` to your `appsettings.json` file.
 ```csharp
 var builder = services.AddHealthChecks();
 
@@ -121,8 +121,8 @@ The configuration looks like this:
 }
 ```
 
-### Variant 2: Options based
-The second one is to use the options based approach. Therefore, you have to create an instance of `TableServiceAvailableOptions` and provide the configuration.
+### Variant 2: Options-based
+The second one is to use the options-based approach. Therefore, you have to create an instance of `TableServiceAvailableOptions` and provide the configuration.
 ```csharp
 var builder = services.AddHealthChecks();
 
