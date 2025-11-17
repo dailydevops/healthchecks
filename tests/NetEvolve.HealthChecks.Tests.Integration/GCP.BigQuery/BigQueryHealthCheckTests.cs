@@ -10,6 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.BigQuery;
 
 [TestGroup($"GCP.{nameof(BigQuery)}")]
+[TestGroup("Z05TestGroup")]
 [ClassDataSource<BigQueryDatabase>(Shared = InstanceSharedType.BigQuery)]
 public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
 {
