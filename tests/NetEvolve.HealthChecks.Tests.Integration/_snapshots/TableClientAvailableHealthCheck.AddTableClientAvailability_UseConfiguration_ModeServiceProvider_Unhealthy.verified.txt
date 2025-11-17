@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: TableConfigurationNotExistsUnhealthy: Unexpected error.,
+      exception: {
+        message: null,
+        type: Azure.RequestFailedException
+      },
+      name: TableConfigurationNotExistsUnhealthy,
+      status: Unhealthy,
+      tags: [
+        storage,
+        azure,
+        table
+      ]
+    }
+  ],
+  status: Unhealthy
+}

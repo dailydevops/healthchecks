@@ -1,7 +1,10 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Tables;
 
 using System.Threading.Tasks;
+using global::Azure.Data.Tables;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
@@ -32,6 +35,32 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddTableServiceAvailability_UseOptions_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableServiceAvailability(
+                    "ServiceServiceProviderKeyedHealthy",
+                    options =>
+                    {
+                        options.KeyedService = "test-key";
+                        options.Mode = TableClientCreationMode.ServiceProvider;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
+                );
+            }
         );
 
     [Test]
@@ -148,5 +177,77 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded
+        );
+
+    // Configuration-based tests
+
+    [Test]
+    public async Task AddTableServiceAvailability_UseConfiguration_ModeServiceProvider_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableServiceAvailability("ServiceConfigurationHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureTableService:ServiceConfigurationHealthy:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableService:ServiceConfigurationHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddTableServiceAvailability_UseConfiguration_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableServiceAvailability("ServiceConfigurationKeyedHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AzureTableService:ServiceConfigurationKeyedHealthy:KeyedService", "test-key" },
+                    {
+                        "HealthChecks:AzureTableService:ServiceConfigurationKeyedHealthy:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableService:ServiceConfigurationKeyedHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
+                );
+            }
+        );
+
+    [Test]
+    public async Task AddTableServiceAvailability_UseConfiguration_ModeServiceProvider_Degraded() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableServiceAvailability("ServiceConfigurationDegraded"),
+            HealthStatus.Degraded,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureTableService:ServiceConfigurationDegraded:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableService:ServiceConfigurationDegraded:Timeout", "0" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
 }

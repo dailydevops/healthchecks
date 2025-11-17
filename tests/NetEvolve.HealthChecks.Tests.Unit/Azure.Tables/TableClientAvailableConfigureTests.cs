@@ -67,14 +67,14 @@ public sealed class TableClientAvailableConfigureTests
         yield return () =>
             (
                 false,
-                "The container name cannot be null or whitespace.",
+                "The table name cannot be null or whitespace.",
                 "name",
                 new TableClientAvailableOptions { TableName = null! }
             );
         yield return () =>
             (
                 false,
-                "The container name cannot be null or whitespace.",
+                "The table name cannot be null or whitespace.",
                 "name",
                 new TableClientAvailableOptions { TableName = "\t" }
             );

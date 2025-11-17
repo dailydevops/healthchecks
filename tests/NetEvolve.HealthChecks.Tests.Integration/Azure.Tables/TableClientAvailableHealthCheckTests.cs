@@ -3,7 +3,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using global::Azure.Data.Tables;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Tables;
@@ -35,6 +38,33 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddTableClientAvailability_UseOptions_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddTableClientAvailability(
+                    "TableServiceProviderKeyedHealthy",
+                    options =>
+                    {
+                        options.KeyedService = "test-key";
+                        options.TableName = "test";
+                        options.Mode = TableClientCreationMode.ServiceProvider;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
+                );
+            }
         );
 
     [Test]
@@ -237,5 +267,124 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded
+        );
+
+    // Configuration-based tests
+
+    [Test]
+    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureTableClient:TableConfigurationHealthy:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableClient:TableConfigurationHealthy:TableName", "test" },
+                    { "HealthChecks:AzureTableClient:TableConfigurationHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddTableClientAvailability_UseConfiguration_WithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationKeyedHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    { "HealthChecks:AzureTableClient:TableConfigurationKeyedHealthy:KeyedService", "test-key" },
+                    {
+                        "HealthChecks:AzureTableClient:TableConfigurationKeyedHealthy:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableClient:TableConfigurationKeyedHealthy:TableName", "test" },
+                    { "HealthChecks:AzureTableClient:TableConfigurationKeyedHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+            {
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
+                _ = services.AddKeyedSingleton(
+                    "test-key",
+                    (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
+                );
+            }
+        );
+
+    [Test]
+    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Degraded() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationDegraded"),
+            HealthStatus.Degraded,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureTableClient:TableConfigurationDegraded:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableClient:TableConfigurationDegraded:TableName", "test" },
+                    { "HealthChecks:AzureTableClient:TableConfigurationDegraded:Timeout", "0" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+        );
+
+    [Test]
+    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationNotExistsUnhealthy"),
+            HealthStatus.Unhealthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
+                {
+                    {
+                        "HealthChecks:AzureTableClient:TableConfigurationNotExistsUnhealthy:Mode",
+                        nameof(TableClientCreationMode.ServiceProvider)
+                    },
+                    { "HealthChecks:AzureTableClient:TableConfigurationNotExistsUnhealthy:TableName", "notexists" },
+                    { "HealthChecks:AzureTableClient:TableConfigurationNotExistsUnhealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services =>
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
+            clearJToken: token =>
+            {
+                if (token is null)
+                {
+                    return null;
+                }
+
+                if (
+                    token.Value<string>("status") is string status
+                    && status.Equals(nameof(HealthCheckResult.Unhealthy), StringComparison.OrdinalIgnoreCase)
+                )
+                {
+                    var results = token["results"].FirstOrDefault();
+
+                    if (results?["exception"] is not null)
+                    {
+                        results["exception"]!["message"] = null;
+                    }
+                }
+
+                return token;
+            }
         );
 }
