@@ -38,6 +38,7 @@
     <PackageReference Include="JanusGraph.Net" />
     <PackageReference Include="Keycloak.Net.Core" />
     <PackageReference Include="LiteDB" />
+    <PackageReference Include="Microsoft.Azure.Kusto.Data" />
     <PackageReference Include="Milvus.Client" />
     <PackageReference Include="Microsoft.Data.SqlClient" />
     <PackageReference Include="Microsoft.Data.Sqlite" />
@@ -96,6 +97,7 @@
     <PackageReference Include="Testcontainers.JanusGraph" />
     <PackageReference Include="Testcontainers.Kafka" />
     <PackageReference Include="Testcontainers.Keycloak" />
+    <PackageReference Include="Testcontainers.Kusto" />
     <PackageReference Include="Testcontainers.LocalStack" />
     <PackageReference Include="Testcontainers.MariaDb" />
     <PackageReference Include="Testcontainers.Milvus" />
@@ -185,6 +187,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
     <ProjectReference Include="..\..\src\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Kusto\NetEvolve.HealthChecks.Azure.Kusto.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.PubSub\NetEvolve.HealthChecks.GCP.PubSub.csproj" />
   </ItemGroup>
   <ItemGroup>

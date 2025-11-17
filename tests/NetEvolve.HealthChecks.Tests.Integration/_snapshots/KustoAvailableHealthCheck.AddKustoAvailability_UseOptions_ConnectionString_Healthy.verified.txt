@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: KustoConnectionStringHealthy: Healthy,
+      name: KustoConnectionStringHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        kusto,
+        adx
+      ]
+    }
+  ],
+  status: Healthy
+}

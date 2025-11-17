@@ -1,0 +1,15 @@
+﻿namespace NetEvolve.HealthChecks.Azure.Kusto
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddKustoAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Kusto.KustoAvailableOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class KustoAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Kusto.KustoAvailableOptions>
+    {
+        public KustoAvailableOptions() { }
+        public System.Uri? ClusterUri { get; set; }
+        public string? ConnectionString { get; set; }
+        public string? DatabaseName { get; set; }
+        public int Timeout { get; set; }
+    }
+}

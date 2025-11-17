@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: KustoWithDatabaseHealthy: Healthy,
+      name: KustoWithDatabaseHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        kusto,
+        adx
+      ]
+    }
+  ],
+  status: Healthy
+}
