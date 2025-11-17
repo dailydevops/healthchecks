@@ -22,31 +22,24 @@ internal sealed partial class KustoAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
-        ICslQueryProvider? queryProvider = null;
-        try
+        var connectionString = GetConnectionString(options);
+        var kcsb = new KustoConnectionStringBuilder(connectionString);
+        using var queryProvider = KustoClientFactory.CreateCslQueryProvider(kcsb);
+
+        var databaseName = string.IsNullOrWhiteSpace(options.DatabaseName) ? "NetDefaultDB" : options.DatabaseName;
+
+        var queryTask = queryProvider.ExecuteQueryAsync(databaseName, ".show databases", null, cancellationToken);
+
+        var (isTimelyResponse, result) = await queryTask
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (result is null)
         {
-            var connectionString = GetConnectionString(options);
-            var kcsb = new KustoConnectionStringBuilder(connectionString);
-            queryProvider = KustoClientFactory.CreateCslQueryProvider(kcsb);
-
-            var query = ".show databases";
-            var queryTask = queryProvider.ExecuteQueryAsync(
-                options.DatabaseName ?? "NetDefaultDB",
-                query,
-                null,
-                cancellationToken
-            );
-
-            var (isValid, result) = await queryTask
-                .WithTimeoutAsync(options.Timeout, cancellationToken)
-                .ConfigureAwait(false);
-
-            return HealthCheckState(isValid && result is not null, name);
+            return HealthCheckUnhealthy(failureStatus, name, "Kusto query returned no result.");
         }
-        finally
-        {
-            queryProvider?.Dispose();
-        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     private static string GetConnectionString(KustoAvailableOptions options)

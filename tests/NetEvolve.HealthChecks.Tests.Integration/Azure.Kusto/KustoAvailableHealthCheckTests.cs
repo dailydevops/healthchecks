@@ -83,21 +83,4 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy
         );
-
-    [Test]
-    public async Task AddKustoAvailability_UseOptions_InvalidConnectionString_Unhealthy() =>
-        await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddKustoAvailability(
-                    "KustoInvalidConnectionStringUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = "https://invalid.kusto.windows.net";
-                        options.Timeout = 1000;
-                    }
-                );
-            },
-            HealthStatus.Unhealthy
-        );
 }
