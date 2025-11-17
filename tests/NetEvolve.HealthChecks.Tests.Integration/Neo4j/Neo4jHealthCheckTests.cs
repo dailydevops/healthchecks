@@ -12,6 +12,7 @@ using NetEvolve.HealthChecks.Neo4j;
 
 [ClassDataSource<Neo4jDatabase>(Shared = InstanceSharedType.Neo4j)]
 [TestGroup(nameof(Neo4j))]
+[TestGroup("Z05TestGroup")]
 public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
     private readonly Neo4jDatabase _database;
