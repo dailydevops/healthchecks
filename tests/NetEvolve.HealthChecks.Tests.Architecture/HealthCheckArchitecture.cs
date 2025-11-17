@@ -64,6 +64,7 @@ internal static class HealthCheckArchitecture
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Devart.MySqlDevartHealthCheck).Assembly,
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,
+            typeof(Neo4j.Neo4jHealthCheck).Assembly,
             typeof(Npgsql.NpgsqlHealthCheck).Assembly,
             typeof(OpenSearch.OpenSearchHealthCheck).Assembly,
             typeof(Odbc.OdbcHealthCheck).Assembly,
