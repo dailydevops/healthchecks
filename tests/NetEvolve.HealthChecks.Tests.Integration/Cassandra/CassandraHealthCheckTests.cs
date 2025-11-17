@@ -211,14 +211,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
             {
                 _ = healthChecks.AddCassandra(
                     "TestContainerInvalidResult",
-                    options =>
-                    {
-                        options.CommandAsync = async (_, cancellationToken) =>
-                        {
-                            await Task.Delay(0, cancellationToken);
-                            return false;
-                        };
-                    }
+                    options => options.CommandAsync = (_, _) => Task.FromResult(false)
                 );
             },
             HealthStatus.Unhealthy,
