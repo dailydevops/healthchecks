@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.Azure.Tables;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Tables)}")]
 [TestGroup("Z02TestGroup")]
-[ClassDataSource<AzuriteAccess>(Shared = InstanceSharedType.Azure)]
+[ClassDataSource<AzuriteAccess>(Shared = SharedType.PerClass)]
 public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;

@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Redpanda;
 
 [TestGroup(nameof(Redpanda))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<RedpandaDatabase>(Shared = InstanceSharedType.Redpanda)]
+[ClassDataSource<RedpandaDatabase>(Shared = SharedType.PerClass)]
 public class RedpandaHealthCheckTests : HealthCheckTestBase
 {
     private readonly RedpandaDatabase _database;

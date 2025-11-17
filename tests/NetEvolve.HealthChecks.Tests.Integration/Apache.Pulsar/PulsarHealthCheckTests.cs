@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Apache.Pulsar;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
 [TestGroup("Z00TestGroup")]
-[ClassDataSource<PulsarContainer>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<PulsarContainer>(Shared = SharedType.PerClass)]
 public sealed class PulsarHealthCheckTests : HealthCheckTestBase
 {
     private readonly PulsarContainer _container;

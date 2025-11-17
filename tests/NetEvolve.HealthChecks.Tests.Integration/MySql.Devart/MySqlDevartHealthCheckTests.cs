@@ -11,7 +11,7 @@ using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
 [TestGroup("Z00TestGroup")]
-[ClassDataSource<MySqlDatabase>(Shared = InstanceSharedType.MySql)]
+[ClassDataSource<MySqlDatabase>(Shared = SharedType.PerClass)]
 [Skip("Devart.Data.MySql requires a license.")]
 public class MySqlDevartHealthCheckTests : HealthCheckTestBase
 {

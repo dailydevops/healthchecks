@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Azure.Queues;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Queues)}")]
 [TestGroup("Z02TestGroup")]
-[ClassDataSource<AzuriteAccess>(Shared = InstanceSharedType.Azure)]
+[ClassDataSource<AzuriteAccess>(Shared = SharedType.PerClass)]
 public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzuriteAccess _container;
