@@ -85,7 +85,7 @@
     <PackageVersion Include="OpenSearch.Client" Version="1.8.0" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.0" />
     <PackageVersion Include="PublicApiGenerator" Version="11.5.0" />
-    <PackageVersion Include="Qdrant.Client" Version="1.15.1" />
+    <PackageVersion Include="Qdrant.Client" Version="1.16.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.0" />
     <PackageVersion Include="RavenDB.Client" Version="7.1.4" />
     <PackageVersion Include="StackExchange.Redis" Version="2.9.32" />
