@@ -60,5 +60,7 @@ public static partial class DependencyInjectionExtensions
         );
     }
 
+#pragma warning disable S101 // Types should be named in PascalCase
     private sealed partial class Neo4jCheckMarker;
+#pragma warning restore S101 // Types should be named in PascalCase
 }

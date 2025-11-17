@@ -12,9 +12,7 @@ internal sealed partial class Neo4jHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         Neo4jOptions options,
         CancellationToken cancellationToken
     )
@@ -25,20 +23,27 @@ internal sealed partial class Neo4jHealthCheck
 
         var commandTask = options.CommandAsync.Invoke(driver, cancellationToken);
 
-        var (isTimelyResponse, _) = await commandTask
+        var (isTimelyResponse, result) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "The command did not return a valid result.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<IResultCursor> DefaultCommandAsync(IDriver driver, CancellationToken cancellationToken)
+    internal static async Task<bool> DefaultCommandAsync(IDriver driver, CancellationToken cancellationToken)
     {
         var session = driver.AsyncSession();
 
         await using (session.ConfigureAwait(false))
         {
-            return await session.RunAsync("RETURN 1", cancellationToken).ConfigureAwait(false);
+            _ = await session.RunAsync("RETURN 1").ConfigureAwait(false);
+
+            return true;
         }
     }
 }

@@ -98,8 +98,8 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                             await Task.Delay(1000, cancellationToken);
 
                             await using var session = driver.AsyncSession();
-
-                            return await session.RunAsync("RETURN 1", cancellationToken).ConfigureAwait(false);
+                            _ = await session.RunAsync("RETURN 1").ConfigureAwait(false);
+                            return true;
                         };
                         options.Timeout = 0;
                     }
@@ -120,8 +120,8 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                         options.CommandAsync = async (driver, cancellationToken) =>
                         {
                             await using var session = driver.AsyncSession();
-
-                            return await session.RunAsync("INVALID QUERY", cancellationToken).ConfigureAwait(false);
+                            _ = await session.RunAsync("INVALID QUERY", cancellationToken).ConfigureAwait(false);
+                            return true;
                         };
                     }
                 );

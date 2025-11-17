@@ -25,6 +25,6 @@ public sealed record Neo4jOptions
     /// The command to execute against the database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<IDriver, CancellationToken, Task<IResultCursor>> CommandAsync { get; internal set; } =
+    public Func<IDriver, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
         Neo4jHealthCheck.DefaultCommandAsync;
 }

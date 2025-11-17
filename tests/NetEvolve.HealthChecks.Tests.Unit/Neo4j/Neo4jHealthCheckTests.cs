@@ -83,8 +83,7 @@ public sealed class Neo4jHealthCheckTests
             CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
-                var cursor = Substitute.For<IResultCursor>();
-                return cursor;
+                return true;
             },
         };
 
@@ -125,8 +124,7 @@ public sealed class Neo4jHealthCheckTests
             CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
-                var cursor = Substitute.For<IResultCursor>();
-                return cursor;
+                return true;
             },
         };
 

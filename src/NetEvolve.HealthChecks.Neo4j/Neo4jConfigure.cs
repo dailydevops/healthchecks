@@ -6,7 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
+#pragma warning disable S101 // Types should be named in PascalCase
 internal sealed class Neo4jConfigure : IConfigureNamedOptions<Neo4jOptions>, IValidateOptions<Neo4jOptions>
+#pragma warning restore S101 // Types should be named in PascalCase
 {
     private readonly IConfiguration _configuration;
 
