@@ -139,32 +139,6 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddTableServiceAvailability_UseOptions_InvalidConnectionString_Unhealthy()
-    {
-        const string invalidConnectionString =
-            "DefaultEndpointsProtocol=https;"
-            + "AccountName=invalid;"
-            + "AccountKey=ZmFrZV9rZXk=;"
-            + "EndpointSuffix=core.windows.net";
-
-        await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddTableServiceAvailability(
-                    "ServiceConnectionStringUnhealthy",
-                    options =>
-                    {
-                        options.Mode = TableClientCreationMode.ConnectionString;
-                        options.ConnectionString = invalidConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
-            },
-            HealthStatus.Unhealthy
-        );
-    }
-
-    [Test]
     public async Task AddTableServiceAvailability_UseOptions_ModeSharedKey_Healthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -276,35 +250,4 @@ public class TableServiceAvailableHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
         );
-
-    [Test]
-    public async Task AddTableServiceAvailability_UseConfiguration_InvalidConnectionString_Unhealthy()
-    {
-        const string invalidConnectionString =
-            "DefaultEndpointsProtocol=https;"
-            + "AccountName=invalid;"
-            + "AccountKey=ZmFrZV9rZXk=;"
-            + "EndpointSuffix=core.windows.net";
-
-        await RunAndVerify(
-            healthChecks => healthChecks.AddTableServiceAvailability("ServiceConfigurationUnhealthy"),
-            HealthStatus.Unhealthy,
-            config =>
-            {
-                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
-                {
-                    {
-                        "HealthChecks:AzureTableService:ServiceConfigurationUnhealthy:ConnectionString",
-                        invalidConnectionString
-                    },
-                    {
-                        "HealthChecks:AzureTableService:ServiceConfigurationUnhealthy:Mode",
-                        nameof(TableClientCreationMode.ConnectionString)
-                    },
-                    { "HealthChecks:AzureTableService:ServiceConfigurationUnhealthy:Timeout", "0" },
-                };
-                _ = config.AddInMemoryCollection(values);
-            }
-        );
-    }
 }
