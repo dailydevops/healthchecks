@@ -23,10 +23,8 @@ public sealed class BigQueryDatabase : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
 
-        // Set the emulator endpoint environment variable
-        Environment.SetEnvironmentVariable("BIGQUERY_EMULATOR_HOST", _container.GetEmulatorEndpoint());
+        var builder = new BigQueryClientBuilder { BaseUri = _container.GetEmulatorEndpoint(), ProjectId = ProjectId };
 
-        // Create BigQuery client configured for emulator
-        _client = await BigQueryClient.CreateAsync(ProjectId).ConfigureAwait(false);
+        _client = await builder.BuildAsync().ConfigureAwait(false);
     }
 }
