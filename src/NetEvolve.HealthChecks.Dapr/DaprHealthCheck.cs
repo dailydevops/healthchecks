@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Dapr;
+namespace NetEvolve.HealthChecks.Dapr;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +20,9 @@ internal sealed partial class DaprHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var client = _serviceProvider.GetRequiredService<DaprClient>();
+        var client = string.IsNullOrWhiteSpace(options.KeyedService)
+            ? _serviceProvider.GetRequiredService<DaprClient>()
+            : _serviceProvider.GetRequiredKeyedService<DaprClient>(options.KeyedService);
 
         var (isHealthy, result) = await client
             .CheckHealthAsync(cancellationToken)
