@@ -1,0 +1,29 @@
+﻿{
+  results: [
+    {
+      description: KustoInvalidConnectionStringUnhealthy: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: Der angegebene Host ist unbekannt. (invalid.kusto.windows.net:443),
+            type: HttpRequestException
+          },
+          {
+            message: Der angegebene Host ist unbekannt.,
+            type: SocketException
+          }
+        ],
+        message: Failed to retrieve cluster authentication metadata. The cluster might be unavailable. Endpoint = 'https://invalid.kusto.windows.net/v1/rest/auth/metadata',
+        type: Kusto.Data.Exceptions.KustoClientTimeoutException
+      },
+      name: KustoInvalidConnectionStringUnhealthy,
+      status: Unhealthy,
+      tags: [
+        azure,
+        kusto,
+        adx
+      ]
+    }
+  ],
+  status: Unhealthy
+}

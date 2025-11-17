@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: KustoConnectionStringDegraded: Degraded,
+      name: KustoConnectionStringDegraded,
+      status: Degraded,
+      tags: [
+        azure,
+        kusto,
+        adx
+      ]
+    }
+  ],
+  status: Degraded
+}
