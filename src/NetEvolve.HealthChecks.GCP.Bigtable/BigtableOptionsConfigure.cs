@@ -33,11 +33,6 @@ internal sealed class BigtableOptionsConfigure
             return Fail("The option cannot be null.");
         }
 
-        if (string.IsNullOrWhiteSpace(options.ProjectName))
-        {
-            return Fail("The project name cannot be null or whitespace.");
-        }
-
         if (options.Timeout < Timeout.Infinite)
         {
             return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");

@@ -24,8 +24,16 @@ internal sealed partial class BigtableHealthCheck
             ? _serviceProvider.GetRequiredService<BigtableInstanceAdminClient>()
             : _serviceProvider.GetRequiredKeyedService<BigtableInstanceAdminClient>(options.KeyedService);
 
+        // Use project name from options, environment, or default placeholder
+        var projectId = options.ProjectName 
+            ?? System.Environment.GetEnvironmentVariable("BIGTABLE_PROJECT_ID") 
+            ?? System.Environment.GetEnvironmentVariable("GCP_PROJECT") 
+            ?? System.Environment.GetEnvironmentVariable("GOOGLE_CLOUD_PROJECT")
+            ?? "test-project";
+        var projectName = $"projects/{projectId}";
+
         var (isTimelyResponse, _) = await client
-            .ListInstancesAsync(new ListInstancesRequest { Parent = options.ProjectName }, cancellationToken)
+            .ListInstancesAsync(new ListInstancesRequest { Parent = projectName }, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 

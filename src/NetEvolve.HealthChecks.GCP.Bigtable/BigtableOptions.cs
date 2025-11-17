@@ -22,7 +22,11 @@ public sealed record BigtableOptions
     public string? KeyedService { get; set; }
 
     /// <summary>
-    /// Gets or sets the Google Cloud Project Name.
+    /// Gets or sets the Google Cloud Project ID.
     /// </summary>
+    /// <value>
+    /// The project ID. If not specified, attempts to read from environment variables 
+    /// (BIGTABLE_PROJECT_ID, GCP_PROJECT, GOOGLE_CLOUD_PROJECT) or defaults to "test-project".
+    /// </value>
     public string? ProjectName { get; set; }
 }
