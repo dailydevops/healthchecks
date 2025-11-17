@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.MySql.Devart;
 using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
-[TestGroup("Z00TestGroup")]
+[TestGroup("Z05TestGroup")]
 [ClassDataSource<MySqlDatabase>(Shared = InstanceSharedType.MySql)]
 [Skip("Devart.Data.MySql requires a license.")]
 public class MySqlDevartHealthCheckTests : HealthCheckTestBase

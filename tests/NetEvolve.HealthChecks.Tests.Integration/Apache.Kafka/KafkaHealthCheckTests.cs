@@ -11,7 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
-[TestGroup("Z00TestGroup")]
+[TestGroup("Z05TestGroup")]
 [ClassDataSource<KafkaContainer>(Shared = InstanceSharedType.Kafka)]
 public class KafkaHealthCheckTests : HealthCheckTestBase
 {
