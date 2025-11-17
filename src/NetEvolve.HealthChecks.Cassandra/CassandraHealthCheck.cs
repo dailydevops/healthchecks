@@ -29,11 +29,7 @@ internal sealed partial class CassandraHealthCheck
 
         if (!result)
         {
-            return HealthCheckUnhealthy(
-                failureStatus,
-                name,
-                "The Cassandra command did not return a valid result."
-            );
+            return HealthCheckUnhealthy(failureStatus, name, "The Cassandra command did not return a valid result.");
         }
 
         return HealthCheckState(isTimelyResponse, name);

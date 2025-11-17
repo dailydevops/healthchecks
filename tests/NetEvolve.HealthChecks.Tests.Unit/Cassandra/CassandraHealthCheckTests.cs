@@ -42,7 +42,9 @@ public class CassandraHealthCheckTests
         var session = Substitute.For<CassandraDriver.ISession>();
 
         _ = cluster.ConnectAsync().Returns(Task.FromResult(session));
-        _ = session.ExecuteAsync(Arg.Any<CassandraDriver.IStatement>()).Returns(Task.FromResult<CassandraDriver.RowSet>(null!));
+        _ = session
+            .ExecuteAsync(Arg.Any<CassandraDriver.IStatement>())
+            .Returns(Task.FromResult<CassandraDriver.RowSet>(null!));
 
         // Act
         var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
@@ -106,7 +108,9 @@ public class CassandraHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: The Cassandra command did not return a valid result.");
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo("test: The Cassandra command did not return a valid result.");
         }
     }
 

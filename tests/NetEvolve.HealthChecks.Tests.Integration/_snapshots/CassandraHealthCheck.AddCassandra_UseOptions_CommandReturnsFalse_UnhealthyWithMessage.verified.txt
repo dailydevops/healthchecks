@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerInvalidResult: The Cassandra command did not return a valid result.,
+      name: TestContainerInvalidResult,
+      status: Unhealthy,
+      tags: [
+        cassandra,
+        nosql
+      ]
+    }
+  ],
+  status: Unhealthy
+}

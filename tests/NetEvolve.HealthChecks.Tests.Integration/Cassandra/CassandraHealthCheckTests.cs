@@ -222,16 +222,6 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_cluster),
-            clearJToken: token =>
-            {
-                // Verify the error message is present
-                if (token?["results"]?[0]?["description"]?.ToString() is string description
-                    && !description.Contains("The Cassandra command did not return a valid result.", StringComparison.Ordinal))
-                {
-                    throw new InvalidOperationException($"Expected error message not found. Actual: {description}");
-                }
-                return token;
-            }
+            serviceBuilder: services => services.AddSingleton(_cluster)
         );
 }
