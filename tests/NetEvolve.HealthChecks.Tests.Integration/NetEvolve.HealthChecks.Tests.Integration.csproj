@@ -18,6 +18,7 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="CassandraCSharpDriver" />
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
     <PackageReference Include="Consul" />
@@ -78,6 +79,7 @@
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.ArangoDb" />
     <PackageReference Include="Testcontainers.Azurite" />
+    <PackageReference Include="Testcontainers.Cassandra" />
     <PackageReference Include="Testcontainers.ClickHouse" />
     <PackageReference Include="Testcontainers.CockroachDb" />
     <PackageReference Include="Testcontainers.Consul" />
@@ -136,6 +138,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Tables\NetEvolve.HealthChecks.Azure.Tables.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Cassandra\NetEvolve.HealthChecks.Cassandra.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ClickHouse\NetEvolve.HealthChecks.ClickHouse.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.CockroachDb\NetEvolve.HealthChecks.CockroachDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Consul\NetEvolve.HealthChecks.Consul.csproj" />

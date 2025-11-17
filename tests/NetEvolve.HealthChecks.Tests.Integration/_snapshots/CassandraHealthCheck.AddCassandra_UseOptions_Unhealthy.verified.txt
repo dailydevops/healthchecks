@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: Undefined column name invalid in table system.local,
+        type: Cassandra.InvalidQueryException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        cassandra,
+        nosql
+      ]
+    }
+  ],
+  status: Unhealthy
+}
