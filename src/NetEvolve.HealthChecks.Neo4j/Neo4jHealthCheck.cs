@@ -8,7 +8,9 @@ using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(Neo4jOptions))]
+#pragma warning disable S101 // Types should be named in PascalCase
 internal sealed partial class Neo4jHealthCheck
+#pragma warning restore S101 // Types should be named in PascalCase
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,

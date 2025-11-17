@@ -5,7 +5,9 @@ using global::Neo4j.Driver;
 /// <summary>
 /// Options for <see cref="Neo4jHealthCheck"/>
 /// </summary>
+#pragma warning disable S101 // Types should be named in PascalCase
 public sealed record Neo4jOptions
+#pragma warning restore S101 // Types should be named in PascalCase
 {
     /// <summary>
     /// Gets or sets the key used to resolve the <c>IDriver</c> from the service provider.
