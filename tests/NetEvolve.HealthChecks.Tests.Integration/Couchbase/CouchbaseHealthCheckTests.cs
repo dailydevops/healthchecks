@@ -14,16 +14,14 @@ using NetEvolve.HealthChecks.Couchbase;
 [ClassDataSource<CouchbaseDatabase>(Shared = InstanceSharedType.Couchbase)]
 [TestGroup(nameof(Couchbase))]
 [TestGroup("Z01TestGroup")]
-public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IAsyncDisposable
+[Retry(25)]
+public class CouchbaseHealthCheckTests : HealthCheckTestBase
 {
     private readonly CouchbaseDatabase _database;
-#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-    private ICluster _cluster = default!;
-#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
 
     public CouchbaseHealthCheckTests(CouchbaseDatabase database) => _database = database;
 
-    public async Task InitializeAsync()
+    private async Task<ICluster> CreateCluster()
     {
         var options = new ClusterOptions
         {
@@ -32,29 +30,24 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
             Password = "password",
         };
 
-        _cluster = await Cluster.ConnectAsync(options).ConfigureAwait(false);
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_cluster is not null)
-        {
-            await _cluster.DisposeAsync().ConfigureAwait(false);
-        }
-
-        GC.SuppressFinalize(this);
+        return await Cluster.ConnectAsync(options).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddCouchbase_UseOptions_Healthy() =>
+    public async Task AddCouchbase_UseOptions_Healthy()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddCouchbase_UseOptionsWithKeyedService_Healthy()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCouchbase(
@@ -66,24 +59,30 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test", (_, _) => _cluster)
+            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test", (_, _) => cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
+    public async Task AddCouchbase_UseOptionsDoubleRegistered_Healthy()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
                 await RunAndVerify(
                     healthChecks =>
                         healthChecks.AddCouchbase("TestContainerHealthy").AddCouchbase("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_cluster)
+                    serviceBuilder: services => services.AddSingleton(cluster)
                 )
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseOptions_Degraded() =>
+    public async Task AddCouchbase_UseOptions_Degraded()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCouchbase(
@@ -100,11 +99,14 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseOptions_Unhealthy() =>
+    public async Task AddCouchbase_UseOptions_Unhealthy()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks =>
             {
@@ -121,11 +123,14 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseConfiguration_Healthy() =>
+    public async Task AddCouchbase_UseConfiguration_Healthy()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -137,11 +142,14 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddCouchbase_UseConfigurationWithKeyedService_Healthy()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -154,11 +162,14 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test-config", (_, _) => _cluster)
+            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test-config", (_, _) => cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseConfiguration_Degraded() =>
+    public async Task AddCouchbase_UseConfiguration_Degraded()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -170,11 +181,14 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddCouchbase_UseConfiguration_ConnectionStringEmpty_ShouldThrowException()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -186,11 +200,14 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCouchbase_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddCouchbase_UseConfiguration_TimeoutMinusTwo_ShouldThrowException()
+    {
+        var cluster = await CreateCluster().ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -202,6 +219,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 }
