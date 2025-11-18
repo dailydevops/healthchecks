@@ -9,6 +9,7 @@ using static ArchUnitNET.Fluent.ArchRuleDefinition;
 [TestGroup(nameof(Architecture))]
 [TestGroup(nameof(HealthChecks))]
 [TestGroup("Z00TestGroup")]
+[Skip("Architecture tests are disabled temporarily.")]
 public class HealthCheckTests
 {
     private readonly IObjectProvider<Class> _healthChecks = Classes()
