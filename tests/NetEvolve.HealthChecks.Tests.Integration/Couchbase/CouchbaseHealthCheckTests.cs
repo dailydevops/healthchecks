@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Couchbase;
+using Testcontainers.Couchbase;
 
 [ClassDataSource<CouchbaseDatabase>(Shared = InstanceSharedType.Couchbase)]
 [TestGroup(nameof(Couchbase))]
@@ -26,8 +27,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
         var options = new ClusterOptions
         {
             ConnectionString = _database.ConnectionString,
-            UserName = "Administrator",
-            Password = "password",
+            UserName = CouchbaseBuilder.DefaultUsername,
+            Password = CouchbaseBuilder.DefaultPassword,
         };
 
         return await Cluster.ConnectAsync(options).ConfigureAwait(false);
