@@ -132,7 +132,7 @@ jobs:
   dependabot:
     name: Dependabot Merge
     if: ${{ !cancelled() && !failure() && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
-    uses: dailydevops/pipelines/.github/workflows/step-dependabot-merge.yml@1.2.26
+    uses: dailydevops/pipelines/.github/workflows/step-dependabot-merge.yml@1.2.27
     needs:
       - build
     secrets: inherit
