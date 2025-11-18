@@ -21,44 +21,6 @@ updates:
     assignees:
       - samtrion
 
-  - package-ecosystem: "nuget"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "chore(deps)"
-    labels:
-      - "dependency:nuget"
-    open-pull-requests-limit: 20
-    # Add assignees
-    assignees:
-      - samtrion
-    groups:
-     coverlet:
-       patterns:
-         - "coverlet*"
-     nunit:
-       patterns:
-         - "nunit"
-         - "nunit*"
-     testcontainers:
-       patterns:
-         - "testcontainers*"
-     tunit:
-       patterns:
-         - "tunit"
-         - "tunit*"
-     verify:
-       patterns:
-         - "verify*"
-     xunit:
-       patterns:
-         - "xunit"
-         - "xunit*"
-       exclude-patterns:
-         - "xunit.v3"
-         - "xunit.v3*"
-
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
