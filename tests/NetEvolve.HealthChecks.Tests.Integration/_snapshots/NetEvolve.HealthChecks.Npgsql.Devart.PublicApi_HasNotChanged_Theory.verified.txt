@@ -1,0 +1,14 @@
+﻿namespace NetEvolve.HealthChecks.Npgsql.Devart
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddNpgsqlDevart([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Npgsql.Devart.NpgsqlDevartOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class NpgsqlDevartOptions : System.IEquatable<NetEvolve.HealthChecks.Npgsql.Devart.NpgsqlDevartOptions>
+    {
+        public NpgsqlDevartOptions() { }
+        public string Command { get; }
+        public string ConnectionString { get; set; }
+        public int Timeout { get; set; }
+    }
+}

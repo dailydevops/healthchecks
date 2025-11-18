@@ -4,12 +4,13 @@ using ArchUnitNET.Domain;
 using ArchUnitNET.TUnit;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
+using TUnit.Core.Enums;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 [TestGroup(nameof(Architecture))]
 [TestGroup(nameof(HealthChecks))]
 [TestGroup("Z00TestGroup")]
-[Skip("Architecture tests are disabled temporarily.")]
+[RunOn(OS.Windows)]
 public class HealthCheckTests
 {
     private readonly IObjectProvider<Class> _healthChecks = Classes()
