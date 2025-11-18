@@ -115,7 +115,7 @@ jobs:
   build:
     name: Build Solution
     if: ${{ !cancelled() && !failure() }}
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-build.yml@1.2.26
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-build.yml@1.2.27
     needs:
       - coverage
       - format
