@@ -25,6 +25,7 @@
     <PackageReference Include="MyCouch" />
     <PackageReference Include="Dapr.Client" />
     <PackageReference Include="Devart.Data.MySql" />
+    <PackageReference Include="Devart.Data.Oracle" />
     <PackageReference Include="Devart.Data.PostgreSql" />
     <PackageReference Include="DotPulsar" />
     <PackageReference Include="Devart.Data.SqlServer" />
@@ -174,6 +175,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Ollama\NetEvolve.HealthChecks.Ollama.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.OpenSearch\NetEvolve.HealthChecks.OpenSearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle\NetEvolve.HealthChecks.Oracle.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle.Devart\NetEvolve.HealthChecks.Oracle.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Pulsar\NetEvolve.HealthChecks.Apache.Pulsar.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RabbitMQ\NetEvolve.HealthChecks.RabbitMQ.csproj" />
