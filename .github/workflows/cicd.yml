@@ -49,7 +49,7 @@ jobs:
 
   format:
     name: Code Formatting
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-format.yml@1.2.26
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-format.yml@1.2.27
     needs:
       - commitlinter
     with:
