@@ -36,7 +36,7 @@ permissions:
 jobs:
   commitlinter:
     name: Commit Linter
-    uses: dailydevops/pipelines/.github/workflows/step-node-commitlint.yml@1.2.26
+    uses: dailydevops/pipelines/.github/workflows/step-node-commitlint.yml@1.2.27
     secrets: inherit
 
   version:
