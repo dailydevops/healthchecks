@@ -49,6 +49,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Couchbase/NetEvolve.HealthChecks.Couchbase.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.CouchDb/NetEvolve.HealthChecks.CouchDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Dapr/NetEvolve.HealthChecks.Dapr.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.DB2.Devart/NetEvolve.HealthChecks.DB2.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DB2/NetEvolve.HealthChecks.DB2.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DuckDB/NetEvolve.HealthChecks.DuckDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Elasticsearch/NetEvolve.HealthChecks.Elasticsearch.csproj" />
