@@ -35,6 +35,7 @@ internal static class HealthCheckArchitecture
             typeof(Azure.EventHubs.EventHubsHealthCheck).Assembly,
             typeof(Azure.Kusto.KustoAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
+            typeof(Azure.Search.SearchIndexAvailableHealthCheck).Assembly,
             typeof(Azure.ServiceBus.ServiceBusQueueHealthCheck).Assembly,
             typeof(Azure.Tables.TableClientAvailableHealthCheck).Assembly,
             // GCP
