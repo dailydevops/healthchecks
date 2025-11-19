@@ -31,22 +31,13 @@ internal class ClientCreation
 
         if (_searchIndexClients is null)
         {
-            _searchIndexClients = new ConcurrentDictionary<string, SearchIndexClient>(
-                StringComparer.OrdinalIgnoreCase
-            );
+            _searchIndexClients = new ConcurrentDictionary<string, SearchIndexClient>(StringComparer.OrdinalIgnoreCase);
         }
 
-        return _searchIndexClients.GetOrAdd(
-            name,
-            _ => CreateSearchIndexClient(options, serviceProvider)
-        );
+        return _searchIndexClients.GetOrAdd(name, _ => CreateSearchIndexClient(options, serviceProvider));
     }
 
-    internal SearchClient GetSearchClient<TOptions>(
-        string name,
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal SearchClient GetSearchClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, ISearchOptions
     {
         if (options.Mode == SearchIndexClientCreationMode.ServiceProvider)
@@ -58,9 +49,7 @@ internal class ClientCreation
 
         if (_searchClients is null)
         {
-            _searchClients = new ConcurrentDictionary<string, SearchClient>(
-                StringComparer.OrdinalIgnoreCase
-            );
+            _searchClients = new ConcurrentDictionary<string, SearchClient>(StringComparer.OrdinalIgnoreCase);
         }
 
         return _searchClients.GetOrAdd(name, _ => CreateSearchClient(options, serviceProvider));
@@ -83,8 +72,7 @@ internal class ClientCreation
         switch (options.Mode)
         {
             case SearchIndexClientCreationMode.DefaultAzureCredentials:
-                var tokenCredential =
-                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new SearchIndexClient(options.ServiceUri, tokenCredential, clientOptions);
             case SearchIndexClientCreationMode.AzureKeyCredential:
                 var azureKeyCredential = new AzureKeyCredential(options.ApiKey!);
@@ -95,17 +83,12 @@ internal class ClientCreation
 #pragma warning restore IDE0010 // Add missing cases
     }
 
-    internal static SearchClient CreateSearchClient<TOptions>(
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal static SearchClient CreateSearchClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, ISearchOptions
     {
         if (options is not SearchIndexAvailableOptions indexOptions)
         {
-            throw new InvalidOperationException(
-                "SearchClient can only be created with SearchIndexAvailableOptions."
-            );
+            throw new InvalidOperationException("SearchClient can only be created with SearchIndexAvailableOptions.");
         }
 
         SearchClientOptions? clientOptions = null;
@@ -119,22 +102,11 @@ internal class ClientCreation
         switch (options.Mode)
         {
             case SearchIndexClientCreationMode.DefaultAzureCredentials:
-                var tokenCredential =
-                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
-                return new SearchClient(
-                    options.ServiceUri,
-                    indexOptions.IndexName,
-                    tokenCredential,
-                    clientOptions
-                );
+                var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                return new SearchClient(options.ServiceUri, indexOptions.IndexName, tokenCredential, clientOptions);
             case SearchIndexClientCreationMode.AzureKeyCredential:
                 var azureKeyCredential = new AzureKeyCredential(options.ApiKey!);
-                return new SearchClient(
-                    options.ServiceUri,
-                    indexOptions.IndexName,
-                    azureKeyCredential,
-                    clientOptions
-                );
+                return new SearchClient(options.ServiceUri, indexOptions.IndexName, azureKeyCredential, clientOptions);
             default:
                 throw new UnreachableException($"Invalid client creation mode `{options.Mode}`.");
         }

@@ -14,23 +14,15 @@ public class ClientCreationTests
         var options = new SearchServiceAvailableOptions { Mode = (SearchIndexClientCreationMode)13 };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() =>
-            ClientCreation.CreateSearchIndexClient(options, serviceProvider)
-        );
+        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateSearchIndexClient(options, serviceProvider));
     }
 
     [Test]
     public void CreateSearchClient_InvalidMode_ThrowUnreachableException()
     {
-        var options = new SearchIndexAvailableOptions
-        {
-            Mode = (SearchIndexClientCreationMode)13,
-            IndexName = "test"
-        };
+        var options = new SearchIndexAvailableOptions { Mode = (SearchIndexClientCreationMode)13, IndexName = "test" };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
-        _ = Assert.Throws<UnreachableException>(() =>
-            ClientCreation.CreateSearchClient(options, serviceProvider)
-        );
+        _ = Assert.Throws<UnreachableException>(() => ClientCreation.CreateSearchClient(options, serviceProvider));
     }
 }

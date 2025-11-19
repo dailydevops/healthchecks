@@ -22,11 +22,7 @@ internal sealed partial class SearchServiceAvailableHealthCheck
     )
     {
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
-        var searchIndexClient = clientCreation.GetSearchIndexClient(
-            name,
-            options,
-            _serviceProvider
-        );
+        var searchIndexClient = clientCreation.GetSearchIndexClient(name, options, _serviceProvider);
 
         var (isValid, _) = await searchIndexClient
             .GetIndexNamesAsync(cancellationToken)

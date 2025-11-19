@@ -24,9 +24,7 @@ internal sealed partial class SearchIndexAvailableHealthCheck
     {
         if (string.IsNullOrWhiteSpace(options.IndexName))
         {
-            return HealthCheckResult.Unhealthy(
-                $"Health check '{name}' failed: IndexName is required."
-            );
+            return HealthCheckResult.Unhealthy($"Health check '{name}' failed: IndexName is required.");
         }
 
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();

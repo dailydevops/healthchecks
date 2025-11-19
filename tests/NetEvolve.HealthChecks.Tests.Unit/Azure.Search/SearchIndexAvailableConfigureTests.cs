@@ -88,7 +88,7 @@ public sealed class SearchIndexAvailableConfigureTests
                 new SearchIndexAvailableOptions
                 {
                     Mode = SearchIndexClientCreationMode.ServiceProvider,
-                    IndexName = "test"
+                    IndexName = "test",
                 }
             );
 
@@ -101,7 +101,7 @@ public sealed class SearchIndexAvailableConfigureTests
                 new SearchIndexAvailableOptions
                 {
                     Mode = SearchIndexClientCreationMode.DefaultAzureCredentials,
-                    IndexName = "test"
+                    IndexName = "test",
                 }
             );
         yield return () =>
@@ -138,7 +138,7 @@ public sealed class SearchIndexAvailableConfigureTests
                 new SearchIndexAvailableOptions
                 {
                     Mode = SearchIndexClientCreationMode.AzureKeyCredential,
-                    IndexName = "test"
+                    IndexName = "test",
                 }
             );
         yield return () =>
