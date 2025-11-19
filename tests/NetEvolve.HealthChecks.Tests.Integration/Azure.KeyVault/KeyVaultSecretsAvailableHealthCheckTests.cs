@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.Azure.KeyVault;
 
 [TestGroup($"{nameof(Azure)}.{nameof(KeyVault)}")]
 [ClassDataSource<KeyVaultEmulatorAccess>(Shared = InstanceSharedType.Azure)]
-[TestGroup("Z02TestGroup")]
+[TestGroup("Z05TestGroup")]
 public class KeyVaultSecretsAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly KeyVaultEmulatorAccess _container;
@@ -75,10 +75,7 @@ public class KeyVaultSecretsAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-            {
-                _ = services.AddSingleton<TokenCredential>(_container.EmulatorCredential);
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_container.EmulatorCredential)
         );
 
     [Test]
@@ -97,9 +94,6 @@ public class KeyVaultSecretsAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services =>
-            {
-                _ = services.AddSingleton<TokenCredential>(_container.EmulatorCredential);
-            }
+            serviceBuilder: services => _ = services.AddSingleton(_container.EmulatorCredential)
         );
 }

@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using AzureKeyVaultEmulator.TestContainers;
 using global::Azure.Core;
+using global::Azure.Identity;
 using global::Azure.Security.KeyVault.Secrets;
 
 public sealed class KeyVaultEmulatorAccess : IAsyncInitializer, IAsyncDisposable
@@ -20,31 +21,36 @@ public sealed class KeyVaultEmulatorAccess : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
 
-        // Create the Secret client manually - the emulator provides connection details
-        // Based on the documentation, the container should have GetSecretClient() as an instance method
-        // Since it's not found, we'll construct the vault URI from the container and use a mock credential
-        var port = _container.GetMappedPublicPort(8200);
-        VaultUri = new Uri($"https://localhost:{port}");
+        VaultUri = new Uri(_container.GetEndpoint());
+        EmulatorCredential = new EmulatedTokenCredential(VaultUri);
 
-        // Create a custom credential that works with the emulator
-        EmulatorCredential = new AzureKeyVaultEmulatorCredential();
+        var options = new SecretClientOptions { DisableChallengeResourceVerification = true };
 
-        // Create the client manually and prepare a test secret for availability checks
-        var secretClient = new SecretClient(VaultUri, EmulatorCredential);
+        var secretClient = new SecretClient(VaultUri, EmulatorCredential, options);
         _ = await secretClient.SetSecretAsync("test-secret", "test-value").ConfigureAwait(false);
     }
-}
 
-// Custom credential that wraps the container's client configuration
-internal sealed class AzureKeyVaultEmulatorCredential : TokenCredential
-{
-    public override AccessToken GetToken(
-        TokenRequestContext requestContext,
-        System.Threading.CancellationToken cancellationToken
-    ) => new("emulator-token", DateTimeOffset.MaxValue);
+    private class EmulatedTokenCredential(Uri vaultUri) : TokenCredential
+    {
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+            GetTokenAsync(requestContext, cancellationToken).AsTask().GetAwaiter().GetResult();
 
-    public override ValueTask<AccessToken> GetTokenAsync(
-        TokenRequestContext requestContext,
-        System.Threading.CancellationToken cancellationToken
-    ) => new(GetToken(requestContext, cancellationToken));
+        public override async ValueTask<AccessToken> GetTokenAsync(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken
+        )
+        {
+            using var client = new HttpClient();
+
+            client.BaseAddress = vaultUri;
+
+#pragma warning disable CA2234 // Pass system uri objects instead of strings
+            var response = await client.GetAsync("token", cancellationToken).ConfigureAwait(false);
+#pragma warning restore CA2234 // Pass system uri objects instead of strings
+
+            var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+
+            return new AccessToken(content, DateTimeOffset.Now.AddYears(1));
+        }
+    }
 }
