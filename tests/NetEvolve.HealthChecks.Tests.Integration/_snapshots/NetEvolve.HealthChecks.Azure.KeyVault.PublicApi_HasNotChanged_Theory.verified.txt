@@ -1,0 +1,20 @@
+﻿namespace NetEvolve.HealthChecks.Azure.KeyVault
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddKeyVaultSecretsAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.KeyVault.KeyVaultSecretsAvailableOptions>? options = null, params string[] tags) { }
+    }
+    public enum KeyVaultClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+    }
+    public sealed class KeyVaultSecretsAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.KeyVault.KeyVaultSecretsAvailableOptions>
+    {
+        public KeyVaultSecretsAvailableOptions() { }
+        public System.Action<Azure.Security.KeyVault.Secrets.SecretClientOptions>? ConfigureClientOptions { get; set; }
+        public NetEvolve.HealthChecks.Azure.KeyVault.KeyVaultClientCreationMode? Mode { get; set; }
+        public int Timeout { get; set; }
+        public System.Uri? VaultUri { get; set; }
+    }
+}
