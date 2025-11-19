@@ -12,11 +12,7 @@ internal class ClientCreation
 {
     private ConcurrentDictionary<string, SecretClient>? _secretClients;
 
-    internal SecretClient GetSecretClient<TOptions>(
-        string name,
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal SecretClient GetSecretClient<TOptions>(string name, TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, IKeyVaultOptions
     {
         if (options.Mode == KeyVaultClientCreationMode.ServiceProvider)
@@ -29,10 +25,7 @@ internal class ClientCreation
         return _secretClients.GetOrAdd(name, _ => CreateSecretClient(options, serviceProvider));
     }
 
-    internal static SecretClient CreateSecretClient<TOptions>(
-        TOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal static SecretClient CreateSecretClient<TOptions>(TOptions options, IServiceProvider serviceProvider)
         where TOptions : class, IKeyVaultOptions
     {
         SecretClientOptions? clientOptions = null;

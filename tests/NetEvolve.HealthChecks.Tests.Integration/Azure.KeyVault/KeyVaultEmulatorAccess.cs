@@ -25,7 +25,7 @@ public sealed class KeyVaultEmulatorAccess : IAsyncInitializer, IAsyncDisposable
         // Since it's not found, we'll construct the vault URI from the container and use a mock credential
         var port = _container.GetMappedPublicPort(8200);
         VaultUri = new Uri($"https://localhost:{port}");
-        
+
         // Create a custom credential that works with the emulator
         EmulatorCredential = new AzureKeyVaultEmulatorCredential();
 
@@ -38,9 +38,13 @@ public sealed class KeyVaultEmulatorAccess : IAsyncInitializer, IAsyncDisposable
 // Custom credential that wraps the container's client configuration
 internal sealed class AzureKeyVaultEmulatorCredential : TokenCredential
 {
-    public override AccessToken GetToken(TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) =>
-        new("emulator-token", DateTimeOffset.MaxValue);
+    public override AccessToken GetToken(
+        TokenRequestContext requestContext,
+        System.Threading.CancellationToken cancellationToken
+    ) => new("emulator-token", DateTimeOffset.MaxValue);
 
-    public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) =>
-        new(GetToken(requestContext, cancellationToken));
+    public override ValueTask<AccessToken> GetTokenAsync(
+        TokenRequestContext requestContext,
+        System.Threading.CancellationToken cancellationToken
+    ) => new(GetToken(requestContext, cancellationToken));
 }
