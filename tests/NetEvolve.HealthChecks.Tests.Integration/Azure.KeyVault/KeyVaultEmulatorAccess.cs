@@ -20,14 +20,17 @@ public sealed class KeyVaultEmulatorAccess : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
 
-        // Use the extension methods provided by the package to get configured clients
-        var secretClient = _container.GetSecretClient();
-        VaultUri = secretClient.VaultUri;
+        // Create the Secret client manually - the emulator provides connection details
+        // Based on the documentation, the container should have GetSecretClient() as an instance method
+        // Since it's not found, we'll construct the vault URI from the container and use a mock credential
+        var port = _container.GetMappedPublicPort(8200);
+        VaultUri = new Uri($"https://localhost:{port}");
         
         // Create a custom credential that works with the emulator
         EmulatorCredential = new AzureKeyVaultEmulatorCredential();
 
-        // Prepare a test secret for availability checks
+        // Create the client manually and prepare a test secret for availability checks
+        var secretClient = new SecretClient(VaultUri, EmulatorCredential);
         _ = await secretClient.SetSecretAsync("test-secret", "test-value").ConfigureAwait(false);
     }
 }
