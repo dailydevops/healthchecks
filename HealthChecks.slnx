@@ -37,6 +37,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Azure.ApplicationInsights/NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.Blobs/NetEvolve.HealthChecks.Azure.Blobs.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.EventHubs/NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Azure.KeyVault/NetEvolve.HealthChecks.Azure.KeyVault.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.Kusto/NetEvolve.HealthChecks.Azure.Kusto.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.Queues/NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Azure.ServiceBus/NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
