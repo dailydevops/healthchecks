@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.GCP.Firestore;
 
 [TestGroup($"GCP.{nameof(Firestore)}")]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<FirestoreDatabase>(Shared = InstanceSharedType.Firestore)]
+[ClassDataSource<FirestoreDatabase>(Shared = SharedType.PerClass)]
 public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
 {
     private readonly FirestoreDatabase _database;

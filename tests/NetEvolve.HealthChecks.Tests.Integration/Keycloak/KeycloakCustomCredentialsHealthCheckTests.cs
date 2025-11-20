@@ -3,7 +3,7 @@
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Tests.Integration.Keycloak.Container;
 
-[ClassDataSource<ContainerCustomCredentials>(Shared = InstanceSharedType.Keycloak)]
+[ClassDataSource<ContainerCustomCredentials>(Shared = SharedType.PerClass)]
 [InheritsTests]
 [TestGroup(nameof(Keycloak))]
 [TestGroup("Z03TestGroup")]

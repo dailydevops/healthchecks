@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Apache.Kafka;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 [TestGroup("Z00TestGroup")]
-[ClassDataSource<KafkaContainer>(Shared = InstanceSharedType.Kafka)]
+[ClassDataSource<KafkaContainer>(Shared = SharedType.PerClass)]
 public class KafkaHealthCheckTests : HealthCheckTestBase
 {
     private readonly KafkaContainer _database;

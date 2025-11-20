@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.Npgsql;
 
 [TestGroup(nameof(Npgsql))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<NpgsqlDatabase>(Shared = InstanceSharedType.PostgreSql)]
+[ClassDataSource<NpgsqlDatabase>(Shared = SharedType.PerClass)]
 public class NpgsqlHealthCheckTests : HealthCheckTestBase
 {
     private readonly NpgsqlDatabase _database;

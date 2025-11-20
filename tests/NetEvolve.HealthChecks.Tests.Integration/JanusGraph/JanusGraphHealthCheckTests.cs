@@ -10,7 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.JanusGraph;
 
-[ClassDataSource<JanusGraphDatabase>(Shared = InstanceSharedType.JanusGraph)]
+[ClassDataSource<JanusGraphDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(JanusGraph))]
 [TestGroup("Z03TestGroup")]
 public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Neo4j;
 
-[ClassDataSource<Neo4jDatabase>(Shared = InstanceSharedType.Neo4j)]
+[ClassDataSource<Neo4jDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(Neo4j))]
 [TestGroup("Z05TestGroup")]
 public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable

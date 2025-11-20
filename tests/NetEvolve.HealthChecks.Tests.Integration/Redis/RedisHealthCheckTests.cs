@@ -12,7 +12,7 @@ using StackExchange.Redis;
 
 [TestGroup(nameof(Redis))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<RedisContainer>(Shared = InstanceSharedType.Redis)]
+[ClassDataSource<RedisContainer>(Shared = SharedType.PerClass)]
 public class RedisHealthCheckTests : HealthCheckTestBase
 {
     private readonly RedisContainer _database;

@@ -15,7 +15,7 @@ using NetEvolve.HealthChecks.Azure.ServiceBus;
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")]
 [TestGroup("Z02TestGroup")]
-[ClassDataSource<ServiceBusContainer>(Shared = InstanceSharedType.AzureServiceBus)]
+[ClassDataSource<ServiceBusContainer>(Shared = SharedType.PerClass)]
 public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
 {
     private readonly ServiceBusContainer _container;

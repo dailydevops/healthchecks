@@ -5,7 +5,7 @@ using Microsoft.Data.SqlClient;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Tests.Integration.SqlServer;
 
-[ClassDataSource<SqlServerDatabase>(Shared = InstanceSharedType.SqlServer)]
+[ClassDataSource<SqlServerDatabase>(Shared = SharedType.PerClass)]
 [InheritsTests]
 [TestGroup("Z03TestGroup")]
 public class OdbcSqlServerHealthCheckTests : OdbcHealthCheckTestsBase

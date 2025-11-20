@@ -10,7 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.InfluxDB;
 
-[ClassDataSource<InfluxDBDatabase>(Shared = InstanceSharedType.InfluxDB)]
+[ClassDataSource<InfluxDBDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(InfluxDB))]
 [TestGroup("Z03TestGroup")]
 public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
