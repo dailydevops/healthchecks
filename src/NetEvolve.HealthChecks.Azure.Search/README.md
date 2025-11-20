@@ -25,7 +25,7 @@ services
         {
             options.ServiceUri = new Uri("https://your-search-service.search.windows.net");
             options.ApiKey = "your-api-key";
-            options.Mode = SearchIndexClientCreationMode.AzureKeyCredential;
+            options.Mode = ClientCreationMode.AzureKeyCredential;
         });
 ```
 
@@ -43,7 +43,7 @@ services
             options.ServiceUri = new Uri("https://your-search-service.search.windows.net");
             options.ApiKey = "your-api-key";
             options.IndexName = "your-index-name";
-            options.Mode = SearchIndexClientCreationMode.AzureKeyCredential;
+            options.Mode = ClientCreationMode.AzureKeyCredential;
         });
 ```
 
@@ -65,7 +65,7 @@ services
         options =>
         {
             options.ServiceUri = new Uri("https://your-search-service.search.windows.net");
-            options.Mode = SearchIndexClientCreationMode.DefaultAzureCredentials;
+            options.Mode = ClientCreationMode.DefaultAzureCredentials;
         });
 ```
 
@@ -83,7 +83,7 @@ services
         "SearchService",
         options =>
         {
-            options.Mode = SearchIndexClientCreationMode.ServiceProvider;
+            options.Mode = ClientCreationMode.ServiceProvider;
         });
 ```
 

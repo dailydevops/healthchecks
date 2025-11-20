@@ -1,19 +1,19 @@
-namespace NetEvolve.HealthChecks.Azure.Search;
+﻿namespace NetEvolve.HealthChecks.Azure.Search;
 
 using System;
 using global::Azure.Search.Documents;
 
 /// <summary>
-/// Options for the <see cref="SearchServiceAvailableHealthCheck"/>.
+/// Options for the <see cref="SearchAvailableHealthCheck"/>.
 /// </summary>
-public sealed record SearchServiceAvailableOptions : ISearchOptions
+public sealed record SearchAvailableOptions
 {
     /// <summary>
-    /// Gets or sets the key used to resolve the <c>SearchIndexClient</c> from the service provider.
+    /// Gets or sets the key used to resolve the <c>SearchClient</c> from the service provider.
     /// </summary>
     /// <remarks>
-    /// When specified, the health check will resolve the <c>SearchIndexClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
-    /// When null or empty, the health check will resolve the <c>SearchIndexClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// When specified, the health check will resolve the <c>SearchClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>SearchClient</c> using <c>IServiceProvider.GetRequiredService</c>.
     /// </remarks>
     public string? KeyedService { get; set; }
 
@@ -30,7 +30,7 @@ public sealed record SearchServiceAvailableOptions : ISearchOptions
     /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
-    public SearchIndexClientCreationMode? Mode { get; set; }
+    public ClientCreationMode? Mode { get; set; }
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds for executing the healthcheck.
@@ -41,4 +41,9 @@ public sealed record SearchServiceAvailableOptions : ISearchOptions
     /// Gets or sets the lambda to configure the <see cref="SearchClientOptions"/>.
     /// </summary>
     public Action<SearchClientOptions>? ConfigureClientOptions { get; set; }
+
+    /// <summary>
+    /// Gets or sets the index name.
+    /// </summary>
+    public string? IndexName { get; set; }
 }

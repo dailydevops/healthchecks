@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Search;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Search;
 
 using System;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +16,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddSearchIndexAvailability("Test");
+        void Act() => builder.AddSearchAvailability("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -32,7 +32,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddSearchIndexAvailability(name!);
+        void Act() => builder.AddSearchAvailability(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -48,7 +48,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddSearchIndexAvailability(name);
+        void Act() => builder.AddSearchAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -64,7 +64,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddSearchIndexAvailability("Test", tags: tags);
+        void Act() => builder.AddSearchAvailability("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -80,84 +80,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddSearchIndexAvailability(name, _ => { }).AddSearchIndexAvailability(name);
-
-        // Assert
-        _ = Assert.Throws<ArgumentException>(nameof(name), Act);
-    }
-
-    [Test]
-    public void AddSearchServiceAvailability_WhenArgumentBuilderNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var builder = default(IHealthChecksBuilder);
-
-        // Act
-        void Act() => builder.AddSearchServiceAvailability("Test");
-
-        // Assert
-        _ = Assert.Throws<ArgumentNullException>("builder", Act);
-    }
-
-    [Test]
-    public void AddSearchServiceAvailability_WhenArgumentNameNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var configuration = new ConfigurationBuilder().Build();
-        var services = new ServiceCollection();
-        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string? name = default;
-
-        // Act
-        void Act() => builder.AddSearchServiceAvailability(name!);
-
-        // Assert
-        _ = Assert.Throws<ArgumentNullException>("name", Act);
-    }
-
-    [Test]
-    public void AddSearchServiceAvailability_WhenArgumentNameEmpty_ThrowArgumentException()
-    {
-        // Arrange
-        var configuration = new ConfigurationBuilder().Build();
-        var services = new ServiceCollection();
-        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var name = string.Empty;
-
-        // Act
-        void Act() => builder.AddSearchServiceAvailability(name);
-
-        // Assert
-        _ = Assert.Throws<ArgumentException>("name", Act);
-    }
-
-    [Test]
-    public void AddSearchServiceAvailability_WhenArgumentTagsNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var configuration = new ConfigurationBuilder().Build();
-        var services = new ServiceCollection();
-        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        var tags = default(string[]);
-
-        // Act
-        void Act() => builder.AddSearchServiceAvailability("Test", tags: tags);
-
-        // Assert
-        _ = Assert.Throws<ArgumentNullException>("tags", Act);
-    }
-
-    [Test]
-    public void AddSearchServiceAvailability_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
-    {
-        // Arrange
-        var configuration = new ConfigurationBuilder().Build();
-        var services = new ServiceCollection();
-        var builder = services.AddSingleton<IConfiguration>(configuration).AddHealthChecks();
-        const string? name = "Test";
-
-        // Act
-        void Act() => builder.AddSearchServiceAvailability(name, _ => { }).AddSearchServiceAvailability(name);
+        void Act() => builder.AddSearchAvailability(name, _ => { }).AddSearchAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

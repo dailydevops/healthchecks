@@ -1,25 +1,25 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Search;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Search;
 
 using System;
-using global::Azure.Search.Documents.Indexes;
+using global::Azure.Search.Documents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Search;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Search)}")]
-public sealed class SearchServiceAvailableConfigureTests
+public sealed class SearchAvailableConfigureTests
 {
     [Test]
     public void Configure_OnlyOptions_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
-        var configure = new SearchServiceAvailableConfigure(
+        var configure = new SearchAvailableConfigure(
             new ConfigurationBuilder().Build(),
             services.BuildServiceProvider()
         );
-        var options = new SearchServiceAvailableOptions();
+        var options = new SearchAvailableOptions();
 
         // Act / Assert
         _ = Assert.Throws<ArgumentException>("name", () => configure.Configure(options));
@@ -31,12 +31,12 @@ public sealed class SearchServiceAvailableConfigureTests
         bool expectedResult,
         string? expectedMessage,
         string? name,
-        SearchServiceAvailableOptions options
+        SearchAvailableOptions options
     )
     {
         // Arrange
         var services = new ServiceCollection();
-        var configure = new SearchServiceAvailableConfigure(
+        var configure = new SearchAvailableConfigure(
             new ConfigurationBuilder().Build(),
             services.BuildServiceProvider()
         );
@@ -52,7 +52,7 @@ public sealed class SearchServiceAvailableConfigureTests
         }
     }
 
-    public static IEnumerable<Func<(bool, string?, string?, SearchServiceAvailableOptions)>> GetValidateTestCases()
+    public static IEnumerable<Func<(bool, string?, string?, SearchAvailableOptions)>> GetValidateTestCases()
     {
         yield return () => (false, "The name cannot be null or whitespace.", null, null!);
         yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
@@ -62,23 +62,30 @@ public sealed class SearchServiceAvailableConfigureTests
                 false,
                 "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.",
                 "name",
-                new SearchServiceAvailableOptions { Timeout = -2 }
+                new SearchAvailableOptions { Timeout = -2 }
+            );
+        yield return () =>
+            (
+                false,
+                "The index name cannot be null or whitespace.",
+                "name",
+                new SearchAvailableOptions { IndexName = null }
             );
         yield return () =>
             (
                 false,
                 "The mode `13` is not supported.",
                 "name",
-                new SearchServiceAvailableOptions { Mode = (SearchIndexClientCreationMode)13 }
+                new SearchAvailableOptions { Mode = (ClientCreationMode)13, IndexName = "test" }
             );
 
         // Model: ServiceProvider
         yield return () =>
             (
                 false,
-                $"No service of type `{nameof(SearchIndexClient)}` registered. Please execute `builder.AddAzureClients()`.",
+                $"No service of type `{nameof(SearchClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new SearchServiceAvailableOptions { Mode = SearchIndexClientCreationMode.ServiceProvider }
+                new SearchAvailableOptions { Mode = ClientCreationMode.ServiceProvider, IndexName = "test" }
             );
 
         // Mode: DefaultAzureCredentials
@@ -87,17 +94,18 @@ public sealed class SearchServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
-                new SearchServiceAvailableOptions { Mode = SearchIndexClientCreationMode.DefaultAzureCredentials }
+                new SearchAvailableOptions { Mode = ClientCreationMode.DefaultAzureCredentials, IndexName = "test" }
             );
         yield return () =>
             (
                 false,
                 "The service url must be an absolute url when using `DefaultAzureCredentials` mode.",
                 "name",
-                new SearchServiceAvailableOptions
+                new SearchAvailableOptions
                 {
-                    Mode = SearchIndexClientCreationMode.DefaultAzureCredentials,
+                    Mode = ClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
+                    IndexName = "test",
                 }
             );
         yield return () =>
@@ -105,10 +113,11 @@ public sealed class SearchServiceAvailableConfigureTests
                 true,
                 null,
                 "name",
-                new SearchServiceAvailableOptions
+                new SearchAvailableOptions
                 {
-                    Mode = SearchIndexClientCreationMode.DefaultAzureCredentials,
+                    Mode = ClientCreationMode.DefaultAzureCredentials,
                     ServiceUri = new Uri("https://example.search.windows.net", UriKind.Absolute),
+                    IndexName = "test",
                 }
             );
 
@@ -118,17 +127,18 @@ public sealed class SearchServiceAvailableConfigureTests
                 false,
                 "The service url cannot be null when using `AzureKeyCredential` mode.",
                 "name",
-                new SearchServiceAvailableOptions { Mode = SearchIndexClientCreationMode.AzureKeyCredential }
+                new SearchAvailableOptions { Mode = ClientCreationMode.AzureKeyCredential, IndexName = "test" }
             );
         yield return () =>
             (
                 false,
                 "The service url must be an absolute url when using `AzureKeyCredential` mode.",
                 "name",
-                new SearchServiceAvailableOptions
+                new SearchAvailableOptions
                 {
-                    Mode = SearchIndexClientCreationMode.AzureKeyCredential,
+                    Mode = ClientCreationMode.AzureKeyCredential,
                     ServiceUri = new Uri("/relative", UriKind.Relative),
+                    IndexName = "test",
                 }
             );
         yield return () =>
@@ -136,11 +146,12 @@ public sealed class SearchServiceAvailableConfigureTests
                 false,
                 "The api key cannot be null or whitespace when using `AzureKeyCredential` mode.",
                 "name",
-                new SearchServiceAvailableOptions
+                new SearchAvailableOptions
                 {
-                    Mode = SearchIndexClientCreationMode.AzureKeyCredential,
+                    Mode = ClientCreationMode.AzureKeyCredential,
                     ServiceUri = new Uri("https://example.search.windows.net", UriKind.Absolute),
                     ApiKey = null,
+                    IndexName = "test",
                 }
             );
         yield return () =>
@@ -148,11 +159,12 @@ public sealed class SearchServiceAvailableConfigureTests
                 true,
                 null,
                 "name",
-                new SearchServiceAvailableOptions
+                new SearchAvailableOptions
                 {
-                    Mode = SearchIndexClientCreationMode.AzureKeyCredential,
+                    Mode = ClientCreationMode.AzureKeyCredential,
                     ServiceUri = new Uri("https://example.search.windows.net", UriKind.Absolute),
                     ApiKey = "test-key",
+                    IndexName = "test",
                 }
             );
     }

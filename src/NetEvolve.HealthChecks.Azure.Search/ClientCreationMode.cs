@@ -3,7 +3,7 @@ namespace NetEvolve.HealthChecks.Azure.Search;
 /// <summary>
 /// Represents the mode to create a <c>SearchIndexClient</c> or <c>SearchClient</c>.
 /// </summary>
-public enum SearchIndexClientCreationMode
+public enum ClientCreationMode
 {
     /// <summary>
     /// Retrieves the client from the <c>IServiceProvider</c>.

@@ -1,11 +1,9 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Search;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Search;
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using global::Azure.Search.Documents;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Search;
@@ -13,19 +11,19 @@ using NetEvolve.HealthChecks.Tests.Integration.Internals;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Search)}")]
 [TestGroup("Z02TestGroup")]
-public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
+public class SearchAvailableHealthCheckTests : HealthCheckTestBase
 {
     [Test]
     public async Task AddSearchIndexAvailability_UseOptions_ModeServiceProvider_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSearchIndexAvailability(
+                _ = healthChecks.AddSearchAvailability(
                     "SearchIndexServiceProviderUnhealthy",
                     options =>
                     {
                         options.IndexName = "test-index";
-                        options.Mode = SearchIndexClientCreationMode.ServiceProvider;
+                        options.Mode = ClientCreationMode.ServiceProvider;
                         options.Timeout = 100;
                     }
                 );
@@ -38,14 +36,14 @@ public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSearchIndexAvailability(
+                _ = healthChecks.AddSearchAvailability(
                     "SearchIndexAzureKeyCredentialUnhealthy",
                     options =>
                     {
                         options.ServiceUri = new Uri("https://invalid-search-service.search.windows.net");
                         options.ApiKey = "invalid-key";
                         options.IndexName = "test-index";
-                        options.Mode = SearchIndexClientCreationMode.AzureKeyCredential;
+                        options.Mode = ClientCreationMode.AzureKeyCredential;
                         options.Timeout = 100;
                     }
                 );
@@ -58,13 +56,13 @@ public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSearchIndexAvailability(
+                _ = healthChecks.AddSearchAvailability(
                     "SearchIndexMissingIndexName",
                     options =>
                     {
                         options.ServiceUri = new Uri("https://invalid-search-service.search.windows.net");
                         options.ApiKey = "invalid-key";
-                        options.Mode = SearchIndexClientCreationMode.AzureKeyCredential;
+                        options.Mode = ClientCreationMode.AzureKeyCredential;
                         options.Timeout = 100;
                     }
                 );
@@ -75,7 +73,7 @@ public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddSearchIndexAvailability_UseConfiguration_ModeServiceProvider_Unhealthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddSearchIndexAvailability("SearchIndexConfigurationUnhealthy"),
+            healthChecks => healthChecks.AddSearchAvailability("SearchIndexConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
             config =>
             {
@@ -84,7 +82,7 @@ public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureSearchIndex:SearchIndexConfigurationUnhealthy:IndexName", "test-index" },
                     {
                         "HealthChecks:AzureSearchIndex:SearchIndexConfigurationUnhealthy:Mode",
-                        nameof(SearchIndexClientCreationMode.ServiceProvider)
+                        nameof(ClientCreationMode.ServiceProvider)
                     },
                     { "HealthChecks:AzureSearchIndex:SearchIndexConfigurationUnhealthy:Timeout", "100" },
                 };
@@ -95,7 +93,7 @@ public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddSearchIndexAvailability_UseConfiguration_ModeAzureKeyCredential_Unhealthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddSearchIndexAvailability("SearchIndexConfigKeyUnhealthy"),
+            healthChecks => healthChecks.AddSearchAvailability("SearchIndexConfigKeyUnhealthy"),
             HealthStatus.Unhealthy,
             config =>
             {
@@ -109,7 +107,7 @@ public class SearchIndexAvailableHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureSearchIndex:SearchIndexConfigKeyUnhealthy:IndexName", "test-index" },
                     {
                         "HealthChecks:AzureSearchIndex:SearchIndexConfigKeyUnhealthy:Mode",
-                        nameof(SearchIndexClientCreationMode.AzureKeyCredential)
+                        nameof(ClientCreationMode.AzureKeyCredential)
                     },
                     { "HealthChecks:AzureSearchIndex:SearchIndexConfigKeyUnhealthy:Timeout", "100" },
                 };
