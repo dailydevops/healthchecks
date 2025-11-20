@@ -27,7 +27,7 @@ public static partial class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddSearchAvailability(
+    public static IHealthChecksBuilder AddAzureSearch(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
         Action<SearchAvailableOptions>? options = null,

@@ -18,7 +18,7 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSearchAvailability(
+                _ = healthChecks.AddAzureSearch(
                     "SearchIndexServiceProviderUnhealthy",
                     options =>
                     {
@@ -36,7 +36,7 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSearchAvailability(
+                _ = healthChecks.AddAzureSearch(
                     "SearchIndexAzureKeyCredentialUnhealthy",
                     options =>
                     {
@@ -56,7 +56,7 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSearchAvailability(
+                _ = healthChecks.AddAzureSearch(
                     "SearchIndexMissingIndexName",
                     options =>
                     {
@@ -73,7 +73,7 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddSearchIndexAvailability_UseConfiguration_ModeServiceProvider_Unhealthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddSearchAvailability("SearchIndexConfigurationUnhealthy"),
+            healthChecks => healthChecks.AddAzureSearch("SearchIndexConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
             config =>
             {
@@ -93,7 +93,7 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddSearchIndexAvailability_UseConfiguration_ModeAzureKeyCredential_Unhealthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddSearchAvailability("SearchIndexConfigKeyUnhealthy"),
+            healthChecks => healthChecks.AddAzureSearch("SearchIndexConfigKeyUnhealthy"),
             HealthStatus.Unhealthy,
             config =>
             {
