@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: SearchIndexConfigurationUnhealthy: Unexpected error.,
+      exception: {
+        message: No service of type `SearchClient` registered. Please execute `builder.AddAzureClients()`.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: SearchIndexConfigurationUnhealthy,
+      status: Unhealthy,
+      tags: [
+        search,
+        azure,
+        cognitive
+      ]
+    }
+  ],
+  status: Unhealthy
+}

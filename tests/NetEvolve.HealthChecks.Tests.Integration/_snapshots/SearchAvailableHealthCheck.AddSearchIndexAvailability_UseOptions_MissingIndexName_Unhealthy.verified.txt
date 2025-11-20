@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: SearchIndexMissingIndexName: Unexpected error.,
+      exception: {
+        message: The index name cannot be null or whitespace.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: SearchIndexMissingIndexName,
+      status: Unhealthy,
+      tags: [
+        search,
+        azure,
+        cognitive
+      ]
+    }
+  ],
+  status: Unhealthy
+}
