@@ -1,0 +1,24 @@
+﻿namespace NetEvolve.HealthChecks.Azure.Search
+{
+    public enum ClientCreationMode
+    {
+        ServiceProvider = 0,
+        DefaultAzureCredentials = 1,
+        AzureKeyCredential = 2,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddAzureSearch([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.Search.SearchAvailableOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class SearchAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.Search.SearchAvailableOptions>
+    {
+        public SearchAvailableOptions() { }
+        public string? ApiKey { get; set; }
+        public System.Action<Azure.Search.Documents.SearchClientOptions>? ConfigureClientOptions { get; set; }
+        public string? IndexName { get; set; }
+        public string? KeyedService { get; set; }
+        public NetEvolve.HealthChecks.Azure.Search.ClientCreationMode? Mode { get; set; }
+        public System.Uri? ServiceUri { get; set; }
+        public int Timeout { get; set; }
+    }
+}
