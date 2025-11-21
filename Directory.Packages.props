@@ -23,7 +23,7 @@
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.10" />
     <PackageVersion Include="AWSSDK.EC2" Version="4.0.59" />
-    <PackageVersion Include="AWSSDK.S3" Version="4.0.12" />
+    <PackageVersion Include="AWSSDK.S3" Version="4.0.13" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.6" />
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.4" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
