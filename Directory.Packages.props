@@ -14,7 +14,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
-    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.4.63" />
+    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.4.72" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.14.1" />
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
   </ItemGroup>
