@@ -106,6 +106,7 @@
     <PackageReference Include="Testcontainers.LocalStack" />
     <PackageReference Include="Testcontainers.MariaDb" />
     <PackageReference Include="Testcontainers.Milvus" />
+    <PackageReference Include="Testcontainers.Minio" />
     <PackageReference Include="Testcontainers.MongoDb" />
     <PackageReference Include="Testcontainers.Mosquitto" />
     <PackageReference Include="Testcontainers.MsSql" />
@@ -170,6 +171,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MariaDb\NetEvolve.HealthChecks.MariaDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Milvus\NetEvolve.HealthChecks.Milvus.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Minio\NetEvolve.HealthChecks.Minio.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Mosquitto\NetEvolve.HealthChecks.Mosquitto.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
