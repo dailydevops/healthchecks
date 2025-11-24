@@ -83,7 +83,7 @@ public sealed class NATSHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenConnectionFails_ReturnsUnhealthy()
+    public async Task CheckHealthAsync_WhenConnectionClosed_ReturnsDegraded()
     {
         // Arrange
         var options = new NATSOptions { KeyedService = null, Timeout = 1000 };
@@ -91,9 +91,9 @@ public sealed class NATSHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
 
-        // Setup connection mock that returns disconnected state
+        // Setup connection mock that returns closed state
         var mockConnection = Substitute.For<IConnection>();
-        _ = mockConnection.State.Returns(ConnState.DISCONNECTED);
+        mockConnection.State.Returns(ConnState.CLOSED);
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(mockConnection);
@@ -123,7 +123,7 @@ public sealed class NATSHealthCheckTests
         var options = new NATSOptions
         {
             KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
+            Timeout = 10, // Very short timeout to force a timeout
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
@@ -133,10 +133,10 @@ public sealed class NATSHealthCheckTests
         var mockConnection = Substitute.For<IConnection>();
 
         // Configure the mock so that accessing State takes longer than the timeout
-        _ = mockConnection
+        mockConnection
             .State.Returns(_ =>
             {
-                Thread.Sleep(50); // Delay to force timeout
+                Thread.Sleep(100); // Delay to force timeout
                 return ConnState.CONNECTED;
             });
 
