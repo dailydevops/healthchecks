@@ -123,7 +123,7 @@ public sealed class NATSHealthCheckTests
         var options = new NATSOptions
         {
             KeyedService = null,
-            Timeout = 10, // Very short timeout to force a timeout
+            Timeout = 5, // Very short timeout to force a timeout
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
@@ -136,7 +136,7 @@ public sealed class NATSHealthCheckTests
         mockConnection
             .State.Returns(_ =>
             {
-                Thread.Sleep(100); // Delay to force timeout
+                Thread.Sleep(200); // Delay to force timeout
                 return ConnState.CONNECTED;
             });
 
