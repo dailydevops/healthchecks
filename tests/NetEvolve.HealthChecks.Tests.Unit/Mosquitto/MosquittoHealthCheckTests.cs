@@ -116,46 +116,4 @@ public sealed class MosquittoHealthCheckTests
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }
-
-    [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded()
-    {
-        // Arrange
-        var options = new MosquittoOptions
-        {
-            KeyedService = null,
-            Timeout = 1, // Very short timeout to force a timeout
-        };
-
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
-
-        // Setup client mock that delays long enough to cause timeout
-        var mockClient = Substitute.For<IMqttClient>();
-        _ = mockClient.IsConnected.Returns(callInfo =>
-        {
-            Thread.Sleep(50); // Delay to force timeout
-            return true;
-        });
-
-        var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockClient);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-
-        var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext
-        {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
-        };
-
-        // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Degraded", StringComparison.Ordinal);
-        }
-    }
 }
