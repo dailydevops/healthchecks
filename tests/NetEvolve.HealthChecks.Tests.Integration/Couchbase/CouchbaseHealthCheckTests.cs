@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Couchbase;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Couchbase;
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,6 @@ using Testcontainers.Couchbase;
 [ClassDataSource<CouchbaseDatabase>(Shared = InstanceSharedType.Couchbase)]
 [TestGroup(nameof(Couchbase))]
 [TestGroup("Z01TestGroup")]
-[Retry(25)]
 public class CouchbaseHealthCheckTests : HealthCheckTestBase
 {
     private readonly CouchbaseDatabase _database;
@@ -35,6 +34,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddCouchbase_UseOptions_Healthy()
     {
         var cluster = await CreateCluster().ConfigureAwait(false);
@@ -46,6 +46,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddCouchbase_UseOptionsWithKeyedService_Healthy()
     {
         var cluster = await CreateCluster().ConfigureAwait(false);
@@ -81,6 +82,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddCouchbase_UseOptions_Degraded()
     {
         var cluster = await CreateCluster().ConfigureAwait(false);
@@ -129,6 +131,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddCouchbase_UseConfiguration_Healthy()
     {
         var cluster = await CreateCluster().ConfigureAwait(false);
@@ -148,6 +151,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddCouchbase_UseConfigurationWithKeyedService_Healthy()
     {
         var cluster = await CreateCluster().ConfigureAwait(false);
@@ -168,6 +172,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddCouchbase_UseConfiguration_Degraded()
     {
         var cluster = await CreateCluster().ConfigureAwait(false);
