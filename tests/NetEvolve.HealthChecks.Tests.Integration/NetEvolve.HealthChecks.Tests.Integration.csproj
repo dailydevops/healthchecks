@@ -47,6 +47,7 @@
     <PackageReference Include="Microsoft.Data.Sqlite" />
     <PackageReference Include="MongoDB.Driver" />
     <PackageReference Include="MQTTnet" />
+    <PackageReference Include="NATS.Client" />
     <PackageReference Include="MySql.Data" />
     <PackageReference Include="MySqlConnector" />
     <PackageReference Include="Neo4j.Driver" />
@@ -112,6 +113,7 @@
     <PackageReference Include="Testcontainers.Mosquitto" />
     <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="Testcontainers.MySql" />
+    <PackageReference Include="Testcontainers.Nats" />
     <PackageReference Include="Testcontainers.Neo4j" />
     <PackageReference Include="Testcontainers.Ollama" />
     <PackageReference Include="Testcontainers.OpenSearch" />
@@ -178,6 +180,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Devart\NetEvolve.HealthChecks.MySql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.NATS\NetEvolve.HealthChecks.NATS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Neo4j\NetEvolve.HealthChecks.Neo4j.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql.Devart\NetEvolve.HealthChecks.Npgsql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
