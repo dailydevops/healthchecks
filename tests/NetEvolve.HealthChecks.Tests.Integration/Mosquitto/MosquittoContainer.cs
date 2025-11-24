@@ -2,26 +2,15 @@
 
 using System;
 using System.Threading.Tasks;
-using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Containers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Testcontainers.Mosquitto;
 
 public sealed class MosquittoContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly IContainer _container = new ContainerBuilder()
-        .WithImage("eclipse-mosquitto:2.0.20")
-        .WithPortBinding(1883, true)
-        .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged("mosquitto version"))
-        .WithLogger(NullLogger.Instance)
-        .Build();
+    private readonly Testcontainers.Mosquitto.MosquittoContainer _mosquittoContainer = new MosquittoBuilder().Build();
 
-    public string Host => _container.Hostname;
+    public Uri ConnectionString => new Uri(_mosquittoContainer.GetConnectionString(), UriKind.Absolute);
 
-    public ushort Port => _container.GetMappedPublicPort(1883);
+    public async ValueTask DisposeAsync() => await _mosquittoContainer.DisposeAsync().ConfigureAwait(false);
 
-    public string ConnectionString => $"mqtt://{Host}:{Port}";
-
-    public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
-
-    public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
+    public async Task InitializeAsync() => await _mosquittoContainer.StartAsync().ConfigureAwait(false);
 }

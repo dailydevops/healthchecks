@@ -131,6 +131,7 @@
     <PackageVersion Include="Testcontainers.MariaDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Milvus" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MongoDb" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Mosquitto" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MsSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.MySql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Neo4j" Version="$(VersionTestContainers)" />

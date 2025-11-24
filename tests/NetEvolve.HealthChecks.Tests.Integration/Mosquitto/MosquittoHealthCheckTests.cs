@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using global::MQTTnet;
-using global::MQTTnet.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using MQTTnet;
+using MQTTnet.Client;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Mosquitto;
 
@@ -24,14 +24,14 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         var mqttFactory = new MqttFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
-        var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
+        var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
         _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<IMqttClient>(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient)
         );
     }
 
@@ -41,7 +41,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         var mqttFactory = new MqttFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
-        var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
+        var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
         _ = await mqttClient.ConnectAsync(options);
 
@@ -56,7 +56,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<IMqttClient>("mosquitto-test", (_, _) => mqttClient)
+            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient)
         );
     }
 
@@ -66,14 +66,14 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         var mqttFactory = new MqttFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
-        var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
+        var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
         _ = await mqttClient.ConnectAsync(options);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IMqttClient>(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient)
         );
     }
 
@@ -83,7 +83,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         var mqttFactory = new MqttFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
-        var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
+        var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
         _ = await mqttClient.ConnectAsync(options);
 
@@ -98,7 +98,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IMqttClient>(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient)
         );
     }
 
@@ -108,7 +108,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         var mqttFactory = new MqttFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
-        var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
+        var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
         _ = await mqttClient.ConnectAsync(options);
 
@@ -124,8 +124,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-                services.AddKeyedSingleton<IMqttClient>("mosquitto-test-config", (_, _) => mqttClient)
+            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test-config", (_, _) => mqttClient)
         );
     }
 
@@ -135,7 +134,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         var mqttFactory = new MqttFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
-        var options = new MqttClientOptionsBuilder().WithTcpServer(_container.Host, _container.Port).Build();
+        var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
         _ = await mqttClient.ConnectAsync(options);
 
@@ -150,7 +149,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IMqttClient>(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient)
         );
     }
 }
