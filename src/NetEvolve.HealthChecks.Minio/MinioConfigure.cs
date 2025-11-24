@@ -3,9 +3,7 @@ namespace NetEvolve.HealthChecks.Minio;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-internal sealed class MinioConfigure
-    : IConfigureNamedOptions<MinioOptions>,
-        IValidateOptions<MinioOptions>
+internal sealed class MinioConfigure : IConfigureNamedOptions<MinioOptions>, IValidateOptions<MinioOptions>
 {
     private readonly IConfiguration _configuration;
 
