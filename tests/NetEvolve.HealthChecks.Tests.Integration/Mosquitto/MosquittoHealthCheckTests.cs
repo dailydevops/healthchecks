@@ -10,8 +10,9 @@ using MQTTnet.Client;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Mosquitto;
 
-[TestGroup(nameof(Mosquitto))]
 [ClassDataSource<MosquittoContainer>]
+[TestGroup(nameof(Mosquitto))]
+[TestGroup("Z05TestGroup")]
 public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
 {
     private readonly MosquittoContainer _container;
