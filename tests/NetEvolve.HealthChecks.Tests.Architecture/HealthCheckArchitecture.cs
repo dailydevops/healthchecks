@@ -63,6 +63,7 @@ internal static class HealthCheckArchitecture
             typeof(MariaDb.MariaDbHealthCheck).Assembly,
             typeof(Milvus.MilvusHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,
+            typeof(Mosquitto.MosquittoHealthCheck).Assembly,
             typeof(MySql.MySqlHealthCheck).Assembly,
             typeof(MySql.Devart.MySqlDevartHealthCheck).Assembly,
             typeof(MySql.Connector.MySqlHealthCheck).Assembly,

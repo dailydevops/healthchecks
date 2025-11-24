@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDegraded: Degraded,
+      name: TestContainerDegraded,
+      status: Degraded,
+      tags: [
+        mosquitto,
+        mqtt,
+        messaging
+      ]
+    }
+  ],
+  status: Degraded
+}
