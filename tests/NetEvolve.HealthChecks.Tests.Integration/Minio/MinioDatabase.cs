@@ -8,8 +8,6 @@ using Testcontainers.Minio;
 
 public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    internal const string AccessKey = "minioadmin";
-    internal const string SecretKey = "minioadmin";
     internal const string BucketName = "test-bucket";
 
     private readonly MinioContainer _container = new MinioBuilder().WithLogger(NullLogger.Instance).Build();
@@ -17,7 +15,14 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
 
     internal string ConnectionString => _container.GetConnectionString();
 
-    internal IMinioClient Client => _client!;
+#pragma warning disable CA2000 // Dispose objects before losing scope
+    internal IMinioClient Client =>
+        new MinioClient()
+            .WithEndpoint(_container.Hostname, _container.GetMappedPublicPort(9000))
+            .WithCredentials(_container.GetAccessKey(), _container.GetSecretKey())
+            .WithSSL(false)
+            .Build();
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
     public async ValueTask DisposeAsync()
     {
@@ -33,12 +38,7 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
         await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 
         // Create Minio client
-        var minioClientBuilder = new MinioClient()
-            .WithEndpoint(_container.Hostname, _container.GetMappedPublicPort(9000))
-            .WithCredentials(AccessKey, SecretKey)
-            .WithSSL(false);
-
-        _client = minioClientBuilder.Build();
+        _client = Client;
 
         // Create a test bucket
         var makeBucketArgs = new MakeBucketArgs().WithBucket(BucketName);

@@ -22,7 +22,15 @@ public class MinioHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMinio_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddMinio("TestContainerHealthy", options => options.Timeout = 10000),
+            healthChecks =>
+                healthChecks.AddMinio(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.BucketName = MinioDatabase.BucketName;
+                        options.Timeout = 10000;
+                    }
+                ),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_database.Client)
         );
@@ -36,6 +44,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.KeyedService = "minio-test";
+                        options.BucketName = MinioDatabase.BucketName;
                         options.Timeout = 10000;
                     }
                 ),
@@ -81,6 +90,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                                 .BucketExistsAsync(bucketExistsArgs, cancellationToken)
                                 .ConfigureAwait(false);
                         };
+                        options.BucketName = MinioDatabase.BucketName;
                         options.Timeout = 0;
                     }
                 );
@@ -111,6 +121,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Minio:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:Minio:TestContainerHealthy:BucketName", MinioDatabase.BucketName },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -128,6 +139,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 {
                     { "HealthChecks:Minio:TestContainerKeyedHealthy:KeyedService", "minio-test-config" },
                     { "HealthChecks:Minio:TestContainerKeyedHealthy:Timeout", "10000" },
+                    { "HealthChecks:Minio:TestContainerKeyedHealthy:BucketName", MinioDatabase.BucketName },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -144,6 +156,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Minio:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:Minio:TestContainerDegraded:BucketName", MinioDatabase.BucketName },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
