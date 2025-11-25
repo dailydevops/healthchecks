@@ -95,8 +95,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
             "name",
             async () =>
                 await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddMinio("TestContainerHealthy").AddMinio("TestContainerHealthy"),
+                    healthChecks => healthChecks.AddMinio("TestContainerHealthy").AddMinio("TestContainerHealthy"),
                     HealthStatus.Healthy,
                     serviceBuilder: services => services.AddSingleton(_database.Client)
                 )
