@@ -5,30 +5,30 @@ using Microsoft.Extensions.Options;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 /// <summary>
-/// Validation and configuration class for <see cref="NATSOptions"/>.
+/// Validation and configuration class for <see cref="NatsOptions"/>.
 /// </summary>
-internal sealed class NATSConfigure : IConfigureNamedOptions<NATSOptions>, IValidateOptions<NATSOptions>
+internal sealed class NatsConfigure : IConfigureNamedOptions<NatsOptions>, IValidateOptions<NatsOptions>
 {
     private readonly IConfiguration _configuration;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NATSConfigure"/> class.
+    /// Initializes a new instance of the <see cref="NatsConfigure"/> class.
     /// </summary>
     /// <param name="configuration">The <see cref="IConfiguration"/> instance used to bind configuration values.</param>
-    public NATSConfigure(IConfiguration configuration) => _configuration = configuration;
+    public NatsConfigure(IConfiguration configuration) => _configuration = configuration;
 
     /// <inheritdoc />
-    public void Configure(string? name, NATSOptions options)
+    public void Configure(string? name, NatsOptions options)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:NATS:{name}", options);
     }
 
     /// <inheritdoc />
-    public void Configure(NATSOptions options) => Configure(Options.DefaultName, options);
+    public void Configure(NatsOptions options) => Configure(Options.DefaultName, options);
 
     /// <inheritdoc />
-    public ValidateOptionsResult Validate(string? name, NATSOptions options)
+    public ValidateOptionsResult Validate(string? name, NatsOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

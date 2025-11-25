@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.Nats;
 
-public sealed class NATSContainer : IAsyncInitializer, IAsyncDisposable
+public sealed class NatsContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly NatsContainer _container = new NatsBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly Testcontainers.Nats.NatsContainer _container = new NatsBuilder()
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _container.GetConnectionString();
 

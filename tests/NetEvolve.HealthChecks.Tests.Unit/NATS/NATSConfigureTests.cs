@@ -21,8 +21,8 @@ public sealed class NATSConfigureTests
 
         var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
 
-        var options = new NATSOptions();
-        var configure = new NATSConfigure(configuration);
+        var options = new NatsOptions();
+        var configure = new NatsConfigure(configuration);
 
         // Act
         configure.Configure("TestName", options);
@@ -40,8 +40,8 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var options = new NATSOptions();
-        var configure = new NATSConfigure(configuration);
+        var options = new NatsOptions();
+        var configure = new NatsConfigure(configuration);
         const string? name = null;
 
         // Act & Assert
@@ -53,8 +53,8 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var options = new NATSOptions();
-        var configure = new NATSConfigure(configuration);
+        var options = new NatsOptions();
+        var configure = new NatsConfigure(configuration);
         var name = string.Empty;
 
         // Act & Assert
@@ -66,8 +66,8 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var options = new NATSOptions { Timeout = 100 };
-        var configure = new NATSConfigure(configuration);
+        var options = new NatsOptions { Timeout = 100 };
+        var configure = new NatsConfigure(configuration);
 
         // Act
         var result = configure.Validate("TestName", options);
@@ -81,8 +81,8 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var options = new NATSOptions();
-        var configure = new NATSConfigure(configuration);
+        var options = new NatsOptions();
+        var configure = new NatsConfigure(configuration);
 
         // Act
         var result = configure.Validate(null, options);
@@ -100,8 +100,8 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var options = new NATSOptions();
-        var configure = new NATSConfigure(configuration);
+        var options = new NatsOptions();
+        var configure = new NatsConfigure(configuration);
 
         // Act
         var result = configure.Validate("", options);
@@ -119,7 +119,7 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var configure = new NATSConfigure(configuration);
+        var configure = new NatsConfigure(configuration);
 
         // Act
         var result = configure.Validate("TestName", null!);
@@ -137,11 +137,11 @@ public sealed class NATSConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
-        var options = new NATSOptions
+        var options = new NatsOptions
         {
             Timeout = -2, // -1 is valid (Infinite), but -2 is not
         };
-        var configure = new NATSConfigure(configuration);
+        var configure = new NatsConfigure(configuration);
 
         // Act
         var result = configure.Validate("TestName", options);

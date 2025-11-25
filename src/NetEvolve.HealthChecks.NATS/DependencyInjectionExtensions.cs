@@ -18,7 +18,7 @@ public static partial class DependencyInjectionExtensions
     /// Add a health check for NATS.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="NATSHealthCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="NatsHealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <returns>The <see cref="IHealthChecksBuilder"/> for chaining.</returns>
@@ -27,10 +27,10 @@ public static partial class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddNATS(
+    public static IHealthChecksBuilder AddNats(
         this IHealthChecksBuilder builder,
         string name,
-        Action<NATSOptions>? options = null,
+        Action<NatsOptions>? options = null,
         params string[] tags
     )
     {
@@ -38,27 +38,27 @@ public static partial class DependencyInjectionExtensions
         ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
-        if (!builder.IsServiceTypeRegistered<NATSCheckMarker>())
+        if (!builder.IsServiceTypeRegistered<NatsCheckMarker>())
         {
             _ = builder
-                .Services.AddSingleton<NATSCheckMarker>()
-                .AddSingleton<NATSHealthCheck>()
-                .ConfigureOptions<NATSConfigure>();
+                .Services.AddSingleton<NatsCheckMarker>()
+                .AddSingleton<NatsHealthCheck>()
+                .ConfigureOptions<NatsConfigure>();
         }
 
-        builder.ThrowIfNameIsAlreadyUsed<NATSHealthCheck>(name);
+        builder.ThrowIfNameIsAlreadyUsed<NatsHealthCheck>(name);
 
         if (options is not null)
         {
             _ = builder.Services.Configure(name, options);
         }
 
-        return builder.AddCheck<NATSHealthCheck>(
+        return builder.AddCheck<NatsHealthCheck>(
             name,
             HealthStatus.Unhealthy,
             _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
-    private sealed partial class NATSCheckMarker;
+    private sealed partial class NatsCheckMarker;
 }

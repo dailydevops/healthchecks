@@ -11,8 +11,8 @@ using SourceGenerator.Attributes;
 /// <summary>
 /// Health check implementation for NATS, using the <c>NATS.Client</c> package.
 /// </summary>
-[ConfigurableHealthCheck(typeof(NATSOptions))]
-internal sealed partial class NATSHealthCheck
+[ConfigurableHealthCheck(typeof(NatsOptions))]
+internal sealed partial class NatsHealthCheck
 {
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -20,7 +20,7 @@ internal sealed partial class NATSHealthCheck
 #pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus _,
 #pragma warning restore S1172 // Unused method parameters should be removed
-        NATSOptions options,
+        NatsOptions options,
         CancellationToken cancellationToken
     )
     {

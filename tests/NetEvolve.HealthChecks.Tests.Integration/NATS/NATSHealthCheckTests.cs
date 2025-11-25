@@ -11,12 +11,12 @@ using NetEvolve.HealthChecks.NATS;
 
 [TestGroup(nameof(NATS))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<NATSContainer>(Shared = SharedType.PerTestSession)]
+[ClassDataSource<NatsContainer>(Shared = SharedType.PerTestSession)]
 public sealed class NATSHealthCheckTests : HealthCheckTestBase
 {
-    private readonly NATSContainer _container;
+    private readonly NatsContainer _container;
 
-    public NATSHealthCheckTests(NATSContainer container) => _container = container;
+    public NATSHealthCheckTests(NatsContainer container) => _container = container;
 
     [Test]
     public async Task AddNATS_UseOptions_Healthy()
@@ -25,7 +25,7 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
-            healthChecks => healthChecks.AddNATS("TestContainerHealthy", options => options.Timeout = 10000),
+            healthChecks => healthChecks.AddNats("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(connection)
         );
@@ -39,7 +39,7 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
 
         await RunAndVerify(
             healthChecks =>
-                healthChecks.AddNATS(
+                healthChecks.AddNats(
                     "TestContainerKeyedHealthy",
                     options =>
                     {
@@ -59,7 +59,7 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
-            healthChecks => healthChecks.AddNATS("TestContainerDegraded", options => options.Timeout = 0),
+            healthChecks => healthChecks.AddNats("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
             serviceBuilder: services => services.AddSingleton(connection)
         );
@@ -72,7 +72,7 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
-            healthChecks => healthChecks.AddNATS("TestContainerHealthy"),
+            healthChecks => healthChecks.AddNats("TestContainerHealthy"),
             HealthStatus.Healthy,
             config =>
             {
@@ -93,7 +93,7 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
-            healthChecks => healthChecks.AddNATS("TestContainerKeyedHealthy"),
+            healthChecks => healthChecks.AddNats("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
             config =>
             {
@@ -115,7 +115,7 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
-            healthChecks => healthChecks.AddNATS("TestContainerDegraded"),
+            healthChecks => healthChecks.AddNats("TestContainerDegraded"),
             HealthStatus.Degraded,
             config =>
             {

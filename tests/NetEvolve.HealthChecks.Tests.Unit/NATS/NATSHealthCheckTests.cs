@@ -18,9 +18,9 @@ public sealed class NATSHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
         // Arrange
-        var options = new NATSOptions { KeyedService = "test-key", Timeout = 100 };
+        var options = new NatsOptions { KeyedService = "test-key", Timeout = 100 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that returns success
@@ -31,7 +31,7 @@ public sealed class NATSHealthCheckTests
         _ = serviceCollection.AddKeyedSingleton("test-key", mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new NATSHealthCheck(serviceProvider, optionsMonitor);
+        var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -52,9 +52,9 @@ public sealed class NATSHealthCheckTests
     public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService()
     {
         // Arrange
-        var options = new NATSOptions { KeyedService = null, Timeout = 1000 };
+        var options = new NatsOptions { KeyedService = null, Timeout = 1000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that returns success
@@ -65,7 +65,7 @@ public sealed class NATSHealthCheckTests
         _ = serviceCollection.AddSingleton(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new NATSHealthCheck(serviceProvider, optionsMonitor);
+        var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -86,20 +86,20 @@ public sealed class NATSHealthCheckTests
     public async Task CheckHealthAsync_WhenConnectionClosed_ReturnsDegraded()
     {
         // Arrange
-        var options = new NATSOptions { KeyedService = null, Timeout = 1000 };
+        var options = new NatsOptions { KeyedService = null, Timeout = 1000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that returns closed state
         var mockConnection = Substitute.For<IConnection>();
-        mockConnection.State.Returns(ConnState.CLOSED);
+        _ = mockConnection.State.Returns(ConnState.CLOSED);
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new NATSHealthCheck(serviceProvider, optionsMonitor);
+        var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
@@ -120,20 +120,20 @@ public sealed class NATSHealthCheckTests
     public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded()
     {
         // Arrange
-        var options = new NATSOptions
+        var options = new NatsOptions
         {
             KeyedService = null,
             Timeout = 5, // Very short timeout to force a timeout
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NATSOptions>>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that delays long enough to cause timeout
         var mockConnection = Substitute.For<IConnection>();
 
         // Configure the mock so that accessing State takes longer than the timeout
-        mockConnection.State.Returns(_ =>
+        _ = mockConnection.State.Returns(_ =>
         {
             Thread.Sleep(200); // Delay to force timeout
             return ConnState.CONNECTED;
@@ -143,7 +143,7 @@ public sealed class NATSHealthCheckTests
         _ = serviceCollection.AddSingleton(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var healthCheck = new NATSHealthCheck(serviceProvider, optionsMonitor);
+        var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),

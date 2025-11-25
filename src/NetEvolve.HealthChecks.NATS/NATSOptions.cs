@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.HealthChecks.NATS;
 
 /// <summary>
-/// Configuration options for the <see cref="NATSHealthCheck"/>.
+/// Configuration options for the <see cref="NatsHealthCheck"/>.
 /// </summary>
-public sealed record NATSOptions
+public sealed record NatsOptions
 {
     /// <summary>
     /// Gets or sets the key used to resolve the <c>IConnection</c> from the service provider.

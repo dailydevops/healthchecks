@@ -19,7 +19,7 @@ public class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddNATS("Test");
+        void Act() => builder.AddNats("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -35,7 +35,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddNATS(name!);
+        void Act() => builder.AddNats(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
@@ -51,7 +51,7 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddNATS(name);
+        void Act() => builder.AddNats(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -67,7 +67,7 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddNATS("Test", tags: tags);
+        void Act() => builder.AddNats("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
@@ -83,7 +83,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        void Act() => builder.AddNATS(name).AddNATS(name);
+        void Act() => builder.AddNats(name).AddNats(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);
@@ -99,7 +99,7 @@ public class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        _ = builder.AddNATS(name);
+        _ = builder.AddNats(name);
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
@@ -120,11 +120,11 @@ public class DependencyInjectionExtensionsTests
         const int timeout = 200;
 
         // Act
-        _ = builder.AddNATS(name, options => options.Timeout = timeout);
+        _ = builder.AddNats(name, options => options.Timeout = timeout);
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
-        var optionsSnapshot = serviceProvider.GetService<IOptionsSnapshot<NATSOptions>>();
+        var optionsSnapshot = serviceProvider.GetService<IOptionsSnapshot<NatsOptions>>();
         var options = optionsSnapshot?.Get(name);
 
         using (Assert.Multiple())
@@ -145,7 +145,7 @@ public class DependencyInjectionExtensionsTests
         var customTags = new[] { "custom1", "custom2" };
 
         // Act
-        _ = builder.AddNATS(name, tags: customTags);
+        _ = builder.AddNats(name, tags: customTags);
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
@@ -176,7 +176,7 @@ public class DependencyInjectionExtensionsTests
         const string name2 = "Test2";
 
         // Act
-        _ = builder.AddNATS(name1).AddNATS(name2);
+        _ = builder.AddNats(name1).AddNats(name2);
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
