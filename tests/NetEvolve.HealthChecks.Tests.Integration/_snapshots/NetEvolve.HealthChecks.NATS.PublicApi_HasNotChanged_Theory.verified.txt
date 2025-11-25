@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.NATS
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddNATS(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.NATS.NATSOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class NATSOptions : System.IEquatable<NetEvolve.HealthChecks.NATS.NATSOptions>
+    {
+        public NATSOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}
