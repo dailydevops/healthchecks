@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: The Minio command did not return a valid result.,
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        minio,
+        s3,
+        storage
+      ]
+    }
+  ],
+  status: Unhealthy
+}

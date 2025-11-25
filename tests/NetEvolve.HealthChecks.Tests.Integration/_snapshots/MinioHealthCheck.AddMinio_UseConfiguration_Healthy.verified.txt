@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TestContainerHealthy: Healthy,
+      name: TestContainerHealthy,
+      status: Healthy,
+      tags: [
+        minio,
+        s3,
+        storage
+      ]
+    }
+  ],
+  status: Healthy
+}

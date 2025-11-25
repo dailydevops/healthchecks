@@ -1,0 +1,19 @@
+﻿{
+  results: [
+    {
+      description: TestContainerInvalidResult: Unexpected error.,
+      exception: {
+        message: The bucket name cannot be null or whitespace.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: TestContainerInvalidResult,
+      status: Unhealthy,
+      tags: [
+        minio,
+        s3,
+        storage
+      ]
+    }
+  ],
+  status: Unhealthy
+}
