@@ -13,15 +13,11 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
     internal const string BucketName = "test-bucket";
 
     private readonly MinioContainer _container = new MinioBuilder().WithLogger(NullLogger.Instance).Build();
-#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-#pragma warning disable CA1859 // Use concrete types when possible for improved performance
-    private IMinioClient _client = default!;
-#pragma warning restore CA1859 // Use concrete types when possible for improved performance
-#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
+    private IMinioClient? _client;
 
     internal string ConnectionString => _container.GetConnectionString();
 
-    internal IMinioClient Client => _client;
+    internal IMinioClient Client => _client!;
 
     public async ValueTask DisposeAsync()
     {
@@ -29,7 +25,7 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
         await _container.DisposeAsync().ConfigureAwait(false);
     }
 
-#pragma warning disable CA2000 // Dispose objects before losing scope - handled by DisposeAsync
+#pragma warning disable CA2000 // MinioClient lifetime managed by class, disposed in DisposeAsync
     public async Task InitializeAsync()
     {
         var cancellationToken = TestContext.Current!.Execution.CancellationToken;
