@@ -1,40 +1,25 @@
 namespace NetEvolve.HealthChecks.Minio;
 
-using Amazon;
-using Amazon.Runtime;
+using global::Minio;
 
 /// <summary>
-/// Represents configuration options for the Minio health check.
+/// Options for <see cref="MinioHealthCheck"/>
 /// </summary>
 public sealed record MinioOptions
 {
     /// <summary>
-    /// Gets or sets the AWS access key used for authentication.
+    /// Gets or sets the key used to resolve the <c>IMinioClient</c> from the service provider.
     /// </summary>
-    public string? AccessKey { get; set; }
-
-    /// <summary>
-    /// Gets or sets the creation mode for the Minio client.
-    /// </summary>
-    public CreationMode? Mode { get; set; }
+    /// <remarks>
+    /// When specified, the health check will resolve the <c>IMinioClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>IMinioClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// </remarks>
+    public string? KeyedService { get; set; }
 
     /// <summary>
     /// Gets or sets the name of the bucket.
     /// </summary>
     public string? BucketName { get; set; }
-
-    /// <inheritdoc cref="ClientConfig.RegionEndpoint"/>
-    public RegionEndpoint? RegionEndpoint { get; set; }
-
-    /// <summary>
-    /// Gets or sets the AWS secret key used for authentication.
-    /// </summary>
-    public string? SecretKey { get; set; }
-
-#pragma warning disable CA1056 // URI-like properties should not be strings
-    /// <inheritdoc cref="ClientConfig.ServiceURL"/>
-    public string? ServiceUrl { get; set; }
-#pragma warning restore CA1056 // URI-like properties should not be strings
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds for the health check operation. Default is 100 ms.
@@ -42,13 +27,9 @@ public sealed record MinioOptions
     public int Timeout { get; set; } = 100;
 
     /// <summary>
-    /// Gets the AWS credentials based on the configured mode.
+    /// The command to execute against the Minio service.
     /// </summary>
-    /// <returns>The AWS credentials or <c>null</c> if not configured.</returns>
-    internal AWSCredentials? GetCredentials() =>
-        Mode switch
-        {
-            CreationMode.BasicAuthentication => new BasicAWSCredentials(AccessKey, SecretKey),
-            _ => null,
-        };
+    /// <remarks>For internal use only.</remarks>
+    public Func<IMinioClient, string, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
+        MinioHealthCheck.DefaultCommandAsync;
 }

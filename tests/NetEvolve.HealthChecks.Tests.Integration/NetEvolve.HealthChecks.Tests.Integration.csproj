@@ -42,6 +42,7 @@
     <PackageReference Include="LiteDB" />
     <PackageReference Include="Microsoft.Azure.Kusto.Data" />
     <PackageReference Include="Milvus.Client" />
+    <PackageReference Include="Minio" />
     <PackageReference Include="Microsoft.Data.SqlClient" />
     <PackageReference Include="Microsoft.Data.Sqlite" />
     <PackageReference Include="MongoDB.Driver" />

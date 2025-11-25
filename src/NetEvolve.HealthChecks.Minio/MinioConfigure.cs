@@ -41,23 +41,6 @@ internal sealed class MinioConfigure : IConfigureNamedOptions<MinioOptions>, IVa
             return ValidateOptionsResult.Fail("The bucket name cannot be null or whitespace.");
         }
 
-        if (string.IsNullOrWhiteSpace(options.ServiceUrl))
-        {
-            return ValidateOptionsResult.Fail("The service URL cannot be null or whitespace.");
-        }
-
-        if (options.Mode is CreationMode.BasicAuthentication)
-        {
-            if (string.IsNullOrWhiteSpace(options.AccessKey))
-            {
-                return ValidateOptionsResult.Fail("The access key cannot be null or whitespace.");
-            }
-            if (string.IsNullOrWhiteSpace(options.SecretKey))
-            {
-                return ValidateOptionsResult.Fail("The secret key cannot be null or whitespace.");
-            }
-        }
-
         return ValidateOptionsResult.Success;
     }
 }

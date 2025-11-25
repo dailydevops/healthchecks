@@ -3,7 +3,9 @@ namespace NetEvolve.HealthChecks.Tests.Integration.Minio;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::Minio;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Minio;
@@ -20,22 +22,25 @@ public class MinioHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMinio_UseOptions_Healthy() =>
         await RunAndVerify(
+            healthChecks => healthChecks.AddMinio("TestContainerHealthy", options => options.Timeout = 10000),
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddSingleton(_database.Client)
+        );
+
+    [Test]
+    public async Task AddMinio_UseOptionsWithKeyedService_Healthy() =>
+        await RunAndVerify(
             healthChecks =>
-            {
-                _ = healthChecks.AddMinio(
-                    "TestContainerHealthy",
+                healthChecks.AddMinio(
+                    "TestContainerKeyedHealthy",
                     options =>
                     {
-                        options.AccessKey = MinioDatabase.AccessKey;
-                        options.SecretKey = MinioDatabase.SecretKey;
-                        options.ServiceUrl = _database.ConnectionString;
-                        options.BucketName = MinioDatabase.BucketName;
-                        options.Mode = CreationMode.BasicAuthentication;
+                        options.KeyedService = "minio-test";
                         options.Timeout = 10000;
                     }
-                );
-            },
-            HealthStatus.Healthy
+                ),
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddKeyedSingleton("minio-test", (_, _) => _database.Client)
         );
 
     [Test]
@@ -47,15 +52,13 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.AccessKey = MinioDatabase.AccessKey;
-                        options.SecretKey = MinioDatabase.SecretKey;
-                        options.ServiceUrl = _database.ConnectionString;
                         options.BucketName = "invalid-bucket";
-                        options.Mode = CreationMode.BasicAuthentication;
+                        options.Timeout = 10000;
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            serviceBuilder: services => services.AddSingleton(_database.Client)
         );
 
     [Test]
@@ -67,16 +70,23 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.AccessKey = MinioDatabase.AccessKey;
-                        options.SecretKey = MinioDatabase.SecretKey;
-                        options.ServiceUrl = _database.ConnectionString;
-                        options.BucketName = MinioDatabase.BucketName;
+                        options.CommandAsync = async (client, bucketName, cancellationToken) =>
+                        {
+                            await Task.Delay(1000, cancellationToken);
+
+                            var bucketExistsArgs = new global::Minio.DataModel.Args.BucketExistsArgs().WithBucket(
+                                bucketName
+                            );
+                            return await client
+                                .BucketExistsAsync(bucketExistsArgs, cancellationToken)
+                                .ConfigureAwait(false);
+                        };
                         options.Timeout = 0;
-                        options.Mode = CreationMode.BasicAuthentication;
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            serviceBuilder: services => services.AddSingleton(_database.Client)
         );
 
     [Test]
@@ -86,20 +96,9 @@ public class MinioHealthCheckTests : HealthCheckTestBase
             async () =>
                 await RunAndVerify(
                     healthChecks =>
-                        healthChecks
-                            .AddMinio(
-                                "TestContainerHealthy",
-                                options =>
-                                {
-                                    options.AccessKey = MinioDatabase.AccessKey;
-                                    options.SecretKey = MinioDatabase.SecretKey;
-                                    options.ServiceUrl = _database.ConnectionString;
-                                    options.BucketName = MinioDatabase.BucketName;
-                                    options.Mode = CreationMode.BasicAuthentication;
-                                }
-                            )
-                            .AddMinio("TestContainerHealthy"),
-                    HealthStatus.Healthy
+                        healthChecks.AddMinio("TestContainerHealthy").AddMinio("TestContainerHealthy"),
+                    HealthStatus.Healthy,
+                    serviceBuilder: services => services.AddSingleton(_database.Client)
                 )
         );
 
@@ -112,16 +111,28 @@ public class MinioHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:Minio:TestContainerHealthy:AccessKey"] = MinioDatabase.AccessKey,
-                    ["HealthChecks:Minio:TestContainerHealthy:SecretKey"] = MinioDatabase.SecretKey,
-                    ["HealthChecks:Minio:TestContainerHealthy:ServiceUrl"] = _database.ConnectionString,
-                    ["HealthChecks:Minio:TestContainerHealthy:BucketName"] = MinioDatabase.BucketName,
-                    ["HealthChecks:Minio:TestContainerHealthy:Mode"] = "BasicAuthentication",
-                    ["HealthChecks:Minio:TestContainerHealthy:Timeout"] = "10000",
+                    { "HealthChecks:Minio:TestContainerHealthy:Timeout", "10000" },
                 };
-
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            serviceBuilder: services => services.AddSingleton(_database.Client)
+        );
+
+    [Test]
+    public async Task AddMinio_UseConfigurationWithKeyedService_Healthy() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddMinio("TestContainerKeyedHealthy"),
+            HealthStatus.Healthy,
+            config =>
+            {
+                var values = new Dictionary<string, string?>
+                {
+                    { "HealthChecks:Minio:TestContainerKeyedHealthy:KeyedService", "minio-test-config" },
+                    { "HealthChecks:Minio:TestContainerKeyedHealthy:Timeout", "10000" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            },
+            serviceBuilder: services => services.AddKeyedSingleton("minio-test-config", (_, _) => _database.Client)
         );
 
     [Test]
@@ -133,36 +144,11 @@ public class MinioHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:Minio:TestContainerDegraded:AccessKey"] = MinioDatabase.AccessKey,
-                    ["HealthChecks:Minio:TestContainerDegraded:SecretKey"] = MinioDatabase.SecretKey,
-                    ["HealthChecks:Minio:TestContainerDegraded:ServiceUrl"] = _database.ConnectionString,
-                    ["HealthChecks:Minio:TestContainerDegraded:BucketName"] = MinioDatabase.BucketName,
-                    ["HealthChecks:Minio:TestContainerDegraded:Mode"] = "BasicAuthentication",
-                    ["HealthChecks:Minio:TestContainerDegraded:Timeout"] = "0",
+                    { "HealthChecks:Minio:TestContainerDegraded:Timeout", "0" },
                 };
-
                 _ = config.AddInMemoryCollection(values);
-            }
-        );
-
-    [Test]
-    public async Task AddMinio_UseConfiguration_WhenBucketInvalid_Unhealthy() =>
-        await RunAndVerify(
-            healthChecks => healthChecks.AddMinio("TestContainerUnhealthy"),
-            HealthStatus.Unhealthy,
-            config =>
-            {
-                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
-                {
-                    ["HealthChecks:Minio:TestContainerUnhealthy:AccessKey"] = MinioDatabase.AccessKey,
-                    ["HealthChecks:Minio:TestContainerUnhealthy:SecretKey"] = MinioDatabase.SecretKey,
-                    ["HealthChecks:Minio:TestContainerUnhealthy:ServiceUrl"] = _database.ConnectionString,
-                    ["HealthChecks:Minio:TestContainerUnhealthy:BucketName"] = "invalid-bucket",
-                    ["HealthChecks:Minio:TestContainerUnhealthy:Mode"] = "BasicAuthentication",
-                };
-
-                _ = config.AddInMemoryCollection(values);
-            }
+            },
+            serviceBuilder: services => services.AddSingleton(_database.Client)
         );
 
     [Test]
@@ -174,39 +160,24 @@ public class MinioHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:Minio:TestNoValues:AccessKey"] = MinioDatabase.AccessKey,
-                    ["HealthChecks:Minio:TestNoValues:SecretKey"] = MinioDatabase.SecretKey,
-                    ["HealthChecks:Minio:TestNoValues:ServiceUrl"] = _database.ConnectionString,
-                    ["HealthChecks:Minio:TestNoValues:BucketName"] = MinioDatabase.BucketName,
-                    ["HealthChecks:Minio:TestNoValues:Mode"] = "BasicAuthentication",
-                    ["HealthChecks:Minio:TestNoValues:Timeout"] = "-2",
+                    { "HealthChecks:Minio:TestNoValues:Timeout", "-2" },
                 };
-
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            serviceBuilder: services => services.AddSingleton(_database.Client)
         );
 
     [Test]
-    public async Task AddMinio_UseConfiguration_WithAdditionalTags()
-    {
-        string[] tags = ["storage", "custom-tag"];
+    public async Task AddMinio_UseOptions_CommandReturnsFalse_UnhealthyWithMessage() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddMinio("TestContainerWithTags", tags: tags),
-            HealthStatus.Healthy,
-            config =>
+            healthChecks =>
             {
-                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
-                {
-                    ["HealthChecks:Minio:TestContainerWithTags:AccessKey"] = MinioDatabase.AccessKey,
-                    ["HealthChecks:Minio:TestContainerWithTags:SecretKey"] = MinioDatabase.SecretKey,
-                    ["HealthChecks:Minio:TestContainerWithTags:ServiceUrl"] = _database.ConnectionString,
-                    ["HealthChecks:Minio:TestContainerWithTags:BucketName"] = MinioDatabase.BucketName,
-                    ["HealthChecks:Minio:TestContainerWithTags:Mode"] = "BasicAuthentication",
-                    ["HealthChecks:Minio:TestContainerWithTags:Timeout"] = "10000",
-                };
-
-                _ = config.AddInMemoryCollection(values);
-            }
+                _ = healthChecks.AddMinio(
+                    "TestContainerInvalidResult",
+                    options => options.CommandAsync = (_, _, _) => Task.FromResult(false)
+                );
+            },
+            HealthStatus.Unhealthy,
+            serviceBuilder: services => services.AddSingleton(_database.Client)
         );
-    }
 }
