@@ -58,6 +58,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Connector\NetEvolve.HealthChecks.MySql.Connector.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql.Devart\NetEvolve.HealthChecks.MySql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MySql\NetEvolve.HealthChecks.MySql.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.NATS\NetEvolve.HealthChecks.NATS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Neo4j\NetEvolve.HealthChecks.Neo4j.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql.Devart\NetEvolve.HealthChecks.Npgsql.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Npgsql\NetEvolve.HealthChecks.Npgsql.csproj" />
