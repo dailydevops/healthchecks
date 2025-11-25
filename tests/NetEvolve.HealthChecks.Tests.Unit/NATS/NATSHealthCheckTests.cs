@@ -133,12 +133,11 @@ public sealed class NATSHealthCheckTests
         var mockConnection = Substitute.For<IConnection>();
 
         // Configure the mock so that accessing State takes longer than the timeout
-        mockConnection
-            .State.Returns(_ =>
-            {
-                Thread.Sleep(200); // Delay to force timeout
-                return ConnState.CONNECTED;
-            });
+        mockConnection.State.Returns(_ =>
+        {
+            Thread.Sleep(200); // Delay to force timeout
+            return ConnState.CONNECTED;
+        });
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(mockConnection);

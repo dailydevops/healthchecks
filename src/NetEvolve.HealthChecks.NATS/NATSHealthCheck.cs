@@ -28,8 +28,10 @@ internal sealed partial class NATSHealthCheck
             ? _serviceProvider.GetRequiredService<IConnection>()
             : _serviceProvider.GetRequiredKeyedService<IConnection>(options.KeyedService);
 
-        var (isTimelyResponse, isConnected) = await Task
-            .Run(() => connection.State == ConnState.CONNECTED, cancellationToken)
+        var (isTimelyResponse, isConnected) = await Task.Run(
+                () => connection.State == ConnState.CONNECTED,
+                cancellationToken
+            )
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
