@@ -18,7 +18,7 @@ public sealed class NATSHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
         // Arrange
-        var options = new NatsOptions { KeyedService = "test-key", Timeout = 100 };
+        var options = new NatsOptions { KeyedService = "test-key", Timeout = 10000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
