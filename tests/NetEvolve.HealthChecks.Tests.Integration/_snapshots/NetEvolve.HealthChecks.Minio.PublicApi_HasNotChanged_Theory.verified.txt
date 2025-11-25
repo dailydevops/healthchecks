@@ -1,0 +1,15 @@
+﻿namespace NetEvolve.HealthChecks.Minio
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddMinio([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Minio.MinioOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class MinioOptions : System.IEquatable<NetEvolve.HealthChecks.Minio.MinioOptions>
+    {
+        public MinioOptions() { }
+        public string? BucketName { get; set; }
+        public System.Func<Minio.IMinioClient, string, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}
