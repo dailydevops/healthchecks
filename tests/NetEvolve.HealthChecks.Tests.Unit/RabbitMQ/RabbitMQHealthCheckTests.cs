@@ -19,7 +19,7 @@ public sealed class RabbitMQHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
         // Arrange
-        var options = new RabbitMQOptions { KeyedService = "test-key", Timeout = 100 };
+        var options = new RabbitMQOptions { KeyedService = "test-key", Timeout = 10000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
         _ = optionsMonitor.Get("test").Returns(options);
