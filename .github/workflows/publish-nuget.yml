@@ -17,7 +17,7 @@ concurrency:
 jobs:
   nuget:
     name: Publish
-    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.actor != 'dependabot[bot]' || github.actor == 'renovate[bot]') }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' }}
     uses: dailydevops/pipelines/.github/workflows/publish-nuget.yml@1.2.27
     with:
       workflowName: ${{ github.event.workflow_run.name }}
