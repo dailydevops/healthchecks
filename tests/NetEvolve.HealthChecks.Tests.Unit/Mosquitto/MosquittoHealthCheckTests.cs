@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Mosquitto;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Mosquitto;
 
 using System;
 using System.Threading;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using MQTTnet.Client;
+using MQTTnet;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Mosquitto;
 using NSubstitute;

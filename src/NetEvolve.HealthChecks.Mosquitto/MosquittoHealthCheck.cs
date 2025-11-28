@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using MQTTnet.Client;
+using MQTTnet;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
