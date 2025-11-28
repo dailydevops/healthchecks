@@ -14,7 +14,7 @@ public sealed record BigtableOptions
     public int Timeout { get; set; } = 100;
 
     /// <summary>
-    /// Gets or sets the keyed service name for retrieving the <see cref="Google.Cloud.Bigtable.Admin.V2.BigtableInstanceAdminClient"/> instance.
+    /// Gets or sets the keyed service name for retrieving the <see cref="Google.Cloud.Bigtable.Admin.V2.BigtableTableAdminClient"/> instance.
     /// </summary>
     /// <value>
     /// The keyed service name, or <c>null</c> if using the default service registration.
@@ -29,4 +29,12 @@ public sealed record BigtableOptions
     /// (BIGTABLE_PROJECT_ID, GCP_PROJECT, GOOGLE_CLOUD_PROJECT) or defaults to "test-project".
     /// </value>
     public string? ProjectName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Bigtable Instance ID.
+    /// </summary>
+    /// <value>
+    /// The instance ID. If not specified, uses "_" as a placeholder for connectivity checks.
+    /// </value>
+    public string? InstanceId { get; set; }
 }

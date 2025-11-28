@@ -13,11 +13,11 @@ public sealed class BigtableDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly BigtableContainer _container = new BigtableBuilder().WithLogger(NullLogger.Instance).Build();
 
-    private BigtableInstanceAdminClient? _client;
+    private BigtableTableAdminClient? _client;
 
     public const string ProjectId = "test-project";
 
-    public BigtableInstanceAdminClient Client =>
+    public BigtableTableAdminClient Client =>
         _client ?? throw new InvalidOperationException("Client not initialized");
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
@@ -31,7 +31,7 @@ public sealed class BigtableDatabase : IAsyncInitializer, IAsyncDisposable
         var uri = new Uri(fullEndpoint);
 
         // Create Bigtable client configured for emulator
-        var clientBuilder = new BigtableInstanceAdminClientBuilder
+        var clientBuilder = new BigtableTableAdminClientBuilder
         {
             Endpoint = $"{uri.Host}:{uri.Port}",
             ChannelCredentials = ChannelCredentials.Insecure,
