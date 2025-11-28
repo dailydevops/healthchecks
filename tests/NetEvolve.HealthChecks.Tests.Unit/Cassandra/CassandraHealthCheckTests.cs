@@ -1,6 +1,5 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

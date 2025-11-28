@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Kusto.Data;
-using global::Kusto.Data.Common;
 using global::Kusto.Data.Net.Client;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;

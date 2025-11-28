@@ -1,6 +1,5 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Kusto;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.Kusto;
 
-using System;
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Kusto;

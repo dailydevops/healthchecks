@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MySql.Devart;
-using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
 [TestGroup("Z00TestGroup")]
