@@ -17,8 +17,7 @@ public sealed class BigtableDatabase : IAsyncInitializer, IAsyncDisposable
 
     public const string ProjectId = "test-project";
 
-    public BigtableTableAdminClient Client =>
-        _client ?? throw new InvalidOperationException("Client not initialized");
+    public BigtableTableAdminClient Client => _client ?? throw new InvalidOperationException("Client not initialized");
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
