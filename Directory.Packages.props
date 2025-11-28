@@ -54,6 +54,7 @@
     <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.2" />
     <PackageVersion Include="EventStore.Client.Grpc.Streams" Version="23.3.9" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.4" />
+    <PackageVersion Include="Google.Cloud.Bigtable.Admin.V2" Version="3.30.0" />
     <PackageVersion Include="Google.Cloud.Firestore" Version="3.13.0" />
     <PackageVersion Include="Google.Cloud.PubSub.V1" Version="3.30.0" />
     <PackageVersion Include="JanusGraph.Net" Version="1.1.0" />
@@ -111,6 +112,7 @@
     <PackageVersion Include="Testcontainers.ActiveMq" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.ArangoDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Azurite" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.Bigtable" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Cassandra" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.ClickHouse" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.CockroachDb" Version="$(VersionTestContainers)" />

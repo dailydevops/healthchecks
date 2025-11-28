@@ -1,0 +1,15 @@
+﻿namespace NetEvolve.HealthChecks.GCP.Bigtable
+{
+    public sealed class BigtableOptions : System.IEquatable<NetEvolve.HealthChecks.GCP.Bigtable.BigtableOptions>
+    {
+        public BigtableOptions() { }
+        public string? InstanceId { get; set; }
+        public string? KeyedService { get; set; }
+        public string? ProjectName { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddBigtable([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.GCP.Bigtable.BigtableOptions>? options = null, params string[] tags) { }
+    }
+}
