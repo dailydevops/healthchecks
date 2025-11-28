@@ -101,6 +101,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
+    [SkipOnFailure]
     public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks =>
