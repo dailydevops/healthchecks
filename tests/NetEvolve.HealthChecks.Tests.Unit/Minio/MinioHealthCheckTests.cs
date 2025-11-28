@@ -1,6 +1,5 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Minio;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Minio;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Minio;

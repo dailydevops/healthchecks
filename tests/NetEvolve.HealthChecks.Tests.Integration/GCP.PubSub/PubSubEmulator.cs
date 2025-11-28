@@ -2,7 +2,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Google.Api.Gax;
 using Google.Cloud.PubSub.V1;
 using Grpc.Core;
 using Microsoft.Extensions.Logging.Abstractions;

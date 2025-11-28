@@ -1,8 +1,7 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.MySql.Devart;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.MySql.Devart;
 
 using System;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MySql.Devart;
 
