@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.AWS.SNS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = InstanceSharedType.AWS)]
+[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
 public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
 {
     private readonly LocalStackInstance _instance;

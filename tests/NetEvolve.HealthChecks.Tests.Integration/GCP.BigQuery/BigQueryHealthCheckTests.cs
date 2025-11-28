@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.GCP.BigQuery;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.GCP.BigQuery;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.GCP.BigQuery;
 
 [TestGroup($"GCP.{nameof(BigQuery)}")]
 [TestGroup("Z05TestGroup")]
-[ClassDataSource<BigQueryDatabase>(Shared = InstanceSharedType.BigQuery)]
+[ClassDataSource<BigQueryDatabase>(Shared = SharedType.PerClass)]
 public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
 {
     private readonly BigQueryDatabase _database;

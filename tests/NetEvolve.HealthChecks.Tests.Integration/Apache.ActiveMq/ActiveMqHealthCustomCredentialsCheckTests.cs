@@ -2,7 +2,7 @@
 
 using NetEvolve.Extensions.TUnit;
 
-[ClassDataSource<ActiveMqCustomCredentials>(Shared = InstanceSharedType.ActiveMQ)]
+[ClassDataSource<ActiveMqCustomCredentials>(Shared = SharedType.PerClass)]
 [InheritsTests]
 [TestGroup($"{nameof(Apache)}.{nameof(ActiveMq)}")]
 [TestGroup("Z00TestGroup")]

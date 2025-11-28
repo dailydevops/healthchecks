@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.GCP.Bigtable;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.GCP.Bigtable;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.GCP.Bigtable;
 
 [TestGroup($"GCP.{nameof(Bigtable)}")]
 [TestGroup("Z05TestGroup")]
-[ClassDataSource<BigtableDatabase>(Shared = InstanceSharedType.Bigtable)]
+[ClassDataSource<BigtableDatabase>(Shared = SharedType.PerClass)]
 public sealed class BigtableHealthCheckTests : HealthCheckTestBase
 {
     private readonly BigtableDatabase _database;

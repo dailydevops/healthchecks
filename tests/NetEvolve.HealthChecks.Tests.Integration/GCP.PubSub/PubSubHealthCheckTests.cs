@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.GCP.PubSub;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.GCP.PubSub;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.GCP.PubSub;
 
 [TestGroup($"GCP.{nameof(PubSub)}")]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<PubSubEmulator>(Shared = InstanceSharedType.PubSub)]
+[ClassDataSource<PubSubEmulator>(Shared = SharedType.PerClass)]
 public sealed class PubSubHealthCheckTests : HealthCheckTestBase
 {
     private readonly PubSubEmulator _emulator;

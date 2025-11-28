@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.MariaDb;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.MariaDb;
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using NetEvolve.HealthChecks.MariaDb;
 
 [TestGroup(nameof(MariaDb))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<MariaDbDatabase>(Shared = InstanceSharedType.MySql)]
+[ClassDataSource<MariaDbDatabase>(Shared = SharedType.PerClass)]
 public class MariaDbHealthCheckTests : HealthCheckTestBase
 {
     private readonly MariaDbDatabase _database;

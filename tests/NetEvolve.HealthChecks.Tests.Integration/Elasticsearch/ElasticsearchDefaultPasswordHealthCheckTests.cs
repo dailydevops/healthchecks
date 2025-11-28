@@ -3,7 +3,7 @@
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Tests.Integration.Elasticsearch.Container;
 
-[ClassDataSource<ContainerDefaultPassword>(Shared = InstanceSharedType.Elasticsearch)]
+[ClassDataSource<ContainerDefaultPassword>(Shared = SharedType.PerClass)]
 [InheritsTests]
 [TestGroup(nameof(Elasticsearch))]
 [TestGroup("Z04TestGroup")]

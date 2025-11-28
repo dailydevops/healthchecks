@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Npgsql.Devart;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Npgsql.Devart;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(Npgsql)}.{nameof(Devart)}")]
 [TestGroup("Z00TestGroup")]
-[ClassDataSource<NpgsqlDatabase>(Shared = InstanceSharedType.PostgreSql)]
+[ClassDataSource<NpgsqlDatabase>(Shared = SharedType.PerClass)]
 [RunOn(OS.Windows)]
 [Skip("Devart.PostgreSql requires a license.")]
 public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
