@@ -2,6 +2,7 @@ namespace NetEvolve.HealthChecks.Tests.Integration.GCP.BigQuery;
 
 using System;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
 using Google.Cloud.BigQuery.V2;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.BigQuery;
@@ -23,7 +24,12 @@ public sealed class BigQueryDatabase : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
 
-        var builder = new BigQueryClientBuilder { BaseUri = _container.GetEmulatorEndpoint(), ProjectId = ProjectId };
+        var builder = new BigQueryClientBuilder
+        {
+            BaseUri = _container.GetEmulatorEndpoint(),
+            ProjectId = ProjectId,
+            Credential = GoogleCredential.FromAccessToken("fake-token"),
+        };
 
         _client = await builder.BuildAsync().ConfigureAwait(false);
     }
