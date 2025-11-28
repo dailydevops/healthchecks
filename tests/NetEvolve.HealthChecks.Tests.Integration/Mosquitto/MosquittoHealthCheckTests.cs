@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MQTTnet;
-using MQTTnet.Client;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Mosquitto;
 
@@ -22,7 +21,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMosquitto_UseOptions_Healthy()
     {
-        var mqttFactory = new MqttFactory();
+        var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
@@ -39,7 +38,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMosquitto_UseOptionsWithKeyedService_Healthy()
     {
-        var mqttFactory = new MqttFactory();
+        var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
@@ -64,7 +63,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMosquitto_UseOptions_Degraded()
     {
-        var mqttFactory = new MqttFactory();
+        var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
@@ -81,7 +80,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMosquitto_UseConfiguration_Healthy()
     {
-        var mqttFactory = new MqttFactory();
+        var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
@@ -106,7 +105,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMosquitto_UseConfigurationWithKeyedService_Healthy()
     {
-        var mqttFactory = new MqttFactory();
+        var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
@@ -132,7 +131,7 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMosquitto_UseConfiguration_Degraded()
     {
-        var mqttFactory = new MqttFactory();
+        var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
