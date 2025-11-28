@@ -10,11 +10,14 @@ using TUnit.Core.Interfaces;
 
 public sealed class BigQueryDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly BigQueryContainer _container = new BigQueryBuilder().WithLogger(NullLogger.Instance).Build();
+    public const string ProjectId = "test-project";
+
+    private readonly BigQueryContainer _container = new BigQueryBuilder()
+        .WithProject(ProjectId)
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     private BigQueryClient? _client;
-
-    public const string ProjectId = "test-project";
 
     public BigQueryClient Client => _client ?? throw new InvalidOperationException("Client not initialized");
 
