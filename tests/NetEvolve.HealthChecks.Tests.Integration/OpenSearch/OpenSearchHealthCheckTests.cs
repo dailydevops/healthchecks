@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.OpenSearch;
 
 [TestGroup(nameof(OpenSearch))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<OpenSearchContainer>(Shared = InstanceSharedType.OpenSearch)]
+[ClassDataSource<OpenSearchContainer>(Shared = SharedType.PerClass)]
 public class OpenSearchHealthCheckTests : HealthCheckTestBase
 {
     private readonly OpenSearchContainer _database;

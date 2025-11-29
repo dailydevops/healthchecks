@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Milvus;
 
 [TestGroup(nameof(Milvus))]
 [TestGroup("Z03TestGroup")]
-[ClassDataSource<MilvusDatabase>(Shared = InstanceSharedType.Milvus)]
+[ClassDataSource<MilvusDatabase>(Shared = SharedType.PerClass)]
 public sealed class MilvusHealthCheckTests : HealthCheckTestBase
 {
     private readonly MilvusDatabase _database;

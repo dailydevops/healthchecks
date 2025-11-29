@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Consul;
 
 [TestGroup(nameof(Consul))]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<ConsulDatabase>(Shared = InstanceSharedType.Consul)]
+[ClassDataSource<ConsulDatabase>(Shared = SharedType.PerClass)]
 public sealed class ConsulHealthCheckTests : HealthCheckTestBase
 {
     private readonly ConsulDatabase _database;

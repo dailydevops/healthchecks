@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Oracle.Devart;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Oracle.Devart;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using TUnit.Core.Enums;
 
 [TestGroup($"{nameof(Oracle)}.{nameof(Devart)}")]
 [TestGroup("Z00TestGroup")]
-[ClassDataSource<OracleDatabase>(Shared = InstanceSharedType.Oracle)]
+[ClassDataSource<OracleDatabase>(Shared = SharedType.PerClass)]
 [RunOn(OS.Windows)]
 [Skip("Devart.Oracle requires a license.")]
 public class OracleDevartHealthCheckTests : HealthCheckTestBase

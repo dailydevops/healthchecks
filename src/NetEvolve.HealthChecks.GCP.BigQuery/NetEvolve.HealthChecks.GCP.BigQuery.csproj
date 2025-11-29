@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Google Cloud Platform BigQuery, based on the nuget package `Google.Cloud.BigQuery.V2`.</Description>
+    <PackageTags>$(PackageTags);gcp;google;bigquery</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.BigQuery.V2" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
+  </ItemGroup>
+</Project>

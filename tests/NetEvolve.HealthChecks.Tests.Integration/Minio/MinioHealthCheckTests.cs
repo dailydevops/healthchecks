@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Minio;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Minio;
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using NetEvolve.HealthChecks.Minio;
 
 [ClassDataSource<MinioDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(Minio))]
-[TestGroup("Z07TestGroup")]
+[TestGroup("Z04TestGroup")]
 public class MinioHealthCheckTests : HealthCheckTestBase
 {
     private readonly MinioDatabase _database;

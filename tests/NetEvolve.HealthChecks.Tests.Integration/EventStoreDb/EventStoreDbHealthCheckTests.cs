@@ -10,7 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.EventStoreDb;
 
-[ClassDataSource<EventStoreDbDatabase>(Shared = InstanceSharedType.EventStoreDb)]
+[ClassDataSource<EventStoreDbDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(EventStoreDb))]
 [TestGroup("Z03TestGroup")]
 public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable

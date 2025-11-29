@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(EC2)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = InstanceSharedType.AWS)]
+[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
 public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
 {
     private readonly LocalStackInstance _instance;
