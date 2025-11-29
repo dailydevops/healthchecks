@@ -17,23 +17,9 @@ public sealed class BigQueryDatabase : IAsyncInitializer, IAsyncDisposable
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    private BigQueryClient? _client;
-
-    public BigQueryClient Client => _client ?? throw new InvalidOperationException("Client not initialized");
+    public string Endpoint => _container.GetEmulatorEndpoint();
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
-    public async Task InitializeAsync()
-    {
-        await _container.StartAsync().ConfigureAwait(false);
-
-        var builder = new BigQueryClientBuilder
-        {
-            BaseUri = _container.GetEmulatorEndpoint(),
-            ProjectId = ProjectId,
-            Credential = GoogleCredential.FromAccessToken("fake-token"),
-        };
-
-        _client = await builder.BuildAsync().ConfigureAwait(false);
-    }
+    public async Task InitializeAsync() => await _container.StartAsync().ConfigureAwait(false);
 }
