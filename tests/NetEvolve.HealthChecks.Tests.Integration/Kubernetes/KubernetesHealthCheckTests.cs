@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Kubernetes;
 
 [TestGroup(nameof(Kubernetes))]
-[TestGroup("Z02TestGroup")]
+[TestGroup("Z04TestGroup")]
 [ClassDataSource<K3sDatabase>(Shared = SharedType.PerClass)]
 public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
 {
