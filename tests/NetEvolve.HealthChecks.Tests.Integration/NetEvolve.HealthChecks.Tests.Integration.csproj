@@ -41,6 +41,7 @@
     <PackageReference Include="InfluxDB.Client" />
     <PackageReference Include="JanusGraph.Net" />
     <PackageReference Include="Keycloak.Net.Core" />
+    <PackageReference Include="KubernetesClient" />
     <PackageReference Include="LiteDB" />
     <PackageReference Include="Microsoft.Azure.Kusto.Data" />
     <PackageReference Include="Milvus.Client" />
@@ -106,6 +107,7 @@
     <PackageReference Include="Testcontainers.Firestore" />
     <PackageReference Include="Testcontainers.InfluxDb" />
     <PackageReference Include="Testcontainers.JanusGraph" />
+    <PackageReference Include="Testcontainers.K3s" />
     <PackageReference Include="Testcontainers.Kafka" />
     <PackageReference Include="Testcontainers.Keycloak" />
     <PackageReference Include="Testcontainers.Kusto" />
@@ -177,6 +179,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.InfluxDB\NetEvolve.HealthChecks.InfluxDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.JanusGraph\NetEvolve.HealthChecks.JanusGraph.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Kubernetes\NetEvolve.HealthChecks.Kubernetes.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MariaDb\NetEvolve.HealthChecks.MariaDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Milvus\NetEvolve.HealthChecks.Milvus.csproj" />
