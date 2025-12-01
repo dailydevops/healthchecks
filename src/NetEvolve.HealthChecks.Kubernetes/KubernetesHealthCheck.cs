@@ -1,8 +1,8 @@
-namespace NetEvolve.HealthChecks.Kubernetes;
+﻿namespace NetEvolve.HealthChecks.Kubernetes;
 
 using System.Threading;
 using System.Threading.Tasks;
-using global::k8s;
+using k8s;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
@@ -27,9 +27,9 @@ internal sealed partial class KubernetesHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        if (version is null || string.IsNullOrWhiteSpace(version.GitVersion))
+        if (string.IsNullOrWhiteSpace(version?.GitVersion))
         {
-            return HealthCheckUnhealthy(failureStatus, name);
+            return HealthCheckUnhealthy(failureStatus, name, $"Kubenetes version endpoint is not available.");
         }
 
         return HealthCheckState(isTimelyResponse, name);

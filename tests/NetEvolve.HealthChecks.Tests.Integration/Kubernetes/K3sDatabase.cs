@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using global::k8s;
+using k8s;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.K3s;
 using TUnit.Core.Interfaces;
@@ -12,13 +12,11 @@ using TUnit.Core.Interfaces;
 [SuppressMessage("Naming", "S101:Types should be named in PascalCase", Justification = "K3s is the product name.")]
 public sealed class K3sDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly Testcontainers.K3s.K3sContainer _container = new K3sBuilder()
-        .WithLogger(NullLogger.Instance)
-        .Build();
+    private readonly K3sContainer _container = new K3sBuilder().WithLogger(NullLogger.Instance).Build();
 
     private KubernetesClientConfiguration? _configuration;
 
-    public IKubernetes CreateClient() => new global::k8s.Kubernetes(_configuration!);
+    public IKubernetes CreateClient() => new Kubernetes(_configuration!);
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 

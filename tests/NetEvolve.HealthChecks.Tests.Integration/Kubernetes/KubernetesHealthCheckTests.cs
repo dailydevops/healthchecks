@@ -2,9 +2,10 @@ namespace NetEvolve.HealthChecks.Tests.Integration.Kubernetes;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using global::k8s;
+using k8s;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Kubernetes;
 
@@ -21,16 +22,16 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
     public async Task AddKubernetes_UseOptions_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerHealthy", options => options.Timeout = 10000),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<IKubernetes>(_ => _database.CreateClient())
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
         );
 
     [Test]
     public async Task AddKubernetes_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerDegraded", options => options.Timeout = 0),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IKubernetes>(_ => _database.CreateClient())
+            HealthStatus.Degraded,
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
         );
 
     [Test]
@@ -47,10 +48,10 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
+            HealthStatus.Healthy,
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton<IKubernetes>("kubernetes-test", (_, _) => _database.CreateClient());
+                _ = services.AddKeyedSingleton("kubernetes-test", (_, _) => _database.CreateClient());
             }
         );
 
@@ -58,42 +59,42 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
     public async Task AddKubernetes_UseConfiguration_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerConfigHealthy"),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
+            HealthStatus.Healthy,
             config =>
             {
-                var values = new Dictionary<string, string?>(System.StringComparer.Ordinal)
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Kubernetes:TestContainerConfigHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IKubernetes>(_ => _database.CreateClient())
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
         );
 
     [Test]
     public async Task AddKubernetes_UseConfiguration_Degraded() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerConfigDegraded"),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
+            HealthStatus.Degraded,
             config =>
             {
-                var values = new Dictionary<string, string?>(System.StringComparer.Ordinal)
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Kubernetes:TestContainerConfigDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IKubernetes>(_ => _database.CreateClient())
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
         );
 
     [Test]
     public async Task AddKubernetes_UseConfiguration_WithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerConfigKeyedHealthy"),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
+            HealthStatus.Healthy,
             config =>
             {
-                var values = new Dictionary<string, string?>(System.StringComparer.Ordinal)
+                var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:Kubernetes:TestContainerConfigKeyedHealthy:Timeout", "10000" },
                     { "HealthChecks:Kubernetes:TestContainerConfigKeyedHealthy:KeyedService", "kubernetes-keyed-test" },
@@ -102,10 +103,7 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
             },
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton<IKubernetes>(
-                    "kubernetes-keyed-test",
-                    (_, _) => _database.CreateClient()
-                );
+                _ = services.AddKeyedSingleton("kubernetes-keyed-test", (_, _) => _database.CreateClient());
             }
         );
 }
