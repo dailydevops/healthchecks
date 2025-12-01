@@ -61,6 +61,7 @@ internal static class HealthCheckArchitecture
             typeof(InfluxDB.InfluxDBHealthCheck).Assembly,
             typeof(JanusGraph.JanusGraphHealthCheck).Assembly,
             typeof(Keycloak.KeycloakHealthCheck).Assembly,
+            typeof(Kubernetes.KubernetesHealthCheck).Assembly,
             typeof(LiteDB.LiteDBHealthCheck).Assembly,
             typeof(MariaDb.MariaDbHealthCheck).Assembly,
             typeof(Milvus.MilvusHealthCheck).Assembly,

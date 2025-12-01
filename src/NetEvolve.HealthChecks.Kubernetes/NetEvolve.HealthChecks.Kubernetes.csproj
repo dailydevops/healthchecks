@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Kubernetes, based on the nuget package `KubernetesClient`.</Description>
+    <PackageTags>$(PackageTags);kubernetes;k8s</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="KubernetesClient" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference
+      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
+  </ItemGroup>
+</Project>
