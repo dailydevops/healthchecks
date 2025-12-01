@@ -29,7 +29,7 @@ internal sealed partial class KubernetesHealthCheck
 
         if (string.IsNullOrWhiteSpace(version?.GitVersion))
         {
-            return HealthCheckUnhealthy(failureStatus, name, "Kubenetes version endpoint is not available.");
+            return HealthCheckUnhealthy(failureStatus, name, "Kubernetes version endpoint is not available.");
         }
 
         return HealthCheckState(isTimelyResponse, name);
