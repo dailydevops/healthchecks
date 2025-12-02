@@ -17,7 +17,7 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
 {
     private readonly KurrentDbDatabase _database;
 #pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-    private EventStoreClient _client = default!;
+    private KurrentDBClient _client = default!;
 #pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
@@ -25,8 +25,8 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
 
     public Task InitializeAsync()
     {
-        var settings = EventStoreClientSettings.Create(_database.ConnectionString);
-        _client = new EventStoreClient(settings);
+        var settings = KurrentDBClientSettings.Create(_database.ConnectionString);
+        _client = new KurrentDBClient(settings);
 
         return Task.CompletedTask;
     }

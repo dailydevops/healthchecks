@@ -18,8 +18,8 @@ internal sealed partial class KurrentDbHealthCheck
     )
     {
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
-            ? _serviceProvider.GetRequiredService<EventStoreClient>()
-            : _serviceProvider.GetRequiredKeyedService<EventStoreClient>(options.KeyedService);
+            ? _serviceProvider.GetRequiredService<KurrentDBClient>()
+            : _serviceProvider.GetRequiredKeyedService<KurrentDBClient>(options.KeyedService);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
@@ -39,7 +39,7 @@ internal sealed partial class KurrentDbHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(EventStoreClient client, CancellationToken cancellationToken)
+    internal static async Task<bool> DefaultCommandAsync(KurrentDBClient client, CancellationToken cancellationToken)
     {
         try
         {

@@ -8,11 +8,11 @@ using KurrentDB.Client;
 public sealed record KurrentDbOptions
 {
     /// <summary>
-    /// Gets or sets the key used to resolve the <c>EventStoreClient</c> from the service provider.
+    /// Gets or sets the key used to resolve the <c>KurrentDBClient</c> from the service provider.
     /// </summary>
     /// <remarks>
-    /// When specified, the health check will resolve the <c>EventStoreClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
-    /// When null or empty, the health check will resolve the <c>EventStoreClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// When specified, the health check will resolve the <c>KurrentDBClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>KurrentDBClient</c> using <c>IServiceProvider.GetRequiredService</c>.
     /// </remarks>
     public string? KeyedService { get; set; }
 
@@ -25,6 +25,6 @@ public sealed record KurrentDbOptions
     /// The command to execute against the database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<EventStoreClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
+    public Func<KurrentDBClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
         KurrentDbHealthCheck.DefaultCommandAsync;
 }
