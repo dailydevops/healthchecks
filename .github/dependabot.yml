@@ -8,19 +8,6 @@
 
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "chore(ci)"
-    labels:
-      - "dependency:actions"
-    open-pull-requests-limit: 20
-    # Add assignees
-    assignees:
-      - samtrion
-
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:

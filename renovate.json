@@ -13,6 +13,7 @@
   "automergeType": "pr",
   "automergeStrategy": "squash",
   "enabledManagers": [
+    "ci",
     "nuget",
     "custom.regex"
   ],
@@ -20,10 +21,13 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/\\.csproj$/"
+        "/\\.(?:cs|fs|vb)proj$/",
+        "/\\.(?:props|targets)$/"
       ],
       "matchStrings": [
-        "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\""
+        "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\"",
+        "<Sdk\\s+Name=\"(?<depName>[^\"]+)\"\\s+Version=\"(?<currentValue>[^,]+)\" />",
+        "<Project Sdk=\"(?<depName>[^\"]+)/(?<currentValue>[^,]+)\">"
       ],
       "datasourceTemplate": "nuget",
       "versioningTemplate": "nuget"
@@ -37,6 +41,26 @@
       ],
       "labels": [
         "dependency:nuget"
+      ],
+      "semanticCommits": "enabled",
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "deps",
+      "assignees": [
+        "samtrion"
+      ]
+    },
+    {
+      "matchManagers": [
+        "ci"
+      ],
+      "labels": [
+        "dependency:actions"
+      ],
+      "semanticCommits": "enabled",
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "ci",
+      "assignees": [
+        "samtrion"
       ]
     }
   ]
