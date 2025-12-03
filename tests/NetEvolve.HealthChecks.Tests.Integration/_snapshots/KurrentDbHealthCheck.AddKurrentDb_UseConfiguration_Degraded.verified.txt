@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerDegraded: Degraded,
+      name: TestContainerDegraded,
+      status: Degraded,
+      tags: [
+        kurrentdb,
+        nosql
+      ]
+    }
+  ],
+  status: Degraded
+}

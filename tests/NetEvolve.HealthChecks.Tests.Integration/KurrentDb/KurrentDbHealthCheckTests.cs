@@ -1,32 +1,32 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Integration.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.KurrentDb;
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EventStore.Client;
+using KurrentDB.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.EventStoreDb;
+using NetEvolve.HealthChecks.KurrentDb;
 
-[ClassDataSource<EventStoreDbDatabase>(Shared = SharedType.PerClass)]
-[TestGroup(nameof(EventStoreDb))]
+[ClassDataSource<KurrentDbDatabase>(Shared = SharedType.PerClass)]
+[TestGroup(nameof(KurrentDb))]
 [TestGroup("Z03TestGroup")]
-public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
+public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
 {
-    private readonly EventStoreDbDatabase _database;
+    private readonly KurrentDbDatabase _database;
 #pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-    private EventStoreClient _client = default!;
+    private KurrentDBClient _client = default!;
 #pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
-    public EventStoreDbHealthCheckTests(EventStoreDbDatabase database) => _database = database;
+    public KurrentDbHealthCheckTests(KurrentDbDatabase database) => _database = database;
 
     public Task InitializeAsync()
     {
-        var settings = EventStoreClientSettings.Create(_database.ConnectionString);
-        _client = new EventStoreClient(settings);
+        var settings = KurrentDBClientSettings.Create(_database.ConnectionString);
+        _client = new KurrentDBClient(settings);
 
         return Task.CompletedTask;
     }
@@ -51,18 +51,18 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
     }
 
     [Test]
-    public async Task AddEventStoreDb_UseOptions_Healthy() =>
+    public async Task AddKurrentDb_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddEventStoreDb("TestContainerHealthy", options => options.Timeout = 10000),
+            healthChecks => healthChecks.AddKurrentDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_client)
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddKurrentDb_UseOptionsWithKeyedService_Healthy() =>
         await RunAndVerify(
             healthChecks =>
-                healthChecks.AddEventStoreDb(
+                healthChecks.AddKurrentDb(
                     "TestContainerKeyedHealthy",
                     options =>
                     {
@@ -75,23 +75,23 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseOptionsDoubleRegistered_Healthy() =>
+    public async Task AddKurrentDb_UseOptionsDoubleRegistered_Healthy() =>
         await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
                 await RunAndVerify(
                     healthChecks =>
-                        healthChecks.AddEventStoreDb("TestContainerHealthy").AddEventStoreDb("TestContainerHealthy"),
+                        healthChecks.AddKurrentDb("TestContainerHealthy").AddKurrentDb("TestContainerHealthy"),
                     HealthStatus.Healthy,
                     serviceBuilder: services => services.AddSingleton(_client)
                 )
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseOptions_Degraded() =>
+    public async Task AddKurrentDb_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
-                healthChecks.AddEventStoreDb(
+                healthChecks.AddKurrentDb(
                     "TestContainerDegraded",
                     options =>
                     {
@@ -109,11 +109,11 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseOptions_Unhealthy() =>
+    public async Task AddKurrentDb_UseOptions_Unhealthy() =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddEventStoreDb(
+                _ = healthChecks.AddKurrentDb(
                     "TestContainerUnhealthy",
                     options =>
                     {
@@ -130,15 +130,15 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseConfiguration_Healthy() =>
+    public async Task AddKurrentDb_UseConfiguration_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddEventStoreDb("TestContainerHealthy"),
+            healthChecks => healthChecks.AddKurrentDb("TestContainerHealthy"),
             HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:EventStoreDb:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:KurrentDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -146,16 +146,16 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddKurrentDb_UseConfigurationWithKeyedService_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddEventStoreDb("TestContainerKeyedHealthy"),
+            healthChecks => healthChecks.AddKurrentDb("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
             config =>
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:EventStoreDb:TestContainerKeyedHealthy:KeyedService", "eventstoredb-test-config" },
-                    { "HealthChecks:EventStoreDb:TestContainerKeyedHealthy:Timeout", "10000" },
+                    { "HealthChecks:KurrentDb:TestContainerKeyedHealthy:KeyedService", "eventstoredb-test-config" },
+                    { "HealthChecks:KurrentDb:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -163,15 +163,15 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseConfiguration_Degraded() =>
+    public async Task AddKurrentDb_UseConfiguration_Degraded() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddEventStoreDb("TestContainerDegraded"),
+            healthChecks => healthChecks.AddKurrentDb("TestContainerDegraded"),
             HealthStatus.Degraded,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:EventStoreDb:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:KurrentDb:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -179,15 +179,15 @@ public class EventStoreDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializ
         );
 
     [Test]
-    public async Task AddEventStoreDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddKurrentDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddEventStoreDb("TestNoValues"),
+            healthChecks => healthChecks.AddKurrentDb("TestNoValues"),
             HealthStatus.Unhealthy,
             config =>
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:EventStoreDb:TestNoValues:Timeout", "-2" },
+                    { "HealthChecks:KurrentDb:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

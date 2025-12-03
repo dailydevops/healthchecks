@@ -1,25 +1,25 @@
-﻿namespace NetEvolve.HealthChecks.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.KurrentDb;
 
 using System.Threading.Tasks;
-using EventStore.Client;
+using KurrentDB.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
-[ConfigurableHealthCheck(typeof(EventStoreDbOptions))]
-internal sealed partial class EventStoreDbHealthCheck
+[ConfigurableHealthCheck(typeof(KurrentDbOptions))]
+internal sealed partial class KurrentDbHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
-        EventStoreDbOptions options,
+        KurrentDbOptions options,
         CancellationToken cancellationToken
     )
     {
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
-            ? _serviceProvider.GetRequiredService<EventStoreClient>()
-            : _serviceProvider.GetRequiredKeyedService<EventStoreClient>(options.KeyedService);
+            ? _serviceProvider.GetRequiredService<KurrentDBClient>()
+            : _serviceProvider.GetRequiredKeyedService<KurrentDBClient>(options.KeyedService);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
@@ -32,14 +32,14 @@ internal sealed partial class EventStoreDbHealthCheck
             return HealthCheckUnhealthy(
                 failureStatus,
                 name,
-                "The EventStoreDB health check command returned a failed result."
+                "The KurrentDB health check command returned a failed result."
             );
         }
 
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(EventStoreClient client, CancellationToken cancellationToken)
+    internal static async Task<bool> DefaultCommandAsync(KurrentDBClient client, CancellationToken cancellationToken)
     {
         try
         {

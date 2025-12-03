@@ -1,14 +1,12 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.KurrentDb;
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
-using Testcontainers.EventStoreDb;
+using Testcontainers.KurrentDb;
 
-public sealed class EventStoreDbDatabase : IAsyncInitializer, IAsyncDisposable
+public sealed class KurrentDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly EventStoreDbContainer _database = new EventStoreDbBuilder()
-        .WithLogger(NullLogger.Instance)
-        .Build();
+    private readonly KurrentDbContainer _database = new KurrentDbBuilder().WithLogger(NullLogger.Instance).Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

@@ -35,6 +35,7 @@
     <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
     <PackageVersion Include="CassandraCSharpDriver" Version="3.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
+    <PackageVersion Include="KurrentDB.Client" Version="1.2.0" />
     <PackageVersion Include="Microsoft.Azure.Kusto.Data" Version="14.0.3" />
     <PackageVersion Include="CliWrap" Version="3.10.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.12.0" />

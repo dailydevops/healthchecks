@@ -1,14 +1,18 @@
 ﻿{
   results: [
     {
-      description: TestContainerHealthy: Healthy,
+      description: TestContainerHealthy: Unexpected error.,
+      exception: {
+        message: Object reference not set to an instance of an object.,
+        type: System.NullReferenceException
+      },
       name: TestContainerHealthy,
-      status: Healthy,
+      status: Unhealthy,
       tags: [
         couchbase,
         nosql
       ]
     }
   ],
-  status: Healthy
+  status: Unhealthy
 }
