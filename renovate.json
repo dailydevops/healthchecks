@@ -56,6 +56,7 @@
       "labels": [
         "dependency:actions"
       ],
+      "automerge": true,
       "semanticCommits": "enabled",
       "semanticCommitType": "chore",
       "semanticCommitScope": "ci",
