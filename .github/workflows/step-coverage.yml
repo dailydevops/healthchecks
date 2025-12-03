@@ -1,11 +1,22 @@
 on:
   workflow_call:
     inputs:
+      dotnet-version:
+        required: false
+        type: string
+        default: '10.0.x'
+      dotnet-logging:
+        required: false
+        type: string
+        default: minimal
       runs-on:
         required: false
         type: string
         default: ubuntu-latest
       solution:
+        required: true
+        type: string
+      solution-version:
         required: true
         type: string
     secrets:
@@ -23,15 +34,30 @@ jobs:
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        submodules: recursive
+        token: ${{ github.token }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5.0.0
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+        global-json-file: ./global.json
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.solution }} -v ${{ inputs.dotnet-logging }}
+
+    - name: Build
+      run: dotnet build ${{ inputs.solution }} -v ${{ inputs.dotnet-logging }} -c Release --no-restore /p:Version=${{ inputs.solution-version }}
+
     - name: Download Build files
       uses: actions/download-artifact@v6.0.0
       with:
         pattern: coverage-*
         merge-multiple: true
-
-    - name: List all Files
-      run: |
-        ls -r ${{ github.workspace }}
 
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.5.0
