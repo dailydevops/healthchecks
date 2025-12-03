@@ -41,7 +41,7 @@ jobs:
 
   version:
     name: Version Management
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-version.yml@1.2.27
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-version.yml@1.2.28
     with:
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
