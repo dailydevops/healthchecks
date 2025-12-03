@@ -106,10 +106,14 @@ jobs:
     name: Collect Code Coverage
     needs:
       - tests
+      - version
     uses: ./.github/workflows/step-coverage.yml
     with:
+      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
+      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       runs-on: 'ubuntu-latest'
       solution: ./HealthChecks.slnx
+      solution-version: ${{ needs.version.outputs.solution-version }}
     secrets: inherit
 
   build:
