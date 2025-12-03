@@ -35,14 +35,14 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       with:
         fetch-depth: 0
         submodules: recursive
         token: ${{ github.token }}
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5.0.1
+      uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
         global-json-file: ./global.json
@@ -54,13 +54,13 @@ jobs:
       run: dotnet build ${{ inputs.solution }} -v ${{ inputs.dotnet-logging }} -c Release --no-restore /p:Version=${{ inputs.solution-version }}
 
     - name: Download Build files
-      uses: actions/download-artifact@v6.0.0
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         pattern: coverage-*
         merge-multiple: true
 
     - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.5.0
+      uses: danielpalme/ReportGenerator-GitHub-Action@dcdfb6e704e87df6b2ed0cf123a6c9f69e364869 # 5.5.0
       with:
         reports: '${{ github.workspace }}/**/*.cobertura.xml'
         targetdir: '${{ github.workspace }}/coveragereports'
@@ -72,7 +72,7 @@ jobs:
         cat $GITHUB_WORKSPACE/coveragereports/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
     - name: Update codecov
-      uses: codecov/codecov-action@v5.5.1
+      uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
       if: ${{ env.codecov_token != '' }}
       with:
         token: ${{ env.codecov_token }}
@@ -80,7 +80,7 @@ jobs:
         files: ${{ github.workspace }}/coveragereports/Cobertura.xml
 
     - name: Upload ReportGenerator
-      uses: actions/upload-artifact@v5.0.0
+      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
       if: always()
       with:
         name: reportgenerator-${{ inputs.runs-on || 'ubuntu-latest' }}-${{ hashFiles(inputs.solution) }}
