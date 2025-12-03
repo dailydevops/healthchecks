@@ -42,7 +42,7 @@ jobs:
         token: ${{ github.token }}
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5.0.0
+      uses: actions/setup-dotnet@v5.0.1
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
         global-json-file: ./global.json
