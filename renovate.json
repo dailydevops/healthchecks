@@ -13,7 +13,7 @@
   "automergeType": "pr",
   "automergeStrategy": "squash",
   "enabledManagers": [
-    "ci",
+    "github-actions",
     "nuget",
     "custom.regex"
   ],
@@ -26,8 +26,8 @@
       ],
       "matchStrings": [
         "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\"",
-        "<Sdk\\s+Name=\"(?<depName>[^\"]+)\"\\s+Version=\"(?<currentValue>[^,]+)\" />",
-        "<Project Sdk=\"(?<depName>[^\"]+)/(?<currentValue>[^,]+)\">"
+        "<Sdk\\s+Name=\"(?<depName>[^\"]+)\"\\s+Version=\"(?<currentValue>[^,]+)\"",
+        "<Project\\s+Sdk=\"(?<depName>[^\"]+)/(?<currentValue>[^,]+)\""
       ],
       "datasourceTemplate": "nuget",
       "versioningTemplate": "nuget"
@@ -51,7 +51,7 @@
     },
     {
       "matchManagers": [
-        "ci"
+        "github-actions"
       ],
       "labels": [
         "dependency:actions"
