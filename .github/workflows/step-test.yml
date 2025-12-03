@@ -50,14 +50,14 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       with:
         fetch-depth: 0
         submodules: recursive
         token: ${{ github.token }}
 
     - name: Free Disk Space - Docker Images
-      uses: jlumbroso/free-disk-space@v1.3.1
+      uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
       if: ${{ runner.os == 'Linux' }}
       with:
         android: true
@@ -69,7 +69,7 @@ jobs:
         docker-images: true
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5.0.1
+      uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
       with:
         dotnet-version: ${{ inputs.dotnet-version || '10.x' }}
         global-json-file: ./global.json
@@ -88,7 +88,7 @@ jobs:
         dotnet test  --solution ${{ inputs.solution }}  -c Release  -v ${{ inputs.dotnet-logging || 'minimal' }}  --no-build --no-restore /p:Version=${{ inputs.solution-version }} --results-directory ./TestResults --ignore-exit-code 8 ${{ inputs.test-filter != '' && format('--treenode-filter "{0}"', inputs.test-filter) || ''}} -- --coverage --coverage-output-format cobertura
 
     - name: Upload Coverage Reports
-      uses: actions/upload-artifact@v5.0.0
+      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
       with:
         name: coverage-${{ inputs.runs-on || 'ubuntu-latest' }}-${{ hashFiles(inputs.solution) }}-${{ inputs.execution-name }}
         path: |
