@@ -8,6 +8,10 @@
     throws an error if missing, and outputs filtered projects as compressed JSON.
 #>
 
+# Set Location to Parents parent directory
+$currentDirectory = Get-Location
+Set-Location (Split-Path (Split-Path (Split-Path $MyInvocation.MyCommand.Definition -Parent) -Parent) -Parent)
+
 # Get all testgroups from the test projects
 $testGroups = Get-ChildItem -Path "tests/NetEvolve.HealthChecks.Tests.Integration" -Recurse -Filter "*.csproj" | ForEach-Object {
   $projectDir = $_.Directory.FullName
@@ -40,6 +44,8 @@ $testGroups = Get-ChildItem -Path "tests/NetEvolve.HealthChecks.Tests.Integratio
   }
 }
 
+# Revert to $currenctDirectory
+Set-Location $currentDirectory
 # Convert the collected testgroups to compressed JSON format
 $testGroupsJson = $testGroups | Sort-Object -Unique | ConvertTo-Json -AsArray -Compress
 $testGroupsJson ?? "[]"
