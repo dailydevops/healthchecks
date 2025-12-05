@@ -10,7 +10,7 @@
 
 # Set Location to Parents parent directory
 $currentDirectory = Get-Location
-Set-Location (Split-Path (Split-Path (Split-Path $MyInvocation.MyCommand.Definition -Parent) -Parent) -Parent)
+Set-Location (Split-Path (Split-Path $MyInvocation.MyCommand.Definition -Parent) -Parent)
 
 # Get all testgroups from the test projects
 $testGroups = Get-ChildItem -Path "tests/NetEvolve.HealthChecks.Tests.Integration" -Recurse -Filter "*.csproj" | ForEach-Object {

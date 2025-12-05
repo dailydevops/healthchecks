@@ -75,7 +75,7 @@ jobs:
         id: collect
         shell: pwsh
         run: |
-          $testGroups = .github/scripts/Collect-TestProjects.ps1
+          $testGroups = ${{ github.workspace }}/scripts/Collect-TestProjects.ps1
           echo $testGroups
           echo "testgroups=$testGroups" >> $env:GITHUB_OUTPUT
 
@@ -99,9 +99,12 @@ jobs:
       runs-on: 'ubuntu-latest'
       solution: ./HealthChecks.slnx
       solution-version: ${{ needs.version.outputs.solution-version }}
+      # Filter tests by TestGroup trait using xUnit test selection syntax
       test-filter: "/*/*/*/*[TestGroup=${{ matrix.testgroups }}]"
+    # Inherit all repository secrets for potential use in test execution
     secrets: inherit
 
+  # Job to aggregate test results and generate code coverage reports
   coverage:
     name: Collect Code Coverage
     needs:
