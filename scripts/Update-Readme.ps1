@@ -120,7 +120,7 @@ function Get-Packages {
     <!-- packages:start --> and <!-- packages:end --> tags with the provided package table.
     Only files containing both tags will be modified.
 
-.PARAMETER workingDirectoy
+.PARAMETER workingDirectory
     The root directory to search for README files.
 
 .PARAMETER packagesContent
@@ -132,7 +132,7 @@ function Get-Packages {
 function Update-Readme {
   param (
     [Parameter(Mandatory = $true)]
-    [string] $workingDirectoy,
+    [string] $workingDirectory,
     [Parameter(Mandatory = $true)]
     [string] $packagesContent
   )
@@ -176,5 +176,5 @@ function Update-Readme {
 # Main execution: Fetch packages and update README files
 $packages = Get-Packages
 if (![string]::IsNullOrWhiteSpace($packages)) {
-  Update-Readme -workingDirectoy $WorkingDirectory -packagesContent $packages
+  Update-Readme -workingDirectory $WorkingDirectory -packagesContent $packages
 }
