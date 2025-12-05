@@ -66,12 +66,12 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     "TestContainerKeyedHealthy",
                     options =>
                     {
-                        options.KeyedService = "eventstoredb-test";
+                        options.KeyedService = "kurrentdb-test";
                         options.Timeout = 10000;
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("eventstoredb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test", (_, _) => _client)
         );
 
     [Test]
@@ -154,12 +154,12 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:KurrentDb:TestContainerKeyedHealthy:KeyedService", "eventstoredb-test-config" },
+                    { "HealthChecks:KurrentDb:TestContainerKeyedHealthy:KeyedService", "kurrentdb-test-config" },
                     { "HealthChecks:KurrentDb:TestContainerKeyedHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("eventstoredb-test-config", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test-config", (_, _) => _client)
         );
 
     [Test]

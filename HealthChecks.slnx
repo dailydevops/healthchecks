@@ -54,7 +54,7 @@
     <Project Path="src/NetEvolve.HealthChecks.DB2/NetEvolve.HealthChecks.DB2.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DuckDB/NetEvolve.HealthChecks.DuckDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Elasticsearch/NetEvolve.HealthChecks.Elasticsearch.csproj" />
-    <Project Path="src/NetEvolve.HealthChecks.EventStoreDb/NetEvolve.HealthChecks.KurrentDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.KurrentDb/NetEvolve.HealthChecks.KurrentDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Firebird/NetEvolve.HealthChecks.Firebird.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.GCP.BigQuery/NetEvolve.HealthChecks.GCP.BigQuery.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.GCP.Bigtable/NetEvolve.HealthChecks.GCP.Bigtable.csproj" />

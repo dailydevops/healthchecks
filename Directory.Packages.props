@@ -126,7 +126,7 @@
     <PackageVersion Include="Testcontainers.Elasticsearch" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.EventHubs" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.BigQuery" Version="$(VersionTestContainers)" />
-    <PackageVersion Include="Testcontainers.EventStoreDb" Version="$(VersionTestContainers)" />
+    <PackageVersion Include="Testcontainers.KurrentDb" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.Firestore" Version="$(VersionTestContainers)" />
     <PackageVersion Include="Testcontainers.PubSub" Version="$(VersionTestContainers)" />
