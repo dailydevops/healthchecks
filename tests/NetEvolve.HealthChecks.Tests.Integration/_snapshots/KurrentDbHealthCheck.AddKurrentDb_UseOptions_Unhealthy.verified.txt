@@ -9,7 +9,7 @@
       name: TestContainerUnhealthy,
       status: Unhealthy,
       tags: [
-        eventstoredb,
+        kurrentdb,
         nosql
       ]
     }

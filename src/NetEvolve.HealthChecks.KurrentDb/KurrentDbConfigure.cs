@@ -1,35 +1,34 @@
-namespace NetEvolve.HealthChecks.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.KurrentDb;
 
 using System.Threading;
+using KurrentDB.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
-internal sealed class EventStoreDbConfigure
-    : IConfigureNamedOptions<EventStoreDbOptions>,
-        IValidateOptions<EventStoreDbOptions>
+internal sealed class KurrentDbConfigure : IConfigureNamedOptions<KurrentDbOptions>, IValidateOptions<KurrentDbOptions>
 {
     private readonly IConfiguration _configuration;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EventStoreDbConfigure"/> class.
+    /// Initializes a new instance of the <see cref="KurrentDbConfigure"/> class.
     /// </summary>
     /// <param name="configuration">The <see cref="IConfiguration"/> instance used to bind configuration values.</param>
-    public EventStoreDbConfigure(IConfiguration configuration) => _configuration = configuration;
+    public KurrentDbConfigure(IConfiguration configuration) => _configuration = configuration;
 
     /// <inheritdoc />
-    public void Configure(string? name, EventStoreDbOptions options)
+    public void Configure(string? name, KurrentDbOptions options)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        _configuration.Bind($"HealthChecks:EventStoreDb:{name}", options);
+        _configuration.Bind($"HealthChecks:KurrentDb:{name}", options);
     }
 
     /// <inheritdoc />
-    public void Configure(EventStoreDbOptions options) => Configure(Options.DefaultName, options);
+    public void Configure(KurrentDbOptions options) => Configure(Options.DefaultName, options);
 
     /// <inheritdoc />
-    public ValidateOptionsResult Validate(string? name, EventStoreDbOptions options)
+    public ValidateOptionsResult Validate(string? name, KurrentDbOptions options)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

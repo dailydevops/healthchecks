@@ -41,7 +41,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DB2\NetEvolve.HealthChecks.DB2.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.DuckDB\NetEvolve.HealthChecks.DuckDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Elasticsearch\NetEvolve.HealthChecks.Elasticsearch.csproj" />
-    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.EventStoreDb\NetEvolve.HealthChecks.EventStoreDb.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.KurrentDb\NetEvolve.HealthChecks.KurrentDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Firebird\NetEvolve.HealthChecks.Firebird.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.BigQuery\NetEvolve.HealthChecks.GCP.BigQuery.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Bigtable\NetEvolve.HealthChecks.GCP.Bigtable.csproj" />

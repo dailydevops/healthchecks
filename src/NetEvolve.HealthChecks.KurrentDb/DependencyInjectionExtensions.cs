@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.KurrentDb;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -13,13 +13,13 @@ using SourceGenerator.Attributes;
 [HealthCheckHelper]
 public static partial class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["eventstoredb", "nosql"];
+    private static readonly string[] _defaultTags = ["kurrentdb", "nosql"];
 
     /// <summary>
-    /// Add a health check for the EventStoreDb database.
+    /// Add a health check for the KurrentDb database.
     /// </summary>
     /// <param name="builder">The <see cref="IHealthChecksBuilder"/>.</param>
-    /// <param name="name">The name of the <see cref="EventStoreDbHealthCheck"/>.</param>
+    /// <param name="name">The name of the <see cref="KurrentDbHealthCheck"/>.</param>
     /// <param name="options">An optional action to configure.</param>
     /// <param name="tags">A list of additional tags that can be used to filter sets of health checks. Optional.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="builder"/> is <see langword="null" />.</exception>
@@ -27,10 +27,10 @@ public static partial class DependencyInjectionExtensions
     /// <exception cref="ArgumentException">The <paramref name="name"/> is <see langword="null" /> or <c>whitespace</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="name"/> is already in use.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="tags"/> is <see langword="null" />.</exception>
-    public static IHealthChecksBuilder AddEventStoreDb(
+    public static IHealthChecksBuilder AddKurrentDb(
         [NotNull] this IHealthChecksBuilder builder,
         [NotNull] string name,
-        Action<EventStoreDbOptions>? options = null,
+        Action<KurrentDbOptions>? options = null,
         params string[] tags
     )
     {
@@ -38,27 +38,27 @@ public static partial class DependencyInjectionExtensions
         ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
-        if (!builder.IsServiceTypeRegistered<EventStoreDbCheckMarker>())
+        if (!builder.IsServiceTypeRegistered<KurrentDbCheckMarker>())
         {
             _ = builder
-                .Services.AddSingleton<EventStoreDbCheckMarker>()
-                .AddSingleton<EventStoreDbHealthCheck>()
-                .ConfigureOptions<EventStoreDbConfigure>();
+                .Services.AddSingleton<KurrentDbCheckMarker>()
+                .AddSingleton<KurrentDbHealthCheck>()
+                .ConfigureOptions<KurrentDbConfigure>();
         }
 
-        builder.ThrowIfNameIsAlreadyUsed<EventStoreDbHealthCheck>(name);
+        builder.ThrowIfNameIsAlreadyUsed<KurrentDbHealthCheck>(name);
 
         if (options is not null)
         {
             _ = builder.Services.Configure(name, options);
         }
 
-        return builder.AddCheck<EventStoreDbHealthCheck>(
+        return builder.AddCheck<KurrentDbHealthCheck>(
             name,
             HealthStatus.Unhealthy,
             _defaultTags.Union(tags, StringComparer.OrdinalIgnoreCase)
         );
     }
 
-    private sealed partial class EventStoreDbCheckMarker;
+    private sealed partial class KurrentDbCheckMarker;
 }

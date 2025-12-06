@@ -5,7 +5,7 @@
       name: TestContainerKeyedHealthy,
       status: Healthy,
       tags: [
-        eventstoredb,
+        kurrentdb,
         nosql
       ]
     }

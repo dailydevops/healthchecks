@@ -1,29 +1,29 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.EventStoreDb;
+namespace NetEvolve.HealthChecks.Tests.Unit.KurrentDb;
 
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.EventStoreDb;
+using NetEvolve.HealthChecks.KurrentDb;
 
-[TestGroup(nameof(EventStoreDb))]
+[TestGroup(nameof(KurrentDb))]
 public class DependencyInjectionExtensionsTests
 {
     [Test]
-    public void AddEventStoreDb_WhenArgumentBuilderNull_ThrowArgumentNullException()
+    public void AddKurrentDb_WhenArgumentBuilderNull_ThrowArgumentNullException()
     {
         // Arrange
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddEventStoreDb("Test");
+        void Act() => builder.AddKurrentDb("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
     }
 
     [Test]
-    public void AddEventStoreDb_WhenArgumentNameNull_ThrowArgumentNullException()
+    public void AddKurrentDb_WhenArgumentNameNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -32,14 +32,14 @@ public class DependencyInjectionExtensionsTests
         const string? name = default;
 
         // Act
-        void Act() => builder.AddEventStoreDb(name!);
+        void Act() => builder.AddKurrentDb(name!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);
     }
 
     [Test]
-    public void AddEventStoreDb_WhenArgumentNameEmpty_ThrowArgumentException()
+    public void AddKurrentDb_WhenArgumentNameEmpty_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -48,14 +48,14 @@ public class DependencyInjectionExtensionsTests
         var name = string.Empty;
 
         // Act
-        void Act() => builder.AddEventStoreDb(name);
+        void Act() => builder.AddKurrentDb(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
     }
 
     [Test]
-    public void AddEventStoreDb_WhenArgumentTagsNull_ThrowArgumentNullException()
+    public void AddKurrentDb_WhenArgumentTagsNull_ThrowArgumentNullException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -64,14 +64,14 @@ public class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddEventStoreDb("Test", tags: tags);
+        void Act() => builder.AddKurrentDb("Test", tags: tags);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
     }
 
     [Test]
-    public void AddEventStoreDb_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
+    public void AddKurrentDb_WhenArgumentNameIsAlreadyUsed_ThrowArgumentException()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
@@ -80,7 +80,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() => builder.AddEventStoreDb(name).AddEventStoreDb(name);
+        void Act() => builder.AddKurrentDb(name).AddKurrentDb(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

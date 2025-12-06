@@ -27,6 +27,7 @@
   <Folder Name="/src/">
     <Project Path="src/NetEvolve.HealthChecks.Apache.ActiveMq/NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Apache.Kafka/NetEvolve.HealthChecks.Apache.Kafka.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Apache.Pulsar/NetEvolve.HealthChecks.Apache.Pulsar.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.ArangoDb/NetEvolve.HealthChecks.ArangoDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.AWS.DynamoDB/NetEvolve.HealthChecks.AWS.DynamoDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.AWS.EC2/NetEvolve.HealthChecks.AWS.EC2.csproj" />
@@ -53,7 +54,7 @@
     <Project Path="src/NetEvolve.HealthChecks.DB2/NetEvolve.HealthChecks.DB2.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.DuckDB/NetEvolve.HealthChecks.DuckDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Elasticsearch/NetEvolve.HealthChecks.Elasticsearch.csproj" />
-    <Project Path="src/NetEvolve.HealthChecks.EventStoreDb/NetEvolve.HealthChecks.EventStoreDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.KurrentDb/NetEvolve.HealthChecks.KurrentDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Firebird/NetEvolve.HealthChecks.Firebird.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.GCP.BigQuery/NetEvolve.HealthChecks.GCP.BigQuery.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.GCP.Bigtable/NetEvolve.HealthChecks.GCP.Bigtable.csproj" />
@@ -83,7 +84,6 @@
     <Project Path="src/NetEvolve.HealthChecks.OpenSearch/NetEvolve.HealthChecks.OpenSearch.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Oracle.Devart/NetEvolve.HealthChecks.Oracle.Devart.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Oracle/NetEvolve.HealthChecks.Oracle.csproj" />
-    <Project Path="src/NetEvolve.HealthChecks.Apache.Pulsar/NetEvolve.HealthChecks.Apache.Pulsar.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Qdrant/NetEvolve.HealthChecks.Qdrant.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.RabbitMQ/NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.RavenDb/NetEvolve.HealthChecks.RavenDb.csproj" />

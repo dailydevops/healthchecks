@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.EventStoreDb;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.KurrentDb;
 
 using System;
 using System.Threading;
@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
-using NetEvolve.HealthChecks.EventStoreDb;
+using NetEvolve.HealthChecks.KurrentDb;
 using NSubstitute;
 
-[TestGroup(nameof(EventStoreDb))]
-public sealed class EventStoreDbHealthCheckTests
+[TestGroup(nameof(KurrentDb))]
+public sealed class KurrentDbHealthCheckTests
 {
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<EventStoreDbOptions>>();
-        var check = new EventStoreDbHealthCheck(serviceProvider, optionsMonitor);
+        var optionsMonitor = Substitute.For<IOptionsMonitor<KurrentDbOptions>>();
+        var check = new KurrentDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
         async Task Act() => _ = await check.CheckHealthAsync(null!, default);
@@ -32,9 +32,9 @@ public sealed class EventStoreDbHealthCheckTests
     {
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<EventStoreDbOptions>>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<KurrentDbOptions>>();
 
-        var check = new EventStoreDbHealthCheck(serviceProvider, optionsMonitor);
+        var check = new KurrentDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
         var cancellationToken = new CancellationToken(true);
 
@@ -54,9 +54,9 @@ public sealed class EventStoreDbHealthCheckTests
     {
         // Arrange
         var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<EventStoreDbOptions>>();
+        var optionsMonitor = Substitute.For<IOptionsMonitor<KurrentDbOptions>>();
 
-        var check = new EventStoreDbHealthCheck(serviceProvider, optionsMonitor);
+        var check = new KurrentDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
 
         // Act

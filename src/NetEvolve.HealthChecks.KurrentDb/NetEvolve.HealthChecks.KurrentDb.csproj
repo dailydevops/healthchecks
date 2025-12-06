@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
-    <Description>Contains HealthChecks for EventStoreDb, based on the nuget package `EventStore.Client.Grpc.Streams`.</Description>
-    <PackageTags>$(PackageTags);eventstoredb;eventstore</PackageTags>
+    <Description>Contains HealthChecks for KurrentDb, based on the nuget package `KurrentDB.Client`.</Description>
+    <PackageTags>$(PackageTags);kurrentdb;eventstore</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EventStore.Client.Grpc.Streams" />
+    <PackageReference Include="KurrentDB.Client" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
   <ItemGroup>

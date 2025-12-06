@@ -1,41 +1,41 @@
-# NetEvolve.HealthChecks.EventStoreDb
+# NetEvolve.HealthChecks.KurrentDb
 
-[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.EventStoreDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.EventStoreDb/)
-[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.EventStoreDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.EventStoreDb/)
+[![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.KurrentDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.KurrentDb/)
+[![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.KurrentDb?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.KurrentDb/)
 
-This package provides a health check for EventStoreDb, based on the [EventStore.Client.Grpc.Streams](https://www.nuget.org/packages/EventStore.Client.Grpc.Streams/) package. The main purpose is to check if the EventStoreDb is available and if the connection is healthy.
+This package provides a health check for KurrentDb, based on the [KurrentDB.Client](https://www.nuget.org/packages/KurrentDB.Client/) package. The main purpose is to check if the KurrentDb is available and if the connection is healthy.
 
 :bulb: This package is available for .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
 ```powershell
-dotnet add package NetEvolve.HealthChecks.EventStoreDb
+dotnet add package NetEvolve.HealthChecks.KurrentDb
 ```
 
-## Health Check - EventStoreDb Liveness
-The health check is a liveness check. It checks if the EventStoreDb is available and if the connection is healthy.
+## Health Check - KurrentDb Liveness
+The health check is a liveness check. It checks if the KurrentDb is available and if the connection is healthy.
 If the query needs longer than the configured timeout, the health check will return `Degraded`.
 If the query fails, for whatever reason, the health check will return `Unhealthy`.
 
 ### Usage
 After adding the package, you need to import the namespace and add the health check to the health check builder.
 ```csharp
-using NetEvolve.HealthChecks.EventStoreDb;
+using NetEvolve.HealthChecks.KurrentDb;
 ```
 Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
 - `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
-- `tags`: The tags for the health check. The tags `eventstoredb` and `nosql` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
+- `tags`: The tags for the health check. The tags `kurrentdb` and `nosql` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. This approach is recommended if you have multiple EventStoreDb instances to check.
+The first one is to use the configuration based approach. This approach is recommended if you have multiple KurrentDb instances to check.
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddEventStoreDb("<name>");
+builder.AddKurrentDb("<name>");
 ```
 
 The configuration looks like this:
@@ -43,7 +43,7 @@ The configuration looks like this:
 {
   ..., // other configuration
   "HealthChecks": {
-    "EventStoreDb": {
+    "KurrentDb": {
       "<name>": {
         "Timeout": "<timeout>" // optional, default is 100 milliseconds
       }
@@ -53,11 +53,11 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you only have one EventStoreDb instance to check or dynamic programmatic values.
+The second approach is to use the builder based approach. This approach is recommended if you only have one KurrentDb instance to check or dynamic programmatic values.
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddEventStoreDb("<name>", options =>
+builder.AddKurrentDb("<name>", options =>
 {
     options.Timeout = "<timeout>"; // optional, default is 100 milliseconds
 });
@@ -68,7 +68,7 @@ builder.AddEventStoreDb("<name>", options =>
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddEventStoreDb("<name>", options => ..., "EventStoreDb", "database");
+builder.AddKurrentDb("<name>", options => ..., "KurrentDb", "database");
 ```
 
 ## License
