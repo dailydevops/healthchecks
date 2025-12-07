@@ -108,7 +108,7 @@ public class GarnetHealthConfigureTests
             _ = await Assert.That(result.Failed).IsTrue();
             _ = await Assert
                 .That(result.FailureMessage)
-                .IsEqualTo("The property Hostname cannot be null or whitespace.");
+                .IsEqualTo("The hostname cannot be null or whitespace when using 'Create' mode.");
         }
     }
 

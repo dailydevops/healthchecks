@@ -14,7 +14,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(GarnetOptions))]
 internal sealed partial class GarnetHealthCheck : IDisposable
 {
-    private ConcurrentDictionary<string, GarnetClient>? _connections;
+    private ConcurrentDictionary<string, GarnetClient>? _clients;
     private bool _disposedValue;
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -55,9 +55,9 @@ internal sealed partial class GarnetHealthCheck : IDisposable
             return serviceProvider.GetRequiredService<GarnetClient>();
         }
 
-        _connections ??= new ConcurrentDictionary<string, GarnetClient>(StringComparer.OrdinalIgnoreCase);
+        _clients ??= new ConcurrentDictionary<string, GarnetClient>(StringComparer.OrdinalIgnoreCase);
 
-        return _connections.GetOrAdd(name, _ => new GarnetClient(options.Hostname, options.Port));
+        return _clients.GetOrAdd(name, _ => new GarnetClient(options.Hostname, options.Port));
     }
 
     [SuppressMessage(
@@ -69,10 +69,10 @@ internal sealed partial class GarnetHealthCheck : IDisposable
     {
         if (!_disposedValue)
         {
-            if (disposing && _connections is not null)
+            if (disposing && _clients is not null)
             {
-                _ = Parallel.ForEach(_connections.Values, connection => connection.Dispose());
-                _connections.Clear();
+                _ = Parallel.ForEach(_clients.Values, clients => clients.Dispose());
+                _clients.Clear();
             }
             _disposedValue = true;
         }
