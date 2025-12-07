@@ -41,6 +41,7 @@ jobs:
       dotnetLogging: ${{ inputs.dotnet-logging }}
       dotnetVersion: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       enableCleanUpDockerDocker: true
+      failFast: false
       script-path: ./scripts/Collect-TestProjects.ps1
       solution: ./HealthChecks.slnx
     secrets: inherit
