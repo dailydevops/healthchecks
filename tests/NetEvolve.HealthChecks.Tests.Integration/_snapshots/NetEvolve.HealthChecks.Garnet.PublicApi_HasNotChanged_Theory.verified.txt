@@ -1,0 +1,20 @@
+﻿namespace NetEvolve.HealthChecks.Garnet
+{
+    public enum ConnectionHandleMode
+    {
+        ServiceProvider = 0,
+        Create = 1,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddGarnet(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Garnet.GarnetOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class GarnetOptions : System.IEquatable<NetEvolve.HealthChecks.Garnet.GarnetOptions>
+    {
+        public GarnetOptions() { }
+        public string? Hostname { get; set; }
+        public NetEvolve.HealthChecks.Garnet.ConnectionHandleMode Mode { get; set; }
+        public int Port { get; set; }
+        public int Timeout { get; set; }
+    }
+}
