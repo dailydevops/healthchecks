@@ -1,14 +1,15 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Garnet;
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
+using global::Garnet.client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Garnet;
-using StackExchange.Redis;
 
 [TestGroup(nameof(Garnet))]
 [TestGroup("Z03TestGroup")]
@@ -28,7 +29,8 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.Hostname = _database.Hostname;
+                        options.Port = _database.Port;
                         options.Mode = ConnectionHandleMode.Create;
                         options.Timeout = 10000; // Set a reasonable timeout
                     }
@@ -44,17 +46,21 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddGarnet(
                     "TestContainerHealthy",
-                    options => options.ConnectionString = _database.GetConnectionString()
+                    options =>
+                    {
+                        options.Mode = ConnectionHandleMode.ServiceProvider;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
                 );
             },
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton<IConnectionMultiplexer>(services =>
+                _ = builder.AddSingleton<GarnetClient>(services =>
                 {
                     var options = services.GetService<IOptionsSnapshot<GarnetOptions>>();
 
-                    return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
+                    return new GarnetClient(options!.Value.Hostname, options.Value.Port);
                 });
             }
         );
@@ -68,7 +74,8 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.ConnectionString = _database.GetConnectionString();
+                        options.Hostname = _database.Hostname;
+                        options.Port = _database.Port;
                         options.Timeout = 0;
                         options.Mode = ConnectionHandleMode.Create;
                     }
@@ -86,9 +93,10 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>
                 {
+                    { "HealthChecks:GarnetDatabase:TestContainerHealthy:Hostname", _database.Hostname },
                     {
-                        "HealthChecks:GarnetDatabase:TestContainerHealthy:ConnectionString",
-                        _database.GetConnectionString()
+                        "HealthChecks:GarnetDatabase:TestContainerHealthy:Port",
+                        _database.Port.ToString(CultureInfo.InvariantCulture)
                     },
                     { "HealthChecks:GarnetDatabase:TestContainerHealthy:Timeout", "10000" },
                 };
@@ -96,11 +104,11 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             },
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton<IConnectionMultiplexer>(services =>
+                _ = builder.AddSingleton<GarnetClient>(services =>
                 {
                     var options = services.GetService<IOptionsSnapshot<GarnetOptions>>();
 
-                    return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
+                    return new GarnetClient(options!.Value.Hostname, options.Value.Port);
                 });
             }
         );
@@ -114,9 +122,10 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>
                 {
+                    { "HealthChecks:GarnetDatabase:TestContainerDegraded:Hostname", _database.Hostname },
                     {
-                        "HealthChecks:GarnetDatabase:TestContainerDegraded:ConnectionString",
-                        _database.GetConnectionString()
+                        "HealthChecks:GarnetDatabase:TestContainerDegraded:Port",
+                        _database.Port.ToString(CultureInfo.InvariantCulture)
                     },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Mode", "Create" },
@@ -150,7 +159,11 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:GarnetDatabase:TestNoValues:ConnectionString", _database.GetConnectionString() },
+                    { "HealthChecks:GarnetDatabase:TestNoValues:Hostname", _database.Hostname },
+                    {
+                        "HealthChecks:GarnetDatabase:TestNoValues:Port",
+                        _database.Port.ToString(CultureInfo.InvariantCulture)
+                    },
                     { "HealthChecks:GarnetDatabase:TestNoValues:Timeout", "-2" },
                     { "HealthChecks:GarnetDatabase:TestNoValues:Mode", "Create" },
                 };

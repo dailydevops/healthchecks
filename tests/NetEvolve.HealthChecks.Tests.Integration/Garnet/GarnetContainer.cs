@@ -6,12 +6,14 @@ using Testcontainers.Redis;
 
 public sealed class GarnetContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly Testcontainers.Redis.RedisContainer _database = new RedisBuilder()
+    private readonly RedisContainer _database = new RedisBuilder()
         .WithImage("ghcr.io/microsoft/garnet")
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    public string GetConnectionString() => _database.GetConnectionString();
+    public string Hostname => _database.Hostname;
+
+    public int Port => _database.GetMappedPublicPort(6379);
 
     public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 

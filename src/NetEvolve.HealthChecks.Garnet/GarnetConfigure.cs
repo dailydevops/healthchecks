@@ -35,9 +35,17 @@ internal sealed class GarnetConfigure : IConfigureNamedOptions<GarnetOptions>, I
             return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
-        if (options.Mode == ConnectionHandleMode.Create && string.IsNullOrWhiteSpace(options.ConnectionString))
+        if (options.Mode == ConnectionHandleMode.Create)
         {
-            return Fail("The property ConnectionString cannot be null or whitespace.");
+            if (string.IsNullOrWhiteSpace(options.Hostname))
+            {
+                return Fail("The hostname cannot be null or whitespace when using 'Create' mode.");
+            }
+
+            if (options.Port <= 0 || options.Port > 65535)
+            {
+                return Fail("The port must be between 1 and 65535 when using 'Create' mode.");
+            }
         }
 
         return Success;

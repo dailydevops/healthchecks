@@ -84,17 +84,19 @@ public class GarnetHealthConfigureTests
             _ = await Assert.That(result.Failed).IsTrue();
             _ = await Assert
                 .That(result.FailureMessage)
-                .IsEqualTo("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
+                .IsEqualTo(
+                    "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
+                );
         }
     }
 
     [Test]
-    public async Task Validate_WhenConnectionStringEmpty_ReturnFailed()
+    public async Task Validate_WhenHostnameEmpty_ReturnFailed()
     {
         // Arrange
         var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
         var configure = new GarnetConfigure(configuration);
-        var options = new GarnetOptions { ConnectionString = string.Empty, Mode = ConnectionHandleMode.Create };
+        var options = new GarnetOptions { Hostname = string.Empty, Mode = ConnectionHandleMode.Create };
         const string name = "Test";
 
         // Act
@@ -104,7 +106,9 @@ public class GarnetHealthConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Failed).IsTrue();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The property ConnectionString cannot be null or whitespace.");
+            _ = await Assert
+                .That(result.FailureMessage)
+                .IsEqualTo("The property Hostname cannot be null or whitespace.");
         }
     }
 
@@ -114,7 +118,8 @@ public class GarnetHealthConfigureTests
         // Arrange
         var values = new Dictionary<string, string?>
         {
-            { "HealthChecks:GarnetDatabase:Test:ConnectionString", "localhost:6379" },
+            { "HealthChecks:GarnetDatabase:Test:Hostname", "localhost" },
+            { "HealthChecks:GarnetDatabase:Test:Port", "1234" },
             { "HealthChecks:GarnetDatabase:Test:Timeout", "1000" },
         };
         var configuration = new ConfigurationBuilder().AddInMemoryCollection(values).Build();
@@ -127,7 +132,8 @@ public class GarnetHealthConfigureTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert.That(options.ConnectionString).IsEqualTo("localhost:6379");
+            _ = await Assert.That(options.Hostname).IsEqualTo("localhost");
+            _ = await Assert.That(options.Port).IsEqualTo(1234);
             _ = await Assert.That(options.Timeout).IsEqualTo(1000);
         }
     }

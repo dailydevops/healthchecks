@@ -5,43 +5,59 @@ using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using global::Garnet.client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
-using StackExchange.Redis;
 
 [ConfigurableHealthCheck(typeof(GarnetOptions))]
 internal sealed partial class GarnetHealthCheck : IDisposable
 {
-    private ConcurrentDictionary<string, IConnectionMultiplexer>? _connections;
+    private ConcurrentDictionary<string, GarnetClient>? _connections;
     private bool _disposedValue;
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         GarnetOptions options,
         CancellationToken cancellationToken
     )
     {
         var connection = GetConnection(name, options, _serviceProvider);
 
-        var result = await connection.GetDatabase().PingAsync().WaitAsync(cancellationToken).ConfigureAwait(false);
+        if (!connection.IsConnected)
+        {
+            await connection.ConnectAsync(cancellationToken).ConfigureAwait(false);
+        }
 
-        return HealthCheckState(result.TotalMilliseconds <= options.Timeout, name);
+        var (isTimelyResponse, result) = await connection
+            .PingAsync(cancellationToken)
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (result is null || !result.Equals("pong", StringComparison.OrdinalIgnoreCase))
+        {
+            return HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                "The ping operation did not return the expected response."
+            );
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
-    private IConnectionMultiplexer GetConnection(string name, GarnetOptions options, IServiceProvider serviceProvider)
+    private GarnetClient GetConnection(string name, GarnetOptions options, IServiceProvider serviceProvider)
     {
         if (options.Mode == ConnectionHandleMode.ServiceProvider)
         {
-            return serviceProvider.GetRequiredService<IConnectionMultiplexer>();
+            return serviceProvider.GetRequiredService<GarnetClient>();
         }
 
-        _connections ??= new ConcurrentDictionary<string, IConnectionMultiplexer>(StringComparer.OrdinalIgnoreCase);
+        _connections ??= new ConcurrentDictionary<string, GarnetClient>(StringComparer.OrdinalIgnoreCase);
 
-        return _connections.GetOrAdd(name, _ => ConnectionMultiplexer.Connect(options.ConnectionString!));
+        return _connections.GetOrAdd(name, _ => new GarnetClient(options.Hostname, options.Port));
     }
 
     [SuppressMessage(

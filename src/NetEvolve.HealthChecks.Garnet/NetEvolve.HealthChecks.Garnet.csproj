@@ -8,7 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Garnet" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
-    <PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
