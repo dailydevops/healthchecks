@@ -36,12 +36,12 @@ permissions:
 jobs:
   commitlinter:
     name: Commit Linter
-    uses: dailydevops/pipelines/.github/workflows/step-node-commitlint.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
+    uses: dailydevops/pipelines/.github/workflows/step-node-commitlint.yml@f83eb5286449074f8785d0cbf08b71b05f4dd95f # 1.3.7
     secrets: inherit
 
   version:
     name: Version Management
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-version.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-version.yml@f83eb5286449074f8785d0cbf08b71b05f4dd95f # 1.3.7
     with:
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
@@ -49,7 +49,7 @@ jobs:
 
   format:
     name: Code Formatting
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-format.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-format.yml@f83eb5286449074f8785d0cbf08b71b05f4dd95f # 1.3.7
     needs:
       - commitlinter
     with:
@@ -122,7 +122,7 @@ jobs:
   build:
     name: Build Solution
     if: ${{ !cancelled() && !failure() }}
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-build.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
+    uses: dailydevops/pipelines/.github/workflows/step-dotnet-build.yml@f83eb5286449074f8785d0cbf08b71b05f4dd95f # 1.3.7
     needs:
       - coverage
       - format
@@ -139,7 +139,7 @@ jobs:
   dependabot:
     name: Dependabot Merge
     if: ${{ !cancelled() && !failure() && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
-    uses: dailydevops/pipelines/.github/workflows/step-dependabot-merge.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
+    uses: dailydevops/pipelines/.github/workflows/step-dependabot-merge.yml@f83eb5286449074f8785d0cbf08b71b05f4dd95f # 1.3.7
     needs:
       - build
     secrets: inherit
