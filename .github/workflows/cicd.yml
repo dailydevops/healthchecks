@@ -34,113 +34,14 @@ permissions:
   security-events: write
 
 jobs:
-  commitlinter:
-    name: Commit Linter
-    uses: dailydevops/pipelines/.github/workflows/step-node-commitlint.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
-    secrets: inherit
-
-  version:
-    name: Version Management
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-version.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
+  all:
+    name: Build & Tests
+    uses: dailydevops/pipelines/.github/workflows/build-dotnet-dynamic.yml@1.3.7
     with:
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-    secrets: inherit
-
-  format:
-    name: Code Formatting
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-format.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
-    needs:
-      - commitlinter
-    with:
-      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      runs-on: 'ubuntu-latest'
-    secrets: inherit
-
-  collect:
-    name: Collect TestGroups
-    runs-on: ubuntu-latest
-    outputs:
-      testgroups: ${{ steps.collect.outputs.testgroups }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-        with:
-          submodules: recursive
-          token: ${{ github.token }}
-
-      - name: Collect TestGroups
-        id: collect
-        shell: pwsh
-        run: |
-          $testGroups = ${{ github.workspace }}/scripts/Collect-TestProjects.ps1
-          echo $testGroups
-          echo "testgroups=$testGroups" >> $env:GITHUB_OUTPUT
-
-  tests:
-    name: TestGroup '${{ matrix.testgroups }}'
-    needs:
-      - commitlinter
-      - collect
-      - version
-    if: ${{ needs.collect.outputs.testgroups != '[]' }}
-    strategy:
-      fail-fast: false
-      matrix:
-        testgroups: ${{ fromJson(needs.collect.outputs.testgroups) }}
-    uses: ./.github/workflows/step-test.yml
-    with:
-      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      execution-name: "tests-${{ matrix.testgroups }}"
-      runs-on: 'ubuntu-latest'
+      dotnetLogging: ${{ inputs.dotnet-logging }}
+      dotnetVersion: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      enableCleanUpDockerDocker: true
+      failFast: false
+      script-path: ./scripts/Collect-TestProjects.ps1
       solution: ./HealthChecks.slnx
-      solution-version: ${{ needs.version.outputs.solution-version }}
-      # Filter tests by TestGroup trait using xUnit test selection syntax
-      test-filter: "/*/*/*/*[TestGroup=${{ matrix.testgroups }}]"
-    # Inherit all repository secrets for potential use in test execution
     secrets: inherit
-
-  # Job to aggregate test results and generate code coverage reports
-  coverage:
-    name: Collect Code Coverage
-    needs:
-      - tests
-      - version
-    uses: ./.github/workflows/step-coverage.yml
-    with:
-      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      runs-on: 'ubuntu-latest'
-      solution: ./HealthChecks.slnx
-      solution-version: ${{ needs.version.outputs.solution-version }}
-    secrets: inherit
-
-  build:
-    name: Build Solution
-    if: ${{ !cancelled() && !failure() }}
-    uses: dailydevops/pipelines/.github/workflows/step-dotnet-build.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
-    needs:
-      - coverage
-      - format
-      - version
-    with:
-      dotnet-logging: ${{ inputs.dotnet-logging || 'minimal' }}
-      dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
-      dotnet-quality: ${{ vars.NE_DOTNET_QUALITY }}
-      runs-on: 'ubuntu-latest'
-      solution: ./HealthChecks.slnx
-      solution-version: ${{ needs.version.outputs.solution-version }}
-    secrets: inherit
-
-  dependabot:
-    name: Dependabot Merge
-    if: ${{ !cancelled() && !failure() && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
-    uses: dailydevops/pipelines/.github/workflows/step-dependabot-merge.yml@615742a7d420dfa5b5f87c279f119f1db055bb3b # 1.2.28
-    needs:
-      - build
-    secrets: inherit
-
