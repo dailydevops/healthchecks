@@ -57,6 +57,7 @@ internal static class HealthCheckArchitecture
             typeof(Elasticsearch.ElasticsearchHealthCheck).Assembly,
             typeof(KurrentDb.KurrentDbHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
+            typeof(Garnet.GarnetHealthCheck).Assembly,
             typeof(Http.HttpHealthCheck).Assembly,
             typeof(InfluxDB.InfluxDBHealthCheck).Assembly,
             typeof(JanusGraph.JanusGraphHealthCheck).Assembly,
