@@ -1,1 +1,3 @@
 **/nuget.config
+**/_snapshots/
+**/_snapshot/
