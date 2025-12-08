@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestNoValues: Unexpected error.,
+      exception: {
+        message: The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.,
+        type: Microsoft.Extensions.Options.OptionsValidationException
+      },
+      name: TestNoValues,
+      status: Unhealthy,
+      tags: [
+        garnet,
+        cache
+      ]
+    }
+  ],
+  status: Unhealthy
+}

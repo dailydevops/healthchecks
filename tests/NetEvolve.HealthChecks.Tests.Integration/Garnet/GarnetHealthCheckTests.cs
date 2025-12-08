@@ -56,12 +56,7 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton<GarnetClient>(services =>
-                {
-                    var options = services.GetService<IOptionsSnapshot<GarnetOptions>>();
-
-                    return new GarnetClient(options!.Value.Hostname, options.Value.Port);
-                });
+                _ = builder.AddSingleton(services => new GarnetClient(_database.Hostname, _database.Port));
             }
         );
 
@@ -94,11 +89,9 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:GarnetDatabase:TestContainerHealthy:Hostname", _database.Hostname },
-                    {
-                        "HealthChecks:GarnetDatabase:TestContainerHealthy:Port",
-                        _database.Port.ToString(CultureInfo.InvariantCulture)
-                    },
+                    { "HealthChecks:GarnetDatabase:TestContainerHealthy:Port", $"{_database.Port}" },
                     { "HealthChecks:GarnetDatabase:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:GarnetDatabase:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -123,10 +116,7 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Hostname", _database.Hostname },
-                    {
-                        "HealthChecks:GarnetDatabase:TestContainerDegraded:Port",
-                        _database.Port.ToString(CultureInfo.InvariantCulture)
-                    },
+                    { "HealthChecks:GarnetDatabase:TestContainerDegraded:Port", $"{_database.Port}" },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Mode", "Create" },
                 };

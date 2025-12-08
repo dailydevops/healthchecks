@@ -88,6 +88,7 @@
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="NetEvolve.Extensions.TUnit" />
     <PackageReference Include="PublicApiGenerator" />
+    <PackageReference Include="Testcontainers" />
     <PackageReference Include="Testcontainers.ActiveMq" />
     <PackageReference Include="Testcontainers.ArangoDb" />
     <PackageReference Include="Testcontainers.Azurite" />
