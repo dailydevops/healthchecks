@@ -1,18 +1,19 @@
 name: Delete Cache after PR merge
 
-permissions:
-  contents: read
-
 on:
   pull_request:
     types:
       - closed
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   cleanup:
     name: Clear cache
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6

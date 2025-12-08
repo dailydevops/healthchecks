@@ -2,7 +2,7 @@ name: NuGet Package
 
 on:
   workflow_run:
-    workflows: [Build & Tests]
+    workflows: [CI]
     types: [completed]
     branches: [main]
 
