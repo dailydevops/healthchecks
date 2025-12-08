@@ -1,5 +1,4 @@
-name: Build & Tests
-
+name: CI
 on:
   push:
     branches: [ main ]
