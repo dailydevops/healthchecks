@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using global::Garnet.client;
@@ -57,7 +58,17 @@ internal sealed partial class GarnetHealthCheck : IDisposable
 
         _clients ??= new ConcurrentDictionary<string, GarnetClient>(StringComparer.OrdinalIgnoreCase);
 
-        return _clients.GetOrAdd(name, _ => new GarnetClient(options.Hostname, options.Port));
+        return _clients.GetOrAdd(
+            name,
+            _ =>
+            {
+                EndPoint endpoint = IPAddress.TryParse(options.Hostname!, out var ipAddress)
+                    ? new IPEndPoint(ipAddress, options.Port)
+                    : new DnsEndPoint(options.Hostname!, options.Port);
+
+                return new GarnetClient(endpoint);
+            }
+        );
     }
 
     [SuppressMessage(

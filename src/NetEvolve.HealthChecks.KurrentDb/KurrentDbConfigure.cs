@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.KurrentDb;
 
 using System.Threading;
-using KurrentDB.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

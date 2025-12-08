@@ -2,7 +2,6 @@ namespace NetEvolve.HealthChecks.Tests.Integration.GCP.Bigtable;
 
 using System;
 using System.Threading.Tasks;
-using Google.Api.Gax;
 using Google.Cloud.Bigtable.Admin.V2;
 using Grpc.Core;
 using Microsoft.Extensions.Logging.Abstractions;

@@ -2,8 +2,6 @@ namespace NetEvolve.HealthChecks.Tests.Integration.GCP.BigQuery;
 
 using System;
 using System.Threading.Tasks;
-using Google.Apis.Auth.OAuth2;
-using Google.Cloud.BigQuery.V2;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.BigQuery;
 using TUnit.Core.Interfaces;

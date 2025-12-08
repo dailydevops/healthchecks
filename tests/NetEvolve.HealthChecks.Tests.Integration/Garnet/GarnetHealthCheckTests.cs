@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 using System.Threading.Tasks;
 using global::Garnet.client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Garnet;
 
@@ -56,7 +56,9 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton(services => new GarnetClient(_database.Hostname, _database.Port));
+                _ = builder.AddSingleton(services => new GarnetClient(
+                    new IPEndPoint(IPAddress.Parse(_database.Hostname), _database.Port)
+                ));
             }
         );
 
@@ -94,15 +96,6 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:GarnetDatabase:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            },
-            serviceBuilder: builder =>
-            {
-                _ = builder.AddSingleton<GarnetClient>(services =>
-                {
-                    var options = services.GetService<IOptionsSnapshot<GarnetOptions>>();
-
-                    return new GarnetClient(options!.Value.Hostname, options.Value.Port);
-                });
             }
         );
 
@@ -116,6 +109,24 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Hostname", _database.Hostname },
+                    { "HealthChecks:GarnetDatabase:TestContainerDegraded:Port", $"{_database.Port}" },
+                    { "HealthChecks:GarnetDatabase:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:GarnetDatabase:TestContainerDegraded:Mode", "Create" },
+                };
+                _ = config.AddInMemoryCollection(values);
+            }
+        );
+
+    [Test]
+    public async Task AddGarnet_UseConfigurationWithLocalhost_Degraded() =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddGarnet("TestContainerDegraded"),
+            HealthStatus.Degraded,
+            config =>
+            {
+                var values = new Dictionary<string, string?>
+                {
+                    { "HealthChecks:GarnetDatabase:TestContainerDegraded:Hostname", "localhost" },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Port", $"{_database.Port}" },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Mode", "Create" },
