@@ -79,6 +79,7 @@
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Garnet" Version="1.0.91" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
+    <PackageVersion Include="Meilisearch" Version="0.18.0" />
     <PackageVersion Include="Milvus.Client" Version="2.3.0-preview.1" />
     <PackageVersion Include="Minio" Version="7.0.0" />
     <PackageVersion Include="MongoDB.Driver" Version="3.5.2" />
