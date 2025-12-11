@@ -69,6 +69,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Kubernetes/NetEvolve.HealthChecks.Kubernetes.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.LiteDB/NetEvolve.HealthChecks.LiteDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MariaDb/NetEvolve.HealthChecks.MariaDb.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Meilisearch/NetEvolve.HealthChecks.Meilisearch.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Milvus/NetEvolve.HealthChecks.Milvus.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Minio/NetEvolve.HealthChecks.Minio.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.MongoDb/NetEvolve.HealthChecks.MongoDb.csproj" />
