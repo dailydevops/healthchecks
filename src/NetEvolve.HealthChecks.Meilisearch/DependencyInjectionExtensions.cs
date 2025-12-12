@@ -13,7 +13,7 @@ using SourceGenerator.Attributes;
 [HealthCheckHelper]
 public static partial class DependencyInjectionExtensions
 {
-    private static readonly string[] _defaultTags = ["meilisearch", "database"];
+    private static readonly string[] _defaultTags = ["meilisearch", "search"];
 
     /// <summary>
     /// Add a health check for the Meilisearch instance.
