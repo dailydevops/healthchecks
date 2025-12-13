@@ -93,7 +93,7 @@
     <PackageVersion Include="Net.IBM.Data.Db2-osx" Version="9.0.0.400" />
     <PackageVersion Include="NetEvolve.CodeBuilder" Version="1.1.28" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="2.0.46" />
-    <PackageVersion Include="NetEvolve.Extensions.TUnit" Version="3.2.3" />
+    <PackageVersion Include="NetEvolve.Extensions.TUnit" Version="3.3.2" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Npgsql" Version="10.0.0" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
