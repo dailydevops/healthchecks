@@ -14,7 +14,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
-    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.4.81" />
+    <GlobalPackageReference Include="NetEvolve.Defaults" Version="1.5.0" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.14.1" />
     <GlobalPackageReference Include="Roslynator.Formatting.Analyzers" Version="4.14.1" />
     <GlobalPackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.14.1" />
