@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class MeilisearchClientProvider
 {
-    private ConcurrentDictionary<string, MeilisearchClient>? _meilisearchClients;
+    private ConcurrentDictionary<string, global::Meilisearch.MeilisearchClient>? _meilisearchClients;
 
-    internal MeilisearchClient GetClient(
+    internal global::Meilisearch.MeilisearchClient GetClient(
         string name,
         MeilisearchOptions options,
         IServiceProvider serviceProvider
@@ -18,18 +18,18 @@ internal sealed class MeilisearchClientProvider
         if (options.Mode == MeilisearchClientCreationMode.ServiceProvider)
         {
             return string.IsNullOrWhiteSpace(options.KeyedService)
-                ? serviceProvider.GetRequiredService<MeilisearchClient>()
-                : serviceProvider.GetRequiredKeyedService<MeilisearchClient>(options.KeyedService);
+                ? serviceProvider.GetRequiredService<global::Meilisearch.MeilisearchClient>()
+                : serviceProvider.GetRequiredKeyedService<global::Meilisearch.MeilisearchClient>(options.KeyedService);
         }
 
-        _meilisearchClients ??= new ConcurrentDictionary<string, MeilisearchClient>(
+        _meilisearchClients ??= new ConcurrentDictionary<string, global::Meilisearch.MeilisearchClient>(
             StringComparer.OrdinalIgnoreCase
         );
 
         return _meilisearchClients.GetOrAdd(name, _ => CreateClient(options));
     }
 
-    internal static MeilisearchClient CreateClient(MeilisearchOptions options)
+    internal static global::Meilisearch.MeilisearchClient CreateClient(MeilisearchOptions options)
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual(
             (int)options.Mode,
@@ -37,6 +37,6 @@ internal sealed class MeilisearchClientProvider
         );
         ArgumentException.ThrowIfNullOrEmpty(options.Host);
 
-        return new MeilisearchClient(options.Host, options.ApiKey);
+        return new global::Meilisearch.MeilisearchClient(options.Host, options.ApiKey);
     }
 }

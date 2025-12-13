@@ -53,7 +53,7 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton(services => new MeilisearchClient(_database.Host));
+                _ = builder.AddSingleton(services => new global::Meilisearch.MeilisearchClient(_database.Host));
             }
         );
 
