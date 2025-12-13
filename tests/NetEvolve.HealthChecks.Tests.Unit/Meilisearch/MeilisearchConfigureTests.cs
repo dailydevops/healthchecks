@@ -155,7 +155,7 @@ public class MeilisearchConfigureTests
     {
         // Arrange
         var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-        var client = new MeilisearchClient("http://localhost:7700");
+        var client = new global::Meilisearch.MeilisearchClient("http://localhost:7700");
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
         var configure = new MeilisearchConfigure(configuration, serviceProvider);
         var options = new MeilisearchOptions { Mode = MeilisearchClientCreationMode.ServiceProvider };

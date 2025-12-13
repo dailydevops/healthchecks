@@ -32,7 +32,7 @@ internal sealed partial class MeilisearchHealthCheck
     }
 
     internal static async Task<bool> DefaultCommandAsync(
-        MeilisearchClient client,
+        global::Meilisearch.MeilisearchClient client,
         CancellationToken cancellationToken
     )
     {

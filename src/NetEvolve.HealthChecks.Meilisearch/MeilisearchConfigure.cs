@@ -69,13 +69,13 @@ internal sealed class MeilisearchConfigure
     private ValidateOptionsResult ValidateCreationModeServiceProvider(MeilisearchOptions options)
     {
         var client = options.KeyedService is null
-            ? _serviceProvider.GetService<MeilisearchClient>()
-            : _serviceProvider.GetKeyedService<MeilisearchClient>(options.KeyedService);
+            ? _serviceProvider.GetService<global::Meilisearch.MeilisearchClient>()
+            : _serviceProvider.GetKeyedService<global::Meilisearch.MeilisearchClient>(options.KeyedService);
 
         if (client is null)
         {
             return Fail(
-                $"No service of type `{nameof(MeilisearchClient)}` registered. Please execute `services.AddSingleton<MeilisearchClient>()`."
+                $"No service of type `{nameof(global::Meilisearch.MeilisearchClient)}` registered. Please execute `services.AddSingleton<MeilisearchClient>()`."
             );
         }
 
