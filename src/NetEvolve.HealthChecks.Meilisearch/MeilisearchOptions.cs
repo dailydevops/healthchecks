@@ -13,8 +13,7 @@ public sealed record MeilisearchOptions
     /// <remarks>
     /// Defaults to <see cref="MeilisearchClientCreationMode.ServiceProvider"/>.
     /// </remarks>
-    public MeilisearchClientCreationMode Mode { get; set; } =
-        MeilisearchClientCreationMode.ServiceProvider;
+    public MeilisearchClientCreationMode Mode { get; set; } = MeilisearchClientCreationMode.ServiceProvider;
 
     /// <summary>
     /// Gets or sets the key used to resolve the <see cref="global::Meilisearch.MeilisearchClient"/> from the service provider.
@@ -59,6 +58,9 @@ public sealed record MeilisearchOptions
     /// Returns <see langword="true"/> if successful, <see langword="false"/> otherwise.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<global::Meilisearch.MeilisearchClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
-        MeilisearchHealthCheck.DefaultCommandAsync;
+    public Func<global::Meilisearch.MeilisearchClient, CancellationToken, Task<bool>> CommandAsync
+    {
+        get;
+        internal set;
+    } = MeilisearchHealthCheck.DefaultCommandAsync;
 }

@@ -88,18 +88,12 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
                 _ = builder.AddInMemoryCollection(
                     new Dictionary<string, string?>
                     {
-                        {
-                            "HealthChecks:Meilisearch:TestContainerHealthy:Host",
-                            _database.Host
-                        },
+                        { "HealthChecks:Meilisearch:TestContainerHealthy:Host", _database.Host },
                         {
                             "HealthChecks:Meilisearch:TestContainerHealthy:Mode",
                             MeilisearchClientCreationMode.Internal.ToString()
                         },
-                        {
-                            "HealthChecks:Meilisearch:TestContainerHealthy:Timeout",
-                            "10000"
-                        },
+                        { "HealthChecks:Meilisearch:TestContainerHealthy:Timeout", "10000" },
                     }
                 );
             }

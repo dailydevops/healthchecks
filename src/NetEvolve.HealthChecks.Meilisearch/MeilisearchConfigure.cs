@@ -51,18 +51,14 @@ internal sealed class MeilisearchConfigure
 
         if (options.Timeout < Timeout.Infinite)
         {
-            return Fail(
-                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
-            );
+            return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
         return options.Mode switch
         {
-            MeilisearchClientCreationMode.ServiceProvider
-                => ValidateCreationModeServiceProvider(options),
+            MeilisearchClientCreationMode.ServiceProvider => ValidateCreationModeServiceProvider(options),
             MeilisearchClientCreationMode.Internal => ValidateCreationModeInternal(options),
-            _
-                => Fail($"The mode `{options.Mode}` is not supported."),
+            _ => Fail($"The mode `{options.Mode}` is not supported."),
         };
     }
 

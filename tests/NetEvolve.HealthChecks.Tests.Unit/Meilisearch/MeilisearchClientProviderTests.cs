@@ -10,11 +10,7 @@ public sealed class MeilisearchClientProviderTests
 {
     [Test]
     [MethodDataSource(nameof(InvalidArgumentsTestData))]
-    public void CreateClient_Theory_Expected(
-        Type expectedException,
-        MeilisearchClientCreationMode mode,
-        string? host
-    )
+    public void CreateClient_Theory_Expected(Type expectedException, MeilisearchClientCreationMode mode, string? host)
     {
         var options = new MeilisearchOptions { Mode = mode, Host = host };
         _ = Assert.Throws(expectedException, () => MeilisearchClientProvider.CreateClient(options));

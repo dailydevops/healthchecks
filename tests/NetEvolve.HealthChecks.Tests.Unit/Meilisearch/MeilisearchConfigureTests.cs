@@ -103,11 +103,7 @@ public class MeilisearchConfigureTests
         var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
         var configure = new MeilisearchConfigure(configuration, serviceProvider);
-        var options = new MeilisearchOptions
-        {
-            Host = string.Empty,
-            Mode = MeilisearchClientCreationMode.Internal,
-        };
+        var options = new MeilisearchOptions { Host = string.Empty, Mode = MeilisearchClientCreationMode.Internal };
         const string name = "Test";
 
         // Act
@@ -119,9 +115,7 @@ public class MeilisearchConfigureTests
             _ = await Assert.That(result.Failed).IsTrue();
             _ = await Assert
                 .That(result.FailureMessage)
-                .IsEqualTo(
-                    "The host cannot be null or whitespace when using the `Internal` client creation mode."
-                );
+                .IsEqualTo("The host cannot be null or whitespace when using the `Internal` client creation mode.");
         }
     }
 

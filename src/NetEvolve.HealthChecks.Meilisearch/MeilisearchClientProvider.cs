@@ -31,10 +31,7 @@ internal sealed class MeilisearchClientProvider
 
     internal static global::Meilisearch.MeilisearchClient CreateClient(MeilisearchOptions options)
     {
-        ArgumentOutOfRangeException.ThrowIfNotEqual(
-            (int)options.Mode,
-            (int)MeilisearchClientCreationMode.Internal
-        );
+        ArgumentOutOfRangeException.ThrowIfNotEqual((int)options.Mode, (int)MeilisearchClientCreationMode.Internal);
         ArgumentException.ThrowIfNullOrEmpty(options.Host);
 
         return new global::Meilisearch.MeilisearchClient(options.Host, options.ApiKey);
