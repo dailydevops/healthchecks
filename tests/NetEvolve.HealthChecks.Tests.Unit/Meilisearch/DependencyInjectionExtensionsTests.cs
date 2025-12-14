@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Meilisearch;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Meilisearch;
 
 using System;
 using Microsoft.Extensions.Configuration;

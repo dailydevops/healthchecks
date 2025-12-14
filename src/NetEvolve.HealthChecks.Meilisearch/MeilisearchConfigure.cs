@@ -2,7 +2,7 @@
 
 using System;
 using System.Threading;
-using Meilisearch;
+using global::Meilisearch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -65,8 +65,8 @@ internal sealed class MeilisearchConfigure
     private ValidateOptionsResult ValidateCreationModeServiceProvider(MeilisearchOptions options)
     {
         var client = options.KeyedService is null
-            ? _serviceProvider.GetService<global::Meilisearch.MeilisearchClient>()
-            : _serviceProvider.GetKeyedService<global::Meilisearch.MeilisearchClient>(options.KeyedService);
+            ? _serviceProvider.GetService<MeilisearchClient>()
+            : _serviceProvider.GetKeyedService<MeilisearchClient>(options.KeyedService);
 
         if (client is null)
         {

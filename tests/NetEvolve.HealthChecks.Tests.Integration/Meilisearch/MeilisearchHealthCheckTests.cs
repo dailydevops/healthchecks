@@ -1,8 +1,7 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Meilisearch;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Meilisearch;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using global::Meilisearch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -83,9 +82,9 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
                 _ = healthChecks.AddMeilisearch("TestContainerHealthy");
             },
             HealthStatus.Healthy,
-            configurationBuilder: builder =>
+            config =>
             {
-                _ = builder.AddInMemoryCollection(
+                _ = config.AddInMemoryCollection(
                     new Dictionary<string, string?>
                     {
                         { "HealthChecks:Meilisearch:TestContainerHealthy:Host", _database.Host },

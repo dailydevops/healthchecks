@@ -1,7 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Meilisearch;
 
 using System.Threading.Tasks;
-using Meilisearch;
+using global::Meilisearch;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
@@ -12,9 +12,7 @@ internal sealed partial class MeilisearchHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         MeilisearchOptions options,
         CancellationToken cancellationToken
     )
@@ -28,15 +26,16 @@ internal sealed partial class MeilisearchHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
+        if (!isResultValid)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Received an invalid response from Meilisearch.");
+        }
+
         return HealthCheckState(isTimelyResponse && isResultValid, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(
-        global::Meilisearch.MeilisearchClient client,
+        MeilisearchClient client,
         CancellationToken cancellationToken
-    )
-    {
-        var isHealthy = await client.IsHealthyAsync(cancellationToken).ConfigureAwait(false);
-        return isHealthy;
-    }
+    ) => await client.IsHealthyAsync(cancellationToken).ConfigureAwait(false);
 }

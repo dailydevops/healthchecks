@@ -1,6 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Meilisearch;
 
-using Meilisearch;
+using global::Meilisearch;
 
 /// <summary>
 /// Options for <see cref="MeilisearchHealthCheck"/>
@@ -16,12 +16,12 @@ public sealed record MeilisearchOptions
     public MeilisearchClientCreationMode Mode { get; set; } = MeilisearchClientCreationMode.ServiceProvider;
 
     /// <summary>
-    /// Gets or sets the key used to resolve the <see cref="global::Meilisearch.MeilisearchClient"/> from the service provider.
+    /// Gets or sets the key used to resolve the <see cref="MeilisearchClient"/> from the service provider.
     /// </summary>
     /// <remarks>
-    /// When specified, the health check will resolve the <see cref="global::Meilisearch.MeilisearchClient"/> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When specified, the health check will resolve the <see cref="MeilisearchClient"/> using <c>IServiceProvider.GetRequiredKeyedService</c>.
     /// <br/>
-    /// When null or empty, the health check will resolve the <see cref="global::Meilisearch.MeilisearchClient"/> using <c>IServiceProvider.GetRequiredService</c>.
+    /// When null or empty, the health check will resolve the <see cref="MeilisearchClient"/> using <c>IServiceProvider.GetRequiredService</c>.
     /// <br/>
     /// This option is only used when <see cref="Mode"/> is set to <see cref="MeilisearchClientCreationMode.ServiceProvider"/>.
     /// </remarks>
@@ -58,9 +58,6 @@ public sealed record MeilisearchOptions
     /// Returns <see langword="true"/> if successful, <see langword="false"/> otherwise.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<global::Meilisearch.MeilisearchClient, CancellationToken, Task<bool>> CommandAsync
-    {
-        get;
-        internal set;
-    } = MeilisearchHealthCheck.DefaultCommandAsync;
+    public Func<MeilisearchClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
+        MeilisearchHealthCheck.DefaultCommandAsync;
 }
