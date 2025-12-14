@@ -6,29 +6,13 @@
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference
-      Include="Net.IBM.Data.Db2"
-      Condition="$([MSBuild]::IsOSPlatform('Windows'))"
-      PrivateAssets="all"
-    />
-    <PackageReference
-      Include="Net.IBM.Data.Db2-lnx"
-      Condition="$([MSBuild]::IsOSPlatform('Linux'))"
-      PrivateAssets="all"
-    />
-    <PackageReference
-      Include="Net.IBM.Data.Db2-osx"
-      Condition="$([MSBuild]::IsOSPlatform('OSX'))"
-      PrivateAssets="all"
-    />
+    <PackageReference Include="Net.IBM.Data.Db2" Condition="$([MSBuild]::IsOSPlatform('Windows'))" PrivateAssets="all" />
+    <PackageReference Include="Net.IBM.Data.Db2-lnx" Condition="$([MSBuild]::IsOSPlatform('Linux'))" PrivateAssets="all" />
+    <PackageReference Include="Net.IBM.Data.Db2-osx" Condition="$([MSBuild]::IsOSPlatform('OSX'))" PrivateAssets="all" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
-    <ProjectReference
-      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
-      ReferenceOutputAssembly="false"
-      OutputItemType="Analyzer"
-    />
+    <ProjectReference Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>

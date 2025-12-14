@@ -10,10 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
-    <ProjectReference
-      Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj"
-      ReferenceOutputAssembly="false"
-      OutputItemType="Analyzer"
-    />
+    <ProjectReference Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>

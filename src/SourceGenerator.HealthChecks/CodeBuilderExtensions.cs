@@ -38,7 +38,8 @@ public static class CodeBuilderExtensions
             ?.Append($"return {condition} ? ")
             .AppendLine(
                 "HealthCheckResult.Healthy($\"{name}: Healthy\") : HealthCheckResult.Degraded($\"{name}: Degraded\");"
-            ) ?? throw new ArgumentNullException(nameof(builder));
+            )
+        ?? throw new ArgumentNullException(nameof(builder));
 
     /// <summary>
     /// Appends code to return a healthy health check result as a ValueTask.
@@ -51,7 +52,8 @@ public static class CodeBuilderExtensions
             ?.Append($"return ValueTask.FromResult({condition} ? ")
             .AppendLine(
                 "HealthCheckResult.Healthy($\"{name}: Healthy\") : HealthCheckResult.Degraded($\"{name}: Degraded\"));"
-            ) ?? throw new ArgumentNullException(nameof(builder));
+            )
+        ?? throw new ArgumentNullException(nameof(builder));
 
     /// <summary>
     /// Appends code to return an unhealthy health check result.
@@ -67,5 +69,6 @@ public static class CodeBuilderExtensions
         builder
             ?.Append($"return new HealthCheckResult(failureStatus, $\"{{name}}: {message}\"")
             .AppendIf(!string.IsNullOrWhiteSpace(exceptionName), $", exception: {exceptionName}")
-            .AppendLine(");") ?? throw new ArgumentNullException(nameof(builder));
+            .AppendLine(");")
+        ?? throw new ArgumentNullException(nameof(builder));
 }
