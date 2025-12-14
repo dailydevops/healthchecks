@@ -44,7 +44,6 @@ public static partial class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<MeilisearchCheckMarker>()
                 .AddSingleton<MeilisearchHealthCheck>()
-                .AddSingleton<MeilisearchClientProvider>()
                 .ConfigureOptions<MeilisearchConfigure>();
         }
 
