@@ -65,6 +65,7 @@ internal static class HealthCheckArchitecture
             typeof(Kubernetes.KubernetesHealthCheck).Assembly,
             typeof(LiteDB.LiteDBHealthCheck).Assembly,
             typeof(MariaDb.MariaDbHealthCheck).Assembly,
+            typeof(Meilisearch.MeilisearchHealthCheck).Assembly,
             typeof(Milvus.MilvusHealthCheck).Assembly,
             typeof(Minio.MinioHealthCheck).Assembly,
             typeof(MongoDb.MongoDbHealthCheck).Assembly,

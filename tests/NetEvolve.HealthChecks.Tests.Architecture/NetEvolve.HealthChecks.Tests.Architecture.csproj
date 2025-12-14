@@ -55,6 +55,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Kubernetes\NetEvolve.HealthChecks.Kubernetes.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.LiteDB\NetEvolve.HealthChecks.LiteDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MariaDb\NetEvolve.HealthChecks.MariaDb.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Meilisearch\NetEvolve.HealthChecks.Meilisearch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Milvus\NetEvolve.HealthChecks.Milvus.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Minio\NetEvolve.HealthChecks.Minio.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.MongoDb\NetEvolve.HealthChecks.MongoDb.csproj" />
