@@ -7,7 +7,7 @@
     <VersionTestContainers>4.9.0</VersionTestContainers>
   </PropertyGroup>
   <ItemGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-    <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.2.2" />
+    <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.2.3" />
   </ItemGroup>
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="4.14.0" />
