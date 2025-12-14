@@ -1,0 +1,22 @@
+﻿namespace NetEvolve.HealthChecks.Meilisearch
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddMeilisearch([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Meilisearch.MeilisearchOptions>? options = null, params string[] tags) { }
+    }
+    public enum MeilisearchClientCreationMode
+    {
+        ServiceProvider = 0,
+        Internal = 1,
+    }
+    public sealed class MeilisearchOptions : System.IEquatable<NetEvolve.HealthChecks.Meilisearch.MeilisearchOptions>
+    {
+        public MeilisearchOptions() { }
+        public string? ApiKey { get; set; }
+        public System.Func<Meilisearch.MeilisearchClient, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; }
+        public string? Host { get; set; }
+        public string? KeyedService { get; set; }
+        public NetEvolve.HealthChecks.Meilisearch.MeilisearchClientCreationMode Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+}
