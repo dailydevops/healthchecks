@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Meilisearch;
 
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using global::Meilisearch;
@@ -9,9 +10,8 @@ using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(MeilisearchOptions))]
-internal sealed partial class MeilisearchHealthCheck : IDisposable
+internal sealed partial class MeilisearchHealthCheck
 {
-    private bool _disposedValue;
     private ConcurrentDictionary<string, MeilisearchClient>? _meilisearchClients;
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -58,23 +58,4 @@ internal sealed partial class MeilisearchHealthCheck : IDisposable
 
     private static MeilisearchClient CreateClient(MeilisearchOptions options) =>
         new MeilisearchClient(options.Host, options.ApiKey);
-
-    private void Dispose(bool disposing)
-    {
-        if (!_disposedValue)
-        {
-            if (disposing && _meilisearchClients is not null)
-            {
-                _meilisearchClients.Clear();
-            }
-
-            _disposedValue = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
 }
