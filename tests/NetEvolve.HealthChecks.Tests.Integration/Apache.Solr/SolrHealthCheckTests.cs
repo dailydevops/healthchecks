@@ -27,8 +27,8 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.BaseUrl = new Uri(_database.BaseUrl);
-                        options.Core = _database.Core;
+                        options.BaseUrl = _database.BaseUrl;
+                        options.Core = SolrContainer.Core;
                         options.Timeout = 10000;
                     }
                 );
@@ -45,8 +45,8 @@ public class SolrHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Solr:TestContainerHealthy:BaseUrl", _database.BaseUrl },
-                    { "HealthChecks:Solr:TestContainerHealthy:Core", _database.Core },
+                    { "HealthChecks:Solr:TestContainerHealthy:BaseUrl", _database.BaseUrl.ToString() },
+                    { "HealthChecks:Solr:TestContainerHealthy:Core", SolrContainer.Core },
                     { "HealthChecks:Solr:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -62,8 +62,8 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.BaseUrl = new Uri(_database.BaseUrl);
-                        options.Core = _database.Core;
+                        options.BaseUrl = _database.BaseUrl;
+                        options.Core = SolrContainer.Core;
                         options.Timeout = 0;
                     }
                 );
@@ -80,8 +80,8 @@ public class SolrHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:Solr:TestContainerDegraded:BaseUrl", _database.BaseUrl },
-                    { "HealthChecks:Solr:TestContainerDegraded:Core", _database.Core },
+                    { "HealthChecks:Solr:TestContainerDegraded:BaseUrl", _database.BaseUrl.ToString() },
+                    { "HealthChecks:Solr:TestContainerDegraded:Core", SolrContainer.Core },
                     { "HealthChecks:Solr:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -115,7 +115,7 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.BaseUrl = new Uri(_database.BaseUrl);
+                        options.BaseUrl = _database.BaseUrl;
                         options.Core = "nonexistent";
                         options.Timeout = 10000;
                     }

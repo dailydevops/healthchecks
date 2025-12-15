@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Apache.Solr;
 
+using System;
 using System.Threading.Tasks;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -17,9 +18,9 @@ public sealed class SolrContainer : IAsyncInitializer, IAsyncDisposable
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    public string BaseUrl => $"http://{_container.Hostname}:{_container.GetMappedPublicPort(SolrPort)}";
+    public Uri BaseUrl => new Uri($"http://{_container.Hostname}:{_container.GetMappedPublicPort(SolrPort)}");
 
-    public string Core => "healthchecks";
+    public static string Core => "healthchecks";
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 
