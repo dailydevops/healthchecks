@@ -16,7 +16,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(SolrOptions))]
 internal sealed partial class SolrHealthCheck
 {
-    private ConcurrentDictionary<string, ISolrBasicReadOnlyOperations<string>>? _clients = new(StringComparer.Ordinal);
+    private ConcurrentDictionary<string, ISolrBasicReadOnlyOperations<string>>? _clients;
 
     /// <summary>
     /// Executes the health check for the configured Solr instance.
