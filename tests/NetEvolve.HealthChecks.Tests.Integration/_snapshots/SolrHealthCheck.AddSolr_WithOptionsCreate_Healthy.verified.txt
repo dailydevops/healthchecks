@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: AddSolr_WithOptionsCreate_Healthy: Healthy,
+      name: AddSolr_WithOptionsCreate_Healthy,
+      status: Healthy,
+      tags: [
+        solr,
+        apache,
+        search
+      ]
+    }
+  ],
+  status: Healthy
+}

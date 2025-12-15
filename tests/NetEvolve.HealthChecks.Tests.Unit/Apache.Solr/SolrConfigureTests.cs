@@ -53,7 +53,7 @@ public sealed class SolrConfigureTests
         // Arrange
         var configure = new SolrConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new SolrOptions();
+        var options = new SolrOptions { CreationMode = ClientCreationMode.Create };
 
         // Act
         var result = configure.Validate(name, options);

@@ -1,6 +1,5 @@
 namespace NetEvolve.HealthChecks.Apache.Solr;
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
@@ -8,6 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 /// </summary>
 public sealed record SolrOptions
 {
+    /// <summary>
+    /// Gets or sets how the Solr client is created (resolved from DI or created on demand).
+    /// </summary>
+    public ClientCreationMode CreationMode { get; set; }
+
     /// <summary>
     /// Gets or sets the base URL of the Solr server.
     /// </summary>
