@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Apache.Solr;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -18,9 +19,8 @@ public sealed class SolrContainer : IAsyncInitializer, IAsyncDisposable
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    public Uri BaseUrl => new Uri($"http://{_container.Hostname}:{_container.GetMappedPublicPort(SolrPort)}");
-
-    public static string Core => "healthchecks";
+    [SuppressMessage("Design", "CA1056:URI-like properties should not be strings", Justification = "As designed.")]
+    public string Url => $"http://{_container.Hostname}:{_container.GetMappedPublicPort(SolrPort)}";
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 

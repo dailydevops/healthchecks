@@ -61,6 +61,7 @@
     <PackageReference Include="Qdrant.Client" />
     <PackageReference Include="RabbitMQ.Client" />
     <PackageReference Include="RavenDB.Client" />
+    <PackageReference Include="SolrNet.Microsoft.DependencyInjection" />
     <PackageReference Include="StackExchange.Redis" />
     <PackageReference Include="System.Data.Odbc" />
     <PackageReference Include="System.Data.SQLite" />

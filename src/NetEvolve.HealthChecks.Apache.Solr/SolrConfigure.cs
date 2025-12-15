@@ -36,14 +36,9 @@ internal sealed class SolrConfigure : IConfigureNamedOptions<SolrOptions>, IVali
             return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
-        if (options.BaseUrl is null)
+        if (string.IsNullOrWhiteSpace(options.BaseUrl))
         {
-            return Fail("The BaseUrl cannot be null.");
-        }
-
-        if (string.IsNullOrWhiteSpace(options.Core))
-        {
-            return Fail("The Core cannot be null or whitespace.");
+            return Fail("The BaseUrl cannot be null or whitespace.");
         }
 
         return Success;

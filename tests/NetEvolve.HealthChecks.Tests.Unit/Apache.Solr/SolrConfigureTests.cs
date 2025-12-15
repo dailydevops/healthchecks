@@ -62,26 +62,7 @@ public sealed class SolrConfigureTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Failed).IsTrue();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The BaseUrl cannot be null.");
-        }
-    }
-
-    [Test]
-    public async Task Validate_WhenCoreNull_ThrowArgumentException()
-    {
-        // Arrange
-        var configure = new SolrConfigure(new ConfigurationBuilder().Build());
-        const string? name = "Test";
-        var options = new SolrOptions { BaseUrl = new Uri("http://localhost:8983") };
-
-        // Act
-        var result = configure.Validate(name, options);
-
-        // Assert
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(result.Failed).IsTrue();
-            _ = await Assert.That(result.FailureMessage).IsEqualTo("The Core cannot be null or whitespace.");
+            _ = await Assert.That(result.FailureMessage).IsEqualTo("The BaseUrl cannot be null or whitespace.");
         }
     }
 
@@ -91,7 +72,7 @@ public sealed class SolrConfigureTests
         // Arrange
         var configure = new SolrConfigure(new ConfigurationBuilder().Build());
         const string? name = "Test";
-        var options = new SolrOptions { BaseUrl = new Uri("http://localhost:8983"), Core = "collection1" };
+        var options = new SolrOptions { BaseUrl = "http://localhost:8983" };
 
         // Act
         var result = configure.Validate(name, options);

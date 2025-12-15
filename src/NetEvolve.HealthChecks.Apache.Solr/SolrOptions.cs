@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Apache.Solr;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
 /// Options for <see cref="SolrHealthCheck"/>.
@@ -10,12 +11,8 @@ public sealed record SolrOptions
     /// <summary>
     /// Gets or sets the base URL of the Solr server.
     /// </summary>
-    public Uri BaseUrl { get; set; } = default!;
-
-    /// <summary>
-    /// Gets or sets the core or collection name to check.
-    /// </summary>
-    public string Core { get; set; } = default!;
+    [SuppressMessage("Design", "CA1056:URI-like properties should not be strings", Justification = "As designed.")]
+    public string BaseUrl { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds for executing the healthcheck.
