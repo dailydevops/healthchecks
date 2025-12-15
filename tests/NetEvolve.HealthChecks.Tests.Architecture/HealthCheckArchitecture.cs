@@ -23,6 +23,7 @@ internal static class HealthCheckArchitecture
             typeof(Apache.ActiveMq.ActiveMqHealthCheck).Assembly,
             typeof(Apache.Kafka.KafkaHealthCheck).Assembly,
             typeof(Apache.Pulsar.PulsarHealthCheck).Assembly,
+            typeof(Apache.Solr.SolrHealthCheck).Assembly,
             // AWS
             typeof(AWS.EC2.ElasticComputeCloudHealthCheck).Assembly,
             typeof(AWS.DynamoDB.DynamoDbHealthCheck).Assembly,

@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Solr\NetEvolve.HealthChecks.Apache.Solr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ArangoDb\NetEvolve.HealthChecks.ArangoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.DynamoDB\NetEvolve.HealthChecks.AWS.DynamoDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.EC2\NetEvolve.HealthChecks.AWS.EC2.csproj" />
