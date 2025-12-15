@@ -1,9 +1,7 @@
 ---
 applyTo: '**/*.razor, **/*.razor.cs, **/*.razor.css'
 
-description: 'This file contains instructions for Blazor development.
-  It includes guidelines for component development, performance optimization, and following Blazor coding standards.
-  Ensure to follow the practices outlined in this file to maintain code quality and consistency.'
+description: This file contains instructions for Blazor development. It includes guidelines for component development, performance optimization, and following Blazor coding standards. Ensure to follow the practices outlined in this file to maintain code quality and consistency.
 ---
 
 # Blazor Development Instructions

@@ -1,9 +1,7 @@
 ---
 applyTo: '**/*.cs'
 
-description: 'This file contains instructions for C# development.
-  It includes guidelines for using GitHub Copilot, managing dependencies, and following coding standards.
-  Ensure to follow the practices outlined in this file to maintain code quality and consistency.'
+description: This file contains instructions for C# development.  It includes guidelines for using GitHub Copilot, managing dependencies, and following coding standards.  Ensure to follow the practices outlined in this file to maintain code quality and consistency.
 ---
 
 # C# Development Instructions
