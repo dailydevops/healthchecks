@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::JanusGraph.Net.IO.GraphSON;
 using Gremlin.Net.Driver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,53 +14,32 @@ using NetEvolve.HealthChecks.JanusGraph;
 [ClassDataSource<JanusGraphDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(JanusGraph))]
 [TestGroup("Z03TestGroup")]
-public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
+public class JanusGraphHealthCheckTests : HealthCheckTestBase
 {
     private readonly JanusGraphDatabase _database;
-#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-    private GremlinClient _client = default!;
-#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
-    private bool _disposed;
+    private readonly JanusGraphGraphSONMessageSerializer _serializer;
 
-    public JanusGraphHealthCheckTests(JanusGraphDatabase database) => _database = database;
-
-    public Task InitializeAsync()
+    public JanusGraphHealthCheckTests(JanusGraphDatabase database)
     {
-        var server = new GremlinServer(_database.Hostname, _database.Port);
-        _client = new GremlinClient(server);
-
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
-        {
-            if (disposing)
-            {
-                _client.Dispose();
-            }
-
-            _disposed = true;
-        }
+        _database = database;
+        _serializer = new JanusGraphGraphSONMessageSerializer();
     }
 
     [Test]
-    public async Task AddJanusGraph_UseOptions_Healthy() =>
+    public async Task AddJanusGraph_UseOptions_Healthy()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks => healthChecks.AddJanusGraph("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddJanusGraph_UseOptionsWithKeyedService_Healthy()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddJanusGraph(
@@ -71,24 +51,30 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<IGremlinClient>("janusgraph-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton<IGremlinClient>("janusgraph-test", (_, _) => client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
+    public async Task AddJanusGraph_UseOptionsDoubleRegistered_Healthy()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
+        _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
                 await RunAndVerify(
                     healthChecks =>
                         healthChecks.AddJanusGraph("TestContainerHealthy").AddJanusGraph("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+                    serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
                 )
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseOptions_Degraded() =>
+    public async Task AddJanusGraph_UseOptions_Degraded()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddJanusGraph(
@@ -104,11 +90,14 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseOptions_Unhealthy() =>
+    public async Task AddJanusGraph_UseOptions_Unhealthy()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks =>
             {
@@ -121,11 +110,14 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseConfiguration_Healthy() =>
+    public async Task AddJanusGraph_UseConfiguration_Healthy()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks => healthChecks.AddJanusGraph("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -137,11 +129,14 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddJanusGraph_UseConfigurationWithKeyedService_Healthy()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks => healthChecks.AddJanusGraph("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -155,11 +150,14 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddKeyedSingleton<IGremlinClient>("janusgraph-test-config", (_, _) => _client)
+                services.AddKeyedSingleton<IGremlinClient>("janusgraph-test-config", (_, _) => client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseConfiguration_Degraded() =>
+    public async Task AddJanusGraph_UseConfiguration_Degraded()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks => healthChecks.AddJanusGraph("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -171,11 +169,14 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
+    }
 
     [Test]
-    public async Task AddJanusGraph_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddJanusGraph_UseConfiguration_TimeoutMinusTwo_ShouldThrowException()
+    {
+        using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
             healthChecks => healthChecks.AddJanusGraph("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -187,6 +188,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase, IAsyncInitializer
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
+    }
 }
