@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.JanusGraph;
 
 using System.Threading.Tasks;
+using Gremlin.Net.Driver;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.JanusGraph;
 
@@ -8,9 +9,8 @@ public sealed class JanusGraphDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly JanusGraphContainer _database = new JanusGraphBuilder().WithLogger(NullLogger.Instance).Build();
 
-    public string Hostname => _database.Hostname;
-
-    public int Port => _database.GetMappedPublicPort(JanusGraphBuilder.JanusGraphPort);
+    public GremlinServer Server =>
+        new GremlinServer(_database.Hostname, _database.GetMappedPublicPort(JanusGraphBuilder.JanusGraphPort));
 
     public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 
