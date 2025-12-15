@@ -4,9 +4,9 @@
 [![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.Apache.Solr?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.Apache.Solr/)
 
 This package provides a health check for Apache Solr, based on the [SolrNet.Core](https://www.nuget.org/packages/SolrNet.Core/) package.
-The main purpose is to check that the Solr server is reachable and that the specified core is available.
+The main purpose is to check that the Solr server is reachable. The health check uses the Solr admin ping endpoint and does not require a core/collection name.
 
-:bulb: This package is available for .NET 8.0 and later.
+:bulb: This package targets .NET 8.0 and later.
 
 ## Installation
 To use this package, you need to add the package to your project. You can do this by using the NuGet package manager or by using the dotnet CLI.
@@ -15,40 +15,39 @@ dotnet add package NetEvolve.HealthChecks.Apache.Solr
 ```
 
 ## Health Check - Apache Solr Liveness
-The health check is a liveness check. It will check that the Solr server is reachable and that the specified core is available using the admin ping endpoint.
-If the server needs longer than the configured timeout to respond, the health check will return `Degraded`.
-If the server is not reachable or returns an error status, the health check will return `Unhealthy`.
+This health check verifies Solr reachability via the admin ping endpoint.
+- If the server responds slower than the configured timeout, the result is `Degraded`.
+- If the server is not reachable or returns an error, the result is `Unhealthy`.
 
 ### Usage
 After adding the package, you need to import the namespace `NetEvolve.HealthChecks.Apache.Solr` and add the health check to the service collection.
 ```csharp
 using NetEvolve.HealthChecks.Apache.Solr;
 ```
-Therefore, you can use two different approaches. In both approaches you have to provide a name for the health check.
+You can register the health check via configuration or code. In both approaches you must provide a unique name.
 
 ### Parameters
-- `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
-- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
-- `tags`: The tags for the health check. The tags `solr`, `apache` and `search` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
+- `name`: Unique health check name used to match configuration.
+- `options`: Optional configuration when using the builder approach. Supported options: `BaseUrl` (string), `Timeout` (milliseconds), and `CreationMode` (`Create` or `ServiceProvider`).
+- `tags`: Optional tags appended to the defaults. The tags `solr`, `apache`, and `search` are always included.
 
 ### Variant 1: Configuration based
-The first one is to use the configuration based approach. Therefore, you have to add the configuration section `HealthChecks:Solr` to your `appsettings.json` file.
+Add a configuration section under `HealthChecks:Solr` in `appsettings.json`, then register by name.
 ```csharp
 var builder = services.AddHealthChecks();
 
 builder.AddSolr("<name>");
 ```
 
-The configuration looks like this:
+Example `appsettings.json`:
 ```json
 {
-  ..., // other configuration
   "HealthChecks": {
     "Solr": {
-      "<name>": {
-        "BaseUrl": "<solr-base-url>", // required, e.g. http://localhost:8983
-        "Core": "<core-name>", // required, e.g. collection1
-        "Timeout": "<timeout>" // optional, default is 100 milliseconds
+      "my-solr": {
+        "BaseUrl": "http://localhost:8983",
+        "Timeout": 100,
+        "CreationMode": "Create" // or "ServiceProvider" when Solr client is registered in DI
       }
     }
   }
@@ -56,24 +55,41 @@ The configuration looks like this:
 ```
 
 ### Variant 2: Builder based
-The second approach is to use the builder based approach. This approach is recommended if you only have one Solr instance to check or dynamic programmatic values.
+Use this approach when values are dynamic or you have a single instance.
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddSolr("<name>", options =>
+builder.AddSolr("my-solr", options =>
 {
-    options.BaseUrl = new Uri("<solr-base-url>"); // required, e.g. http://localhost:8983
-    options.Core = "<core-name>"; // required, e.g. collection1
-    options.Timeout = "<timeout>"; // optional, default is 100 milliseconds
+  options.BaseUrl = "http://localhost:8983";
+  options.Timeout = 100; // milliseconds
+  options.CreationMode = ClientCreationMode.Create; // default: ServiceProvider
 });
 ```
 
-### :bulb: You can always provide tags to all health checks, for grouping or filtering.
+Example `Program.cs` registration and endpoint exposure:
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHealthChecks()
+  .AddSolr("my-solr");
+
+var app = builder.Build();
+
+app.MapHealthChecks("/health");
+
+app.Run();
+```
+
+When using `CreationMode = ServiceProvider`, ensure an `ISolrBasicReadOnlyOperations<string>` client is registered in DI before adding the health check.
+
+### Tags
+You can provide additional tags to group or filter health checks.
 
 ```csharp
 var builder = services.AddHealthChecks();
 
-builder.AddSolr("<name>", options => ..., "solr", "search");
+builder.AddSolr("my-solr", options => { /* ... */ }, "critical", "liveness");
 ```
 
 ## License
