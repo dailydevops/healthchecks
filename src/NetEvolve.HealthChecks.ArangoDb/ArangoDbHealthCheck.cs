@@ -18,9 +18,7 @@ internal sealed partial class ArangoDbHealthCheck
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         ArangoDbOptions options,
         CancellationToken cancellationToken
     )
@@ -33,7 +31,12 @@ internal sealed partial class ArangoDbHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isTimelyResponse && isResultValid, name);
+        if (!isResultValid)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "The command did not return a valid result.");
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(ArangoDBClient client, CancellationToken cancellationToken)

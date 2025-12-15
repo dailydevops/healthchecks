@@ -43,7 +43,6 @@ public static partial class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<ArangoDbCheckMarker>()
                 .AddSingleton<ArangoDbHealthCheck>()
-                .AddSingleton<ArangoDbClientProvider>()
                 .ConfigureOptions<ArangoDbConfigure>();
         }
 
