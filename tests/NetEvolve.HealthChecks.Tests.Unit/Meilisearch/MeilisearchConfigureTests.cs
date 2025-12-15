@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.Tests.Unit.Meilisearch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Meilisearch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;

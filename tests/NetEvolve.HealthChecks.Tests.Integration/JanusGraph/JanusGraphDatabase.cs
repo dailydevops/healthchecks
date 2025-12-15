@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.JanusGraph;
 
 using System.Threading.Tasks;
-using Google.Cloud.PubSub.V1;
 using Gremlin.Net.Driver;
 using Microsoft.Extensions.Logging.Abstractions;
 using Testcontainers.JanusGraph;
