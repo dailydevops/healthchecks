@@ -106,6 +106,7 @@
     <PackageVersion Include="Qdrant.Client" Version="1.16.1" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.0" />
     <PackageVersion Include="RavenDB.Client" Version="7.1.4" />
+    <PackageVersion Include="SolrNet.Core" Version="1.2.1" />
     <PackageVersion Include="StackExchange.Redis" Version="2.10.1" />
     <PackageVersion Include="System.Data.Odbc" Version="9.0.11" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />

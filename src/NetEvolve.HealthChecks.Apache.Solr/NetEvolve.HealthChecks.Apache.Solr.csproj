@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for Apache Solr, based on the NuGet package `SolrNet.Core`.</Description>
+    <PackageTags>$(PackageTags);apache;solr;search</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+</Project>
