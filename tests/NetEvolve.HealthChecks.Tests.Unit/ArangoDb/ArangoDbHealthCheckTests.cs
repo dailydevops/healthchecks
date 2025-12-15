@@ -106,10 +106,7 @@ public sealed class ArangoDbHealthCheckTests
         var transport = Substitute.For<HttpClient>();
         using var client = new ArangoDBClient(transport);
 
-        var serviceProvider = new ServiceCollection()
-            .AddKeyedSingleton(serviceKey, client)
-            .AddSingleton<ArangoDbClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, client).BuildServiceProvider();
 
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -152,10 +149,7 @@ public sealed class ArangoDbHealthCheckTests
         var transport = HttpApiTransport.UsingNoAuth(new Uri("http://localhost/test"));
         using var client = new ArangoDBClient(transport);
 
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<ArangoDbClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -198,10 +192,7 @@ public sealed class ArangoDbHealthCheckTests
         var transport = HttpApiTransport.UsingNoAuth(new Uri("http://localhost/test"));
         using var client = new ArangoDBClient(transport);
 
-        var serviceProvider = new ServiceCollection()
-            .AddSingleton(client)
-            .AddSingleton<ArangoDbClientProvider>()
-            .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
 
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
