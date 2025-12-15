@@ -108,7 +108,6 @@ public sealed class ArangoDbHealthCheckTests
 
         var serviceProvider = new ServiceCollection()
             .AddKeyedSingleton(serviceKey, client)
-            .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
@@ -154,7 +153,6 @@ public sealed class ArangoDbHealthCheckTests
 
         var serviceProvider = new ServiceCollection()
             .AddSingleton(client)
-            .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
@@ -200,7 +198,6 @@ public sealed class ArangoDbHealthCheckTests
 
         var serviceProvider = new ServiceCollection()
             .AddSingleton(client)
-            .AddSingleton<ArangoDbClientProvider>()
             .BuildServiceProvider();
 
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
