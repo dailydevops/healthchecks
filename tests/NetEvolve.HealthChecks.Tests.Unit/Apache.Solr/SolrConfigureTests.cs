@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Apache.Solr;
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Solr;
