@@ -63,6 +63,30 @@
       "assignees": [
         "samtrion"
       ]
+    },
+    {
+      "groupName": "Testcontainers packages",
+      "groupSlug": "testcontainers-packages",
+      "matchManagers": [
+        "nuget",
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "Testcontainers",
+        "Testcontainers.*"
+      ]
+    },
+    {
+      "groupName": "TUnit packages",
+      "groupSlug": "tunit-packages",
+      "matchManagers": [
+        "nuget",
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "TUnit",
+        "TUnit.*"
+      ]
     }
   ]
 }
