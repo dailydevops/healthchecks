@@ -33,7 +33,7 @@ internal sealed partial class SolrHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var client = GetClient(name, options, serviceProvider);
+        var client = GetClient(name, options, _serviceProvider);
 
         var (isTimelyResponse, response) = await client
             .PingAsync()
