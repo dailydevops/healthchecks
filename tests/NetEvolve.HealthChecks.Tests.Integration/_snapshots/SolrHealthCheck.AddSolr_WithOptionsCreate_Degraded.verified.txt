@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: AddSolr_WithOptionsCreate_Degraded: Degraded,
+      name: AddSolr_WithOptionsCreate_Degraded,
+      status: Degraded,
+      tags: [
+        solr,
+        apache,
+        search
+      ]
+    }
+  ],
+  status: Degraded
+}

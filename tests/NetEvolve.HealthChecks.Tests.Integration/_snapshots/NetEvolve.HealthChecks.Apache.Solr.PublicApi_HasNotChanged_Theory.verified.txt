@@ -1,0 +1,19 @@
+﻿namespace NetEvolve.HealthChecks.Apache.Solr
+{
+    public enum ClientCreationMode
+    {
+        ServiceProvider = 0,
+        Create = 1,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSolr([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Apache.Solr.SolrOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class SolrOptions : System.IEquatable<NetEvolve.HealthChecks.Apache.Solr.SolrOptions>
+    {
+        public SolrOptions() { }
+        public string BaseUrl { get; set; }
+        public NetEvolve.HealthChecks.Apache.Solr.ClientCreationMode CreationMode { get; set; }
+        public int Timeout { get; set; }
+    }
+}

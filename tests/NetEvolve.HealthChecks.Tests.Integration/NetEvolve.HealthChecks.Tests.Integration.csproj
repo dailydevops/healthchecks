@@ -61,6 +61,7 @@
     <PackageReference Include="Qdrant.Client" />
     <PackageReference Include="RabbitMQ.Client" />
     <PackageReference Include="RavenDB.Client" />
+    <PackageReference Include="SolrNet.Microsoft.DependencyInjection" />
     <PackageReference Include="StackExchange.Redis" />
     <PackageReference Include="System.Data.Odbc" />
     <PackageReference Include="System.Data.SQLite" />
@@ -218,6 +219,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Kusto\NetEvolve.HealthChecks.Azure.Kusto.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.PubSub\NetEvolve.HealthChecks.GCP.PubSub.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Solr\NetEvolve.HealthChecks.Apache.Solr.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.IntegrationTestAttribute" />

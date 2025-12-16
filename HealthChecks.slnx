@@ -28,6 +28,7 @@
     <Project Path="src/NetEvolve.HealthChecks.Apache.ActiveMq/NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Apache.Kafka/NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Apache.Pulsar/NetEvolve.HealthChecks.Apache.Pulsar.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.Apache.Solr/NetEvolve.HealthChecks.Apache.Solr.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.ArangoDb/NetEvolve.HealthChecks.ArangoDb.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.AWS.DynamoDB/NetEvolve.HealthChecks.AWS.DynamoDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.AWS.EC2/NetEvolve.HealthChecks.AWS.EC2.csproj" />
