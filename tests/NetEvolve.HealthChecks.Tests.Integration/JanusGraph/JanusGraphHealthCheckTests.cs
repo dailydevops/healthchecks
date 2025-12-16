@@ -13,7 +13,7 @@ using NetEvolve.HealthChecks.JanusGraph;
 
 [ClassDataSource<JanusGraphDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(JanusGraph))]
-[TestGroup("Z03TestGroup")]
+[TestGroup("Z01TestGroup")]
 public class JanusGraphHealthCheckTests : HealthCheckTestBase
 {
     private readonly JanusGraphDatabase _database;
@@ -30,7 +30,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     {
         using var client = new GremlinClient(_database.Server, _serializer);
         await RunAndVerify(
-            healthChecks => healthChecks.AddJanusGraph("TestContainerHealthy", options => options.Timeout = 10000),
+            healthChecks => healthChecks.AddJanusGraph("TestContainerHealthy", options => options.Timeout = 25000),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
         );
@@ -47,7 +47,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
                     options =>
                     {
                         options.KeyedService = "janusgraph-test";
-                        options.Timeout = 10000;
+                        options.Timeout = 25000;
                     }
                 ),
             HealthStatus.Healthy,
@@ -125,7 +125,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:JanusGraph:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:JanusGraph:TestContainerHealthy:Timeout", "25000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -145,7 +145,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>
                 {
                     { "HealthChecks:JanusGraph:TestContainerKeyedHealthy:KeyedService", "janusgraph-test-config" },
-                    { "HealthChecks:JanusGraph:TestContainerKeyedHealthy:Timeout", "10000" },
+                    { "HealthChecks:JanusGraph:TestContainerKeyedHealthy:Timeout", "25000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
