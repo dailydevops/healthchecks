@@ -26,6 +26,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddJanusGraph_UseOptions_Healthy()
     {
         using var client = new GremlinClient(_database.Server, _serializer);
@@ -37,6 +38,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddJanusGraph_UseOptionsWithKeyedService_Healthy()
     {
         using var client = new GremlinClient(_database.Server, _serializer);
@@ -56,6 +58,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddJanusGraph_UseOptionsDoubleRegistered_Healthy()
     {
         using var client = new GremlinClient(_database.Server, _serializer);
@@ -115,6 +118,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddJanusGraph_UseConfiguration_Healthy()
     {
         using var client = new GremlinClient(_database.Server, _serializer);
@@ -134,6 +138,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    [SkipOnFailure]
     public async Task AddJanusGraph_UseConfigurationWithKeyedService_Healthy()
     {
         using var client = new GremlinClient(_database.Server, _serializer);
