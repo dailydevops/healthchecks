@@ -4,7 +4,7 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-    <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.2.3" />
+    <GlobalPackageReference Include="CSharpier.MSBuild" Version="1.2.4" />
   </ItemGroup>
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="4.14.0" />
