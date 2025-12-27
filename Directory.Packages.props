@@ -113,7 +113,7 @@
     <PackageVersion Include="System.Text.Json" Version="10.0.1" />
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.13.1" />
     <PackageVersion Include="TUnit" Version="1.5.70" />
-    <PackageVersion Include="Verify.TUnit" Version="31.9.0" />
+    <PackageVersion Include="Verify.TUnit" Version="31.9.3" />
   </ItemGroup>
   <ItemGroup Label="Testcontainers">
     <PackageVersion Include="Testcontainers" Version="4.9.0" />
