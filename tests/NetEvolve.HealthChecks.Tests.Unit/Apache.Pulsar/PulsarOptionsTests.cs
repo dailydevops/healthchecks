@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.Pulsar;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Apache.Pulsar;
 
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Pulsar;
