@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Integration.Pulsar;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.Pulsar;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;

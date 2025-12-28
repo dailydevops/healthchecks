@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.Pulsar;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Apache.Pulsar;
 
 using System;
 using System.Linq;
