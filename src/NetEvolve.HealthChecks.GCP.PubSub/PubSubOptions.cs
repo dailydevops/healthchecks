@@ -24,5 +24,5 @@ public sealed record PubSubOptions
     /// <summary>
     /// Gets or sets the Google Cloud project name.
     /// </summary>
-    public string ProjectName { get; set; }
+    public string? ProjectName { get; set; }
 }
