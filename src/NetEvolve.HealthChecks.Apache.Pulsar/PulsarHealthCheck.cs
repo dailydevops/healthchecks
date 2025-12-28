@@ -8,6 +8,7 @@ using DotPulsar.Abstractions;
 using DotPulsar.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 /// <summary>
@@ -19,11 +20,9 @@ internal sealed partial class PulsarHealthCheck
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172, RCS1163, IDE0060 // Unused method parameters should be removed
-        HealthStatus _,
+        HealthStatus failureStatus,
         PulsarOptions options,
         CancellationToken cancellationToken
-#pragma warning restore S1172, RCS1163, IDE0060 // Unused method parameters should be removed
     )
     {
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
@@ -31,17 +30,37 @@ internal sealed partial class PulsarHealthCheck
             : _serviceProvider.GetRequiredKeyedService<IPulsarClient>(options.KeyedService);
 
         // Create a temporary reader to test connectivity
-        var sw = Stopwatch.StartNew();
-        var reader = client
-            .NewReader(Schema.String)
-            .Topic("persistent://public/default/healthcheck")
-            .StartMessageId(MessageId.Earliest)
-            .Create();
+        var (isTimelyResponse, result) = await Task.Run(
+                async () =>
+                {
+                    IAsyncDisposable? reader = null;
+                    try
+                    {
+                        reader = client
+                            .NewReader(Schema.String)
+                            .Topic("persistent://public/default/healthcheck")
+                            .StartMessageId(MessageId.Earliest)
+                            .Create();
 
-        var isTimelyResponse = options.Timeout >= sw.Elapsed.TotalMilliseconds;
+                        return true;
+                    }
+                    finally
+                    {
+                        if (reader is not null)
+                        {
+                            await reader.DisposeAsync().ConfigureAwait(false);
+                        }
+                    }
+                },
+                cancellationToken
+            )
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
 
-        // If we can create the reader, the client is connected
-        await reader.DisposeAsync().ConfigureAwait(false);
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Failed to create a reader for the health check topic.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
