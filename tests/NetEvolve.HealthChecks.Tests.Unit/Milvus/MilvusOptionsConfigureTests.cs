@@ -15,7 +15,7 @@ public sealed class MilvusOptionsConfigureTests
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var configure = new MilvusOptionsConfigure(configuration);
-        var name = default(string);
+        const string? name = default;
         var options = new MilvusOptions();
 
         // Act
@@ -31,7 +31,7 @@ public sealed class MilvusOptionsConfigureTests
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var configure = new MilvusOptionsConfigure(configuration);
-        var name = "Test";
+        const string name = "Test";
         var options = default(MilvusOptions);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class MilvusOptionsConfigureTests
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var configure = new MilvusOptionsConfigure(configuration);
-        var name = "Test";
+        const string name = "Test";
         var options = new MilvusOptions { Timeout = -2 };
 
         // Act
@@ -63,7 +63,7 @@ public sealed class MilvusOptionsConfigureTests
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var configure = new MilvusOptionsConfigure(configuration);
-        var name = "Test";
+        const string name = "Test";
         var options = new MilvusOptions { Timeout = Timeout.Infinite };
 
         // Act
@@ -79,7 +79,7 @@ public sealed class MilvusOptionsConfigureTests
         // Arrange
         var configuration = new ConfigurationBuilder().Build();
         var configure = new MilvusOptionsConfigure(configuration);
-        var name = default(string);
+        const string? name = default;
         var options = new MilvusOptions();
 
         // Act

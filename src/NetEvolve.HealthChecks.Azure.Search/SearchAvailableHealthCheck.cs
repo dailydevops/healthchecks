@@ -54,10 +54,7 @@ internal sealed partial class SearchAvailableHealthCheck
                 : serviceProvider.GetRequiredKeyedService<SearchClient>(options.KeyedService);
         }
 
-        if (_searchClients is null)
-        {
-            _searchClients = new ConcurrentDictionary<string, SearchClient>(StringComparer.OrdinalIgnoreCase);
-        }
+        _searchClients ??= new ConcurrentDictionary<string, SearchClient>(StringComparer.OrdinalIgnoreCase);
 
         return _searchClients.GetOrAdd(name, _ => CreateSearchClient(options, serviceProvider));
     }

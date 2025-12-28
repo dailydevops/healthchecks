@@ -50,9 +50,7 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-            {
-                _ = services.AddKeyedSingleton("kubernetes-test", (_, _) => _database.CreateClient());
-            }
+                _ = services.AddKeyedSingleton("kubernetes-test", (_, _) => _database.CreateClient())
         );
 
     [Test]
@@ -102,8 +100,6 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-            {
-                _ = services.AddKeyedSingleton("kubernetes-keyed-test", (_, _) => _database.CreateClient());
-            }
+                _ = services.AddKeyedSingleton("kubernetes-keyed-test", (_, _) => _database.CreateClient())
         );
 }

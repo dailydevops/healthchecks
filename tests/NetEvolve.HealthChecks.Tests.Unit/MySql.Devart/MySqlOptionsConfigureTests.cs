@@ -17,7 +17,7 @@ public sealed class MySqlOptionsConfigureTests
         var options = new MySqlDevartOptions();
 
         // Act
-        void Act() => configure.Configure(null!, options);
+        void Act() => configure.Configure(null, options);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("name", Act);

@@ -51,9 +51,7 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: builder =>
-            {
-                _ = builder.AddSingleton(services => new global::Meilisearch.MeilisearchClient(_database.Host));
-            }
+                _ = builder.AddSingleton(_ => new global::Meilisearch.MeilisearchClient(_database.Host))
         );
 
     [Test]
@@ -77,10 +75,7 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddMeilisearch_UseConfiguration_Healthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddMeilisearch("TestContainerHealthy");
-            },
+            healthChecks => _ = healthChecks.AddMeilisearch("TestContainerHealthy"),
             HealthStatus.Healthy,
             config =>
             {
@@ -90,7 +85,7 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:Meilisearch:TestContainerHealthy:Host", _database.Host },
                         {
                             "HealthChecks:Meilisearch:TestContainerHealthy:Mode",
-                            MeilisearchClientCreationMode.Internal.ToString()
+                            nameof(MeilisearchClientCreationMode.Internal)
                         },
                         { "HealthChecks:Meilisearch:TestContainerHealthy:Timeout", "10000" },
                     }

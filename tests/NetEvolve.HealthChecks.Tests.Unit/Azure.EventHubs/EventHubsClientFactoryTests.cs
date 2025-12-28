@@ -69,7 +69,7 @@ public sealed class EventHubsClientFactoryTests
         var mockClient = Substitute.For<EventHubProducerClient>();
         var services = new ServiceCollection();
         _ = services.AddSingleton(mockClient);
-        using var serviceProvider = services.BuildServiceProvider();
+        await using var serviceProvider = services.BuildServiceProvider();
 
         var options = new EventHubsOptions { Mode = ClientCreationMode.ServiceProvider, EventHubName = "eventhub1" };
         using var clientFactory = new EventHubsClientFactory();

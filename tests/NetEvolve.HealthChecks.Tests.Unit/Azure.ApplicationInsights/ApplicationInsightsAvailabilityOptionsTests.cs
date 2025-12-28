@@ -31,7 +31,7 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        var connectionString =
+        const string connectionString =
             "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
 
         // Act
@@ -46,7 +46,7 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        var instrumentationKey = "12345678-1234-1234-1234-123456789abc";
+        const string instrumentationKey = "12345678-1234-1234-1234-123456789abc";
 
         // Act
         options.InstrumentationKey = instrumentationKey;
@@ -60,7 +60,7 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        var mode = ApplicationInsightsClientCreationMode.ConnectionString;
+        const ApplicationInsightsClientCreationMode mode = ApplicationInsightsClientCreationMode.ConnectionString;
 
         // Act
         options.Mode = mode;
@@ -74,7 +74,7 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        var timeout = 5000;
+        const int timeout = 5000;
 
         // Act
         options.Timeout = timeout;
@@ -88,7 +88,7 @@ public class ApplicationInsightsAvailabilityOptionsTests
     {
         // Arrange
         var options = new ApplicationInsightsAvailabilityOptions();
-        static void ConfigureAction(TelemetryConfiguration config) => throw new NotImplementedException();
+        static void ConfigureAction(TelemetryConfiguration _) => throw new NotImplementedException();
 
         // Act
         options.ConfigureConfiguration = ConfigureAction;

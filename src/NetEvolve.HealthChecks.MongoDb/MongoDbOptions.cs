@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.MongoDb;
 
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 /// <summary>
@@ -26,6 +25,6 @@ public sealed record MongoDbOptions
     /// The command to execute against the database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<MongoClient, CancellationToken, Task<BsonDocument>> CommandAsync { get; internal set; } =
+    public Func<MongoClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
         MongoDbHealthCheck.DefaultCommandAsync;
 }

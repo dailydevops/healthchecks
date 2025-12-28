@@ -1,11 +1,7 @@
 ﻿{
   results: [
     {
-      description: TableServiceProviderNotExistsUnhealthy: Unexpected error.,
-      exception: {
-        message: null,
-        type: Azure.RequestFailedException
-      },
+      description: TableServiceProviderNotExistsUnhealthy: Table 'notexists' does not exist or is not accessible.,
       name: TableServiceProviderNotExistsUnhealthy,
       status: Unhealthy,
       tags: [

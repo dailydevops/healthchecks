@@ -31,6 +31,11 @@ internal sealed class PubSubOptionsConfigure : IConfigureNamedOptions<PubSubOpti
             return Fail("The option cannot be null.");
         }
 
+        if (string.IsNullOrWhiteSpace(options.ProjectName))
+        {
+            return Fail("The GCP project name must be provided.");
+        }
+
         if (options.Timeout < Timeout.Infinite)
         {
             return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");

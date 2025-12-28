@@ -12,9 +12,7 @@ internal sealed partial class BlobContainerAvailableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         BlobContainerAvailableOptions options,
         CancellationToken cancellationToken
     )
@@ -32,12 +30,17 @@ internal sealed partial class BlobContainerAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Failed to list blob containers.");
+        }
+
         var container = blobClient.GetBlobContainerClient(options.ContainerName);
 
         var containerExists = await container.ExistsAsync(cancellationToken).ConfigureAwait(false);
         if (!containerExists)
         {
-            return HealthCheckResult.Unhealthy($"{name}: Container `{options.ContainerName}` does not exist.");
+            return HealthCheckUnhealthy(failureStatus, name, $"Container `{options.ContainerName}` does not exist.");
         }
 
         (var containerInTime, _) = await container
@@ -45,6 +48,6 @@ internal sealed partial class BlobContainerAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid && result && containerInTime, name);
+        return HealthCheckState(isValid && containerInTime, name);
     }
 }

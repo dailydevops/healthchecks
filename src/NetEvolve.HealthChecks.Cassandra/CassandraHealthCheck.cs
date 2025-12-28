@@ -35,7 +35,7 @@ internal sealed partial class CassandraHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken cancellationToken)
+    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken _)
     {
         using var session = await cluster.ConnectAsync().ConfigureAwait(false);
 
@@ -43,6 +43,6 @@ internal sealed partial class CassandraHealthCheck
             .ExecuteAsync(new SimpleStatement("SELECT release_version FROM system.local"))
             .ConfigureAwait(false);
 
-        return result is not null && result.Any();
+        return result?.Any() == true;
     }
 }

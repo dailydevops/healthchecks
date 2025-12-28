@@ -84,7 +84,7 @@ public sealed class MongoDbHealthCheckTests
             CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
-                return new BsonDocument("test", 1);
+                return true;
             },
         };
 
@@ -126,7 +126,7 @@ public sealed class MongoDbHealthCheckTests
             CommandAsync = async (_, cancellationToken) =>
             {
                 await Task.Delay(0, cancellationToken);
-                return new BsonDocument("test", 1);
+                return true;
             },
         };
 

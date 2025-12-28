@@ -17,9 +17,7 @@ internal sealed partial class NatsHealthCheck
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         NatsOptions options,
         CancellationToken cancellationToken
     )
@@ -34,6 +32,11 @@ internal sealed partial class NatsHealthCheck
             )
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!isConnected)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "NATS connection is not connected.");
+        }
 
         return HealthCheckState(isTimelyResponse && isConnected, name);
     }

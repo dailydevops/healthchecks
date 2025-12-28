@@ -12,9 +12,7 @@ internal sealed partial class QueueServiceAvailableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         QueueServiceAvailableOptions options,
         CancellationToken cancellationToken
     )
@@ -28,10 +26,15 @@ internal sealed partial class QueueServiceAvailableHealthCheck
             .GetAsyncEnumerator(cancellationToken)
             .MoveNextAsync();
 
-        var (isValid, result) = await queueTask
+        var (isTimelyResponse, result) = await queueTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid && result, name);
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "The queue service is not available.");
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

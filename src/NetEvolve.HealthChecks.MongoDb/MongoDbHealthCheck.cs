@@ -15,9 +15,7 @@ internal sealed partial class MongoDbHealthCheck
 
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         MongoDbOptions options,
         CancellationToken cancellationToken
     )
@@ -28,22 +26,26 @@ internal sealed partial class MongoDbHealthCheck
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
 
-        var (isTimelyResponse, _) = await commandTask
+        var (isTimelyResponse, result) = await commandTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "The command did not return a valid result.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<BsonDocument> DefaultCommandAsync(
-        MongoClient client,
-        CancellationToken cancellationToken
-    )
+    internal static async Task<bool> DefaultCommandAsync(MongoClient client, CancellationToken cancellationToken)
     {
         var database = client.GetDatabase("admin");
 
-        return await database
+        _ = await database
             .RunCommandAsync<BsonDocument>(_defaultCommand, null, cancellationToken)
             .ConfigureAwait(false);
+
+        return true;
     }
 }

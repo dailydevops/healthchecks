@@ -95,7 +95,7 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
+                        options.CommandAsync = async (_, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
 
@@ -116,13 +116,7 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 _ = healthChecks.AddKurrentDb(
                     "TestContainerUnhealthy",
                     options =>
-                    {
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-                            await Task.CompletedTask;
-                            throw new InvalidOperationException("Test exception");
-                        };
-                    }
+                        options.CommandAsync = async (_1, _2) => throw new InvalidOperationException("Test exception")
                 );
             },
             HealthStatus.Unhealthy,

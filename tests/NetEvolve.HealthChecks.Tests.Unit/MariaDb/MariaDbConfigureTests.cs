@@ -45,7 +45,7 @@ public sealed class MariaDbConfigureTests
     {
         // Arrange
         var configure = new MariaDbConfigure(new ConfigurationBuilder().Build());
-        var name = " ";
+        const string name = " ";
         var options = new MariaDbOptions();
 
         // Act
@@ -139,7 +139,7 @@ public sealed class MariaDbConfigureTests
     {
         // Arrange
         var configure = new MariaDbConfigure(new ConfigurationBuilder().Build());
-        var name = " ";
+        const string name = " ";
         var options = new MariaDbOptions();
 
         // Act
@@ -237,7 +237,7 @@ public sealed class MariaDbConfigureTests
     {
         // Arrange
         var configure = new MariaDbConfigure(new ConfigurationBuilder().Build());
-        var name = " ";
+        const string name = " ";
         var options = new MariaDbOptions();
 
         // Act

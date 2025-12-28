@@ -22,11 +22,11 @@ internal sealed partial class ServiceBusTopicHealthCheck
         var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
         var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
-        var (isValid, _) = await client
+        var (isTimelyResponse, _) = await client
             .GetTopicRuntimePropertiesAsync(options.TopicName, cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

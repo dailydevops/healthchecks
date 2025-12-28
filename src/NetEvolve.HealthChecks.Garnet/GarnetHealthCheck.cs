@@ -37,7 +37,7 @@ internal sealed partial class GarnetHealthCheck : IDisposable
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        if (result is null || !result.Equals("pong", StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrWhiteSpace(result) || !result.Equals("pong", StringComparison.OrdinalIgnoreCase))
         {
             return HealthCheckUnhealthy(
                 failureStatus,

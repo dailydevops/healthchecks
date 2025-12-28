@@ -24,7 +24,7 @@ public sealed class K3sDatabase : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
         var kubeconfig = await _container.GetKubeconfigAsync().ConfigureAwait(false);
-        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(kubeconfig));
+        await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(kubeconfig));
         _configuration = await KubernetesClientConfiguration
             .BuildConfigFromConfigFileAsync(stream)
             .ConfigureAwait(false);

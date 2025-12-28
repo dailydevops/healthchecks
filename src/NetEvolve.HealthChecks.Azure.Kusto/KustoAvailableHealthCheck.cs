@@ -14,9 +14,7 @@ internal sealed partial class KustoAvailableHealthCheck
 {
     private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         KustoAvailableOptions options,
         CancellationToken cancellationToken
     )
@@ -27,9 +25,8 @@ internal sealed partial class KustoAvailableHealthCheck
 
         var databaseName = string.IsNullOrWhiteSpace(options.DatabaseName) ? "NetDefaultDB" : options.DatabaseName;
 
-        var queryTask = queryProvider.ExecuteQueryAsync(databaseName, ".show databases", null, cancellationToken);
-
-        var (isTimelyResponse, result) = await queryTask
+        var (isTimelyResponse, result) = await queryProvider
+            .ExecuteQueryAsync(databaseName, ".show databases", null, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 

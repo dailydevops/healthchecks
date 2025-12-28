@@ -112,8 +112,9 @@ public sealed class MosquittoHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Unexpected error.", StringComparison.Ordinal);
-            _ = await Assert.That(result.Exception).IsNotNull();
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo("test: Mosquitto health check failed.", StringComparison.Ordinal);
         }
     }
 }

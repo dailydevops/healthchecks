@@ -47,7 +47,7 @@ internal static class CodeGenerator
                 )
                 .AppendLineIf(
                     includeServiceProvider,
-                    $"private readonly IServiceProvider _serviceProvider = serviceProvider;"
+                    "private readonly IServiceProvider _serviceProvider = serviceProvider;"
                 )
                 .AppendLine(
                     $"private readonly {candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName} _defaultConfiguration = new {candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName}();"
@@ -78,7 +78,7 @@ internal static class CodeGenerator
                 {
                     _ = cb.AppendLine("var options = _optionsMonitor.Get(name);");
 
-                    using (cb.ScopeLine($"if (options?.Equals(_defaultConfiguration) != false)"))
+                    using (cb.ScopeLine("if (options?.Equals(_defaultConfiguration) != false)"))
                     {
                         _ = cb.HealthCheckUnhealthy("Missing configuration.");
                     }

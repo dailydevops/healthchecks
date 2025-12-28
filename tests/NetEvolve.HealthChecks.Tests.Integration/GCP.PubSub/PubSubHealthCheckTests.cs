@@ -21,7 +21,15 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddPubSub_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddPubSub("TestContainerHealthy", options => options.Timeout = 10000),
+            healthChecks =>
+                healthChecks.AddPubSub(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.Timeout = 10000;
+                        options.ProjectName = PubSubEmulator.ProjectId;
+                    }
+                ),
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
         );
@@ -29,7 +37,15 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddPubSub_UseOptions_Degraded() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddPubSub("TestContainerDegraded", options => options.Timeout = 0),
+            healthChecks =>
+                healthChecks.AddPubSub(
+                    "TestContainerDegraded",
+                    options =>
+                    {
+                        options.Timeout = 0;
+                        options.ProjectName = PubSubEmulator.ProjectId;
+                    }
+                ),
             HealthStatus.Degraded,
             serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
         );
@@ -45,6 +61,7 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                     {
                         options.Timeout = 10000;
                         options.KeyedService = "pubsub";
+                        options.ProjectName = PubSubEmulator.ProjectId;
                     }
                 );
             },
@@ -62,6 +79,7 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:GCP:PubSub:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:GCP:PubSub:TestContainerHealthy:ProjectName", PubSubEmulator.ProjectId },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -78,6 +96,7 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:GCP:PubSub:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:GCP:PubSub:TestContainerDegraded:ProjectName", PubSubEmulator.ProjectId },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -94,6 +113,7 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:GCP:PubSub:TestNoValues:Timeout", "-2" },
+                    { "HealthChecks:GCP:PubSub:TestNoValues:ProjectName", PubSubEmulator.ProjectId },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

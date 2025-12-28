@@ -51,7 +51,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
     {
         if (_isCluster)
         {
-            return Enumerable.Range(0, 3).Select(_ => _container.ConnectionString).ToArray();
+            return [.. Enumerable.Range(0, 3).Select(_ => _container.ConnectionString)];
         }
 
         return [_container.ConnectionString];
@@ -140,7 +140,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
+                        options.CommandAsync = async (_, cancellationToken) =>
                         {
                             await Task.Delay(5000, cancellationToken);
                             return true;
@@ -159,13 +159,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
             {
                 _ = healthChecks.AddElasticsearch(
                     "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.CommandAsync = (_, _) =>
-                        {
-                            throw new InvalidOperationException("test");
-                        };
-                    }
+                    options => options.CommandAsync = (_, _) => throw new InvalidOperationException("test")
                 );
             },
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,

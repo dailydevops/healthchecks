@@ -23,7 +23,7 @@ public sealed class JanusGraphOptionsTests
     public async Task KeyedService_WhenSetToValue_Expected()
     {
         // Arrange
-        var expected = "test-key";
+        const string expected = "test-key";
         var options = new JanusGraphOptions { KeyedService = expected };
 
         // Act
@@ -50,7 +50,7 @@ public sealed class JanusGraphOptionsTests
     public async Task Timeout_WhenSetToValue_Expected()
     {
         // Arrange
-        var expected = 500;
+        const int expected = 500;
         var options = new JanusGraphOptions { Timeout = expected };
 
         // Act

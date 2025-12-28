@@ -32,7 +32,7 @@ internal sealed partial class KafkaHealthCheck : IDisposable
     {
         var producer = GetProducer(name, options, _serviceProvider);
 
-        var (isHealthy, result) = await producer
+        var (isTimelyResponse, result) = await producer
             .ProduceAsync(options.Topic, _message, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
@@ -42,7 +42,7 @@ internal sealed partial class KafkaHealthCheck : IDisposable
             return HealthCheckUnhealthy(failureStatus, name, "Message Not Persisted.");
         }
 
-        return HealthCheckState(isHealthy, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     private IProducer<string, string> GetProducer(string name, KafkaOptions options, IServiceProvider serviceProvider)

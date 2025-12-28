@@ -19,7 +19,7 @@ public sealed class KubernetesOptionsConfigureTests
         var options = new KubernetesOptions();
 
         // Act
-        void Act() => configure.Configure(null!, options);
+        void Act() => configure.Configure(null, options);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -67,7 +67,7 @@ public sealed class KubernetesOptionsConfigureTests
         var options = new KubernetesOptions();
 
         // Act
-        var result = configure.Validate(null!, options);
+        var result = configure.Validate(null, options);
 
         // Assert
         using (Assert.Multiple())

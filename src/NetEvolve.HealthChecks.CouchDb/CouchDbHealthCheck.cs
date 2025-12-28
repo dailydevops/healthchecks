@@ -11,9 +11,7 @@ internal sealed partial class CouchDbHealthCheck
 {
     private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         CouchDbOptions options,
         CancellationToken cancellationToken
     )
@@ -21,14 +19,23 @@ internal sealed partial class CouchDbHealthCheck
         var connectionInfo = new DbConnectionInfo(options.ConnectionString, options.DatabaseName);
         using var client = new MyCouchClient(connectionInfo);
 
-        var isTimelyResponse = await options
+        var (isTimelyResponse, result) = await options
             .CommandAsync.Invoke(client, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, $"CouchDB health check '{name}' failed.");
+        }
+
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task DefaultCommandAsync(MyCouchClient client, CancellationToken cancellationToken) =>
+    internal static async Task<bool> DefaultCommandAsync(MyCouchClient client, CancellationToken cancellationToken)
+    {
         _ = await client.Database.HeadAsync(cancellationToken).ConfigureAwait(false);
+
+        return true;
+    }
 }

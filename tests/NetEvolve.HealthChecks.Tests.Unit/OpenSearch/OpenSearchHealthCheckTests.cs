@@ -50,9 +50,7 @@ public sealed class OpenSearchHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert
-                .That(result.Status)
-                .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Cancellation requested.");
         }
     }
@@ -77,9 +75,7 @@ public sealed class OpenSearchHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert
-                .That(result.Status)
-                .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Missing configuration.");
         }
     }
@@ -117,12 +113,7 @@ public sealed class OpenSearchHealthCheckTests
         var healthCheck = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(
-                testName,
-                healthCheck,
-                Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                null
-            ),
+            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -131,9 +122,7 @@ public sealed class OpenSearchHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert
-                .That(result.Status)
-                .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
             _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
         }
     }
@@ -170,12 +159,7 @@ public sealed class OpenSearchHealthCheckTests
         var healthCheck = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(
-                testName,
-                healthCheck,
-                Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                null
-            ),
+            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -184,9 +168,7 @@ public sealed class OpenSearchHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert
-                .That(result.Status)
-                .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
             _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
         }
     }
@@ -223,12 +205,7 @@ public sealed class OpenSearchHealthCheckTests
         var healthCheck = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(
-                testName,
-                healthCheck,
-                Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                null
-            ),
+            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -237,9 +214,7 @@ public sealed class OpenSearchHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert
-                .That(result.Status)
-                .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
                 .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);

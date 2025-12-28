@@ -84,7 +84,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
+                        options.CommandAsync = async (_, cancellationToken) =>
                         {
                             await Task.Delay(1000, cancellationToken);
                             return true;
@@ -106,10 +106,7 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
             {
                 _ = healthChecks.AddJanusGraph(
                     "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.CommandAsync = (client, _) => Task.FromResult(false);
-                    }
+                    options => options.CommandAsync = (_1, _2) => Task.FromResult(false)
                 );
             },
             HealthStatus.Unhealthy,

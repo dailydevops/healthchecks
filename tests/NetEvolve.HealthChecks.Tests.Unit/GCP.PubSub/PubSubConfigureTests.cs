@@ -92,7 +92,7 @@ public sealed class PubSubConfigureTests
         // Arrange
         var config = new ConfigurationBuilder().Build();
         var configure = new PubSubOptionsConfigure(config);
-        var options = new PubSubOptions { Timeout = -2 };
+        var options = new PubSubOptions { Timeout = -2, ProjectName = "test-project" };
 
         // Act
         var result = configure.Validate("Test", options);
@@ -111,7 +111,7 @@ public sealed class PubSubConfigureTests
         // Arrange
         var config = new ConfigurationBuilder().Build();
         var configure = new PubSubOptionsConfigure(config);
-        var options = new PubSubOptions { Timeout = 1000 };
+        var options = new PubSubOptions { Timeout = 1000, ProjectName = "test-project" };
 
         // Act
         var result = configure.Validate("Test", options);

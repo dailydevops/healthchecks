@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public static class DB2Hooks
 {
     [Before(Assembly)]
-    public static async Task BeforeTestDiscovery()
+    public static async Task BeforeTestDiscovery(AssemblyHookContext _1)
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {

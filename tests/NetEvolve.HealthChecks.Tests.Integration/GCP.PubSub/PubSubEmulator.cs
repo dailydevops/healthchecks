@@ -33,5 +33,8 @@ public sealed class PubSubEmulator : IAsyncInitializer, IAsyncDisposable
         };
 
         _client = await clientBuilder.BuildAsync().ConfigureAwait(false);
+        _ = await _client
+            .CreateTopicAsync(new TopicName(ProjectId, "healthcheck"), CancellationToken.None)
+            .ConfigureAwait(false);
     }
 }

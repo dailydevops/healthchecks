@@ -26,12 +26,7 @@ internal sealed partial class BigtableHealthCheck
             : _serviceProvider.GetRequiredKeyedService<BigtableTableAdminClient>(options.KeyedService);
 
         // Use project name from options, environment, or default placeholder
-        var projectId =
-            options.ProjectName
-            ?? System.Environment.GetEnvironmentVariable("BIGTABLE_PROJECT_ID")
-            ?? System.Environment.GetEnvironmentVariable("GCP_PROJECT")
-            ?? System.Environment.GetEnvironmentVariable("GOOGLE_CLOUD_PROJECT")
-            ?? "test-project";
+        var projectId = GetProjectId(options);
 
         // Use a placeholder instance name that works with emulators
         // ListTables is a lightweight operation that verifies the client can connect to the service
@@ -51,5 +46,30 @@ internal sealed partial class BigtableHealthCheck
             .ConfigureAwait(false);
 
         return HealthCheckState(isTimelyResponse, name);
+    }
+
+    private static string GetProjectId(BigtableOptions options)
+    {
+        if (!string.IsNullOrWhiteSpace(options.ProjectName))
+        {
+            return options.ProjectName;
+        }
+
+        if (Environment.GetEnvironmentVariable("BIGTABLE_PROJECT_ID") is { Length: > 0 } envProjectId)
+        {
+            return envProjectId;
+        }
+
+        if (Environment.GetEnvironmentVariable("GCP_PROJECT") is { Length: > 0 } gcpProjectId)
+        {
+            return gcpProjectId;
+        }
+
+        if (Environment.GetEnvironmentVariable("GOOGLE_CLOUD_PROJECT") is { Length: > 0 } googleCloudProjectId)
+        {
+            return googleCloudProjectId;
+        }
+
+        return "test-project";
     }
 }

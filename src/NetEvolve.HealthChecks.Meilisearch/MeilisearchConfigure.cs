@@ -71,7 +71,7 @@ internal sealed class MeilisearchConfigure
         if (client is null)
         {
             return Fail(
-                $"No service of type `{nameof(global::Meilisearch.MeilisearchClient)}` registered. Please execute `services.AddSingleton<MeilisearchClient>()`."
+                $"No service of type `{nameof(MeilisearchClient)}` registered. Please execute `services.AddSingleton<MeilisearchClient>()`."
             );
         }
 

@@ -77,7 +77,7 @@ public sealed class ClientCreationTests
                 "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/",
         };
         var serviceProvider = new ServiceCollection().BuildServiceProvider();
-        var name = "test";
+        const string name = "test";
 
         // Act
         var client1 = clientCreation.GetTelemetryClient(name, options, serviceProvider);

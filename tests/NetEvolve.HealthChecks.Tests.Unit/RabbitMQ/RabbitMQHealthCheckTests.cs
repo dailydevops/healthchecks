@@ -25,10 +25,12 @@ public sealed class RabbitMQHealthCheckTests
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that returns success
+        var mockChannel = Substitute.For<IChannel>();
+        _ = mockChannel.IsOpen.Returns(true);
         var mockConnection = Substitute.For<IConnection>();
         _ = mockConnection
             .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(Substitute.For<IChannel>()));
+            .Returns(Task.FromResult(mockChannel));
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddKeyedSingleton("test-key", mockConnection);
@@ -61,10 +63,12 @@ public sealed class RabbitMQHealthCheckTests
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that returns success
+        var mockChannel = Substitute.For<IChannel>();
+        _ = mockChannel.IsOpen.Returns(true);
         var mockConnection = Substitute.For<IConnection>();
         _ = mockConnection
             .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(Substitute.For<IChannel>()));
+            .Returns(Task.FromResult(mockChannel));
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(mockConnection);
@@ -138,13 +142,15 @@ public sealed class RabbitMQHealthCheckTests
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Setup connection mock that delays long enough to cause timeout
+        var mockChannel = Substitute.For<IChannel>();
+        _ = mockChannel.IsOpen.Returns(true);
         var mockConnection = Substitute.For<IConnection>();
         _ = mockConnection
             .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
             .Returns(async _ =>
             {
                 await Task.Delay(50); // Delay to force timeout
-                return Substitute.For<IChannel>();
+                return mockChannel;
             });
 
         var serviceCollection = new ServiceCollection();

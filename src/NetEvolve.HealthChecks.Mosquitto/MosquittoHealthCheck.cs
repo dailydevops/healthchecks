@@ -17,9 +17,7 @@ internal sealed partial class MosquittoHealthCheck
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         MosquittoOptions options,
         CancellationToken cancellationToken
     )
@@ -28,21 +26,16 @@ internal sealed partial class MosquittoHealthCheck
             ? _serviceProvider.GetRequiredService<IMqttClient>()
             : _serviceProvider.GetRequiredKeyedService<IMqttClient>(options.KeyedService);
 
-        var checkTask = Task.Run(
-            () =>
-            {
-                if (!client.IsConnected)
-                {
-                    throw new InvalidOperationException("Client is not connected.");
-                }
-                return true;
-            },
-            cancellationToken
-        );
+        var checkTask = Task.Run(() => client.IsConnected, cancellationToken);
 
-        var (isTimelyResponse, _) = await checkTask
+        var (isTimelyResponse, result) = await checkTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Mosquitto health check failed.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }

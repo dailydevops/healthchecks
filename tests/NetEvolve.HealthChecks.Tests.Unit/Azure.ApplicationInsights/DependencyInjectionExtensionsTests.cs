@@ -98,6 +98,6 @@ public class DependencyInjectionExtensionsTests
         var providedTags = new[] { "azure", "applicationinsights" };
 
         // Act & Assert
-        _ = builder.AddApplicationInsightsAvailability(name, options => { }, providedTags);
+        _ = builder.AddApplicationInsightsAvailability(name, _ => { }, providedTags);
     }
 }
