@@ -124,6 +124,11 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
         AttributeData attributeData
     )
     {
+        if (attributeData.ConstructorArguments.Length != 3)
+        {
+            return null;
+        }
+
         if (attributeData.ConstructorArguments[0].Value is not ISymbol connectionType)
         {
             return null;

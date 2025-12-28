@@ -81,6 +81,11 @@ internal sealed class ConfigurableHealthCheckGenerator : IIncrementalGenerator
         AttributeData attributeData
     )
     {
+        if (attributeData.ConstructorArguments.Length != 2)
+        {
+            return null;
+        }
+
         if (attributeData.ConstructorArguments[0].Value is not ISymbol optionsType)
         {
             return null;
