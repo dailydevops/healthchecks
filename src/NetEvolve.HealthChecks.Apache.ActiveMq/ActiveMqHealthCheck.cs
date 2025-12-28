@@ -25,12 +25,17 @@ internal sealed partial class ActiveMqHealthCheck
     {
         using var client = await GetConnectionAsync(options, cancellationToken).ConfigureAwait(false);
 
-        var isValid = await client
+        var isTimelyResponse = await client
             .StartAsync()
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(client.IsStarted && isValid, name);
+        if (!client.IsStarted)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Unable to start ActiveMQ connection.");
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     private async ValueTask<IConnection> GetConnectionAsync(
