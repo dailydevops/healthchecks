@@ -24,17 +24,5 @@ public sealed record BigtableOptions
     /// <summary>
     /// Gets or sets the Google Cloud Project ID.
     /// </summary>
-    /// <value>
-    /// The project ID. If not specified, attempts to read from environment variables
-    /// (BIGTABLE_PROJECT_ID, GCP_PROJECT, GOOGLE_CLOUD_PROJECT) or defaults to "test-project".
-    /// </value>
     public string? ProjectName { get; set; }
-
-    /// <summary>
-    /// Gets or sets the Bigtable Instance ID.
-    /// </summary>
-    /// <value>
-    /// The instance ID. If not specified, uses "_" as a placeholder for connectivity checks.
-    /// </value>
-    public string? InstanceId { get; set; }
 }

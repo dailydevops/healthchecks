@@ -14,9 +14,7 @@ internal sealed partial class BigtableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         BigtableOptions options,
         CancellationToken cancellationToken
     )
@@ -25,51 +23,29 @@ internal sealed partial class BigtableHealthCheck
             ? _serviceProvider.GetRequiredService<BigtableTableAdminClient>()
             : _serviceProvider.GetRequiredKeyedService<BigtableTableAdminClient>(options.KeyedService);
 
-        // Use project name from options, environment, or default placeholder
-        var projectId = GetProjectId(options);
-
-        // Use a placeholder instance name that works with emulators
-        // ListTables is a lightweight operation that verifies the client can connect to the service
-        var instanceName = new InstanceName(projectId, options.InstanceId ?? "_");
-
         var listTablesTask = Task.Run(
             async () =>
             {
-                var result = client.ListTablesAsync(instanceName);
-                return await result.ReadPageAsync(1, cancellationToken).ConfigureAwait(false);
+                var result = client.ListTablesAsync(options.ProjectName);
+                var pages = await result.ReadPageAsync(1, cancellationToken).ConfigureAwait(false);
+                return pages?.GetEnumerator().MoveNext() ?? false;
             },
             cancellationToken
         );
 
-        var (isTimelyResponse, _) = await listTablesTask
+        var (isTimelyResponse, result) = await listTablesTask
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
+        if (!result)
+        {
+            return HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                $"Bigtable health check failed for project '{options.ProjectName}'."
+            );
+        }
+
         return HealthCheckState(isTimelyResponse, name);
-    }
-
-    private static string GetProjectId(BigtableOptions options)
-    {
-        if (!string.IsNullOrWhiteSpace(options.ProjectName))
-        {
-            return options.ProjectName;
-        }
-
-        if (Environment.GetEnvironmentVariable("BIGTABLE_PROJECT_ID") is { Length: > 0 } envProjectId)
-        {
-            return envProjectId;
-        }
-
-        if (Environment.GetEnvironmentVariable("GCP_PROJECT") is { Length: > 0 } gcpProjectId)
-        {
-            return gcpProjectId;
-        }
-
-        if (Environment.GetEnvironmentVariable("GOOGLE_CLOUD_PROJECT") is { Length: > 0 } googleCloudProjectId)
-        {
-            return googleCloudProjectId;
-        }
-
-        return "test-project";
     }
 }
