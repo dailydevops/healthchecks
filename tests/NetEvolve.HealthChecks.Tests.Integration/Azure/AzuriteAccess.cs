@@ -12,11 +12,11 @@ using Testcontainers.Azurite;
 
 public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
 {
-    public const string AccountName = "devstoreaccount1";
-    public const string AccountKey =
-        "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
+    public const string AccountName = AzuriteBuilder.AccountName;
+    public const string AccountKey = AzuriteBuilder.AccountKey;
 
     private readonly AzuriteContainer _container = new AzuriteBuilder()
+        .WithImage("mcr.microsoft.com/azure-storage/azurite:latest")
         .WithLogger(NullLogger.Instance)
         .WithCommand("--skipApiVersionCheck")
         .Build();
@@ -49,18 +49,20 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
     {
         var tableServiceClient = new TableServiceClient(ConnectionString);
 
-        var tableClient = tableServiceClient.GetTableClient("test");
-        _ = await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+        _ = await tableServiceClient.CreateTableIfNotExistsAsync("test").ConfigureAwait(false);
 
-        TableAccountSasUri = tableClient.GenerateSasUri(TableSasPermissions.All, DateTimeOffset.UtcNow.AddDays(1));
+        TableAccountSasUri = tableServiceClient.GenerateSasUri(
+            TableAccountSasPermissions.All,
+            TableAccountSasResourceTypes.All,
+            DateTimeOffset.UtcNow.AddDays(1)
+        );
     }
 
     private async Task PrepareQueueRequirements()
     {
         var queueServiceClient = new QueueServiceClient(ConnectionString);
 
-        var queueClient = queueServiceClient.GetQueueClient("test");
-        _ = await queueClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+        _ = await queueServiceClient.CreateQueueAsync("test").ConfigureAwait(false);
 
         QueueAccountSasUri = queueServiceClient.GenerateAccountSasUri(
             AccountSasPermissions.All,
@@ -73,8 +75,7 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
     {
         var blobServiceClient = new BlobServiceClient(ConnectionString);
 
-        var blobContainerClient = blobServiceClient.GetBlobContainerClient("test");
-        _ = await blobContainerClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+        _ = await blobServiceClient.CreateBlobContainerAsync("test").ConfigureAwait(false);
 
         BlobAccountSasUri = blobServiceClient.GenerateAccountSasUri(
             AccountSasPermissions.All,

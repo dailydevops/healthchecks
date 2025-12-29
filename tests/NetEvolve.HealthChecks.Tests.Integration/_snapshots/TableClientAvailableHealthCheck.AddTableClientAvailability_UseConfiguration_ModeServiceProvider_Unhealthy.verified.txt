@@ -1,11 +1,7 @@
 ﻿{
   results: [
     {
-      description: TableConfigurationNotExistsUnhealthy: Unexpected error.,
-      exception: {
-        message: null,
-        type: Azure.RequestFailedException
-      },
+      description: TableConfigurationNotExistsUnhealthy: Table 'notexists' does not exist or is not accessible.,
       name: TableConfigurationNotExistsUnhealthy,
       status: Unhealthy,
       tags: [

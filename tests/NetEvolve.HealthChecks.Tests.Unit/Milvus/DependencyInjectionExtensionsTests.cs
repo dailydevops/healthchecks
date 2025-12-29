@@ -27,7 +27,7 @@ public sealed class DependencyInjectionExtensionsTests
         // Arrange
         var services = new ServiceCollection();
         var builder = services.AddHealthChecks();
-        var name = default(string);
+        const string? name = default;
 
         // Act
         void Act() => _ = builder.AddMilvus(name!);

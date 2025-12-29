@@ -17,7 +17,7 @@ public sealed class DependencyInjectionExtensionsTests
     public void AddLiteDB_WhenBuilderIsNull_ThrowsArgumentNullException()
     {
         // Act
-        void Act() => DependencyInjectionExtensions.AddLiteDB(null!, "test");
+        static void Act() => DependencyInjectionExtensions.AddLiteDB(null!, "test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -162,7 +162,7 @@ public sealed class DependencyInjectionExtensionsTests
         _ = builder.AddLiteDB("duplicate");
 
         // Act
-        void Act() => builder.AddLiteDB("duplicate", options => { });
+        void Act() => builder.AddLiteDB("duplicate", _ => { });
 
         // Assert
         var exception = Assert.Throws<ArgumentException>("name", Act);

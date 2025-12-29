@@ -58,6 +58,8 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                         {
                             await Task.Delay(1000, cancellationToken);
                             _ = await client.Database.HeadAsync(cancellationToken).ConfigureAwait(false);
+
+                            return true;
                         };
                         options.Timeout = 0;
                     }

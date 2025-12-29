@@ -13,9 +13,7 @@ internal sealed partial class RavenDbHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         RavenDbOptions options,
         CancellationToken cancellationToken
     )
@@ -30,7 +28,12 @@ internal sealed partial class RavenDbHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isTimelyResponse && result, name);
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, $"RavenDB health check '{name}' failed.");
+        }
+
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     internal static async Task<bool> DefaultCommandAsync(IDocumentStore store, CancellationToken cancellationToken)

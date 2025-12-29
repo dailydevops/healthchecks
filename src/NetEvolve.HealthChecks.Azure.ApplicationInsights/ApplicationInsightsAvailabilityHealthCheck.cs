@@ -15,9 +15,7 @@ internal sealed partial class ApplicationInsightsAvailabilityHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         ApplicationInsightsAvailabilityOptions options,
         CancellationToken cancellationToken
     )
@@ -35,10 +33,15 @@ internal sealed partial class ApplicationInsightsAvailabilityHealthCheck
 
         // Test the telemetry client by tracking an event
         telemetryClient.TrackEvent(customEvent);
-        var (isTimelyResponse, _) = await telemetryClient
+        var (isTimelyResponse, successfulFlush) = await telemetryClient
             .FlushAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!successfulFlush)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Failed to flush telemetry data to Application Insights.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }

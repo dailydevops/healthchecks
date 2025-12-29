@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 using StackExchange.Redis;
 
@@ -27,9 +28,13 @@ internal sealed partial class RedisHealthCheck : IDisposable
     {
         var connection = GetConnection(name, options, _serviceProvider);
 
-        var result = await connection.GetDatabase().PingAsync().WaitAsync(cancellationToken).ConfigureAwait(false);
+        var (isTimelyResponse, _) = await connection
+            .GetDatabase()
+            .PingAsync()
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
 
-        return HealthCheckState(result.TotalMilliseconds <= options.Timeout, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     private IConnectionMultiplexer GetConnection(string name, RedisOptions options, IServiceProvider serviceProvider)

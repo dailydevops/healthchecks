@@ -9,6 +9,6 @@
         public LiteDBOptions() { }
         public string CollectionName { get; set; }
         public string ConnectionString { get; set; }
-        public double Timeout { get; set; }
+        public int Timeout { get; set; }
     }
 }

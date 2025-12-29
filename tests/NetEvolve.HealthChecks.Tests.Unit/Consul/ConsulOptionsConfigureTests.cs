@@ -19,7 +19,7 @@ public sealed class ConsulOptionsConfigureTests
         var options = new ConsulOptions();
 
         // Act
-        void Act() => configure.Configure(null!, options);
+        void Act() => configure.Configure(null, options);
 
         // Assert
         _ = Assert.Throws<ArgumentException>("name", Act);
@@ -67,7 +67,7 @@ public sealed class ConsulOptionsConfigureTests
         var options = new ConsulOptions();
 
         // Act
-        var result = configure.Validate(null!, options);
+        var result = configure.Validate(null, options);
 
         // Assert
         using (Assert.Multiple())

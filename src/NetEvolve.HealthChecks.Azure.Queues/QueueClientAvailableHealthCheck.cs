@@ -12,9 +12,7 @@ internal sealed partial class QueueClientAvailableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         QueueClientAvailableOptions options,
         CancellationToken cancellationToken
     )
@@ -22,22 +20,25 @@ internal sealed partial class QueueClientAvailableHealthCheck
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var queueClient = clientCreation.GetQueueServiceClient(name, options, _serviceProvider);
 
-        var queueTask = queueClient
+        var (isTimelyResponse, result) = await queueClient
             .GetQueuesAsync(cancellationToken: cancellationToken)
             .AsPages(pageSizeHint: 1)
             .GetAsyncEnumerator(cancellationToken)
-            .MoveNextAsync();
-
-        var (isValid, result) = await queueTask
+            .MoveNextAsync()
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Failed to list queues.");
+        }
 
         var queue = queueClient.GetQueueClient(options.QueueName);
 
         var queueExists = await queue.ExistsAsync(cancellationToken).ConfigureAwait(false);
         if (!queueExists)
         {
-            return HealthCheckResult.Unhealthy($"{name}: Queue `{options.QueueName}` does not exist.");
+            return HealthCheckUnhealthy(failureStatus, name, $"Queue `{options.QueueName}` does not exist.");
         }
 
         (var queueInTime, _) = await queue
@@ -45,6 +46,6 @@ internal sealed partial class QueueClientAvailableHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid && result && queueInTime, name);
+        return HealthCheckState(isTimelyResponse && queueInTime, name);
     }
 }

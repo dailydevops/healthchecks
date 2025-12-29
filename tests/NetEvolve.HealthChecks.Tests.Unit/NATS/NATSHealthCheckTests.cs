@@ -83,7 +83,7 @@ public sealed class NATSHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenConnectionClosed_ReturnsDegraded()
+    public async Task CheckHealthAsync_WhenConnectionClosed_ReturnsUnhealthy()
     {
         // Arrange
         var options = new NatsOptions { KeyedService = null, Timeout = 1000 };
@@ -111,8 +111,10 @@ public sealed class NATSHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Degraded", StringComparison.Ordinal);
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo("test: NATS connection is not connected.", StringComparison.Ordinal);
         }
     }
 

@@ -64,10 +64,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
 
         // Run the health check against the test server
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddHttp("TestValidEndpoint", options => options.Uri = testServerUrl);
-            },
+            healthChecks => _ = healthChecks.AddHttp("TestValidEndpoint", options => options.Uri = testServerUrl),
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
@@ -272,8 +269,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
     public async Task AddHttp_WithCustomHeaders_ReturnsHealthy()
     {
         // Set up a test server that validates headers
-        var expectedHeader = "X-Test-Header";
-        var expectedValue = "TestValue";
+        const string expectedHeader = "X-Test-Header";
+        const string expectedValue = "TestValue";
 
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -331,8 +328,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
     public async Task AddHttp_WithRequestBody_ReturnsHealthy()
     {
         // Set up a test server that validates request body
-        var expectedContentType = "application/json";
-        var expectedContent = "{\"test\":\"value\"}";
+        const string expectedContentType = "application/json";
+        const string expectedContent = "{\"test\":\"value\"}";
 
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -349,7 +346,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                                 // Validate content type
                                 var contentType = context.Request.ContentType;
                                 if (
-                                    contentType != null
+                                    !string.IsNullOrWhiteSpace(contentType)
                                     && contentType.StartsWith(expectedContentType, StringComparison.OrdinalIgnoreCase)
                                 )
                                 {

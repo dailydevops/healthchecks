@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 
-internal sealed partial class ApplicationReadyCheck : IHealthCheck
+internal sealed class ApplicationReadyCheck : IHealthCheck
 {
     private bool _applicationReady;
 

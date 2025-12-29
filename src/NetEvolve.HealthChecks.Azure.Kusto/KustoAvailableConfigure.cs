@@ -44,7 +44,7 @@ internal sealed class KustoAvailableConfigure
             return Fail("Either ConnectionString or ClusterUri must be provided.");
         }
 
-        if (options.ClusterUri is not null && !options.ClusterUri.IsAbsoluteUri)
+        if (options.ClusterUri?.IsAbsoluteUri == false)
         {
             return Fail("The ClusterUri must be an absolute URI.");
         }

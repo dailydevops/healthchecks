@@ -13,9 +13,7 @@ internal sealed partial class DaprHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         DaprOptions options,
         CancellationToken cancellationToken
     )
@@ -28,6 +26,11 @@ internal sealed partial class DaprHealthCheck
             .CheckHealthAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, $"{name} reported unhealthy status from Dapr sidecar.");
+        }
 
         return HealthCheckState(isHealthy && result, name);
     }

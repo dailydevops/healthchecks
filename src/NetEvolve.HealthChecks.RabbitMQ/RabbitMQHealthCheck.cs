@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.RabbitMQ;
 
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using global::RabbitMQ.Client;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +18,7 @@ internal sealed partial class RabbitMQHealthCheck
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
-        HealthStatus _,
-#pragma warning restore S1172 // Unused method parameters should be removed
+        HealthStatus failureStatus,
         RabbitMQOptions options,
         CancellationToken cancellationToken
     )
@@ -28,10 +27,15 @@ internal sealed partial class RabbitMQHealthCheck
             ? _serviceProvider.GetRequiredService<IConnection>()
             : _serviceProvider.GetRequiredKeyedService<IConnection>(options.KeyedService);
 
-        var (isTimelyResponse, _) = await client
+        var (isTimelyResponse, channel) = await client
             .CreateChannelAsync(cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (channel?.IsOpen != true)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Failed to create a channel to RabbitMQ.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }

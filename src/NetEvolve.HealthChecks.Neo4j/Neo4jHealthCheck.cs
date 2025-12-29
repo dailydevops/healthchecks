@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Neo4j;
+﻿namespace NetEvolve.HealthChecks.Neo4j;
 
 using System.Threading.Tasks;
 using global::Neo4j.Driver;
@@ -37,15 +37,15 @@ internal sealed partial class Neo4jHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(IDriver driver, CancellationToken cancellationToken)
+    internal static async Task<bool> DefaultCommandAsync(IDriver driver, CancellationToken _)
     {
         var session = driver.AsyncSession();
 
         await using (session.ConfigureAwait(false))
         {
-            _ = await session.RunAsync("RETURN 1").ConfigureAwait(false);
+            var result = await session.RunAsync("RETURN 1").ConfigureAwait(false);
 
-            return true;
+            return result?.IsOpen == true;
         }
     }
 }

@@ -116,7 +116,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.PingAsync = async (client, cancellationToken) =>
+                        options.PingAsync = async (_, cancellationToken) =>
                         {
                             await Task.Delay(0, cancellationToken);
                             throw new InvalidOperationException("test");

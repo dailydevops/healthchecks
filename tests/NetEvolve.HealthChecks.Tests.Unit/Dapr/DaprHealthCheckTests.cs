@@ -74,8 +74,10 @@ public sealed class DaprHealthCheckTests
         // Assert
         using (Assert.Multiple())
         {
-            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Degraded");
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo("DaprSidecar: DaprSidecar reported unhealthy status from Dapr sidecar.");
         }
     }
 

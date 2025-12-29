@@ -21,7 +21,15 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddBigtable_UseOptions_Healthy() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddBigtable("TestContainerHealthy", options => options.Timeout = 10000),
+            healthChecks =>
+                healthChecks.AddBigtable(
+                    "TestContainerHealthy",
+                    options =>
+                    {
+                        options.Timeout = 10000;
+                        options.ProjectName = BigtableDatabase.ProjectId;
+                    }
+                ),
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
         );
@@ -29,7 +37,15 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddBigtable_UseOptions_Degraded() =>
         await RunAndVerify(
-            healthChecks => healthChecks.AddBigtable("TestContainerDegraded", options => options.Timeout = 0),
+            healthChecks =>
+                healthChecks.AddBigtable(
+                    "TestContainerDegraded",
+                    options =>
+                    {
+                        options.Timeout = 0;
+                        options.ProjectName = BigtableDatabase.ProjectId;
+                    }
+                ),
             HealthStatus.Degraded,
             serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
         );
@@ -45,6 +61,7 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                     {
                         options.Timeout = 10000;
                         options.KeyedService = "bigtable";
+                        options.ProjectName = BigtableDatabase.ProjectId;
                     }
                 );
             },
@@ -62,6 +79,7 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:GCP:Bigtable:TestContainerHealthy:Timeout", "10000" },
+                    { "HealthChecks:GCP:Bigtable:TestContainerHealthy:ProjectName", BigtableDatabase.ProjectId },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -78,6 +96,7 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:GCP:Bigtable:TestContainerDegraded:Timeout", "0" },
+                    { "HealthChecks:GCP:Bigtable:TestContainerDegraded:ProjectName", BigtableDatabase.ProjectId },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -94,6 +113,7 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:GCP:Bigtable:TestNoValues:Timeout", "-2" },
+                    { "HealthChecks:GCP:Bigtable:TestNoValues:ProjectName", BigtableDatabase.ProjectId },
                 };
                 _ = config.AddInMemoryCollection(values);
             },

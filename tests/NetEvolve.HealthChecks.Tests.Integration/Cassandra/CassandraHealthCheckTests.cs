@@ -105,7 +105,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                                 .ExecuteAsync(new SimpleStatement("SELECT release_version FROM system.local"))
                                 .ConfigureAwait(false);
 
-                            return result is not null && result.Any();
+                            return result?.Any() == true;
                         };
                         options.Timeout = 0;
                     }
@@ -123,14 +123,14 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.CommandAsync = async (cluster, cancellationToken) =>
+                        options.CommandAsync = async (cluster, _) =>
                         {
                             using var session = await cluster.ConnectAsync().ConfigureAwait(false);
                             var result = await session
                                 .ExecuteAsync(new SimpleStatement("SELECT invalid FROM system.local"))
                                 .ConfigureAwait(false);
 
-                            return result is not null && result.Any();
+                            return result?.Any() == true;
                         };
                     }
                 );

@@ -31,12 +31,12 @@ internal sealed partial class ServiceBusQueueHealthCheck
         var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
         var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
-        var (isValid, _) = await client
+        var (isTimelyResponse, _) = await client
             .GetQueueRuntimePropertiesAsync(options.QueueName, cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 
     private async ValueTask<HealthCheckResult> ExecutePeekHealthCheckAsync(
@@ -50,11 +50,11 @@ internal sealed partial class ServiceBusQueueHealthCheck
 
         var receiver = client.CreateReceiver(options.QueueName);
 
-        var (isValid, _) = await receiver
+        var (isTimelyResponse, _) = await receiver
             .PeekMessageAsync(cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        return HealthCheckState(isValid, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

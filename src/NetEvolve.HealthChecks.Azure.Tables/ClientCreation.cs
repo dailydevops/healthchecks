@@ -27,12 +27,7 @@ internal class ClientCreation
                 : serviceProvider.GetRequiredKeyedService<TableServiceClient>(options.KeyedService);
         }
 
-        if (_tableServiceClients is null)
-        {
-            _tableServiceClients = new ConcurrentDictionary<string, TableServiceClient>(
-                StringComparer.OrdinalIgnoreCase
-            );
-        }
+        _tableServiceClients ??= new ConcurrentDictionary<string, TableServiceClient>(StringComparer.OrdinalIgnoreCase);
 
         return _tableServiceClients.GetOrAdd(name, _ => CreateTableServiceClient(options, serviceProvider));
     }

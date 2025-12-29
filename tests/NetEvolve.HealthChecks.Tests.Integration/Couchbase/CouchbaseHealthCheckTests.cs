@@ -117,7 +117,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.CommandAsync = async (cluster, cancellationToken) =>
+                        options.CommandAsync = async (_, cancellationToken) =>
                         {
                             await Task.Delay(0, cancellationToken);
                             throw new InvalidOperationException("Simulated failure");

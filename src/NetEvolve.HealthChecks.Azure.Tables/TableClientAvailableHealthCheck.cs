@@ -13,9 +13,7 @@ internal sealed partial class TableClientAvailableHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         TableClientAvailableOptions options,
         CancellationToken cancellationToken
     )
@@ -23,21 +21,22 @@ internal sealed partial class TableClientAvailableHealthCheck
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var tableClient = clientCreation.GetTableServiceClient(name, options, _serviceProvider);
 
-        var (isValid, _) = await tableClient
-            .QueryAsync(cancellationToken: cancellationToken)
+        var (isTimelyResponse, result) = await tableClient
+            .QueryAsync(x => x.Name == options.TableName, cancellationToken: cancellationToken)
             .GetAsyncEnumerator(cancellationToken)
             .MoveNextAsync()
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        (var tableInTime, _) = await tableClient
-            .GetTableClient(options.TableName)
-            .QueryAsync<TableEntity>(cancellationToken: cancellationToken)
-            .GetAsyncEnumerator(cancellationToken)
-            .MoveNextAsync()
-            .WithTimeoutAsync(options.Timeout, cancellationToken)
-            .ConfigureAwait(false);
+        if (!result)
+        {
+            return HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                $"Table '{options.TableName}' does not exist or is not accessible."
+            );
+        }
 
-        return HealthCheckState(isValid && tableInTime, name);
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

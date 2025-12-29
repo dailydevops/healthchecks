@@ -27,5 +27,5 @@ public record LiteDBOptions
     /// <value>
     /// The timeout in milliseconds. Default value is 100 milliseconds.
     /// </value>
-    public double Timeout { get; set; } = 100;
+    public int Timeout { get; set; } = 100;
 }

@@ -8,6 +8,7 @@
     {
         public PubSubOptions() { }
         public string? KeyedService { get; set; }
+        public string? ProjectName { get; set; }
         public int Timeout { get; set; }
     }
 }

@@ -232,6 +232,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
+    [Skip("AzureSasCredential is not supported by Azurite.")]
     public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_Healthy() =>
         await RunAndVerify(
             healthChecks =>
@@ -251,6 +252,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
+    [Skip("AzureSasCredential is not supported by Azurite.")]
     public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_Degraded() =>
         await RunAndVerify(
             healthChecks =>

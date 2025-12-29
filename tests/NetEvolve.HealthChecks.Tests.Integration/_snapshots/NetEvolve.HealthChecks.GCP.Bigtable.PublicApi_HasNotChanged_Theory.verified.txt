@@ -3,7 +3,6 @@
     public sealed class BigtableOptions : System.IEquatable<NetEvolve.HealthChecks.GCP.Bigtable.BigtableOptions>
     {
         public BigtableOptions() { }
-        public string? InstanceId { get; set; }
         public string? KeyedService { get; set; }
         public string? ProjectName { get; set; }
         public int Timeout { get; set; }

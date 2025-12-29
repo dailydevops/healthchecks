@@ -41,19 +41,16 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddOpenSearch_UseOptionsServiceProvider_Healthy() =>
         await RunAndVerify(
-            healthChecks =>
-            {
-                _ = healthChecks.AddOpenSearch("TestContainerHealthy", options => options.Timeout = 10000);
-            },
+            healthChecks => _ = healthChecks.AddOpenSearch("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton(services =>
+                _ = builder.AddSingleton(_ =>
                 {
                     var uri = new Uri(_database.GetConnectionString());
-                    var settings = new ConnectionSettings(uri);
-                    _ = settings.BasicAuthentication("admin", "admin");
-                    _ = settings.ServerCertificateValidationCallback((o, certificate, chain, errors) => true);
+                    var settings = new ConnectionSettings(uri)
+                        .BasicAuthentication("admin", "admin")
+                        .ServerCertificateValidationCallback((_1, _2, _3, _4) => true);
 
                     return new OpenSearchClient(settings);
                 });

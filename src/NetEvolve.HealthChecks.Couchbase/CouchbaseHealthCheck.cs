@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Couchbase;
+﻿namespace NetEvolve.HealthChecks.Couchbase;
 
 using System.Threading.Tasks;
 using global::Couchbase;
@@ -35,12 +35,12 @@ internal sealed partial class CouchbaseHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken cancellationToken)
+    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken _)
     {
         var result = await cluster.PingAsync(_options).ConfigureAwait(false);
 
-        return result is not null
-            && result.Services.Values.SelectMany(service => service).All(endpoint => endpoint.State == ServiceState.Ok);
+        return result?.Services.Values.SelectMany(service => service).All(endpoint => endpoint.State == ServiceState.Ok)
+            == true;
     }
 
     private static readonly PingOptions _options = new PingOptions().ServiceTypes(

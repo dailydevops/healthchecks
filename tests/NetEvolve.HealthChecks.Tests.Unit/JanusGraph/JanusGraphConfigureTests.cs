@@ -18,7 +18,7 @@ public sealed class JanusGraphConfigureTests
         var options = new JanusGraphOptions();
 
         // Act
-        void Act() => configure.Configure(null!, options);
+        void Act() => configure.Configure(null, options);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(Act);
@@ -87,7 +87,7 @@ public sealed class JanusGraphConfigureTests
         var options = new JanusGraphOptions();
 
         // Act
-        var result = configure.Validate(null!, options);
+        var result = configure.Validate(null, options);
 
         // Assert
         using (Assert.Multiple())

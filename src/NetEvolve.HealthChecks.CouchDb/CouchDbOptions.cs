@@ -26,6 +26,6 @@ public sealed record CouchDbOptions
     /// The command to execute against the database.
     /// </summary>
     /// <remarks>For internal use only.</remarks>
-    public Func<MyCouchClient, CancellationToken, Task> CommandAsync { get; internal set; } =
+    public Func<MyCouchClient, CancellationToken, Task<bool>> CommandAsync { get; internal set; } =
         CouchDbHealthCheck.DefaultCommandAsync;
 }

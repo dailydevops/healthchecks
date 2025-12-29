@@ -101,9 +101,11 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                             var database = client.GetDatabase("admin");
                             var command = new BsonDocument("ping", 1);
 
-                            return await database
+                            _ = await database
                                 .RunCommandAsync<BsonDocument>(command, null, cancellationToken)
                                 .ConfigureAwait(false);
+
+                            return true;
                         };
                         options.Timeout = 0;
                     }
@@ -126,9 +128,11 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                             var database = client.GetDatabase("admin");
                             var invalidCommand = new BsonDocument("invalid", 1);
 
-                            return await database
+                            _ = await database
                                 .RunCommandAsync<BsonDocument>(invalidCommand, null, cancellationToken)
                                 .ConfigureAwait(false);
+
+                            return true;
                         };
                     }
                 );

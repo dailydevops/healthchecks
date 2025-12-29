@@ -56,7 +56,7 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
             HealthStatus.Healthy,
             serviceBuilder: builder =>
             {
-                _ = builder.AddSingleton(services => new GarnetClient(
+                _ = builder.AddSingleton(_ => new GarnetClient(
                     new IPEndPoint(IPAddress.Parse(_database.Hostname), _database.Port)
                 ));
             }

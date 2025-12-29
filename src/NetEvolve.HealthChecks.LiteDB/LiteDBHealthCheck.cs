@@ -5,12 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using global::LiteDB;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(LiteDBOptions))]
 internal sealed partial class LiteDBHealthCheck
 {
-    private static ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private static async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
         HealthStatus failureStatus,
         LiteDBOptions options,
@@ -19,24 +20,26 @@ internal sealed partial class LiteDBHealthCheck
 #pragma warning restore S1172 // Unused method parameters should be removed
     )
     {
-        using var db = new LiteDatabase(options.ConnectionString);
-
-        var sw = Stopwatch.StartNew();
-        var collectionExists = db.CollectionExists(options.CollectionName);
-        sw.Stop();
-        var isTimelyResponse = options.Timeout >= sw.Elapsed.TotalMilliseconds;
+        var (isTimelyResponse, collectionExists) = await Task.Run(
+                () =>
+                {
+                    using var db = new LiteDatabase(options.ConnectionString);
+                    return db.CollectionExists(options.CollectionName);
+                },
+                cancellationToken
+            )
+            .WithTimeoutAsync(options.Timeout, cancellationToken)
+            .ConfigureAwait(false);
 
         if (!collectionExists)
         {
-            return ValueTask.FromResult(
-                HealthCheckUnhealthy(
-                    failureStatus,
-                    name,
-                    $"Collection '{options.CollectionName}' does not exist in the database."
-                )
+            return HealthCheckUnhealthy(
+                failureStatus,
+                name,
+                $"Collection '{options.CollectionName}' does not exist in the database."
             );
         }
 
-        return ValueTask.FromResult(HealthCheckState(isTimelyResponse, name));
+        return HealthCheckState(isTimelyResponse, name);
     }
 }

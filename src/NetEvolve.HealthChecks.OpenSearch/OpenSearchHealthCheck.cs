@@ -63,7 +63,7 @@ internal sealed partial class OpenSearchHealthCheck
         var settings = new ConnectionSettings(uri);
 #pragma warning restore CA2000 // Dispose objects before losing scope
 
-        _ = settings.ServerCertificateValidationCallback((o, certificate, chain, errors) => true);
+        _ = settings.ServerCertificateValidationCallback((_1, _2, _3, _4) => true);
 
         if (options.Username is not null && options.Password is not null)
         {
