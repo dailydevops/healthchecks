@@ -1,0 +1,13 @@
+﻿{
+  results: [
+    {
+      description: DaprSidecar: Degraded,
+      name: DaprSidecar,
+      status: Degraded,
+      tags: [
+        dapr
+      ]
+    }
+  ],
+  status: Degraded
+}

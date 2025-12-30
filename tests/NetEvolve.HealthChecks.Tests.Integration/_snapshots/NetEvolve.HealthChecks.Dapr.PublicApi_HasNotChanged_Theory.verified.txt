@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.Dapr
+{
+    public sealed class DaprOptions : System.IEquatable<NetEvolve.HealthChecks.Dapr.DaprOptions>
+    {
+        public DaprOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddDapr([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, System.Action<NetEvolve.HealthChecks.Dapr.DaprOptions>? options = null, params string[] tags) { }
+    }
+}
