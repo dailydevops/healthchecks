@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.Dapr;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.Dapr;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Dapr;
 
 [TestGroup(nameof(Dapr))]
-[TestGroup("Z03TestGroup")]
+[TestGroup("Z01TestGroup")]
 [ClassDataSource<DaprContainer>(Shared = SharedType.PerTestSession)]
 public sealed class DaprHealthCheckTests : HealthCheckTestBase
 {
@@ -21,10 +21,7 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddDapr_UseOptions_Healthy()
     {
-        var clientBuilder = new DaprClientBuilder()
-            .UseHttpEndpoint(_container.HttpEndpoint)
-            .UseGrpcEndpoint(_container.GrpcEndpoint);
-        var client = clientBuilder.Build();
+        using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(options => options.Timeout = 10000),
@@ -36,20 +33,15 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddDapr_UseOptionsWithKeyedService_Healthy()
     {
-        var clientBuilder = new DaprClientBuilder()
-            .UseHttpEndpoint(_container.HttpEndpoint)
-            .UseGrpcEndpoint(_container.GrpcEndpoint);
-        var client = clientBuilder.Build();
+        using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks =>
-                healthChecks.AddDapr(
-                    options =>
-                    {
-                        options.KeyedService = "dapr-test";
-                        options.Timeout = 10000;
-                    }
-                ),
+                healthChecks.AddDapr(options =>
+                {
+                    options.KeyedService = "dapr-test";
+                    options.Timeout = 10000;
+                }),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddKeyedSingleton("dapr-test", (_, _) => client)
         );
@@ -58,10 +50,7 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddDapr_UseOptions_Degraded()
     {
-        var clientBuilder = new DaprClientBuilder()
-            .UseHttpEndpoint(_container.HttpEndpoint)
-            .UseGrpcEndpoint(_container.GrpcEndpoint);
-        var client = clientBuilder.Build();
+        using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(options => options.Timeout = 0),
@@ -73,20 +62,14 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddDapr_UseConfiguration_Healthy()
     {
-        var clientBuilder = new DaprClientBuilder()
-            .UseHttpEndpoint(_container.HttpEndpoint)
-            .UseGrpcEndpoint(_container.GrpcEndpoint);
-        var client = clientBuilder.Build();
+        using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(),
             HealthStatus.Healthy,
             config =>
             {
-                var values = new Dictionary<string, string?>
-                {
-                    { "HealthChecks:Dapr:DaprSidecar:Timeout", "10000" },
-                };
+                var values = new Dictionary<string, string?> { { "HealthChecks:DaprSidecar:Timeout", "10000" } };
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services => services.AddSingleton(client)
@@ -96,10 +79,7 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddDapr_UseConfigurationWithKeyedService_Healthy()
     {
-        var clientBuilder = new DaprClientBuilder()
-            .UseHttpEndpoint(_container.HttpEndpoint)
-            .UseGrpcEndpoint(_container.GrpcEndpoint);
-        var client = clientBuilder.Build();
+        using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(),
@@ -108,8 +88,8 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>
                 {
-                    { "HealthChecks:Dapr:DaprSidecar:KeyedService", "dapr-test-config" },
-                    { "HealthChecks:Dapr:DaprSidecar:Timeout", "10000" },
+                    { "HealthChecks:DaprSidecar:KeyedService", "dapr-test-config" },
+                    { "HealthChecks:DaprSidecar:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
             },
@@ -120,23 +100,23 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddDapr_UseConfiguration_Degraded()
     {
-        var clientBuilder = new DaprClientBuilder()
-            .UseHttpEndpoint(_container.HttpEndpoint)
-            .UseGrpcEndpoint(_container.GrpcEndpoint);
-        var client = clientBuilder.Build();
+        using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(),
             HealthStatus.Degraded,
             config =>
             {
-                var values = new Dictionary<string, string?>
-                {
-                    { "HealthChecks:Dapr:DaprSidecar:Timeout", "0" },
-                };
+                var values = new Dictionary<string, string?> { { "HealthChecks:DaprSidecar:Timeout", "0" } };
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services => services.AddSingleton(client)
         );
     }
+
+    private DaprClient CreateDaprClient() =>
+        new DaprClientBuilder()
+            .UseHttpEndpoint(_container.HttpEndpoint)
+            .UseGrpcEndpoint(_container.GrpcEndpoint)
+            .Build();
 }

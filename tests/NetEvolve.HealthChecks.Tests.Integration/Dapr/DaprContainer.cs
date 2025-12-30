@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Dapr;
 
 using System.Globalization;
+using System.Net;
 using System.Threading.Tasks;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -14,9 +15,24 @@ public sealed class DaprContainer : IAsyncInitializer, IAsyncDisposable
         .WithImage("daprio/daprd:latest")
         .WithPortBinding(DaprHttpPort, true)
         .WithPortBinding(DaprGrpcPort, true)
-        .WithCommand("./daprd", "-app-id", "test-app", "-dapr-http-port", DaprHttpPort.ToString(CultureInfo.InvariantCulture), "-dapr-grpc-port", DaprGrpcPort.ToString(CultureInfo.InvariantCulture))
+        .WithEntrypoint("./daprd")
+        .WithCommand(
+            "-app-id",
+            "test-app",
+            "-dapr-http-port",
+            DaprHttpPort.ToString(CultureInfo.InvariantCulture),
+            "-dapr-grpc-port",
+            DaprGrpcPort.ToString(CultureInfo.InvariantCulture),
+            "--log-level",
+            "info"
+        )
         .WithLogger(NullLogger.Instance)
-        .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(r => r.ForPort(DaprHttpPort).ForPath("/v1.0/healthz")))
+        .WithWaitStrategy(
+            Wait.ForUnixContainer()
+                .UntilHttpRequestIsSucceeded(r =>
+                    r.ForPath("/v1.0/healthz").ForPort(DaprHttpPort).ForStatusCode(HttpStatusCode.NoContent)
+                )
+        )
         .Build();
 
     public string HttpEndpoint => $"http://{_container.Hostname}:{_container.GetMappedPublicPort(DaprHttpPort)}";

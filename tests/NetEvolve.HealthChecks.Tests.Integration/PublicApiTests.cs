@@ -9,7 +9,6 @@ using NetEvolve.Extensions.TUnit;
 using PublicApiGenerator;
 using SourceGenerator.Attributes;
 
-[TestGroup(nameof(HealthChecks))]
 [TestGroup("PublicAPI")]
 [TestGroup("Z00TestGroup")]
 public class PublicApiTests
