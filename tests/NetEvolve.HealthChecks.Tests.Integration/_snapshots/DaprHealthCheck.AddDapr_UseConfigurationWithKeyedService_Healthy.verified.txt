@@ -1,0 +1,13 @@
+﻿{
+  results: [
+    {
+      description: DaprSidecar: Healthy,
+      name: DaprSidecar,
+      status: Healthy,
+      tags: [
+        dapr
+      ]
+    }
+  ],
+  status: Healthy
+}
