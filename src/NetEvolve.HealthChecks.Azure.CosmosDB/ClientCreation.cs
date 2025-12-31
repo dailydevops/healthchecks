@@ -28,10 +28,7 @@ internal class ClientCreation
         return _cosmosClients.GetOrAdd(name, _ => CreateCosmosClient(options, serviceProvider));
     }
 
-    internal static CosmosClient CreateCosmosClient(
-        CosmosDbAvailableOptions options,
-        IServiceProvider serviceProvider
-    )
+    internal static CosmosClient CreateCosmosClient(CosmosDbAvailableOptions options, IServiceProvider serviceProvider)
     {
 #pragma warning disable IDE0010 // Add missing cases
         switch (options.Mode)

@@ -119,9 +119,7 @@ internal sealed class CosmosDbAvailableConfigure
     {
         if (_serviceProvider.GetService<CosmosClient>() is null)
         {
-            return Fail(
-                $"No service of type `{nameof(CosmosClient)}` registered. Please register the CosmosClient."
-            );
+            return Fail($"No service of type `{nameof(CosmosClient)}` registered. Please register the CosmosClient.");
         }
 
         return Success;

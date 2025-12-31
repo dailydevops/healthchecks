@@ -7,9 +7,7 @@ using Testcontainers.CosmosDb;
 
 public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly CosmosDbContainer _container = new CosmosDbBuilder()
-        .WithLogger(NullLogger.Instance)
-        .Build();
+    private readonly CosmosDbContainer _container = new CosmosDbBuilder().WithLogger(NullLogger.Instance).Build();
 
     public string ConnectionString => _container.GetConnectionString();
 
