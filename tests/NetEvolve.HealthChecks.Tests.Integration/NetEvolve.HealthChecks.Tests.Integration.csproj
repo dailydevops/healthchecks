@@ -18,6 +18,7 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" />
     <PackageReference Include="CassandraCSharpDriver" />
     <PackageReference Include="ClickHouse.Client" />
     <PackageReference Include="Confluent.Kafka" />
@@ -94,6 +95,7 @@
     <PackageReference Include="Testcontainers.ClickHouse" />
     <PackageReference Include="Testcontainers.CockroachDb" />
     <PackageReference Include="Testcontainers.Consul" />
+    <PackageReference Include="Testcontainers.CosmosDB" />
     <PackageReference Include="Testcontainers.Couchbase" />
     <PackageReference Include="Testcontainers.CouchDb" />
     <PackageReference Include="Testcontainers.Db2" />
@@ -153,6 +155,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.SQS\NetEvolve.HealthChecks.AWS.SQS.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ApplicationInsights\NetEvolve.HealthChecks.Azure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.CosmosDB\NetEvolve.HealthChecks.Azure.CosmosDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Search\NetEvolve.HealthChecks.Azure.Search.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.ServiceBus\NetEvolve.HealthChecks.Azure.ServiceBus.csproj" />
