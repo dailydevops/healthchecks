@@ -13,54 +13,29 @@ using NetEvolve.HealthChecks.Cassandra;
 [ClassDataSource<CassandraDatabase>(Shared = SharedType.PerClass)]
 [TestGroup(nameof(Cassandra))]
 [TestGroup("Z04TestGroup")]
-public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
+public class CassandraHealthCheckTests : HealthCheckTestBase
 {
     private readonly CassandraDatabase _database;
-#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
-#pragma warning disable CA1859 // Use concrete types when possible for improved performance
-    private ICluster _cluster = default!;
-#pragma warning restore CA1859 // Use concrete types when possible for improved performance
-#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
-    private bool _disposed;
 
     public CassandraHealthCheckTests(CassandraDatabase database) => _database = database;
 
-    public Task InitializeAsync()
-    {
-        _cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
-
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
-        {
-            if (disposing)
-            {
-                _cluster?.Dispose();
-            }
-
-            _disposed = true;
-        }
-    }
-
     [Test]
-    public async Task AddCassandra_UseOptions_Healthy() =>
+    public async Task AddCassandra_UseOptions_Healthy()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddCassandra_UseOptionsWithKeyedService_Healthy()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCassandra(
@@ -72,11 +47,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("cassandra-test", (_, _) => _cluster)
+            serviceBuilder: services => services.AddKeyedSingleton("cassandra-test", (_, _) => cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseOptionsDoubleRegistered_Healthy() =>
+    public async Task AddCassandra_UseOptionsDoubleRegistered_Healthy()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
@@ -84,12 +63,16 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     healthChecks =>
                         healthChecks.AddCassandra("TestContainerHealthy").AddCassandra("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_cluster)
+                    serviceBuilder: services => services.AddSingleton(cluster)
                 )
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseOptions_Degraded() =>
+    public async Task AddCassandra_UseOptions_Degraded()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCassandra(
@@ -111,11 +94,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseOptions_Unhealthy() =>
+    public async Task AddCassandra_UseOptions_Unhealthy()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks =>
             {
@@ -136,11 +123,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseConfiguration_Healthy() =>
+    public async Task AddCassandra_UseConfiguration_Healthy()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -152,11 +143,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddCassandra_UseConfigurationWithKeyedService_Healthy()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -169,11 +164,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("cassandra-test-config", (_, _) => _cluster)
+            serviceBuilder: services => services.AddKeyedSingleton("cassandra-test-config", (_, _) => cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseConfiguration_Degraded() =>
+    public async Task AddCassandra_UseConfiguration_Degraded()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -185,11 +184,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddCassandra_UseConfiguration_TimeoutMinusTwo_ShouldThrowException()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -201,11 +204,15 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 
     [Test]
-    public async Task AddCassandra_UseOptions_CommandReturnsFalse_UnhealthyWithMessage() =>
+    public async Task AddCassandra_UseOptions_CommandReturnsFalse_UnhealthyWithMessage()
+    {
+        using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
+
         await RunAndVerify(
             healthChecks =>
             {
@@ -215,6 +222,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_cluster)
+            serviceBuilder: services => services.AddSingleton(cluster)
         );
+    }
 }
