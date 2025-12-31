@@ -56,7 +56,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
     {
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
-        await Assert.ThrowsAsync<ArgumentException>(
+        _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
                 await RunAndVerify(
