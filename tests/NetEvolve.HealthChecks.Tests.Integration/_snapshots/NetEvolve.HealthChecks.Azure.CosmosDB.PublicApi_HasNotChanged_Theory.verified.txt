@@ -1,0 +1,24 @@
+﻿namespace NetEvolve.HealthChecks.Azure.CosmosDB
+{
+    public sealed class CosmosDbAvailableOptions : System.IEquatable<NetEvolve.HealthChecks.Azure.CosmosDB.CosmosDbAvailableOptions>
+    {
+        public CosmosDbAvailableOptions() { }
+        public System.Uri? AccountEndpoint { get; set; }
+        public string? AccountKey { get; set; }
+        public string? ConnectionString { get; set; }
+        public string? DatabaseId { get; set; }
+        public NetEvolve.HealthChecks.Azure.CosmosDB.CosmosDbClientCreationMode? Mode { get; set; }
+        public int Timeout { get; set; }
+    }
+    public enum CosmosDbClientCreationMode
+    {
+        ServiceProvider = 0,
+        ConnectionString = 1,
+        DefaultAzureCredentials = 2,
+        AccountKey = 3,
+    }
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddCosmosDbAvailability([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Azure.CosmosDB.CosmosDbAvailableOptions>? options = null, params string[] tags) { }
+    }
+}
