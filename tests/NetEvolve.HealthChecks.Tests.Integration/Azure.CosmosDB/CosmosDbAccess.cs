@@ -19,7 +19,7 @@ public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
     {
         await _container.StartAsync().ConfigureAwait(false);
 
-        var client = new CosmosClient(ConnectionString);
+        using var client = new CosmosClient(ConnectionString);
         _ = await client.CreateDatabaseIfNotExistsAsync("testdb").ConfigureAwait(false);
     }
 }
