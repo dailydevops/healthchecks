@@ -7,7 +7,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.Kusto;
 
 [TestGroup($"{nameof(Azure)}.{nameof(Kusto)}")]
-[TestGroup("Z05TestGroup")]
+[TestGroup("Z04TestGroup")]
 [ClassDataSource<KustoAccess>(Shared = SharedType.PerClass)]
 public class KustoAvailableHealthCheckTests : HealthCheckTestBase
 {

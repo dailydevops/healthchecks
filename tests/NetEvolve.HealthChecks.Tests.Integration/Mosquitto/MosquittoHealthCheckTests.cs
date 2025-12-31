@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Mosquitto;
 
 [ClassDataSource<MosquittoContainer>]
 [TestGroup(nameof(Mosquitto))]
-[TestGroup("Z05TestGroup")]
+[TestGroup("Z04TestGroup")]
 public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
 {
     private readonly MosquittoContainer _container;
