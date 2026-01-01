@@ -34,6 +34,7 @@
     <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
+    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.47.0" />
     <PackageVersion Include="CassandraCSharpDriver" Version="3.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.10.0" />
@@ -124,6 +125,7 @@
     <PackageVersion Include="Testcontainers.ClickHouse" Version="4.9.0" />
     <PackageVersion Include="Testcontainers.CockroachDb" Version="4.9.0" />
     <PackageVersion Include="Testcontainers.Consul" Version="4.9.0" />
+    <PackageVersion Include="Testcontainers.CosmosDB" Version="4.9.0" />
     <PackageVersion Include="Testcontainers.Couchbase" Version="4.9.0" />
     <PackageVersion Include="Testcontainers.CouchDb" Version="4.9.0" />
     <PackageVersion Include="Testcontainers.Db2" Version="4.9.0" />

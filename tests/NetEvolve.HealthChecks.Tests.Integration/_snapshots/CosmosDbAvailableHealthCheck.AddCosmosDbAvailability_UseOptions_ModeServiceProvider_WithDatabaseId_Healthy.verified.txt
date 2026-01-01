@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: CosmosDbServiceProviderWithDatabaseHealthy: Healthy,
+      name: CosmosDbServiceProviderWithDatabaseHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        cosmosdb,
+        nosql
+      ]
+    }
+  ],
+  status: Healthy
+}
