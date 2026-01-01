@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Azure.CosmosDB;
 
 using System;
+using Microsoft.Azure.Cosmos;
 
 /// <summary>
 /// Options for <see cref="CosmosDbAvailableHealthCheck"/>.
@@ -33,7 +34,21 @@ public sealed record CosmosDbAvailableOptions
     public string? DatabaseId { get; set; }
 
     /// <summary>
+    /// Gets or sets the key used to resolve the <c>CosmosClient</c> from the service provider.
+    /// </summary>
+    /// <remarks>
+    /// When specified, the health check will resolve the <c>CosmosClient</c> using <c>IServiceProvider.GetRequiredKeyedService</c>.
+    /// When null or empty, the health check will resolve the <c>CosmosClient</c> using <c>IServiceProvider.GetRequiredService</c>.
+    /// </remarks>
+    public string? KeyedService { get; set; }
+
+    /// <summary>
     /// Gets or sets the mode to create the client.
     /// </summary>
     public CosmosDbClientCreationMode? Mode { get; set; }
+
+    /// <summary>
+    /// Gets or sets the action to configure the <see cref="CosmosClientOptions"/> used to create the <see cref="CosmosClient"/>.
+    /// </summary>
+    public Action<CosmosClientOptions>? ClientConfiguration { get; internal set; }
 }

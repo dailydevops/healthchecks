@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: CosmosDbConnectionStringHealthy: Healthy,
+      name: CosmosDbConnectionStringHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        cosmosdb,
+        nosql
+      ]
+    }
+  ],
+  status: Healthy
+}

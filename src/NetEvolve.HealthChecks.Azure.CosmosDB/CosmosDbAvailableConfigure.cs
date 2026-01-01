@@ -50,7 +50,7 @@ internal sealed class CosmosDbAvailableConfigure
 
         return options.Mode switch
         {
-            CosmosDbClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
+            CosmosDbClientCreationMode.ServiceProvider => ValidateModeServiceProvider(options),
             CosmosDbClientCreationMode.ConnectionString => ValidateModeConnectionString(options),
             CosmosDbClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
             CosmosDbClientCreationMode.AccountKey => ValidateModeAccountKey(options),
@@ -115,9 +115,18 @@ internal sealed class CosmosDbAvailableConfigure
         return Success;
     }
 
-    private ValidateOptionsResult ValidateModeServiceProvider()
+    private ValidateOptionsResult ValidateModeServiceProvider(CosmosDbAvailableOptions options)
     {
-        if (_serviceProvider.GetService<CosmosClient>() is null)
+        if (!string.IsNullOrWhiteSpace(options.KeyedService))
+        {
+            if (_serviceProvider.GetKeyedService<CosmosClient>(options.KeyedService) is null)
+            {
+                return Fail(
+                    $"No keyed service of type `{nameof(CosmosClient)}` registered with key `{options.KeyedService}`. Please register the keyed CosmosClient."
+                );
+            }
+        }
+        else if (_serviceProvider.GetService<CosmosClient>() is null)
         {
             return Fail($"No service of type `{nameof(CosmosClient)}` registered. Please register the CosmosClient.");
         }

@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: CosmosDbServiceProviderWithNonExistingDatabaseIdUnhealthy: CosmosDB is not available.,
+      name: CosmosDbServiceProviderWithNonExistingDatabaseIdUnhealthy,
+      status: Unhealthy,
+      tags: [
+        azure,
+        cosmosdb,
+        nosql
+      ]
+    }
+  ],
+  status: Unhealthy
+}

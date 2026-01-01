@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using SourceGenerator.Attributes;
 
@@ -45,8 +44,6 @@ public static partial class DependencyInjectionExtensions
                 .Services.AddSingleton<AzureCosmosDbCheckMarker>()
                 .AddSingleton<CosmosDbAvailableHealthCheck>()
                 .ConfigureOptions<CosmosDbAvailableConfigure>();
-
-            builder.Services.TryAddSingleton<ClientCreation>();
         }
 
         builder.ThrowIfNameIsAlreadyUsed<CosmosDbAvailableHealthCheck>(name);

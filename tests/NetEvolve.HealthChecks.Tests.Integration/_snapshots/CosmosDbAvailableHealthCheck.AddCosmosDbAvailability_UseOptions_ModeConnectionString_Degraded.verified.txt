@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: CosmosDbConnectionStringDegraded: Degraded,
+      name: CosmosDbConnectionStringDegraded,
+      status: Degraded,
+      tags: [
+        azure,
+        cosmosdb,
+        nosql
+      ]
+    }
+  ],
+  status: Degraded
+}

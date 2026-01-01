@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Azure.CosmosDB;
 
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.CosmosDB;
@@ -46,6 +47,7 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                         options.ConnectionString = _container.ConnectionString;
                         options.DatabaseId = "testdb";
                         options.Timeout = 10000; // Set a reasonable timeout
+                        options.ClientConfiguration = _container.ClientConfiguration;
                     }
                 );
             },
@@ -68,5 +70,63 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded
+        );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbServiceProviderHealthy",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.ServiceProvider;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddSingleton(_container.CosmosClient)
+        );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_WithDatabaseId_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbServiceProviderWithDatabaseHealthy",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.ServiceProvider;
+                        options.DatabaseId = "testdb";
+                        options.Timeout = 10000; // Set a reasonable timeout
+                        options.KeyedService = "test";
+                    }
+                );
+            },
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient)
+        );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_WithNonExistingDatabaseId_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbServiceProviderWithNonExistingDatabaseIdUnhealthy",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.ServiceProvider;
+                        options.DatabaseId = "testdb-nonexisting";
+                        options.Timeout = 10000; // Set a reasonable timeout
+                        options.KeyedService = "test";
+                    }
+                );
+            },
+            HealthStatus.Unhealthy,
+            serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient)
         );
 }
