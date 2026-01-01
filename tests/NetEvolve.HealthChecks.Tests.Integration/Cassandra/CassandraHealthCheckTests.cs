@@ -204,7 +204,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 
