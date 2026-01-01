@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.MySql.Devart;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class MySqlDevartConfigure
@@ -17,7 +16,7 @@ internal sealed class MySqlDevartConfigure
 
     public void Configure(string? name, MySqlDevartOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:MySql:{name}", options);
     }
 

@@ -6,7 +6,6 @@ using global::OpenSearch.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class OpenSearchConfigure
@@ -30,7 +29,7 @@ internal sealed class OpenSearchConfigure
     /// <inheritdoc />
     public void Configure(string? name, OpenSearchOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:OpenSearch:{name}", options);
     }
 

@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.SQLite.Devart;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class SQLiteDevartConfigure
@@ -17,7 +16,7 @@ internal sealed class SQLiteDevartConfigure
 
     public void Configure(string? name, SQLiteDevartOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:SQLite:{name}", options);
     }
 
