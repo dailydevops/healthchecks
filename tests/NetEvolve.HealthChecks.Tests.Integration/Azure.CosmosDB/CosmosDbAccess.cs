@@ -39,6 +39,10 @@ public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
         }
     }
 
+    public Uri AccountEndpoint => new UriBuilder(Uri.UriSchemeHttp, Hostname, _container.GetMappedPublicPort(CosmosDbPort)).Uri;
+
+    public static string AccountKey => DefaultAccountKey;
+
     public CosmosClient CosmosClient
     {
         get

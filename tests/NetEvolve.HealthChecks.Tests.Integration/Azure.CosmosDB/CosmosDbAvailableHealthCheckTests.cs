@@ -129,4 +129,85 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient)
         );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbAccountKeyHealthy",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.AccountKey;
+                        options.AccountEndpoint = _container.AccountEndpoint;
+                        options.AccountKey = CosmosDbAccess.AccountKey;
+                        options.ClientConfiguration = _container.ClientConfiguration;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_WithDatabaseId_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbAccountKeyWithDatabaseHealthy",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.AccountKey;
+                        options.AccountEndpoint = _container.AccountEndpoint;
+                        options.AccountKey = CosmosDbAccess.AccountKey;
+                        options.DatabaseId = "testdb";
+                        options.ClientConfiguration = _container.ClientConfiguration;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_Degraded() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbAccountKeyDegraded",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.AccountKey;
+                        options.AccountEndpoint = _container.AccountEndpoint;
+                        options.AccountKey = CosmosDbAccess.AccountKey;
+                        options.Timeout = 0;
+                    }
+                );
+            },
+            HealthStatus.Degraded
+        );
+
+    [Test]
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_WithNonExistingDatabaseId_Unhealthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddCosmosDbAvailability(
+                    "CosmosDbAccountKeyWithNonExistingDatabaseIdUnhealthy",
+                    options =>
+                    {
+                        options.Mode = CosmosDbClientCreationMode.AccountKey;
+                        options.AccountEndpoint = _container.AccountEndpoint;
+                        options.AccountKey = CosmosDbAccess.AccountKey;
+                        options.DatabaseId = "testdb-nonexisting";
+                        options.ClientConfiguration = _container.ClientConfiguration;
+                        options.Timeout = 10000; // Set a reasonable timeout
+                    }
+                );
+            },
+            HealthStatus.Unhealthy
+        );
 }
