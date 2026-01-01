@@ -121,7 +121,7 @@ internal sealed partial class CosmosDbAvailableHealthCheck : IDisposable
         }
     }
 
-    public void Dispose()
+    void IDisposable.Dispose()
     {
         Dispose(disposing: true);
         GC.SuppressFinalize(this);

@@ -33,6 +33,7 @@ internal static class HealthCheckArchitecture
             // Azure
             typeof(Azure.ApplicationInsights.ApplicationInsightsAvailabilityHealthCheck).Assembly,
             typeof(Azure.Blobs.BlobContainerAvailableHealthCheck).Assembly,
+            typeof(Azure.CosmosDB.CosmosDbAvailableHealthCheck).Assembly,
             typeof(Azure.EventHubs.EventHubsHealthCheck).Assembly,
             typeof(Azure.Kusto.KustoAvailableHealthCheck).Assembly,
             typeof(Azure.Queues.QueueClientAvailableHealthCheck).Assembly,
