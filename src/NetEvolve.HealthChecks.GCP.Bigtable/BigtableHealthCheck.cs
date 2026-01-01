@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.GCP.Bigtable;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Cloud.Bigtable.Admin.V2;
-using Google.Cloud.Bigtable.Common.V2;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
