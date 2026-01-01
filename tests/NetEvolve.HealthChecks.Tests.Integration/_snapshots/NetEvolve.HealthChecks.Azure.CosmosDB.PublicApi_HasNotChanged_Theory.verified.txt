@@ -5,8 +5,10 @@
         public CosmosDbAvailableOptions() { }
         public System.Uri? AccountEndpoint { get; set; }
         public string? AccountKey { get; set; }
+        public System.Action<Microsoft.Azure.Cosmos.CosmosClientOptions>? ClientConfiguration { get; set; }
         public string? ConnectionString { get; set; }
         public string? DatabaseId { get; set; }
+        public string? KeyedService { get; set; }
         public NetEvolve.HealthChecks.Azure.CosmosDB.CosmosDbClientCreationMode? Mode { get; set; }
         public int Timeout { get; set; }
     }

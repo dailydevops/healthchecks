@@ -50,5 +50,5 @@ public sealed record CosmosDbAvailableOptions
     /// <summary>
     /// Gets or sets the action to configure the <see cref="CosmosClientOptions"/> used to create the <see cref="CosmosClient"/>.
     /// </summary>
-    public Action<CosmosClientOptions>? ClientConfiguration { get; internal set; }
+    public Action<CosmosClientOptions>? ClientConfiguration { get; set; }
 }
