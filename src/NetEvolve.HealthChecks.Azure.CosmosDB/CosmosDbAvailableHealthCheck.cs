@@ -106,7 +106,7 @@ internal sealed partial class CosmosDbAvailableHealthCheck : IDisposable
 #pragma warning restore IDE0010 // Add missing cases
     }
 
-    private void Dispose(bool disposing)
+    private void DisposeInternal(bool disposing)
     {
         if (!_disposedValue)
         {
@@ -123,7 +123,7 @@ internal sealed partial class CosmosDbAvailableHealthCheck : IDisposable
 
     void IDisposable.Dispose()
     {
-        Dispose(disposing: true);
+        DisposeInternal(disposing: true);
         GC.SuppressFinalize(this);
     }
 }
