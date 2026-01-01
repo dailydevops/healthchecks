@@ -6,7 +6,6 @@ using Elastic.Clients.Elasticsearch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class ElasticsearchConfigure
@@ -30,7 +29,7 @@ internal sealed class ElasticsearchConfigure
     /// <inheritdoc />
     public void Configure(string? name, ElasticsearchOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Elasticsearch:{name}", options);
     }
 

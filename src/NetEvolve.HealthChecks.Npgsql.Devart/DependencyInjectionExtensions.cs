@@ -6,7 +6,6 @@ using System.Linq;
 using global::Devart.Data.PostgreSql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using NetEvolve.Arguments;
 using SourceGenerator.Attributes;
 
 /// <summary>
@@ -37,7 +36,7 @@ public static partial class DependencyInjectionExtensions
     )
     {
         ArgumentNullException.ThrowIfNull(builder);
-        Argument.ThrowIfNullOrEmpty(name);
+        ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<NpgsqlDevartCheckMarker>())

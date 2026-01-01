@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.Oracle.Devart;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class OracleDevartConfigure
@@ -17,7 +16,7 @@ internal sealed class OracleDevartConfigure
 
     public void Configure(string? name, OracleDevartOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Oracle:{name}", options);
     }
 

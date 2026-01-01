@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.Npgsql.Devart;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NetEvolve.Arguments;
 using static Microsoft.Extensions.Options.ValidateOptionsResult;
 
 internal sealed class NpgsqlDevartConfigure
@@ -17,7 +16,7 @@ internal sealed class NpgsqlDevartConfigure
 
     public void Configure(string? name, NpgsqlDevartOptions options)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         _configuration.Bind($"HealthChecks:Npgsql:{name}", options);
     }
 
