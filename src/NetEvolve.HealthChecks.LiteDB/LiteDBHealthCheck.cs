@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.LiteDB;
 
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using global::LiteDB;

@@ -2,7 +2,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using global::Azure.Data.Tables;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;

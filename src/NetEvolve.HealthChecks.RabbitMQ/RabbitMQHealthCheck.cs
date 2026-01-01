@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.RabbitMQ;
 
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using global::RabbitMQ.Client;
 using Microsoft.Extensions.DependencyInjection;
