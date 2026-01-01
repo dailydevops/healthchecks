@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: CosmosDbAccountKeyHealthy: Healthy,
+      name: CosmosDbAccountKeyHealthy,
+      status: Healthy,
+      tags: [
+        azure,
+        cosmosdb,
+        nosql
+      ]
+    }
+  ],
+  status: Healthy
+}

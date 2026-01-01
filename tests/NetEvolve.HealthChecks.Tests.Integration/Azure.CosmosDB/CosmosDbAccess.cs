@@ -29,17 +29,15 @@ public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
         {
             var properties = new Dictionary<string, string>
             {
-                {
-                    "AccountEndpoint",
-                    new UriBuilder(Uri.UriSchemeHttp, Hostname, _container.GetMappedPublicPort(CosmosDbPort)).ToString()
-                },
+                { "AccountEndpoint", AccountEndpoint.ToString() },
                 { "AccountKey", DefaultAccountKey },
             };
             return string.Join(";", properties.Select(property => string.Join("=", property.Key, property.Value)));
         }
     }
 
-    public Uri AccountEndpoint => new UriBuilder(Uri.UriSchemeHttp, Hostname, _container.GetMappedPublicPort(CosmosDbPort)).Uri;
+    public Uri AccountEndpoint =>
+        new UriBuilder(Uri.UriSchemeHttp, Hostname, _container.GetMappedPublicPort(CosmosDbPort)).Uri;
 
     public static string AccountKey => DefaultAccountKey;
 

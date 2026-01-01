@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: CosmosDbAccountKeyDegraded: Degraded,
+      name: CosmosDbAccountKeyDegraded,
+      status: Degraded,
+      tags: [
+        azure,
+        cosmosdb,
+        nosql
+      ]
+    }
+  ],
+  status: Degraded
+}
