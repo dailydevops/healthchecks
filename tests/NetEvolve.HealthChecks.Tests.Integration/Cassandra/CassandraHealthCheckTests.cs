@@ -27,7 +27,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 
@@ -47,7 +47,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("cassandra-test", (_, _) => cluster)
+            serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test", (_, _) => cluster)
         );
     }
 
@@ -63,7 +63,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                     healthChecks =>
                         healthChecks.AddCassandra("TestContainerHealthy").AddCassandra("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(cluster)
+                    serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
                 )
         );
     }
@@ -94,7 +94,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 
@@ -123,7 +123,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 
@@ -143,7 +143,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 
@@ -164,7 +164,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("cassandra-test-config", (_, _) => cluster)
+            serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test-config", (_, _) => cluster)
         );
     }
 
@@ -184,7 +184,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 
@@ -222,7 +222,7 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
         );
     }
 }
