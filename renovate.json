@@ -98,7 +98,8 @@
       "semanticCommitScope": "docker",
       "assignees": [
         "samtrion"
-      ]
+      ],
+      "versioning": "loose"
     },
     {
       "groupName": "Testcontainers packages",
