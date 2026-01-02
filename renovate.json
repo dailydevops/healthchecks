@@ -77,6 +77,20 @@
       ]
     },
     {
+      "matchDatasources": [
+        "docker"
+      ],
+      "labels": [
+        "dependency:docker"
+      ],
+      "semanticCommits": "enabled",
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "docker",
+      "assignees": [
+        "samtrion"
+      ]
+    },
+    {
       "groupName": "Testcontainers packages",
       "groupSlug": "testcontainers-packages",
       "matchManagers": [
@@ -98,20 +112,6 @@
       "matchPackageNames": [
         "TUnit",
         "TUnit.*"
-      ]
-    },
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "labels": [
-        "dependency:docker"
-      ],
-      "semanticCommits": "enabled",
-      "semanticCommitType": "chore",
-      "semanticCommitScope": "docker",
-      "assignees": [
-        "samtrion"
       ]
     }
   ]
