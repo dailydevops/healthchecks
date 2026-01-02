@@ -1,0 +1,35 @@
+name: Clone Labels
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # 1st of every month at 00:00 UTC
+    - cron: '0 0 15 * *' # 15th of every month at 00:00 UTC
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  clone-labels:
+    name: Clone Labels
+    runs-on: ubuntu-latest
+    if: github.repository != 'dailydevops/template-dotnet'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Clone labels
+        run: |
+          SOURCE_REPO="dailydevops/template-dotnet"
+
+          echo "Cloning labels from $SOURCE_REPO"
+
+          # Clone labels from source to target repository
+          gh label clone $SOURCE_REPO --force
+
+          echo "✅ Labels successfully cloned from $SOURCE_REPO to ${{ github.repository }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
