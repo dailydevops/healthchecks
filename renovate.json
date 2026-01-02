@@ -21,7 +21,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
+      "fileMatch": [
         "/\\.(?:cs|fs|vb)proj$/",
         "/\\.(?:props|targets)$/"
       ],
@@ -35,7 +35,7 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": [
+      "fileMatch": [
         "/\\.cs$/"
       ],
       "matchStrings": [
