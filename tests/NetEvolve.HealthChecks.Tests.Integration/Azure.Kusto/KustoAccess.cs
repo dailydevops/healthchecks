@@ -7,7 +7,11 @@ using Testcontainers.Kusto;
 
 public sealed class KustoAccess : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly KustoContainer _container = new KustoBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly KustoContainer _container = new KustoBuilder(
+        /*dockerimage*/"mcr.microsoft.com/azuredataexplorer/kustainer-linux:1.0.138706602"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _container.GetConnectionString();
 

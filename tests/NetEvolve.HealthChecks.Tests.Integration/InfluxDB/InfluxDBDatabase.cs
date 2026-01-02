@@ -6,7 +6,11 @@ using Testcontainers.InfluxDb;
 
 public sealed class InfluxDBDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly InfluxDbContainer _database = new InfluxDbBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly InfluxDbContainer _database = new InfluxDbBuilder(
+        /*dockerimage*/"influxdb:2.7.0"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetAddress();
 

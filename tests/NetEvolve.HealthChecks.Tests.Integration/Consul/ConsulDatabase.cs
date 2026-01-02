@@ -8,7 +8,11 @@ using TUnit.Core.Interfaces;
 
 public sealed class ConsulDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly ConsulContainer _container = new ConsulBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly ConsulContainer _container = new ConsulBuilder(
+        /*dockerimage*/"consul:1.15.0"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string HttpEndpoint => _container.GetBaseAddress();
 

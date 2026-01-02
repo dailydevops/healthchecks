@@ -6,7 +6,11 @@ using Testcontainers.KurrentDb;
 
 public sealed class KurrentDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly KurrentDbContainer _database = new KurrentDbBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly KurrentDbContainer _database = new KurrentDbBuilder(
+        /*dockerimage*/"kurrentplatform/kurrentdb:25.1"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

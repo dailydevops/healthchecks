@@ -10,7 +10,9 @@ public sealed class EventHubsContainer : IAsyncInitializer, IAsyncDisposable
 {
     public const string EventHubName = "eventhub.1";
 
-    private readonly TestContainer _container = new EventHubsBuilder()
+    private readonly TestContainer _container = new EventHubsBuilder(
+        /*dockerimage*/"mcr.microsoft.com/azure-messaging/eventhubs-emulator:2.1.0"
+    )
         .WithLogger(NullLogger.Instance)
         .WithAcceptLicenseAgreement(true)
         .WithConfigurationBuilder(EventHubsServiceConfiguration.Create().WithEntity(EventHubName, 2))
