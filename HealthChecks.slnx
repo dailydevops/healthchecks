@@ -22,6 +22,7 @@
     <File Path="new-project.ps1" />
     <File Path="nuget.config" />
     <File Path="README.md" />
+    <File Path="renovate.json" />
     <File Path="update-solution.ps1" />
   </Folder>
   <Folder Name="/src/">

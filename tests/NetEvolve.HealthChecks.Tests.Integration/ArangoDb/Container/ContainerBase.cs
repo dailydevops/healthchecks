@@ -11,7 +11,9 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
 
     protected ContainerBase(string? password = null)
     {
-        var builder = new ArangoDbBuilder().WithLogger(NullLogger.Instance);
+        var builder = new ArangoDbBuilder(
+            /*dockerimage*/"arangodb:3.11.5"
+        ).WithLogger(NullLogger.Instance);
 
         if (password is null)
         {

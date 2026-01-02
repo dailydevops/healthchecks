@@ -11,8 +11,16 @@ using Testcontainers.MsSql;
 
 public class SqlServer
 {
-    private readonly MsSqlContainer _databaseOne = new MsSqlBuilder().WithLogger(NullLogger.Instance).Build();
-    private readonly MsSqlContainer _databaseTwo = new MsSqlBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly MsSqlContainer _databaseOne = new MsSqlBuilder(
+        /*dockerimage*/"mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
+    private readonly MsSqlContainer _databaseTwo = new MsSqlBuilder(
+        /*dockerimage*/"mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private BenchmarkHealthCheckService _netEvolveHealthCheckExecutor;

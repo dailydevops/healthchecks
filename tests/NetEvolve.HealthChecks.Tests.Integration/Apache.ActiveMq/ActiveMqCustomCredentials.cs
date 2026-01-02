@@ -15,7 +15,9 @@ public sealed class ActiveMqCustomCredentials : IAsyncInitializer, IAsyncDisposa
     public string? Password { get; } = $"{Guid.NewGuid():D}";
 
     public ActiveMqCustomCredentials() =>
-        _container = new ArtemisBuilder()
+        _container = new ArtemisBuilder(
+            /*dockerimage*/"apache/activemq-artemis:2.31.2"
+        )
             .WithUsername(Username)
             .WithPassword(Password)
             .WithLogger(NullLogger.Instance)
