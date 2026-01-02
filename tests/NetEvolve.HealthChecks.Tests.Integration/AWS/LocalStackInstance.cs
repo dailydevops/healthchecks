@@ -28,7 +28,6 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
         /*dockerimage*/"localstack/localstack:2.0.0"
     )
         .WithLogger(NullLogger.Instance)
-        .WithImage("localstack/localstack:stable")
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
         .WithEnvironment("AWS_SECRET_ACCESS_KEY", SecretKey)
         .Build();
