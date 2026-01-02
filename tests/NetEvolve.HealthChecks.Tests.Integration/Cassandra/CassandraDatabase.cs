@@ -7,7 +7,7 @@ using Testcontainers.Cassandra;
 public sealed class CassandraDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly CassandraContainer _database = new CassandraBuilder(
-        /*dockerimage*/"cassandra:5.0.0"
+        /*dockerimage*/"cassandra:5.0.6"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
