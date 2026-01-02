@@ -39,6 +39,7 @@
     <PackageReference Include="Google.Cloud.Bigtable.Admin.V2" />
     <PackageReference Include="Google.Cloud.Firestore" />
     <PackageReference Include="Google.Cloud.PubSub.V1" />
+    <PackageReference Include="IBMMQDotnetClient" />
     <PackageReference Include="InfluxDB.Client" />
     <PackageReference Include="JanusGraph.Net" />
     <PackageReference Include="Keycloak.Net.Core" />
@@ -177,6 +178,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Bigtable\NetEvolve.HealthChecks.GCP.Bigtable.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.Firestore\NetEvolve.HealthChecks.GCP.Firestore.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Http\NetEvolve.HealthChecks.Http.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.IbmMQ\NetEvolve.HealthChecks.IbmMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.InfluxDB\NetEvolve.HealthChecks.InfluxDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.JanusGraph\NetEvolve.HealthChecks.JanusGraph.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Keycloak\NetEvolve.HealthChecks.Keycloak.csproj" />
