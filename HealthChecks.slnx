@@ -66,6 +66,7 @@
     <Project Path="src/NetEvolve.HealthChecks.GCP.PubSub/NetEvolve.HealthChecks.GCP.PubSub.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.GCP/NetEvolve.HealthChecks.GCP.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Http/NetEvolve.HealthChecks.Http.csproj" />
+    <Project Path="src/NetEvolve.HealthChecks.IbmMQ/NetEvolve.HealthChecks.IbmMQ.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.InfluxDB/NetEvolve.HealthChecks.InfluxDB.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.JanusGraph/NetEvolve.HealthChecks.JanusGraph.csproj" />
     <Project Path="src/NetEvolve.HealthChecks.Keycloak/NetEvolve.HealthChecks.Keycloak.csproj" />
