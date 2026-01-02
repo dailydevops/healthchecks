@@ -35,8 +35,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "\\.cs$"
+      "managerFilePatterns": [
+        "/\\.cs$/"
       ],
       "matchStrings": [
         "/\\*dockerimage\\*/\\s*\"(?<depName>[^:]+):(?<currentValue>[^\"]+)\""
