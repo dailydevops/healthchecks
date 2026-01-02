@@ -14,7 +14,7 @@
   "automergeStrategy": "squash",
   "enabledManagers": [
     "custom.regex",
-    "docker",
+    "dockerfile",
     "github-actions",
     "nuget"
   ],
