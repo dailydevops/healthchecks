@@ -39,7 +39,7 @@
         "/\\.cs$/"
       ],
       "matchStrings": [
-        "/\\*dockerimage\\*/\\s*\"(?<depName>[^:]+):(?<currentValue>[^\"]+)\""
+        "/\\*\\s*dockerimage\\s*\\*/\\s*\"(?<depName>[^:]+):(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker"
@@ -78,7 +78,8 @@
     },
     {
       "matchDatasources": [
-        "docker"
+        "docker",
+        "custom.regex"
       ],
       "labels": [
         "dependency:docker"
