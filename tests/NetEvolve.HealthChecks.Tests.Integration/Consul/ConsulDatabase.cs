@@ -9,7 +9,7 @@ using TUnit.Core.Interfaces;
 public sealed class ConsulDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly ConsulContainer _container = new ConsulBuilder(
-        /*dockerimage*/"consul:1.15.0"
+        /*dockerimage*/"consul:1.15.4"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
