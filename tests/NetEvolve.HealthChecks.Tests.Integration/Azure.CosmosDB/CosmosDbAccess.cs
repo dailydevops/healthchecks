@@ -55,7 +55,7 @@ public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
     public Action<CosmosClientOptions> ClientConfiguration =>
         options =>
         {
-            options.ConnectionMode = ConnectionMode.Gateway;
+            options.ConnectionMode = Microsoft.Azure.Cosmos.ConnectionMode.Gateway;
             options.HttpClientFactory = () =>
                 new(new UriRewriter(_container.Hostname, _container.GetMappedPublicPort(CosmosDbPort)));
         };
