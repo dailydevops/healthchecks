@@ -6,7 +6,11 @@ using Testcontainers.Redpanda;
 
 public sealed class RedpandaDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly RedpandaContainer _database = new RedpandaBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly RedpandaContainer _database = new RedpandaBuilder(
+        /*dockerimage*/"docker.redpanda.com/redpandadata/redpanda:v22.2.1"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string BootstrapAddress => _database.GetBootstrapAddress();
 

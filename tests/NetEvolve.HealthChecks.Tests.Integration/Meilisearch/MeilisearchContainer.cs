@@ -8,8 +8,9 @@ using Microsoft.Extensions.Logging.Abstractions;
 public sealed class MeilisearchContainer : IAsyncInitializer, IAsyncDisposable
 {
     private const int DefaultPort = 7700;
-    private readonly IContainer _database = new ContainerBuilder()
-        .WithImage("getmeili/meilisearch:latest")
+    private readonly IContainer _database = new ContainerBuilder(
+        /*dockerimage*/"getmeili/meilisearch:v1.31.0"
+    )
         .WithPortBinding(DefaultPort, true)
         .WithEnvironment("MEILI_ENV", "development")
         .WithEnvironment("MEILI_NO_ANALYTICS", "true")

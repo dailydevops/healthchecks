@@ -6,7 +6,9 @@ using Testcontainers.Kafka;
 
 public sealed class KafkaContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly Testcontainers.Kafka.KafkaContainer _database = new KafkaBuilder()
+    private readonly Testcontainers.Kafka.KafkaContainer _database = new KafkaBuilder(
+        /*dockerimage*/"confluentinc/cp-kafka:7.5.12"
+    )
         .WithLogger(NullLogger.Instance)
         .Build();
 

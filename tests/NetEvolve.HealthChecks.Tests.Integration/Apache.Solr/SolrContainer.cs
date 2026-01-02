@@ -12,8 +12,9 @@ public sealed class SolrContainer : IAsyncInitializer, IAsyncDisposable
     private const string SolrCore = "healthchecks";
     private const int SolrPort = 8983;
 
-    private readonly IContainer _container = new ContainerBuilder()
-        .WithImage("solr:9-slim")
+    private readonly IContainer _container = new ContainerBuilder(
+        /*dockerimage*/"solr:9-slim"
+    )
         .WithPortBinding(SolrPort, assignRandomHostPort: true)
         .WithCommand("solr-precreate", SolrCore)
         .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged(@"o\.a\.s\.c\.SolrCore Registered new searcher"))

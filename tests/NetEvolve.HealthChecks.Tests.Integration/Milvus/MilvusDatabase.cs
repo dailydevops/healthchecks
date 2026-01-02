@@ -7,7 +7,11 @@ using TUnit.Core.Interfaces;
 
 public sealed class MilvusDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly MilvusContainer _database = new MilvusBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly MilvusContainer _database = new MilvusBuilder(
+        /*dockerimage*/"milvusdb/milvus:v2.3.10"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public Uri GrpcConnectionString => _database.GetEndpoint();
 

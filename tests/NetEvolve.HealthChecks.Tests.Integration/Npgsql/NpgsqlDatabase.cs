@@ -6,7 +6,11 @@ using Testcontainers.PostgreSql;
 
 public sealed class NpgsqlDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly PostgreSqlContainer _database = new PostgreSqlBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly PostgreSqlContainer _database = new PostgreSqlBuilder(
+        /*dockerimage*/"postgres:15.1"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

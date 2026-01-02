@@ -7,7 +7,11 @@ using Testcontainers.JanusGraph;
 
 public sealed class JanusGraphDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly JanusGraphContainer _database = new JanusGraphBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly JanusGraphContainer _database = new JanusGraphBuilder(
+        /*dockerimage*/"janusgraph/janusgraph:1.0.0"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public GremlinServer Server =>
         new GremlinServer(_database.Hostname, _database.GetMappedPublicPort(JanusGraphBuilder.JanusGraphPort));

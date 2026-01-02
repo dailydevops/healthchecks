@@ -10,7 +10,11 @@ using TUnit.Core.Interfaces;
 
 public sealed class BigtableDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly BigtableContainer _container = new BigtableBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly BigtableContainer _container = new BigtableBuilder(
+        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:446.0.1-emulators"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     private BigtableTableAdminClient? _client;
 

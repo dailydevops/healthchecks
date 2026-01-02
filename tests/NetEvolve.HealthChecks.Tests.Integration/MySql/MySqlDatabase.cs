@@ -6,7 +6,11 @@ using Testcontainers.MySql;
 
 public sealed class MySqlDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly MySqlContainer _database = new MySqlBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly MySqlContainer _database = new MySqlBuilder(
+        /*dockerimage*/"mysql:8.0.44"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

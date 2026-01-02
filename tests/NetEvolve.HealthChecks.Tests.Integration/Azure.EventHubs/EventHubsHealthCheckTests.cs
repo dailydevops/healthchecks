@@ -108,7 +108,7 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
                         options.Mode = ClientCreationMode.ConnectionString;
                         options.ConnectionString = _container.ConnectionString;
                         options.EventHubName = EventHubsContainer.EventHubName;
-                        options.Timeout = 1;
+                        options.Timeout = 0;
                     }
                 );
             },

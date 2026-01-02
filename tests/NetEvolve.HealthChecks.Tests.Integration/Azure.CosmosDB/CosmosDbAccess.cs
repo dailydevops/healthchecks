@@ -16,8 +16,9 @@ public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
     private const string DefaultAccountKey =
         "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
 
-    private readonly IContainer _container = new ContainerBuilder()
-        .WithImage("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview")
+    private readonly IContainer _container = new ContainerBuilder(
+        /*dockerimage*/"mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview"
+    )
         .WithEnvironment("ENABLE_EXPLORER", "false")
         .WithPortBinding(CosmosDbPort, true)
         .WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitForMe()))

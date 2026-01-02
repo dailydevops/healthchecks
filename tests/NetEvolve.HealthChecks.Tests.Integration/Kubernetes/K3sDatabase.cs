@@ -12,7 +12,11 @@ using TUnit.Core.Interfaces;
 [SuppressMessage("Naming", "S101:Types should be named in PascalCase", Justification = "K3s is the product name.")]
 public sealed class K3sDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly K3sContainer _container = new K3sBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly K3sContainer _container = new K3sBuilder(
+        /*dockerimage*/"rancher/k3s:v1.26.2-k3s1"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     private KubernetesClientConfiguration? _configuration;
 

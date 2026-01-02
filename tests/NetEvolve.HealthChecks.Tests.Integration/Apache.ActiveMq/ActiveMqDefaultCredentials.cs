@@ -6,7 +6,11 @@ using Testcontainers.ActiveMq;
 
 public sealed class ActiveMqDefaultCredentials : IAsyncInitializer, IAsyncDisposable, IActiveMQAccessor
 {
-    private readonly ArtemisContainer _container = new ArtemisBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly ArtemisContainer _container = new ArtemisBuilder(
+        /*dockerimage*/"apache/activemq-artemis:2.31.2"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string BrokerAddress => _container.GetBrokerAddress();
 

@@ -6,7 +6,11 @@ using Testcontainers.CouchDb;
 
 public sealed class CouchDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly CouchDbContainer _database = new CouchDbBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly CouchDbContainer _database = new CouchDbBuilder(
+        /*dockerimage*/"couchdb:3.3.0"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

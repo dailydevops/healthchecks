@@ -6,7 +6,11 @@ using Testcontainers.FirebirdSql;
 
 public sealed class FirebirdDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly FirebirdSqlContainer _database = new FirebirdSqlBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly FirebirdSqlContainer _database = new FirebirdSqlBuilder(
+        /*dockerimage*/"jacobalberty/firebird:v4.0.2"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

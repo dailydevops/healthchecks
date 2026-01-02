@@ -7,7 +7,11 @@ using Testcontainers.RabbitMq;
 
 public sealed class RabbitMQContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly RabbitMqContainer _container = new RabbitMqBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly RabbitMqContainer _container = new RabbitMqBuilder(
+        /*dockerimage*/"rabbitmq:3.11.28"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public Uri ConnectionString => new Uri(_container.GetConnectionString());
 

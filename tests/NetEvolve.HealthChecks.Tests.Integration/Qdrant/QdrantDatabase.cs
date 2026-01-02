@@ -7,7 +7,11 @@ using TUnit.Core.Interfaces;
 
 public sealed class QdrantDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly QdrantContainer _database = new QdrantBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly QdrantContainer _database = new QdrantBuilder(
+        /*dockerimage*/"qdrant/qdrant:v1.13.4"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public Uri GrpcConnectionString => new Uri(_database.GetGrpcConnectionString());
 
