@@ -12,7 +12,7 @@ using TUnit.Core.Interfaces;
 public sealed class FirestoreDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly FirestoreContainer _container = new FirestoreBuilder(
-        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:446.0.1-emulators"
+        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:446.0.1"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
