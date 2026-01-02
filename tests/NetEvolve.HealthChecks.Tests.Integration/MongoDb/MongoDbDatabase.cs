@@ -6,7 +6,11 @@ using Testcontainers.MongoDb;
 
 public sealed class MongoDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly MongoDbContainer _database = new MongoDbBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly MongoDbContainer _database = new MongoDbBuilder(
+        /*dockerimage*/"mongo:6.0.27"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 

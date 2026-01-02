@@ -8,8 +8,9 @@ using Microsoft.Extensions.Logging.Abstractions;
 public sealed class GarnetContainer : IAsyncInitializer, IAsyncDisposable
 {
     private const int DefaultPort = 6379;
-    private readonly IContainer _database = new ContainerBuilder()
-        .WithImage("ghcr.io/microsoft/garnet")
+    private readonly IContainer _database = new ContainerBuilder(
+        /*dockerimage*/"ghcr.io/microsoft/garnet:latest"
+    )
         .WithPortBinding(DefaultPort, true)
         .WithLogger(NullLogger.Instance)
         .WithWaitStrategy(Wait.ForUnixContainer().UntilInternalTcpPortIsAvailable(DefaultPort))

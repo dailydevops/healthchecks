@@ -6,7 +6,9 @@ using Testcontainers.Redis;
 
 public sealed class RedisContainer : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly Testcontainers.Redis.RedisContainer _database = new RedisBuilder()
+    private readonly Testcontainers.Redis.RedisContainer _database = new RedisBuilder(
+        /*dockerimage*/"redis:7.0.15"
+    )
         .WithLogger(NullLogger.Instance)
         .Build();
 

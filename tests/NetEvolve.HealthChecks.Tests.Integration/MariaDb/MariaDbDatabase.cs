@@ -6,7 +6,11 @@ using Testcontainers.MariaDb;
 
 public sealed class MariaDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
-    private readonly MariaDbContainer _database = new MariaDbBuilder().WithLogger(NullLogger.Instance).Build();
+    private readonly MariaDbContainer _database = new MariaDbBuilder(
+        /*dockerimage*/"mariadb:10.11.15"
+    )
+        .WithLogger(NullLogger.Instance)
+        .Build();
 
     public string ConnectionString => _database.GetConnectionString();
 
