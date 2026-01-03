@@ -19,7 +19,7 @@ public sealed class DependencyInjectionExtensionsTests
         var builder = default(IHealthChecksBuilder);
 
         // Act
-        void Act() => builder.AddIbmMQ("Test");
+        void Act() => builder!.AddIbmMQ("Test");
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("builder", Act);
@@ -67,7 +67,7 @@ public sealed class DependencyInjectionExtensionsTests
         var tags = default(string[]);
 
         // Act
-        void Act() => builder.AddIbmMQ("Test", tags: tags);
+        void Act() => builder.AddIbmMQ("Test", tags: tags!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>("tags", Act);
