@@ -7,7 +7,7 @@ using Testcontainers.CouchDb;
 public sealed class CouchDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly CouchDbContainer _database = new CouchDbBuilder(
-        /*dockerimage*/"couchdb:3.3.0"
+        /*dockerimage*/"couchdb:3.3.3"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
