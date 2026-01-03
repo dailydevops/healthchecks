@@ -1,5 +1,6 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.IbmMQ;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.IbmMQ;
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IBM.WMQ;
@@ -28,7 +29,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             { MQC.CHANNEL_PROPERTY, _container.Channel },
         };
 
-        var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy", options => options.Timeout = 10000),
@@ -47,7 +48,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             { MQC.CHANNEL_PROPERTY, _container.Channel },
         };
 
-        var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
 
         await RunAndVerify(
             healthChecks =>
@@ -74,7 +75,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             { MQC.CHANNEL_PROPERTY, _container.Channel },
         };
 
-        var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerDegraded", options => options.Timeout = 0),
@@ -93,7 +94,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             { MQC.CHANNEL_PROPERTY, _container.Channel },
         };
 
-        var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy"),
@@ -120,7 +121,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             { MQC.CHANNEL_PROPERTY, _container.Channel },
         };
 
-        var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerKeyedHealthy"),
@@ -148,7 +149,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             { MQC.CHANNEL_PROPERTY, _container.Channel },
         };
 
-        var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerDegraded"),

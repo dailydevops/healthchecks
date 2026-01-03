@@ -110,9 +110,7 @@ public sealed class IbmMQHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert
-                .That(result.Description)
-                .IsEqualTo("test: IBM MQ Queue Manager is not connected.");
+            _ = await Assert.That(result.Description).IsEqualTo("test: IBM MQ Queue Manager is not connected.");
         }
     }
 
@@ -145,9 +143,7 @@ public sealed class IbmMQHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert
-                .That(result.Description)
-                .IsEqualTo("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert.That(result.Description).IsEqualTo("test: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }
