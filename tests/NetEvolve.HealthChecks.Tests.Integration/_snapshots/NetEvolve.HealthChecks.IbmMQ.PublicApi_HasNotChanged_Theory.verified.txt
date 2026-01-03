@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.IbmMQ
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddIbmMQ(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.IbmMQ.IbmMQOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class IbmMQOptions : System.IEquatable<NetEvolve.HealthChecks.IbmMQ.IbmMQOptions>
+    {
+        public IbmMQOptions() { }
+        public string? KeyedService { get; set; }
+        public int Timeout { get; set; }
+    }
+}
