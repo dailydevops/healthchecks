@@ -11,22 +11,22 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.HealthChecks.ArangoDb;
 using NetEvolve.HealthChecks.Tests.Integration.ArangoDb.Container;
 
-public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsyncInitializer, IDisposable
+public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
+    : HealthCheckTestBase,
+        IAsyncInitializer,
+        IDisposable
 {
-    public ContainerBase _container { get; }
 #pragma warning disable TUnit0023 // Member should be disposed within a clean up method
     private ArangoDBClient _client = default!;
 #pragma warning restore TUnit0023 // Member should be disposed within a clean up method
     private bool _disposed;
 
-    protected ArangoDbHealthCheckBaseTests(ContainerBase container) => _container = container;
-
     public Task InitializeAsync()
     {
         var transport = HttpApiTransport.UsingBasicAuth(
-            new Uri(_container.TransportAddress),
+            new Uri(container.TransportAddress),
             "root",
-            _container.Password
+            container.Password
         );
         _client = new ArangoDBClient(transport);
 
@@ -90,9 +90,9 @@ public abstract class ArangoDbHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     {
                         options.Mode = ArangoDbClientCreationMode.Internal;
                         options.Timeout = 10000;
-                        options.TransportAddress = _container.TransportAddress;
+                        options.TransportAddress = container.TransportAddress;
                         options.Username = "root";
-                        options.Password = _container.Password;
+                        options.Password = container.Password;
                     }
                 ),
             HealthStatus.Healthy
