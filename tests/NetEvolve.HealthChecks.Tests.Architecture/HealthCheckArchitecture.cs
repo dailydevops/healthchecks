@@ -60,6 +60,7 @@ internal static class HealthCheckArchitecture
             typeof(KurrentDb.KurrentDbHealthCheck).Assembly,
             typeof(Firebird.FirebirdHealthCheck).Assembly,
             typeof(Garnet.GarnetHealthCheck).Assembly,
+            typeof(IbmMQ.IbmMQHealthCheck).Assembly,
             typeof(Http.HttpHealthCheck).Assembly,
             typeof(InfluxDB.InfluxDBHealthCheck).Assembly,
             typeof(JanusGraph.JanusGraphHealthCheck).Assembly,
