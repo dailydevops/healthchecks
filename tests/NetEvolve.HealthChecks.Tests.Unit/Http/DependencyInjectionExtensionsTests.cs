@@ -49,8 +49,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddHttp_WhenParameterCorrect_ServiceAdded()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         const string name = "Test";
 
@@ -68,8 +69,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddHttp_WhenParameterCorrectWithOptions_ServiceAdded()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         const string name = "Test";
 
