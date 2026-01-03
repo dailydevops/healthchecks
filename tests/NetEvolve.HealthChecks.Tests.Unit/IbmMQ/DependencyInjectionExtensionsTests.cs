@@ -3,7 +3,6 @@ namespace NetEvolve.HealthChecks.Tests.Unit.IbmMQ;
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.IbmMQ;
 

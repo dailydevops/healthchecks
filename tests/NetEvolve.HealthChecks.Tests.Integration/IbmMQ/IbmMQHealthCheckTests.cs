@@ -3,7 +3,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using global::Keycloak.Net.Models.Root;
 using IBM.WMQ;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

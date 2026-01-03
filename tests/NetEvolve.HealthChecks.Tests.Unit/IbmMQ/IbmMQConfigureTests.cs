@@ -1,7 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.IbmMQ;
 
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.IbmMQ;
 
