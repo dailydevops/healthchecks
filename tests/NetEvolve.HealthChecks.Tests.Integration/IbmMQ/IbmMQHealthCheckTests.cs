@@ -11,7 +11,7 @@ using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.IbmMQ;
 
 [TestGroup(nameof(IbmMQ))]
-[TestGroup("Z03TestGroup")]
+[TestGroup("Z04TestGroup")]
 [ClassDataSource<IbmMQContainer>(Shared = SharedType.PerClass)]
 public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
 {
