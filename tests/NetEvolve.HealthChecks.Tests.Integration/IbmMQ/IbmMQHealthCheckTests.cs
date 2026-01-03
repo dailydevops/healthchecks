@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::Keycloak.Net.Models.Root;
 using IBM.WMQ;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,14 +23,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddIbmMQ_UseOptions_Healthy()
     {
-        var properties = new Hashtable
-        {
-            { MQC.HOST_NAME_PROPERTY, _container.Host },
-            { MQC.PORT_PROPERTY, _container.Port },
-            { MQC.CHANNEL_PROPERTY, _container.Channel },
-        };
-
-        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy", options => options.Timeout = 10000),
@@ -39,16 +33,23 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
+    public async Task AddIbmMQ_UseOptions_AndDisconnected_Unhealthy()
+    {
+        using var queueManager = CreateQueueManager(_container.Host);
+
+        queueManager.Disconnect();
+
+        await RunAndVerify(
+            healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy", options => options.Timeout = 10000),
+            HealthStatus.Unhealthy,
+            serviceBuilder: services => services.AddSingleton(queueManager)
+        );
+    }
+
+    [Test]
     public async Task AddIbmMQ_UseOptionsWithKeyedService_Healthy()
     {
-        var properties = new Hashtable
-        {
-            { MQC.HOST_NAME_PROPERTY, _container.Host },
-            { MQC.PORT_PROPERTY, _container.Port },
-            { MQC.CHANNEL_PROPERTY, _container.Channel },
-        };
-
-        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks =>
@@ -68,14 +69,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddIbmMQ_UseOptions_Degraded()
     {
-        var properties = new Hashtable
-        {
-            { MQC.HOST_NAME_PROPERTY, _container.Host },
-            { MQC.PORT_PROPERTY, _container.Port },
-            { MQC.CHANNEL_PROPERTY, _container.Channel },
-        };
-
-        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerDegraded", options => options.Timeout = 0),
@@ -87,14 +81,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddIbmMQ_UseConfiguration_Healthy()
     {
-        var properties = new Hashtable
-        {
-            { MQC.HOST_NAME_PROPERTY, _container.Host },
-            { MQC.PORT_PROPERTY, _container.Port },
-            { MQC.CHANNEL_PROPERTY, _container.Channel },
-        };
-
-        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy"),
@@ -114,14 +101,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddIbmMQ_UseConfigurationWithKeyedService_Healthy()
     {
-        var properties = new Hashtable
-        {
-            { MQC.HOST_NAME_PROPERTY, _container.Host },
-            { MQC.PORT_PROPERTY, _container.Port },
-            { MQC.CHANNEL_PROPERTY, _container.Channel },
-        };
-
-        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerKeyedHealthy"),
@@ -142,14 +122,7 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     [Test]
     public async Task AddIbmMQ_UseConfiguration_Degraded()
     {
-        var properties = new Hashtable
-        {
-            { MQC.HOST_NAME_PROPERTY, _container.Host },
-            { MQC.PORT_PROPERTY, _container.Port },
-            { MQC.CHANNEL_PROPERTY, _container.Channel },
-        };
-
-        using var queueManager = new MQQueueManager(_container.QueueManagerName, properties);
+        using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerDegraded"),
@@ -164,5 +137,19 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
             },
             serviceBuilder: services => services.AddSingleton(queueManager)
         );
+    }
+
+    private static MQQueueManager CreateQueueManager(string host)
+    {
+        var properties = new Hashtable
+        {
+            { MQC.TRANSPORT_PROPERTY, MQC.TRANSPORT_MQSERIES_MANAGED },
+            { MQC.CHANNEL_PROPERTY, IbmMQContainer.Channel },
+            { MQC.CONNECTION_NAME_PROPERTY, host },
+            { MQC.USER_ID_PROPERTY, IbmMQContainer.User },
+            { MQC.PASSWORD_PROPERTY, IbmMQContainer.Password },
+        };
+
+        return new MQQueueManager(IbmMQContainer.QueueManager, properties);
     }
 }

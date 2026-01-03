@@ -26,18 +26,7 @@ internal sealed partial class IbmMQHealthCheck
             ? _serviceProvider.GetRequiredService<MQQueueManager>()
             : _serviceProvider.GetRequiredKeyedService<MQQueueManager>(options.KeyedService);
 
-        var (isTimelyResponse, isConnected) = await Task.Run(
-                () =>
-                {
-                    if (!queueManager.IsConnected)
-                    {
-                        queueManager.Connect();
-                    }
-
-                    return queueManager.IsConnected;
-                },
-                cancellationToken
-            )
+        var (isTimelyResponse, isConnected) = await Task.Run(() => queueManager.IsConnected, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 

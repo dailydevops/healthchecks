@@ -8,29 +8,26 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 public sealed class IbmMQContainer : IAsyncInitializer, IAsyncDisposable
 {
+    internal const string Password = "passw0rd";
+    internal const string User = "app";
+    internal const string QueueManager = "QM1";
+    internal const string Channel = "DEV.APP.SVRCONN";
+    internal const int PortNumber = 1414;
+
     private readonly IContainer _container = new ContainerBuilder(
         /*dockerimage*/"icr.io/ibm-messaging/mq:9.4.1.0-r1"
     )
-        .WithPortBinding(1414, true)
-        .WithPortBinding(9443, true)
+        .WithPortBinding(PortNumber, true)
         .WithEnvironment("LICENSE", "accept")
-        .WithEnvironment("MQ_QMGR_NAME", "QM1")
-        .WithEnvironment("MQ_APP_PASSWORD", "passw0rd")
+        .WithEnvironment("MQ_QMGR_NAME", QueueManager)
+        .WithEnvironment("MQ_APP_PASSWORD", Password)
         .WithLogger(NullLogger.Instance)
         .WithWaitStrategy(Wait.ForUnixContainer().UntilCommandIsCompleted("chkmqready"))
         .Build();
 
-#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
-    public string QueueManagerName => "QM1";
-#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+    public string Host => $"localhost({Port})";
 
-    public string Host => _container.Hostname;
-
-    public int Port => _container.GetMappedPublicPort(1414);
-
-#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
-    public string Channel => "DEV.APP.SVRCONN";
-#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+    public int Port => _container.GetMappedPublicPort(PortNumber);
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 

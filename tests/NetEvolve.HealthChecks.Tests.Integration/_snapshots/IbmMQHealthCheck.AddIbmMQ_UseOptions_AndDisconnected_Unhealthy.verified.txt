@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerHealthy: IBM MQ Queue Manager is not connected.,
+      name: TestContainerHealthy,
+      status: Unhealthy,
+      tags: [
+        ibmmq,
+        messaging
+      ]
+    }
+  ],
+  status: Unhealthy
+}

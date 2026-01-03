@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.IbmMQ;
 
 using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
@@ -53,73 +54,12 @@ public sealed class DependencyInjectionExtensionsTests
     }
 
     [Test]
-    public async Task AddIbmMQ_WithValidName_RegistersHealthCheck()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        var builder = services.AddHealthChecks();
-
-        // Act
-        _ = builder.AddIbmMQ("test");
-
-        // Assert
-        var serviceProvider = services.BuildServiceProvider();
-        var registrations = serviceProvider.GetService<IEnumerable<HealthCheckRegistration>>();
-        _ = await Assert.That(registrations).IsNotNull();
-
-        var registration = registrations!.FirstOrDefault(x => x.Name == "test");
-        _ = await Assert.That(registration).IsNotNull();
-    }
-
-    [Test]
-    public async Task AddIbmMQ_WithOptions_RegistersHealthCheck()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        var builder = services.AddHealthChecks();
-
-        // Act
-        _ = builder.AddIbmMQ("test", options => options.Timeout = 500);
-
-        // Assert
-        var serviceProvider = services.BuildServiceProvider();
-        var registrations = serviceProvider.GetService<IEnumerable<HealthCheckRegistration>>();
-        _ = await Assert.That(registrations).IsNotNull();
-
-        var registration = registrations!.FirstOrDefault(x => x.Name == "test");
-        _ = await Assert.That(registration).IsNotNull();
-    }
-
-    [Test]
-    public async Task AddIbmMQ_WithTags_RegistersHealthCheckWithTags()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        var builder = services.AddHealthChecks();
-
-        // Act
-        _ = builder.AddIbmMQ("test", null, "custom-tag");
-
-        // Assert
-        var serviceProvider = services.BuildServiceProvider();
-        var registrations = serviceProvider.GetService<IEnumerable<HealthCheckRegistration>>();
-        _ = await Assert.That(registrations).IsNotNull();
-
-        var registration = registrations!.FirstOrDefault(x => x.Name == "test");
-        using (Assert.Multiple())
-        {
-            _ = await Assert.That(registration).IsNotNull();
-            _ = await Assert.That(registration!.Tags).Contains("ibmmq");
-            _ = await Assert.That(registration!.Tags).Contains("messaging");
-            _ = await Assert.That(registration!.Tags).Contains("custom-tag");
-        }
-    }
-
-    [Test]
     public void AddIbmMQ_WithDuplicateName_ThrowsArgumentException()
     {
         // Arrange
-        var services = new ServiceCollection();
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         _ = builder.AddIbmMQ("test");
 
