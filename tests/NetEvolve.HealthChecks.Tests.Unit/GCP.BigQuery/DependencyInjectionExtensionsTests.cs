@@ -63,8 +63,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddBigQuery_WhenParameterCorrect_RegistrationAdded()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         const string name = "Test";
 
@@ -84,8 +85,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddBigQuery_WhenParameterCorrectWithOptions_RegistrationAdded()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         const string name = "Test";
 
@@ -112,8 +114,9 @@ public sealed class DependencyInjectionExtensionsTests
     public void AddBigQuery_WhenDuplicateName_ThrowArgumentException()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         const string name = "Test";
 
@@ -127,8 +130,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddBigQuery_WhenMultipleChecksWithDifferentNames_AllRegistrationsAdded()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
 
         // Act
@@ -148,8 +152,9 @@ public sealed class DependencyInjectionExtensionsTests
     public async Task AddBigQuery_WhenCustomTags_TagsApplied()
     {
         // Arrange
-        var services = new ServiceCollection();
-        _ = services.AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection([]).Build());
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(
+            new ConfigurationBuilder().AddInMemoryCollection([]).Build()
+        );
         var builder = services.AddHealthChecks();
         const string name = "Test";
         const string customTag = "custom-tag";
