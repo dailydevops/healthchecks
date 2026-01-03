@@ -7,7 +7,7 @@ using Testcontainers.Db2;
 public sealed class DB2Database : IAsyncInitializer, IAsyncDisposable
 {
     private readonly Db2Container _database = new Db2Builder(
-        /*dockerimage*/"icr.io/db2_community/db2:12.1.0.0"
+        /*dockerimage*/"icr.io/db2_community/db2:12.1.3.0"
     )
         .WithLogger(NullLogger.Instance)
         .WithAcceptLicenseAgreement(true)
