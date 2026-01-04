@@ -2,8 +2,7 @@ name: Clone Labels
 
 on:
   schedule:
-    - cron: '0 0 1 * *'  # 1st of every month at 00:00 UTC
-    - cron: '0 0 15 * *' # 15th of every month at 00:00 UTC
+    - cron: '0 3 * * 1'  # Every monday at 03:00 UTC
 
   workflow_dispatch:
 
