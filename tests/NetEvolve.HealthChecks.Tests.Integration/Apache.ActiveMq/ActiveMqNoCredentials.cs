@@ -7,7 +7,7 @@ using Testcontainers.ActiveMq;
 public sealed class ActiveMqNoCredentials : IAsyncInitializer, IAsyncDisposable, IActiveMQAccessor
 {
     private readonly ArtemisContainer _container = new ArtemisBuilder(
-        /*dockerimage*/"apache/activemq-artemis:2.31.2"
+        /*dockerimage*/"apache/activemq-artemis:2.44.0"
     )
         .WithLogger(NullLogger.Instance)
         .WithEnvironment("ANONYMOUS_LOGIN", bool.TrueString)
