@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Unit.Couchbase;
+﻿namespace NetEvolve.HealthChecks.Tests.Unit.Couchbase;
 
 using System;
 using System.Threading;
@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(Couchbase))]
 public sealed class CouchbaseHealthCheckTests
 {
+    private const string TestName = nameof(Couchbase);
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -37,7 +39,10 @@ public sealed class CouchbaseHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
 
         var check = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -47,7 +52,7 @@ public sealed class CouchbaseHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -59,7 +64,10 @@ public sealed class CouchbaseHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
 
         var check = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -68,7 +76,7 @@ public sealed class CouchbaseHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -88,7 +96,7 @@ public sealed class CouchbaseHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var cluster = Substitute.For<ICluster>();
 
@@ -99,7 +107,7 @@ public sealed class CouchbaseHealthCheckTests
         var healthCheck = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -109,7 +117,7 @@ public sealed class CouchbaseHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -129,7 +137,7 @@ public sealed class CouchbaseHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var cluster = Substitute.For<ICluster>();
 
@@ -140,7 +148,7 @@ public sealed class CouchbaseHealthCheckTests
         var healthCheck = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -150,7 +158,7 @@ public sealed class CouchbaseHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -170,7 +178,7 @@ public sealed class CouchbaseHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var cluster = Substitute.For<ICluster>();
 
@@ -181,7 +189,7 @@ public sealed class CouchbaseHealthCheckTests
         var healthCheck = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -191,7 +199,9 @@ public sealed class CouchbaseHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).Contains("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert
+                .That(result.Description)
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }

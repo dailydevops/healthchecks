@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(OpenSearch))]
 public sealed class OpenSearchHealthCheckTests
 {
+    private const string TestName = nameof(OpenSearch);
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -33,14 +35,13 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
 
         var check = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -51,7 +52,7 @@ public sealed class OpenSearchHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -59,14 +60,13 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
 
         var check = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
 
         // Act
@@ -76,7 +76,7 @@ public sealed class OpenSearchHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -84,7 +84,6 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
     {
         // Arrange
-        const string testName = "Test";
         const string serviceKey = "test-key";
 
         var options = new OpenSearchOptions
@@ -99,7 +98,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var uri = new Uri("http://localhost:9200");
@@ -113,7 +112,7 @@ public sealed class OpenSearchHealthCheckTests
         var healthCheck = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -123,7 +122,7 @@ public sealed class OpenSearchHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -131,7 +130,6 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new OpenSearchOptions
         {
@@ -145,7 +143,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var uri = new Uri("http://localhost:9200");
@@ -159,7 +157,7 @@ public sealed class OpenSearchHealthCheckTests
         var healthCheck = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -169,7 +167,7 @@ public sealed class OpenSearchHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -177,7 +175,6 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new OpenSearchOptions
         {
@@ -191,7 +188,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         var uri = new Uri("http://localhost:9200");
@@ -205,7 +202,7 @@ public sealed class OpenSearchHealthCheckTests
         var healthCheck = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -217,7 +214,7 @@ public sealed class OpenSearchHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }

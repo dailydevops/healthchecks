@@ -12,6 +12,8 @@ using NSubstitute;
 [TestGroup($"{nameof(Azure)}.{nameof(EventHubs)}")]
 public sealed class EventHubsHealthCheckTests
 {
+    private const string TestName = $"{nameof(Azure)}.{nameof(EventHubs)}";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -34,7 +36,10 @@ public sealed class EventHubsHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<EventHubsOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new EventHubsHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -44,7 +49,7 @@ public sealed class EventHubsHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -53,10 +58,13 @@ public sealed class EventHubsHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<EventHubsOptions>>();
-        _ = optionsMonitor.Get("Test").Returns((EventHubsOptions)null!);
+        _ = optionsMonitor.Get(TestName).Returns((EventHubsOptions)null!);
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new EventHubsHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -65,7 +73,7 @@ public sealed class EventHubsHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 }

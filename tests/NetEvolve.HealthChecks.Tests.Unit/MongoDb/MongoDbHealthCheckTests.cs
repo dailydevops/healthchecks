@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(MongoDb))]
 public sealed class MongoDbHealthCheckTests
 {
+    private const string TestName = nameof(MongoDb);
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -37,7 +39,10 @@ public sealed class MongoDbHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
 
         var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -47,7 +52,7 @@ public sealed class MongoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -59,7 +64,10 @@ public sealed class MongoDbHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
 
         var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -68,7 +76,7 @@ public sealed class MongoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -88,7 +96,7 @@ public sealed class MongoDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         using var client = new MongoClient();
@@ -100,7 +108,7 @@ public sealed class MongoDbHealthCheckTests
         var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -110,7 +118,7 @@ public sealed class MongoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -130,7 +138,7 @@ public sealed class MongoDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         using var client = new MongoClient();
@@ -142,7 +150,7 @@ public sealed class MongoDbHealthCheckTests
         var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -152,7 +160,7 @@ public sealed class MongoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -172,7 +180,7 @@ public sealed class MongoDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         using var client = new MongoClient();
@@ -184,7 +192,7 @@ public sealed class MongoDbHealthCheckTests
         var healthCheck = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -194,7 +202,9 @@ public sealed class MongoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).Contains("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert
+                .That(result.Description)
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }

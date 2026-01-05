@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(Elasticsearch))]
 public sealed class ElasticsearchHealthCheckTests
 {
+    private const string TestName = nameof(Elasticsearch);
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -33,14 +35,13 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
 
         using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -53,7 +54,7 @@ public sealed class ElasticsearchHealthCheckTests
             _ = await Assert
                 .That(result.Status)
                 .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -61,14 +62,13 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
 
         using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
 
         // Act
@@ -80,7 +80,7 @@ public sealed class ElasticsearchHealthCheckTests
             _ = await Assert
                 .That(result.Status)
                 .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -88,7 +88,6 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
     {
         // Arrange
-        const string testName = "Test";
         const string serviceKey = "test-key";
 
         var options = new ElasticsearchOptions
@@ -103,7 +102,7 @@ public sealed class ElasticsearchHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var uri = Substitute.For<Uri>("http://localhost/test");
@@ -116,7 +115,7 @@ public sealed class ElasticsearchHealthCheckTests
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(
-                testName,
+                TestName,
                 healthCheck,
                 Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
                 null
@@ -132,7 +131,7 @@ public sealed class ElasticsearchHealthCheckTests
             _ = await Assert
                 .That(result.Status)
                 .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -140,7 +139,6 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new ElasticsearchOptions
         {
@@ -154,7 +152,7 @@ public sealed class ElasticsearchHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var uri = Substitute.For<Uri>("http://localhost/test");
@@ -167,7 +165,7 @@ public sealed class ElasticsearchHealthCheckTests
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(
-                testName,
+                TestName,
                 healthCheck,
                 Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
                 null
@@ -183,7 +181,7 @@ public sealed class ElasticsearchHealthCheckTests
             _ = await Assert
                 .That(result.Status)
                 .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -191,7 +189,6 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new ElasticsearchOptions
         {
@@ -205,7 +202,7 @@ public sealed class ElasticsearchHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         var uri = Substitute.For<Uri>("http://localhost/test");
@@ -218,7 +215,7 @@ public sealed class ElasticsearchHealthCheckTests
         var context = new HealthCheckContext
         {
             Registration = new HealthCheckRegistration(
-                testName,
+                TestName,
                 healthCheck,
                 Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
                 null
@@ -236,7 +233,7 @@ public sealed class ElasticsearchHealthCheckTests
                 .IsEqualTo(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }

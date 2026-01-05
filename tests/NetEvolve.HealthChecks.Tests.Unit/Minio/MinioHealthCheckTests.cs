@@ -13,6 +13,8 @@ using NSubstitute;
 [TestGroup(nameof(Minio))]
 public class MinioHealthCheckTests
 {
+    private const string TestName = nameof(Minio);
+
     [Test]
     public async Task DefaultCommandAsync_WhenBucketExists_ReturnsTrue()
     {
@@ -63,7 +65,7 @@ public class MinioHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MinioOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(client);
@@ -72,7 +74,7 @@ public class MinioHealthCheckTests
         var healthCheck = new MinioHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -84,7 +86,7 @@ public class MinioHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .IsEqualTo("test: The Minio command did not return a valid result.");
+                .IsEqualTo($"{TestName}: The Minio command did not return a valid result.");
         }
     }
 
@@ -106,7 +108,7 @@ public class MinioHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MinioOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(client);
@@ -115,7 +117,7 @@ public class MinioHealthCheckTests
         var healthCheck = new MinioHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -125,7 +127,7 @@ public class MinioHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 }

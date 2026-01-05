@@ -15,6 +15,8 @@ using NSubstitute;
 [TestGroup(nameof(ArangoDb))]
 public sealed class ArangoDbHealthCheckTests
 {
+    private const string TestName = nameof(ArangoDb);
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -34,14 +36,13 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
 
         var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -52,7 +53,7 @@ public sealed class ArangoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -60,14 +61,13 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
 
         var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
 
         // Act
@@ -77,7 +77,7 @@ public sealed class ArangoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -85,7 +85,6 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
     {
         // Arrange
-        const string testName = "Test";
         const string serviceKey = "test-key";
 
         var options = new ArangoDbOptions
@@ -100,7 +99,7 @@ public sealed class ArangoDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var transport = Substitute.For<HttpClient>();
@@ -111,7 +110,7 @@ public sealed class ArangoDbHealthCheckTests
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -121,7 +120,7 @@ public sealed class ArangoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -129,7 +128,6 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new ArangoDbOptions
         {
@@ -143,7 +141,7 @@ public sealed class ArangoDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var transport = HttpApiTransport.UsingNoAuth(new Uri("http://localhost/test"));
@@ -154,7 +152,7 @@ public sealed class ArangoDbHealthCheckTests
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -164,7 +162,7 @@ public sealed class ArangoDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -172,7 +170,6 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new ArangoDbOptions
         {
@@ -186,7 +183,7 @@ public sealed class ArangoDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         var transport = HttpApiTransport.UsingNoAuth(new Uri("http://localhost/test"));
@@ -197,7 +194,7 @@ public sealed class ArangoDbHealthCheckTests
         var healthCheck = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -209,7 +206,7 @@ public sealed class ArangoDbHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }

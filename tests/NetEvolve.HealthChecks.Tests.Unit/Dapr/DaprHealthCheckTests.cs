@@ -15,6 +15,8 @@ using NSubstitute.ExceptionExtensions;
 [TestGroup(nameof(Dapr))]
 public sealed class DaprHealthCheckTests
 {
+    private const string TestName = nameof(Dapr);
+
     [Test]
     public async Task CheckHealthAsync_WhenDaprHealthy_ReturnsHealthy()
     {
@@ -25,7 +27,7 @@ public sealed class DaprHealthCheckTests
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
 
         _ = services.AddSingleton(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 10000);
+        _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
@@ -33,7 +35,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("DaprSidecar", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -43,7 +45,7 @@ public sealed class DaprHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -57,7 +59,7 @@ public sealed class DaprHealthCheckTests
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(false);
 
         _ = services.AddSingleton(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 0);
+        _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = 0);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
@@ -65,7 +67,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("DaprSidecar", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -77,7 +79,7 @@ public sealed class DaprHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .IsEqualTo("DaprSidecar: DaprSidecar reported unhealthy status from Dapr sidecar.");
+                .IsEqualTo($"{TestName}: {TestName} reported unhealthy status from Dapr sidecar.");
         }
     }
 
@@ -86,7 +88,7 @@ public sealed class DaprHealthCheckTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var options = new DaprOptions { Timeout = 10 }; // Very short timeout
+        var options = new DaprOptions { Timeout = 0 }; // Very short timeout
 
         var mockClient = Substitute.For<DaprClient>();
         _ = mockClient
@@ -98,7 +100,7 @@ public sealed class DaprHealthCheckTests
             });
 
         _ = services.AddSingleton(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = options.Timeout);
+        _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = options.Timeout);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
@@ -106,7 +108,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("DaprSidecar", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -116,7 +118,7 @@ public sealed class DaprHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Degraded");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Degraded");
         }
     }
 
@@ -132,7 +134,7 @@ public sealed class DaprHealthCheckTests
             .ThrowsAsync(new InvalidOperationException("Test exception"));
 
         _ = services.AddSingleton(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = 10000);
+        _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
@@ -140,7 +142,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("DaprSidecar", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -151,7 +153,7 @@ public sealed class DaprHealthCheckTests
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
-                .That(result.Description!.Contains("DaprSidecar: Unexpected error.", StringComparison.Ordinal))
+                .That(result.Description!.Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal))
                 .IsTrue();
             _ = await Assert.That(result.Exception).IsNotNull().And.IsTypeOf<InvalidOperationException>();
         }
@@ -168,7 +170,7 @@ public sealed class DaprHealthCheckTests
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
 
         _ = services.AddSingleton(mockClient);
-        _ = services.Configure("DaprSidecar", (DaprOptions o) => o.Timeout = options.Timeout);
+        _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = options.Timeout);
 
         var serviceProvider = services.BuildServiceProvider();
         var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<DaprOptions>>();
@@ -176,7 +178,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("DaprSidecar", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         using var cts = new CancellationTokenSource();
@@ -189,7 +191,7 @@ public sealed class DaprHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("DaprSidecar: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -197,13 +199,12 @@ public sealed class DaprHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
     {
         // Arrange
-        const string testName = "Test";
         const string serviceKey = "test-key";
 
         var options = new DaprOptions { KeyedService = serviceKey, Timeout = 100 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<DaprOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var mockClient = Substitute.For<DaprClient>();
         _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
@@ -213,7 +214,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -223,7 +224,7 @@ public sealed class DaprHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -231,13 +232,12 @@ public sealed class DaprHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_PrefersKeyedOverDefault()
     {
         // Arrange
-        const string testName = "Test";
         const string serviceKey = "test-key";
 
         var options = new DaprOptions { KeyedService = serviceKey, Timeout = 100 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<DaprOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var defaultClient = Substitute.For<DaprClient>();
         _ = defaultClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(false); // Returns unhealthy
@@ -253,7 +253,7 @@ public sealed class DaprHealthCheckTests
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -263,7 +263,7 @@ public sealed class DaprHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 }

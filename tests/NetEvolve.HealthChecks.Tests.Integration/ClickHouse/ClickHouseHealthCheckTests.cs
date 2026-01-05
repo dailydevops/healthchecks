@@ -61,7 +61,7 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.ConnectionString = _database.ConnectionString;
+                        options.ConnectionString = "Unreachable"; // Wrong connection string to simulate failure
                         options.Command = "Error";
                     }
                 );

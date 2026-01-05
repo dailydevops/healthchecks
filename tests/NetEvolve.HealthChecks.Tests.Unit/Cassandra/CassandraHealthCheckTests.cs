@@ -14,6 +14,8 @@ using CassandraDriver = global::Cassandra;
 [TestGroup(nameof(Cassandra))]
 public class CassandraHealthCheckTests
 {
+    private const string TestName = nameof(Cassandra);
+
     [Test]
     public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue()
     {
@@ -88,7 +90,7 @@ public class CassandraHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<CassandraOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(cluster);
@@ -97,7 +99,7 @@ public class CassandraHealthCheckTests
         var healthCheck = new CassandraHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -109,7 +111,7 @@ public class CassandraHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .IsEqualTo("test: The Cassandra command did not return a valid result.");
+                .IsEqualTo($"{TestName}: The Cassandra command did not return a valid result.");
         }
     }
 
@@ -130,7 +132,7 @@ public class CassandraHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<CassandraOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(cluster);
@@ -139,7 +141,7 @@ public class CassandraHealthCheckTests
         var healthCheck = new CassandraHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -149,7 +151,7 @@ public class CassandraHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 }

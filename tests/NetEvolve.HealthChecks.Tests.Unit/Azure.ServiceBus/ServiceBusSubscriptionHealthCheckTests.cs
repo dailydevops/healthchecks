@@ -13,6 +13,8 @@ using NSubstitute;
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Subscription")]
 public sealed class ServiceBusSubscriptionHealthCheckTests
 {
+    private const string TestName = $"{nameof(Azure)}.{nameof(ServiceBus)}.Subscription";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -35,7 +37,10 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusSubscriptionOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new ServiceBusSubscriptionHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -45,7 +50,7 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -54,10 +59,13 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
     {
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusSubscriptionOptions>>();
-        _ = optionsMonitor.Get("Test").Returns((ServiceBusSubscriptionOptions)null!);
+        _ = optionsMonitor.Get(TestName).Returns((ServiceBusSubscriptionOptions)null!);
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new ServiceBusSubscriptionHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -66,7 +74,7 @@ public sealed class ServiceBusSubscriptionHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 }

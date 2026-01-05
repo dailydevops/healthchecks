@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(Keycloak))]
 public sealed class KeycloakHealthCheckTests
 {
+    private const string TestName = nameof(Keycloak);
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -33,7 +35,6 @@ public sealed class KeycloakHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
 
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
@@ -41,7 +42,7 @@ public sealed class KeycloakHealthCheckTests
         var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
         var cancellationToken = new CancellationToken(true);
 
@@ -52,7 +53,7 @@ public sealed class KeycloakHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -60,7 +61,6 @@ public sealed class KeycloakHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
 
         var serviceProvider = Substitute.For<IServiceProvider>();
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
@@ -68,7 +68,7 @@ public sealed class KeycloakHealthCheckTests
         var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, check, null, null),
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
 
         // Act
@@ -78,7 +78,7 @@ public sealed class KeycloakHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -86,7 +86,6 @@ public sealed class KeycloakHealthCheckTests
     public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
     {
         // Arrange
-        const string testName = "Test";
         const string serviceKey = "test-key";
 
         var options = new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
@@ -101,7 +100,7 @@ public sealed class KeycloakHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var client = new KeycloakClient("http://localhost/test", "test");
@@ -114,7 +113,7 @@ public sealed class KeycloakHealthCheckTests
         var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -124,7 +123,7 @@ public sealed class KeycloakHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -132,8 +131,6 @@ public sealed class KeycloakHealthCheckTests
     public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService()
     {
         // Arrange
-        const string testName = "Test";
-
         var options = new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
         {
             KeyedService = null,
@@ -146,7 +143,7 @@ public sealed class KeycloakHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var client = new KeycloakClient("http://localhost/test", "test");
@@ -159,7 +156,7 @@ public sealed class KeycloakHealthCheckTests
         var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -169,7 +166,7 @@ public sealed class KeycloakHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo($"{testName}: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -177,7 +174,6 @@ public sealed class KeycloakHealthCheckTests
     public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy()
     {
         // Arrange
-        const string testName = "Test";
 
         var options = new NetEvolve.HealthChecks.Keycloak.KeycloakOptions
         {
@@ -191,7 +187,7 @@ public sealed class KeycloakHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
-        _ = optionsMonitor.Get(testName).Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         var client = new KeycloakClient("http://localhost/test", "test");
@@ -204,7 +200,7 @@ public sealed class KeycloakHealthCheckTests
         var healthCheck = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration(testName, healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -216,7 +212,7 @@ public sealed class KeycloakHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .Contains($"{testName}: Unexpected error.", StringComparison.Ordinal);
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }
