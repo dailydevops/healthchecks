@@ -42,3 +42,9 @@ jobs:
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cancel Workflow Runs
+        uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          all_but_latest: false
+          workflow_id: cicd.yml
