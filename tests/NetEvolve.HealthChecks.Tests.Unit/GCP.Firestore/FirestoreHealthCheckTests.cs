@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"GCP.{nameof(Firestore)}")]
 public sealed class FirestoreHealthCheckTests
 {
-    private const string TestName = "Firestore";
+    private const string TestName = $"GCP.{nameof(Firestore)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(SqlServer)}.{nameof(Legacy)}")]
 public sealed class SqlServerLegacyHealthCheckTests
 {
-    private const string TestName = "SqlServer.Legacy";
+    private const string TestName = $"{nameof(SqlServer)}.{nameof(Legacy)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

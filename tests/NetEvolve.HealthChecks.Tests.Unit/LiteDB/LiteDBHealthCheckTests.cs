@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(LiteDB))]
 public sealed class LiteDBHealthCheckTests
 {
-    private const string TestName = "LiteDB";
+    private const string TestName = nameof(LiteDB);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

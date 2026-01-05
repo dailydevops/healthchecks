@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(Oracle)}.{nameof(Devart)}")]
 public sealed class OracleDevartHealthCheckTests
 {
-    private const string TestName = "Oracle.Devart";
+    private const string TestName = $"{nameof(Oracle)}.{nameof(Devart)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

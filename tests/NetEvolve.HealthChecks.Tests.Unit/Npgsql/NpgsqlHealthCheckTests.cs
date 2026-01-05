@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Npgsql))]
 public sealed class NpgsqlHealthCheckTests
 {
-    private const string TestName = "Npgsql";
+    private const string TestName = nameof(Npgsql);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

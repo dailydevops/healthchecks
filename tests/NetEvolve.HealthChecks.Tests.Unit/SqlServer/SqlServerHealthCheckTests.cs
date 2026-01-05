@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(SqlServer))]
 public sealed class SqlServerHealthCheckTests
 {
-    private const string TestName = "SqlServer";
+    private const string TestName = nameof(SqlServer);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

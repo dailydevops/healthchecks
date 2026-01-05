@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(AWS)}.{nameof(EC2)}")]
 public sealed class ElasticComputeCloudHealthCheckTests
 {
-    private const string TestName = "EC2";
+    private const string TestName = $"{nameof(AWS)}.{nameof(EC2)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

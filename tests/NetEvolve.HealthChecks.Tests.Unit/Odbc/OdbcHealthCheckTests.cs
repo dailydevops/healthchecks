@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Odbc))]
 public sealed class OdbcHealthCheckTests
 {
-    private const string TestName = "Odbc";
+    private const string TestName = nameof(Odbc);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(Elasticsearch))]
 public sealed class ElasticsearchHealthCheckTests
 {
-    private const string TestName = "Elasticsearch";
+    private const string TestName = nameof(Elasticsearch);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

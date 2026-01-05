@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(MariaDb))]
 public sealed class MariaDbHealthCheckTests
 {
-    private const string TestName = "MariaDb";
+    private const string TestName = nameof(MariaDb);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

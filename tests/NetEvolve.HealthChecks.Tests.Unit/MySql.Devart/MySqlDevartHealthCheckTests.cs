@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
 public sealed class MySqlDevartHealthCheckTests
 {
-    private const string TestName = "MySql.Devart";
+    private const string TestName = $"{nameof(MySql)}.{nameof(Devart)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

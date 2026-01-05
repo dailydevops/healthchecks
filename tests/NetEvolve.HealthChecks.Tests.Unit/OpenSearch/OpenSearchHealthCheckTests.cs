@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(OpenSearch))]
 public sealed class OpenSearchHealthCheckTests
 {
-    private const string TestName = "OpenSearch";
+    private const string TestName = nameof(OpenSearch);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

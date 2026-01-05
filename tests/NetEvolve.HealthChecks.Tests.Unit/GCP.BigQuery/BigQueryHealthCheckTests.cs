@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"GCP.{nameof(BigQuery)}")]
 public sealed class BigQueryHealthCheckTests
 {
-    private const string TestName = "BigQuery";
+    private const string TestName = $"GCP.{nameof(BigQuery)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

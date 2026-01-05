@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(SQLite))]
 public sealed class SQLiteHealthCheckTests
 {
-    private const string TestName = "SQLite";
+    private const string TestName = nameof(SQLite);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

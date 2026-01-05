@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(AWS)}.{nameof(DynamoDB)}")]
 public sealed class DynamoDbHealthCheckTests
 {
-    private const string TestName = "DynamoDB";
+    private const string TestName = $"{nameof(AWS)}.{nameof(DynamoDB)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

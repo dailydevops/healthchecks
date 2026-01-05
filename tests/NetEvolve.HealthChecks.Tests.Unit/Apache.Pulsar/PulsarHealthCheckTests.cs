@@ -11,7 +11,7 @@ using NetEvolve.HealthChecks.Apache.Pulsar;
 [TestGroup($"{nameof(Apache)}.{nameof(Pulsar)}")]
 public sealed class PulsarHealthCheckTests
 {
-    private const string TestName = "Pulsar";
+    private const string TestName = $"{nameof(Apache)}.{nameof(Pulsar)}";
 
     [Test]
     public void CheckHealthAsync_WhenClientNotRegistered_ThrowsException()

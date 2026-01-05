@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(Couchbase))]
 public sealed class CouchbaseHealthCheckTests
 {
-    private const string TestName = "Couchbase";
+    private const string TestName = nameof(Couchbase);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

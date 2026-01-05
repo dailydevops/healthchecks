@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(AWS)}.{nameof(S3)}")]
 public sealed class SimpleStorageServiceHealthCheckTests
 {
-    private const string TestName = "S3";
+    private const string TestName = $"{nameof(AWS)}.{nameof(S3)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

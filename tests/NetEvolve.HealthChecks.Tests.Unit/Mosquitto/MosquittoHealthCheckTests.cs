@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(Mosquitto))]
 public sealed class MosquittoHealthCheckTests
 {
-    private const string TestName = "Mosquitto";
+    private const string TestName = nameof(Mosquitto);
 
     [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()

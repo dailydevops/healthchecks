@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Milvus))]
 public sealed class MilvusHealthCheckTests
 {
-    private const string TestName = "Milvus";
+    private const string TestName = nameof(Milvus);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

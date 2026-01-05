@@ -15,7 +15,7 @@ using NSubstitute;
 [TestGroup(nameof(ArangoDb))]
 public sealed class ArangoDbHealthCheckTests
 {
-    private const string TestName = "ArangoDb";
+    private const string TestName = nameof(ArangoDb);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

@@ -14,7 +14,7 @@ using CassandraDriver = global::Cassandra;
 [TestGroup(nameof(Cassandra))]
 public class CassandraHealthCheckTests
 {
-    private const string TestName = "Cassandra";
+    private const string TestName = nameof(Cassandra);
 
     [Test]
     public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue()

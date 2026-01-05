@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(Apache)}.{nameof(Solr)}")]
 public sealed class SolrHealthCheckTests
 {
-    private const string TestName = "Solr";
+    private const string TestName = $"{nameof(Apache)}.{nameof(Solr)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

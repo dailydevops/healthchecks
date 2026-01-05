@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Redpanda))]
 public sealed class RedpandaHealthCheckTests
 {
-    private const string TestName = "Redpanda";
+    private const string TestName = nameof(Redpanda);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

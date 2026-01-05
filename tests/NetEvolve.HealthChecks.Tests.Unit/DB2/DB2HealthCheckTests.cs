@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(DB2))]
 public sealed class DB2HealthCheckTests
 {
-    private const string TestName = "DB2";
+    private const string TestName = nameof(DB2);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

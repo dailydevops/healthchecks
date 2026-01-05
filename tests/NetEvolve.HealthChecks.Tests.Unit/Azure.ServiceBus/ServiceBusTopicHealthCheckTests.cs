@@ -13,7 +13,7 @@ using NSubstitute;
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Topic")]
 public sealed class ServiceBusTopicHealthCheckTests
 {
-    private const string TestName = "ServiceBus.Topic";
+    private const string TestName = $"{nameof(Azure)}.{nameof(ServiceBus)}.Topic";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

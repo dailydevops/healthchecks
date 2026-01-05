@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(Neo4j))]
 public sealed class Neo4jHealthCheckTests
 {
-    private const string TestName = "Neo4j";
+    private const string TestName = nameof(Neo4j);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

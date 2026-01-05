@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(MongoDb))]
 public sealed class MongoDbHealthCheckTests
 {
-    private const string TestName = "MongoDb";
+    private const string TestName = nameof(MongoDb);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

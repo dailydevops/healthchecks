@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(NATS))]
 public sealed class NATSHealthCheckTests
 {
-    private const string TestName = "NATS";
+    private const string TestName = nameof(NATS);
 
     [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()

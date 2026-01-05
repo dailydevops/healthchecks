@@ -15,7 +15,7 @@ using Raven.Client.Exceptions;
 [TestGroup(nameof(RavenDb))]
 public sealed class RavenDbHealthCheckTests
 {
-    private const string TestName = "RavenDb";
+    private const string TestName = nameof(RavenDb);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

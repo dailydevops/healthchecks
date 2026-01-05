@@ -10,7 +10,7 @@ using NSubstitute;
 [TestGroup(nameof(Firebird))]
 public sealed class FirebirdHealthCheckTests
 {
-    private const string TestName = "Firebird";
+    private const string TestName = nameof(Firebird);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

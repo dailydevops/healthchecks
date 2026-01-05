@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Kubernetes))]
 public sealed class KubernetesHealthCheckTests
 {
-    private const string TestName = "Kubernetes";
+    private const string TestName = nameof(Kubernetes);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

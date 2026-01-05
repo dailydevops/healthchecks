@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(JanusGraph))]
 public sealed class JanusGraphHealthCheckTests
 {
-    private const string TestName = "JanusGraph";
+    private const string TestName = nameof(JanusGraph);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

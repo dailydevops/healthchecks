@@ -13,7 +13,7 @@ using NSubstitute;
 [TestGroup(nameof(Minio))]
 public class MinioHealthCheckTests
 {
-    private const string TestName = "Minio";
+    private const string TestName = nameof(Minio);
 
     [Test]
     public async Task DefaultCommandAsync_WhenBucketExists_ReturnsTrue()

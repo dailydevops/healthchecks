@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(Npgsql)}.{nameof(Devart)}")]
 public sealed class NpgsqlDevartHealthCheckTests
 {
-    private const string TestName = "Npgsql.Devart";
+    private const string TestName = $"{nameof(Npgsql)}.{nameof(Devart)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

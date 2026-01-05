@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(MySqlConnector))]
 public sealed class MySqlHealthCheckTests
 {
-    private const string TestName = "MySqlConnector";
+    private const string TestName = nameof(MySqlConnector);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

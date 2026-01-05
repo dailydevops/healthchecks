@@ -15,7 +15,7 @@ using NSubstitute.ExceptionExtensions;
 [TestGroup(nameof(RabbitMQ))]
 public sealed class RabbitMQHealthCheckTests
 {
-    private const string TestName = "RabbitMQ";
+    private const string TestName = nameof(RabbitMQ);
 
     [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()

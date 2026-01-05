@@ -9,7 +9,7 @@ using NetEvolve.Extensions.TUnit;
 [TestGroup(nameof(HealthChecks))]
 public sealed class ApplicationSelfCheckTests
 {
-    private const string TestName = "Test";
+    private const string TestName = nameof(HealthChecks);
 
     [Test]
     public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException()

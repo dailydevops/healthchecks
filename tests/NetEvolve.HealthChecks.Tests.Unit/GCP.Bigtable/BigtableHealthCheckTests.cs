@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"GCP.{nameof(Bigtable)}")]
 public sealed class BigtableHealthCheckTests
 {
-    private const string TestName = "Bigtable";
+    private const string TestName = $"GCP.{nameof(Bigtable)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

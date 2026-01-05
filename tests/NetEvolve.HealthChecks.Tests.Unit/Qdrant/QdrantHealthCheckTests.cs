@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Qdrant))]
 public sealed class QdrantHealthCheckTests
 {
-    private const string TestName = "Qdrant";
+    private const string TestName = nameof(Qdrant);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

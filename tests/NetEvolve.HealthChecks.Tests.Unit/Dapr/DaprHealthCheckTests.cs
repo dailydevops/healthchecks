@@ -15,7 +15,7 @@ using NSubstitute.ExceptionExtensions;
 [TestGroup(nameof(Dapr))]
 public sealed class DaprHealthCheckTests
 {
-    private const string TestName = "DaprSidecar";
+    private const string TestName = nameof(Dapr);
 
     [Test]
     public async Task CheckHealthAsync_WhenDaprHealthy_ReturnsHealthy()

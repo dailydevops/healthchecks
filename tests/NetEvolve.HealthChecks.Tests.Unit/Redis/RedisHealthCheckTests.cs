@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(Redis))]
 public sealed class RedisHealthCheckTests
 {
-    private const string TestName = "Redis";
+    private const string TestName = nameof(Redis);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

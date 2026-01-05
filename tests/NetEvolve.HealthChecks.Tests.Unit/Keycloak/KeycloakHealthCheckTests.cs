@@ -14,7 +14,7 @@ using NSubstitute;
 [TestGroup(nameof(Keycloak))]
 public sealed class KeycloakHealthCheckTests
 {
-    private const string TestName = "Keycloak";
+    private const string TestName = nameof(Keycloak);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

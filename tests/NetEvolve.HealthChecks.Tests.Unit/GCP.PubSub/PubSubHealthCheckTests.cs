@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"GCP.{nameof(PubSub)}")]
 public sealed class PubSubHealthCheckTests
 {
-    private const string TestName = "PubSub";
+    private const string TestName = $"GCP.{nameof(PubSub)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

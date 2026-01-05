@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup(nameof(DuckDB))]
 public sealed class DuckDBHealthCheckTests
 {
-    private const string TestName = "DuckDB";
+    private const string TestName = nameof(DuckDB);
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()

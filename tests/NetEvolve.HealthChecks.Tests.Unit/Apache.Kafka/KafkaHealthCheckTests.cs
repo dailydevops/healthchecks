@@ -12,7 +12,7 @@ using NSubstitute;
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 public sealed class KafkaHealthCheckTests
 {
-    private const string TestName = "Kafka";
+    private const string TestName = $"{nameof(Apache)}.{nameof(Kafka)}";
 
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
