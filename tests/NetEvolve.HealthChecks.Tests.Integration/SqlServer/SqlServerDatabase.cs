@@ -7,7 +7,7 @@ using Testcontainers.MsSql;
 public sealed class SqlServerDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly MsSqlContainer _database = new MsSqlBuilder(
-        /*dockerimage*/"mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04"
+        /*dockerimage*/"mcr.microsoft.com/mssql/server:2022-RTM-ubuntu-20.04"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
