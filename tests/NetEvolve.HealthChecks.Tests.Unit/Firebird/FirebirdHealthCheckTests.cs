@@ -10,6 +10,8 @@ using NSubstitute;
 [TestGroup(nameof(Firebird))]
 public sealed class FirebirdHealthCheckTests
 {
+    private const string TestName = "Firebird";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -30,7 +32,10 @@ public sealed class FirebirdHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<FirebirdOptions>>();
         var check = new FirebirdHealthCheck(optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -40,7 +45,7 @@ public sealed class FirebirdHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -50,7 +55,10 @@ public sealed class FirebirdHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<FirebirdOptions>>();
         var check = new FirebirdHealthCheck(optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -59,7 +67,7 @@ public sealed class FirebirdHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 }

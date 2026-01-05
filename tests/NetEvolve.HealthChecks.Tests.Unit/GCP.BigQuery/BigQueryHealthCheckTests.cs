@@ -12,6 +12,8 @@ using NSubstitute;
 [TestGroup($"GCP.{nameof(BigQuery)}")]
 public sealed class BigQueryHealthCheckTests
 {
+    private const string TestName = "BigQuery";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -34,7 +36,10 @@ public sealed class BigQueryHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<BigQueryOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new BigQueryHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -44,7 +49,7 @@ public sealed class BigQueryHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -55,7 +60,10 @@ public sealed class BigQueryHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<BigQueryOptions>>();
         var serviceProvider = Substitute.For<IServiceProvider>();
         var check = new BigQueryHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -64,7 +72,7 @@ public sealed class BigQueryHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 }

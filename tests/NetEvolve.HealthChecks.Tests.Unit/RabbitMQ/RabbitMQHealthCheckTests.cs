@@ -15,6 +15,8 @@ using NSubstitute.ExceptionExtensions;
 [TestGroup(nameof(RabbitMQ))]
 public sealed class RabbitMQHealthCheckTests
 {
+    private const string TestName = "RabbitMQ";
+
     [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
@@ -22,7 +24,7 @@ public sealed class RabbitMQHealthCheckTests
         var options = new RabbitMQOptions { KeyedService = "test-key", Timeout = 10000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var mockChannel = Substitute.For<IChannel>();
@@ -39,7 +41,7 @@ public sealed class RabbitMQHealthCheckTests
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -49,7 +51,7 @@ public sealed class RabbitMQHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -60,7 +62,7 @@ public sealed class RabbitMQHealthCheckTests
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var mockChannel = Substitute.For<IChannel>();
@@ -77,7 +79,7 @@ public sealed class RabbitMQHealthCheckTests
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -87,7 +89,7 @@ public sealed class RabbitMQHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -98,7 +100,7 @@ public sealed class RabbitMQHealthCheckTests
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         var mockConnection = Substitute.For<IConnection>();
@@ -113,7 +115,7 @@ public sealed class RabbitMQHealthCheckTests
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -123,7 +125,9 @@ public sealed class RabbitMQHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }
@@ -139,7 +143,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that delays long enough to cause timeout
         var mockChannel = Substitute.For<IChannel>();
@@ -160,7 +164,7 @@ public sealed class RabbitMQHealthCheckTests
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -170,7 +174,7 @@ public sealed class RabbitMQHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Degraded", StringComparison.Ordinal);
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Degraded", StringComparison.Ordinal);
         }
     }
 }

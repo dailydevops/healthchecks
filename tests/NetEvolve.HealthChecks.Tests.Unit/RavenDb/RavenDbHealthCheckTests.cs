@@ -15,6 +15,8 @@ using Raven.Client.Exceptions;
 [TestGroup(nameof(RavenDb))]
 public sealed class RavenDbHealthCheckTests
 {
+    private const string TestName = "RavenDb";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -38,7 +40,10 @@ public sealed class RavenDbHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
 
         var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -48,7 +53,7 @@ public sealed class RavenDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -60,7 +65,10 @@ public sealed class RavenDbHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
 
         var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -69,7 +77,7 @@ public sealed class RavenDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 
@@ -89,7 +97,7 @@ public sealed class RavenDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var store = Substitute.For<IDocumentStore>();
@@ -101,7 +109,7 @@ public sealed class RavenDbHealthCheckTests
         var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -111,7 +119,7 @@ public sealed class RavenDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -131,7 +139,7 @@ public sealed class RavenDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var store = Substitute.For<IDocumentStore>();
@@ -143,7 +151,7 @@ public sealed class RavenDbHealthCheckTests
         var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -153,7 +161,7 @@ public sealed class RavenDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -173,7 +181,7 @@ public sealed class RavenDbHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
         var store = Substitute.For<IDocumentStore>();
@@ -185,7 +193,7 @@ public sealed class RavenDbHealthCheckTests
         var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -195,7 +203,9 @@ public sealed class RavenDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).Contains("test: Unexpected error.", StringComparison.Ordinal);
+            _ = await Assert
+                .That(result.Description)
+                .Contains($"{TestName}: Unexpected error.", StringComparison.Ordinal);
             _ = await Assert.That(result.Exception).IsNotNull();
         }
     }

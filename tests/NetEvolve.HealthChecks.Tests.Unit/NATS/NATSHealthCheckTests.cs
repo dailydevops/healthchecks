@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(NATS))]
 public sealed class NATSHealthCheckTests
 {
+    private const string TestName = "NATS";
+
     [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
@@ -21,7 +23,7 @@ public sealed class NATSHealthCheckTests
         var options = new NatsOptions { KeyedService = "test-key", Timeout = 10000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var mockConnection = Substitute.For<IConnection>();
@@ -34,7 +36,7 @@ public sealed class NATSHealthCheckTests
         var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -44,7 +46,7 @@ public sealed class NATSHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -55,7 +57,7 @@ public sealed class NATSHealthCheckTests
         var options = new NatsOptions { KeyedService = null, Timeout = 1000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
         var mockConnection = Substitute.For<IConnection>();
@@ -68,7 +70,7 @@ public sealed class NATSHealthCheckTests
         var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -78,7 +80,7 @@ public sealed class NATSHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -89,7 +91,7 @@ public sealed class NATSHealthCheckTests
         var options = new NatsOptions { KeyedService = null, Timeout = 1000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns closed state
         var mockConnection = Substitute.For<IConnection>();
@@ -102,7 +104,7 @@ public sealed class NATSHealthCheckTests
         var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -114,7 +116,7 @@ public sealed class NATSHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .IsEqualTo("test: NATS connection is not connected.", StringComparison.Ordinal);
+                .IsEqualTo($"{TestName}: NATS connection is not connected.", StringComparison.Ordinal);
         }
     }
 
@@ -129,7 +131,7 @@ public sealed class NATSHealthCheckTests
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that delays long enough to cause timeout
         var mockConnection = Substitute.For<IConnection>();
@@ -148,7 +150,7 @@ public sealed class NATSHealthCheckTests
         var healthCheck = new NatsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -158,7 +160,7 @@ public sealed class NATSHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Degraded", StringComparison.Ordinal);
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Degraded", StringComparison.Ordinal);
         }
     }
 }

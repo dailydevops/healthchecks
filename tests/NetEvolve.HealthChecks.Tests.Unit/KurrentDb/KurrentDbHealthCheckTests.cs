@@ -12,6 +12,8 @@ using NSubstitute;
 [TestGroup(nameof(KurrentDb))]
 public sealed class KurrentDbHealthCheckTests
 {
+    private const string TestName = "KurrentDb";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -35,7 +37,10 @@ public sealed class KurrentDbHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<KurrentDbOptions>>();
 
         var check = new KurrentDbHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -45,7 +50,7 @@ public sealed class KurrentDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -57,7 +62,10 @@ public sealed class KurrentDbHealthCheckTests
         var optionsMonitor = Substitute.For<IOptionsMonitor<KurrentDbOptions>>();
 
         var check = new KurrentDbHealthCheck(serviceProvider, optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -66,7 +74,7 @@ public sealed class KurrentDbHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 }

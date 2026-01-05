@@ -9,6 +9,8 @@ using NetEvolve.Extensions.TUnit;
 [TestGroup(nameof(HealthChecks))]
 public sealed class ApplicationSelfCheckTests
 {
+    private const string TestName = "Test";
+
     [Test]
     public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException()
     {
@@ -28,7 +30,7 @@ public sealed class ApplicationSelfCheckTests
         // Arrange
         var sut = new ApplicationHealthyCheck();
         var cancellationToken = new CancellationToken();
-        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
+        var context = new HealthCheckContext { Registration = new(TestName, sut, HealthStatus.Unhealthy, null) };
 
         // Act
         var result = await sut.CheckHealthAsync(context, cancellationToken);
@@ -43,7 +45,7 @@ public sealed class ApplicationSelfCheckTests
         // Arrange
         var sut = new ApplicationHealthyCheck();
         var cancellationToken = new CancellationToken(true);
-        var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
+        var context = new HealthCheckContext { Registration = new(TestName, sut, HealthStatus.Unhealthy, null) };
 
         // Act
         var result = await sut.CheckHealthAsync(context, cancellationToken);

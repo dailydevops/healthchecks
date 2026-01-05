@@ -12,6 +12,8 @@ using NSubstitute;
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
 public sealed class MySqlDevartHealthCheckTests
 {
+    private const string TestName = "MySql.Devart";
+
     [Test]
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
@@ -32,7 +34,10 @@ public sealed class MySqlDevartHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlDevartOptions>>();
         var check = new MySqlDevartHealthCheck(optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
         var cancellationToken = new CancellationToken(true);
 
         // Act
@@ -42,7 +47,7 @@ public sealed class MySqlDevartHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Cancellation requested.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Cancellation requested.");
         }
     }
 
@@ -52,7 +57,10 @@ public sealed class MySqlDevartHealthCheckTests
         // Arrange
         var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlDevartOptions>>();
         var check = new MySqlDevartHealthCheck(optionsMonitor);
-        var context = new HealthCheckContext { Registration = new HealthCheckRegistration("Test", check, null, null) };
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, check, null, null),
+        };
 
         // Act
         var result = await check.CheckHealthAsync(context);
@@ -61,7 +69,7 @@ public sealed class MySqlDevartHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
-            _ = await Assert.That(result.Description).IsEqualTo("Test: Missing configuration.");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Missing configuration.");
         }
     }
 }

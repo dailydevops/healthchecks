@@ -14,6 +14,8 @@ using NSubstitute;
 [TestGroup(nameof(Mosquitto))]
 public sealed class MosquittoHealthCheckTests
 {
+    private const string TestName = "Mosquitto";
+
     [Test]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
@@ -21,7 +23,7 @@ public sealed class MosquittoHealthCheckTests
         var options = new MosquittoOptions { KeyedService = "test-key", Timeout = 10000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var mockClient = Substitute.For<IMqttClient>();
@@ -34,7 +36,7 @@ public sealed class MosquittoHealthCheckTests
         var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -44,7 +46,7 @@ public sealed class MosquittoHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -55,7 +57,7 @@ public sealed class MosquittoHealthCheckTests
         var options = new MosquittoOptions { KeyedService = null, Timeout = 1000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
         var mockClient = Substitute.For<IMqttClient>();
@@ -68,7 +70,7 @@ public sealed class MosquittoHealthCheckTests
         var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -78,7 +80,7 @@ public sealed class MosquittoHealthCheckTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
-            _ = await Assert.That(result.Description).IsEqualTo("test: Healthy");
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
         }
     }
 
@@ -89,7 +91,7 @@ public sealed class MosquittoHealthCheckTests
         var options = new MosquittoOptions { KeyedService = null, Timeout = 1000 };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
-        _ = optionsMonitor.Get("test").Returns(options);
+        _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns not connected
         var mockClient = Substitute.For<IMqttClient>();
@@ -102,7 +104,7 @@ public sealed class MosquittoHealthCheckTests
         var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
-            Registration = new HealthCheckRegistration("test", healthCheck, HealthStatus.Unhealthy, null),
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
         };
 
         // Act
@@ -114,7 +116,7 @@ public sealed class MosquittoHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
             _ = await Assert
                 .That(result.Description)
-                .IsEqualTo("test: Mosquitto health check failed.", StringComparison.Ordinal);
+                .IsEqualTo($"{TestName}: Mosquitto health check failed.", StringComparison.Ordinal);
         }
     }
 }
