@@ -7,7 +7,7 @@ using Testcontainers.Oracle;
 public sealed class OracleDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly OracleContainer _database = new OracleBuilder(
-        /*dockerimage*/"gvenzl/oracle-xe:21.3.0"
+        /*dockerimage*/"gvenzl/oracle-xe:21.3.0-slim-faststart"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
