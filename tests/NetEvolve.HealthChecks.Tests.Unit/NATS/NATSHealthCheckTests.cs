@@ -127,7 +127,7 @@ public sealed class NATSHealthCheckTests
         var options = new NatsOptions
         {
             KeyedService = null,
-            Timeout = 5, // Very short timeout to force a timeout
+            Timeout = 0, // Very short timeout to force a timeout
         };
 
         var optionsMonitor = Substitute.For<IOptionsMonitor<NatsOptions>>();
