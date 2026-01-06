@@ -20,14 +20,13 @@ Follow these C# coding conventions for consistency across the project.
 
 * MUST use `var` when the type is obvious from the right side of the assignment.
 * MUST use appropriate null-checking pattern based on package availability:
-  - When `NetEvolve.Arguments` package is referenced in project: Use `Argument.ThrowIfNull(x)`
-  - When `NetEvolve.Arguments` package is NOT referenced: Use `ArgumentNullException.ThrowIfNull(x)`
+  - Use `ArgumentNullException.ThrowIfNull(x)`
   - Check `Directory.Packages.props` for `NetEvolve.Arguments` availability
   - Example with NetEvolve.Arguments:
     ```csharp
     public void ProcessData(string data)
     {
-        Argument.ThrowIfNull(data);
+        ArgumentNullException.ThrowIfNull(data);
         // process data
     }
     ```
