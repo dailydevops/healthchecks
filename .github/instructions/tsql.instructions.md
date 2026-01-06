@@ -1,9 +1,7 @@
 ---
 applyTo: '**/*.sql'
 
-description: 'This file contains instructions for T-SQL development.
-  It includes guidelines for database schema design, query optimization, and following SQL coding standards.
-  Ensure to follow the practices outlined in this file to maintain code quality and consistency.'
+description: 'This file contains instructions for T-SQL development. It includes guidelines for database schema design, query optimization, and following SQL coding standards. Ensure to follow the practices outlined in this file to maintain code quality and consistency.'
 ---
 
 # T-SQL Development Instructions

@@ -1,9 +1,7 @@
 ---
 applyTo: '.github/copilot-instructions.md, .github/instructions/*.instructions.md, decisions/**/*.md'
 
-description: 'This file contains instructions for wording and writing style.
-  It includes guidelines for creating and modifying instruction files, decision documents, and Copilot instructions.
-  Ensure to follow the practices outlined in this file to maintain consistency and clarity in documentation.'
+description: 'This file contains instructions for wording and writing style. It includes guidelines for creating and modifying instruction files, decision documents, and Copilot instructions. Ensure to follow the practices outlined in this file to maintain consistency and clarity in documentation.'
 ---
 
 # Wording and Writing Style Instructions

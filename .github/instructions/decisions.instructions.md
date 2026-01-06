@@ -1,6 +1,6 @@
 ---
 applyTo: '**/*.*'
-description: 'Instructions for interpreting and applying architectural decisions from the decisions/ folder.'
+description: Instructions for interpreting and applying architectural decisions from the decisions/ folder.
 ---
 
 # Decision Handling Instructions
