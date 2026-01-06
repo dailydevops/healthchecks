@@ -36,8 +36,7 @@
       ],
       "matchStrings": [
         "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\"",
-        "<Sdk\\s+Name=\"(?<depName>[^\"]+)\"\\s+Version=\"(?<currentValue>[^,]+)\"",
-        "<Project\\s+Sdk=\"(?<depName>[^\"]+)/(?<currentValue>[^,]+)\""
+        "<Project\\s+Sdk=\"(?<depName>[^\"]+)/(?<currentValue>[^,]+)\">"
       ],
       "datasourceTemplate": "nuget",
       "versioningTemplate": "nuget"
