@@ -13,7 +13,7 @@ public sealed class BigQueryDatabase : IAsyncInitializer, IAsyncDisposable
     public const string ProjectId = "test-project";
 
     private readonly BigQueryContainer _container = new BigQueryBuilder(
-        /*dockerimage*/"ghcr.io/goccy/bigquery-emulator:0.4.4"
+        /*dockerimage*/"ghcr.io/goccy/bigquery-emulator:0.6.6"
     )
         .WithProject(ProjectId)
         .WithLogger(NullLogger.Instance)
