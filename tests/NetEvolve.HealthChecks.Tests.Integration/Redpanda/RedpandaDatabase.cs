@@ -7,7 +7,7 @@ using Testcontainers.Redpanda;
 public sealed class RedpandaDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly RedpandaContainer _database = new RedpandaBuilder(
-        /*dockerimage*/"docker.redpanda.com/redpandadata/redpanda:v22.2.13"
+        /*dockerimage*/"docker.redpanda.com/redpandadata/redpanda:v22.3.25"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
