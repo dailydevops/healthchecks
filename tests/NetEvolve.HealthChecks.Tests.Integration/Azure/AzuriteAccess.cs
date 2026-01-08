@@ -16,7 +16,7 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
     public const string AccountKey = AzuriteBuilder.AccountKey;
 
     private readonly AzuriteContainer _container = new AzuriteBuilder(
-        /*dockerimage*/"mcr.microsoft.com/azure-storage/azurite:3.28.0"
+        /*dockerimage*/"mcr.microsoft.com/azure-storage/azurite:3.35.0"
     )
         .WithLogger(NullLogger.Instance)
         .WithCommand("--skipApiVersionCheck")
