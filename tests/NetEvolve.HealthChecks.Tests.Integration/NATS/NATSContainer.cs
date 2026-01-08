@@ -8,7 +8,7 @@ using Testcontainers.Nats;
 public sealed class NatsContainer : IAsyncInitializer, IAsyncDisposable
 {
     private readonly Testcontainers.Nats.NatsContainer _container = new NatsBuilder(
-        /*dockerimage*/"nats:2.9.25"
+        /*dockerimage*/"nats:2.12.3"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
