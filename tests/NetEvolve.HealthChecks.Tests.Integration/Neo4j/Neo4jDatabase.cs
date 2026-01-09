@@ -9,7 +9,7 @@ public sealed class Neo4jDatabase : IAsyncInitializer, IAsyncDisposable
 #pragma warning restore S101 // Types should be named in PascalCase
 {
     private readonly Neo4jContainer _database = new Neo4jBuilder(
-        /*dockerimage*/"neo4j:5.4.0"
+        /*dockerimage*/"neo4j:5.26.19"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
