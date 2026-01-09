@@ -8,7 +8,7 @@ using Testcontainers.RabbitMq;
 public sealed class RabbitMQContainer : IAsyncInitializer, IAsyncDisposable
 {
     private readonly RabbitMqContainer _container = new RabbitMqBuilder(
-        /*dockerimage*/"rabbitmq:3.11.28"
+        /*dockerimage*/"rabbitmq:3.13.7"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
