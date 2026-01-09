@@ -1,6 +1,6 @@
 ---
 agent: 'agent'
-tools: ['changes', 'search/codebase', 'edit/editFiles', 'problems', 'search']
+tools: ['search/changes', 'search/codebase', 'edit/editFiles', 'read/problems', 'search']
 description: 'Best practices for TUnit unit testing, including data-driven tests'
 ---
 
