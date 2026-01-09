@@ -56,7 +56,7 @@ All code, documentation, comments, and other written content in this project MUS
 - **Code Comments**: All inline comments, documentation comments, and code annotations
 - **Documentation**: README files, API documentation, user guides, and technical specifications
 - **Commit Messages**: All commit messages must follow the established Conventional Commits format in English
-- **Issue Tracking**: GitHub issues, pull request descriptions, and discussions
+- **Issue Tracking**: GitHub issues, pull request descriptions
 - **Configuration Files**: Comments and descriptions in configuration files
 - **Database Objects**: Table names, column names, stored procedure names, and database documentation
 

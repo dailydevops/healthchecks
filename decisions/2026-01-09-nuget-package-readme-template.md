@@ -70,7 +70,7 @@ The template provides a comprehensive structure including:
 * **Related Packages**: Cross-references to related packages in the ecosystem
 * **Documentation Links**: References to comprehensive documentation
 * **Contributing Guidelines**: Links to contribution processes
-* **Support Channels**: GitHub Issues, Discussions, and documentation links
+* **Support Channels**: GitHub Issues, and documentation links
 * **License Information**: Clear license declaration and reference
 
 All URLs in package READMEs MUST be absolute URLs pointing to GitHub or NuGet.org to ensure compatibility across all platforms where the README may be displayed.

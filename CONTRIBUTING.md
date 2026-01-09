@@ -3,7 +3,7 @@
 All contributions must follow the rules below to stay consistent with our automation and downstream consumers.
 
 ## Expectations
-- Use English for all code, documentation, discussions, and commit messages.
+- Use English for all code, documentation, and commit messages.
 - Follow the trunk-based workflow implied by GitVersion; prefer short-lived feature branches merged via pull requests.
 - Keep production code under `src/` and test projects under `tests/` using the `{ProjectName}.Tests.Unit` / `{ProjectName}.Tests.Integration` pattern.
 - Add NuGet packages without versions in project files; define versions centrally in `Directory.Packages.props` only.

@@ -162,7 +162,6 @@ Contributions are welcome! Please read the [Contributing Guidelines](https://git
 
 <!-- Replace 'YourRepo' with the actual repository name in all links below. -->
 * **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
-* **Discussions**: Join the conversation on [GitHub Discussions](https://github.com/dailydevops/YourRepo/discussions)
 * **Documentation**: Read the full documentation at [https://github.com/dailydevops/YourRepo](https://github.com/dailydevops/YourRepo)
 
 ## License
