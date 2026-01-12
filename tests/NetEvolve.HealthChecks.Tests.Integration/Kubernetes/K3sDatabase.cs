@@ -13,7 +13,7 @@ using TUnit.Core.Interfaces;
 public sealed class K3sDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly K3sContainer _container = new K3sBuilder(
-        /*dockerimage*/"rancher/k3s:v1.26.2-k3s1"
+        /*dockerimage*/"rancher/k3s:v1.35.0-rc1-k3s1"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
