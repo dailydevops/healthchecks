@@ -256,6 +256,7 @@ This project uses [GitVersion](https://gitversion.net/) for automated semantic v
 <!--
 Provide information on how users can get help or report issues.
 Replace 'YourRepo' with actual repository name.
+All communication related to bugs, features, and project coordination occurs through GitHub Issues.
 -->
 
 * **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
@@ -269,32 +270,6 @@ Replace 'MIT License' with actual license type if different.
 -->
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Maintainers
-
-<!--
-Optional: List the primary maintainers or teams responsible for this solution.
-Include contact information or GitHub handles.
-Remove this section if not needed.
--->
-
-* **Team Name** - [@githubhandle](https://github.com/githubhandle)
-* **Individual Name** - [@githubhandle](https://github.com/githubhandle)
-
-## Acknowledgments
-
-<!--
-Optional: Credit contributors, libraries, or resources that helped with this solution.
-Remove this section if not needed.
-Examples:
-- Thank specific contributors or organizations
-- Credit important libraries or frameworks used
-- Acknowledge inspiration or related projects
--->
-
-* Special thanks to all [contributors](https://github.com/dailydevops/YourRepo/graphs/contributors)
-* Built with [.NET](https://dotnet.microsoft.com/)
-* Inspired by community best practices and patterns
 
 ---
 

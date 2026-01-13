@@ -160,7 +160,7 @@ Contributions are welcome! Please read the [Contributing Guidelines](https://git
 
 ## Support
 
-<!-- Replace 'YourRepo' with the actual repository name in all links below. -->
+<!-- Replace 'YourRepo' with the actual repository name in all links below. All communication related to bugs, features, and project coordination occurs through GitHub Issues. -->
 * **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
 * **Documentation**: Read the full documentation at [https://github.com/dailydevops/YourRepo](https://github.com/dailydevops/YourRepo)
 
@@ -168,17 +168,6 @@ Contributions are welcome! Please read the [Contributing Guidelines](https://git
 
 <!-- Replace 'MIT License' and 'YourRepo' with actual values. Ensure the LICENSE file exists in the repository. -->
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/dailydevops/YourRepo/blob/main/LICENSE) file for details.
-
-## Acknowledgments
-
-<!--
-Optional: Credit contributors, libraries, or resources that helped with this project.
-Remove this section if not needed.
-Examples:
-- Thank specific contributors or organizations
-- Credit libraries or tools used
-- Acknowledge inspiration or related projects
--->
 
 ---
 

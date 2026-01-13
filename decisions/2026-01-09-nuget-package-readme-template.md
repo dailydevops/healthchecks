@@ -70,7 +70,7 @@ The template provides a comprehensive structure including:
 * **Related Packages**: Cross-references to related packages in the ecosystem
 * **Documentation Links**: References to comprehensive documentation
 * **Contributing Guidelines**: Links to contribution processes
-* **Support Channels**: GitHub Issues, and documentation links
+* **Support Channels**: GitHub Issues and documentation links (GitHub Discussions is not used for project communication)
 * **License Information**: Clear license declaration and reference
 
 All URLs in package READMEs MUST be absolute URLs pointing to GitHub or NuGet.org to ensure compatibility across all platforms where the README may be displayed.
@@ -158,3 +158,4 @@ Use automated documentation generation tools (DocFX, Sandcastle) instead of manu
 
 * [English as Project Language](./2025-07-11-english-as-project-language.md) - All README content must be written in English following this decision
 * [Folder Structure and Naming Conventions](./2025-07-10-folder-structure-and-naming-conventions.md) - README files are placed at the root of each project directory following folder structure conventions
+* [No GitHub Discussions for Communication](./2025-11-01-no-github-discussions-for-communication.md) - GitHub Issues serve as the central point of contact for all project-related discussions

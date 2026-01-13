@@ -41,16 +41,17 @@ Adopt a standardized template for solution-level README files (`templates/readme
 
 The template includes:
 
-1. **Standard Structure**: Overview, Projects, Features, Getting Started, Development, Architecture, Contributing, Code of Conduct, Documentation, Versioning, Support, License, Maintainers, and Acknowledgments sections
+1. **Standard Structure**: Overview, Projects, Features, Getting Started, Development, Architecture, Contributing, Code of Conduct, Documentation, Versioning, Support, and License sections
 2. **Relative Links**: All internal references use relative paths (e.g., `[CONTRIBUTING.md](CONTRIBUTING.md)`)
 3. **Inline Guidance**: HTML comments provide detailed instructions for each section
 4. **Badge Support**: Standardized badges for license, build status, and contributors
 5. **Placeholder Patterns**: Consistent use of `YourRepo`, `ProjectName`, and similar placeholders for easy customization
-6. **Flexible Structure**: Optional sections (Maintainers, Acknowledgments, Configuration) can be removed if not needed
+6. **Flexible Structure**: Optional sections (Acknowledgments, Configuration) can be removed if not needed
 7. **Marker Preservation**: Support for preserving existing content markers (e.g., `<!-- packages:start -->`, `<!-- packages:end -->`) during modernization
-8. **GitVersion Integration**: Documents the use of automated semantic versioning
-9. **Conventional Commits Reference**: Links to commit message standards
-10. **ADR Integration**: References Architecture Decision Records with relative links to `decisions/` folder
+8. **Support Communication**: Directs users to GitHub Issues as the central point of contact (GitHub Discussions is not used)
+9. **GitVersion Integration**: Documents the use of automated semantic versioning
+10. **Conventional Commits Reference**: Links to commit message standards
+11. **ADR Integration**: References Architecture Decision Records with relative links to `decisions/` folder
 
 When modernizing existing README files:
 * MUST preserve all existing content markers (comments like `<!-- packages:start -->`)
@@ -145,3 +146,4 @@ When modernizing existing README files:
 * [English as Project Language](./2025-07-11-english-as-project-language.md) - Establishes language requirements for all documentation
 * [GitVersion Automated Semantic Versioning](./2025-07-10-gitversion-automated-semantic-versioning.md) - Referenced in the Versioning section of the template
 * [Conventional Commits](./2025-07-10-conventional-commits.md) - Referenced in Contributing and Versioning sections
+* [No GitHub Discussions for Communication](./2025-11-01-no-github-discussions-for-communication.md) - GitHub Issues serve as the central point of contact for all project discussions
