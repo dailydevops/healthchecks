@@ -123,6 +123,18 @@
         "TUnit",
         "TUnit.*"
       ]
+    },
+    {
+      "groupName": "Microsoft Entity Framework",
+      "groupSlug": "microsoft-entity-framework",
+      "matchManagers": [
+        "nuget",
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "Microsoft.EntityFrameworkCore",
+        "Microsoft.EntityFrameworkCore.*"
+      ]
     }
   ]
 }
