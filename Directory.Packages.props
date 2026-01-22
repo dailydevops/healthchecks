@@ -86,6 +86,7 @@
     <PackageVersion Include="MySqlConnector" Version="2.5.0" />
     <PackageVersion Include="NATS.Client" Version="1.1.8" />
     <PackageVersion Include="Neo4j.Driver" Version="6.0.0" />
+    <PackageVersion Include="net-questdb-client" Version="3.2.0" />
     <PackageVersion Include="Net.IBM.Data.Db2" Version="9.0.0.400" />
     <PackageVersion Include="Net.IBM.Data.Db2-lnx" Version="9.0.0.400" />
     <PackageVersion Include="Net.IBM.Data.Db2-osx" Version="9.0.0.400" />

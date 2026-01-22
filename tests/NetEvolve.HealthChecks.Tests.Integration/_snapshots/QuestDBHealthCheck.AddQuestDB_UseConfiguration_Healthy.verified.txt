@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerConfigHealthy: Unexpected error.,
+      exception: {
+        message: No service for type 'System.Net.Http.HttpClient' has been registered.,
+        type: System.InvalidOperationException
+      },
+      name: TestContainerConfigHealthy,
+      status: Unhealthy,
+      tags: [
+        questdb,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
