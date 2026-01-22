@@ -13,11 +13,11 @@ using NetEvolve.HealthChecks.Qdrant;
 [TestGroup(nameof(Qdrant))]
 [TestGroup("Z03TestGroup")]
 [ClassDataSource<QdrantDatabase>(Shared = SharedType.PerClass)]
-public sealed class QdrantHealthCheckTests : HealthCheckTestBase
+public sealed class QuestDBHealthCheckTests : HealthCheckTestBase
 {
     private readonly QdrantDatabase _database;
 
-    public QdrantHealthCheckTests(QdrantDatabase database) => _database = database;
+    public QuestDBHealthCheckTests(QdrantDatabase database) => _database = database;
 
     [Test]
     public async Task AddQdrant_UseOptions_Healthy() =>
