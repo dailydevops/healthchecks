@@ -90,6 +90,7 @@ internal static class HealthCheckArchitecture
             typeof(Redis.RedisHealthCheck).Assembly,
             typeof(Redpanda.RedpandaHealthCheck).Assembly,
             typeof(Qdrant.QdrantHealthCheck).Assembly,
+            typeof(QuestDB.QuestDBHealthCheck).Assembly,
             typeof(SQLite.SQLiteHealthCheck).Assembly,
             typeof(SQLite.Devart.SQLiteDevartHealthCheck).Assembly,
             typeof(SQLite.Legacy.SQLiteLegacyHealthCheck).Assembly,
