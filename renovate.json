@@ -7,17 +7,10 @@
     ":automergePatch",
     ":rebaseStalePrs"
   ],
-  "ignorePresets": [
-    "group:monorepos"
-  ],
+  "ignorePresets": ["group:monorepos"],
   "automergeType": "pr",
   "automergeStrategy": "squash",
-  "enabledManagers": [
-    "custom.regex",
-    "dockerfile",
-    "github-actions",
-    "nuget"
-  ],
+  "enabledManagers": ["custom.regex", "dockerfile", "github-actions", "nuget"],
   "ignorePaths": [
     "**/node_modules/**",
     "**/bower_components/**",
@@ -30,10 +23,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/\\.(?:cs|fs|vb)proj$/",
-        "/\\.(?:props|targets)$/"
-      ],
+      "managerFilePatterns": ["/\\.(?:cs|fs|vb)proj$/", "/\\.(?:props|targets)$/"],
       "matchStrings": [
         "<PackageReference\\s+Include=\"(?<depName>[^\"]+)\"\\s+Version=\"\\[(?<currentValue>[^,]+),.*\"",
         "<Project\\s+Sdk=\"(?<depName>[^\"]+)/(?<currentValue>[^,]+)\">"
@@ -43,98 +33,62 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/\\.cs$/"
-      ],
-      "matchStrings": [
-        "/\\*\\s*dockerimage\\s*\\*/\\s*\"(?<depName>[^:]+):(?<currentValue>[^\"]+)\""
-      ],
+      "managerFilePatterns": ["/\\.cs$/"],
+      "matchStrings": ["/\\*\\s*dockerimage\\s*\\*/\\s*\"(?<depName>[^:]+):(?<currentValue>[^\"]+)\""],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker"
     }
   ],
   "packageRules": [
     {
-      "matchManagers": [
-        "nuget",
-        "custom.regex"
-      ],
-      "labels": [
-        "dependency:nuget"
-      ],
+      "matchManagers": ["nuget", "custom.regex"],
+      "labels": ["dependency:nuget"],
       "semanticCommits": "enabled",
       "semanticCommitType": "chore",
       "semanticCommitScope": "deps",
-      "assignees": [
-        "samtrion"
-      ]
+      "assignees": ["samtrion"]
     },
     {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "labels": [
-        "dependency:actions"
-      ],
+      "matchManagers": ["github-actions"],
+      "labels": ["dependency:actions"],
       "automerge": true,
       "semanticCommits": "enabled",
       "semanticCommitType": "chore",
       "semanticCommitScope": "ci",
-      "assignees": [
-        "samtrion"
-      ]
+      "assignees": ["samtrion"]
     },
     {
-      "matchDatasources": [
-        "docker",
-        "custom.regex"
-      ],
-      "labels": [
-        "dependency:docker"
-      ],
+      "matchDatasources": ["docker", "custom.regex"],
+      "labels": ["dependency:docker"],
       "semanticCommits": "enabled",
       "semanticCommitType": "chore",
       "semanticCommitScope": "docker",
-      "assignees": [
-        "samtrion"
-      ],
+      "assignees": ["samtrion"],
       "versioning": "loose"
     },
     {
       "groupName": "Testcontainers packages",
       "groupSlug": "testcontainers-packages",
-      "matchManagers": [
-        "nuget",
-        "custom.regex"
-      ],
-      "matchPackageNames": [
-        "Testcontainers",
-        "Testcontainers.*"
-      ]
+      "matchManagers": ["nuget", "custom.regex"],
+      "matchPackageNames": ["Testcontainers", "Testcontainers.*"]
     },
     {
       "groupName": "TUnit packages",
       "groupSlug": "tunit-packages",
-      "matchManagers": [
-        "nuget",
-        "custom.regex"
-      ],
-      "matchPackageNames": [
-        "TUnit",
-        "TUnit.*"
-      ]
+      "matchManagers": ["nuget", "custom.regex"],
+      "matchPackageNames": ["TUnit", "TUnit.*"]
+    },
+    {
+      "groupName": "XUnit.V3 packages",
+      "groupSlug": "xunit-v3-packages",
+      "matchManagers": ["nuget", "custom.regex"],
+      "matchPackageNames": ["XUnit.V3", "XUnit.V3.*"]
     },
     {
       "groupName": "Microsoft Entity Framework",
       "groupSlug": "microsoft-entity-framework",
-      "matchManagers": [
-        "nuget",
-        "custom.regex"
-      ],
-      "matchPackageNames": [
-        "Microsoft.EntityFrameworkCore",
-        "Microsoft.EntityFrameworkCore.*"
-      ]
+      "matchManagers": ["nuget", "custom.regex"],
+      "matchPackageNames": ["Microsoft.EntityFrameworkCore", "Microsoft.EntityFrameworkCore.*"]
     }
   ]
 }
