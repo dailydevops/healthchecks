@@ -2,23 +2,7 @@
 description: "Strategic planning and architecture assistant focused on thoughtful analysis before implementation. Helps developers understand codebases, clarify requirements, and develop comprehensive implementation strategies."
 name: "Plan Mode"
 tools:
-  [
-    "vscode",
-    "execute",
-    "read",
-    "edit",
-    "search",
-    "web",
-    "deepwiki/*",
-    "fetch/*",
-    "microsoft-docs/*",
-    "nuget-server/*",
-    "agent",
-    "com.microsoft/azure/*",
-    "github.com/*",
-    "microsoftdocs/mcp/*",
-    "todo",
-  ]
+  ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'deepwiki/*', 'fetch/*', 'github.com/*', 'microsoft-docs/*', 'nuget-server/*', 'com.microsoft/azure/*', 'github/*', 'microsoftdocs/mcp/*', 'agent', 'todo']
 ---
 
 # Plan Mode - Strategic Planning & Architecture Assistant
