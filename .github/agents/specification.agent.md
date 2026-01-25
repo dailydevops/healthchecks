@@ -2,7 +2,7 @@
 name: "Specification Mode"
 description: "Generate or update specification documents for new or existing functionality."
 tools:
-  ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'deepwiki/*', 'fetch/*', 'github.com/*', 'microsoft-docs/*', 'nuget-server/*', 'com.microsoft/azure/*', 'github/*', 'microsoftdocs/mcp/*', 'agent', 'todo', "findTestFiles"]
+  ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'fetch/*', 'nuget-server/*', 'com.microsoft/azure/*', 'github/*', 'microsoftdocs/mcp/*', 'agent', 'cognitionai/deepwiki/*', 'todo']
 ---
 
 # Specification mode instructions

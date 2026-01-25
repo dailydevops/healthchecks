@@ -2,7 +2,7 @@
 description: "Generate an implementation plan for new features or refactoring existing code."
 name: "Implementation Plan Generation Mode"
 tools:
-  ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'deepwiki/*', 'fetch/*', 'github.com/*', 'microsoft-docs/*', 'nuget-server/*', 'com.microsoft/azure/*', 'github/*', 'microsoftdocs/mcp/*', 'agent', 'todo']
+  ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'fetch/*', 'nuget-server/*', 'com.microsoft/azure/*', 'github/*', 'microsoftdocs/mcp/*', 'agent', 'cognitionai/deepwiki/*', 'todo']
 ---
 
 # Implementation Plan Generation Mode
