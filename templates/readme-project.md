@@ -5,6 +5,7 @@ Replace 'YourPackageName' with the actual NuGet package ID.
 Replace 'YourRepo' with the actual GitHub repository name.
 The badges provide quick visual indicators of package status.
 -->
+
 [![NuGet Version](https://img.shields.io/nuget/v/YourPackageName.svg)](https://www.nuget.org/packages/YourPackageName/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/YourPackageName.svg)](https://www.nuget.org/packages/YourPackageName/)
 [![License](https://img.shields.io/github/license/dailydevops/YourRepo.svg)](https://github.com/dailydevops/YourRepo/blob/main/LICENSE)
@@ -28,9 +29,9 @@ Examples:
 * Comprehensive logging and diagnostics
 -->
 
-* Feature 1 - Brief description of what this feature provides
-* Feature 2 - Brief description of what this feature provides
-* Feature 3 - Brief description of what this feature provides
+- Feature 1 - Brief description of what this feature provides
+- Feature 2 - Brief description of what this feature provides
+- Feature 3 - Brief description of what this feature provides
 
 ## Installation
 
@@ -51,6 +52,7 @@ dotnet add package YourPackageName
 ### PackageReference
 
 <!-- For PackageReference, you can either specify a version or omit it if using centralized package management. -->
+
 ```xml
 <PackageReference Include="YourPackageName" Version="x.x.x" />
 ```
@@ -130,8 +132,8 @@ Include:
 Replace 'X.0' with the actual minimum .NET version.
 -->
 
-* .NET X.0 or higher
-* Any additional dependencies or system requirements
+- .NET X.0 or higher
+- Any additional dependencies or system requirements
 
 ## Related Packages
 
@@ -144,32 +146,37 @@ Remove this section if there are no related packages.
 Replace example entries with actual related packages.
 -->
 
-* [**RelatedPackage.Core**](https://www.nuget.org/packages/RelatedPackage.Core/) - Core functionality and shared abstractions
-* [**RelatedPackage.Extensions**](https://www.nuget.org/packages/RelatedPackage.Extensions/) - Additional extensions and helper methods
-* [**RelatedPackage.Integrations**](https://www.nuget.org/packages/RelatedPackage.Integrations/) - Integration with third-party libraries
+- [**RelatedPackage.Core**](https://www.nuget.org/packages/RelatedPackage.Core/) - Core functionality and shared abstractions
+- [**RelatedPackage.Extensions**](https://www.nuget.org/packages/RelatedPackage.Extensions/) - Additional extensions and helper methods
+- [**RelatedPackage.Integrations**](https://www.nuget.org/packages/RelatedPackage.Integrations/) - Integration with third-party libraries
 
 ## Documentation
 
 <!-- Replace 'YourRepo' with the actual repository name. Add links to any additional documentation sites if available. -->
+
 For complete documentation, please visit the [official documentation](https://github.com/dailydevops/YourRepo/blob/main/README.md).
 
 ## Contributing
 
 <!-- Ensure the CONTRIBUTING.md file exists in the repository before using this link. -->
+
 Contributions are welcome! Please read the [Contributing Guidelines](https://github.com/dailydevops/YourRepo/blob/main/CONTRIBUTING.md) before submitting a pull request.
 
 ## Support
 
 <!-- Replace 'YourRepo' with the actual repository name in all links below. All communication related to bugs, features, and project coordination occurs through GitHub Issues. -->
-* **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
-* **Documentation**: Read the full documentation at [https://github.com/dailydevops/YourRepo](https://github.com/dailydevops/YourRepo)
+
+- **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
+- **Documentation**: Read the full documentation at [https://github.com/dailydevops/YourRepo](https://github.com/dailydevops/YourRepo)
 
 ## License
 
 <!-- Replace 'MIT License' and 'YourRepo' with actual values. Ensure the LICENSE file exists in the repository. -->
+
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/dailydevops/YourRepo/blob/main/LICENSE) file for details.
 
 ---
 
-> [!NOTE] 
+> [!NOTE]
 > **Made with ❤️ by the NetEvolve Team**
+> Visit us at [https://www.netevolve.com](https://www.netevolve.com) for more information about our services and solutions.

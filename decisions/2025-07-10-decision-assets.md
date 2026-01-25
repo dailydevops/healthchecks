@@ -31,20 +31,23 @@ The current project structure includes a `decisions/` folder for storing archite
 
 All decision-related assets MUST be stored in the `decisions/assets/` folder and MUST be directly linked within decision documents using relative paths.
 
-### Storage Requirements:
+### Storage Requirements
+
 - All assets supporting architectural decisions (diagrams, images, PDFs, etc.) MUST be placed in `decisions/assets/`
 - Asset filenames SHOULD use their original names without requiring any specific naming convention
 - Assets MAY be organized into subdirectories within `decisions/assets/` if needed for better organization
 
-### Linking Requirements:
+### Linking Requirements
+
 - All assets MUST be referenced using relative paths from the decision document
 - Links MUST use the format: `[Asset Description](assets/filename.extension)` for files in the root assets folder
 - For assets in subdirectories, use: `[Asset Description](assets/subdirectory/filename.extension)`
 - Assets MUST be directly embedded or linked within the relevant decision document
 - No external hosting or cloud storage links are permitted for decision assets
 
-### Example Structure:
-```
+### Example Structure
+
+```txt
 decisions/
 ├── 2025-07-10-decision-assets.md
 ├── 2025-07-10-database-architecture.md
@@ -53,7 +56,8 @@ decisions/
     ├── performance-analysis.pdf
 ```
 
-### Example Linking:
+### Example Linking
+
 ```markdown
 The proposed database schema is illustrated in the following diagram:
 
@@ -64,14 +68,16 @@ For detailed performance analysis, refer to the [Performance Analysis Report](as
 
 ## Consequences
 
-### Positive Consequences:
+### Positive Consequences
+
 - **Centralized Asset Management**: All decision-related assets are stored in a single, predictable location
 - **Version Control**: Assets are version-controlled alongside the decision documents
 - **Accessibility**: Assets remain accessible even when working offline or in different environments
 - **Maintenance**: Easier to maintain and update assets as they're co-located with decisions
 - **Documentation Integrity**: Direct linking ensures assets and decisions remain connected
 
-### Potential Risks:
+### Potential Risks
+
 - **Repository Size**: Large assets may increase repository size, though this is manageable with proper asset optimization
 - **Binary File Management**: Git may not handle large binary files efficiently, but this can be mitigated with Git LFS if needed
 - **Asset Duplication**: Same assets might be referenced by multiple decisions, though this ensures each decision remains self-contained

@@ -42,19 +42,19 @@ All NuGet package README files MUST use the standardized template located at `te
 
 The template provides a comprehensive structure including:
 
-* **Package Metadata**: Badges for version, downloads, and license status
-* **Project Description**: Clear explanation of package purpose and functionality
-* **Features**: Bullet-point list of key capabilities
-* **Installation Instructions**: Multiple installation methods (NuGet Package Manager, .NET CLI, PackageReference)
-* **Quick Start**: Minimal working example for immediate usage
-* **Usage Examples**: Detailed examples covering basic and advanced scenarios
-* **Configuration**: Setup and configuration guidance
-* **Requirements**: Minimum framework versions and dependencies
-* **Related Packages**: Cross-references to related packages in the ecosystem
-* **Documentation Links**: References to comprehensive documentation
-* **Contributing Guidelines**: Links to contribution processes
-* **Support Channels**: GitHub Issues and documentation links (GitHub Discussions is not used for project communication)
-* **License Information**: Clear license declaration and reference
+- **Package Metadata**: Badges for version, downloads, and license status
+- **Project Description**: Clear explanation of package purpose and functionality
+- **Features**: Bullet-point list of key capabilities
+- **Installation Instructions**: Multiple installation methods (NuGet Package Manager, .NET CLI, PackageReference)
+- **Quick Start**: Minimal working example for immediate usage
+- **Usage Examples**: Detailed examples covering basic and advanced scenarios
+- **Configuration**: Setup and configuration guidance
+- **Requirements**: Minimum framework versions and dependencies
+- **Related Packages**: Cross-references to related packages in the ecosystem
+- **Documentation Links**: References to comprehensive documentation
+- **Contributing Guidelines**: Links to contribution processes
+- **Support Channels**: GitHub Issues and documentation links (GitHub Discussions is not used for project communication)
+- **License Information**: Clear license declaration and reference
 
 All URLs in package READMEs MUST be absolute URLs pointing to GitHub or NuGet.org to ensure compatibility across all platforms where the README may be displayed.
 
@@ -65,9 +65,10 @@ The template includes comprehensive comments explaining each section's purpose a
 When updating existing README files, all automated content markers MUST be preserved under all circumstances. These markers are HTML comments that define sections managed by automated tools or processes.
 
 Common marker patterns include:
-* `<!-- packages:start -->` and `<!-- packages:end -->` - Automated package list sections
-* `<!-- section:start -->` and `<!-- section:end -->` - Generic automated sections
-* Any other `<!-- marker:start -->` and `<!-- marker:end -->` pairs
+
+- `<!-- packages:start -->` and `<!-- packages:end -->` - Automated package list sections
+- `<!-- section:start -->` and `<!-- section:end -->` - Generic automated sections
+- Any other `<!-- marker:start -->` and `<!-- marker:end -->` pairs
 
 These markers and their content MUST NOT be modified or removed during manual template updates. Automated tools rely on these markers to maintain dynamic content sections.
 
@@ -75,24 +76,24 @@ These markers and their content MUST NOT be modified or removed during manual te
 
 ### Positive
 
-* **Consistency**: All package READMEs follow the same structure, making information easy to find
-* **Completeness**: Template ensures all critical sections are included and properly documented
-* **Professional Quality**: Standardized documentation improves the perceived quality and professionalism of all packages
-* **Reduced Maintenance**: Template updates automatically improve documentation guidance for all packages
-* **Cross-Platform Compatibility**: Absolute URLs ensure README content displays correctly on NuGet.org, GitHub, and other platforms
-* **Faster Onboarding**: New package authors have clear guidance for creating documentation
-* **Better Discoverability**: Consistent structure with badges and clear descriptions improves package discoverability
-* **User Experience**: Users benefit from predictable documentation structure across all packages
-* **Quality Assurance**: Template comments guide authors toward complete and accurate documentation
-* **Automated Content Protection**: Marker preservation ensures automated tooling continues to function correctly
+- **Consistency**: All package READMEs follow the same structure, making information easy to find
+- **Completeness**: Template ensures all critical sections are included and properly documented
+- **Professional Quality**: Standardized documentation improves the perceived quality and professionalism of all packages
+- **Reduced Maintenance**: Template updates automatically improve documentation guidance for all packages
+- **Cross-Platform Compatibility**: Absolute URLs ensure README content displays correctly on NuGet.org, GitHub, and other platforms
+- **Faster Onboarding**: New package authors have clear guidance for creating documentation
+- **Better Discoverability**: Consistent structure with badges and clear descriptions improves package discoverability
+- **User Experience**: Users benefit from predictable documentation structure across all packages
+- **Quality Assurance**: Template comments guide authors toward complete and accurate documentation
+- **Automated Content Protection**: Marker preservation ensures automated tooling continues to function correctly
 
 ### Negative
 
-* **Initial Effort**: Existing packages require updates to conform to the new template structure
-* **Flexibility Constraints**: Specialized packages may need to deviate from the standard template structure
-* **Maintenance Obligation**: Template changes require updating existing package READMEs to maintain consistency
-* **Learning Curve**: Authors must familiarize themselves with the template structure and guidelines
-* **Marker Awareness**: Authors must be aware of automated content markers and avoid modifying them manually
+- **Initial Effort**: Existing packages require updates to conform to the new template structure
+- **Flexibility Constraints**: Specialized packages may need to deviate from the standard template structure
+- **Maintenance Obligation**: Template changes require updating existing package READMEs to maintain consistency
+- **Learning Curve**: Authors must familiarize themselves with the template structure and guidelines
+- **Marker Awareness**: Authors must be aware of automated content markers and avoid modifying them manually
 
 ## Alternatives Considered
 
@@ -101,44 +102,48 @@ These markers and their content MUST NOT be modified or removed during manual te
 Each package author creates README files independently without a standardized template.
 
 **Rejected because**:
-* Leads to inconsistent documentation quality and structure
-* Critical information often omitted or poorly organized
-* Increases maintenance burden for ensuring documentation standards
-* Reduces professional appearance of package ecosystem
-* Makes it difficult for users to find information consistently
+
+- Leads to inconsistent documentation quality and structure
+- Critical information often omitted or poorly organized
+- Increases maintenance burden for ensuring documentation standards
+- Reduces professional appearance of package ecosystem
+- Makes it difficult for users to find information consistently
 
 ### Minimal Template
 
 Provide a minimal template with only basic sections (title, description, installation).
 
 **Rejected because**:
-* Insufficient guidance for comprehensive documentation
-* Important sections like configuration, requirements, and support would be frequently omitted
-* Does not address cross-platform URL compatibility issues
-* Provides less value in standardizing documentation quality
+
+- Insufficient guidance for comprehensive documentation
+- Important sections like configuration, requirements, and support would be frequently omitted
+- Does not address cross-platform URL compatibility issues
+- Provides less value in standardizing documentation quality
 
 ### Multiple Templates by Package Type
 
 Create different templates for different types of packages (libraries, tools, extensions).
 
 **Rejected because**:
-* Adds complexity in choosing the correct template
-* Reduces consistency across the package ecosystem
-* Most sections are relevant to all package types
-* Authors can omit irrelevant sections from the standard template
+
+- Adds complexity in choosing the correct template
+- Reduces consistency across the package ecosystem
+- Most sections are relevant to all package types
+- Authors can omit irrelevant sections from the standard template
 
 ### External Documentation Generation Tools
 
 Use automated documentation generation tools (DocFX, Sandcastle) instead of manual README files.
 
 **Rejected because**:
-* NuGet.org displays README content prominently, requiring manually crafted content
-* Generated documentation is often too technical or detailed for quick package evaluation
-* Adds build complexity and tooling dependencies
-* Does not replace the need for user-friendly introductory content
+
+- NuGet.org displays README content prominently, requiring manually crafted content
+- Generated documentation is often too technical or detailed for quick package evaluation
+- Adds build complexity and tooling dependencies
+- Does not replace the need for user-friendly introductory content
 
 ## Related Decisions
 
-* [English as Project Language](./2025-07-11-english-as-project-language.md) - All README content must be written in English following this decision
-* [Folder Structure and Naming Conventions](./2025-07-10-folder-structure-and-naming-conventions.md) - README files are placed at the root of each project directory following folder structure conventions
-* [No GitHub Discussions for Communication](./2025-11-01-no-github-discussions-for-communication.md) - GitHub Issues serve as the central point of contact for all project-related discussions
+- [English as Project Language](./2025-07-11-english-as-project-language.md) - All README content must be written in English following this decision
+- [Folder Structure and Naming Conventions](./2025-07-10-folder-structure-and-naming-conventions.md) - README files are placed at the root of each project directory following folder structure conventions
+- [No GitHub Discussions for Communication](./2025-11-01-no-github-discussions-for-communication.md) - GitHub Issues serve as the central point of contact for all project-related discussions

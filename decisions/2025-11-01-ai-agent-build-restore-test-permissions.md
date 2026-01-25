@@ -107,6 +107,7 @@ AI agents MAY:
 **Description**: Require human developers to manually run build and test commands after AI-generated changes.
 
 **Why Not Chosen**:
+
 - Reduces the value proposition of AI assistance
 - Increases developer workload and slows down development
 - Errors are discovered later in the workflow
@@ -117,6 +118,7 @@ AI agents MAY:
 **Description**: Use static code analysis and linting without actual compilation or test execution.
 
 **Why Not Chosen**:
+
 - Cannot detect runtime issues or test failures
 - May miss compilation errors not caught by static analysis
 - Less comprehensive verification than actual build/test
@@ -127,6 +129,7 @@ AI agents MAY:
 **Description**: Create a separate, isolated environment for AI build verification that doesn't use actual project files.
 
 **Why Not Chosen**:
+
 - Adds significant complexity to implementation
 - May not accurately reflect actual build behavior
 - Difficult to maintain parity with real build environment
@@ -137,6 +140,7 @@ AI agents MAY:
 **Description**: Allow AI agents to analyze code but not execute any commands.
 
 **Why Not Chosen**:
+
 - Severely limits AI effectiveness
 - Cannot verify changes work correctly
 - Misses the primary benefit of automated verification

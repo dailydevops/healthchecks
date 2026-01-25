@@ -23,6 +23,7 @@ This decision establishes the standard folder structure for .NET projects and de
 ## Context
 
 As .NET projects grow in complexity, maintaining a clear and consistent folder structure becomes crucial for:
+
 - Developer onboarding and navigation
 - Build automation and CI/CD pipelines
 - Separation of concerns between production and test code
@@ -30,6 +31,7 @@ As .NET projects grow in complexity, maintaining a clear and consistent folder s
 - IDE and tooling support
 
 Without standardized conventions, teams may adopt inconsistent patterns that lead to:
+
 - Confusion about where to place new code
 - Difficulty in setting up automated test execution
 - Unclear distinction between different types of tests
@@ -40,7 +42,8 @@ Without standardized conventions, teams may adopt inconsistent patterns that lea
 We will adopt the following folder structure and naming conventions:
 
 ### Root Folder Structure
-```
+
+```txt
 /
 ├── src/           # All production source code
 ├── tests/         # All test projects
@@ -50,26 +53,32 @@ We will adopt the following folder structure and naming conventions:
 ```
 
 ### Source Code Organization
+
 - All production code MUST be placed under the `src/` folder
 - Project folders under `src/` MUST follow the namespace hierarchy
 - Each project MUST have its own folder directly under `src/`
 - The `SpixSpreed.` prefix is automatically applied to all projects through build automation in `Directory.Build.targets`
 
 ### Test Project Naming Conventions
+
 Test projects MUST follow this naming pattern:
+
 - **Unit Tests**: `{ProjectName}.Tests.Unit`
 - **Integration Tests**: `{ProjectName}.Tests.Integration`
 
 Where `{ProjectName}` is the name of the production project being tested (the build system will automatically apply the `SpixSpreed.` prefix).
 
 ### Project Naming Convention
+
 Project folder names follow a simple `{ComponentName}` pattern, where:
+
 - `{ComponentName}` describes the functional area or component (e.g., Core, Data, Api, Web)
 - The `SpixSpreed.` prefix is automatically applied by the build system through `Directory.Build.targets`
 - This ensures consistent assembly names, namespaces, and package IDs without manual prefixing
 
 ### Examples
-```
+
+```txt
 src/
 ├── Api/                     # Web API controllers, middleware, and HTTP-related logic
 ├── Core/                    # Domain models, business logic, interfaces, and shared utilities
@@ -87,6 +96,7 @@ tests/
 ## Consequences
 
 ### Positive Consequences
+
 - **Clear Separation**: Distinct separation between production and test code prevents accidental inclusion of test code in production builds
 - **Consistent Navigation**: Developers can quickly locate source code and corresponding tests
 - **Test Categorization**: Clear distinction between unit and integration tests enables selective test execution
@@ -95,6 +105,7 @@ tests/
 - **Scalability**: Structure scales well as projects grow in size and complexity
 
 ### Potential Drawbacks
+
 - **Initial Setup**: Requires discipline to maintain the structure, especially in the early stages of a project
 - **Migration Effort**: Existing projects may need restructuring to adopt these conventions
 - **Tool Configuration**: Some tools may need configuration updates to work with the new structure
@@ -103,7 +114,7 @@ tests/
 
 ### Alternative 1: Flat Structure
 
-```
+```txt
 /
 ├── ProjectA/
 ├── ProjectA.Tests/
@@ -115,7 +126,7 @@ tests/
 
 ### Alternative 2: Tests Alongside Source
 
-```
+```txt
 src/
 ├── ProjectA/
 │   ├── ProjectA.csproj

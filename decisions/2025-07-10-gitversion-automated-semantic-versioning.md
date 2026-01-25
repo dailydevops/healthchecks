@@ -37,6 +37,7 @@ The project currently uses .NET 10 with centralized package management and follo
 We will use **GitVersion** as the primary tool for automated semantic versioning with the following configuration:
 
 **GitVersion Configuration (`GitVersion.yml`):**
+
 ```yaml
 mode: ManualDeployment
 major-version-bump-message: "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\([\\w\\s-,/\\\\]*\\))?(!:|:.*\\n\\n((.+\\n)+\\n)?BREAKING CHANGE:\\s.+)"
@@ -46,6 +47,7 @@ workflow: TrunkBased/preview1
 ```
 
 **Implementation Details:**
+
 - **Mode**: `ManualDeployment` - Provides full control over when versions are incremented and tagged
 - **Workflow**: `TrunkBased/preview1` - Optimized for trunk-based development with feature previews
 - **MSBuild Integration**: `GitVersion.MsBuild` package automatically injects version information into all projects during build
@@ -53,11 +55,13 @@ workflow: TrunkBased/preview1
 - **Target Framework Workaround**: Temporary configuration to use `net9.0` for GitVersion processing until full .NET 10 support is available
 
 **Version Increment Rules:**
+
 - **Major Version**: Triggered by breaking changes (commits with `!` or `BREAKING CHANGE:` footer)
 - **Minor Version**: Triggered by `feat:` commits (new features)
 - **Patch Version**: Triggered by `fix:`, `build:`, `chore:`, `ci:`, `docs:`, `perf:`, `refactor:`, `revert:`, `style:`, `test:` commits
 
 **MSBuild Integration:**
+
 - GitVersion.MsBuild automatically provides version properties to all projects
 - Version information is embedded in assemblies, packages, and other artifacts
 - No manual version management required in project files
@@ -65,6 +69,7 @@ workflow: TrunkBased/preview1
 ## Consequences
 
 **Positive Consequences:**
+
 1. **Automated version calculation**: Version numbers are automatically calculated from git history and conventional commit messages, eliminating manual version management
 2. **Consistent versioning**: All project artifacts automatically use the same calculated version, ensuring consistency across builds and deployments
 3. **CI/CD integration**: Build pipelines can reliably access version information for package creation, tagging, and deployment processes
@@ -74,6 +79,7 @@ workflow: TrunkBased/preview1
 7. **Audit trail**: Version increments are directly traceable to specific commits and their semantic meaning
 
 **Potential Challenges:**
+
 1. **Learning curve**: Developers need to understand how conventional commits impact version calculation
 2. **Commit message discipline**: Incorrect commit message formats can lead to inappropriate version increments
 3. **Build complexity**: Additional dependency in the build process that requires understanding for troubleshooting
@@ -81,6 +87,7 @@ workflow: TrunkBased/preview1
 5. **Rollback scenarios**: Complex version rollback situations may require manual intervention
 
 **Risk Mitigation:**
+
 - Implement commit message validation to ensure proper conventional commit format
 - Provide clear documentation and training on conventional commits and their version impact
 - Configure appropriate branch and tag patterns for different deployment scenarios

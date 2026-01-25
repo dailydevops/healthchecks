@@ -37,7 +37,8 @@ The project already uses GitVersion (as evidenced by `GitVersion.MsBuild` in `Di
 We will adopt the [Conventional Commits 1.0.0 specification](https://www.conventionalcommits.org/en/v1.0.0/) for all commit messages in this project.
 
 **Commit Message Structure:**
-```
+
+```txt
 <type>[optional scope]: <description>
 
 [optional body]
@@ -46,11 +47,13 @@ We will adopt the [Conventional Commits 1.0.0 specification](https://www.convent
 ```
 
 **Required Types:**
+
 - `feat`: A new feature (correlates with MINOR in Semantic Versioning)
 - `fix`: A bug fix (correlates with PATCH in Semantic Versioning)
 - `BREAKING CHANGE`: Breaking API changes (correlates with MAJOR in Semantic Versioning)
 
 **Recommended Additional Types:**
+
 - `build`: Changes to build system or external dependencies
 - `chore`: Maintenance tasks that don't modify src or test files
 - `ci`: Changes to CI configuration files and scripts
@@ -61,6 +64,7 @@ We will adopt the [Conventional Commits 1.0.0 specification](https://www.convent
 - `test`: Adding or modifying tests
 
 **Implementation Guidelines:**
+
 - Commits MUST be prefixed with a type followed by an optional scope, optional `!`, and required terminal colon and space
 - Breaking changes MUST be indicated either by `!` after the type/scope or by including `BREAKING CHANGE:` in the footer
 - Scope MAY be provided to give additional context (e.g., `feat(api):`, `fix(parser):`)
@@ -70,6 +74,7 @@ We will adopt the [Conventional Commits 1.0.0 specification](https://www.convent
 ## Consequences
 
 **Positive Consequences:**
+
 1. **Automated versioning**: GitVersion and other tools can automatically determine semantic version bumps based on commit types
 2. **Automated changelog generation**: Tools can automatically generate changelogs and release notes from structured commit messages
 3. **Improved communication**: Clear, structured commit messages help team members and stakeholders understand the nature and impact of changes
@@ -78,12 +83,14 @@ We will adopt the [Conventional Commits 1.0.0 specification](https://www.convent
 6. **Enhanced collaboration**: New contributors can quickly understand the commit convention and follow established patterns
 
 **Potential Challenges:**
+
 1. **Learning curve**: Team members need to learn and remember the conventional commit format
 2. **Enforcement overhead**: Initial effort required to establish tooling and processes to enforce the convention
 3. **Commit message length**: Some developers may need to adjust to writing more descriptive commit messages
 4. **Retroactive application**: Existing commit history will not follow the convention, creating inconsistency in historical data
 
 **Risk Mitigation:**
+
 - Implement commit message linting tools to validate format automatically
 - Provide training and documentation for team members
 - Use commit message templates in development environments

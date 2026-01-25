@@ -44,6 +44,7 @@ All code, documentation, comments, and other written content in this project MUS
 - **Database Objects**: Table names, column names, stored procedure names, and database documentation
 
 The English used should be:
+
 - **Professional**: Use clear, concise, and professional language
 - **Consistent**: Follow established naming conventions and terminology
 - **Accessible**: Avoid unnecessary jargon and use plain English where possible
@@ -74,14 +75,17 @@ The English used should be:
 ## Alternatives Considered
 
 ### Multi-language Approach
+
 - **Description**: Allow multiple languages based on team member preferences or regional requirements
 - **Rejected Because**: Creates inconsistency, reduces maintainability, and limits global collaboration
 
 ### Native Language with English Translation
+
 - **Description**: Write in native language first, then translate to English
 - **Rejected Because**: Increases maintenance overhead, creates potential for translation errors, and delays development
 
 ### Gradual Migration
+
 - **Description**: Slowly transition to English over time without enforcing immediate compliance
 - **Rejected Because**: Would result in inconsistent codebase for extended periods and may never achieve full compliance
 

@@ -69,7 +69,8 @@ This approach ensures that all projects in the solution use consistent package v
 
 **Description**: Allow each project to manage its own package versions independently.
 
-**Why Not Chosen**: 
+**Why Not Chosen**:
+
 - Leads to version inconsistencies across the solution
 - Increases maintenance overhead
 - Higher risk of dependency conflicts
@@ -80,6 +81,7 @@ This approach ensures that all projects in the solution use consistent package v
 **Description**: Use shared `.props` files to define common package versions but still reference versions in individual projects.
 
 **Why Not Chosen**:
+
 - Still requires version references in each project file
 - More complex to implement and maintain
 - Doesn't leverage MSBuild's built-in central package management features
@@ -90,6 +92,7 @@ This approach ensures that all projects in the solution use consistent package v
 **Description**: Define package versions as MSBuild properties and reference them in individual projects.
 
 **Why Not Chosen**:
+
 - Verbose syntax in project files
 - No built-in tooling support
 - More error-prone than the centralized approach

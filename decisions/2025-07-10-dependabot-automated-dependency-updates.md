@@ -91,7 +91,8 @@ We have implemented Dependabot with the following configuration:
 
 **Description**: Manually monitor and update dependencies on a periodic basis.
 
-**Why Not Chosen**: 
+**Why Not Chosen**:
+
 - Time-consuming and error-prone
 - Inconsistent update frequency
 - Higher risk of missing critical security updates
@@ -102,6 +103,7 @@ We have implemented Dependabot with the following configuration:
 **Description**: Use tools that scan for vulnerabilities but don't automatically create updates.
 
 **Why Not Chosen**:
+
 - Provides visibility but still requires manual update process
 - Doesn't address the maintenance overhead of dependency updates
 - May lead to delayed responses to security issues
@@ -111,6 +113,7 @@ We have implemented Dependabot with the following configuration:
 **Description**: Configure Dependabot to run less frequently.
 
 **Why Not Chosen**:
+
 - Slower response to security vulnerabilities
 - Larger batch updates are more complex to review
 - May accumulate breaking changes over time
@@ -120,6 +123,7 @@ We have implemented Dependabot with the following configuration:
 **Description**: Use tools like WhiteSource, or Snyk for dependency management.
 
 **Why Not Chosen**:
+
 - Dependabot is native to GitHub and integrates seamlessly
 - No additional third-party service dependencies
 - Simpler configuration and maintenance

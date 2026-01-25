@@ -37,6 +37,7 @@ The Spix Spreed platform is a modern social media management platform that requi
 5. **Compatibility Requirements**: Must support .NET Aspire for cloud-native orchestration and modern tooling ecosystem
 
 Key considerations for framework selection:
+
 - Performance improvements in runtime and garbage collection
 - Enhanced cloud-native features and container optimization
 - Language improvements in C# 13 for better developer productivity
@@ -49,17 +50,20 @@ Key considerations for framework selection:
 We have decided to adopt **.NET 10** as the target framework and **C# 13** as the primary programming language version for the Spix Spreed platform. This includes:
 
 ### Framework Configuration
+
 - **Target Framework**: `net10.0` for all projects within the solution
 - **Language Version**: C# 13 (preview) to access the latest language features
 - **Runtime**: .NET 10 runtime with optimizations for cloud-native workloads
 
 ### Implementation Details
+
 - Configure `Directory.Build.props` with `<TargetFrameworks>net10.0</TargetFrameworks>`
 - Set `<LangVersion>preview</LangVersion>` to enable C# 13 features during development
 - Maintain compatibility with .NET Aspire orchestration requirements
 - Utilize GitVersion workaround for `net9.0` target framework compatibility until official support
 
 ### Key Features to Leverage
+
 - **Performance Improvements**: Utilize enhanced garbage collection and runtime optimizations
 - **Native AOT**: Implement for performance-critical services where applicable
 - **C# 13 Language Features**: Adopt new syntax improvements and performance enhancements
@@ -69,6 +73,7 @@ We have decided to adopt **.NET 10** as the target framework and **C# 13** as th
 ## Consequences
 
 ### Positive Consequences
+
 - **Performance Benefits**: Significant improvements in throughput, memory usage, and startup times
 - **Developer Productivity**: Access to latest C# 13 language features improves code readability and maintainability
 - **Future-Proofing**: Positions the platform for long-term compatibility with evolving .NET ecosystem
@@ -77,12 +82,14 @@ We have decided to adopt **.NET 10** as the target framework and **C# 13** as th
 - **AOT Capabilities**: Option for Native Ahead-of-Time compilation for performance-critical scenarios
 
 ### Potential Risks
+
 - **Preview Stability**: C# 13 preview features may have stability considerations during development
 - **Ecosystem Compatibility**: Some third-party libraries may not immediately support .NET 10
 - **Migration Complexity**: Future upgrades from preview to stable versions may require code adjustments
 - **Tooling Maturity**: Development tools and IDE support may be evolving for latest features
 
 ### Mitigation Strategies
+
 - Monitor C# 13 language feature stability and adjust usage based on production readiness
 - Maintain compatibility testing with critical third-party dependencies
 - Implement comprehensive testing strategies to validate preview feature usage
@@ -91,12 +98,15 @@ We have decided to adopt **.NET 10** as the target framework and **C# 13** as th
 ## Alternatives Considered
 
 ### .NET 8 LTS with C# 12
+
 **Pros:**
+
 - Long-term support guarantee until November 2026
 - Proven stability and extensive ecosystem compatibility
 - Full production readiness with comprehensive tooling support
 
 **Cons:**
+
 - Missing latest performance improvements available in .NET 10
 - Limited access to newest language features that improve developer productivity
 - Less optimal cloud-native and container performance
@@ -105,12 +115,15 @@ We have decided to adopt **.NET 10** as the target framework and **C# 13** as th
 **Decision:** Rejected due to performance requirements and desire for latest cloud-native optimizations
 
 ### .NET 9 with C# 12
+
 **Pros:**
+
 - Standard Term Support (STS) with 18-month support lifecycle
 - Good balance of stability and modern features
 - Broad ecosystem compatibility
 
 **Cons:**
+
 - Shorter support lifecycle compared to LTS versions
 - Missing .NET 10 performance improvements
 - Limited future-proofing for long-term platform development

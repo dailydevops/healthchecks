@@ -31,12 +31,14 @@ GitHub Discussions will not be used for project communication. GitHub Issues wil
 ## Consequences
 
 **Positive:**
+
 - Single source of truth for all project communication
 - Improved traceability and searchability of decisions
 - Reduced cognitive overhead from having fewer communication channels
 - Better integration with workflow automation tied to Issues
 
 **Negative:**
+
 - Requires discipline to redirect team members away from Discussions
 - May require additional effort to maintain Issues as the communication hub
 - Issues-only approach requires clear issue templates and categorization to prevent clutter
@@ -44,14 +46,17 @@ GitHub Discussions will not be used for project communication. GitHub Issues wil
 ## Alternatives Considered
 
 **Use GitHub Discussions as the primary communication channel:**
+
 - Rejected because Issues are already established as the central contact point
 - Would create fragmentation between Issues and Discussions, making it harder to track decisions
 
 **Use external communication tools (Slack, Teams, etc.) for discussions:**
+
 - Rejected as these tools are not being considered for this project
 - Communication must remain within the GitHub ecosystem to maintain traceability
 
 **Use both Issues and Discussions for different purposes:**
+
 - Rejected because maintaining two communication channels adds unnecessary complexity
 - Issues provide sufficient functionality for all communication needs
 
