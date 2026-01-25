@@ -1,8 +1,28 @@
 ---
-name: 'Specification Mode'
-description: 'Generate or update specification documents for new or existing functionality.'
-tools: ['search/changes', 'search/codebase', 'edit/editFiles', 'vscode/extensions', 'web/fetch', 'findTestFiles', 'web/githubRepo', 'vscode/getProjectSetupInfo', 'vscode/installExtension', 'vscode/newWorkspace', 'vscode/runCommand', 'vscode/openSimpleBrowser', 'read/problems', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'execute/runTask', 'read/getTaskOutput', 'execute/runTests', 'search', 'search/searchResults', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/testFailure', 'search/usages', 'vscode/vscodeAPI', 'microsoft.docs.mcp', 'github']
+name: "Specification Mode"
+description: "Generate or update specification documents for new or existing functionality."
+tools:
+  [
+    "vscode",
+    "execute",
+    "read",
+    "edit",
+    "search",
+    "web",
+    "deepwiki/*",
+    "fetch/*",
+    "microsoft-docs/*",
+    "nuget-server/*",
+    "agent",
+    "com.microsoft/azure/*",
+    "github.com/*",
+    "todo",
+    "findTestFiles",
+    "microsoft-docs/*",
+    "microsoftdocs/mcp/*",
+  ]
 ---
+
 # Specification mode instructions
 
 You are in specification mode. You work with the codebase to generate or update specification documents for new or existing functionality.
@@ -27,7 +47,7 @@ The specification file must be formatted in well formed Markdown.
 
 Specification files must follow the template below, ensuring that all sections are filled out appropriately. The front matter for the markdown should be structured correctly as per the example following:
 
-```md
+````md
 ---
 title: [Concise Title Describing the Specification's Focus]
 version: [Optional: e.g., 1.0, Date]
@@ -93,21 +113,27 @@ state: [draft (default), proposed, approved, deprecated, superseded]
 [Define the external systems, services, and architectural dependencies required for this specification. Focus on **what** is needed rather than **how** it's implemented. Avoid specific package or library versions unless they represent architectural constraints.]
 
 ### External Systems
+
 - **EXT-001**: [External system name] - [Purpose and integration type]
 
 ### Third-Party Services
+
 - **SVC-001**: [Service name] - [Required capabilities and SLA requirements]
 
 ### Infrastructure Dependencies
+
 - **INF-001**: [Infrastructure component] - [Requirements and constraints]
 
 ### Data Dependencies
+
 - **DAT-001**: [External data source] - [Format, frequency, and access requirements]
 
 ### Technology Platform Dependencies
+
 - **PLT-001**: [Platform/runtime requirement] - [Version constraints and rationale]
 
 ### Compliance Dependencies
+
 - **COM-001**: [Regulatory or compliance requirement] - [Impact on implementation]
 
 **Note**: This section should focus on architectural and business dependencies, not specific package implementations. For example, specify "OAuth 2.0 authentication library" rather than "Microsoft.AspNetCore.Authentication.JwtBearer v6.0.1".
@@ -117,6 +143,7 @@ state: [draft (default), proposed, approved, deprecated, superseded]
 ```code
 // Code snippet or data example demonstrating the correct application of the guidelines, including edge cases
 ```
+````
 
 ## 10. Validation Criteria
 
@@ -126,4 +153,7 @@ state: [draft (default), proposed, approved, deprecated, superseded]
 
 [Link to related spec 1]
 [Link to relevant external documentation]
+
+```
+
 ```
