@@ -1,43 +1,36 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
+# List of authors who contributed to this decision. Include full names and roles if applicable.
 authors:
-- Name Surname <!-- Replace with actual name -->
-- Another Name Surname <!-- Add more authors as needed -->
+  - Name Surname # Replace with actual name
+  - Another Name Surname # Add more authors as needed
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
-Example:
+# The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
+# Example:
+#   - "**/*.cs"          # Applies to all C# files
+#   - "src/**/*.razor"   # Applies to all Blazor components in src folder
+#   - "tests/**/*.sql"   # Applies to all SQL files in tests folder
 applyTo:
-- "**/*.cs"          # Applies to all C# files
-- "src/**/*.razor"   # Applies to all Blazor components in src folder
-- "tests/**/*.sql"   # Applies to all SQL files in tests folder
--->
-applyTo:
-- "**/*" <!-- Replace with specific glob patterns -->
+  - "**/*" # Replace with specific glob patterns
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
+# The date this ADR was initially created in YYYY-MM-DD format.
 created: YYYY-MM-DD
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
+# The most recent date this ADR was updated in YYYY-MM-DD format.
+# IMPORTANT: Update this field whenever the decision is modified.
 lastModified: YYYY-MM-DD
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
+# The current state of this ADR. If superseded, include references to the superseding ADR.
+# Valid values: proposed, accepted, deprecated, superseded
 state: proposed
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
+# A compact AI LLM compatible definition of this decision.
+# This should be a precise, structured description that AI systems can easily parse and understand.
+# Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
 instructions: |
   Compact definition of the decision made and its core purpose.
   Key rationale and primary impact on the project or development process.
 ---
+
 <!-- REQUIRED: Filename MUST follow the format: YYYY-MM-DD-Title (replace all spaces with hyphens) -->
 # Title <!-- A concise title that summarizes the decision. Use a format like "Decision: [Short Description of Decision]". -->
 

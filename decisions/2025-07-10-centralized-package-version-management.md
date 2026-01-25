@@ -1,40 +1,24 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
--->
 applyTo:
-- "Directory.Packages.props"
-- "**/*.csproj"
-- "**/*.fsproj"
-- "**/*.vbproj"
+  - "Directory.Packages.props"
+  - "**/*.csproj"
+  - "**/*.fsproj"
+  - "**/*.vbproj"
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
 created: 2025-07-10
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
 lastModified: 2025-07-14
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
 state: accepted
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
 instructions: |
   Enable centralized package version management by setting ManagePackageVersionsCentrally to true in Directory.Packages.props to eliminate version inconsistencies and reduce maintenance overhead.
   All projects reference packages without version numbers, with versions controlled centrally from a single source of truth.
 ---
+
 # Decision: Centralized Package Version Management with ManagePackageVersionsCentrally
 
 We have decided to enable centralized package version management across the entire solution by setting `ManagePackageVersionsCentrally` to `true` in the `Directory.Packages.props` file.

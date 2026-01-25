@@ -1,44 +1,28 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
--->
 applyTo:
-- "**/*.csproj"
-- "**/*.fsproj"
-- "**/*.vbproj"
-- "Directory.Build.props"
-- "Directory.Build.targets"
-- "global.json"
-- "**/*.cs"
+  - "**/*.csproj"
+  - "**/*.fsproj"
+  - "**/*.vbproj"
+  - "Directory.Build.props"
+  - "Directory.Build.targets"
+  - "global.json"
+  - "**/*.cs"
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
 created: 2025-07-11
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
 lastModified: 2025-07-14
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
 state: accepted
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
 instructions: |
   Adopt .NET 10 as the target framework and C# 13 as the primary programming language version to leverage latest performance improvements, cloud-native capabilities, and modern language features.
   All projects must target net10.0 with C# 13 preview features enabled for enhanced developer productivity and future-proofing.
 ---
-# .NET 10 and C# 13 Adoption
+
+# Decision: .NET 10 and C# 13 Adoption
 
 A decision to adopt .NET 10 as the target framework and C# 13 as the primary programming language version for the Spix Spreed platform, leveraging the latest performance improvements, language features, and cloud-native capabilities.
 

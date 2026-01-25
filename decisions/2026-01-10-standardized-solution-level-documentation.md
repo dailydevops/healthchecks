@@ -1,10 +1,10 @@
 ---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
 applyTo:
-- "README.md"
-- "templates/readme-solution.md"
+  - "README.md"
+  - "templates/readme-solution.md"
 
 created: 2026-01-10
 
@@ -17,9 +17,9 @@ instructions: |
   MUST preserve existing content markers (e.g., <!-- packages:start -->) when modernizing existing README files.
   MUST include all required sections: Overview, Projects, Features, Getting Started, Development, Architecture, Contributing, Code of Conduct, Documentation, Versioning, Support, and License.
   MUST use relative links for all internal repository references (CONTRIBUTING.md, CODE_OF_CONDUCT.md, LICENSE, decisions/).
-  MUST provide comprehensive guidance for each section through inline comments.
 ---
-# Standardized Solution-Level Documentation
+
+# Decision: Standardized Solution-Level Documentation
 
 This decision establishes a standardized template for solution-level README files to ensure consistency, maintainability, and comprehensive documentation across all repositories.
 

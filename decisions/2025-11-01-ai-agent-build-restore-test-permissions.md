@@ -1,45 +1,29 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
--->
 applyTo:
-- "**/*.csproj"
-- "**/*.fsproj"
-- "**/*.vbproj"
-- "**/*.sln"
-- "**/*.slnx"
-- "**/tests/**/*.cs"
-- "AGENTS.md"
-- ".github/copilot-instructions.md"
+  - "**/*.csproj"
+  - "**/*.fsproj"
+  - "**/*.vbproj"
+  - "**/*.sln"
+  - "**/*.slnx"
+  - "**/tests/**/*.cs"
+  - "AGENTS.md"
+  - ".github/copilot-instructions.md"
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
 created: 2025-11-01
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
 lastModified: 2025-11-01
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
 state: accepted
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
 instructions: |
   AI agents are authorized to execute dotnet build, restore, and test commands for all projects in the solution to verify code correctness and maintain quality standards.
   All operations MUST be executed at the solution level using the .sln or .slnx file found in the repository root directory.
   Before committing changes, AI agents MUST run restore, build, and test operations to ensure no regressions are introduced.
 ---
+
 # Decision: AI Agent Authorization for Build, Restore, and Test Operations
 
 AI coding assistants such as GitHub Copilot are authorized to execute `dotnet build`, `dotnet restore`, and `dotnet test` commands for all projects within the solution to verify code correctness, ensure compilation success, and validate functionality through automated tests.

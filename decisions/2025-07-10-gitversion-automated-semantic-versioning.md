@@ -1,39 +1,22 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
--->
 applyTo:
-- "**/*.*"
+  - "**/*.*"
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
 created: 2025-07-10
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
 lastModified: 2025-07-14
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
 state: accepted
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
 instructions: |
   Use GitVersion with ManualDeployment mode and TrunkBased workflow to automatically calculate semantic versions from conventional commit messages.
   Breaking changes trigger major versions, feat triggers minor, and fix/chore/docs trigger patch versions for automated CI/CD integration.
 ---
-<!-- REQUIRED: Filename MUST follow the format: YYYY-MM-DD-Title (replace all spaces with hyphens) -->
-# GitVersion for Automated Semantic Versioning
+
+# Decision: GitVersion for Automated Semantic Versioning
 
 A decision to adopt GitVersion as the primary tool for automated semantic versioning, leveraging conventional commit messages to determine version increments and maintain consistent versioning across the project lifecycle.
 

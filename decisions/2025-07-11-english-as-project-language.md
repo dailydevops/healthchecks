@@ -1,39 +1,22 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
--->
 applyTo:
-- "**/*.*"
+  - "**/*.*"
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
 created: 2025-07-11
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
 lastModified: 2025-07-14
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
 state: accepted
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
 instructions: |
   Establish English as the mandatory language for all code, documentation, comments, commit messages, and written content to ensure consistency and global accessibility.
   Applies to all identifiers, configuration files, database objects, and communication using clear, professional English standards.
 ---
-<!-- REQUIRED: Filename MUST follow the format: YYYY-MM-DD-Title (replace all spaces with hyphens) -->
-# English as Project Language
+
+# Decision: English as Project Language
 
 A decision to establish English as the primary and mandatory language for all code, documentation, and written content within the project to ensure consistency, professionalism, and global accessibility.
 

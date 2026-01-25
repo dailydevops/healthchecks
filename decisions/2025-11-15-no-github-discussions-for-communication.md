@@ -12,7 +12,8 @@ lastModified: 2025-11-15
 state: accepted
 
 instructions: |
-  GitHub Discussions is not used for team communication. Issues serve as the central point of contact for all project-related discussions and coordination. This decision reduces tool fragmentation and ensures all communication flows through a single, tracked channel.
+  GitHub Discussions is not used for team communication. Issues serve as the central point of contact for all project-related discussions and coordination.
+  This decision reduces tool fragmentation and ensures all communication flows through a single, tracked channel.
 ---
 
 # Decision: No GitHub Discussions for Communication

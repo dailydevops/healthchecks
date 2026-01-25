@@ -1,41 +1,24 @@
-<!-- List of authors who contributed to this decision. Include full names and roles if applicable. -->
+---
 authors:
-- Martin Stühmer
+  - Martin Stühmer
 
-<!--
-The patterns this decision applies to. Each entry is a glob pattern that matches files affected by this decision.
--->
 applyTo:
-- "**/README.md"
-- "src/**/README.md"
+  - "**/README.md"
+  - "src/**/README.md"
 
-<!-- The date this ADR was initially created in YYYY-MM-DD format. -->
 created: 2026-01-09
 
-<!--
-The most recent date this ADR was updated in YYYY-MM-DD format.
-IMPORTANT: Update this field whenever the decision is modified.
--->
 lastModified: 2026-01-09
 
-<!--
-The current state of this ADR. If superseded, include references to the superseding ADR.
-Valid values: proposed, accepted, deprecated, superseded
--->
 state: accepted
 
-<!--
-A compact AI LLM compatible definition of this decision.
-This should be a precise, structured description that AI systems can easily parse and understand.
-Include the core decision, key rationale, and primary impact in 1-2 concise sentences.
--->
 instructions: |
   Use templates/readme-project.md as the mandatory template for all NuGet package README files to ensure consistent documentation structure, comprehensive content, and absolute URLs for cross-platform compatibility.
   All project READMEs MUST include features, installation instructions, usage examples, requirements, and support information following the template structure.
   MUST preserve all automated content markers (e.g., <!-- packages:start -->) under all circumstances when updating existing README files.
 ---
-<!-- REQUIRED: Filename MUST follow the format: YYYY-MM-DD-Title (replace all spaces with hyphens) -->
-# NuGet Package README Template
+
+# Decision: NuGet Package README Template
 
 Establish a standardized template for NuGet package README files to ensure consistent, comprehensive, and professional documentation across all packages in the project ecosystem.
 
