@@ -1,6 +1,6 @@
 ---
 agent: 'agent'
-tools: ['search/changes', 'search/codebase', 'edit/editFiles', 'read/problems', 'search']
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'deepwiki/*', 'fetch/*', 'microsoft-docs/*', 'nuget-server/*', 'agent', 'todo']
 description: 'Best practices for TUnit unit testing, including data-driven tests'
 ---
 

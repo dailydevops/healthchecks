@@ -1,6 +1,6 @@
 ---
 agent: 'agent'
-tools: ['search/changes', 'search/codebase', 'edit/editFiles', 'read/problems']
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'deepwiki/*', 'fetch/*', 'microsoft-docs/*', 'nuget-server/*', 'agent', 'todo']
 description: 'Ensure that C# types are documented with XML comments following Microsoft documentation standards and project guidelines.'
 ---
 
