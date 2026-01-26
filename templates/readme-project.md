@@ -179,4 +179,4 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 > [!NOTE]
 > **Made with ❤️ by the NetEvolve Team**
-> Visit us at [https://www.netevolve.com](https://www.netevolve.com) for more information about our services and solutions.
+> Visit us at [https://www.daily-devops.net](https://www.daily-devops.net) for more information about our services and solutions.

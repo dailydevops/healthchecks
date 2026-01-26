@@ -26,10 +26,10 @@ Include information about the technical stack, frameworks, and key technologies 
 
 This solution contains multiple projects organized into a cohesive architecture:
 
-* **Core Projects**: Foundation libraries and shared abstractions
-* **Service Projects**: Business logic and domain services
-* **Integration Projects**: External system integrations and adapters
-* **Test Projects**: Comprehensive unit and integration tests
+- **Core Projects**: Foundation libraries and shared abstractions
+- **Service Projects**: Business logic and domain services
+- **Integration Projects**: External system integrations and adapters
+- **Test Projects**: Comprehensive unit and integration tests
 
 ## Projects
 
@@ -42,23 +42,23 @@ Replace example entries with actual projects.
 
 ### Core Libraries
 
-* **ProjectName.Core** - Core domain models, interfaces, and shared utilities
-* **ProjectName.Abstractions** - Public contracts and abstractions for extensibility
+- **ProjectName.Core** - Core domain models, interfaces, and shared utilities
+- **ProjectName.Abstractions** - Public contracts and abstractions for extensibility
 
 ### Services
 
-* **ProjectName.Services** - Business logic implementation and service layer
-* **ProjectName.Api** - RESTful API endpoints and controllers
+- **ProjectName.Services** - Business logic implementation and service layer
+- **ProjectName.Api** - RESTful API endpoints and controllers
 
 ### Infrastructure
 
-* **ProjectName.Data** - Data access layer and repository implementations
-* **ProjectName.Infrastructure** - Cross-cutting concerns and infrastructure services
+- **ProjectName.Data** - Data access layer and repository implementations
+- **ProjectName.Infrastructure** - Cross-cutting concerns and infrastructure services
 
 ### Tests
 
-* **ProjectName.Tests.Unit** - Unit tests for all core components
-* **ProjectName.Tests.Integration** - Integration tests and end-to-end scenarios
+- **ProjectName.Tests.Unit** - Unit tests for all core components
+- **ProjectName.Tests.Integration** - Integration tests and end-to-end scenarios
 
 ## Features
 
@@ -69,10 +69,10 @@ Start each feature with a strong action verb or noun.
 Limit to 6-10 key features to maintain focus.
 -->
 
-* Feature 1 - Brief description of solution-wide capability
-* Feature 2 - Brief description of solution-wide capability
-* Feature 3 - Brief description of solution-wide capability
-* Feature 4 - Brief description of solution-wide capability
+- Feature 1 - Brief description of solution-wide capability
+- Feature 2 - Brief description of solution-wide capability
+- Feature 3 - Brief description of solution-wide capability
+- Feature 4 - Brief description of solution-wide capability
 
 ## Getting Started
 
@@ -85,10 +85,10 @@ Mention any system requirements (OS, hardware, etc.).
 Replace version numbers with actual requirements.
 -->
 
-* [.NET SDK 10.0](https://dotnet.microsoft.com/download) or higher
-* [Git](https://git-scm.com/) for version control
-* [Visual Studio 2022](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (recommended)
-* Any additional tools or dependencies
+- [.NET SDK 10.0](https://dotnet.microsoft.com/download) or higher
+- [Git](https://git-scm.com/) for version control
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (recommended)
+- Any additional tools or dependencies
 
 ### Installation
 
@@ -99,22 +99,26 @@ Replace 'YourRepo' with actual repository name.
 -->
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/dailydevops/YourRepo.git
    cd YourRepo
    ```
 
 2. Restore dependencies:
+
    ```bash
    dotnet restore
    ```
 
 3. Build the solution:
+
    ```bash
    dotnet build
    ```
 
 4. Run tests to verify installation:
+
    ```bash
    dotnet test
    ```
@@ -175,7 +179,7 @@ Explain the folder structure and organization conventions.
 Help developers understand where different types of code should live.
 -->
 
-```
+```txt
 src/                    # Production code
 ├── Core/              # Core libraries and abstractions
 ├── Services/          # Business logic and services
@@ -200,10 +204,10 @@ Remove this section if not applicable.
 
 This solution follows modern .NET architectural patterns and best practices:
 
-* **Clean Architecture**: Clear separation of concerns with dependencies pointing inward
-* **Dependency Injection**: Built-in .NET dependency injection throughout
-* **Repository Pattern**: Abstraction over data access logic
-* **SOLID Principles**: Object-oriented design with SOLID principles
+- **Clean Architecture**: Clear separation of concerns with dependencies pointing inward
+- **Dependency Injection**: Built-in .NET dependency injection throughout
+- **Repository Pattern**: Abstraction over data access logic
+- **SOLID Principles**: Object-oriented design with SOLID principles
 
 For detailed architectural decisions, see the [Architecture Decision Records](decisions/).
 
@@ -217,10 +221,11 @@ Link to CONTRIBUTING.md for detailed guidelines.
 We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
 
 Key points:
-* Follow the [Conventional Commits](https://www.conventionalcommits.org/) format for commit messages
-* Write tests for new functionality
-* Follow existing code style and conventions
-* Update documentation as needed
+
+- Follow the [Conventional Commits](https://www.conventionalcommits.org/) format for commit messages
+- Write tests for new functionality
+- Follow existing code style and conventions
+- Update documentation as needed
 
 ## Code of Conduct
 
@@ -228,7 +233,7 @@ Key points:
 Reference the Code of Conduct to establish community standards.
 -->
 
-This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to info@daily-devops.net.
+This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [info@daily-devops.net](mailto:info@daily-devops.net).
 
 ## Documentation
 
@@ -237,10 +242,10 @@ Link to additional documentation resources.
 Include links to wikis, external docs sites, or specific documentation files.
 -->
 
-* **[Architecture Decision Records](decisions/)** - Detailed architectural decisions and rationale
-* **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to this project
-* **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards and expectations
-* **[License](LICENSE)** - Project licensing information
+- **[Architecture Decision Records](decisions/)** - Detailed architectural decisions and rationale
+- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to this project
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards and expectations
+- **[License](LICENSE)** - Project licensing information
 
 ## Versioning
 
@@ -259,8 +264,8 @@ Replace 'YourRepo' with actual repository name.
 All communication related to bugs, features, and project coordination occurs through GitHub Issues.
 -->
 
-* **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
-* **Documentation**: Read the full documentation in this repository
+- **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/dailydevops/YourRepo/issues)
+- **Documentation**: Read the full documentation in this repository
 
 ## License
 
@@ -273,5 +278,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-> [!NOTE] 
+> [!NOTE]
 > **Made with ❤️ by the NetEvolve Team**
+> Visit us at [https://www.daily-devops.net](https://www.daily-devops.net) for more information about our services and solutions.
