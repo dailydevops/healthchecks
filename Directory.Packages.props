@@ -47,7 +47,7 @@
     <PackageVersion Include="Devart.Data.PostgreSql" Version="9.0.0" />
     <PackageVersion Include="Devart.Data.SQLite" Version="7.0.0" />
     <PackageVersion Include="Devart.Data.SqlServer" Version="6.0.0" />
-    <PackageVersion Include="DotPulsar" Version="5.1.1" />
+    <PackageVersion Include="DotPulsar" Version="5.1.2" />
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.4.3" />
     <PackageVersion Include="DuckDB.NET.Data" Version="1.4.3" />
     <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.2" />
