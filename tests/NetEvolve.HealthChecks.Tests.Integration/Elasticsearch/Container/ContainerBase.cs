@@ -11,7 +11,7 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
     protected ContainerBase(string? password)
     {
         var builder = new ElasticsearchBuilder(
-            /*dockerimage*/"elasticsearch:9.2.3"
+            /*dockerimage*/"elasticsearch:9.3.0"
         );
 
         if (!string.IsNullOrWhiteSpace(password))
