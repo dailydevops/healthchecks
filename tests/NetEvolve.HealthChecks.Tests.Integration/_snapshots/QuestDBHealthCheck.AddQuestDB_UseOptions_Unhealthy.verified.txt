@@ -3,7 +3,7 @@
     {
       description: TestContainerUnhealthy: Unexpected error.,
       exception: {
-        message: No service for type 'System.Net.Http.HttpClient' has been registered.,
+        message: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.,
         type: System.InvalidOperationException
       },
       name: TestContainerUnhealthy,

@@ -43,6 +43,7 @@ public static partial class DependencyInjectionExtensions
             _ = builder
                 .Services.AddSingleton<QuestDBCheckMarker>()
                 .AddSingleton<QuestDBHealthCheck>()
+                .AddHttpClient()
                 .ConfigureOptions<QuestDBOptionsConfigure>();
         }
 

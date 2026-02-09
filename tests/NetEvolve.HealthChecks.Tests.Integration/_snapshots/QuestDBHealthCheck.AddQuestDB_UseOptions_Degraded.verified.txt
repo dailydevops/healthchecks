@@ -1,18 +1,14 @@
 ﻿{
   results: [
     {
-      description: TestContainerDegraded: Unexpected error.,
-      exception: {
-        message: No service for type 'System.Net.Http.HttpClient' has been registered.,
-        type: System.InvalidOperationException
-      },
+      description: TestContainerDegraded: Degraded,
       name: TestContainerDegraded,
-      status: Unhealthy,
+      status: Degraded,
       tags: [
         questdb,
         database
       ]
     }
   ],
-  status: Unhealthy
+  status: Degraded
 }

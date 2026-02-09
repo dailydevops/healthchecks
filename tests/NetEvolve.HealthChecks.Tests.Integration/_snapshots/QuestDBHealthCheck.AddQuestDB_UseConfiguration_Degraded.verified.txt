@@ -1,18 +1,14 @@
 ﻿{
   results: [
     {
-      description: TestContainerConfigDegraded: Unexpected error.,
-      exception: {
-        message: The status uri cannot be null or whitespace.,
-        type: Microsoft.Extensions.Options.OptionsValidationException
-      },
+      description: TestContainerConfigDegraded: Degraded,
       name: TestContainerConfigDegraded,
-      status: Unhealthy,
+      status: Degraded,
       tags: [
         questdb,
         database
       ]
     }
   ],
-  status: Unhealthy
+  status: Degraded
 }
