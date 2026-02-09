@@ -89,7 +89,7 @@ public sealed class QuestDBHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
                     { "HealthChecks:QuestDB:TestContainerConfigDegraded:Timeout", "0" },
-                    { "HealthChecks:QuestDB:TestContainerConfigHealthy:StatusUri", _database.StatusUri.ToString() },
+                    { "HealthChecks:QuestDB:TestContainerConfigDegraded:StatusUri", _database.StatusUri.ToString() },
                 };
                 _ = config.AddInMemoryCollection(values);
             }

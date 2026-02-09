@@ -12,7 +12,7 @@ public sealed class QuestDBDatabase : IAsyncInitializer, IAsyncDisposable
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    public Uri StatusUri => new Uri(_database.GetRestApiAddress(), "/status");
+    public Uri StatusUri => new Uri(_database.GetRestApiAddress(), "/ping");
 
     public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 

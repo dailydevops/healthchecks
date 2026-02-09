@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
+using QuestDB;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(QuestDBOptions))]
@@ -18,10 +19,10 @@ internal sealed partial class QuestDBHealthCheck
         CancellationToken cancellationToken
     )
     {
-        var httpClient = _serviceProvider.GetRequiredService<HttpClient>();
+        var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
 
-        var httpMethod = new HttpMethod("GET");
-        using var request = new HttpRequestMessage(httpMethod, options.StatusUri);
+        using var httpClient = httpClientFactory.CreateClient(name);
+        using var request = new HttpRequestMessage(HttpMethod.Get, options.StatusUri);
 
         var (isTimelyResponse, response) = await httpClient
             .SendAsync(request, cancellationToken)

@@ -9,7 +9,7 @@
 public sealed record QuestDBOptions
 {
     /// <summary>
-    /// The HTTP status endpoint URI to check, e.g. "http://localhost:9000/status".
+    /// The HTTP status endpoint URI to check, e.g. "http://localhost:9000/ping".
     /// </summary>
 #pragma warning disable CA1056 // URI-like properties should not be strings
     public string StatusUri { get; set; } = default!;
