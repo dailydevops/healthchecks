@@ -11,6 +11,7 @@ using SourceGenerator.Attributes;
 
 [TestGroup("PublicAPI")]
 [TestGroup("Z00TestGroup")]
+[PublicApi]
 public class PublicApiTests
 {
     private static readonly string[] _excludedAttributes =
