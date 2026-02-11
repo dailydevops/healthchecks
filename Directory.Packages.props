@@ -98,7 +98,7 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="OllamaSharp" Version="5.4.16" />
     <PackageVersion Include="OpenSearch.Client" Version="1.8.0" />
-    <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.0" />
+    <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.100" />
     <PackageVersion Include="PublicApiGenerator" Version="11.5.4" />
     <PackageVersion Include="Qdrant.Client" Version="1.16.1" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.0" />
