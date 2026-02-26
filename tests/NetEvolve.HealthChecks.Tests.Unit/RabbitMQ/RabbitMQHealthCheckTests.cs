@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.RabbitMQ;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using global::RabbitMQ.Client;
@@ -18,6 +19,11 @@ public sealed class RabbitMQHealthCheckTests
     private const string TestName = nameof(RabbitMQ);
 
     [Test]
+    [SuppressMessage(
+        "Reliability",
+        "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
+        Justification = "As designed."
+    )]
     public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
     {
         // Arrange
@@ -56,6 +62,11 @@ public sealed class RabbitMQHealthCheckTests
     }
 
     [Test]
+    [SuppressMessage(
+        "Reliability",
+        "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
+        Justification = "As designed."
+    )]
     public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService()
     {
         // Arrange
