@@ -23,7 +23,7 @@
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.2.0" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.15" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.78" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.79" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.18.7" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.16" />
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.14" />
