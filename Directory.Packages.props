@@ -39,7 +39,7 @@
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.10.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.13.0" />
-    <PackageVersion Include="Consul" Version="1.7.14.10" />
+    <PackageVersion Include="Consul" Version="1.7.14.11" />
     <PackageVersion Include="CouchbaseNetClient" Version="3.8.1" />
     <PackageVersion Include="Dapr.Client" Version="1.16.1" />
     <PackageVersion Include="Devart.Data.MySql" Version="10.0.0" />
