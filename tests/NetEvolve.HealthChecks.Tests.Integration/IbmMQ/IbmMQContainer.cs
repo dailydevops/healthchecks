@@ -15,7 +15,7 @@ public sealed class IbmMQContainer : IAsyncInitializer, IAsyncDisposable
     internal const int PortNumber = 1414;
 
     private readonly IContainer _container = new ContainerBuilder(
-        /*dockerimage*/"icr.io/ibm-messaging/mq:9.2.4.0-r1"
+        /*dockerimage*/"icr.io/ibm-messaging/mq:9.2.5.0-r3-s390x"
     )
         .WithPortBinding(PortNumber, true)
         .WithEnvironment("LICENSE", "accept")
