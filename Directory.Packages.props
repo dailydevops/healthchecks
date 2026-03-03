@@ -107,7 +107,7 @@
     <PackageVersion Include="SolrNet.Microsoft.DependencyInjection" Version="1.2.1" />
     <PackageVersion Include="StackExchange.Redis" Version="2.10.14" />
     <PackageVersion Include="System.Data.Odbc" Version="9.0.13" />
-    <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
+    <PackageVersion Include="System.Data.SqlClient" Version="4.9.1" />
     <PackageVersion Include="System.Data.SQLite" Version="2.0.2" />
     <PackageVersion Include="System.Drawing.Common" Version="9.0.11" />
     <PackageVersion Include="System.Text.Json" Version="10.0.1" />
