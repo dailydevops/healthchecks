@@ -1,0 +1,13 @@
+﻿namespace NetEvolve.HealthChecks.QuestDB
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddQuestDB([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.QuestDB.QuestDBOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class QuestDBOptions : System.IEquatable<NetEvolve.HealthChecks.QuestDB.QuestDBOptions>
+    {
+        public QuestDBOptions() { }
+        public string StatusUri { get; set; }
+        public int Timeout { get; set; }
+    }
+}

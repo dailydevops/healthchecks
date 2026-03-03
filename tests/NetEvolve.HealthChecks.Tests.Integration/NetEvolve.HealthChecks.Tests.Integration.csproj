@@ -204,6 +204,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Oracle.Devart\NetEvolve.HealthChecks.Oracle.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Pulsar\NetEvolve.HealthChecks.Apache.Pulsar.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Qdrant\NetEvolve.HealthChecks.Qdrant.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.QuestDB\NetEvolve.HealthChecks.QuestDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RabbitMQ\NetEvolve.HealthChecks.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />

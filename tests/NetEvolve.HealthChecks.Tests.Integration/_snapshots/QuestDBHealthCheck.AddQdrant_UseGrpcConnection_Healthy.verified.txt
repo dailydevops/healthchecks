@@ -1,0 +1,14 @@
+﻿{
+  results: [
+    {
+      description: TestContainerGrpcHealthy: Healthy,
+      name: TestContainerGrpcHealthy,
+      status: Healthy,
+      tags: [
+        qdrant,
+        database
+      ]
+    }
+  ],
+  status: Healthy
+}

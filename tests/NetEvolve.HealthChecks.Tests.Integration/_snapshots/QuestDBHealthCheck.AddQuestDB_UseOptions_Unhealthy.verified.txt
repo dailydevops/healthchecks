@@ -1,0 +1,18 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        message: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.,
+        type: System.InvalidOperationException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        questdb,
+        database
+      ]
+    }
+  ],
+  status: Unhealthy
+}
