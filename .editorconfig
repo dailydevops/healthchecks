@@ -267,18 +267,6 @@ dotnet_diagnostic.IDE0290.severity                                      = sugges
 # [CSharpier] Incompatible rules deactivated
 # https://csharpier.com/docs/IntegratingWithLinters#code-analysis-rules
 dotnet_diagnostic.IDE0055.severity                                      = none
-dotnet_diagnostic.SA1000.severity                                       = none
-dotnet_diagnostic.SA1009.severity                                       = none
-dotnet_diagnostic.SA1111.severity                                       = none
-dotnet_diagnostic.SA1118.severity                                       = none
-dotnet_diagnostic.SA1137.severity                                       = none
-dotnet_diagnostic.SA1413.severity                                       = none
-dotnet_diagnostic.SA1500.severity                                       = none
-dotnet_diagnostic.SA1501.severity                                       = none
-dotnet_diagnostic.SA1502.severity                                       = none
-dotnet_diagnostic.SA1504.severity                                       = none
-dotnet_diagnostic.SA1515.severity                                       = none
-dotnet_diagnostic.SA1516.severity                                       = none
 
 # Support for NetEvolve.Arguments Methods
 # https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062#null-check-validation-methods
