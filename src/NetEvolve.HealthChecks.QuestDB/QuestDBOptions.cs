@@ -4,7 +4,7 @@
 /// Represents configuration options for the QuestDB health check.
 /// </summary>
 /// <remarks>
-/// This record provides configuration for the health check that verifies connectivity and proper functioning of a QuestDB vector database.
+/// This record provides configuration for the health check that verifies connectivity and proper functioning of a QuestDB time-series database.
 /// </remarks>
 public sealed record QuestDBOptions
 {

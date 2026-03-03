@@ -1,7 +1,0 @@
-{
-  "profiles": {
-    "SourceGenerator.HealthChecks": {
-      "commandName": "Project"
-    }
-  }
-}

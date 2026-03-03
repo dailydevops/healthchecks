@@ -35,7 +35,7 @@ public static partial class DependencyInjectionExtensions
     )
     {
         ArgumentNullException.ThrowIfNull(builder);
-        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         ArgumentNullException.ThrowIfNull(tags);
 
         if (!builder.IsServiceTypeRegistered<QuestDBCheckMarker>())

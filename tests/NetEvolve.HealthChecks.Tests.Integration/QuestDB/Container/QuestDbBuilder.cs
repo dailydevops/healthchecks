@@ -5,7 +5,6 @@ using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Images;
-using NetEvolve.Extensions.TUnit;
 
 /// <inheritdoc cref="ContainerBuilder{TBuilderEntity, TContainerEntity, TConfigurationEntity}" />
 public sealed class QuestDbBuilder : ContainerBuilder<QuestDbBuilder, QuestDbContainer, QuestDbConfiguration>

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
-using QuestDB;
 using SourceGenerator.Attributes;
 
 [ConfigurableHealthCheck(typeof(QuestDBOptions))]
@@ -21,7 +20,7 @@ internal sealed partial class QuestDBHealthCheck
     {
         var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
 
-        using var httpClient = httpClientFactory.CreateClient(name);
+        var httpClient = httpClientFactory.CreateClient(name);
         using var request = new HttpRequestMessage(HttpMethod.Get, options.StatusUri);
 
         var (isTimelyResponse, response) = await httpClient
@@ -29,14 +28,15 @@ internal sealed partial class QuestDBHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        var statusCode = (int)response.StatusCode;
-
-        return statusCode is >= 200 and < 300
-            ? HealthCheckState(isTimelyResponse, name)
-            : HealthCheckUnhealthy(
-                failureStatus,
-                name,
-                $"Unexpected status code {statusCode}. Expected: between 200 and 300"
-            );
+        using (response)
+        {
+            return response.IsSuccessStatusCode
+                ? HealthCheckState(isTimelyResponse, name)
+                : HealthCheckUnhealthy(
+                    failureStatus,
+                    name,
+                    $"Unexpected status code {response.StatusCode}. Expected: between 200 and 300"
+                );
+        }
     }
 }

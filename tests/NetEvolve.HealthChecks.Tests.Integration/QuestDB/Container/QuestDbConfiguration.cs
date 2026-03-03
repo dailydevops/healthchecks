@@ -3,7 +3,6 @@
 using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
-using NetEvolve.Extensions.TUnit;
 
 /// <inheritdoc cref="ContainerConfiguration" />
 public sealed class QuestDbConfiguration : ContainerConfiguration

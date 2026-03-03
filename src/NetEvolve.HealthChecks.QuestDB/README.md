@@ -3,8 +3,8 @@
 [![NuGet](https://img.shields.io/nuget/v/NetEvolve.HealthChecks.QuestDB?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.QuestDB/)
 [![NuGet](https://img.shields.io/nuget/dt/NetEvolve.HealthChecks.QuestDB?logo=nuget)](https://www.nuget.org/packages/NetEvolve.HealthChecks.QuestDB/)
 
-This package provides a health check for QuestDB databases, based on the [net-questdb-client](https://www.nuget.org/packages/net-questdb-client/) package.
-The main purpose is to check if the QuestDB database is available and if the database is online.
+This package provides a health check for QuestDB databases. The implementation uses `HttpClient` to send a GET request to the QuestDB status endpoint and evaluates the HTTP response status code.
+The main purpose is to check if the QuestDB database is available by monitoring the checked endpoint (`status/health`). The health check returns healthy or unhealthy based on the HTTP response.
 
 :bulb: This package is available for .NET 8.0 and later.
 
@@ -28,7 +28,7 @@ Therefore, you can use two different approaches. In both approaches you have to 
 
 ### Parameters
 - `name`: The name of the health check. The name is used to identify the configuration object. It is required and must be unique within the application.
-- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration based approach.
+- `options`: The configuration options for the health check. If you don't provide any options, the health check will use the configuration-based approach.
 - `tags`: The tags for the health check. The tags `questdb` and `database` are always used as default and combined with the user input. You can provide additional tags to group or filter the health checks.
 
 ### Variant 1: Configuration-based
