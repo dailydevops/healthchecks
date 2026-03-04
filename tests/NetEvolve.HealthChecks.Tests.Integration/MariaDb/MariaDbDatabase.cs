@@ -7,7 +7,7 @@ using Testcontainers.MariaDb;
 public sealed class MariaDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly MariaDbContainer _database = new MariaDbBuilder(
-        /*dockerimage*/"mariadb:10.11.15"
+        /*dockerimage*/"mariadb:10.11.16"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
