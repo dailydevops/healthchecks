@@ -87,10 +87,6 @@ insert_final_newline = false
 [*.sln]
 indent_style = tab
 
-[*.{received,verified}.txt]
-insert_final_newline = false
-trim_trailing_whitespace = false
-
 [*.{cs,csx,vb,vbx}]
 # .NET Code Style Settings
 # See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
