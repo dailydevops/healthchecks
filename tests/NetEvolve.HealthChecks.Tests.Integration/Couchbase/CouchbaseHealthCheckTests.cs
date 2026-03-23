@@ -23,14 +23,11 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
 
     private async Task<ICluster> CreateCluster()
     {
-        var options = new ClusterOptions
-        {
-            ConnectionString = _database.ConnectionString,
-            UserName = CouchbaseBuilder.DefaultUsername,
-            Password = CouchbaseBuilder.DefaultPassword,
-        };
-
+        var options = new ClusterOptions()
+            .WithConnectionString(_database.ConnectionString)
+            .WithPasswordAuthentication(CouchbaseBuilder.DefaultUsername, CouchbaseBuilder.DefaultPassword);
         var cluster = await Cluster.ConnectAsync(options).ConfigureAwait(false);
+
         await cluster.WaitUntilReadyAsync(TimeSpan.FromSeconds(10)).ConfigureAwait(false);
 
         return cluster;
