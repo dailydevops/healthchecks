@@ -99,67 +99,94 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateSQSDefaults(CancellationToken cancellationToken)
     {
-        // Create SQS Queue
-        using var sqsClient = new AmazonSQSClient(
-            AccessKey,
-            SecretKey,
-            new AmazonSQSConfig { ServiceURL = ConnectionString }
-        );
-
-        _ = await sqsClient.CreateQueueAsync(QueueName, cancellationToken).ConfigureAwait(false);
+        try
+        {
+            // Create SQS Queue
+            using var sqsClient = new AmazonSQSClient(
+                AccessKey,
+                SecretKey,
+                new AmazonSQSConfig { ServiceURL = ConnectionString }
+            );
+            _ = await sqsClient.CreateQueueAsync(QueueName, cancellationToken).ConfigureAwait(false);
+        }
+        catch
+        {
+            // Ignore
+        }
     }
 
     private async Task CreateS3Defaults(CancellationToken cancellationToken)
     {
-        // Create S3 Bucket
-        using var s3Client = new AmazonS3Client(
-            AccessKey,
-            SecretKey,
-            new AmazonS3Config { ServiceURL = ConnectionString, ForcePathStyle = true }
-        );
+        try
+        {
+            // Create S3 Bucket
+            using var s3Client = new AmazonS3Client(
+                AccessKey,
+                SecretKey,
+                new AmazonS3Config { ServiceURL = ConnectionString, ForcePathStyle = true }
+            );
 
-        var putBucketRequest = new PutBucketRequest { BucketName = BucketName };
-        _ = await s3Client.PutBucketAsync(putBucketRequest, cancellationToken).ConfigureAwait(false);
+            var putBucketRequest = new PutBucketRequest { BucketName = BucketName };
+            _ = await s3Client.PutBucketAsync(putBucketRequest, cancellationToken).ConfigureAwait(false);
+        }
+        catch
+        {
+            // Ignore
+        }
     }
 
     private async Task CreateEC2DEfaults(CancellationToken cancellationToken)
     {
-        // Create EC2 Defaults if needed
-        using var ec2Client = new AmazonEC2Client(
-            AccessKey,
-            SecretKey,
-            new AmazonEC2Config { ServiceURL = ConnectionString }
-        );
-
-        var request = new RunInstancesRequest()
+        try
         {
-            InstanceType = InstanceType.T1Micro,
-            MinCount = 1,
-            MaxCount = 1,
-            KeyName = "development",
-        };
-        _ = await ec2Client.RunInstancesAsync(request, cancellationToken).ConfigureAwait(false);
+            // Create EC2 Defaults if needed
+            using var ec2Client = new AmazonEC2Client(
+                AccessKey,
+                SecretKey,
+                new AmazonEC2Config { ServiceURL = ConnectionString }
+            );
+
+            var request = new RunInstancesRequest()
+            {
+                InstanceType = InstanceType.T1Micro,
+                MinCount = 1,
+                MaxCount = 1,
+                KeyName = "development",
+            };
+            _ = await ec2Client.RunInstancesAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+        catch
+        {
+            // Ignore
+        }
     }
 
     private async Task CreateDynamoDBDefaults(CancellationToken cancellationToken)
     {
-        // Create DynamoDB Table
-        using var dynamoDbClient = new AmazonDynamoDBClient(
-            AccessKey,
-            SecretKey,
-            new AmazonDynamoDBConfig { ServiceURL = ConnectionString }
-        );
-
-        var createTableRequest = new CreateTableRequest
+        try
         {
-            TableName = TableName,
-            KeySchema = [new KeySchemaElement { AttributeName = "Id", KeyType = Amazon.DynamoDBv2.KeyType.HASH }],
-            AttributeDefinitions =
-            [
-                new AttributeDefinition { AttributeName = "Id", AttributeType = ScalarAttributeType.S },
-            ],
-            BillingMode = BillingMode.PAY_PER_REQUEST,
-        };
-        _ = await dynamoDbClient.CreateTableAsync(createTableRequest, cancellationToken).ConfigureAwait(false);
+            // Create DynamoDB Table
+            using var dynamoDbClient = new AmazonDynamoDBClient(
+                AccessKey,
+                SecretKey,
+                new AmazonDynamoDBConfig { ServiceURL = ConnectionString }
+            );
+
+            var createTableRequest = new CreateTableRequest
+            {
+                TableName = TableName,
+                KeySchema = [new KeySchemaElement { AttributeName = "Id", KeyType = Amazon.DynamoDBv2.KeyType.HASH }],
+                AttributeDefinitions =
+                [
+                    new AttributeDefinition { AttributeName = "Id", AttributeType = ScalarAttributeType.S },
+                ],
+                BillingMode = BillingMode.PAY_PER_REQUEST,
+            };
+            _ = await dynamoDbClient.CreateTableAsync(createTableRequest, cancellationToken).ConfigureAwait(false);
+        }
+        catch
+        {
+            // Ignore
+        }
     }
 }
