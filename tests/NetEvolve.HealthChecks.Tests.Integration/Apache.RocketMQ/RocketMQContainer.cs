@@ -22,8 +22,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
         .WithLogger(NullLogger.Instance)
         .Build();
 
-    public string Endpoint =>
-        $"{_nameServer.Hostname}:{_nameServer.GetMappedPublicPort(NameServerPort)}";
+    public string Endpoint => $"{_nameServer.Hostname}:{_nameServer.GetMappedPublicPort(NameServerPort)}";
 
     public string Topic => "health-check-topic";
 
