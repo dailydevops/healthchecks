@@ -15,10 +15,7 @@ internal sealed class KeyVaultSecretAvailableConfigure
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public KeyVaultSecretAvailableConfigure(
-        IConfiguration configuration,
-        IServiceProvider serviceProvider
-    )
+    public KeyVaultSecretAvailableConfigure(IConfiguration configuration, IServiceProvider serviceProvider)
     {
         _configuration = configuration;
         _serviceProvider = serviceProvider;
@@ -30,8 +27,7 @@ internal sealed class KeyVaultSecretAvailableConfigure
         _configuration.Bind($"HealthChecks:AzureKeyVaultSecret:{name}", options);
     }
 
-    public void Configure(KeyVaultSecretAvailableOptions options) =>
-        Configure(Options.DefaultName, options);
+    public void Configure(KeyVaultSecretAvailableOptions options) => Configure(Options.DefaultName, options);
 
     public ValidateOptionsResult Validate(string? name, KeyVaultSecretAvailableOptions options)
     {
@@ -47,9 +43,7 @@ internal sealed class KeyVaultSecretAvailableConfigure
 
         if (options.Timeout < Timeout.Infinite)
         {
-            return Fail(
-                "The timeout value must be a positive number in milliseconds or -1 for an infinite timeout."
-            );
+            return Fail("The timeout value must be a positive number in milliseconds or -1 for an infinite timeout.");
         }
 
         var mode = options.Mode;
@@ -57,19 +51,13 @@ internal sealed class KeyVaultSecretAvailableConfigure
         return options.Mode switch
         {
             KeyVaultClientCreationMode.ServiceProvider => ValidateModeServiceProvider(),
-            KeyVaultClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(
-                options
-            ),
-            KeyVaultClientCreationMode.ClientSecretCredential => ValidateModeClientSecretCredential(
-                options
-            ),
+            KeyVaultClientCreationMode.DefaultAzureCredentials => ValidateModeDefaultAzureCredentials(options),
+            KeyVaultClientCreationMode.ClientSecretCredential => ValidateModeClientSecretCredential(options),
             _ => Fail($"The mode `{mode}` is not supported."),
         };
     }
 
-    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(
-        KeyVaultSecretAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeDefaultAzureCredentials(KeyVaultSecretAvailableOptions options)
     {
         if (options.VaultUri is null)
         {
@@ -88,9 +76,7 @@ internal sealed class KeyVaultSecretAvailableConfigure
         return Success;
     }
 
-    private static ValidateOptionsResult ValidateModeClientSecretCredential(
-        KeyVaultSecretAvailableOptions options
-    )
+    private static ValidateOptionsResult ValidateModeClientSecretCredential(KeyVaultSecretAvailableOptions options)
     {
         if (options.VaultUri is null)
         {
