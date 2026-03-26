@@ -80,10 +80,7 @@ public class DependencyInjectionExtensionsTests
         const string? name = "Test";
 
         // Act
-        void Act() =>
-            builder
-                .AddKeyVaultSecretAvailability(name, _ => { })
-                .AddKeyVaultSecretAvailability(name);
+        void Act() => builder.AddKeyVaultSecretAvailability(name, _ => { }).AddKeyVaultSecretAvailability(name);
 
         // Assert
         _ = Assert.Throws<ArgumentException>(nameof(name), Act);

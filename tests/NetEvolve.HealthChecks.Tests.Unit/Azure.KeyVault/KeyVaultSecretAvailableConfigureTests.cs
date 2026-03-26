@@ -52,9 +52,7 @@ public sealed class KeyVaultSecretAvailableConfigureTests
         }
     }
 
-    public static IEnumerable<
-        Func<(bool, string?, string?, KeyVaultSecretAvailableOptions)>
-    > GetValidateTestCases()
+    public static IEnumerable<Func<(bool, string?, string?, KeyVaultSecretAvailableOptions)>> GetValidateTestCases()
     {
         yield return () => (false, "The name cannot be null or whitespace.", null, null!);
         yield return () => (false, "The name cannot be null or whitespace.", "\t", null!);
@@ -66,13 +64,7 @@ public sealed class KeyVaultSecretAvailableConfigureTests
                 "name",
                 new KeyVaultSecretAvailableOptions { Timeout = -2 }
             );
-        yield return () =>
-            (
-                false,
-                "The mode `` is not supported.",
-                "name",
-                new KeyVaultSecretAvailableOptions()
-            );
+        yield return () => (false, "The mode `` is not supported.", "name", new KeyVaultSecretAvailableOptions());
         yield return () =>
             (
                 false,
@@ -87,10 +79,7 @@ public sealed class KeyVaultSecretAvailableConfigureTests
                 false,
                 $"No service of type `{nameof(SecretClient)}` registered. Please execute `builder.AddAzureClients()`.",
                 "name",
-                new KeyVaultSecretAvailableOptions
-                {
-                    Mode = KeyVaultClientCreationMode.ServiceProvider,
-                }
+                new KeyVaultSecretAvailableOptions { Mode = KeyVaultClientCreationMode.ServiceProvider }
             );
 
         // Mode: DefaultAzureCredentials
@@ -99,10 +88,7 @@ public sealed class KeyVaultSecretAvailableConfigureTests
                 false,
                 "The vault url cannot be null when using `DefaultAzureCredentials` mode.",
                 "name",
-                new KeyVaultSecretAvailableOptions
-                {
-                    Mode = KeyVaultClientCreationMode.DefaultAzureCredentials,
-                }
+                new KeyVaultSecretAvailableOptions { Mode = KeyVaultClientCreationMode.DefaultAzureCredentials }
             );
         yield return () =>
             (
@@ -133,10 +119,7 @@ public sealed class KeyVaultSecretAvailableConfigureTests
                 false,
                 "The vault url cannot be null when using `ClientSecretCredential` mode.",
                 "name",
-                new KeyVaultSecretAvailableOptions
-                {
-                    Mode = KeyVaultClientCreationMode.ClientSecretCredential,
-                }
+                new KeyVaultSecretAvailableOptions { Mode = KeyVaultClientCreationMode.ClientSecretCredential }
             );
         yield return () =>
             (
