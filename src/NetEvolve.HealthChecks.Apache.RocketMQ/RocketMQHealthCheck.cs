@@ -15,9 +15,7 @@ using SourceGenerator.Attributes;
 [ConfigurableHealthCheck(typeof(RocketMQOptions))]
 internal sealed partial class RocketMQHealthCheck
 {
-    private readonly ConcurrentDictionary<string, ClientConfig> _clientConfigs = new(
-        StringComparer.OrdinalIgnoreCase
-    );
+    private readonly ConcurrentDictionary<string, ClientConfig> _clientConfigs = new(StringComparer.OrdinalIgnoreCase);
 
     /// <inheritdoc />
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
@@ -29,11 +27,7 @@ internal sealed partial class RocketMQHealthCheck
     {
         var clientConfig = _clientConfigs.GetOrAdd(name, _ => BuildClientConfig(options));
 
-        var (isTimelyResponse, sendReceipt) = await BuildAndSendAsync(
-                clientConfig,
-                options.Topic!,
-                cancellationToken
-            )
+        var (isTimelyResponse, sendReceipt) = await BuildAndSendAsync(clientConfig, options.Topic!, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
@@ -79,10 +73,7 @@ internal sealed partial class RocketMQHealthCheck
 
         await using (producer.ConfigureAwait(false))
         {
-            var message = new Message.Builder()
-                .SetTopic(topic)
-                .SetBody(Encoding.UTF8.GetBytes("healthcheck"))
-                .Build();
+            var message = new Message.Builder().SetTopic(topic).SetBody(Encoding.UTF8.GetBytes("healthcheck")).Build();
 
             return await producer.Send(message).WaitAsync(cancellationToken).ConfigureAwait(false);
         }
