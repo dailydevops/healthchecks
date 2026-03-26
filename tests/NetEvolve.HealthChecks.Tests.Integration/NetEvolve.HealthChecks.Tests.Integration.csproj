@@ -16,6 +16,8 @@
     <PackageReference Include="Azure.Data.Tables" />
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <PackageReference Include="AzureKeyVaultEmulator.TestContainers" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
     <PackageReference Include="Microsoft.Azure.Cosmos" />
@@ -218,6 +220,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks\NetEvolve.HealthChecks.csproj" />
     <ProjectReference Include="..\..\src\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.KeyVault\NetEvolve.HealthChecks.Azure.KeyVault.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Azure.Kusto\NetEvolve.HealthChecks.Azure.Kusto.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.GCP.PubSub\NetEvolve.HealthChecks.GCP.PubSub.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Solr\NetEvolve.HealthChecks.Apache.Solr.csproj" />
