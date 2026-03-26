@@ -16,8 +16,7 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
 {
     private readonly AzureKeyVaultEmulatorAccess _container;
 
-    public KeyVaultSecretAvailableHealthCheckTests(AzureKeyVaultEmulatorAccess container) =>
-        _container = container;
+    public KeyVaultSecretAvailableHealthCheckTests(AzureKeyVaultEmulatorAccess container) => _container = container;
 
     [Test]
     public async Task AddKeyVaultSecretAvailability_UseOptions_ModeServiceProvider_Healthy() =>
@@ -34,8 +33,7 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services =>
-                services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
         );
 
     [Test]
@@ -53,8 +51,7 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services =>
-                services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
         );
 
     [Test]
@@ -134,8 +131,7 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-                services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
         );
 
     [Test]
@@ -155,7 +151,6 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services =>
-                services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
         );
 }

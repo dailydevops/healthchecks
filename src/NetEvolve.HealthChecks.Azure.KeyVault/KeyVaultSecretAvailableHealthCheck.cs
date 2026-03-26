@@ -71,8 +71,7 @@ internal sealed partial class KeyVaultSecretAvailableHealthCheck
         switch (options.Mode)
         {
             case KeyVaultClientCreationMode.DefaultAzureCredentials:
-                var tokenCredential =
-                    serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
+                var tokenCredential = serviceProvider.GetService<TokenCredential>() ?? new DefaultAzureCredential();
                 return new SecretClient(options.VaultUri, tokenCredential, clientOptions);
             case KeyVaultClientCreationMode.ClientSecretCredential:
                 var credential = new global::Azure.Identity.ClientSecretCredential(
