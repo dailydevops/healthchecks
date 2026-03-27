@@ -82,7 +82,7 @@
     <PackageVersion Include="Milvus.Client" Version="2.3.0-preview.1" />
     <PackageVersion Include="Minio" Version="7.0.0" />
     <PackageVersion Include="MongoDB.Driver" Version="3.7.1" />
-    <PackageVersion Include="MQTTnet" Version="5.0.1.1416" />
+    <PackageVersion Include="MQTTnet" Version="5.1.0.1559" />
     <PackageVersion Include="MyCouch" Version="7.6.0" />
     <PackageVersion Include="MySql.Data" Version="9.5.0" />
     <PackageVersion Include="MySqlConnector" Version="2.5.0" />
