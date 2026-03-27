@@ -7,7 +7,7 @@ using Testcontainers.Mosquitto;
 public sealed class MosquittoContainer : IAsyncInitializer, IAsyncDisposable
 {
     private readonly Testcontainers.Mosquitto.MosquittoContainer _mosquittoContainer = new MosquittoBuilder(
-        /*dockerimage*/"eclipse-mosquitto:2.0.22"
+        /*dockerimage*/"eclipse-mosquitto:2.1.2-alpine"
     ).Build();
 
     public Uri ConnectionString => new Uri(_mosquittoContainer.GetConnectionString(), UriKind.Absolute);
