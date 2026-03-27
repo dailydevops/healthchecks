@@ -44,19 +44,22 @@ generated_code = true
 # XML project files
 [*.{slnx,csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj,nativeproj,locproj}]
 indent_size = 2
-max_line_length = 160
+max_line_length = 200
 
 # Xml build files
 [*.builds]
 indent_size = 2
+max_line_length = 200
 
 # Xml files
 [*.{xml,stylecop,resx,ruleset}]
 indent_size = 2
+max_line_length = 200
 
 # XML config files
 [*.{props,targets,ruleset,config,nuspec,vsixmanifest,vsct}]
 indent_size = 2
+max_line_length = 200
 
 # JSON files
 [*.json]
@@ -267,3 +270,14 @@ dotnet_diagnostic.IDE0055.severity                                      = none
 # Support for NetEvolve.Arguments Methods
 # https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062#null-check-validation-methods
 dotnet_code_quality.CA1062.null_check_validation_methods                = M:NetEvolve.Arguments.Argument.ThrowIfNull(System.Object,System.String)|M:NetEvolve.Arguments.Argument.ThrowIfNull(System.Void*,System.String)|M:NetEvolve.Arguments.Argument.ThrowIfNullOrEmpty(System.String,System.String)|M:NetEvolve.Arguments.Argument.ThrowIfNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0},System.String)|M:NetEvolve.Arguments.Argument.ThrowIfNullOrWhiteSpace(System.String,System.String)
+
+# Disable all style rules for generated code
+[*.{received,verified}.*]
+generated_code = true
+# Disable all style rules for migrations
+dotnet_analyzer_diagnostic.severity = none
+
+[**/Migrations/*.{cs,csx,vb,vbx}]
+generated_code = true
+# Disable all style rules for migrations
+dotnet_analyzer_diagnostic.severity = none

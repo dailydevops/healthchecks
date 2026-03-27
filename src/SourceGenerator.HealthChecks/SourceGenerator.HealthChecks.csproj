@@ -23,10 +23,7 @@
   </PropertyGroup>
   <Target Name="GetDependencyTargetPaths">
     <ItemGroup>
-      <TargetPathWithTargetPlatformMoniker
-        Include="$(PKGNetEvolve_CodeBuilder)\lib\netstandard2.0\NetEvolve.CodeBuilder.dll"
-        IncludeRuntimeDependency="false"
-      />
+      <TargetPathWithTargetPlatformMoniker Include="$(PKGNetEvolve_CodeBuilder)\lib\netstandard2.0\NetEvolve.CodeBuilder.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>
   </Target>
 </Project>

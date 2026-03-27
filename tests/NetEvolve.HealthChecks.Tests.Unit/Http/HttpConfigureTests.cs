@@ -100,7 +100,7 @@ public sealed class HttpConfigureTests
             _ = await Assert.That(options.KeyedService).IsEqualTo(expectedKeyedService);
             _ = await Assert.That(options.Timeout).IsEqualTo(expectedTimeout);
             _ = await Assert.That(options.ContentType).IsEqualTo(expectedContentType);
-            _ = await Assert.That(options.AllowAutoRedirect).IsEqualTo(expectedAllowAutoRedirect);
+            _ = await Assert.That(options.AllowAutoRedirect).IsFalse();
         }
     }
 
