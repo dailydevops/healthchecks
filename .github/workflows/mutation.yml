@@ -1,0 +1,23 @@
+name: Run Stryker.NET with Dashboard Reporting
+
+on:
+  schedule:
+    # Change the cron expression to your desired schedule. This example runs every Monday and Thursday at 2 AM.
+    - cron: '0 2 * * MON,THU'
+
+  workflow_dispatch:
+    inputs:
+      configurationFile:
+        description: 'Path to the Stryker configuration file'
+        required: false
+        default: 'stryker-config.json'
+
+jobs:
+  all:
+    if: github.run_id != 1
+    name: Run Stryker.NET Mutation Testing
+    uses: dailydevops/pipelines/.github/workflows/mutation-dotnet.yml@7462ba51bbbb5e45a6d418b990ad4fd319e1c067 # 2.4.1
+    with:
+      configurationFile: ${{ inputs.configurationFile || 'stryker-config.json' }}
+    secrets: inherit
+
