@@ -12,6 +12,10 @@
         "--prerelease",
         "--yes"
       ]
+    },
+    "GitHub.com": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
     }
   }
 }

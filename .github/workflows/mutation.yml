@@ -4,6 +4,7 @@ on:
   schedule:
     # Change the cron expression to your desired schedule. This example runs every Monday and Thursday at 2 AM.
     - cron: '0 2 * * MON,THU'
+      timezone: 'Europe/Berlin'
 
   workflow_dispatch:
     inputs:
