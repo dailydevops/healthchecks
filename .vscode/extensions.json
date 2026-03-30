@@ -1,8 +1,3 @@
 {
-    "recommendations": [
-        "editorconfig.editorconfig",
-        "ms-dotnettools.csharp",
-        "github.vscode-github-actions",
-        "eamodio.gitlens"
-    ]
+  "recommendations": ["editorconfig.editorconfig", "ms-dotnettools.csharp", "github.vscode-github-actions"]
 }
