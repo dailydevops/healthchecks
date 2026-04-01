@@ -54,7 +54,7 @@
     <PackageVersion Include="EventStore.Client.Grpc.Streams" Version="23.3.9" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.4" />
     <PackageVersion Include="Google.Cloud.BigQuery.V2" Version="3.11.0" />
-    <PackageVersion Include="Google.Cloud.Bigtable.Admin.V2" Version="3.31.0" />
+    <PackageVersion Include="Google.Cloud.Bigtable.Admin.V2" Version="3.32.0" />
     <PackageVersion Include="Google.Cloud.Firestore" Version="4.2.0" />
     <PackageVersion Include="Google.Cloud.PubSub.V1" Version="3.33.0" />
     <PackageVersion Include="IBMMQDotnetClient" Version="9.4.1.0" />
