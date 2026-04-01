@@ -12,7 +12,7 @@ public sealed class DaprContainer : IAsyncInitializer, IAsyncDisposable
     private const int DaprHttpPort = 3500;
     private const int DaprGrpcPort = 50001;
     private readonly IContainer _container = new ContainerBuilder(
-        /*dockerimage*/"daprio/daprd:1.17.3"
+        /*dockerimage*/"daprio/daprd:1.17.4-rc.1-windows-ltsc2022-amd64"
     )
         .WithPortBinding(DaprHttpPort, true)
         .WithPortBinding(DaprGrpcPort, true)
