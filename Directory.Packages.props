@@ -108,7 +108,7 @@
     <PackageVersion Include="RavenDB.Client" Version="7.2.1" />
     <PackageVersion Include="SolrNet.Core" Version="1.2.1" />
     <PackageVersion Include="SolrNet.Microsoft.DependencyInjection" Version="1.2.1" />
-    <PackageVersion Include="StackExchange.Redis" Version="2.12.8" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.12.14" />
     <PackageVersion Include="System.Data.Odbc" Version="9.0.14" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.1" />
     <PackageVersion Include="System.Data.SQLite" Version="2.0.3" />
