@@ -85,6 +85,12 @@
       "groupSlug": "opentelemetry-instrumentation-packages",
       "matchManagers": ["nuget"],
       "matchPackageNames": ["OpenTelemetry.Instrumentation.*"]
+    },
+    {
+      "groupName": "AWS SDK packages",
+      "groupSlug": "aws-sdk-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["AWSSDK.*"]
     }
   ]
 }
