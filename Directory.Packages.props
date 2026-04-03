@@ -38,7 +38,7 @@
     <PackageVersion Include="CassandraCSharpDriver" Version="3.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.10.1" />
-    <PackageVersion Include="Confluent.Kafka" Version="2.13.2" />
+    <PackageVersion Include="Confluent.Kafka" Version="2.14.0" />
     <PackageVersion Include="Consul" Version="1.8.0" />
     <PackageVersion Include="CouchbaseNetClient" Version="3.9.0" />
     <PackageVersion Include="Dapr.Client" Version="1.17.7" />
