@@ -7,7 +7,7 @@ using Testcontainers.PostgreSql;
 public sealed class NpgsqlDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly PostgreSqlContainer _database = new PostgreSqlBuilder(
-        /*dockerimage*/"postgres:15.15"
+        /*dockerimage*/"postgres:15.17"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
