@@ -25,7 +25,7 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string TableName = "test-table";
 
     private readonly TestContainer _container = new LocalStackBuilder(
-        /*dockerimage*/"localstack/localstack:4.12.0"
+        /*dockerimage*/"localstack/localstack:4.14.0"
     )
         .WithLogger(NullLogger.Instance)
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
