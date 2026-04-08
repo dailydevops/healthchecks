@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Azure.KeyVault;
+﻿namespace NetEvolve.HealthChecks.Azure.KeyVault;
 
 using System;
 using System.Collections.Concurrent;
@@ -27,13 +27,18 @@ internal sealed partial class KeyVaultSecretAvailableHealthCheck
     {
         var secretClient = GetSecretClient(name, options, _serviceProvider);
 
-        var (isTimelyResponse, _) = await secretClient
+        var (isTimelyResponse, result) = await secretClient
             .GetPropertiesOfSecretsAsync(cancellationToken: cancellationToken)
             .AsPages(pageSizeHint: 1)
             .GetAsyncEnumerator(cancellationToken)
             .MoveNextAsync()
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (!result)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Failed to retrieve secrets from Key Vault.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
