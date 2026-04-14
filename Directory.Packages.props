@@ -30,6 +30,7 @@
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.31" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.21.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.9.0" />
     <PackageVersion Include="AzureKeyVaultEmulator.TestContainers" Version="2.3.3" />
     <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
@@ -137,6 +138,7 @@
     <PackageVersion Include="Testcontainers.EventHubs" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.FirebirdSql" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.Firestore" Version="4.12.0" />
+    <PackageVersion Include="Testcontainers.Floci" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.InfluxDb" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.JanusGraph" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.K3s" Version="4.12.0" />
@@ -144,7 +146,7 @@
     <PackageVersion Include="Testcontainers.Keycloak" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.KurrentDb" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.Kusto" Version="4.12.0" />
-    <PackageVersion Include="Testcontainers.Floci" Version="4.12.0" />
+    <PackageVersion Include="Testcontainers.LowkeyVault" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.MariaDb" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.Milvus" Version="4.12.0" />
     <PackageVersion Include="Testcontainers.Minio" Version="4.12.0" />

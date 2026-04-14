@@ -14,11 +14,6 @@
     <PackageReference Include="Apache.NMS.ActiveMQ" />
     <PackageReference Include="ArangoDBNetStandard" />
     <PackageReference Include="Azure.Data.Tables" />
-    <PackageReference Include="Azure.Messaging.EventHubs" />
-    <PackageReference Include="Azure.Messaging.ServiceBus" />
-    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
-    <PackageReference Include="AzureKeyVaultEmulator.TestContainers" />
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
     <PackageReference Include="Microsoft.Azure.Cosmos" />
     <PackageReference Include="CassandraCSharpDriver" />
@@ -106,6 +101,7 @@
     <PackageReference Include="Testcontainers.EventHubs" />
     <PackageReference Include="Testcontainers.FirebirdSql" />
     <PackageReference Include="Testcontainers.Firestore" />
+    <PackageReference Include="Testcontainers.Floci" />
     <PackageReference Include="Testcontainers.InfluxDb" />
     <PackageReference Include="Testcontainers.JanusGraph" />
     <PackageReference Include="Testcontainers.K3s" />
@@ -113,7 +109,7 @@
     <PackageReference Include="Testcontainers.Keycloak" />
     <PackageReference Include="Testcontainers.KurrentDb" />
     <PackageReference Include="Testcontainers.Kusto" />
-    <PackageReference Include="Testcontainers.Floci" />
+    <PackageReference Include="Testcontainers.LowkeyVault" />
     <PackageReference Include="Testcontainers.MariaDb" />
     <PackageReference Include="Testcontainers.Milvus" />
     <PackageReference Include="Testcontainers.Minio" />
