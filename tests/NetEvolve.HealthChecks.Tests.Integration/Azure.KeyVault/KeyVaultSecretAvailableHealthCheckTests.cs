@@ -2,6 +2,7 @@ namespace NetEvolve.HealthChecks.Tests.Integration.Azure.KeyVault;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using global::Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -10,13 +11,12 @@ using NetEvolve.HealthChecks.Azure.KeyVault;
 
 [TestGroup("Azure.KeyVault")]
 [TestGroup("Z02TestGroup")]
-[ClassDataSource<AzureKeyVaultEmulatorAccess>(Shared = SharedType.PerClass)]
-[Skip("AzureKeyVaultEmulator requires SSL certificate installation and may require elevated privileges.")]
+[ClassDataSource<LowkeyVaultAccess>(Shared = SharedType.PerClass)]
 public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
 {
-    private readonly AzureKeyVaultEmulatorAccess _container;
+    private readonly LowkeyVaultAccess _container;
 
-    public KeyVaultSecretAvailableHealthCheckTests(AzureKeyVaultEmulatorAccess container) => _container = container;
+    public KeyVaultSecretAvailableHealthCheckTests(LowkeyVaultAccess container) => _container = container;
 
     [Test]
     public async Task AddKeyVaultSecretAvailability_UseOptions_ModeServiceProvider_Healthy() =>
@@ -66,10 +66,12 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                         options.VaultUri = _container.VaultUri;
                         options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
                         options.Timeout = 10000;
+                        options.ConfigureClientOptions = _container.ConfigureSecretClientOptions;
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential)
         );
 
     [Test]
@@ -84,14 +86,18 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                         options.VaultUri = _container.VaultUri;
                         options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
                         options.Timeout = 0;
+                        options.ConfigureClientOptions = _container.ConfigureSecretClientOptions;
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential)
         );
 
     [Test]
-    [Skip("ClientSecretCredential mode is not supported by the Azure Key Vault Emulator.")]
+    [Skip(
+        "ClientSecretCredential mode requires Azure AD authentication, which is not supported in the LowkeyVault test setup."
+    )]
     public async Task AddKeyVaultSecretAvailability_UseOptions_ModeClientSecretCredential_Healthy() =>
         await RunAndVerify(
             healthChecks =>
