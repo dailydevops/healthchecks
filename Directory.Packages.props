@@ -105,6 +105,7 @@
     <PackageVersion Include="PublicApiGenerator" Version="11.5.4" />
     <PackageVersion Include="Qdrant.Client" Version="1.17.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.1" />
+    <PackageVersion Include="RocketMQ.Client" Version="5.1.0" />
     <PackageVersion Include="RavenDB.Client" Version="7.2.1" />
     <PackageVersion Include="SolrNet.Core" Version="1.2.1" />
     <PackageVersion Include="SolrNet.Microsoft.DependencyInjection" Version="1.2.1" />
