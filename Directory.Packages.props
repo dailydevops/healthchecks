@@ -22,12 +22,12 @@
   <ItemGroup>
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.2.0" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
-    <PackageVersion Include="AWSSDK.Core" Version="4.0.3.28" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.17.7" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.83" />
-    <PackageVersion Include="AWSSDK.S3" Version="4.0.21" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.26" />
-    <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.24" />
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.3.29" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.17.8" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.83.1" />
+    <PackageVersion Include="AWSSDK.S3" Version="4.0.21.1" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.27" />
+    <PackageVersion Include="AWSSDK.SQS" Version="4.0.2.25" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity" Version="1.20.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
