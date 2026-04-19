@@ -67,7 +67,7 @@
     <PackageVersion Include="MeiliSearch" Version="0.18.0" />
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="10.0.5" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="10.0.6" />
     <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.58.0" />
     <PackageVersion Include="Microsoft.Azure.Kusto.Data" Version="14.1.1" />
     <PackageVersion Include="Microsoft.Bcl.Memory" Version="10.0.5" />
