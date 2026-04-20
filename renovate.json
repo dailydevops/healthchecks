@@ -66,7 +66,14 @@
       "groupName": "TUnit packages",
       "groupSlug": "tunit-packages",
       "matchManagers": ["nuget"],
-      "matchPackageNames": ["TUnit", "TUnit.*", "Verify.TUnit"]
+      "matchPackageNames": ["TUnit", "TUnit.*", "Verify.TUnit", "!TUnit.Mocks", "!TUnit.Mocks.*"]
+    },
+    {
+      "groupName": "TUnit Mocks packages",
+      "groupSlug": "tunit-mocks-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["TUnit.Mocks", "TUnit.Mocks.*"],
+      "ignoreUnstable": false
     },
     {
       "groupName": "XUnit.V3 packages",
@@ -91,6 +98,12 @@
       "groupSlug": "aws-sdk-packages",
       "matchManagers": ["nuget"],
       "matchPackageNames": ["AWSSDK.*"]
+    },
+    {
+      "groupName": "NetEvolve HttpCorrelation packages",
+      "groupSlug": "netevolve-httpcorrelation-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["NetEvolve.Http.Correlation", "NetEvolve.Http.Correlation.*"]
     }
   ]
 }
