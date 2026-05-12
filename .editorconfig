@@ -134,6 +134,13 @@ dotnet_naming_rule.all_const.severity                                   = error
 dotnet_naming_rule.all_const.style                                      = all_elements
 dotnet_naming_rule.all_const.symbols                                    = all_const
 
+dotnet_naming_style.all_static_readonly.capitalization                  = pascal_case
+dotnet_naming_symbols.all_static_readonly.applicable_kinds              = field
+dotnet_naming_symbols.all_static_readonly.required_modifiers            = static, readonly
+dotnet_naming_rule.all_static_readonly.severity                         = error
+dotnet_naming_rule.all_static_readonly.style                            = all_static_readonly
+dotnet_naming_rule.all_static_readonly.symbols                          = all_static_readonly
+
 dotnet_naming_style.all_fields.required_prefix                          = _
 dotnet_naming_style.all_fields.capitalization                           = camel_case
 dotnet_naming_symbols.all_fields.applicable_kinds                       = field

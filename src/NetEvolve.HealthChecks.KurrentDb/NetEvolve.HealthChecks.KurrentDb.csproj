@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="KurrentDB.Client" />
     <PackageReference Include="NetEvolve.Extensions.Tasks" />
+    <PackageReference Include="OpenTelemetry.Api" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
