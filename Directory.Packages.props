@@ -50,7 +50,7 @@
     <PackageVersion Include="DotPulsar" Version="5.3.1" />
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.5.2" />
     <PackageVersion Include="DuckDB.NET.Data" Version="1.5.2" />
-    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.3.7" />
+    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.4.0" />
     <PackageVersion Include="EventStore.Client.Grpc.Streams" Version="23.3.9" />
     <PackageVersion Include="FirebirdSql.Data.FirebirdClient" Version="10.3.4" />
     <PackageVersion Include="Google.Cloud.BigQuery.V2" Version="3.11.0" />
