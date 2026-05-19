@@ -82,6 +82,12 @@
       "matchPackageNames": ["XUnit.V3", "XUnit.V3.*", "Verify.XunitV3"]
     },
     {
+      "groupName": "MSTest packages",
+      "groupSlug": "mstest-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["MSTest", "MSTest.*", "Verify.MSTest"]
+    },
+    {
       "groupName": "Microsoft Entity Framework",
       "groupSlug": "microsoft-entity-framework",
       "matchManagers": ["nuget"],
