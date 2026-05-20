@@ -21,14 +21,10 @@ internal sealed partial class ElasticComputeCloudHealthCheck
     {
         using var client = CreateClient(options);
 
-        var request = new DescribeInstancesRequest
-        {
-            MaxResults = 1,
-            Filters = [new Filter("key-name", [options.KeyName])],
-        };
+        var request = new DescribeKeyPairsRequest { KeyNames = [options.KeyName] };
 
         var (isTimelyResponse, response) = await client
-            .DescribeInstancesAsync(request, cancellationToken)
+            .DescribeKeyPairsAsync(request, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
@@ -41,13 +37,9 @@ internal sealed partial class ElasticComputeCloudHealthCheck
             );
         }
 
-        var isHealthy = response
-            .Reservations.SelectMany(x => x.Instances)
-            .Any(x => x.State.Name == InstanceStateName.Running || x.State.Name == InstanceStateName.Pending);
-
-        if (!isHealthy)
+        if (response.KeyPairs.Count == 0)
         {
-            return HealthCheckUnhealthy(failureStatus, name, "No running instances found.");
+            return HealthCheckUnhealthy(failureStatus, name, $"No key pair with name '{options.KeyName}' found.");
         }
 
         return HealthCheckState(isTimelyResponse, name);

@@ -9,7 +9,7 @@
             type: HttpErrorResponseException
           }
         ],
-        message: The specified queue does not exist.,
+        message: The specified queue does not exist for this wsdl version.,
         type: Amazon.SQS.Model.QueueDoesNotExistException
       },
       name: TestContainerUnhealthy,

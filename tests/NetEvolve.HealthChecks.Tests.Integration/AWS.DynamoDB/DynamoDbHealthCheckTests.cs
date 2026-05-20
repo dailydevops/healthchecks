@@ -11,12 +11,12 @@ using NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(DynamoDB)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
+[ClassDataSource<FlociStackInstance>(Shared = SharedType.PerClass)]
 public class DynamoDbHealthCheckTests : HealthCheckTestBase
 {
-    private readonly LocalStackInstance _instance;
+    private readonly FlociStackInstance _instance;
 
-    public DynamoDbHealthCheckTests(LocalStackInstance instance) => _instance = instance;
+    public DynamoDbHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
     public async Task AddAWSDynamoDB_UseOptionsCreate_Healthy() =>
@@ -27,10 +27,10 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.TableName = LocalStackInstance.TableName;
+                        options.TableName = FlociStackInstance.TableName;
                         options.Mode = CreationMode.BasicAuthentication;
                         options.Timeout = 10000; // Set a reasonable timeout
                     }
@@ -48,8 +48,8 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.TableName = "invalid-table";
                         options.Mode = CreationMode.BasicAuthentication;
@@ -68,10 +68,10 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.TableName = LocalStackInstance.TableName;
+                        options.TableName = FlociStackInstance.TableName;
                         options.Timeout = 0;
                         options.Mode = CreationMode.BasicAuthentication;
                     }
@@ -89,9 +89,9 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSDynamoDB:TestContainerHealthy:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSDynamoDB:TestContainerHealthy:TableName"] = LocalStackInstance.TableName,
-                    ["HealthChecks:AWSDynamoDB:TestContainerHealthy:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSDynamoDB:TestContainerHealthy:AccessKey"] = FlociStackInstance.AccessKey,
+                    ["HealthChecks:AWSDynamoDB:TestContainerHealthy:TableName"] = FlociStackInstance.TableName,
+                    ["HealthChecks:AWSDynamoDB:TestContainerHealthy:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSDynamoDB:TestContainerHealthy:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSDynamoDB:TestContainerHealthy:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSDynamoDB:TestContainerHealthy:Timeout"] = "10000",
@@ -110,9 +110,9 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSDynamoDB:TestContainerDegraded:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSDynamoDB:TestContainerDegraded:TableName"] = LocalStackInstance.TableName,
-                    ["HealthChecks:AWSDynamoDB:TestContainerDegraded:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSDynamoDB:TestContainerDegraded:AccessKey"] = FlociStackInstance.AccessKey,
+                    ["HealthChecks:AWSDynamoDB:TestContainerDegraded:TableName"] = FlociStackInstance.TableName,
+                    ["HealthChecks:AWSDynamoDB:TestContainerDegraded:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSDynamoDB:TestContainerDegraded:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSDynamoDB:TestContainerDegraded:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSDynamoDB:TestContainerDegraded:Timeout"] = "0",
@@ -131,9 +131,9 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:AccessKey"] = FlociStackInstance.AccessKey,
                     ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:TableName"] = "invalid-table",
-                    ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSDynamoDB:TestContainerUnhealthy:Mode"] = "BasicAuthentication",
                 };

@@ -11,12 +11,12 @@ using NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(S3)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
+[ClassDataSource<FlociStackInstance>(Shared = SharedType.PerClass)]
 public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
 {
-    private readonly LocalStackInstance _instance;
+    private readonly FlociStackInstance _instance;
 
-    public SimpleStorageServiceHealthCheckTests(LocalStackInstance instance) => _instance = instance;
+    public SimpleStorageServiceHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
     public async Task AddAWSS3_UseOptionsCreate_Healthy() =>
@@ -27,10 +27,10 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.BucketName = LocalStackInstance.BucketName;
+                        options.BucketName = FlociStackInstance.BucketName;
                         options.Mode = CreationMode.BasicAuthentication;
                         options.Timeout = 10000; // Set a reasonable timeout
                     }
@@ -48,8 +48,8 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.BucketName = "invalid-bucket";
                         options.Mode = CreationMode.BasicAuthentication;
@@ -68,10 +68,10 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.BucketName = LocalStackInstance.BucketName;
+                        options.BucketName = FlociStackInstance.BucketName;
                         options.Timeout = 0;
                         options.Mode = CreationMode.BasicAuthentication;
                     }
@@ -91,10 +91,10 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSS3:TestContainerHealthy:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSS3:TestContainerHealthy:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSS3:TestContainerHealthy:AccessKey"] = FlociStackInstance.AccessKey,
+                    ["HealthChecks:AWSS3:TestContainerHealthy:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSS3:TestContainerHealthy:ServiceUrl"] = _instance.ConnectionString,
-                    ["HealthChecks:AWSS3:TestContainerHealthy:BucketName"] = LocalStackInstance.BucketName,
+                    ["HealthChecks:AWSS3:TestContainerHealthy:BucketName"] = FlociStackInstance.BucketName,
                     ["HealthChecks:AWSS3:TestContainerHealthy:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSS3:TestContainerHealthy:Timeout"] = "1000",
                 };
@@ -112,10 +112,10 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSS3:TestContainerDegraded:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSS3:TestContainerDegraded:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSS3:TestContainerDegraded:AccessKey"] = FlociStackInstance.AccessKey,
+                    ["HealthChecks:AWSS3:TestContainerDegraded:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSS3:TestContainerDegraded:ServiceUrl"] = _instance.ConnectionString,
-                    ["HealthChecks:AWSS3:TestContainerDegraded:BucketName"] = LocalStackInstance.BucketName,
+                    ["HealthChecks:AWSS3:TestContainerDegraded:BucketName"] = FlociStackInstance.BucketName,
                     ["HealthChecks:AWSS3:TestContainerDegraded:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSS3:TestContainerDegraded:Timeout"] = "0",
                 };
@@ -133,8 +133,8 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSS3:TestContainerUnhealthy:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSS3:TestContainerUnhealthy:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSS3:TestContainerUnhealthy:AccessKey"] = FlociStackInstance.AccessKey,
+                    ["HealthChecks:AWSS3:TestContainerUnhealthy:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSS3:TestContainerUnhealthy:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSS3:TestContainerUnhealthy:BucketName"] = "invalid-bucket",
                     ["HealthChecks:AWSS3:TestContainerUnhealthy:Mode"] = "BasicAuthentication",
@@ -155,10 +155,10 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSS3:TestContainerWithTags:AccessKey"] = LocalStackInstance.AccessKey,
-                    ["HealthChecks:AWSS3:TestContainerWithTags:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSS3:TestContainerWithTags:AccessKey"] = FlociStackInstance.AccessKey,
+                    ["HealthChecks:AWSS3:TestContainerWithTags:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSS3:TestContainerWithTags:ServiceUrl"] = _instance.ConnectionString,
-                    ["HealthChecks:AWSS3:TestContainerWithTags:BucketName"] = LocalStackInstance.BucketName,
+                    ["HealthChecks:AWSS3:TestContainerWithTags:BucketName"] = FlociStackInstance.BucketName,
                     ["HealthChecks:AWSS3:TestContainerWithTags:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSS3:TestContainerWithTags:Timeout"] = "1000",
                 };

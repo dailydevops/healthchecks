@@ -9,7 +9,7 @@
             type: HttpErrorResponseException
           }
         ],
-        message: The specified bucket does not exist,
+        message: The specified bucket does not exist.,
         type: Amazon.S3.Model.NoSuchBucketException
       },
       name: TestContainerUnhealthy,

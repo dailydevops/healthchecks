@@ -10,12 +10,12 @@ using NetEvolve.HealthChecks.AWS.SQS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SQS)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
+[ClassDataSource<FlociStackInstance>(Shared = SharedType.PerClass)]
 public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
 {
-    private readonly LocalStackInstance _instance;
+    private readonly FlociStackInstance _instance;
 
-    public SimpleQueueServiceHealthCheckTests(LocalStackInstance instance) => _instance = instance;
+    public SimpleQueueServiceHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
     public async Task AddAWSSQS_UseOptionsCreate_Healthy() =>
@@ -26,10 +26,10 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.QueueName = LocalStackInstance.QueueName;
+                        options.QueueName = FlociStackInstance.QueueName;
                         options.Mode = CreationMode.BasicAuthentication;
                         options.Timeout = 10000; // Set a reasonable timeout
                     }
@@ -47,8 +47,8 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.QueueName = "invalid";
                         options.Mode = CreationMode.BasicAuthentication;
@@ -67,10 +67,10 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.QueueName = LocalStackInstance.QueueName;
+                        options.QueueName = FlociStackInstance.QueueName;
                         options.Timeout = 0;
                         options.Mode = CreationMode.BasicAuthentication;
                     }
@@ -90,10 +90,10 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSQS:TestContainerHealthy:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSQS:TestContainerHealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSQS:TestContainerHealthy:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSQS:TestContainerHealthy:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSQS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
-                    { "HealthChecks:AWSSQS:TestContainerHealthy:QueueName", LocalStackInstance.QueueName },
+                    { "HealthChecks:AWSSQS:TestContainerHealthy:QueueName", FlociStackInstance.QueueName },
                     { "HealthChecks:AWSSQS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                     { "HealthChecks:AWSSQS:TestContainerHealthy:Timeout", "10000" },
                 };
@@ -110,8 +110,8 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSQS:TestContainerUnhealthy:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSQS:TestContainerUnhealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSQS:TestContainerUnhealthy:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSQS:TestContainerUnhealthy:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSQS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
                     { "HealthChecks:AWSSQS:TestContainerUnhealthy:QueueName", "invalid" },
                     { "HealthChecks:AWSSQS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
@@ -129,10 +129,10 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSQS:TestContainerDegraded:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSQS:TestContainerDegraded:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSQS:TestContainerDegraded:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSQS:TestContainerDegraded:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSQS:TestContainerDegraded:ServiceUrl", _instance.ConnectionString },
-                    { "HealthChecks:AWSSQS:TestContainerDegraded:QueueName", LocalStackInstance.QueueName },
+                    { "HealthChecks:AWSSQS:TestContainerDegraded:QueueName", FlociStackInstance.QueueName },
                     { "HealthChecks:AWSSQS:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:AWSSQS:TestContainerDegraded:Mode", nameof(CreationMode.BasicAuthentication) },
                 };

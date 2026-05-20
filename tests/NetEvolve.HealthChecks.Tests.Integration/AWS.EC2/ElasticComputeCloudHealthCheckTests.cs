@@ -11,12 +11,18 @@ using NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(EC2)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
+[ClassDataSource<FlociStackInstance>(Shared = SharedType.PerClass)]
 public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
 {
-    private readonly LocalStackInstance _instance;
+    private readonly FlociStackInstance _instance;
 
-    public ElasticComputeCloudHealthCheckTests(LocalStackInstance instance) => _instance = instance;
+    public ElasticComputeCloudHealthCheckTests(FlociStackInstance instance) => _instance = instance;
+
+    [Before(Test)]
+    public async Task SetupEC2InstanceAsync()
+    {
+        await _instance.CreateEC2InstanceAsync().ConfigureAwait(false);
+    }
 
     [Test]
     public async Task AddAWSEC2_UseOptionsCreate_Healthy() =>
@@ -27,9 +33,9 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
                         options.KeyName = "development";
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.Mode = CreationMode.BasicAuthentication;
                         options.Timeout = 10000; // Set a reasonable timeout
@@ -48,9 +54,9 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
                         options.KeyName = "development";
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.Timeout = 0;
                         options.Mode = CreationMode.BasicAuthentication;
@@ -71,9 +77,9 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSEC2:TestContainerHealthy:AccessKey"] = FlociStackInstance.AccessKey,
                     ["HealthChecks:AWSEC2:TestContainerHealthy:KeyName"] = "development",
-                    ["HealthChecks:AWSEC2:TestContainerHealthy:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSEC2:TestContainerHealthy:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSEC2:TestContainerHealthy:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSEC2:TestContainerHealthy:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSEC2:TestContainerHealthy:Timeout"] = "10000",
@@ -92,9 +98,9 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSEC2:TestContainerDegraded:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSEC2:TestContainerDegraded:AccessKey"] = FlociStackInstance.AccessKey,
                     ["HealthChecks:AWSEC2:TestContainerDegraded:KeyName"] = "development",
-                    ["HealthChecks:AWSEC2:TestContainerDegraded:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSEC2:TestContainerDegraded:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSEC2:TestContainerDegraded:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSEC2:TestContainerDegraded:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSEC2:TestContainerDegraded:Timeout"] = "0",
@@ -115,9 +121,9 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    ["HealthChecks:AWSEC2:TestContainerWithTags:AccessKey"] = LocalStackInstance.AccessKey,
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:AccessKey"] = FlociStackInstance.AccessKey,
                     ["HealthChecks:AWSEC2:TestContainerWithTags:KeyName"] = "development",
-                    ["HealthChecks:AWSEC2:TestContainerWithTags:SecretKey"] = LocalStackInstance.SecretKey,
+                    ["HealthChecks:AWSEC2:TestContainerWithTags:SecretKey"] = FlociStackInstance.SecretKey,
                     ["HealthChecks:AWSEC2:TestContainerWithTags:ServiceUrl"] = _instance.ConnectionString,
                     ["HealthChecks:AWSEC2:TestContainerWithTags:Mode"] = "BasicAuthentication",
                     ["HealthChecks:AWSEC2:TestContainerWithTags:Timeout"] = "10000",

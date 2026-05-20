@@ -111,7 +111,7 @@
     <PackageReference Include="Testcontainers.Keycloak" />
     <PackageReference Include="Testcontainers.KurrentDb" />
     <PackageReference Include="Testcontainers.Kusto" />
-    <PackageReference Include="Testcontainers.LocalStack" />
+    <PackageReference Include="Testcontainers.Floci" />
     <PackageReference Include="Testcontainers.MariaDb" />
     <PackageReference Include="Testcontainers.Milvus" />
     <PackageReference Include="Testcontainers.Minio" />
