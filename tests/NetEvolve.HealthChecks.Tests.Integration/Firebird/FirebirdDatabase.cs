@@ -20,18 +20,16 @@ public sealed class FirebirdDatabase : IAsyncInitializer, IAsyncDisposable
 
     public async Task InitializeAsync()
     {
-        Environment.SetEnvironmentVariable(
-            "USERNAME",
-            ToAsciiUsername(),
-            EnvironmentVariableTarget.Process
-        );
+        Environment.SetEnvironmentVariable("USERNAME", ToAsciiUsername(), EnvironmentVariableTarget.Process);
         await _database.StartAsync().ConfigureAwait(false);
     }
 
     private static string ToAsciiUsername()
     {
         // Normalisierung: zerlegt "ü" in "u" + Combining Diaeresis
-        var normalized = Environment.UserName.Replace("ß", "ss", StringComparison.Ordinal).Normalize(NormalizationForm.FormD);
+        var normalized = Environment
+            .UserName.Replace("ß", "ss", StringComparison.Ordinal)
+            .Normalize(NormalizationForm.FormD);
 
         var sb = new StringBuilder();
         foreach (var c in normalized)
