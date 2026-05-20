@@ -9,7 +9,7 @@
             type: HttpErrorResponseException
           }
         ],
-        message: Cannot do operations on a non-existent table,
+        message: Requested resource not found,
         type: Amazon.DynamoDBv2.Model.ResourceNotFoundException
       },
       name: TestContainerUnhealthy,

@@ -39,7 +39,7 @@ internal sealed class ConfigurableHealthCheckGenerator : IIncrementalGenerator
             .AppendLine()
             .AppendLine("[MethodImpl(MethodImplOptions.AggressiveInlining)]")
             .AppendLine("private static HealthCheckResult HealthCheckState(bool condition, string name) =>")
-            .Intend()
+            .Indent()
             .AppendLine("condition ? HealthCheckResult.Healthy($\"{name}: Healthy\") : HealthCheckDegraded(name);");
 
         _ = builder
@@ -48,14 +48,14 @@ internal sealed class ConfigurableHealthCheckGenerator : IIncrementalGenerator
             .AppendLine(
                 "private static HealthCheckResult HealthCheckUnhealthy(HealthStatus failureStatus, string name, string message = \"Unhealthy\", Exception? ex = null) =>"
             )
-            .Intend()
+            .Indent()
             .AppendLine("new HealthCheckResult(failureStatus, $\"{name}: {message}\", exception: ex);");
 
         _ = builder
             .AppendLine()
             .AppendLine("[MethodImpl(MethodImplOptions.AggressiveInlining)]")
             .AppendLine("private static HealthCheckResult HealthCheckDegraded(string name) =>")
-            .Intend()
+            .Indent()
             .AppendLine("HealthCheckResult.Degraded($\"{name}: Degraded\");");
     }
 

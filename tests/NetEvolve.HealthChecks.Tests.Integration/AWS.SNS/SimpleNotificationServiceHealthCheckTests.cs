@@ -10,12 +10,12 @@ using NetEvolve.HealthChecks.AWS.SNS;
 
 [TestGroup($"{nameof(AWS)}.{nameof(SNS)}")]
 [TestGroup("Z01TestGroup")]
-[ClassDataSource<LocalStackInstance>(Shared = SharedType.PerClass)]
+[ClassDataSource<FlociStackInstance>(Shared = SharedType.PerClass)]
 public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
 {
-    private readonly LocalStackInstance _instance;
+    private readonly FlociStackInstance _instance;
 
-    public SimpleNotificationServiceHealthCheckTests(LocalStackInstance instance) => _instance = instance;
+    public SimpleNotificationServiceHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
     public async Task AddSimpleNotificationService_UseOptionsCreate_Healthy() =>
@@ -26,10 +26,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = LocalStackInstance.TopicName;
+                        options.TopicName = FlociStackInstance.TopicName;
                         options.Subscription = _instance.Subscription;
                         options.Mode = CreationMode.BasicAuthentication;
                         options.Timeout = 10000; // Set a reasonable timeout
@@ -48,10 +48,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = LocalStackInstance.TopicName;
+                        options.TopicName = FlociStackInstance.TopicName;
                         options.Subscription = "NotFound";
                         options.Mode = CreationMode.BasicAuthentication;
                     }
@@ -69,8 +69,8 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerUnhealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.TopicName = "Invalid";
                         options.Subscription = _instance.Subscription;
@@ -90,10 +90,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerDegraded",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = LocalStackInstance.TopicName;
+                        options.TopicName = FlociStackInstance.TopicName;
                         options.Subscription = _instance.Subscription;
                         options.Timeout = 0;
                         options.Mode = CreationMode.BasicAuthentication;
@@ -116,8 +116,8 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     "TestContainerHealthy",
                     options =>
                     {
-                        options.AccessKey = LocalStackInstance.AccessKey;
-                        options.SecretKey = LocalStackInstance.SecretKey;
+                        options.AccessKey = FlociStackInstance.AccessKey;
+                        options.SecretKey = FlociStackInstance.SecretKey;
                         options.ServiceUrl = _instance.ConnectionString;
                         options.TopicName = topicName;
                         options.Subscription = subcription.SubscriptionArn;
@@ -141,10 +141,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSNS:TestContainerHealthy:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSNS:TestContainerHealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
-                    { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", LocalStackInstance.TopicName },
+                    { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", FlociStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", _instance.Subscription },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "10000" },
@@ -162,10 +162,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", LocalStackInstance.TopicName },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", FlociStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Subscription", "NotFound" },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
@@ -182,8 +182,8 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerUnhealthy:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:ServiceUrl", _instance.ConnectionString },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:TopicName", "Invalid" },
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Subscription", _instance.Subscription },
@@ -202,10 +202,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                 {
-                    { "HealthChecks:AWSSNS:TestContainerDegraded:AccessKey", LocalStackInstance.AccessKey },
-                    { "HealthChecks:AWSSNS:TestContainerDegraded:SecretKey", LocalStackInstance.SecretKey },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:AccessKey", FlociStackInstance.AccessKey },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:SecretKey", FlociStackInstance.SecretKey },
                     { "HealthChecks:AWSSNS:TestContainerDegraded:ServiceUrl", _instance.ConnectionString },
-                    { "HealthChecks:AWSSNS:TestContainerDegraded:TopicName", LocalStackInstance.TopicName },
+                    { "HealthChecks:AWSSNS:TestContainerDegraded:TopicName", FlociStackInstance.TopicName },
                     { "HealthChecks:AWSSNS:TestContainerDegraded:Subscription", _instance.Subscription },
                     { "HealthChecks:AWSSNS:TestContainerDegraded:Timeout", "0" },
                     { "HealthChecks:AWSSNS:TestContainerDegraded:Mode", nameof(CreationMode.BasicAuthentication) },
@@ -227,8 +227,8 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                 {
                     var values = new Dictionary<string, string?>(StringComparer.Ordinal)
                     {
-                        { "HealthChecks:AWSSNS:TestContainerHealthy:AccessKey", LocalStackInstance.AccessKey },
-                        { "HealthChecks:AWSSNS:TestContainerHealthy:SecretKey", LocalStackInstance.SecretKey },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:AccessKey", FlociStackInstance.AccessKey },
+                        { "HealthChecks:AWSSNS:TestContainerHealthy:SecretKey", FlociStackInstance.SecretKey },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:ServiceUrl", _instance.ConnectionString },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:TopicName", topicName },
                         { "HealthChecks:AWSSNS:TestContainerHealthy:Subscription", subscription.SubscriptionArn },

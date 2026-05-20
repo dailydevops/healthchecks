@@ -10,22 +10,22 @@ using Amazon.S3.Model;
 using Amazon.SimpleNotificationService;
 using Amazon.SQS;
 using Microsoft.Extensions.Logging.Abstractions;
-using Testcontainers.LocalStack;
-using TestContainer = Testcontainers.LocalStack.LocalStackContainer;
+using Testcontainers.Floci;
+using TestContainer = Testcontainers.Floci.FlociContainer;
 
-public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
+public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 {
     /// <summary>Access Key</summary>
     /// <see href="https://docs.aws.amazon.com/STS/latest/APIReference/API_GetAccessKeyInfo.html" />
-    internal const string AccessKey = "AKIAIOSFODNN7EXAMPLE";
-    internal const string SecretKey = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+    internal const string AccessKey = FlociBuilder.AccessKey;
+    internal const string SecretKey = FlociBuilder.SecretKey;
     internal const string BucketName = "test-bucket";
     internal const string TopicName = "test-topic";
     internal const string QueueName = "test-queue";
     internal const string TableName = "test-table";
 
-    private readonly TestContainer _container = new LocalStackBuilder(
-        /*dockerimage*/"localstack/localstack:4.14.0"
+    private readonly TestContainer _container = new FlociBuilder(
+        /*dockerimage*/"floci/floci:1.5.17"
     )
         .WithLogger(NullLogger.Instance)
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
@@ -135,25 +135,32 @@ public sealed class LocalStackInstance : IAsyncInitializer, IAsyncDisposable
         }
     }
 
+    internal async Task CreateEC2InstanceAsync(CancellationToken cancellationToken = default)
+    {
+        using var ec2Client = new AmazonEC2Client(
+            AccessKey,
+            SecretKey,
+            new AmazonEC2Config { ServiceURL = ConnectionString }
+        );
+
+        // Ensure the key pair exists
+        try
+        {
+            _ = await ec2Client
+                .CreateKeyPairAsync(new CreateKeyPairRequest { KeyName = "development" }, cancellationToken)
+                .ConfigureAwait(false);
+        }
+        catch
+        {
+            // Key pair may already exist; ignore
+        }
+    }
+
     private async Task CreateEC2DEfaults(CancellationToken cancellationToken)
     {
         try
         {
-            // Create EC2 Defaults if needed
-            using var ec2Client = new AmazonEC2Client(
-                AccessKey,
-                SecretKey,
-                new AmazonEC2Config { ServiceURL = ConnectionString }
-            );
-
-            var request = new RunInstancesRequest()
-            {
-                InstanceType = InstanceType.T1Micro,
-                MinCount = 1,
-                MaxCount = 1,
-                KeyName = "development",
-            };
-            _ = await ec2Client.RunInstancesAsync(request, cancellationToken).ConfigureAwait(false);
+            await CreateEC2InstanceAsync(cancellationToken).ConfigureAwait(false);
         }
         catch
         {
