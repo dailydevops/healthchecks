@@ -19,10 +19,7 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
     public ElasticComputeCloudHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Before(Test)]
-    public async Task SetupEC2InstanceAsync()
-    {
-        await _instance.CreateEC2InstanceAsync().ConfigureAwait(false);
-    }
+    public async Task SetupEC2InstanceAsync() => await _instance.CreateEC2InstanceAsync().ConfigureAwait(false);
 
     [Test]
     public async Task AddAWSEC2_UseOptionsCreate_Healthy() =>
