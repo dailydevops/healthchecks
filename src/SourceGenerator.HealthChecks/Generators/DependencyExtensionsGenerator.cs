@@ -83,9 +83,9 @@ internal sealed class DependencyExtensionsGenerator : IIncrementalGenerator
                 _ = builder
                     .AppendLine("[ExcludeFromCodeCoverage]")
                     .AppendLine("bool IsNameAlreadyUsedForServiceType(HealthCheckRegistration registration) =>")
-                    .Intend()
+                    .Indent()
                     .AppendLine("registration.Name.Equals(name, StringComparison.OrdinalIgnoreCase)")
-                    .Intend()
+                    .Indent()
                     .AppendLine("&& registration.Factory(scope.ServiceProvider).GetType() == typeof(T);");
             }
         }

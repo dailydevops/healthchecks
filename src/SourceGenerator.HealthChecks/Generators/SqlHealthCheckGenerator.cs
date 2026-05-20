@@ -39,14 +39,14 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
             .Append("private ")
             .AppendIf(candidate.AsyncImplementation, "async ")
             .AppendLine("ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(")
-            .Intend()
+            .Indent()
             .AppendLine("string name,")
-            .Intend()
+            .Indent()
             .AppendLine("HealthStatus failureStatus,")
-            .Intend()
+            .Indent()
             .Append(candidate.OptionsTypeName)
             .AppendLine(" options,")
-            .Intend()
+            .Indent()
             .AppendLine("CancellationToken cancellationToken)");
         using (builder.Scope())
         {

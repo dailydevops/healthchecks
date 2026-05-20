@@ -37,7 +37,7 @@ internal static class CodeGenerator
                 includeServiceProvider,
                 $"partial class {candidate.Name}(IServiceProvider serviceProvider, IOptionsMonitor<{candidate.OptionsTypeNamespace}.{candidate.OptionsTypeName}> optionsMonitor)"
             )
-            .Intend()
+            .Indent()
             .AppendLine(": IHealthCheck");
 
         using (cb.Scope())
