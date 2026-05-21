@@ -8,7 +8,7 @@ using Testcontainers.Pulsar;
 public sealed class PulsarContainer : IAsyncInitializer, IAsyncDisposable
 {
     private readonly Testcontainers.Pulsar.PulsarContainer _container = new PulsarBuilder(
-        /*dockerimage*/"apachepulsar/pulsar:3.3.9"
+        /*dockerimage*/"apachepulsar/pulsar:4.2.1"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
