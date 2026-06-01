@@ -1,5 +1,4 @@
 * text=auto eol=lf
-* text eol=lf
 
 # (binary is a macro for -text -diff)
 *.png binary

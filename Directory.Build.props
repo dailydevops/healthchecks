@@ -17,6 +17,9 @@
     <PackageReleaseNotes>$(PackageProjectUrl)/releases/</PackageReleaseNotes>
     <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
+  <PropertyGroup>
+    <DisableRecommendedPackage>Meziantou.Analyzer</DisableRecommendedPackage>
+  </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" Condition=" '$(TargetFramework)' != 'netstandard2.0' " />
   </ItemGroup>
