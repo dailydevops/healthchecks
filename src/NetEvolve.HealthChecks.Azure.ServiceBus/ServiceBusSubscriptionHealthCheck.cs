@@ -12,18 +12,17 @@ internal sealed partial class ServiceBusSubscriptionHealthCheck
 {
     private ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         ServiceBusSubscriptionOptions options,
         CancellationToken cancellationToken
     ) =>
         options.EnablePeekMode
             ? ExecutePeekHealthCheckAsync(name, options, cancellationToken)
-            : ExecuteHealthCheckAsync(name, options, cancellationToken);
+            : ExecuteGetHealthCheckAsync(name, failureStatus, options, cancellationToken);
 
-    private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
+    private async ValueTask<HealthCheckResult> ExecuteGetHealthCheckAsync(
         string name,
+        HealthStatus failureStatus,
         ServiceBusSubscriptionOptions options,
         CancellationToken cancellationToken
     )
@@ -31,10 +30,15 @@ internal sealed partial class ServiceBusSubscriptionHealthCheck
         var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
         var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
-        var (isValid, _) = await client
+        var (isValid, subscription) = await client
             .GetSubscriptionRuntimePropertiesAsync(options.TopicName, options.SubscriptionName, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (subscription is null)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Subscription not found.");
+        }
 
         return HealthCheckState(isValid, name);
     }

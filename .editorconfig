@@ -270,6 +270,11 @@ dotnet_diagnostic.IDE0046.severity                                      = sugges
 csharp_style_prefer_primary_constructors                                = false
 dotnet_diagnostic.IDE0290.severity                                      = suggestion
 
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity                                      = warning
+dotnet_diagnostic.RCS1163.severity                                      = none
+dotnet_code_quality_unused_parameters                                   = all
+
 # [CSharpier] Incompatible rules deactivated
 # https://csharpier.com/docs/IntegratingWithLinters#code-analysis-rules
 dotnet_diagnostic.IDE0055.severity                                      = none

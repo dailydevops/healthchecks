@@ -12,9 +12,7 @@ internal sealed partial class ServiceBusTopicHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         ServiceBusTopicOptions options,
         CancellationToken cancellationToken
     )
@@ -22,10 +20,15 @@ internal sealed partial class ServiceBusTopicHealthCheck
         var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
         var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
-        var (isTimelyResponse, _) = await client
+        var (isTimelyResponse, topic) = await client
             .GetTopicRuntimePropertiesAsync(options.TopicName, cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (topic is null)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Topic not found.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
