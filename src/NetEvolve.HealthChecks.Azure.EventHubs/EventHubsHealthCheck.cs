@@ -12,9 +12,7 @@ internal sealed partial class EventHubsHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         EventHubsOptions options,
         CancellationToken cancellationToken
     )
@@ -22,10 +20,15 @@ internal sealed partial class EventHubsHealthCheck
         var clientFactory = _serviceProvider.GetRequiredService<EventHubsClientFactory>();
         var client = clientFactory.GetClient(name, options, _serviceProvider);
 
-        var (isTimelyResponse, _) = await client
+        var (isTimelyResponse, hub) = await client
             .GetEventHubPropertiesAsync(cancellationToken: cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (hub is null)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Event hub not found.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }

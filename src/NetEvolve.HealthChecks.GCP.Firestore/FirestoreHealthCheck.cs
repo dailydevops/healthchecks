@@ -13,9 +13,7 @@ internal sealed partial class FirestoreHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
         string name,
-#pragma warning disable S1172 // Unused method parameters should be removed
         HealthStatus failureStatus,
-#pragma warning restore S1172 // Unused method parameters should be removed
         FirestoreOptions options,
         CancellationToken cancellationToken
     )
@@ -30,10 +28,15 @@ internal sealed partial class FirestoreHealthCheck
         var testDoc = testCollection.Document("test");
 
         // Attempt a lightweight operation with timeout
-        var (isTimelyResponse, _) = await testDoc
+        var (isTimelyResponse, snapshot) = await testDoc
             .GetSnapshotAsync(cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
+
+        if (snapshot is null)
+        {
+            return HealthCheckUnhealthy(failureStatus, name, "Document not found.");
+        }
 
         return HealthCheckState(isTimelyResponse, name);
     }
