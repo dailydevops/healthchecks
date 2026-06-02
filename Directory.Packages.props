@@ -17,7 +17,7 @@
     <GlobalPackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.15.0" />
     <GlobalPackageReference Include="Roslynator.CodeFixes" Version="4.15.0" />
     <GlobalPackageReference Include="Roslynator.Refactorings" Version="4.15.0" />
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.25.0.139117" />
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.27.0.140913" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.2.0" />
