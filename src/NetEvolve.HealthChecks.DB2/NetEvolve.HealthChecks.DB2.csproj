@@ -15,7 +15,7 @@
   </ItemGroup>
   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
     <PackageReference Include="Net.IBM.Data.Db2" Condition="$([MSBuild]::IsOSPlatform('Windows'))" PrivateAssets="all" VersionOverride="9.0.0.400" />
-    <PackageReference Include="Net.IBM.Data.Db2-lnx" Condition="$([MSBuild]::IsOSPlatform('Linux'))" PrivateAssets="all" VersionOverride="9.0.0.400" />
+    <PackageReference Include="Net.IBM.Data.Db2-lnx" Condition="$([MSBuild]::IsOSPlatform('Linux'))" PrivateAssets="all" VersionOverride="10.0.0.200" />
     <PackageReference Include="Net.IBM.Data.Db2-osx" Condition="$([MSBuild]::IsOSPlatform('OSX'))" PrivateAssets="all" VersionOverride="9.0.0.400" />
   </ItemGroup>
   <ItemGroup>
