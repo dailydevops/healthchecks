@@ -45,7 +45,7 @@
     <PackageVersion Include="Devart.Data.MySql" Version="10.1.100" />
     <PackageVersion Include="Devart.Data.Oracle" Version="11.1.100" />
     <PackageVersion Include="Devart.Data.PostgreSql" Version="9.1.100" />
-    <PackageVersion Include="Devart.Data.SQLite" Version="7.1.72" />
+    <PackageVersion Include="Devart.Data.SQLite" Version="7.1.100" />
     <PackageVersion Include="Devart.Data.SqlServer" Version="6.1.72" />
     <PackageVersion Include="DotPulsar" Version="5.3.1" />
     <PackageVersion Include="DuckDB.NET.Bindings.Full" Version="1.5.3" />
