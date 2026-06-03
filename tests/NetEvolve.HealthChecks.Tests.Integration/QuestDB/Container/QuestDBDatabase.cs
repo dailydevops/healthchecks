@@ -7,7 +7,7 @@ using TUnit.Core.Interfaces;
 public sealed class QuestDBDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly QuestDbContainer _database = new QuestDbBuilder(
-        /*dockerimage*/"questdb/questdb:9.4.0"
+        /*dockerimage*/"questdb/questdb:9.4.1"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
