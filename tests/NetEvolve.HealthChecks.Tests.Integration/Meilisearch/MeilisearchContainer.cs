@@ -9,7 +9,7 @@ public sealed class MeilisearchContainer : IAsyncInitializer, IAsyncDisposable
 {
     private const int DefaultPort = 7700;
     private readonly IContainer _database = new ContainerBuilder(
-        /*dockerimage*/"getmeili/meilisearch:v1.44.0"
+        /*dockerimage*/"getmeili/meilisearch:v1.45.2"
     )
         .WithPortBinding(DefaultPort, true)
         .WithEnvironment("MEILI_ENV", "development")
