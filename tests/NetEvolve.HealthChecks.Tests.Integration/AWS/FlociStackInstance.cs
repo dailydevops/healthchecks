@@ -25,7 +25,7 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string TableName = "test-table";
 
     private readonly TestContainer _container = new FlociBuilder(
-        /*dockerimage*/"floci/floci:1.5.21"
+        /*dockerimage*/"floci/floci:1.5.22"
     )
         .WithLogger(NullLogger.Instance)
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
