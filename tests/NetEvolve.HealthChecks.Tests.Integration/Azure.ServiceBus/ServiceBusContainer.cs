@@ -13,7 +13,7 @@ public sealed class ServiceBusContainer : IAsyncInitializer, IAsyncDisposable
     public const string TopicName = "topic.1";
 
     private readonly TestContainer _container = new ServiceBusBuilder(
-        /*dockerimage*/"mcr.microsoft.com/azure-messaging/servicebus-emulator:1.1.2"
+        /*dockerimage*/"mcr.microsoft.com/azure-messaging/servicebus-emulator:2.0.0"
     )
         .WithLogger(NullLogger.Instance)
         .WithAcceptLicenseAgreement(true)
