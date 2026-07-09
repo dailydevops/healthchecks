@@ -13,6 +13,7 @@ This bundle package provides health checks for various Azure services. For speci
 - [Azure Blob Storage](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Blobs/)
 - [Azure CosmosDB](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.CosmosDB/)
 - [Azure Event Hubs](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.EventHubs/)
+- [Azure Key Vault](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.KeyVault/)
 - [Azure Kusto](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Kusto/)
 - [Azure Search](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.Search/)
 - [Azure Service Bus](https://www.nuget.org/packages/NetEvolve.HealthChecks.Azure.ServiceBus/)
