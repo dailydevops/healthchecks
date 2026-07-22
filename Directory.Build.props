@@ -23,4 +23,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" Condition=" '$(TargetFramework)' != 'netstandard2.0' " />
   </ItemGroup>
+  <ItemGroup Label="No fixed version available yet, see https://github.com/advisories/GHSA-2m69-gcr7-jv3q">
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-2m69-gcr7-jv3q" />
+  </ItemGroup>
 </Project>
