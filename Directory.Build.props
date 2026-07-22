@@ -23,7 +23,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" Condition=" '$(TargetFramework)' != 'netstandard2.0' " />
   </ItemGroup>
-  <ItemGroup Condition=" '$(MSBuildProjectName)' == 'NetEvolve.HealthChecks.SQLite' " Label="Temporary NuGet audit suppression (no fixed version yet): https://github.com/advisories/GHSA-2m69-gcr7-jv3q">
+  <ItemGroup Label="Temporary NuGet audit suppression (no fixed version yet): https://github.com/advisories/GHSA-2m69-gcr7-jv3q">
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-2m69-gcr7-jv3q" />
   </ItemGroup>
 </Project>
