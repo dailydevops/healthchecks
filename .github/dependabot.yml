@@ -8,6 +8,20 @@
 
 version: 2
 updates:
+  # Regular NuGet updates are handled by Renovate; this entry exists so that
+  # Dependabot security updates use a Conventional Commits compliant prefix.
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependency:nuget"
+    open-pull-requests-limit: 0
+    assignees:
+      - samtrion
+
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
