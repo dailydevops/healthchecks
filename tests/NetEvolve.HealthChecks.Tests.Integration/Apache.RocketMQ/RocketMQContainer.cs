@@ -60,8 +60,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             // The proxy resolves the broker's route info from the name server on its own client-side
             // cache, which only refreshes on a fixed interval. Starting the proxy can therefore race
             // the broker's registration and crash on its first attempt (fails to create its internal
-            // system topics); let Docker restart it rather than failing the test, and wait for its
-            // own readiness log line rather than just the port being mapped.
+            // system topics); let Docker restart it rather than failing the test.
             .WithCreateParameterModifier(parameters =>
             {
                 parameters.HostConfig ??= new HostConfig();
@@ -73,8 +72,8 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             })
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilMessageIsLogged(
-                        "rocketmq-proxy startup successfully",
+                    .UntilExternalTcpPortIsAvailable(
+                        ProxyGrpcPort,
                         strategy => strategy.WithRetries(60).WithInterval(TimeSpan.FromSeconds(2))
                     )
             )
