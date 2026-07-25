@@ -24,7 +24,7 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                         options.Topic = _accessor.Topic;
                         options.AccessKey = _accessor.AccessKey;
                         options.AccessSecret = _accessor.AccessSecret;
-                        options.EnableSsl = false;
+                        options.EnableSsl = true;
                         options.Timeout = 30000;
                     }
                 );
@@ -64,7 +64,7 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                         options.Topic = _accessor.Topic;
                         options.AccessKey = _accessor.AccessKey;
                         options.AccessSecret = _accessor.AccessSecret;
-                        options.EnableSsl = false;
+                        options.EnableSsl = true;
                         options.Timeout = 0;
                     }
                 );
@@ -85,7 +85,7 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestContainerHealthy:Topic", _accessor.Topic },
                     { "HealthChecks:RocketMQ:TestContainerHealthy:AccessKey", _accessor.AccessKey },
                     { "HealthChecks:RocketMQ:TestContainerHealthy:AccessSecret", _accessor.AccessSecret },
-                    { "HealthChecks:RocketMQ:TestContainerHealthy:EnableSsl", "false" },
+                    { "HealthChecks:RocketMQ:TestContainerHealthy:EnableSsl", "true" },
                     { "HealthChecks:RocketMQ:TestContainerHealthy:Timeout", "30000" },
                 };
                 _ = config.AddInMemoryCollection(values);
@@ -123,7 +123,7 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestContainerDegraded:Topic", _accessor.Topic },
                     { "HealthChecks:RocketMQ:TestContainerDegraded:AccessKey", _accessor.AccessKey },
                     { "HealthChecks:RocketMQ:TestContainerDegraded:AccessSecret", _accessor.AccessSecret },
-                    { "HealthChecks:RocketMQ:TestContainerDegraded:EnableSsl", "false" },
+                    { "HealthChecks:RocketMQ:TestContainerDegraded:EnableSsl", "true" },
                     { "HealthChecks:RocketMQ:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);

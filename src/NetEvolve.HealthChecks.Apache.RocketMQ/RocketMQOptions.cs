@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 public sealed record RocketMQOptions
 {
     /// <summary>
-    /// Gets or sets the gRPC endpoint of the RocketMQ name server (e.g., "127.0.0.1:8081").
+    /// Gets or sets the gRPC endpoint of the RocketMQ proxy (e.g., "127.0.0.1:8081").
     /// </summary>
     public string? Endpoint { get; set; }
 
