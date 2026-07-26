@@ -8,6 +8,6 @@ using NetEvolve.Extensions.TUnit;
 [TestGroup("Z00TestGroup")]
 public sealed class RocketMQHealthCheckTests : RocketMQHealthCheckBaseTests
 {
-    public RocketMQHealthCheckTests(RocketMQContainer container)
-        : base(container) { }
+    public RocketMQHealthCheckTests(RocketMQContainer accessor)
+        : base(accessor) { }
 }
