@@ -7,7 +7,7 @@ using Testcontainers.OpenSearch;
 public sealed class OpenSearchContainer : IAsyncInitializer, IAsyncDisposable
 {
     private readonly Testcontainers.OpenSearch.OpenSearchContainer _database = new OpenSearchBuilder(
-        /*dockerimage*/"opensearchproject/opensearch:2.19.5"
+        /*dockerimage*/"opensearchproject/opensearch:3.7.0"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
