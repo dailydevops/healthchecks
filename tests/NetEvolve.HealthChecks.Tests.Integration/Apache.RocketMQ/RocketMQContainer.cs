@@ -1,6 +1,9 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Apache.RocketMQ;
 
 using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
@@ -24,9 +27,9 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
     private const string ProxyAlias = "proxy";
     private const int NameServerPort = 9876;
     private const int BrokerPort = 10911;
-    private const int ProxyGrpcPort = 8081;
     private const string ClusterName = "DefaultCluster";
     private const string TopicName = "health-check-topic";
+    private const string ProxyConfigPath = "/home/rocketmq/rocketmq-5.3.1/conf/rmq-proxy.json";
 
     // The proxy's gRPC port accepts TCP connections slightly before its TLS/gRPC listener is
     // actually ready to serve requests (a JVM/Netty warm-up race), so the first real client
@@ -34,6 +37,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
     // no retry for this, so give the listener a moment to settle before running any test against it.
     private static readonly TimeSpan ProxySettleDelay = TimeSpan.FromSeconds(10);
 
+    private readonly int _proxyGrpcPort = GetFreePort();
     private readonly INetwork _network = new NetworkBuilder().Build();
 
     private readonly IContainer _nameServer;
@@ -59,11 +63,25 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             .WithLogger(NullLogger.Instance)
             .Build();
 
+        // The proxy always reports its own configured `grpcServerPort` (not the Docker-mapped host
+        // port) as the address for clients to (re)connect to when handling route/send RPCs. Docker
+        // assigns a random host port for the gRPC binding, which never matches that hardcoded value,
+        // so every call beyond the first would be misdirected. Pinning `grpcServerPort` to the same
+        // free port used for the host<->container port mapping keeps both sides in sync.
+        var proxyConfig = $$"""
+            {
+              "rocketMQClusterName": "{{ClusterName}}",
+              "proxyMode": "CLUSTER",
+              "grpcServerPort": {{_proxyGrpcPort}}
+            }
+            """;
+
         _proxy = new ContainerBuilder(ImageName)
             .WithNetwork(_network)
             .WithNetworkAliases(ProxyAlias)
             .WithEnvironment("NAMESRV_ADDR", $"{NameServerAlias}:{NameServerPort}")
-            .WithPortBinding(ProxyGrpcPort, true)
+            .WithPortBinding(_proxyGrpcPort, _proxyGrpcPort)
+            .WithResourceMapping(Encoding.UTF8.GetBytes(proxyConfig), FilePath.Of(ProxyConfigPath))
             .WithCommand("sh", "mqproxy")
             // The proxy resolves the broker's route info from the name server on its own client-side
             // cache, which only refreshes on a fixed interval. Starting the proxy can therefore race
@@ -81,7 +99,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
                     .UntilExternalTcpPortIsAvailable(
-                        ProxyGrpcPort,
+                        _proxyGrpcPort,
                         strategy => strategy.WithRetries(60).WithInterval(TimeSpan.FromSeconds(2))
                     )
             )
@@ -89,7 +107,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             .Build();
     }
 
-    public string Endpoint => $"{_proxy.Hostname}:{_proxy.GetMappedPublicPort(ProxyGrpcPort)}";
+    public string Endpoint => $"{_proxy.Hostname}:{_proxyGrpcPort}";
 
     public string Topic => TopicName;
 
@@ -107,29 +125,53 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
         // publish request; it does not trigger the broker's auto-create-topic behavior the way
         // publishing directly through the native remoting protocol would. Without this, every
         // send fails with "No topic route info in name server for the topic".
-        var updateTopicResult = await _broker
-            .ExecAsync([
-                "sh",
-                "mqadmin",
-                "updateTopic",
-                "-n",
-                $"{NameServerAlias}:{NameServerPort}",
-                "-c",
-                ClusterName,
-                "-t",
-                TopicName,
-            ])
-            .ConfigureAwait(false);
-
-        if (updateTopicResult.ExitCode != 0)
+        //
+        // The broker registers itself with the name server asynchronously after startup, so the
+        // first few attempts can race that registration; mqadmin still exits 0 in that case and
+        // only reports the failure in stdout, so both must be checked.
+        for (var attempt = 1; ; attempt++)
         {
-            throw new InvalidOperationException(
-                $"Failed to create RocketMQ topic '{TopicName}'. Stdout: {updateTopicResult.Stdout} Stderr: {updateTopicResult.Stderr}"
-            );
+            var updateTopicResult = await _broker
+                .ExecAsync([
+                    "sh",
+                    "mqadmin",
+                    "updateTopic",
+                    "-n",
+                    $"{NameServerAlias}:{NameServerPort}",
+                    "-c",
+                    ClusterName,
+                    "-t",
+                    TopicName,
+                ])
+                .ConfigureAwait(false);
+
+            if (
+                updateTopicResult.ExitCode == 0
+                && !updateTopicResult.Stdout.Contains("[error]", StringComparison.Ordinal)
+            )
+            {
+                break;
+            }
+
+            if (attempt >= 20)
+            {
+                throw new InvalidOperationException(
+                    $"Failed to create RocketMQ topic '{TopicName}'. Stdout: {updateTopicResult.Stdout} Stderr: {updateTopicResult.Stderr}"
+                );
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
         }
 
         await _proxy.StartAsync().ConfigureAwait(false);
         await Task.Delay(ProxySettleDelay).ConfigureAwait(false);
+    }
+
+    private static int GetFreePort()
+    {
+        using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        socket.Bind(new IPEndPoint(IPAddress.Loopback, 0));
+        return ((IPEndPoint)socket.LocalEndPoint!).Port;
     }
 
     public async ValueTask DisposeAsync()
