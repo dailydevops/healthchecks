@@ -100,7 +100,7 @@
     <PackageVersion Include="NSubstitute" Version="6.0.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="OllamaSharp" Version="5.4.30" />
-    <PackageVersion Include="OpenSearch.Client" Version="1.8.0" />
+    <PackageVersion Include="OpenSearch.Client" Version="2.0.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.17.0" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.300" />
     <PackageVersion Include="PublicApiGenerator" Version="11.5.4" />
