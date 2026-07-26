@@ -5,15 +5,15 @@
       exception: {
         innerExceptions: [
           {
-            message: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte. (127.0.0.1:9999),
+            message: Connection refused (127.0.0.1:9999),
             type: HttpRequestException
           },
           {
-            message: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte.,
+            message: Connection refused,
             type: SocketException
           }
         ],
-        message: Status(StatusCode="Unavailable", Detail="Error starting gRPC call. HttpRequestException: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte. (127.0.0.1:9999) SocketException: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte.", DebugException="System.Net.Http.HttpRequestException: Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte. (127.0.0.1:9999)"),
+        message: Status(StatusCode="Unavailable", Detail="Error starting gRPC call. HttpRequestException: Connection refused (127.0.0.1:9999) SocketException: Connection refused", DebugException="System.Net.Http.HttpRequestException: Connection refused (127.0.0.1:9999)"),
         type: Grpc.Core.RpcException
       },
       name: TestContainerUnhealthy,
