@@ -129,7 +129,10 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
         // The broker registers itself with the name server asynchronously after startup, so the
         // first few attempts can race that registration; mqadmin still exits 0 in that case and
         // only reports the failure in stdout, so both must be checked.
-        for (var attempt = 1; ; attempt++)
+        const int maxAttempts = 20;
+        var topicCreated = false;
+
+        for (var attempt = 1; attempt <= maxAttempts && !topicCreated; attempt++)
         {
             var updateTopicResult = await _broker
                 .ExecAsync([
@@ -145,22 +148,21 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
                 ])
                 .ConfigureAwait(false);
 
-            if (
+            topicCreated =
                 updateTopicResult.ExitCode == 0
-                && !updateTopicResult.Stdout.Contains("[error]", StringComparison.Ordinal)
-            )
-            {
-                break;
-            }
+                && !updateTopicResult.Stdout.Contains("[error]", StringComparison.Ordinal);
 
-            if (attempt >= 20)
+            if (!topicCreated)
             {
-                throw new InvalidOperationException(
-                    $"Failed to create RocketMQ topic '{TopicName}'. Stdout: {updateTopicResult.Stdout} Stderr: {updateTopicResult.Stderr}"
-                );
-            }
+                if (attempt == maxAttempts)
+                {
+                    throw new InvalidOperationException(
+                        $"Failed to create RocketMQ topic '{TopicName}'. Stdout: {updateTopicResult.Stdout} Stderr: {updateTopicResult.Stderr}"
+                    );
+                }
 
-            await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+            }
         }
 
         await _proxy.StartAsync().ConfigureAwait(false);
