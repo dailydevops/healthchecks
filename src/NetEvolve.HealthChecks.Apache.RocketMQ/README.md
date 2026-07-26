@@ -46,7 +46,7 @@ The configuration looks like this:
     "HealthChecks": {
         "RocketMQ": {
             "<name>": {
-                "Endpoint": "<endpoint>", // required, e.g. "127.0.0.1:8081"
+                "Endpoint": "<endpoint>", // required, the gRPC endpoint of the RocketMQ proxy (not the NameServer), e.g. "127.0.0.1:8081"
                 "Topic": "<topic>", // required, the topic to send health check messages to
                 "AccessKey": "<access-key>", // optional, default is null
                 "AccessSecret": "<access-secret>", // optional, default is null
@@ -65,7 +65,7 @@ var builder = services.AddHealthChecks();
 
 builder.AddRocketMQ("<name>", options =>
 {
-        options.Endpoint = "<endpoint>"; // required, e.g. "127.0.0.1:8081"
+        options.Endpoint = "<endpoint>"; // required, the gRPC endpoint of the RocketMQ proxy (not the NameServer), e.g. "127.0.0.1:8081"
         options.Topic = "<topic>"; // required, the topic to send health check messages to
         options.AccessKey = "<access-key>"; // optional, default is null
         options.AccessSecret = "<access-secret>"; // optional, default is null

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Docker.DotNet;
 using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -37,12 +38,13 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
     // no retry for this, so give the listener a moment to settle before running any test against it.
     private static readonly TimeSpan ProxySettleDelay = TimeSpan.FromSeconds(10);
 
-    private readonly int _proxyGrpcPort = GetFreePort();
     private readonly INetwork _network = new NetworkBuilder().Build();
 
     private readonly IContainer _nameServer;
     private readonly IContainer _broker;
-    private readonly IContainer _proxy;
+
+    private int _proxyGrpcPort;
+    private IContainer _proxy;
 
     public RocketMQContainer()
     {
@@ -63,24 +65,30 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             .WithLogger(NullLogger.Instance)
             .Build();
 
-        // The proxy always reports its own configured `grpcServerPort` (not the Docker-mapped host
-        // port) as the address for clients to (re)connect to when handling route/send RPCs. Docker
-        // assigns a random host port for the gRPC binding, which never matches that hardcoded value,
-        // so every call beyond the first would be misdirected. Pinning `grpcServerPort` to the same
-        // free port used for the host<->container port mapping keeps both sides in sync.
+        _proxyGrpcPort = GetFreePort();
+        _proxy = BuildProxyContainer(_proxyGrpcPort);
+    }
+
+    // The proxy always reports its own configured `grpcServerPort` (not the Docker-mapped host
+    // port) as the address for clients to (re)connect to when handling route/send RPCs. Docker
+    // assigns a random host port for the gRPC binding, which never matches that hardcoded value,
+    // so every call beyond the first would be misdirected. Pinning `grpcServerPort` to the same
+    // free port used for the host<->container port mapping keeps both sides in sync.
+    private IContainer BuildProxyContainer(int grpcPort)
+    {
         var proxyConfig = $$"""
             {
               "rocketMQClusterName": "{{ClusterName}}",
               "proxyMode": "CLUSTER",
-              "grpcServerPort": {{_proxyGrpcPort}}
+              "grpcServerPort": {{grpcPort}}
             }
             """;
 
-        _proxy = new ContainerBuilder(ImageName)
+        return new ContainerBuilder(ImageName)
             .WithNetwork(_network)
             .WithNetworkAliases(ProxyAlias)
             .WithEnvironment("NAMESRV_ADDR", $"{NameServerAlias}:{NameServerPort}")
-            .WithPortBinding(_proxyGrpcPort, _proxyGrpcPort)
+            .WithPortBinding(grpcPort, grpcPort)
             .WithResourceMapping(Encoding.UTF8.GetBytes(proxyConfig), FilePath.Of(ProxyConfigPath))
             .WithCommand("sh", "mqproxy")
             // The proxy resolves the broker's route info from the name server on its own client-side
@@ -99,7 +107,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
                     .UntilExternalTcpPortIsAvailable(
-                        _proxyGrpcPort,
+                        grpcPort,
                         strategy => strategy.WithRetries(60).WithInterval(TimeSpan.FromSeconds(2))
                     )
             )
@@ -165,7 +173,27 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             }
         }
 
-        await _proxy.StartAsync().ConfigureAwait(false);
+        // GetFreePort() only reserves a port at the moment it's called; another process can still
+        // claim it before Docker binds the container to it. Rebuild the proxy with a freshly chosen
+        // port and retry rather than failing the test outright on that rare race.
+        const int maxPortAttempts = 5;
+        var proxyStarted = false;
+
+        for (var attempt = 1; attempt <= maxPortAttempts && !proxyStarted; attempt++)
+        {
+            try
+            {
+                await _proxy.StartAsync().ConfigureAwait(false);
+                proxyStarted = true;
+            }
+            catch (DockerApiException) when (attempt < maxPortAttempts)
+            {
+                await _proxy.DisposeAsync().ConfigureAwait(false);
+                _proxyGrpcPort = GetFreePort();
+                _proxy = BuildProxyContainer(_proxyGrpcPort);
+            }
+        }
+
         await Task.Delay(ProxySettleDelay).ConfigureAwait(false);
     }
 

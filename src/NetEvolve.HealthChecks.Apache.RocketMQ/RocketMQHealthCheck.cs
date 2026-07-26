@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Apache.RocketMQ;
 
+using System;
 using System.Collections.Concurrent;
 using System.Text;
 using System.Threading;
@@ -41,11 +42,13 @@ internal sealed partial class RocketMQHealthCheck
 
     private static ClientConfig BuildClientConfig(RocketMQOptions options)
     {
-        var builder = new ClientConfig.Builder().SetEndpoints(options.Endpoint!);
+        var builder = new ClientConfig.Builder().SetEndpoints(options.Endpoint!).EnableSsl(options.EnableSsl);
 
         if (!options.EnableSsl)
         {
-            _ = builder.EnableSsl(false);
+            // The RocketMQ gRPC client relies on plain HTTP/2 (h2c) when TLS is disabled, which
+            // .NET's SocketsHttpHandler doesn't allow unless explicitly opted into.
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
         }
 
         if (options.AccessKey is not null && options.AccessSecret is not null)
