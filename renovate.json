@@ -32,6 +32,7 @@
   "packageRules": [
     {
       "matchManagers": ["nuget"],
+      "prPriority": 5,
       "labels": ["dependency:nuget"],
       "semanticCommits": "enabled",
       "semanticCommitType": "chore",
@@ -40,6 +41,7 @@
     },
     {
       "matchManagers": ["github-actions"],
+      "prPriority": 10,
       "labels": ["dependency:actions"],
       "automerge": true,
       "semanticCommits": "enabled",
@@ -49,6 +51,7 @@
     },
     {
       "matchDatasources": ["docker", "custom.regex"],
+      "prPriority": -5,
       "labels": ["dependency:docker"],
       "semanticCommits": "enabled",
       "semanticCommitType": "chore",
