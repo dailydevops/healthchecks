@@ -25,6 +25,8 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
     private const int NameServerPort = 9876;
     private const int BrokerPort = 10911;
     private const int ProxyGrpcPort = 8081;
+    private const string ClusterName = "DefaultCluster";
+    private const string TopicName = "health-check-topic";
 
     // The proxy's gRPC port accepts TCP connections slightly before its TLS/gRPC listener is
     // actually ready to serve requests (a JVM/Netty warm-up race), so the first real client
@@ -89,7 +91,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
 
     public string Endpoint => $"{_proxy.Hostname}:{_proxy.GetMappedPublicPort(ProxyGrpcPort)}";
 
-    public string Topic => "health-check-topic";
+    public string Topic => TopicName;
 
     public string? AccessKey => null;
 
@@ -100,6 +102,32 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
         await _network.CreateAsync().ConfigureAwait(false);
         await _nameServer.StartAsync().ConfigureAwait(false);
         await _broker.StartAsync().ConfigureAwait(false);
+
+        // The gRPC proxy resolves a topic's route from the name server before forwarding a
+        // publish request; it does not trigger the broker's auto-create-topic behavior the way
+        // publishing directly through the native remoting protocol would. Without this, every
+        // send fails with "No topic route info in name server for the topic".
+        var updateTopicResult = await _broker
+            .ExecAsync([
+                "sh",
+                "mqadmin",
+                "updateTopic",
+                "-n",
+                $"{NameServerAlias}:{NameServerPort}",
+                "-c",
+                ClusterName,
+                "-t",
+                TopicName,
+            ])
+            .ConfigureAwait(false);
+
+        if (updateTopicResult.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"Failed to create RocketMQ topic '{TopicName}'. Stdout: {updateTopicResult.Stdout} Stderr: {updateTopicResult.Stderr}"
+            );
+        }
+
         await _proxy.StartAsync().ConfigureAwait(false);
         await Task.Delay(ProxySettleDelay).ConfigureAwait(false);
     }
