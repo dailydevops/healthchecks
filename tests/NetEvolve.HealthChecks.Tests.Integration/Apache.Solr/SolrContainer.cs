@@ -13,7 +13,7 @@ public sealed class SolrContainer : IAsyncInitializer, IAsyncDisposable
     private const int SolrPort = 8983;
 
     private readonly IContainer _container = new ContainerBuilder(
-        /*dockerimage*/"solr:9.10.1"
+        /*dockerimage*/"solr:10.0.0"
     )
         .WithPortBinding(SolrPort, assignRandomHostPort: true)
         .WithCommand("solr-precreate", SolrCore)
