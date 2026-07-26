@@ -26,6 +26,12 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
     private const int BrokerPort = 10911;
     private const int ProxyGrpcPort = 8081;
 
+    // The proxy's gRPC port accepts TCP connections slightly before its TLS/gRPC listener is
+    // actually ready to serve requests (a JVM/Netty warm-up race), so the first real client
+    // connection right after the port opens can be reset mid-handshake. The RocketMQ client has
+    // no retry for this, so give the listener a moment to settle before running any test against it.
+    private static readonly TimeSpan ProxySettleDelay = TimeSpan.FromSeconds(10);
+
     private readonly INetwork _network = new NetworkBuilder().Build();
 
     private readonly IContainer _nameServer;
@@ -95,6 +101,7 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
         await _nameServer.StartAsync().ConfigureAwait(false);
         await _broker.StartAsync().ConfigureAwait(false);
         await _proxy.StartAsync().ConfigureAwait(false);
+        await Task.Delay(ProxySettleDelay).ConfigureAwait(false);
     }
 
     public async ValueTask DisposeAsync()
