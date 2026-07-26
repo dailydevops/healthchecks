@@ -7,7 +7,7 @@ using Testcontainers.MySql;
 public sealed class MySqlDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly MySqlContainer _database = new MySqlBuilder(
-        /*dockerimage*/"mysql:8.4.9"
+        /*dockerimage*/"mysql:8.4.10"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
