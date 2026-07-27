@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup Label="Transitive Version Workaround">
     <!-- Related to https://github.com/dependabot/dependabot-core/issues/12493 -->
+    <PackageReference Include="AWSSDK.CloudWatch" />
     <PackageReference Include="AWSSDK.EC2" />
     <PackageReference Include="AWSSDK.S3" />
     <PackageReference Include="AWSSDK.SQS" />
@@ -150,6 +151,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.RocketMQ\NetEvolve.HealthChecks.Apache.RocketMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ArangoDb\NetEvolve.HealthChecks.ArangoDb.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.CloudWatch\NetEvolve.HealthChecks.AWS.CloudWatch.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.DynamoDB\NetEvolve.HealthChecks.AWS.DynamoDB.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.EC2\NetEvolve.HealthChecks.AWS.EC2.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.S3\NetEvolve.HealthChecks.AWS.S3.csproj" />

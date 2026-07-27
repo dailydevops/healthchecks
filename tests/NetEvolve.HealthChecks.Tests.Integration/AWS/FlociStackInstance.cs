@@ -1,6 +1,8 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS;
 
 using System.Threading.Tasks;
+using Amazon.CloudWatch;
+using Amazon.CloudWatch.Model;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Amazon.EC2;
@@ -23,6 +25,7 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string TopicName = "test-topic";
     internal const string QueueName = "test-queue";
     internal const string TableName = "test-table";
+    internal const string AlarmName = "test-alarm";
 
     private readonly TestContainer _container = new FlociBuilder(
         /*dockerimage*/"floci/floci:1.5.33"
@@ -49,7 +52,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
                 CreateSNSDefaults(cancellationToken),
                 CreateSQSDefaults(cancellationToken),
                 CreateS3Defaults(cancellationToken),
-                CreateDynamoDBDefaults(cancellationToken)
+                CreateDynamoDBDefaults(cancellationToken),
+                CreateCloudWatchDefaults(cancellationToken)
             )
             .ConfigureAwait(false);
     }
@@ -190,6 +194,38 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
                 BillingMode = BillingMode.PAY_PER_REQUEST,
             };
             _ = await dynamoDbClient.CreateTableAsync(createTableRequest, cancellationToken).ConfigureAwait(false);
+        }
+        catch
+        {
+            // Ignore
+        }
+    }
+
+    private async Task CreateCloudWatchDefaults(CancellationToken cancellationToken)
+    {
+        try
+        {
+            // Create CloudWatch Alarm
+            using var cloudWatchClient = new AmazonCloudWatchClient(
+                AccessKey,
+                SecretKey,
+                new AmazonCloudWatchConfig { ServiceURL = ConnectionString }
+            );
+
+            var putMetricAlarmRequest = new PutMetricAlarmRequest
+            {
+                AlarmName = AlarmName,
+                Namespace = "AWS/EC2",
+                MetricName = "CPUUtilization",
+                Statistic = Statistic.Average,
+                Period = 60,
+                EvaluationPeriods = 1,
+                Threshold = 80,
+                ComparisonOperator = Amazon.CloudWatch.ComparisonOperator.GreaterThanThreshold,
+            };
+            _ = await cloudWatchClient
+                .PutMetricAlarmAsync(putMetricAlarmRequest, cancellationToken)
+                .ConfigureAwait(false);
         }
         catch
         {

@@ -25,6 +25,7 @@ internal static class HealthCheckArchitecture
             typeof(Apache.Pulsar.PulsarHealthCheck).Assembly,
             typeof(Apache.Solr.SolrHealthCheck).Assembly,
             // AWS
+            typeof(AWS.CloudWatch.CloudWatchHealthCheck).Assembly,
             typeof(AWS.EC2.ElasticComputeCloudHealthCheck).Assembly,
             typeof(AWS.DynamoDB.DynamoDbHealthCheck).Assembly,
             typeof(AWS.S3.SimpleStorageServiceHealthCheck).Assembly,

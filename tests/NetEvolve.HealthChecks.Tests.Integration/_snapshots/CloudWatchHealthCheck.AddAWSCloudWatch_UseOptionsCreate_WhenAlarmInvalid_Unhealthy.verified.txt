@@ -1,0 +1,15 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Alarm `Invalid` not found.,
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        aws,
+        cloudwatch,
+        monitoring
+      ]
+    }
+  ],
+  status: Unhealthy
+}
