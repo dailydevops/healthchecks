@@ -9,7 +9,7 @@ using Testcontainers.FirebirdSql;
 public sealed class FirebirdDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly FirebirdSqlContainer _database = new FirebirdSqlBuilder(
-        /*dockerimage*/"jacobalberty/firebird:v5.0.0"
+        /*dockerimage*/"jacobalberty/firebird:v4.0.2"
     )
         .WithLogger(NullLogger.Instance)
         .Build();

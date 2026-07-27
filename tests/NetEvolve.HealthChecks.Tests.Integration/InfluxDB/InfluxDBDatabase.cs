@@ -1,4 +1,4 @@
-namespace NetEvolve.HealthChecks.Tests.Integration.InfluxDB;
+﻿namespace NetEvolve.HealthChecks.Tests.Integration.InfluxDB;
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -7,7 +7,7 @@ using Testcontainers.InfluxDb;
 public sealed class InfluxDBDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly InfluxDbContainer _database = new InfluxDbBuilder(
-        /*dockerimage*/"influxdb:3.10.3-enterprise"
+        /*dockerimage*/"influxdb:2.9.1-alpine"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
