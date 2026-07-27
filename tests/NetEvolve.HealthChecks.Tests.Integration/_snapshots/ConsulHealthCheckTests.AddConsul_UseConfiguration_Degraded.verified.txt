@@ -1,4 +1,4 @@
-{
+﻿{
   results: [
     {
       description: TestContainerConfigDegraded: Degraded,
