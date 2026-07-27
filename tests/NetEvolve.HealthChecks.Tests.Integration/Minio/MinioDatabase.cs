@@ -21,7 +21,7 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
     internal IMinioClient Client =>
-        new MinioClient()
+        _client ??= new MinioClient()
             .WithEndpoint(_container.Hostname, _container.GetMappedPublicPort(9000))
             .WithCredentials(_container.GetAccessKey(), _container.GetSecretKey())
             .WithSSL(false)
@@ -41,12 +41,9 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
 
         await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 
-        // Create Minio client
-        _client = Client;
-
         // Create a test bucket
         var makeBucketArgs = new MakeBucketArgs().WithBucket(BucketName);
-        await _client.MakeBucketAsync(makeBucketArgs, cancellationToken).ConfigureAwait(false);
+        await Client.MakeBucketAsync(makeBucketArgs, cancellationToken).ConfigureAwait(false);
     }
 #pragma warning restore CA2000
 }

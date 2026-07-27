@@ -95,9 +95,9 @@ public sealed class DependencyInjectionExtensionsTests
             _ = await Assert.That(result).IsNotNull();
             _ = await Assert.That(registration).IsNotNull();
             _ = await Assert.That(registration!.Name).IsEqualTo("litedb-test");
-            _ = await Assert.That(registration!.FailureStatus).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert.That(registration.FailureStatus).IsEqualTo(HealthStatus.Unhealthy);
 
-            var tags = registration!.Tags.ToArray();
+            var tags = registration.Tags.ToArray();
             _ = await Assert.That(tags.Length).IsEqualTo(4);
             _ = await Assert.That(tags).Contains("litedb");
             _ = await Assert.That(tags).Contains("database");
@@ -146,7 +146,7 @@ public sealed class DependencyInjectionExtensionsTests
         {
             _ = await Assert.That(registrations).IsNotNull();
             _ = await Assert.That(registrations!.Length).IsEqualTo(2);
-            _ = await Assert.That(registrations!.Any(r => r.Name == "litedb-test1")).IsTrue();
+            _ = await Assert.That(registrations.Any(r => r.Name == "litedb-test1")).IsTrue();
             _ = await Assert.That(registrations!.Any(r => r.Name == "litedb-test2")).IsTrue();
         }
     }
