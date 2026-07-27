@@ -7,7 +7,7 @@ using Testcontainers.InfluxDb;
 public sealed class InfluxDBDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly InfluxDbContainer _database = new InfluxDbBuilder(
-        /*dockerimage*/"influxdb:2.9.1-alpine"
+        /*dockerimage*/"influxdb:2.9.1"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
