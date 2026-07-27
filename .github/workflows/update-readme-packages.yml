@@ -7,14 +7,14 @@ on:
     - cron: '21 4 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
+permissions: {}
 
 jobs:
   run:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
 
     - name: Checkout repository
