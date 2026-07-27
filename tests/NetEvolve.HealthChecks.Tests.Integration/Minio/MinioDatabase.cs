@@ -20,12 +20,14 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
     internal string ConnectionString => _container.GetConnectionString();
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
+#pragma warning disable S4275 // Getter does not access the expected field; a new client is intentionally created on each call
     internal IMinioClient Client =>
-        _client ??= new MinioClient()
+        new MinioClient()
             .WithEndpoint(_container.Hostname, _container.GetMappedPublicPort(9000))
             .WithCredentials(_container.GetAccessKey(), _container.GetSecretKey())
             .WithSSL(false)
             .Build();
+#pragma warning restore S4275
 #pragma warning restore CA2000 // Dispose objects before losing scope
 
     public async ValueTask DisposeAsync()
@@ -41,9 +43,12 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
 
         await _container.StartAsync(cancellationToken).ConfigureAwait(false);
 
+        // Create Minio client
+        _client = Client;
+
         // Create a test bucket
         var makeBucketArgs = new MakeBucketArgs().WithBucket(BucketName);
-        await Client.MakeBucketAsync(makeBucketArgs, cancellationToken).ConfigureAwait(false);
+        await _client.MakeBucketAsync(makeBucketArgs, cancellationToken).ConfigureAwait(false);
     }
 #pragma warning restore CA2000
 }
