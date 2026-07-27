@@ -147,7 +147,7 @@ public sealed class DependencyInjectionExtensionsTests
             _ = await Assert.That(registrations).IsNotNull();
             _ = await Assert.That(registrations!.Length).IsEqualTo(2);
             _ = await Assert.That(registrations.Any(r => r.Name == "litedb-test1")).IsTrue();
-            _ = await Assert.That(registrations!.Any(r => r.Name == "litedb-test2")).IsTrue();
+            _ = await Assert.That(registrations.Any(r => r.Name == "litedb-test2")).IsTrue();
         }
     }
 
