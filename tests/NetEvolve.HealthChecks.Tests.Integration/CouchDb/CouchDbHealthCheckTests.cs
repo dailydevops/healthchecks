@@ -72,6 +72,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
+#pragma warning disable S5332 // Using clear-text protocols is insecure
                 _ = healthChecks.AddCouchDb(
                     "TestContainerUnhealthy",
                     options =>
@@ -80,6 +81,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                         options.Timeout = 100;
                     }
                 );
+#pragma warning restore S5332 // Using clear-text protocols is insecure
             },
             HealthStatus.Unhealthy
         );

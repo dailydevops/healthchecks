@@ -36,9 +36,11 @@ public sealed class DaprContainer : IAsyncInitializer, IAsyncDisposable
         )
         .Build();
 
+#pragma warning disable S5332 // Using clear-text protocols is insecure
     public string HttpEndpoint => $"http://{_container.Hostname}:{_container.GetMappedPublicPort(DaprHttpPort)}";
 
     public string GrpcEndpoint => $"http://{_container.Hostname}:{_container.GetMappedPublicPort(DaprGrpcPort)}";
+#pragma warning restore S5332 // Using clear-text protocols is insecure
 
     public async ValueTask DisposeAsync() => await _container.DisposeAsync().ConfigureAwait(false);
 

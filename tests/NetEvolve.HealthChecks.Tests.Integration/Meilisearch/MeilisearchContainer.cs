@@ -22,7 +22,9 @@ public sealed class MeilisearchContainer : IAsyncInitializer, IAsyncDisposable
 
     public int Port => _database.GetMappedPublicPort(DefaultPort);
 
+#pragma warning disable S5332 // Using clear-text protocols is insecure
     public string Host => $"http://{Hostname}:{Port}";
+#pragma warning restore S5332 // Using clear-text protocols is insecure
 
     public async ValueTask DisposeAsync() => await _database.DisposeAsync().ConfigureAwait(false);
 

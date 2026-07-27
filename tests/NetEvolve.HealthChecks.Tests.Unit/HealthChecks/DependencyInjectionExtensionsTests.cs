@@ -48,9 +48,9 @@ public class DependencyInjectionExtensionsTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(check).IsNotNull();
-            _ = await Assert.That(check!.Tags.Count).IsEqualTo(3);
-            _ = await Assert.That(check!.Name).IsEqualTo("ApplicationReady");
-            _ = await Assert.That(check!.Factory(serviceProvider)).IsNotNull().And.IsTypeOf<ApplicationReadyCheck>();
+            _ = await Assert.That(check.Tags.Count).IsEqualTo(3);
+            _ = await Assert.That(check.Name).IsEqualTo("ApplicationReady");
+            _ = await Assert.That(check.Factory(serviceProvider)).IsNotNull().And.IsTypeOf<ApplicationReadyCheck>();
         }
     }
 
