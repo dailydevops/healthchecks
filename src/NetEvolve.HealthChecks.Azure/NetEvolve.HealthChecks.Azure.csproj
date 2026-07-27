@@ -9,6 +9,7 @@
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Blobs\NetEvolve.HealthChecks.Azure.Blobs.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.CosmosDB\NetEvolve.HealthChecks.Azure.CosmosDB.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.EventHubs\NetEvolve.HealthChecks.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.KeyVault\NetEvolve.HealthChecks.Azure.KeyVault.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Kusto\NetEvolve.HealthChecks.Azure.Kusto.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Queues\NetEvolve.HealthChecks.Azure.Queues.csproj" />
     <ProjectReference Include="..\NetEvolve.HealthChecks.Azure.Search\NetEvolve.HealthChecks.Azure.Search.csproj" />
