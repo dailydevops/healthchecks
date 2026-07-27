@@ -111,9 +111,7 @@ public sealed class RabbitMQHealthCheckTests
 
         // Setup connection mock that throws an exception
         var mockConnection = IConnection.Mock();
-        _ = mockConnection
-            .CreateChannelAsync(Any(), Any())
-            .Throws(new InvalidOperationException("Connection failed"));
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).Throws(new InvalidOperationException("Connection failed"));
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
