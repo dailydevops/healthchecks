@@ -32,7 +32,7 @@ internal sealed partial class PubSubHealthCheck
                 async () =>
                 {
                     var result = client.ListTopicsAsync(projectName);
-                    var topics = await result.ReadPageAsync(1).ConfigureAwait(false);
+                    var topics = await result.ReadPageAsync(1, cancellationToken).ConfigureAwait(false);
                     return topics?.GetEnumerator().MoveNext() ?? false;
                 },
                 cancellationToken
