@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Oracle.Devart;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Oracle)}.{nameof(Devart)}")]
 public sealed class OracleDevartHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class OracleDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OracleDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<OracleDevartOptions>.Mock();
         var check = new OracleDevartHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class OracleDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OracleDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<OracleDevartOptions>.Mock();
         var check = new OracleDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class OracleDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OracleDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<OracleDevartOptions>.Mock();
         var check = new OracleDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

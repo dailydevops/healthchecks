@@ -10,7 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.ArangoDb;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(ArangoDb))]
 public sealed class ArangoDbHealthCheckTests
@@ -21,8 +21,8 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<ArangoDbOptions>.Mock();
         var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -36,8 +36,8 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<ArangoDbOptions>.Mock();
 
         var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -61,8 +61,8 @@ public sealed class ArangoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<ArangoDbOptions>.Mock();
 
         var check = new ArangoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -98,11 +98,11 @@ public sealed class ArangoDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<ArangoDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
-        var transport = Substitute.For<HttpClient>();
+        var transport = HttpClient.Mock();
         using var client = new ArangoDBClient(transport);
 
         var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, client).BuildServiceProvider();
@@ -140,7 +140,7 @@ public sealed class ArangoDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<ArangoDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
@@ -182,7 +182,7 @@ public sealed class ArangoDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ArangoDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<ArangoDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception

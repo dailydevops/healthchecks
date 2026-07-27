@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Odbc;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Odbc))]
 public sealed class OdbcHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class OdbcHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OdbcOptions>>();
+        var optionsMonitor = IOptionsMonitor<OdbcOptions>.Mock();
         var check = new OdbcHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class OdbcHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OdbcOptions>>();
+        var optionsMonitor = IOptionsMonitor<OdbcOptions>.Mock();
         var check = new OdbcHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class OdbcHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OdbcOptions>>();
+        var optionsMonitor = IOptionsMonitor<OdbcOptions>.Mock();
         var check = new OdbcHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

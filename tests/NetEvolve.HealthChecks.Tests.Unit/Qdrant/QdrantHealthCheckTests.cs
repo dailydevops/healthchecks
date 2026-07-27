@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Qdrant;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Qdrant))]
 public sealed class QdrantHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class QdrantHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<QdrantOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<QdrantOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new QdrantHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class QdrantHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<QdrantOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<QdrantOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new QdrantHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class QdrantHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<QdrantOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<QdrantOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new QdrantHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

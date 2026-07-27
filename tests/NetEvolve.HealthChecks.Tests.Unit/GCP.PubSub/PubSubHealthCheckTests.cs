@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.PubSub;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"GCP.{nameof(PubSub)}")]
 public sealed class PubSubHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class PubSubHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<PubSubOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<PubSubOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new PubSubHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class PubSubHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<PubSubOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<PubSubOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new PubSubHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class PubSubHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<PubSubOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<PubSubOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new PubSubHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

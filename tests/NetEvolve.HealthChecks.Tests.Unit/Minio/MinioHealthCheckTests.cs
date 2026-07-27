@@ -8,7 +8,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Minio;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Minio))]
 public class MinioHealthCheckTests
@@ -19,10 +19,8 @@ public class MinioHealthCheckTests
     public async Task DefaultCommandAsync_WhenBucketExists_ReturnsTrue()
     {
         // Arrange
-        var client = Substitute.For<IMinioClient>();
-        _ = client
-            .BucketExistsAsync(Arg.Any<global::Minio.DataModel.Args.BucketExistsArgs>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(true));
+        var client = IMinioClient.Mock();
+        _ = client.BucketExistsAsync(Any(), Any()).Returns(true);
 
         // Act
         var result = await MinioHealthCheck.DefaultCommandAsync(client, "test-bucket", CancellationToken.None);
@@ -35,10 +33,8 @@ public class MinioHealthCheckTests
     public async Task DefaultCommandAsync_WhenBucketDoesNotExist_ReturnsFalse()
     {
         // Arrange
-        var client = Substitute.For<IMinioClient>();
-        _ = client
-            .BucketExistsAsync(Arg.Any<global::Minio.DataModel.Args.BucketExistsArgs>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(false));
+        var client = IMinioClient.Mock();
+        _ = client.BucketExistsAsync(Any(), Any()).Returns(false);
 
         // Act
         var result = await MinioHealthCheck.DefaultCommandAsync(client, "non-existing-bucket", CancellationToken.None);
@@ -51,7 +47,7 @@ public class MinioHealthCheckTests
     public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage()
     {
         // Arrange
-        var client = Substitute.For<IMinioClient>();
+        var client = IMinioClient.Mock();
         var options = new MinioOptions
         {
             KeyedService = null,
@@ -64,11 +60,11 @@ public class MinioHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MinioOptions>>();
+        var optionsMonitor = IOptionsMonitor<MinioOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
+        _ = serviceCollection.AddSingleton<IMinioClient>(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new MinioHealthCheck(serviceProvider, optionsMonitor);
@@ -94,7 +90,7 @@ public class MinioHealthCheckTests
     public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy()
     {
         // Arrange
-        var client = Substitute.For<IMinioClient>();
+        var client = IMinioClient.Mock();
         var options = new MinioOptions
         {
             KeyedService = null,
@@ -107,11 +103,11 @@ public class MinioHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MinioOptions>>();
+        var optionsMonitor = IOptionsMonitor<MinioOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
+        _ = serviceCollection.AddSingleton<IMinioClient>(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new MinioHealthCheck(serviceProvider, optionsMonitor);

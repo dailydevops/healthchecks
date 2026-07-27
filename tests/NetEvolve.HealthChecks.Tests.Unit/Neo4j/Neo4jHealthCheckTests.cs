@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Neo4j;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Neo4j))]
 public sealed class Neo4jHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class Neo4jHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<Neo4jOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<Neo4jOptions>.Mock();
         var check = new Neo4jHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class Neo4jHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<Neo4jOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<Neo4jOptions>.Mock();
 
         var check = new Neo4jHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -60,8 +60,8 @@ public sealed class Neo4jHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<Neo4jOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<Neo4jOptions>.Mock();
 
         var check = new Neo4jHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -95,13 +95,13 @@ public sealed class Neo4jHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<Neo4jOptions>>();
+        var optionsMonitor = IOptionsMonitor<Neo4jOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var driver = Substitute.For<IDriver>();
+        var driver = IDriver.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", driver);
+        _ = serviceCollection.AddKeyedSingleton<IDriver>("test-key", driver);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new Neo4jHealthCheck(serviceProvider, optionsMonitor);
@@ -136,13 +136,13 @@ public sealed class Neo4jHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<Neo4jOptions>>();
+        var optionsMonitor = IOptionsMonitor<Neo4jOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var driver = Substitute.For<IDriver>();
+        var driver = IDriver.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(driver);
+        _ = serviceCollection.AddSingleton<IDriver>(driver);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new Neo4jHealthCheck(serviceProvider, optionsMonitor);
@@ -177,13 +177,13 @@ public sealed class Neo4jHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<Neo4jOptions>>();
+        var optionsMonitor = IOptionsMonitor<Neo4jOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var driver = Substitute.For<IDriver>();
+        var driver = IDriver.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(driver);
+        _ = serviceCollection.AddSingleton<IDriver>(driver);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new Neo4jHealthCheck(serviceProvider, optionsMonitor);

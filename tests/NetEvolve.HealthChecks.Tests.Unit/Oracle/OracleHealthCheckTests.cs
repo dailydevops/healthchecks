@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Oracle;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Oracle))]
 public sealed class OracleHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class OracleHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OracleOptions>>();
+        var optionsMonitor = IOptionsMonitor<OracleOptions>.Mock();
         var check = new OracleHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class OracleHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OracleOptions>>();
+        var optionsMonitor = IOptionsMonitor<OracleOptions>.Mock();
         var check = new OracleHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class OracleHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OracleOptions>>();
+        var optionsMonitor = IOptionsMonitor<OracleOptions>.Mock();
         var check = new OracleHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.QuestDB;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(QuestDB))]
 public sealed class QuestDBHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class QuestDBHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<QuestDBOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<QuestDBOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new QuestDBHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class QuestDBHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<QuestDBOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<QuestDBOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new QuestDBHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class QuestDBHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<QuestDBOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<QuestDBOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new QuestDBHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

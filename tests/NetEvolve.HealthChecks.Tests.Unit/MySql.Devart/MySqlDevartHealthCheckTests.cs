@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MySql.Devart;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(MySql)}.{nameof(Devart)}")]
 public sealed class MySqlDevartHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class MySqlDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<MySqlDevartOptions>.Mock();
         var check = new MySqlDevartHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class MySqlDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<MySqlDevartOptions>.Mock();
         var check = new MySqlDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class MySqlDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<MySqlDevartOptions>.Mock();
         var check = new MySqlDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

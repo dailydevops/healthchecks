@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
+using TUnit.Mocks;
 
 [TestGroup(nameof(RabbitMQ))]
 public sealed class RabbitMQHealthCheckTests
@@ -29,19 +29,17 @@ public sealed class RabbitMQHealthCheckTests
         // Arrange
         var options = new RabbitMQOptions { KeyedService = "test-key", Timeout = 10000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
+        var optionsMonitor = IOptionsMonitor<RabbitMQOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
-        var mockChannel = Substitute.For<IChannel>();
+        var mockChannel = IChannel.Mock();
         _ = mockChannel.IsOpen.Returns(true);
-        var mockConnection = Substitute.For<IConnection>();
-        _ = mockConnection
-            .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(mockChannel));
+        var mockConnection = IConnection.Mock();
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).Returns(mockChannel);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", mockConnection);
+        _ = serviceCollection.AddKeyedSingleton<IConnection>("test-key", mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -72,19 +70,17 @@ public sealed class RabbitMQHealthCheckTests
         // Arrange
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
+        var optionsMonitor = IOptionsMonitor<RabbitMQOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
-        var mockChannel = Substitute.For<IChannel>();
+        var mockChannel = IChannel.Mock();
         _ = mockChannel.IsOpen.Returns(true);
-        var mockConnection = Substitute.For<IConnection>();
-        _ = mockConnection
-            .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(mockChannel));
+        var mockConnection = IConnection.Mock();
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).Returns(mockChannel);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockConnection);
+        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -110,17 +106,17 @@ public sealed class RabbitMQHealthCheckTests
         // Arrange
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
+        var optionsMonitor = IOptionsMonitor<RabbitMQOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
-        var mockConnection = Substitute.For<IConnection>();
+        var mockConnection = IConnection.Mock();
         _ = mockConnection
-            .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
-            .ThrowsAsync(new InvalidOperationException("Connection failed"));
+            .CreateChannelAsync(Any(), Any())
+            .Throws(new InvalidOperationException("Connection failed"));
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockConnection);
+        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -153,15 +149,19 @@ public sealed class RabbitMQHealthCheckTests
             Timeout = 1, // Very short timeout to force a timeout
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
+        // TUnit.Mocks' .Returns() only supports a synchronous Func<T> (auto-wrapped into a
+        // completed Task<T>) - there's no way to hand back a task that stays pending and
+        // completes asynchronously later, so a genuine timeout-race can't be simulated with it.
+        // NSubstitute is used here instead, purely for this one test.
+        var optionsMonitor = NSubstitute.Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that delays long enough to cause timeout
-        var mockChannel = Substitute.For<IChannel>();
+        var mockChannel = NSubstitute.Substitute.For<IChannel>();
         _ = mockChannel.IsOpen.Returns(true);
-        var mockConnection = Substitute.For<IConnection>();
+        var mockConnection = NSubstitute.Substitute.For<IConnection>();
         _ = mockConnection
-            .CreateChannelAsync(Arg.Any<CreateChannelOptions>(), Arg.Any<CancellationToken>())
+            .CreateChannelAsync(NSubstitute.Arg.Any<CreateChannelOptions>(), NSubstitute.Arg.Any<CancellationToken>())
             .Returns(async _ =>
             {
                 await Task.Delay(50); // Delay to force timeout

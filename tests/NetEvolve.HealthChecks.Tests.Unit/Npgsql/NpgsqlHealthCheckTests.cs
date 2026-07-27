@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Npgsql;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Npgsql))]
 public sealed class NpgsqlHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class NpgsqlHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NpgsqlOptions>>();
+        var optionsMonitor = IOptionsMonitor<NpgsqlOptions>.Mock();
         var check = new NpgsqlHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class NpgsqlHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NpgsqlOptions>>();
+        var optionsMonitor = IOptionsMonitor<NpgsqlOptions>.Mock();
         var check = new NpgsqlHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class NpgsqlHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NpgsqlOptions>>();
+        var optionsMonitor = IOptionsMonitor<NpgsqlOptions>.Mock();
         var check = new NpgsqlHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Firebird;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Firebird))]
 public sealed class FirebirdHealthCheckTests
@@ -16,7 +16,7 @@ public sealed class FirebirdHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<FirebirdOptions>>();
+        var optionsMonitor = IOptionsMonitor<FirebirdOptions>.Mock();
         var check = new FirebirdHealthCheck(optionsMonitor);
 
         // Act
@@ -30,7 +30,7 @@ public sealed class FirebirdHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<FirebirdOptions>>();
+        var optionsMonitor = IOptionsMonitor<FirebirdOptions>.Mock();
         var check = new FirebirdHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -53,7 +53,7 @@ public sealed class FirebirdHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<FirebirdOptions>>();
+        var optionsMonitor = IOptionsMonitor<FirebirdOptions>.Mock();
         var check = new FirebirdHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

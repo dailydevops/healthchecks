@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Kafka;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Kafka)}")]
 public sealed class KafkaHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class KafkaHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<KafkaOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<KafkaOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         using var check = new KafkaHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class KafkaHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<KafkaOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<KafkaOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         using var check = new KafkaHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class KafkaHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<KafkaOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<KafkaOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         using var check = new KafkaHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

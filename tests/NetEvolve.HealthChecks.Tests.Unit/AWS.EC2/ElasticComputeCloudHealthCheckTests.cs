@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.EC2;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(AWS)}.{nameof(EC2)}")]
 public sealed class ElasticComputeCloudHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class ElasticComputeCloudHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticComputeCloudOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ElasticComputeCloudOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ElasticComputeCloudHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class ElasticComputeCloudHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticComputeCloudOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ElasticComputeCloudOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ElasticComputeCloudHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class ElasticComputeCloudHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticComputeCloudOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ElasticComputeCloudOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ElasticComputeCloudHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

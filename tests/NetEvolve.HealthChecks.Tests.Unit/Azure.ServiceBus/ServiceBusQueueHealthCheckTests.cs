@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
+namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
 
 using System;
 using System.Threading;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")]
@@ -19,8 +19,8 @@ public sealed class ServiceBusQueueHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusQueueOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusQueueOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ServiceBusQueueHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -34,8 +34,8 @@ public sealed class ServiceBusQueueHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusQueueOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusQueueOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ServiceBusQueueHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -58,9 +58,9 @@ public sealed class ServiceBusQueueHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusQueueOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusQueueOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns((ServiceBusQueueOptions)null!);
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ServiceBusQueueHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

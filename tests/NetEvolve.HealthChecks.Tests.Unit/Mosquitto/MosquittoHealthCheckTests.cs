@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using MQTTnet;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Mosquitto;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Mosquitto))]
 public sealed class MosquittoHealthCheckTests
@@ -22,15 +22,15 @@ public sealed class MosquittoHealthCheckTests
         // Arrange
         var options = new MosquittoOptions { KeyedService = "test-key", Timeout = 10000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
+        var optionsMonitor = IOptionsMonitor<MosquittoOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
-        var mockClient = Substitute.For<IMqttClient>();
+        var mockClient = IMqttClient.Mock();
         _ = mockClient.IsConnected.Returns(true);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", mockClient);
+        _ = serviceCollection.AddKeyedSingleton<IMqttClient>("test-key", mockClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);
@@ -56,15 +56,15 @@ public sealed class MosquittoHealthCheckTests
         // Arrange
         var options = new MosquittoOptions { KeyedService = null, Timeout = 1000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
+        var optionsMonitor = IOptionsMonitor<MosquittoOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
-        var mockClient = Substitute.For<IMqttClient>();
+        var mockClient = IMqttClient.Mock();
         _ = mockClient.IsConnected.Returns(true);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockClient);
+        _ = serviceCollection.AddSingleton<IMqttClient>(mockClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);
@@ -90,15 +90,15 @@ public sealed class MosquittoHealthCheckTests
         // Arrange
         var options = new MosquittoOptions { KeyedService = null, Timeout = 1000 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MosquittoOptions>>();
+        var optionsMonitor = IOptionsMonitor<MosquittoOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns not connected
-        var mockClient = Substitute.For<IMqttClient>();
+        var mockClient = IMqttClient.Mock();
         _ = mockClient.IsConnected.Returns(false);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockClient);
+        _ = serviceCollection.AddSingleton<IMqttClient>(mockClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new MosquittoHealthCheck(serviceProvider, optionsMonitor);

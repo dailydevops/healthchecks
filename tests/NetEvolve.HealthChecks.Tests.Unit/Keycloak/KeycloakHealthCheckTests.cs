@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Keycloak;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Keycloak))]
 public sealed class KeycloakHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class KeycloakHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>.Mock();
         var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -36,8 +36,8 @@ public sealed class KeycloakHealthCheckTests
     {
         // Arrange
 
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>.Mock();
 
         var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -62,8 +62,8 @@ public sealed class KeycloakHealthCheckTests
     {
         // Arrange
 
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>.Mock();
 
         var check = new KeycloakHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -99,7 +99,7 @@ public sealed class KeycloakHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
+        var optionsMonitor = IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
@@ -142,7 +142,7 @@ public sealed class KeycloakHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
+        var optionsMonitor = IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
@@ -186,7 +186,7 @@ public sealed class KeycloakHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>>();
+        var optionsMonitor = IOptionsMonitor<NetEvolve.HealthChecks.Keycloak.KeycloakOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception

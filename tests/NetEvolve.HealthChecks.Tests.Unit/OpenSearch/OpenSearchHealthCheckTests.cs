@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.OpenSearch;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(OpenSearch))]
 public sealed class OpenSearchHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
         var check = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
 
         var check = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -60,8 +60,8 @@ public sealed class OpenSearchHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
 
         var check = new OpenSearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -97,7 +97,7 @@ public sealed class OpenSearchHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
+        var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
@@ -142,7 +142,7 @@ public sealed class OpenSearchHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
+        var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
@@ -187,7 +187,7 @@ public sealed class OpenSearchHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OpenSearchOptions>>();
+        var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Devart;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(SqlServer)}.{nameof(Devart)}")]
 public sealed class SqlServerDevartHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class SqlServerDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerDevartOptions>.Mock();
         var check = new SqlServerDevartHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class SqlServerDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerDevartOptions>.Mock();
         var check = new SqlServerDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class SqlServerDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerDevartOptions>.Mock();
         var check = new SqlServerDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

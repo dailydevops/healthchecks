@@ -5,7 +5,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 public sealed class ServiceBusClientFactoryTests
@@ -21,7 +21,7 @@ public sealed class ServiceBusClientFactoryTests
             Mode = ClientCreationMode.ConnectionString,
             ConnectionString = connectionString,
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -45,7 +45,7 @@ public sealed class ServiceBusClientFactoryTests
             Mode = ClientCreationMode.DefaultAzureCredentials,
             FullyQualifiedNamespace = fullyQualifiedNamespace,
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -70,7 +70,7 @@ public sealed class ServiceBusClientFactoryTests
             Mode = ClientCreationMode.ConnectionString,
             ConnectionString = connectionString,
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -100,7 +100,7 @@ public sealed class ServiceBusClientFactoryTests
             Mode = ClientCreationMode.ConnectionString,
             ConnectionString = connectionString,
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -124,7 +124,7 @@ public sealed class ServiceBusClientFactoryTests
             Mode = ClientCreationMode.DefaultAzureCredentials,
             FullyQualifiedNamespace = fullyQualifiedNamespace,
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -149,7 +149,7 @@ public sealed class ServiceBusClientFactoryTests
             Mode = ClientCreationMode.ConnectionString,
             ConnectionString = connectionString,
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -173,7 +173,7 @@ public sealed class ServiceBusClientFactoryTests
     {
         // Arrange
         var options = new ServiceBusQueueOptions { Mode = (ClientCreationMode)int.MaxValue };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
@@ -193,7 +193,7 @@ public sealed class ServiceBusClientFactoryTests
     {
         // Arrange
         var options = new ServiceBusQueueOptions { Mode = (ClientCreationMode)int.MaxValue };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var clientFactory = new ServiceBusClientFactory();
 
         // Act
