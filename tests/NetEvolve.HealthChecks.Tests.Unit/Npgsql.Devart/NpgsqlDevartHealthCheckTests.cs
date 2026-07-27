@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Npgsql.Devart;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Npgsql)}.{nameof(Devart)}")]
 public sealed class NpgsqlDevartHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class NpgsqlDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NpgsqlDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<NpgsqlDevartOptions>.Mock();
         var check = new NpgsqlDevartHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class NpgsqlDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NpgsqlDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<NpgsqlDevartOptions>.Mock();
         var check = new NpgsqlDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class NpgsqlDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<NpgsqlDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<NpgsqlDevartOptions>.Mock();
         var check = new NpgsqlDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

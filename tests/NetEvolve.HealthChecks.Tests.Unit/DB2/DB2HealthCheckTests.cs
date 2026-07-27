@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DB2;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(DB2))]
 public sealed class DB2HealthCheckTests
@@ -18,7 +18,7 @@ public sealed class DB2HealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DB2Options>>();
+        var optionsMonitor = IOptionsMonitor<DB2Options>.Mock();
         var check = new DB2HealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class DB2HealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DB2Options>>();
+        var optionsMonitor = IOptionsMonitor<DB2Options>.Mock();
         var check = new DB2HealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class DB2HealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DB2Options>>();
+        var optionsMonitor = IOptionsMonitor<DB2Options>.Mock();
         var check = new DB2HealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

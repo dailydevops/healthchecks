@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Couchbase;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Couchbase))]
 public sealed class CouchbaseHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class CouchbaseHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<CouchbaseOptions>.Mock();
         var check = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class CouchbaseHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<CouchbaseOptions>.Mock();
 
         var check = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -60,8 +60,8 @@ public sealed class CouchbaseHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<CouchbaseOptions>.Mock();
 
         var check = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -95,13 +95,13 @@ public sealed class CouchbaseHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
+        var optionsMonitor = IOptionsMonitor<CouchbaseOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var cluster = Substitute.For<ICluster>();
+        var cluster = ICluster.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", cluster);
+        _ = serviceCollection.AddKeyedSingleton<ICluster>("test-key", cluster);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
@@ -136,13 +136,13 @@ public sealed class CouchbaseHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
+        var optionsMonitor = IOptionsMonitor<CouchbaseOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var cluster = Substitute.For<ICluster>();
+        var cluster = ICluster.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(cluster);
+        _ = serviceCollection.AddSingleton<ICluster>(cluster);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);
@@ -177,13 +177,13 @@ public sealed class CouchbaseHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchbaseOptions>>();
+        var optionsMonitor = IOptionsMonitor<CouchbaseOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var cluster = Substitute.For<ICluster>();
+        var cluster = ICluster.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(cluster);
+        _ = serviceCollection.AddSingleton<ICluster>(cluster);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new CouchbaseHealthCheck(serviceProvider, optionsMonitor);

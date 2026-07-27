@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.InfluxDB;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(InfluxDB))]
 public sealed class InfluxDBHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class InfluxDBHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<InfluxDBOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<InfluxDBOptions>.Mock();
         var check = new InfluxDBHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class InfluxDBHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<InfluxDBOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<InfluxDBOptions>.Mock();
 
         var check = new InfluxDBHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -60,8 +60,8 @@ public sealed class InfluxDBHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<InfluxDBOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<InfluxDBOptions>.Mock();
 
         var check = new InfluxDBHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -95,13 +95,13 @@ public sealed class InfluxDBHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<InfluxDBOptions>>();
+        var optionsMonitor = IOptionsMonitor<InfluxDBOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var client = Substitute.For<IInfluxDBClient>();
+        var client = IInfluxDBClient.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", client);
+        _ = serviceCollection.AddKeyedSingleton<IInfluxDBClient>("test-key", client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new InfluxDBHealthCheck(serviceProvider, optionsMonitor);
@@ -136,13 +136,13 @@ public sealed class InfluxDBHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<InfluxDBOptions>>();
+        var optionsMonitor = IOptionsMonitor<InfluxDBOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var client = Substitute.For<IInfluxDBClient>();
+        var client = IInfluxDBClient.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
+        _ = serviceCollection.AddSingleton<IInfluxDBClient>(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new InfluxDBHealthCheck(serviceProvider, optionsMonitor);
@@ -177,13 +177,13 @@ public sealed class InfluxDBHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<InfluxDBOptions>>();
+        var optionsMonitor = IOptionsMonitor<InfluxDBOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var client = Substitute.For<IInfluxDBClient>();
+        var client = IInfluxDBClient.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
+        _ = serviceCollection.AddSingleton<IInfluxDBClient>(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new InfluxDBHealthCheck(serviceProvider, optionsMonitor);

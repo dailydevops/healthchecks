@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Ollama;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Ollama))]
 public sealed class OllamaHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class OllamaHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OllamaOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<OllamaOptions>.Mock();
         using var check = new OllamaHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class OllamaHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OllamaOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<OllamaOptions>.Mock();
         using var check = new OllamaHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class OllamaHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<OllamaOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<OllamaOptions>.Mock();
         using var check = new OllamaHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

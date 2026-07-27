@@ -6,7 +6,7 @@ using global::Azure.Messaging.EventHubs.Producer;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.EventHubs;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(EventHubs)}")]
 public sealed class EventHubsClientFactoryTests
@@ -23,7 +23,7 @@ public sealed class EventHubsClientFactoryTests
             ConnectionString = connectionString,
             EventHubName = "eventhub1",
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         using var clientFactory = new EventHubsClientFactory();
 
         // Act
@@ -48,7 +48,7 @@ public sealed class EventHubsClientFactoryTests
             FullyQualifiedNamespace = fullyQualifiedNamespace,
             EventHubName = "eventhub1",
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         using var clientFactory = new EventHubsClientFactory();
 
         // Act
@@ -66,8 +66,12 @@ public sealed class EventHubsClientFactoryTests
     public async Task GetClient_WhenModeIsServiceProvider_ShouldReturnRegisteredClient()
     {
         // Arrange
-        var mockClient = Substitute.For<EventHubProducerClient>();
-        var services = new ServiceCollection().AddSingleton(mockClient);
+        var mockClient = EventHubProducerClient.Mock();
+        // Convert once to the real type and reuse that instance everywhere below - each implicit
+        // conversion from the mock wrapper to the real type can mint a distinct proxy instance, so
+        // converting again later (e.g. at the assertion) would compare against a different object.
+        EventHubProducerClient registeredClient = mockClient;
+        var services = new ServiceCollection().AddSingleton(registeredClient);
         await using var serviceProvider = services.BuildServiceProvider();
 
         var options = new EventHubsOptions { Mode = ClientCreationMode.ServiceProvider, EventHubName = "eventhub1" };
@@ -81,7 +85,7 @@ public sealed class EventHubsClientFactoryTests
         );
 
         // Assert
-        _ = await Assert.That(client).IsSameReferenceAs(mockClient);
+        _ = await Assert.That(client).IsSameReferenceAs(registeredClient);
     }
 
     [Test]
@@ -96,7 +100,7 @@ public sealed class EventHubsClientFactoryTests
             ConnectionString = connectionString,
             EventHubName = "eventhub1",
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         using var clientFactory = new EventHubsClientFactory();
 
         // Act
@@ -127,7 +131,7 @@ public sealed class EventHubsClientFactoryTests
             ConnectionString = connectionString,
             EventHubName = "eventhub1",
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         using var clientFactory = new EventHubsClientFactory();
 
         // Act
@@ -150,7 +154,7 @@ public sealed class EventHubsClientFactoryTests
             ConnectionString = connectionString,
             EventHubName = "eventhub1",
         };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         using var clientFactory = new EventHubsClientFactory();
 
         // Act
@@ -166,7 +170,7 @@ public sealed class EventHubsClientFactoryTests
     {
         // Arrange
         var options = new EventHubsOptions { Mode = (ClientCreationMode)int.MaxValue, EventHubName = "eventhub1" };
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         using var clientFactory = new EventHubsClientFactory();
 
         // Act

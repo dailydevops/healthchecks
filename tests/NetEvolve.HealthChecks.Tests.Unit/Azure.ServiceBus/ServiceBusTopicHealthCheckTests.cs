@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Topic")]
@@ -19,8 +19,8 @@ public sealed class ServiceBusTopicHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusTopicOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusTopicOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -34,8 +34,8 @@ public sealed class ServiceBusTopicHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusTopicOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusTopicOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -58,9 +58,9 @@ public sealed class ServiceBusTopicHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusTopicOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusTopicOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns((ServiceBusTopicOptions)null!);
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

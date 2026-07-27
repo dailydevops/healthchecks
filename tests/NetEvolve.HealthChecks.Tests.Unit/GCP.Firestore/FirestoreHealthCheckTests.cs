@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.GCP.Firestore;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"GCP.{nameof(Firestore)}")]
 public sealed class FirestoreHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class FirestoreHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<FirestoreOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<FirestoreOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new FirestoreHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class FirestoreHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<FirestoreOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<FirestoreOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new FirestoreHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class FirestoreHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<FirestoreOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<FirestoreOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new FirestoreHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

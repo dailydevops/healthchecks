@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.CockroachDb;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(CockroachDb))]
 public sealed class CockroachDbHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class CockroachDbHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CockroachDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<CockroachDbOptions>.Mock();
         var check = new CockroachDbHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class CockroachDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CockroachDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<CockroachDbOptions>.Mock();
         var check = new CockroachDbHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class CockroachDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CockroachDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<CockroachDbOptions>.Mock();
         var check = new CockroachDbHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

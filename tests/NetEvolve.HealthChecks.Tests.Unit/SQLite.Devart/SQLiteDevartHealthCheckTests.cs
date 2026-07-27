@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite.Devart;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(SQLite)}.{nameof(Devart)}")]
 public sealed class SQLiteDevartHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class SQLiteDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SQLiteDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<SQLiteDevartOptions>.Mock();
         var check = new SQLiteDevartHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class SQLiteDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SQLiteDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<SQLiteDevartOptions>.Mock();
         var check = new SQLiteDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class SQLiteDevartHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SQLiteDevartOptions>>();
+        var optionsMonitor = IOptionsMonitor<SQLiteDevartOptions>.Mock();
         var check = new SQLiteDevartHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

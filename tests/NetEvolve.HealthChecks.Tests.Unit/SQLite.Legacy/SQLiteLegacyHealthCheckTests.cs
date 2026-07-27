@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SQLite.Legacy;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(SQLite)}.{nameof(Legacy)}")]
 public sealed class SQLiteLegacyHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class SQLiteLegacyHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SQLiteLegacyOptions>>();
+        var optionsMonitor = IOptionsMonitor<SQLiteLegacyOptions>.Mock();
         var check = new SQLiteLegacyHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class SQLiteLegacyHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SQLiteLegacyOptions>>();
+        var optionsMonitor = IOptionsMonitor<SQLiteLegacyOptions>.Mock();
         var check = new SQLiteLegacyHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class SQLiteLegacyHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SQLiteLegacyOptions>>();
+        var optionsMonitor = IOptionsMonitor<SQLiteLegacyOptions>.Mock();
         var check = new SQLiteLegacyHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

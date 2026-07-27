@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.ClickHouse;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(ClickHouse))]
 public sealed class ClickHouseHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class ClickHouseHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ClickHouseOptions>>();
+        var optionsMonitor = IOptionsMonitor<ClickHouseOptions>.Mock();
         var check = new ClickHouseHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class ClickHouseHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ClickHouseOptions>>();
+        var optionsMonitor = IOptionsMonitor<ClickHouseOptions>.Mock();
         var check = new ClickHouseHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class ClickHouseHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ClickHouseOptions>>();
+        var optionsMonitor = IOptionsMonitor<ClickHouseOptions>.Mock();
         var check = new ClickHouseHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

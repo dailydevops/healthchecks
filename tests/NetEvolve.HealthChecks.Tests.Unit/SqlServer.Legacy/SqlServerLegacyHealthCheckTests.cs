@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer.Legacy;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(SqlServer)}.{nameof(Legacy)}")]
 public sealed class SqlServerLegacyHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class SqlServerLegacyHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerLegacyOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerLegacyOptions>.Mock();
         var check = new SqlServerLegacyHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class SqlServerLegacyHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerLegacyOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerLegacyOptions>.Mock();
         var check = new SqlServerLegacyHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class SqlServerLegacyHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerLegacyOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerLegacyOptions>.Mock();
         var check = new SqlServerLegacyHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

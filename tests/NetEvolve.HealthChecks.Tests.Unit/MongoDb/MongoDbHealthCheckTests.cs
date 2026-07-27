@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MongoDb;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(MongoDb))]
 public sealed class MongoDbHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class MongoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<MongoDbOptions>.Mock();
         var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class MongoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<MongoDbOptions>.Mock();
 
         var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -60,8 +60,8 @@ public sealed class MongoDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<MongoDbOptions>.Mock();
 
         var check = new MongoDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -95,7 +95,7 @@ public sealed class MongoDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<MongoDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
@@ -137,7 +137,7 @@ public sealed class MongoDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<MongoDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
@@ -179,7 +179,7 @@ public sealed class MongoDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MongoDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<MongoDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception

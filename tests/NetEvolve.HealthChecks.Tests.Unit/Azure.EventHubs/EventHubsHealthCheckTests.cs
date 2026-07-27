@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.EventHubs;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(EventHubs)}")]
 public sealed class EventHubsHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class EventHubsHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<EventHubsOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<EventHubsOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new EventHubsHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class EventHubsHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<EventHubsOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<EventHubsOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new EventHubsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,9 +57,9 @@ public sealed class EventHubsHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<EventHubsOptions>>();
+        var optionsMonitor = IOptionsMonitor<EventHubsOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns((EventHubsOptions)null!);
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new EventHubsHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.DuckDB;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(DuckDB))]
 public sealed class DuckDBHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class DuckDBHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DuckDBOptions>>();
+        var optionsMonitor = IOptionsMonitor<DuckDBOptions>.Mock();
         var check = new DuckDBHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class DuckDBHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DuckDBOptions>>();
+        var optionsMonitor = IOptionsMonitor<DuckDBOptions>.Mock();
         var check = new DuckDBHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class DuckDBHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DuckDBOptions>>();
+        var optionsMonitor = IOptionsMonitor<DuckDBOptions>.Mock();
         var check = new DuckDBHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

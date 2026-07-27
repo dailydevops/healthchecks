@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.SqlServer;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(SqlServer))]
 public sealed class SqlServerHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class SqlServerHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerOptions>.Mock();
         var check = new SqlServerHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class SqlServerHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerOptions>.Mock();
         var check = new SqlServerHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class SqlServerHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SqlServerOptions>>();
+        var optionsMonitor = IOptionsMonitor<SqlServerOptions>.Mock();
         var check = new SqlServerHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

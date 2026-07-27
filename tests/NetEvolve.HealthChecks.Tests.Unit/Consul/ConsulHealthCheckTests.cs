@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.Consul;
+namespace NetEvolve.HealthChecks.Tests.Unit.Consul;
 
 using System;
 using System.Threading;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Consul;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Consul))]
 public sealed class ConsulHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class ConsulHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ConsulOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ConsulOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ConsulHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class ConsulHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ConsulOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ConsulOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ConsulHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class ConsulHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ConsulOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<ConsulOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new ConsulHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

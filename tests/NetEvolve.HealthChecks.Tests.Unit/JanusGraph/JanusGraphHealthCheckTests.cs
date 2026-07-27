@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.JanusGraph;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(JanusGraph))]
 public sealed class JanusGraphHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class JanusGraphHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<JanusGraphOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<JanusGraphOptions>.Mock();
         var check = new JanusGraphHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class JanusGraphHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<JanusGraphOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<JanusGraphOptions>.Mock();
 
         var check = new JanusGraphHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -60,8 +60,8 @@ public sealed class JanusGraphHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<JanusGraphOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<JanusGraphOptions>.Mock();
 
         var check = new JanusGraphHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -95,13 +95,13 @@ public sealed class JanusGraphHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<JanusGraphOptions>>();
+        var optionsMonitor = IOptionsMonitor<JanusGraphOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var client = Substitute.For<IGremlinClient>();
+        var client = IGremlinClient.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", client);
+        _ = serviceCollection.AddKeyedSingleton<IGremlinClient>("test-key", client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new JanusGraphHealthCheck(serviceProvider, optionsMonitor);
@@ -136,13 +136,13 @@ public sealed class JanusGraphHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<JanusGraphOptions>>();
+        var optionsMonitor = IOptionsMonitor<JanusGraphOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var client = Substitute.For<IGremlinClient>();
+        var client = IGremlinClient.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
+        _ = serviceCollection.AddSingleton<IGremlinClient>(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new JanusGraphHealthCheck(serviceProvider, optionsMonitor);
@@ -177,13 +177,13 @@ public sealed class JanusGraphHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<JanusGraphOptions>>();
+        var optionsMonitor = IOptionsMonitor<JanusGraphOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var client = Substitute.For<IGremlinClient>();
+        var client = IGremlinClient.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(client);
+        _ = serviceCollection.AddSingleton<IGremlinClient>(client);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new JanusGraphHealthCheck(serviceProvider, optionsMonitor);

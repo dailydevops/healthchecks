@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.CouchDb;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(CouchDb))]
 public sealed class CouchDbHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class CouchDbHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<CouchDbOptions>.Mock();
         var check = new CouchDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class CouchDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<CouchDbOptions>.Mock();
 
         var check = new CouchDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -58,8 +58,8 @@ public sealed class CouchDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CouchDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<CouchDbOptions>.Mock();
 
         var check = new CouchDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext

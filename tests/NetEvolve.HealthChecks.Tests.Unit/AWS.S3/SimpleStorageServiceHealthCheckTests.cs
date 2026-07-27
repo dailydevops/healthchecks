@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.AWS.S3;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(AWS)}.{nameof(S3)}")]
 public sealed class SimpleStorageServiceHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class SimpleStorageServiceHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SimpleStorageServiceOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<SimpleStorageServiceOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new SimpleStorageServiceHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class SimpleStorageServiceHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SimpleStorageServiceOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<SimpleStorageServiceOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new SimpleStorageServiceHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class SimpleStorageServiceHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SimpleStorageServiceOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<SimpleStorageServiceOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new SimpleStorageServiceHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {

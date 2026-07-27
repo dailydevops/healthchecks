@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MariaDb;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(MariaDb))]
 public sealed class MariaDbHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class MariaDbHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MariaDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<MariaDbOptions>.Mock();
         var check = new MariaDbHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class MariaDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MariaDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<MariaDbOptions>.Mock();
         var check = new MariaDbHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class MariaDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MariaDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<MariaDbOptions>.Mock();
         var check = new MariaDbHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

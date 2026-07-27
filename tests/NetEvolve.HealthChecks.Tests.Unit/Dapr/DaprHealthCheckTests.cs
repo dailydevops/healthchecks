@@ -9,8 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Dapr;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Dapr))]
 public sealed class DaprHealthCheckTests
@@ -23,10 +22,10 @@ public sealed class DaprHealthCheckTests
         // Arrange
         var services = new ServiceCollection();
 
-        var mockClient = Substitute.For<DaprClient>();
-        _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
+        var mockClient = DaprClient.Mock();
+        _ = mockClient.CheckHealthAsync(Any()).Returns(true);
 
-        _ = services.AddSingleton(mockClient);
+        _ = services.AddSingleton<DaprClient>(mockClient);
         _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -55,10 +54,10 @@ public sealed class DaprHealthCheckTests
         // Arrange
         var services = new ServiceCollection();
 
-        var mockClient = Substitute.For<DaprClient>();
-        _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(false);
+        var mockClient = DaprClient.Mock();
+        _ = mockClient.CheckHealthAsync(Any()).Returns(false);
 
-        _ = services.AddSingleton(mockClient);
+        _ = services.AddSingleton<DaprClient>(mockClient);
         _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = 0);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -90,16 +89,16 @@ public sealed class DaprHealthCheckTests
         var services = new ServiceCollection();
         var options = new DaprOptions { Timeout = 0 }; // Very short timeout
 
-        var mockClient = Substitute.For<DaprClient>();
+        var mockClient = DaprClient.Mock();
         _ = mockClient
-            .CheckHealthAsync(Arg.Any<CancellationToken>())
-            .Returns(async _ =>
+            .CheckHealthAsync(Any())
+            .Returns(() =>
             {
-                await Task.Delay(1000); // Delay longer than the timeout
+                Thread.Sleep(1000); // Delay longer than the timeout
                 return true;
             });
 
-        _ = services.AddSingleton(mockClient);
+        _ = services.AddSingleton<DaprClient>(mockClient);
         _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = options.Timeout);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -128,12 +127,10 @@ public sealed class DaprHealthCheckTests
         // Arrange
         var services = new ServiceCollection();
 
-        var mockClient = Substitute.For<DaprClient>();
-        _ = mockClient
-            .CheckHealthAsync(Arg.Any<CancellationToken>())
-            .ThrowsAsync(new InvalidOperationException("Test exception"));
+        var mockClient = DaprClient.Mock();
+        _ = mockClient.CheckHealthAsync(Any()).Throws(new InvalidOperationException("Test exception"));
 
-        _ = services.AddSingleton(mockClient);
+        _ = services.AddSingleton<DaprClient>(mockClient);
         _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = 10000);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -166,10 +163,10 @@ public sealed class DaprHealthCheckTests
         var services = new ServiceCollection();
         var options = new DaprOptions { Timeout = 100 };
 
-        var mockClient = Substitute.For<DaprClient>();
-        _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
+        var mockClient = DaprClient.Mock();
+        _ = mockClient.CheckHealthAsync(Any()).Returns(true);
 
-        _ = services.AddSingleton(mockClient);
+        _ = services.AddSingleton<DaprClient>(mockClient);
         _ = services.Configure(TestName, (DaprOptions o) => o.Timeout = options.Timeout);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -203,13 +200,15 @@ public sealed class DaprHealthCheckTests
 
         var options = new DaprOptions { KeyedService = serviceKey, Timeout = 100 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DaprOptions>>();
+        var optionsMonitor = IOptionsMonitor<DaprOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var mockClient = Substitute.For<DaprClient>();
-        _ = mockClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true);
+        var mockClient = DaprClient.Mock();
+        _ = mockClient.CheckHealthAsync(Any()).Returns(true);
 
-        var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, mockClient).BuildServiceProvider();
+        var serviceProvider = new ServiceCollection()
+            .AddKeyedSingleton<DaprClient>(serviceKey, mockClient)
+            .BuildServiceProvider();
 
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -236,18 +235,18 @@ public sealed class DaprHealthCheckTests
 
         var options = new DaprOptions { KeyedService = serviceKey, Timeout = 100 };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<DaprOptions>>();
+        var optionsMonitor = IOptionsMonitor<DaprOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        var defaultClient = Substitute.For<DaprClient>();
-        _ = defaultClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(false); // Returns unhealthy
+        var defaultClient = DaprClient.Mock();
+        _ = defaultClient.CheckHealthAsync(Any()).Returns(false); // Returns unhealthy
 
-        var keyedClient = Substitute.For<DaprClient>();
-        _ = keyedClient.CheckHealthAsync(Arg.Any<CancellationToken>()).Returns(true); // Returns healthy
+        var keyedClient = DaprClient.Mock();
+        _ = keyedClient.CheckHealthAsync(Any()).Returns(true); // Returns healthy
 
         var serviceProvider = new ServiceCollection()
-            .AddSingleton(defaultClient)
-            .AddKeyedSingleton(serviceKey, keyedClient)
+            .AddSingleton<DaprClient>(defaultClient)
+            .AddKeyedSingleton<DaprClient>(serviceKey, keyedClient)
             .BuildServiceProvider();
 
         var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);

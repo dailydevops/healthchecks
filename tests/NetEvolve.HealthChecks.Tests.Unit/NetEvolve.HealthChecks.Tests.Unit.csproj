@@ -16,12 +16,39 @@
     <PackageReference Include="Minio" />
     <PackageReference Include="NATS.Client" />
     <PackageReference Include="NetEvolve.Extensions.TUnit" />
+    <!--
+      NSubstitute is retained for a handful of files that TUnit.Mocks 1.61.38's alpha source
+      generator can't (yet) handle. Remove once the linked upstream issues are fixed and these
+      files are migrated too:
+        - RavenDb: mocking IDocumentStore fails (nested ISessionBlittableJsonConverter member
+          with asymmetric property accessors, CS0535/CS0548/CS0551).
+          https://github.com/thomhurst/TUnit/issues/6491
+        - Elasticsearch: mocking ElasticsearchClientSettings fails (generator emits an invalid
+          nullable-type pattern, CS8116).
+          https://github.com/thomhurst/TUnit/issues/6492
+        - Azure.ServiceBus (Queue/Subscription/Topic Administration): mocking
+          ServiceBusAdministrationClient pulls in QueueRuntimeProperties/
+          SubscriptionRuntimeProperties/TopicRuntimeProperties, none of which have an accessible
+          parameterless constructor (CS1729).
+          https://github.com/thomhurst/TUnit/issues/6493
+        - Cassandra: mocking Cassandra.ICluster collides with Couchbase.ICluster (also mocked in
+          this project, see Couchbase/CouchbaseHealthCheckTests.cs) - the generator names the
+          wrapper type "IClusterMock" without namespace-qualifying it, so having both interfaces
+          mocked in the same compilation silently breaks one of them (CS1061: generated wrapper
+          is missing the real interface's members entirely).
+          https://github.com/thomhurst/TUnit/issues/6494
+        - RabbitMQ: one test only (CheckHealthAsync_WhenTimeout_ReturnsDegraded) - .Returns() only
+          accepts a synchronous Func<T>, so a mocked call can't hand back a task that stays pending
+          and completes later, which this test's genuine async timeout-race depends on.
+          https://github.com/thomhurst/TUnit/issues/6495
+    -->
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="NSubstitute.Analyzers.CSharp">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="TUnit" />
+    <PackageReference Include="TUnit.Mocks" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />

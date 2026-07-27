@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.MySql.Connector;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(MySqlConnector))]
 public sealed class MySqlHealthCheckTests
@@ -18,7 +18,7 @@ public sealed class MySqlHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlOptions>>();
+        var optionsMonitor = IOptionsMonitor<MySqlOptions>.Mock();
         var check = new MySqlHealthCheck(optionsMonitor);
 
         // Act
@@ -32,7 +32,7 @@ public sealed class MySqlHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlOptions>>();
+        var optionsMonitor = IOptionsMonitor<MySqlOptions>.Mock();
         var check = new MySqlHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -55,7 +55,7 @@ public sealed class MySqlHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<MySqlOptions>>();
+        var optionsMonitor = IOptionsMonitor<MySqlOptions>.Mock();
         var check = new MySqlHealthCheck(optionsMonitor);
         var context = new HealthCheckContext
         {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Apache.Solr;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Apache)}.{nameof(Solr)}")]
 public sealed class SolrHealthCheckTests
@@ -18,8 +18,8 @@ public sealed class SolrHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SolrOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<SolrOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new SolrHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -33,8 +33,8 @@ public sealed class SolrHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SolrOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<SolrOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new SolrHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
@@ -57,8 +57,8 @@ public sealed class SolrHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var optionsMonitor = Substitute.For<IOptionsMonitor<SolrOptions>>();
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var optionsMonitor = IOptionsMonitor<SolrOptions>.Mock();
+        var serviceProvider = IServiceProvider.Mock();
         var check = new SolrHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
         {
