@@ -5,15 +5,15 @@
       exception: {
         innerExceptions: [
           {
-            message: Connection refused (127.0.0.1:9999),
+            message: null,
             type: HttpRequestException
           },
           {
-            message: Connection refused,
+            message: null,
             type: SocketException
           }
         ],
-        message: Status(StatusCode="Unavailable", Detail="Error starting gRPC call. HttpRequestException: Connection refused (127.0.0.1:9999) SocketException: Connection refused", DebugException="System.Net.Http.HttpRequestException: Connection refused (127.0.0.1:9999)"),
+        message: null,
         type: Grpc.Core.RpcException
       },
       name: TestContainerUnhealthy,

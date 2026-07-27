@@ -1,5 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Apache.RocketMQ;
 
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -48,7 +50,8 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            clearJToken: ClearConnectionRefusedMessages
         );
 
     [Test]
@@ -107,7 +110,8 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestContainerUnhealthy:Timeout", "5000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            clearJToken: ClearConnectionRefusedMessages
         );
 
     [Test]
@@ -163,4 +167,38 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             }
         );
+
+    // The connection-refused socket/HTTP error text is supplied by the OS and localized to its UI
+    // language, so it differs between machines (e.g. German Windows vs. English Linux CI). Scrub it
+    // out before verification, matching the pattern used by TableClientAvailableHealthCheckTests.
+    private static Argon.JToken? ClearConnectionRefusedMessages(Argon.JToken? token)
+    {
+        if (token is null)
+        {
+            return null;
+        }
+
+        if (
+            token.Value<string>("status") is string status
+            && status.Equals(nameof(HealthStatus.Unhealthy), StringComparison.OrdinalIgnoreCase)
+        )
+        {
+            var exception = token["results"]?.FirstOrDefault()?["exception"];
+
+            if (exception is not null)
+            {
+                exception["message"] = null;
+
+                if (exception["innerExceptions"] is Argon.JArray innerExceptions)
+                {
+                    foreach (var inner in innerExceptions)
+                    {
+                        inner["message"] = null;
+                    }
+                }
+            }
+        }
+
+        return token;
+    }
 }
