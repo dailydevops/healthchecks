@@ -4,8 +4,7 @@
     "config:best-practices",
     ":disableDependencyDashboard",
     ":automergeMinor",
-    ":rebaseStalePrs",
-    "renovate-repo.json"
+    ":rebaseStalePrs"
   ],
   "ignorePresets": ["group:monorepos"],
   "automergeStrategy": "squash",
