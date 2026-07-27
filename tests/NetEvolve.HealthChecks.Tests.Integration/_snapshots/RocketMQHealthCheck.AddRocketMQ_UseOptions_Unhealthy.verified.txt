@@ -1,0 +1,28 @@
+﻿{
+  results: [
+    {
+      description: TestContainerUnhealthy: Unexpected error.,
+      exception: {
+        innerExceptions: [
+          {
+            message: null,
+            type: HttpRequestException
+          },
+          {
+            message: null,
+            type: SocketException
+          }
+        ],
+        message: null,
+        type: Grpc.Core.RpcException
+      },
+      name: TestContainerUnhealthy,
+      status: Unhealthy,
+      tags: [
+        rocketmq,
+        messaging
+      ]
+    }
+  ],
+  status: Unhealthy
+}

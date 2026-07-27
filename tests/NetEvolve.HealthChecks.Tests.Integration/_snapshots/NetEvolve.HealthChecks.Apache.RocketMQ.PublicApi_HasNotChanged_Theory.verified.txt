@@ -1,0 +1,17 @@
+﻿namespace NetEvolve.HealthChecks.Apache.RocketMQ
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddRocketMQ(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Action<NetEvolve.HealthChecks.Apache.RocketMQ.RocketMQOptions>? options = null, params string[] tags) { }
+    }
+    public sealed class RocketMQOptions : System.IEquatable<NetEvolve.HealthChecks.Apache.RocketMQ.RocketMQOptions>
+    {
+        public RocketMQOptions() { }
+        public string? AccessKey { get; set; }
+        public string? AccessSecret { get; set; }
+        public bool EnableSsl { get; set; }
+        public string? Endpoint { get; set; }
+        public int Timeout { get; set; }
+        public string? Topic { get; set; }
+    }
+}

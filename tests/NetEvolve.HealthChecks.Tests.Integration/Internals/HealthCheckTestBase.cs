@@ -71,6 +71,11 @@ public abstract class HealthCheckTestBase
 
         using (Assert.Multiple())
         {
+            _ = await Verify(content)
+                .UseSplitModeForUniqueDirectory()
+                .IgnoreParametersForVerified()
+                .ConfigureAwait(true);
+
             if (content is not null)
             {
                 var statusValue = content["status"]?.ToString();
@@ -82,11 +87,6 @@ public abstract class HealthCheckTestBase
 
                 _ = await Assert.That(actualStatus).IsEqualTo(expectedStatus);
             }
-
-            _ = await Verify(content)
-                .UseSplitModeForUniqueDirectory()
-                .IgnoreParametersForVerified()
-                .ConfigureAwait(true);
         }
 
         await host.StopAsync().ConfigureAwait(false);
