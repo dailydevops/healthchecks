@@ -36,6 +36,23 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
+    public async Task AddSqlServerLegacy_UseOptions_InfiniteTimeout_Healthy() =>
+        await RunAndVerify(
+            healthChecks =>
+            {
+                _ = healthChecks.AddSqlServerLegacy(
+                    "TestContainerHealthyInfiniteTimeout",
+                    options =>
+                    {
+                        options.ConnectionString = _database.ConnectionString;
+                        options.Timeout = Timeout.Infinite;
+                    }
+                );
+            },
+            HealthStatus.Healthy
+        );
+
+    [Test]
     public async Task AddSqlServerLegacy_UseOptions_Degraded() =>
         await RunAndVerify(
             healthChecks =>
