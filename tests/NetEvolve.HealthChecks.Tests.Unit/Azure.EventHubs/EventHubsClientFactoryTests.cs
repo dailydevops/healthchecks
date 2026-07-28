@@ -1,7 +1,10 @@
 namespace NetEvolve.HealthChecks.Tests.Unit.Azure.EventHubs;
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Reflection;
+using System.Threading.Tasks;
 using global::Azure.Messaging.EventHubs.Producer;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
@@ -203,5 +206,83 @@ public sealed class EventHubsClientFactoryTests
 
         // Assert
         _ = Assert.Throws<InvalidOperationException>(Act);
+    }
+
+    [Test]
+    public async Task Dispose_WhenClientDisposalIsAsynchronous_ShouldCompleteBeforeReturning()
+    {
+        // Arrange
+        const string connectionString =
+            "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=testkey;EntityPath=eventhub1";
+        var clientFactory = new EventHubsClientFactory();
+        var delayedClient = new DelayedDisposeEventHubProducerClient(connectionString);
+
+        // Reach into the private client cache, since there is no public seam to inject a client
+        // whose DisposeAsync completes asynchronously.
+        var clientsField = typeof(EventHubsClientFactory).GetField(
+            "_eventHubClients",
+            BindingFlags.NonPublic | BindingFlags.Instance
+        );
+        var clients = (ConcurrentDictionary<string, EventHubProducerClient>)clientsField!.GetValue(clientFactory)!;
+        _ = clients.TryAdd(
+            nameof(Dispose_WhenClientDisposalIsAsynchronous_ShouldCompleteBeforeReturning),
+            delayedClient
+        );
+
+        // Act
+        ((IDisposable)clientFactory).Dispose();
+
+        // Assert
+        _ = await Assert.That(delayedClient.DisposeAsyncCompleted).IsTrue();
+    }
+
+    [Test]
+    public async Task Dispose_WhenClientDisposalThrows_ShouldNotThrow()
+    {
+        // Arrange
+        const string connectionString =
+            "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=testkey;EntityPath=eventhub1";
+        using var clientFactory = new EventHubsClientFactory();
+        var faultingClient = new FaultingDisposeEventHubProducerClient(connectionString);
+
+        var clientsField = typeof(EventHubsClientFactory).GetField(
+            "_eventHubClients",
+            BindingFlags.NonPublic | BindingFlags.Instance
+        );
+        var clients = (ConcurrentDictionary<string, EventHubProducerClient>)clientsField!.GetValue(clientFactory)!;
+        _ = clients.TryAdd(nameof(Dispose_WhenClientDisposalThrows_ShouldNotThrow), faultingClient);
+
+        // Act
+        void Act() => ((IDisposable)clientFactory).Dispose();
+
+        // Assert
+        _ = await Assert.That(Act).ThrowsNothing();
+    }
+
+    private sealed class DelayedDisposeEventHubProducerClient : EventHubProducerClient
+    {
+        public bool DisposeAsyncCompleted { get; private set; }
+
+        public DelayedDisposeEventHubProducerClient(string connectionString)
+            : base(connectionString) { }
+
+        public override async ValueTask DisposeAsync()
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(200)).ConfigureAwait(false);
+            await base.DisposeAsync().ConfigureAwait(false);
+            DisposeAsyncCompleted = true;
+        }
+    }
+
+    private sealed class FaultingDisposeEventHubProducerClient : EventHubProducerClient
+    {
+        public FaultingDisposeEventHubProducerClient(string connectionString)
+            : base(connectionString) { }
+
+        public override async ValueTask DisposeAsync()
+        {
+            await base.DisposeAsync().ConfigureAwait(false);
+            throw new InvalidOperationException("Simulated disposal failure.");
+        }
     }
 }
