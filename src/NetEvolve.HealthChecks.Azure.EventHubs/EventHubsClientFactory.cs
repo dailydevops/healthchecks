@@ -4,6 +4,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
 using global::Azure.Core;
 using global::Azure.Identity;
 using global::Azure.Messaging.EventHubs.Producer;
@@ -59,12 +61,22 @@ internal sealed class EventHubsClientFactory : IDisposable
         {
             if (disposing)
             {
-#pragma warning disable VSTHRD101 // Avoid unsupported async delegates
-                _ = Parallel.ForEach(
-                    _eventHubClients.Values,
-                    async client => await client.DisposeAsync().ConfigureAwait(false)
-                );
-#pragma warning restore VSTHRD101 // Avoid unsupported async delegates
+                try
+                {
+#pragma warning disable VSTHRD002 // Synchronously waiting on tasks or awaiters may cause deadlocks
+                    Task.WhenAll(_eventHubClients.Values.Select(client => client.DisposeAsync().AsTask()))
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
+#pragma warning restore VSTHRD002 // Synchronously waiting on tasks or awaiters may cause deadlocks
+                }
+                catch
+                {
+                    // Disposal is best-effort. A faulting client (e.g. unreachable namespace
+                    // during shutdown) must not prevent the factory from completing disposal or
+                    // crash the process.
+                }
+
                 _eventHubClients.Clear();
             }
 
