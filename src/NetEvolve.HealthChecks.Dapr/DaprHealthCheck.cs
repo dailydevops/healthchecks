@@ -8,7 +8,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.Tasks;
 using SourceGenerator.Attributes;
 
-[ConfigurableHealthCheck(typeof(DaprOptions))]
+[ConfigurableHealthCheck(typeof(DaprOptions), acceptDefaultConfiguration: true)]
 internal sealed partial class DaprHealthCheck
 {
     private async ValueTask<HealthCheckResult> ExecuteHealthCheckAsync(
