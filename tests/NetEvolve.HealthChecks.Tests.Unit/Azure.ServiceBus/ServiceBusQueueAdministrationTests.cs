@@ -1,8 +1,6 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
+namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +8,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Queue")]
@@ -29,10 +27,10 @@ public sealed class ServiceBusQueueAdministrationTests
             EnablePeekMode = false,
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusQueueOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusQueueOptions>.Mock();
         _ = optionsMonitor.Get("test").Returns(options);
 
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var healthCheck = new ServiceBusQueueHealthCheck(serviceProvider, optionsMonitor);
 
         var context = new HealthCheckContext
@@ -58,11 +56,11 @@ public sealed class ServiceBusQueueAdministrationTests
             EnablePeekMode = false,
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusQueueOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusQueueOptions>.Mock();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Create a mock service provider with a mock administration client
-        var mockAdminClient = Substitute.For<ServiceBusAdministrationClient>();
+        var mockAdminClient = ServiceBusAdministrationClient.Mock();
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(mockAdminClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -76,14 +74,13 @@ public sealed class ServiceBusQueueAdministrationTests
 
         // Setup mock to throw exception to simulate queue not existing
         _ = mockAdminClient
-            .GetQueueRuntimePropertiesAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns<global::Azure.Response<QueueRuntimeProperties>>(_ =>
-            {
-                throw new global::Azure.Messaging.ServiceBus.ServiceBusException(
+            .GetQueueRuntimePropertiesAsync(Any(), Any())
+            .Throws(
+                new global::Azure.Messaging.ServiceBus.ServiceBusException(
                     "Queue not found",
                     global::Azure.Messaging.ServiceBus.ServiceBusFailureReason.MessagingEntityNotFound
-                );
-            });
+                )
+            );
 
         // Act
         var result = await healthCheck.CheckHealthAsync(context);
@@ -93,11 +90,6 @@ public sealed class ServiceBusQueueAdministrationTests
     }
 
     [Test]
-    [SuppressMessage(
-        "Substitute creation",
-        "NS2001:Could not find accessible constructor.",
-        Justification = "Reviewed"
-    )]
     public async Task CheckHealthAsync_WhenTimeout_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -109,11 +101,11 @@ public sealed class ServiceBusQueueAdministrationTests
             Timeout = 1, // Very short timeout to force failure
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusQueueOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusQueueOptions>.Mock();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Create a mock service provider with a mock administration client
-        var mockAdminClient = Substitute.For<ServiceBusAdministrationClient>();
+        var mockAdminClient = ServiceBusAdministrationClient.Mock();
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton(mockAdminClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -127,13 +119,13 @@ public sealed class ServiceBusQueueAdministrationTests
 
         // Setup mock to delay longer than the timeout
         _ = mockAdminClient
-            .GetQueueRuntimePropertiesAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(async _ =>
+            .GetQueueRuntimePropertiesAsync(Any(), Any())
+            .ReturnsAsync(async () =>
             {
                 await Task.Delay(100); // Delay longer than the timeout
                 return global::Azure.Response.FromValue(
-                    Substitute.For<QueueRuntimeProperties>(),
-                    Substitute.For<global::Azure.Response>()
+                    global::Azure.Messaging.ServiceBus.ServiceBusModelFactory.QueueRuntimeProperties("timeout-queue"),
+                    global::Azure.Response.Mock()
                 );
             });
 

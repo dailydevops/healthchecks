@@ -100,8 +100,6 @@
     <PackageVersion Include="NetEvolve.Extensions.TUnit" Version="3.5.348" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Npgsql" Version="10.0.3" />
-    <PackageVersion Include="NSubstitute" Version="6.0.0" />
-    <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="OllamaSharp" Version="5.4.30" />
     <PackageVersion Include="OpenSearch.Client" Version="2.0.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.17.0" />
@@ -171,8 +169,8 @@
     <PackageVersion Include="Testcontainers.Redpanda" Version="4.13.0" />
     <PackageVersion Include="Testcontainers.ServiceBus" Version="4.13.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.13.3" />
-    <PackageVersion Include="TUnit" Version="1.61.38" />
-    <PackageVersion Include="TUnit.Mocks" Version="1.61.38" />
+    <PackageVersion Include="TUnit" Version="1.62.0" />
+    <PackageVersion Include="TUnit.Mocks" Version="1.62.0" />
     <PackageVersion Include="Verify.TUnit" Version="31.27.0" />
   </ItemGroup>
 </Project>

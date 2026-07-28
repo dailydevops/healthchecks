@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.RavenDb;
+namespace NetEvolve.HealthChecks.Tests.Unit.RavenDb;
 
 using System;
 using System.Threading;
@@ -8,9 +8,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RavenDb;
-using NSubstitute;
 using Raven.Client.Documents;
 using Raven.Client.Exceptions;
+using TUnit.Mocks;
 
 [TestGroup(nameof(RavenDb))]
 public sealed class RavenDbHealthCheckTests
@@ -21,8 +21,8 @@ public sealed class RavenDbHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<RavenDbOptions>.Mock();
         var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -36,8 +36,8 @@ public sealed class RavenDbHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<RavenDbOptions>.Mock();
 
         var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -61,8 +61,8 @@ public sealed class RavenDbHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<RavenDbOptions>.Mock();
 
         var check = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -96,14 +96,14 @@ public sealed class RavenDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<RavenDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup client mock that returns success
-        var store = Substitute.For<IDocumentStore>();
+        var store = IDocumentStore.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddKeyedSingleton("test-key", store);
+        _ = serviceCollection.AddKeyedSingleton<IDocumentStore>("test-key", store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
@@ -138,14 +138,14 @@ public sealed class RavenDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<RavenDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that returns success
-        var store = Substitute.For<IDocumentStore>();
+        var store = IDocumentStore.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(store);
+        _ = serviceCollection.AddSingleton<IDocumentStore>(store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);
@@ -180,14 +180,14 @@ public sealed class RavenDbHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<RavenDbOptions>>();
+        var optionsMonitor = IOptionsMonitor<RavenDbOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that throws an exception
-        var store = Substitute.For<IDocumentStore>();
+        var store = IDocumentStore.Mock();
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(store);
+        _ = serviceCollection.AddSingleton<IDocumentStore>(store);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RavenDbHealthCheck(serviceProvider, optionsMonitor);

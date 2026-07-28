@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Elasticsearch;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup(nameof(Elasticsearch))]
 public sealed class ElasticsearchHealthCheckTests
@@ -20,8 +20,8 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<ElasticsearchOptions>.Mock();
         using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
@@ -35,8 +35,8 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<ElasticsearchOptions>.Mock();
 
         using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -62,8 +62,8 @@ public sealed class ElasticsearchHealthCheckTests
     public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
     {
         // Arrange
-        var serviceProvider = Substitute.For<IServiceProvider>();
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
+        var serviceProvider = IServiceProvider.Mock();
+        var optionsMonitor = IOptionsMonitor<ElasticsearchOptions>.Mock();
 
         using var check = new ElasticsearchHealthCheck(serviceProvider, optionsMonitor);
         var context = new HealthCheckContext
@@ -101,12 +101,12 @@ public sealed class ElasticsearchHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
+        var optionsMonitor = IOptionsMonitor<ElasticsearchOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        // Setup client mock that returns success
-        var uri = Substitute.For<Uri>("http://localhost/test");
-        var settings = Substitute.For<ElasticsearchClientSettings>(uri);
+        // Setup client that returns success
+        var uri = new Uri("http://localhost/test");
+        var settings = ElasticsearchClientSettings.Mock(uri).Object;
         var client = new ElasticsearchClient(settings);
 
         var serviceProvider = new ServiceCollection().AddKeyedSingleton(serviceKey, client).BuildServiceProvider();
@@ -151,12 +151,12 @@ public sealed class ElasticsearchHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
+        var optionsMonitor = IOptionsMonitor<ElasticsearchOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        // Setup connection mock that returns success
-        var uri = Substitute.For<Uri>("http://localhost/test");
-        var settings = Substitute.For<ElasticsearchClientSettings>(uri);
+        // Setup connection that returns success
+        var uri = new Uri("http://localhost/test");
+        var settings = ElasticsearchClientSettings.Mock(uri).Object;
         var client = new ElasticsearchClient(settings);
 
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
@@ -201,12 +201,12 @@ public sealed class ElasticsearchHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ElasticsearchOptions>>();
+        var optionsMonitor = IOptionsMonitor<ElasticsearchOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
-        // Setup connection mock that throws an exception
-        var uri = Substitute.For<Uri>("http://localhost/test");
-        var settings = Substitute.For<ElasticsearchClientSettings>(uri);
+        // Setup connection that throws an exception
+        var uri = new Uri("http://localhost/test");
+        var settings = ElasticsearchClientSettings.Mock(uri).Object;
         var client = new ElasticsearchClient(settings);
 
         var serviceProvider = new ServiceCollection().AddSingleton(client).BuildServiceProvider();
