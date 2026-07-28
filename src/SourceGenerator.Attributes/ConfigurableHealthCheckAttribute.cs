@@ -16,8 +16,18 @@ using System.Diagnostics.CodeAnalysis;
 /// <param name="includeWin32Handling">
 /// Indicates whether to include Win32 error code handling in the generated health check code.
 /// </param>
+/// <param name="acceptDefaultConfiguration">
+/// Indicates whether an options instance equal to a default-constructed <paramref name="optionsType"/> is considered valid configuration.
+/// Set this to <see langword="true"/> for health checks whose defaults are fully functional, e.g. because the client is resolved from DI
+/// instead of being built from the options. When <see langword="false"/> (default), the generated health check reports
+/// "Missing configuration." whenever the resolved options equal the type's default value.
+/// </param>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 [ExcludeFromCodeCoverage]
 #pragma warning disable CS9113, CA1019 // Parameter is unread.
-public sealed class ConfigurableHealthCheckAttribute(Type optionsType, bool includeWin32Handling = false) : Attribute;
+public sealed class ConfigurableHealthCheckAttribute(
+    Type optionsType,
+    bool includeWin32Handling = false,
+    bool acceptDefaultConfiguration = false
+) : Attribute;
 #pragma warning restore CS9113, CA1019 // Parameter is unread.

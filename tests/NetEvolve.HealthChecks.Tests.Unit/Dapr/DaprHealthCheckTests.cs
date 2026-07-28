@@ -49,6 +49,37 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
+    public async Task CheckHealthAsync_WithDefaultOptions_ReturnsHealthy()
+    {
+        // Arrange
+        var options = new DaprOptions(); // Fully valid: DaprClient is resolved from DI, no configuration is required.
+
+        var optionsMonitor = IOptionsMonitor<DaprOptions>.Mock();
+        _ = optionsMonitor.Get(TestName).Returns(options);
+
+        var mockClient = DaprClient.Mock();
+        _ = mockClient.CheckHealthAsync(Any()).Returns(true);
+
+        var serviceProvider = new ServiceCollection().AddSingleton<DaprClient>(mockClient).BuildServiceProvider();
+
+        var healthCheck = new DaprHealthCheck(serviceProvider, optionsMonitor);
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
+        };
+
+        // Act
+        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
+            _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Healthy");
+        }
+    }
+
+    [Test]
     public async Task CheckHealthAsync_WhenDaprUnhealthy_ReturnsDegraded()
     {
         // Arrange

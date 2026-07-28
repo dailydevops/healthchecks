@@ -8,7 +8,8 @@ internal static class CodeGenerator
         ICandidate candidate,
         Action<CSharpCodeBuilder>? additionalCode = null,
         bool withWin32ExceptionHandling = false,
-        bool includeServiceProvider = false
+        bool includeServiceProvider = false,
+        bool acceptDefaultConfiguration = false
     )
     {
         var cb = new CSharpCodeBuilder(500)
@@ -78,9 +79,12 @@ internal static class CodeGenerator
                 {
                     _ = cb.AppendLine("var options = _optionsMonitor.Get(name);");
 
-                    using (cb.ScopeLine("if (options?.Equals(_defaultConfiguration) != false)"))
+                    if (!acceptDefaultConfiguration)
                     {
-                        _ = cb.HealthCheckUnhealthy("Missing configuration.");
+                        using (cb.ScopeLine("if (options?.Equals(_defaultConfiguration) != false)"))
+                        {
+                            _ = cb.HealthCheckUnhealthy("Missing configuration.");
+                        }
                     }
 
                     _ = cb.AppendLine()
