@@ -1,0 +1,15 @@
+{
+  results: [
+    {
+      description: TestContainerHealthyInfiniteTimeout: Healthy,
+      name: TestContainerHealthyInfiniteTimeout,
+      status: Healthy,
+      tags: [
+        sqlserver,
+        database,
+        legacy
+      ]
+    }
+  ],
+  status: Healthy
+}

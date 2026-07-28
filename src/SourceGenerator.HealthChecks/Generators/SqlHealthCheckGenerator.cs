@@ -94,7 +94,9 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
                     .AppendLine("#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities")
                     .AppendLine("var sw = Stopwatch.StartNew();")
                     .AppendLine("_ = command.ExecuteNonQuery();")
-                    .AppendLine("var isTimelyResponse = options.Timeout >= sw.Elapsed.TotalMilliseconds;")
+                    .AppendLine(
+                        "var isTimelyResponse = options.Timeout == global::System.Threading.Timeout.Infinite || options.Timeout >= sw.Elapsed.TotalMilliseconds;"
+                    )
                     .HealthCheckStateValueTask("isTimelyResponse");
             }
         }
