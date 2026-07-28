@@ -1,8 +1,5 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +7,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Azure.ServiceBus;
-using NSubstitute;
+using TUnit.Mocks;
 
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}")]
 [TestGroup($"{nameof(Azure)}.{nameof(ServiceBus)}.Topic")]
@@ -28,10 +25,10 @@ public sealed class ServiceBusTopicAdministrationTests
             TopicName = "test-topic",
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusTopicOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusTopicOptions>.Mock();
         _ = optionsMonitor.Get("test").Returns(options);
 
-        var serviceProvider = Substitute.For<IServiceProvider>();
+        var serviceProvider = IServiceProvider.Mock();
         var healthCheck = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
 
         var context = new HealthCheckContext
@@ -56,13 +53,14 @@ public sealed class ServiceBusTopicAdministrationTests
             TopicName = "non-existing-topic",
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusTopicOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusTopicOptions>.Mock();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Create a mock service provider with a mock administration client
-        var mockAdminClient = Substitute.For<ServiceBusAdministrationClient>();
+        var mockAdminClient = ServiceBusAdministrationClient.Mock();
+        ServiceBusAdministrationClient registeredAdminClient = mockAdminClient;
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockAdminClient);
+        _ = serviceCollection.AddSingleton(registeredAdminClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
@@ -74,14 +72,13 @@ public sealed class ServiceBusTopicAdministrationTests
 
         // Setup mock to throw exception to simulate topic not existing
         _ = mockAdminClient
-            .GetTopicRuntimePropertiesAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns<global::Azure.Response<TopicRuntimeProperties>>(_ =>
-            {
-                throw new global::Azure.Messaging.ServiceBus.ServiceBusException(
+            .GetTopicRuntimePropertiesAsync(Any(), Any())
+            .Throws(
+                new global::Azure.Messaging.ServiceBus.ServiceBusException(
                     "Topic not found",
                     global::Azure.Messaging.ServiceBus.ServiceBusFailureReason.MessagingEntityNotFound
-                );
-            });
+                )
+            );
 
         // Act
         var result = await healthCheck.CheckHealthAsync(context);
@@ -91,11 +88,6 @@ public sealed class ServiceBusTopicAdministrationTests
     }
 
     [Test]
-    [SuppressMessage(
-        "Substitute creation",
-        "NS2001:Could not find accessible constructor.",
-        Justification = "Reviewed"
-    )]
     public async Task CheckHealthAsync_WhenTimeout_ShouldReturnUnhealthy()
     {
         // Arrange
@@ -106,13 +98,14 @@ public sealed class ServiceBusTopicAdministrationTests
             Timeout = 1, // Very short timeout to force failure
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<ServiceBusTopicOptions>>();
+        var optionsMonitor = IOptionsMonitor<ServiceBusTopicOptions>.Mock();
         _ = optionsMonitor.Get("test").Returns(options);
 
         // Create a mock service provider with a mock administration client
-        var mockAdminClient = Substitute.For<ServiceBusAdministrationClient>();
+        var mockAdminClient = ServiceBusAdministrationClient.Mock();
+        ServiceBusAdministrationClient registeredAdminClient = mockAdminClient;
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockAdminClient);
+        _ = serviceCollection.AddSingleton(registeredAdminClient);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new ServiceBusTopicHealthCheck(serviceProvider, optionsMonitor);
@@ -124,13 +117,13 @@ public sealed class ServiceBusTopicAdministrationTests
 
         // Setup mock to delay longer than the timeout
         _ = mockAdminClient
-            .GetTopicRuntimePropertiesAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(async _ =>
+            .GetTopicRuntimePropertiesAsync(Any(), Any())
+            .ReturnsAsync(async () =>
             {
                 await Task.Delay(100); // Delay longer than the timeout
                 return global::Azure.Response.FromValue(
-                    Substitute.For<TopicRuntimeProperties>(),
-                    Substitute.For<global::Azure.Response>()
+                    global::Azure.Messaging.ServiceBus.ServiceBusModelFactory.TopicRuntimeProperties("timeout-topic"),
+                    global::Azure.Response.Mock()
                 );
             });
 

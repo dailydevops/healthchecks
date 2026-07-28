@@ -1,6 +1,7 @@
-﻿namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
+namespace NetEvolve.HealthChecks.Tests.Unit.Cassandra;
 
-using System.Linq;
+using System.Collections.Concurrent;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.Cassandra;
-using NSubstitute;
+using TUnit.Mocks;
 using CassandraDriver = global::Cassandra;
 
 [TestGroup(nameof(Cassandra))]
@@ -16,17 +17,32 @@ public class CassandraHealthCheckTests
 {
     private const string TestName = nameof(Cassandra);
 
+    // CassandraDriver.RowSet is a concrete class whose GetEnumerator() reads from a protected
+    // RowQueue property; TUnit.Mocks' partial-mock subclass triggers a virtual-dispatch NRE
+    // because the driver's own constructor assigns RowQueue before the mock's tracking state is
+    // initialized. Constructing a real RowSet and populating RowQueue via reflection sidesteps
+    // the generator bug entirely while still exercising real driver enumeration behavior.
+    private static CassandraDriver.RowSet CreateRowSet(params CassandraDriver.Row[] rows)
+    {
+        var rowSet = new CassandraDriver.RowSet();
+        var rowQueueProperty = typeof(CassandraDriver.RowSet).GetProperty(
+            "RowQueue",
+            BindingFlags.Instance | BindingFlags.NonPublic
+        )!;
+        rowQueueProperty.SetValue(rowSet, new ConcurrentQueue<CassandraDriver.Row>(rows));
+        return rowSet;
+    }
+
     [Test]
     public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue()
     {
         // Arrange
-        var cluster = Substitute.For<CassandraDriver.ICluster>();
-        var session = Substitute.For<CassandraDriver.ISession>();
-        var rowSet = Substitute.For<CassandraDriver.RowSet>();
+        var cluster = CassandraDriver.ICluster.Mock();
+        var session = CassandraDriver.ISession.Mock();
+        using var rowSet = CreateRowSet(new CassandraDriver.Row());
 
-        _ = cluster.ConnectAsync().Returns(Task.FromResult(session));
-        _ = session.ExecuteAsync(Arg.Any<CassandraDriver.IStatement>()).Returns(Task.FromResult(rowSet));
-        _ = rowSet.GetEnumerator().Returns(Enumerable.Repeat(Substitute.For<CassandraDriver.Row>(), 1).GetEnumerator());
+        _ = cluster.ConnectAsync().Returns(session);
+        _ = session.ExecuteAsync(Any<CassandraDriver.IStatement>()).Returns(rowSet);
 
         // Act
         var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
@@ -39,13 +55,11 @@ public class CassandraHealthCheckTests
     public async Task DefaultCommandAsync_WhenResultIsNull_ReturnsFalse()
     {
         // Arrange
-        var cluster = Substitute.For<CassandraDriver.ICluster>();
-        var session = Substitute.For<CassandraDriver.ISession>();
+        var cluster = CassandraDriver.ICluster.Mock();
+        var session = CassandraDriver.ISession.Mock();
 
-        _ = cluster.ConnectAsync().Returns(Task.FromResult(session));
-        _ = session
-            .ExecuteAsync(Arg.Any<CassandraDriver.IStatement>())
-            .Returns(Task.FromResult<CassandraDriver.RowSet>(null!));
+        _ = cluster.ConnectAsync().Returns(session);
+        _ = session.ExecuteAsync(Any<CassandraDriver.IStatement>()).Returns((CassandraDriver.RowSet)null!);
 
         // Act
         var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
@@ -58,13 +72,12 @@ public class CassandraHealthCheckTests
     public async Task DefaultCommandAsync_WhenResultIsEmpty_ReturnsFalse()
     {
         // Arrange
-        var cluster = Substitute.For<CassandraDriver.ICluster>();
-        var session = Substitute.For<CassandraDriver.ISession>();
-        var rowSet = Substitute.For<CassandraDriver.RowSet>();
+        var cluster = CassandraDriver.ICluster.Mock();
+        var session = CassandraDriver.ISession.Mock();
+        using var rowSet = CreateRowSet();
 
-        _ = cluster.ConnectAsync().Returns(Task.FromResult(session));
-        _ = session.ExecuteAsync(Arg.Any<CassandraDriver.IStatement>()).Returns(Task.FromResult(rowSet));
-        _ = rowSet.GetEnumerator().Returns(Enumerable.Empty<CassandraDriver.Row>().GetEnumerator());
+        _ = cluster.ConnectAsync().Returns(session);
+        _ = session.ExecuteAsync(Any<CassandraDriver.IStatement>()).Returns(rowSet);
 
         // Act
         var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
@@ -77,7 +90,7 @@ public class CassandraHealthCheckTests
     public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage()
     {
         // Arrange
-        var cluster = Substitute.For<CassandraDriver.ICluster>();
+        var cluster = CassandraDriver.ICluster.Mock();
         var options = new CassandraOptions
         {
             KeyedService = null,
@@ -89,11 +102,11 @@ public class CassandraHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CassandraOptions>>();
+        var optionsMonitor = IOptionsMonitor<CassandraOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(cluster);
+        _ = serviceCollection.AddSingleton<CassandraDriver.ICluster>(cluster);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new CassandraHealthCheck(serviceProvider, optionsMonitor);
@@ -119,7 +132,7 @@ public class CassandraHealthCheckTests
     public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy()
     {
         // Arrange
-        var cluster = Substitute.For<CassandraDriver.ICluster>();
+        var cluster = CassandraDriver.ICluster.Mock();
         var options = new CassandraOptions
         {
             KeyedService = null,
@@ -131,11 +144,11 @@ public class CassandraHealthCheckTests
             },
         };
 
-        var optionsMonitor = Substitute.For<IOptionsMonitor<CassandraOptions>>();
+        var optionsMonitor = IOptionsMonitor<CassandraOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(cluster);
+        _ = serviceCollection.AddSingleton<CassandraDriver.ICluster>(cluster);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new CassandraHealthCheck(serviceProvider, optionsMonitor);

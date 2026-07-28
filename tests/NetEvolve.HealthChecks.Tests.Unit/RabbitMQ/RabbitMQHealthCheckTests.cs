@@ -10,7 +10,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.TUnit;
 using NetEvolve.HealthChecks.RabbitMQ;
-using NSubstitute;
 using TUnit.Mocks;
 
 [TestGroup(nameof(RabbitMQ))]
@@ -138,6 +137,11 @@ public sealed class RabbitMQHealthCheckTests
     }
 
     [Test]
+    [SuppressMessage(
+        "Reliability",
+        "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
+        Justification = "As designed."
+    )]
     public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded()
     {
         // Arrange
@@ -147,27 +151,17 @@ public sealed class RabbitMQHealthCheckTests
             Timeout = 1, // Very short timeout to force a timeout
         };
 
-        // TUnit.Mocks' .Returns() only supports a synchronous Func<T> (auto-wrapped into a
-        // completed Task<T>) - there's no way to hand back a task that stays pending and
-        // completes asynchronously later, so a genuine timeout-race can't be simulated with it.
-        // NSubstitute is used here instead, purely for this one test.
-        var optionsMonitor = NSubstitute.Substitute.For<IOptionsMonitor<RabbitMQOptions>>();
+        var optionsMonitor = IOptionsMonitor<RabbitMQOptions>.Mock();
         _ = optionsMonitor.Get(TestName).Returns(options);
 
         // Setup connection mock that delays long enough to cause timeout
-        var mockChannel = NSubstitute.Substitute.For<IChannel>();
+        var mockChannel = IChannel.Mock();
         _ = mockChannel.IsOpen.Returns(true);
-        var mockConnection = NSubstitute.Substitute.For<IConnection>();
-        _ = mockConnection
-            .CreateChannelAsync(NSubstitute.Arg.Any<CreateChannelOptions>(), NSubstitute.Arg.Any<CancellationToken>())
-            .Returns(async _ =>
-            {
-                await Task.Delay(50); // Delay to force timeout
-                return mockChannel;
-            });
+        var mockConnection = IConnection.Mock();
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).ReturnsAsync(() => DelayedChannelAsync(mockChannel));
 
         var serviceCollection = new ServiceCollection();
-        _ = serviceCollection.AddSingleton(mockConnection);
+        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
@@ -185,5 +179,13 @@ public sealed class RabbitMQHealthCheckTests
             _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Degraded);
             _ = await Assert.That(result.Description).IsEqualTo($"{TestName}: Degraded", StringComparison.Ordinal);
         }
+    }
+
+    // Genuinely delays before completing, so the created channel task stays pending long
+    // enough for the health check's timeout to elapse first.
+    private static async Task<IChannel> DelayedChannelAsync(IChannel channel)
+    {
+        await Task.Delay(50);
+        return channel;
     }
 }
