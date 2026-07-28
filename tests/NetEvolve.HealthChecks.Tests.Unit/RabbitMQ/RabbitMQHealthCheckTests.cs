@@ -158,9 +158,7 @@ public sealed class RabbitMQHealthCheckTests
         var mockChannel = IChannel.Mock();
         _ = mockChannel.IsOpen.Returns(true);
         var mockConnection = IConnection.Mock();
-        _ = mockConnection
-            .CreateChannelAsync(Any(), Any())
-            .ReturnsAsync(() => DelayedChannelAsync(mockChannel));
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).ReturnsAsync(() => DelayedChannelAsync(mockChannel));
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
