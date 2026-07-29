@@ -31,11 +31,21 @@ internal sealed partial class RabbitMQHealthCheck
             .WithTimeoutAsync(options.Timeout, cancellationToken)
             .ConfigureAwait(false);
 
-        if (channel?.IsOpen != true)
+        try
         {
-            return HealthCheckUnhealthy(failureStatus, name, "Failed to create a channel to RabbitMQ.");
-        }
+            if (channel?.IsOpen != true)
+            {
+                return HealthCheckUnhealthy(failureStatus, name, "Failed to create a channel to RabbitMQ.");
+            }
 
-        return HealthCheckState(isTimelyResponse, name);
+            return HealthCheckState(isTimelyResponse, name);
+        }
+        finally
+        {
+            if (channel is not null)
+            {
+                await channel.DisposeAsync().ConfigureAwait(false);
+            }
+        }
     }
 }
