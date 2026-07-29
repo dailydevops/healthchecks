@@ -28,7 +28,7 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
     internal const string AlarmName = "test-alarm";
 
     private readonly TestContainer _container = new FlociBuilder(
-        /*dockerimage*/"floci/floci:1.5.33"
+        /*dockerimage*/"floci/floci:1.5.34"
     )
         .WithLogger(NullLogger.Instance)
         .WithEnvironment("AWS_ACCESS_KEY_ID", AccessKey)
