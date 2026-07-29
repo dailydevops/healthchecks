@@ -142,6 +142,85 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
+    public async Task CheckHealthAsync_WithoutKeyedService_DisposesChannel()
+    {
+        // Arrange
+        var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
+
+        var optionsMonitor = IOptionsMonitor<RabbitMQOptions>.Mock();
+        _ = optionsMonitor.Get(TestName).Returns(options);
+
+        var mockChannel = IChannel.Mock();
+        _ = mockChannel.IsOpen.Returns(true);
+        var mockConnection = IConnection.Mock();
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).Returns(mockChannel);
+
+        var serviceCollection = new ServiceCollection();
+        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
+        };
+
+        // Act
+        _ = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+
+        // Assert
+        mockChannel.DisposeAsync().WasCalled(Times.Once);
+    }
+
+    [Test]
+    [SuppressMessage(
+        "Reliability",
+        "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
+        Justification = "As designed."
+    )]
+    public async Task CheckHealthAsync_WhenChannelNotOpen_ReturnsUnhealthyAndDisposesChannel()
+    {
+        // Arrange
+        var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
+
+        var optionsMonitor = IOptionsMonitor<RabbitMQOptions>.Mock();
+        _ = optionsMonitor.Get(TestName).Returns(options);
+
+        var mockChannel = IChannel.Mock();
+        _ = mockChannel.IsOpen.Returns(false);
+        var mockConnection = IConnection.Mock();
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).Returns(mockChannel);
+
+        var serviceCollection = new ServiceCollection();
+        _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        var healthCheck = new RabbitMQHealthCheck(serviceProvider, optionsMonitor);
+        var context = new HealthCheckContext
+        {
+            Registration = new HealthCheckRegistration(TestName, healthCheck, HealthStatus.Unhealthy, null),
+        };
+
+        // Act
+        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
+            _ = await Assert
+                .That(result.Description)
+                .IsEqualTo($"{TestName}: Failed to create a channel to RabbitMQ.", StringComparison.Ordinal);
+        }
+        mockChannel.DisposeAsync().WasCalled(Times.Once);
+    }
+
+    [Test]
+    [SuppressMessage(
+        "Reliability",
+        "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
+        Justification = "As designed."
+    )]
     public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded()
     {
         // Arrange
