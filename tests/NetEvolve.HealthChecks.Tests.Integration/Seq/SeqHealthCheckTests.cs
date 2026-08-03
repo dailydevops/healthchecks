@@ -25,7 +25,7 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddSeq("ServiceProviderHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(new SeqConnection(_container.ServerUrl.ToString()))
+            serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
         );
 
     [Test]
@@ -54,7 +54,7 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddSeq("ServiceProviderDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(new SeqConnection(_container.ServerUrl.ToString()))
+            serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
         );
 
     [Test]
@@ -97,7 +97,8 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
                 await RunAndVerify(
                     healthChecks => healthChecks.AddSeq("DoubleRegistered").AddSeq("DoubleRegistered"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(new SeqConnection(_container.ServerUrl.ToString()))
+                    serviceBuilder: services =>
+                        services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
                 )
         );
 
@@ -115,7 +116,7 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
                         }
                 ),
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(new SeqConnection(_container.ServerUrl.ToString()))
+            serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
         );
 
     [Test]
@@ -131,7 +132,7 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(new SeqConnection(_container.ServerUrl.ToString()))
+            serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
         );
 
     [Test]
@@ -179,6 +180,6 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(new SeqConnection(_container.ServerUrl.ToString()))
+            serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
         );
 }
