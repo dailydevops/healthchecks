@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: ConfigServiceProviderHealthy: Healthy,
+      name: ConfigServiceProviderHealthy,
+      status: Healthy,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Healthy
+}

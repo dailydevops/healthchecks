@@ -1,0 +1,22 @@
+﻿namespace NetEvolve.HealthChecks.Seq
+{
+    public static class DependencyInjectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder AddSeq([System.Diagnostics.CodeAnalysis.NotNull] this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, [System.Diagnostics.CodeAnalysis.NotNull] string name, System.Action<NetEvolve.HealthChecks.Seq.SeqOptions>? options = null, params string[] tags) { }
+    }
+    public enum SeqClientCreationMode
+    {
+        ServiceProvider = 0,
+        ServerUrl = 1,
+    }
+    public sealed class SeqOptions : System.IEquatable<NetEvolve.HealthChecks.Seq.SeqOptions>
+    {
+        public SeqOptions() { }
+        public string? ApiKey { get; set; }
+        public System.Func<Seq.Api.SeqConnection, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> CommandAsync { get; set; }
+        public string? KeyedService { get; set; }
+        public NetEvolve.HealthChecks.Seq.SeqClientCreationMode Mode { get; set; }
+        public System.Uri? ServerUrl { get; set; }
+        public int Timeout { get; set; }
+    }
+}

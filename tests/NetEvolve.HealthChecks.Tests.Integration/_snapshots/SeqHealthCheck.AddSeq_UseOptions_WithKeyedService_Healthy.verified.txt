@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: KeyedServiceProviderHealthy: Healthy,
+      name: KeyedServiceProviderHealthy,
+      status: Healthy,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Healthy
+}

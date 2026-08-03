@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: ServiceProviderHealthy: Healthy,
+      name: ServiceProviderHealthy,
+      status: Healthy,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Healthy
+}
