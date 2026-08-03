@@ -23,6 +23,7 @@ internal static class HealthCheckArchitecture
             typeof(Apache.ActiveMq.ActiveMqHealthCheck).Assembly,
             typeof(Apache.Kafka.KafkaHealthCheck).Assembly,
             typeof(Apache.Pulsar.PulsarHealthCheck).Assembly,
+            typeof(Apache.RocketMQ.RocketMQHealthCheck).Assembly,
             typeof(Apache.Solr.SolrHealthCheck).Assembly,
             // AWS
             typeof(AWS.CloudWatch.CloudWatchHealthCheck).Assembly,
@@ -93,6 +94,7 @@ internal static class HealthCheckArchitecture
             typeof(Redpanda.RedpandaHealthCheck).Assembly,
             typeof(Qdrant.QdrantHealthCheck).Assembly,
             typeof(QuestDB.QuestDBHealthCheck).Assembly,
+            typeof(Seq.SeqHealthCheck).Assembly,
             typeof(SQLite.SQLiteHealthCheck).Assembly,
             typeof(SQLite.Devart.SQLiteDevartHealthCheck).Assembly,
             typeof(SQLite.Legacy.SQLiteLegacyHealthCheck).Assembly,
