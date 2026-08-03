@@ -8,7 +8,7 @@ using Testcontainers.Seq;
 public sealed class SeqContainerAccess : IAsyncInitializer, IAsyncDisposable
 {
     private readonly SeqContainer _container = new SeqBuilder(
-        /*dockerimage*/"datalust/seq:2025.2.16202"
+        /*dockerimage*/"datalust/seq:2026.1.17083"
     )
         .WithLogger(NullLogger.Instance)
         .WithAcceptLicenseAgreement(true)
