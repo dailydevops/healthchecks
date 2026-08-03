@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.ActiveMq\NetEvolve.HealthChecks.Apache.ActiveMq.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Kafka\NetEvolve.HealthChecks.Apache.Kafka.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.RocketMQ\NetEvolve.HealthChecks.Apache.RocketMQ.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Apache.Solr\NetEvolve.HealthChecks.Apache.Solr.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.ArangoDb\NetEvolve.HealthChecks.ArangoDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.AWS.CloudWatch\NetEvolve.HealthChecks.AWS.CloudWatch.csproj" />
@@ -79,6 +80,7 @@
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.RavenDb\NetEvolve.HealthChecks.RavenDb.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redis\NetEvolve.HealthChecks.Redis.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Redpanda\NetEvolve.HealthChecks.Redpanda.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.Seq\NetEvolve.HealthChecks.Seq.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Devart\NetEvolve.HealthChecks.SQLite.Devart.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite.Legacy\NetEvolve.HealthChecks.SQLite.Legacy.csproj" />
     <ProjectReference Include="..\..\src\NetEvolve.HealthChecks.SQLite\NetEvolve.HealthChecks.SQLite.csproj" />
