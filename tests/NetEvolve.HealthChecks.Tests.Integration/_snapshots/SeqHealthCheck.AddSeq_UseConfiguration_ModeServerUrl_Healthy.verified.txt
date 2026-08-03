@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: ConfigServerUrlHealthy: Healthy,
+      name: ConfigServerUrlHealthy,
+      status: Healthy,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Healthy
+}

@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: ServerUrlHealthy: Healthy,
+      name: ServerUrlHealthy,
+      status: Healthy,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Healthy
+}

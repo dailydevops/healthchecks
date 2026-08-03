@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: ServerUrlDegraded: Degraded,
+      name: ServerUrlDegraded,
+      status: Degraded,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Degraded
+}

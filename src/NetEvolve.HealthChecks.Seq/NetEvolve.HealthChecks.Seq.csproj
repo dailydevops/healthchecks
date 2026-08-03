@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(_ProjectTargetFrameworks)</TargetFrameworks>
+    <Description>Contains HealthChecks for the Seq service, based on the nuget package `Seq.Api`.</Description>
+    <PackageTags>$(PackageTags);seq;logging</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Seq.Api" />
+    <PackageReference Include="NetEvolve.Extensions.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenerator.Attributes\SourceGenerator.Attributes.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\SourceGenerator.HealthChecks\SourceGenerator.HealthChecks.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+</Project>

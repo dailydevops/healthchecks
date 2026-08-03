@@ -1,0 +1,14 @@
+{
+  results: [
+    {
+      description: ServiceProviderDegraded: Degraded,
+      name: ServiceProviderDegraded,
+      status: Degraded,
+      tags: [
+        seq,
+        logging
+      ]
+    }
+  ],
+  status: Degraded
+}
