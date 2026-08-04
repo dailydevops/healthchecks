@@ -11,7 +11,7 @@ using TUnit.Core.Interfaces;
 public sealed class BigtableDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly BigtableContainer _container = new BigtableBuilder(
-        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:578.0.0"
+        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:579.0.0"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
