@@ -18,17 +18,6 @@ Use AI coding assistants, such as GitHub Copilot, to enhance productivity and ma
 * MUST consider the impact on existing workflows and user experience.
 * MUST evaluate the cost-benefit ratio of proposed changes or new implementations.
 
-## Decision References
-
-* MUST document all decisions in `decisions/` folder using `templates/adr.md` format.
-* MUST treat "accepted" decisions as mandatory requirements with highest precedence.
-* MUST respect decision states:
-  - **accepted**: mandatory requirements
-  - **proposed**: optional considerations
-  - **deprecated**: avoid in new implementations
-  - **superseded**: forbidden, follow superseding decision instead
-* MUST use the `instructions` frontmatter property as primary AI guidance for each decision.
-
 ## Configuration Files
 
 These files control project-wide settings and should remain unchanged unless specifically requested.
