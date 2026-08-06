@@ -105,7 +105,7 @@
     <PackageVersion Include="OpenTelemetry.Api" Version="1.17.0" />
     <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.300" />
     <PackageVersion Include="PublicApiGenerator" Version="11.5.4" />
-    <PackageVersion Include="Qdrant.Client" Version="1.18.1" />
+    <PackageVersion Include="Qdrant.Client" Version="1.19.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.1" />
     <PackageVersion Include="RavenDB.Client" Version="7.2.5" />
     <PackageVersion Include="RocketMQ.Client" Version="5.2.1" />
