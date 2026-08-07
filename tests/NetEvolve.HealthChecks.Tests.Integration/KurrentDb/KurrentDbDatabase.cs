@@ -7,7 +7,7 @@ using Testcontainers.KurrentDb;
 public sealed class KurrentDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly KurrentDbContainer _database = new KurrentDbBuilder(
-        /*dockerimage*/"kurrentplatform/kurrentdb:26.1.1"
+        /*dockerimage*/"kurrentplatform/kurrentdb:26.1.2"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
