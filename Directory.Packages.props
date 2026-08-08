@@ -25,7 +25,7 @@
     <PackageVersion Include="AWSSDK.CloudWatch" Version="4.0.103.1" />
     <PackageVersion Include="AWSSDK.Core" Version="4.0.100.9" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.103" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.109" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.110" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.102" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.7" />
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.100.7" />
