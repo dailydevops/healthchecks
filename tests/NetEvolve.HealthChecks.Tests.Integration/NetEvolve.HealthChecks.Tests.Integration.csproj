@@ -71,7 +71,7 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" VersionOverride="8.0.29" />
   </ItemGroup>
   <ItemGroup Condition=" $(TargetFramework) == 'net9.0' ">
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" VersionOverride="9.0.18" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" VersionOverride="9.0.19" />
   </ItemGroup>
   <ItemGroup Condition=" $(TargetFramework) == 'net10.0' ">
     <PackageReference Include="Microsoft.AspNetCore.TestHost" />
