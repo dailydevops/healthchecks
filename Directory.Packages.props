@@ -43,7 +43,7 @@
     <PackageVersion Include="CliWrap" Version="3.10.4" />
     <PackageVersion Include="Confluent.Kafka" Version="2.15.0" />
     <PackageVersion Include="Consul" Version="1.8.0" />
-    <PackageVersion Include="CouchbaseNetClient" Version="3.9.4" />
+    <PackageVersion Include="CouchbaseNetClient" Version="3.9.5" />
     <PackageVersion Include="Dapr.Client" Version="1.18.5" />
     <PackageVersion Include="Devart.Data.MySql" Version="10.1.123" />
     <PackageVersion Include="Devart.Data.Oracle" Version="11.1.123" />
