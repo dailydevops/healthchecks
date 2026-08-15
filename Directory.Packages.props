@@ -88,7 +88,7 @@
     <PackageVersion Include="MQTTnet" Version="5.2.0.1603" />
     <PackageVersion Include="MyCouch" Version="7.6.0" />
     <PackageVersion Include="MySql.Data" Version="26.7.0" />
-    <PackageVersion Include="MySqlConnector" Version="2.6.1" />
+    <PackageVersion Include="MySqlConnector" Version="2.6.2" />
     <PackageVersion Include="NATS.Client" Version="1.1.8" />
     <PackageVersion Include="Neo4j.Driver" Version="6.1.2" />
     <PackageVersion Include="net-questdb-client" Version="3.2.0" />
