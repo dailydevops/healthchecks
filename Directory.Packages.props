@@ -9,7 +9,7 @@
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="5.6.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.400" />
-    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.301" />
+    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.400" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23" />
     <GlobalPackageReference Include="NetEvolve.Defaults" Version="2.6.95" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.16.0" />
