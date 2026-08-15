@@ -108,6 +108,18 @@
       "groupSlug": "netevolve-httpcorrelation-packages",
       "matchManagers": ["nuget"],
       "matchPackageNames": ["NetEvolve.Http.Correlation", "NetEvolve.Http.Correlation.*"]
+    },
+    {
+      "groupName": "Microsoft.Extensions packages",
+      "groupSlug": "microsoft-extensions-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["/^Microsoft\\.Extensions\\./"]
+    },
+    {
+      "groupName": "Roslynator packages",
+      "groupSlug": "roslynator-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["/^Roslynator/"]
     }
   ]
 }
