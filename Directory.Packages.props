@@ -40,7 +40,7 @@
     <PackageVersion Include="Azure.Storage.Queues" Version="12.27.1" />
     <PackageVersion Include="CassandraCSharpDriver" Version="3.22.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
-    <PackageVersion Include="CliWrap" Version="3.10.4" />
+    <PackageVersion Include="CliWrap" Version="3.10.5" />
     <PackageVersion Include="Confluent.Kafka" Version="2.15.0" />
     <PackageVersion Include="Consul" Version="1.8.0" />
     <PackageVersion Include="CouchbaseNetClient" Version="3.9.5" />
