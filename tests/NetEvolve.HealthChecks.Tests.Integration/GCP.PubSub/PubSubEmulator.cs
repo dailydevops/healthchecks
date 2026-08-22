@@ -11,7 +11,7 @@ using TUnit.Core.Interfaces;
 public sealed class PubSubEmulator : IAsyncInitializer, IAsyncDisposable
 {
     private readonly PubSubContainer _container = new PubSubBuilder(
-        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:580.0.0"
+        /*dockerimage*/"gcr.io/google.com/cloudsdktool/google-cloud-cli:581.0.0"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
