@@ -7,7 +7,7 @@ using Testcontainers.Ollama;
 public sealed class OllamaContainer : IAsyncInitializer, IAsyncDisposable
 {
     private readonly Testcontainers.Ollama.OllamaContainer _container = new OllamaBuilder(
-        /*dockerimage*/"ollama/ollama:0.32.15"
+        /*dockerimage*/"ollama/ollama:0.33.0-rc2-rocm"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
