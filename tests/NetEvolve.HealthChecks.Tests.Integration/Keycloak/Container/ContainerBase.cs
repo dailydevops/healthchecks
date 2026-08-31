@@ -15,7 +15,7 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
     )
     {
         _container = new KeycloakBuilder(
-            /*dockerimage*/"quay.io/keycloak/keycloak:26.7.2"
+            /*dockerimage*/"quay.io/keycloak/keycloak:26.7.3"
         )
             .WithLogger(NullLogger.Instance)
             .WithPassword(password)
