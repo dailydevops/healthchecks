@@ -7,7 +7,7 @@ using Testcontainers.RavenDb;
 public sealed class RavenDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly RavenDbContainer _database = new RavenDbBuilder(
-        /*dockerimage*/"ravendb/ravendb:7.2.5"
+        /*dockerimage*/"ravendb/ravendb:7.2.6"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
