@@ -23,9 +23,9 @@
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.2.0" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
     <PackageVersion Include="AWSSDK.CloudWatch" Version="4.0.104.1" />
-    <PackageVersion Include="AWSSDK.Core" Version="4.0.102.1" />
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.102.2" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.103.5" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.114" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.116" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.102.4" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.11" />
     <PackageVersion Include="AWSSDK.SQS" Version="4.0.100.11" />
