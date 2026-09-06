@@ -8,7 +8,7 @@ using TUnit.Core.Interfaces;
 public sealed class QdrantDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly QdrantContainer _database = new QdrantBuilder(
-        /*dockerimage*/"qdrant/qdrant:v1.19.0"
+        /*dockerimage*/"qdrant/qdrant:v1.19.1"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
