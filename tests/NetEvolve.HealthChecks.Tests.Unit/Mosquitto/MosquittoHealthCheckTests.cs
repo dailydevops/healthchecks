@@ -17,8 +17,10 @@ public sealed class MosquittoHealthCheckTests
     private const string TestName = nameof(Mosquitto);
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
+    public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new MosquittoOptions { KeyedService = "test-key", Timeout = 10000 };
 
@@ -40,7 +42,7 @@ public sealed class MosquittoHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -51,8 +53,10 @@ public sealed class MosquittoHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService()
+    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new MosquittoOptions { KeyedService = null, Timeout = 1000 };
 
@@ -74,7 +78,7 @@ public sealed class MosquittoHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -85,8 +89,10 @@ public sealed class MosquittoHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenClientNotConnected_ReturnsUnhealthy()
+    public async Task CheckHealthAsync_WhenClientNotConnected_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new MosquittoOptions { KeyedService = null, Timeout = 1000 };
 
@@ -108,7 +114,7 @@ public sealed class MosquittoHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

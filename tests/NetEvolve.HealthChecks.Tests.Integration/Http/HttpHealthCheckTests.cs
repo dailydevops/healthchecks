@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,8 +40,10 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddHttp_WithLocalServer_ReturnsHealthy()
+    public async Task AddHttp_WithLocalServer_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that responds with HTTP 200 OK
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -52,12 +55,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("OK");
+                            await context.Response.WriteAsync("OK", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -73,12 +76,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             }
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithKeyedLocalServer_ReturnsHealthy()
+    public async Task AddHttp_WithKeyedLocalServer_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that responds with HTTP 200 OK
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -90,12 +95,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("OK");
+                            await context.Response.WriteAsync("OK", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -122,12 +127,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             }
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithNon200StatusCode_ConfiguredToAccept_ReturnsHealthy()
+    public async Task AddHttp_WithNon200StatusCode_ConfiguredToAccept_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that returns HTTP 201 Created
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -139,12 +146,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.Created;
-                            await context.Response.WriteAsync("Created");
+                            await context.Response.WriteAsync("Created", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -166,12 +173,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithNon200StatusCode_NotConfiguredToAccept_ReturnsUnhealthy()
+    public async Task AddHttp_WithNon200StatusCode_NotConfiguredToAccept_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that returns HTTP 201 Created
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -183,12 +192,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.Created;
-                            await context.Response.WriteAsync("Created");
+                            await context.Response.WriteAsync("Created", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -210,12 +219,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithPostMethod_ReturnsHealthy()
+    public async Task AddHttp_WithPostMethod_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that validates POST method
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -229,18 +240,18 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                             if (context.Request.Method == "POST")
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                await context.Response.WriteAsync("OK");
+                                await context.Response.WriteAsync("OK", cancellationToken);
                             }
                             else
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
-                                await context.Response.WriteAsync("Method not allowed");
+                                await context.Response.WriteAsync("Method not allowed", cancellationToken);
                             }
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -262,12 +273,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithCustomHeaders_ReturnsHealthy()
+    public async Task AddHttp_WithCustomHeaders_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that validates headers
         const string expectedHeader = "X-Test-Header";
         const string expectedValue = "TestValue";
@@ -288,18 +301,18 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                             )
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                await context.Response.WriteAsync("OK");
+                                await context.Response.WriteAsync("OK", cancellationToken);
                             }
                             else
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                                await context.Response.WriteAsync("Missing or invalid header");
+                                await context.Response.WriteAsync("Missing or invalid header", cancellationToken);
                             }
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -321,12 +334,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithRequestBody_ReturnsHealthy()
+    public async Task AddHttp_WithRequestBody_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that validates request body
         const string expectedContentType = "application/json";
         const string expectedContent = "{\"test\":\"value\"}";
@@ -352,25 +367,25 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                                 {
                                     // Read the body content
                                     using var reader = new StreamReader(context.Request.Body, Encoding.UTF8);
-                                    var body = await reader.ReadToEndAsync();
+                                    var body = await reader.ReadToEndAsync(cancellationToken);
                                     if (body == expectedContent)
                                     {
                                         context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                        await context.Response.WriteAsync("OK");
+                                        await context.Response.WriteAsync("OK", cancellationToken);
                                         return;
                                     }
                                 }
                                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                                await context.Response.WriteAsync("Invalid content or content type");
+                                await context.Response.WriteAsync("Invalid content or content type", cancellationToken);
                                 return;
                             }
                             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                            await context.Response.WriteAsync("No content");
+                            await context.Response.WriteAsync("No content", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         // Create a client for the TestServer
@@ -396,12 +411,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services => _ = services.AddSingleton(client)
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithSlowEndpoint_TimeoutExceeded_ReturnsDegraded()
+    public async Task AddHttp_WithSlowEndpoint_TimeoutExceeded_ReturnsDegraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that has a delayed response
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -413,14 +430,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             // Delay for 1 second
-                            await Task.Delay(1000);
+                            await Task.Delay(1000, cancellationToken);
                             context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("OK but slow");
+                            await context.Response.WriteAsync("OK but slow", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -442,12 +459,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithRedirect_AllowRedirect_ReturnsHealthy()
+    public async Task AddHttp_WithRedirect_AllowRedirect_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that redirects
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -466,13 +485,13 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                             else if (context.Request.Path == "/redirected")
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                await context.Response.WriteAsync("Redirected OK");
+                                await context.Response.WriteAsync("Redirected OK", cancellationToken);
                             }
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var client = testServer.CreateClient();
@@ -504,12 +523,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             }
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithRedirect_DisallowRedirect_ReturnsUnhealthy()
+    public async Task AddHttp_WithRedirect_DisallowRedirect_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that redirects
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -528,13 +549,13 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                             else if (context.Request.Path == "/redirected")
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                await context.Response.WriteAsync("Redirected OK");
+                                await context.Response.WriteAsync("Redirected OK", cancellationToken);
                             }
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         // Create client from test server
@@ -565,7 +586,7 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             }
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
@@ -585,8 +606,10 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddHttp_UseConfiguration_WithLocalServer_ReturnsHealthy()
+    public async Task AddHttp_UseConfiguration_WithLocalServer_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that responds with HTTP 200 OK
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -598,12 +621,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("OK");
+                            await context.Response.WriteAsync("OK", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -628,12 +651,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             }
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_UseConfiguration_WithKeyedLocalServer_ReturnsHealthy()
+    public async Task AddHttp_UseConfiguration_WithKeyedLocalServer_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Set up a test server that responds with HTTP 200 OK
         using var host = new HostBuilder()
             .ConfigureWebHost(webBuilder =>
@@ -645,12 +670,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                         app.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            await context.Response.WriteAsync("OK");
+                            await context.Response.WriteAsync("OK", cancellationToken);
                         });
                     });
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var testServer = host.GetTestServer();
         var testServerUrl = testServer.BaseAddress.ToString().TrimEnd('/');
@@ -676,6 +701,6 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             }
         );
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 }

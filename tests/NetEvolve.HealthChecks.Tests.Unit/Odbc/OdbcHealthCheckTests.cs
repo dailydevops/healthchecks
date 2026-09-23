@@ -29,8 +29,10 @@ public sealed class OdbcHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var optionsMonitor = IOptionsMonitor<OdbcOptions>.Mock();
         var check = new OdbcHealthCheck(optionsMonitor);
@@ -38,10 +40,10 @@ public sealed class OdbcHealthCheckTests
         {
             Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
-        var cancellationToken = new CancellationToken(true);
+        var cancelledToken = new CancellationToken(true);
 
         // Act
-        var result = await check.CheckHealthAsync(context, cancellationToken);
+        var result = await check.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         using (Assert.Multiple())
@@ -52,8 +54,10 @@ public sealed class OdbcHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var optionsMonitor = IOptionsMonitor<OdbcOptions>.Mock();
         var check = new OdbcHealthCheck(optionsMonitor);
@@ -63,7 +67,7 @@ public sealed class OdbcHealthCheckTests
         };
 
         // Act
-        var result = await check.CheckHealthAsync(context);
+        var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

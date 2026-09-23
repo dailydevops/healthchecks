@@ -30,8 +30,10 @@ public sealed class MilvusHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var optionsMonitor = IOptionsMonitor<MilvusOptions>.Mock();
         var serviceProvider = IServiceProvider.Mock();
@@ -40,10 +42,10 @@ public sealed class MilvusHealthCheckTests
         {
             Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
-        var cancellationToken = new CancellationToken(true);
+        var cancelledToken = new CancellationToken(true);
 
         // Act
-        var result = await check.CheckHealthAsync(context, cancellationToken);
+        var result = await check.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         using (Assert.Multiple())
@@ -54,8 +56,10 @@ public sealed class MilvusHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var optionsMonitor = IOptionsMonitor<MilvusOptions>.Mock();
         var serviceProvider = IServiceProvider.Mock();
@@ -66,7 +70,7 @@ public sealed class MilvusHealthCheckTests
         };
 
         // Act
-        var result = await check.CheckHealthAsync(context);
+        var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

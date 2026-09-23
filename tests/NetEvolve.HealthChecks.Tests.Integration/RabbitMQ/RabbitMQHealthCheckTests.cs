@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.RabbitMQ;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
@@ -19,10 +20,12 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     public RabbitMQHealthCheckTests(RabbitMQContainer container) => _container = container;
 
     [Test]
-    public async Task AddRabbitMQ_UseOptions_Healthy()
+    public async Task AddRabbitMQ_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
-        var connection = await factory.CreateConnectionAsync();
+        var connection = await factory.CreateConnectionAsync(cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy", options => options.Timeout = 10000),
@@ -32,10 +35,12 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseOptionsWithKeyedService_Healthy()
+    public async Task AddRabbitMQ_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
-        var connection = await factory.CreateConnectionAsync();
+        var connection = await factory.CreateConnectionAsync(cancellationToken);
 
         await RunAndVerify(
             healthChecks =>
@@ -53,10 +58,12 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseOptions_Degraded()
+    public async Task AddRabbitMQ_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
-        var connection = await factory.CreateConnectionAsync();
+        var connection = await factory.CreateConnectionAsync(cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded", options => options.Timeout = 0),
@@ -66,10 +73,12 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfiguration_Healthy()
+    public async Task AddRabbitMQ_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
-        var connection = await factory.CreateConnectionAsync();
+        var connection = await factory.CreateConnectionAsync(cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy"),
@@ -87,10 +96,12 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
-        var connection = await factory.CreateConnectionAsync();
+        var connection = await factory.CreateConnectionAsync(cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerKeyedHealthy"),
@@ -109,10 +120,12 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfiguration_Degraded()
+    public async Task AddRabbitMQ_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
-        var connection = await factory.CreateConnectionAsync();
+        var connection = await factory.CreateConnectionAsync(cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded"),

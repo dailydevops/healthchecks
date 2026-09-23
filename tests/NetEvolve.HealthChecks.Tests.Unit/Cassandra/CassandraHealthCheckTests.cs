@@ -34,8 +34,10 @@ public class CassandraHealthCheckTests
     }
 
     [Test]
-    public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue()
+    public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var cluster = CassandraDriver.ICluster.Mock();
         var session = CassandraDriver.ISession.Mock();
@@ -45,15 +47,17 @@ public class CassandraHealthCheckTests
         _ = session.ExecuteAsync(Any<CassandraDriver.IStatement>()).Returns(rowSet);
 
         // Act
-        var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
+        var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, cancellationToken);
 
         // Assert
         _ = await Assert.That(result).IsTrue();
     }
 
     [Test]
-    public async Task DefaultCommandAsync_WhenResultIsNull_ReturnsFalse()
+    public async Task DefaultCommandAsync_WhenResultIsNull_ReturnsFalse(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var cluster = CassandraDriver.ICluster.Mock();
         var session = CassandraDriver.ISession.Mock();
@@ -62,15 +66,17 @@ public class CassandraHealthCheckTests
         _ = session.ExecuteAsync(Any<CassandraDriver.IStatement>()).Returns((CassandraDriver.RowSet)null!);
 
         // Act
-        var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
+        var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, cancellationToken);
 
         // Assert
         _ = await Assert.That(result).IsFalse();
     }
 
     [Test]
-    public async Task DefaultCommandAsync_WhenResultIsEmpty_ReturnsFalse()
+    public async Task DefaultCommandAsync_WhenResultIsEmpty_ReturnsFalse(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var cluster = CassandraDriver.ICluster.Mock();
         var session = CassandraDriver.ISession.Mock();
@@ -80,15 +86,17 @@ public class CassandraHealthCheckTests
         _ = session.ExecuteAsync(Any<CassandraDriver.IStatement>()).Returns(rowSet);
 
         // Act
-        var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, CancellationToken.None);
+        var result = await CassandraHealthCheck.DefaultCommandAsync(cluster, cancellationToken);
 
         // Assert
         _ = await Assert.That(result).IsFalse();
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage()
+    public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var cluster = CassandraDriver.ICluster.Mock();
         var options = new CassandraOptions
@@ -116,7 +124,7 @@ public class CassandraHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -129,8 +137,10 @@ public class CassandraHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy()
+    public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var cluster = CassandraDriver.ICluster.Mock();
         var options = new CassandraOptions
@@ -158,7 +168,7 @@ public class CassandraHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

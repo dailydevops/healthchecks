@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -30,9 +31,12 @@ public abstract class HealthCheckTestBase
         Action<IConfigurationBuilder>? config = null,
         Action<IServiceCollection>? serviceBuilder = null,
         Action<TestServer>? serverConfiguration = null,
-        Func<Argon.JToken?, Argon.JToken?>? clearJToken = null
+        Func<Argon.JToken?, Argon.JToken?>? clearJToken = null,
+        CancellationToken cancellationToken = default
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var host = new HostBuilder()
             .ConfigureAppConfiguration((_, configBuilder) => config?.Invoke(configBuilder))
             .ConfigureServices(services =>
@@ -53,14 +57,16 @@ public abstract class HealthCheckTestBase
                     );
             })
             .Build();
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using var server = host.GetTestServer();
         using var client = server.CreateClient();
 
         serverConfiguration?.Invoke(server);
 
-        var response = await client.GetAsync(new Uri(HealthCheckPath, UriKind.Relative)).ConfigureAwait(false);
+        var response = await client
+            .GetAsync(new Uri(HealthCheckPath, UriKind.Relative), cancellationToken)
+            .ConfigureAwait(false);
         var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
 
@@ -89,7 +95,7 @@ public abstract class HealthCheckTestBase
             }
         }
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task WriteResponse(HttpContext context, HealthReport report)

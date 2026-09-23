@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -104,8 +105,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_Run101Subscriptions_Healthy()
+    public async Task AddSimpleNotificationService_Run101Subscriptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string topicName = "MassOf101Subscriptions";
         await using var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101);
 
@@ -215,8 +218,10 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_Healthy()
+    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string topicName = "MassOf101SubscriptionsConfig";
         await using (var subscription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
         {

@@ -12,70 +12,78 @@ using NetEvolve.Extensions.TUnit;
 public sealed class ApplicationReadinessCheckTests
 {
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException()
+    public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
 
         // Act
-        async Task Act() => await sut.CheckHealthAsync(null!);
+        async Task Act() => await sut.CheckHealthAsync(null!, cancellationToken);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy()
+    public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
-        var cancellationToken = new CancellationToken();
+        var cancelledToken = new CancellationToken();
         var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         lifetime.StartApplication();
-        var result = await sut.CheckHealthAsync(context, cancellationToken);
+        var result = await sut.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy()
+    public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
-        var cancellationToken = new CancellationToken(true);
+        var cancelledToken = new CancellationToken(true);
         var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
-        var result = await sut.CheckHealthAsync(context, cancellationToken);
+        var result = await sut.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenApplicationStopped_ReturnsUnhealthy()
+    public async Task CheckHealthAsync_WhenApplicationStopped_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         using var lifetime = new TestHostApplicationLifeTime();
         var sut = new ApplicationReadyCheck(lifetime);
-        var cancellationToken = new CancellationToken();
+        var cancelledToken = new CancellationToken();
         var context = new HealthCheckContext { Registration = new("Test", sut, HealthStatus.Unhealthy, null) };
 
         // Act
         lifetime.StartApplication();
 
         // Assert
-        var result = await sut.CheckHealthAsync(context, cancellationToken);
+        var result = await sut.CheckHealthAsync(context, cancelledToken);
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Healthy);
 
         lifetime.StopApplication();
-        result = await sut.CheckHealthAsync(context, cancellationToken);
+        result = await sut.CheckHealthAsync(context, cancelledToken);
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 

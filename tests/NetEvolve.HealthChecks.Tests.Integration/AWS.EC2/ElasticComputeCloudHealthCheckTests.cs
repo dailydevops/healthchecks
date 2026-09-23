@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,7 +20,8 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
     public ElasticComputeCloudHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Before(Test)]
-    public async Task SetupEC2InstanceAsync() => await _instance.CreateEC2InstanceAsync().ConfigureAwait(false);
+    public async Task SetupEC2InstanceAsync(CancellationToken cancellationToken = default) =>
+        await _instance.CreateEC2InstanceAsync(cancellationToken).ConfigureAwait(false);
 
     [Test]
     public async Task AddAWSEC2_UseOptionsCreate_Healthy() =>

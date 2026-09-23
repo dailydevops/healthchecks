@@ -23,8 +23,10 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService()
+    public async Task CheckHealthAsync_WithKeyedService_UsesKeyedService(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new RabbitMQOptions { KeyedService = "test-key", Timeout = 10000 };
 
@@ -48,7 +50,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -64,8 +66,10 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService()
+    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
@@ -89,7 +93,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -100,8 +104,10 @@ public sealed class RabbitMQHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenConnectionFails_ReturnsUnhealthy()
+    public async Task CheckHealthAsync_WhenConnectionFails_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
@@ -123,7 +129,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -142,8 +148,10 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WithoutKeyedService_DisposesChannel()
+    public async Task CheckHealthAsync_WithoutKeyedService_DisposesChannel(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
@@ -166,7 +174,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         // Act
-        _ = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        _ = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         mockChannel.DisposeAsync().WasCalled(Times.Once);
@@ -178,8 +186,10 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WhenChannelNotOpen_ReturnsUnhealthyAndDisposesChannel()
+    public async Task CheckHealthAsync_WhenChannelNotOpen_ReturnsUnhealthyAndDisposesChannel(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new RabbitMQOptions { KeyedService = null, Timeout = 1000 };
 
@@ -202,7 +212,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -221,8 +231,10 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded()
+    public async Task CheckHealthAsync_WhenTimeout_ReturnsDegraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new RabbitMQOptions
         {
@@ -237,7 +249,7 @@ public sealed class RabbitMQHealthCheckTests
         var mockChannel = IChannel.Mock();
         _ = mockChannel.IsOpen.Returns(true);
         var mockConnection = IConnection.Mock();
-        _ = mockConnection.CreateChannelAsync(Any(), Any()).ReturnsAsync(() => DelayedChannelAsync(mockChannel));
+        _ = mockConnection.CreateChannelAsync(Any(), Any()).ReturnsAsync(() => DelayedChannelAsync(mockChannel, cancellationToken));
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
@@ -250,7 +262,7 @@ public sealed class RabbitMQHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -262,9 +274,11 @@ public sealed class RabbitMQHealthCheckTests
 
     // Genuinely delays before completing, so the created channel task stays pending long
     // enough for the health check's timeout to elapse first.
-    private static async Task<IChannel> DelayedChannelAsync(IChannel channel)
+    private static async Task<IChannel> DelayedChannelAsync(IChannel channel, CancellationToken cancellationToken = default)
     {
-        await Task.Delay(50);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await Task.Delay(50, cancellationToken);
         return channel;
     }
 }

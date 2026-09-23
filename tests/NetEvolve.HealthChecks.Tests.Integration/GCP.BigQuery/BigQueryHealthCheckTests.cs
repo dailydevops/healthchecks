@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.BigQuery.V2;
@@ -21,8 +22,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     public BigQueryHealthCheckTests(BigQueryDatabase database) => _database = database;
 
     [Test]
-    public async Task AddBigQuery_UseOptions_Healthy()
+    public async Task AddBigQuery_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
 
         await RunAndVerify(
@@ -33,8 +36,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddBigQuery_UseOptions_Degraded()
+    public async Task AddBigQuery_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
 
         await RunAndVerify(
@@ -45,8 +50,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddBigQuery_UseOptionsWithKeyedService_Healthy()
+    public async Task AddBigQuery_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
 
         await RunAndVerify(
@@ -67,8 +74,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddBigQuery_UseConfiguration_Healthy()
+    public async Task AddBigQuery_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
 
         await RunAndVerify(
@@ -87,8 +96,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddBigQuery_UseConfiguration_Degraded()
+    public async Task AddBigQuery_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
 
         await RunAndVerify(
@@ -107,8 +118,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddBigQuery_UseConfiguration_TimeoutMinusTwo_ThrowException()
+    public async Task AddBigQuery_UseConfiguration_TimeoutMinusTwo_ThrowException(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
 
         await RunAndVerify(
@@ -126,8 +139,10 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
         );
     }
 
-    private static async Task<BigQueryClient> CreateClientAsync(string endpoint, string projectId)
+    private static async Task<BigQueryClient> CreateClientAsync(string endpoint, string projectId, CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var builder = new BigQueryClientBuilder
         {
             BaseUri = endpoint,
@@ -135,6 +150,6 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
             Credential = GoogleCredential.FromAccessToken("fake-token"),
         };
 
-        return await builder.BuildAsync().ConfigureAwait(false);
+        return await builder.BuildAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -17,8 +17,10 @@ public sealed class DaprHealthCheckTests
     private const string TestName = nameof(Dapr);
 
     [Test]
-    public async Task CheckHealthAsync_WhenDaprHealthy_ReturnsHealthy()
+    public async Task CheckHealthAsync_WhenDaprHealthy_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var services = new ServiceCollection();
 
@@ -38,7 +40,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -49,8 +51,10 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithDefaultOptions_ReturnsHealthy()
+    public async Task CheckHealthAsync_WithDefaultOptions_ReturnsHealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new DaprOptions(); // Fully valid: DaprClient is resolved from DI, no configuration is required.
 
@@ -69,7 +73,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -80,8 +84,10 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenDaprUnhealthy_ReturnsDegraded()
+    public async Task CheckHealthAsync_WhenDaprUnhealthy_ReturnsDegraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var services = new ServiceCollection();
 
@@ -101,7 +107,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -114,8 +120,10 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenDaprTimeout_ReturnsDegraded()
+    public async Task CheckHealthAsync_WhenDaprTimeout_ReturnsDegraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var services = new ServiceCollection();
         var options = new DaprOptions { Timeout = 0 }; // Very short timeout
@@ -142,7 +150,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -153,8 +161,10 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenDaprError_ReturnsUnhealthy()
+    public async Task CheckHealthAsync_WhenDaprError_ReturnsUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var services = new ServiceCollection();
 
@@ -174,7 +184,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -224,8 +234,10 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
+    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         const string serviceKey = "test-key";
 
@@ -248,7 +260,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -259,8 +271,10 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_PrefersKeyedOverDefault()
+    public async Task CheckHealthAsync_WithKeyedService_PrefersKeyedOverDefault(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         const string serviceKey = "test-key";
 
@@ -287,7 +301,7 @@ public sealed class DaprHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert - Should be Healthy (from keyed service), not Degraded (from default)
         using (Assert.Multiple())
