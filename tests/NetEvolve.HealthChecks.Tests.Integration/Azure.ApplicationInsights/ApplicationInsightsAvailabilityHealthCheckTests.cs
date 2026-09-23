@@ -30,7 +30,15 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<TelemetryClient>()
+            serviceBuilder: services =>
+                services
+                    .AddSingleton(
+                        new Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration
+                        {
+                            ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc",
+                        }
+                    )
+                    .AddSingleton<TelemetryClient>()
         );
 
     [Test]

@@ -37,8 +37,10 @@ internal class ClientCreation
         switch (options.Mode)
         {
             case ApplicationInsightsClientCreationMode.ConnectionString:
+                // TelemetryConfiguration.CreateDefault() returns a shared, already-built instance in this SDK
+                // version, whose settings can no longer be changed. A fresh instance must be created instead.
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                var config = TelemetryConfiguration.CreateDefault();
+                var config = new TelemetryConfiguration();
 #pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.ConnectionString))
                 {
@@ -49,7 +51,7 @@ internal class ClientCreation
                 return new TelemetryClient(config);
             case ApplicationInsightsClientCreationMode.InstrumentationKey:
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                var configWithKey = TelemetryConfiguration.CreateDefault();
+                var configWithKey = new TelemetryConfiguration();
 #pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.InstrumentationKey))
                 {

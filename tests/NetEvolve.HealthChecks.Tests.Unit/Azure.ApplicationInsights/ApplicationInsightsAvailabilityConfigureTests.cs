@@ -316,7 +316,16 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
     public async Task Validate_WhenServiceProviderModeWithTelemetryClient_ReturnsSuccess()
     {
         // Arrange
-        var services = new ServiceCollection().AddSingleton<TelemetryClient>();
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var services = new ServiceCollection()
+            .AddSingleton(
+                new Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration
+                {
+                    ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc",
+                }
+            )
+            .AddSingleton<TelemetryClient>();
+#pragma warning restore CA2000 // Dispose objects before losing scope
         var configure = new ApplicationInsightsAvailabilityConfigure(
             new ConfigurationBuilder().Build(),
             services.BuildServiceProvider()

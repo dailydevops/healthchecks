@@ -50,8 +50,8 @@ public sealed class ClientCreationTests
             _ = await Assert.That(client).IsNotNull();
             _ = await Assert.That(client).IsTypeOf<TelemetryClient>();
             _ = await Assert
-                .That(client.TelemetryConfiguration.InstrumentationKey)
-                .IsEqualTo(options.InstrumentationKey);
+                .That(client.TelemetryConfiguration.ConnectionString)
+                .IsEqualTo($"InstrumentationKey={options.InstrumentationKey}");
         }
     }
 

@@ -5,12 +5,12 @@
       exception: {
         innerExceptions: [
           {
-            message: Input contains invalid delimiters and cannot be parsed. Expected example: 'key1=value1;key2=value2;key3=value3'.,
-            type: ArgumentException
+            message: Connection string doesn't have value for keyword 'invalid-connection-string'.,
+            type: InvalidOperationException
           }
         ],
-        message: There was an error parsing the Connection String: Input contains invalid delimiters and cannot be parsed. Expected example: 'key1=value1;key2=value2;key3=value3'.,
-        type: System.ArgumentException
+        message: Connection String Error: Connection string doesn't have value for keyword 'invalid-connection-string'.,
+        type: System.InvalidOperationException
       },
       name: ConfigurationUnhealthy,
       status: Unhealthy,
