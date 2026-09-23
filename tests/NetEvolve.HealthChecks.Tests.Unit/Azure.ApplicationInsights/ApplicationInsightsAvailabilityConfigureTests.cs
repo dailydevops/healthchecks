@@ -2,6 +2,7 @@
 
 using System;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.TUnit;
@@ -316,7 +317,13 @@ public sealed class ApplicationInsightsAvailabilityConfigureTests
     public async Task Validate_WhenServiceProviderModeWithTelemetryClient_ReturnsSuccess()
     {
         // Arrange
-        var services = new ServiceCollection().AddSingleton<TelemetryClient>();
+#pragma warning disable CA2000 // Dispose objects before losing scope
+        var services = new ServiceCollection().AddSingleton(
+            new TelemetryClient(
+                new TelemetryConfiguration { ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc" }
+            )
+        );
+#pragma warning restore CA2000 // Dispose objects before losing scope
         var configure = new ApplicationInsightsAvailabilityConfigure(
             new ConfigurationBuilder().Build(),
             services.BuildServiceProvider()

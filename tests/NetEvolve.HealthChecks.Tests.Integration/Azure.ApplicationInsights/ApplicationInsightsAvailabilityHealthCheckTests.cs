@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -30,7 +31,17 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<TelemetryClient>()
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            serviceBuilder: services =>
+                services.AddSingleton(
+                    new TelemetryClient(
+                        new TelemetryConfiguration
+                        {
+                            ConnectionString = "InstrumentationKey=12345678-1234-1234-1234-123456789abc",
+                        }
+                    )
+                )
+#pragma warning restore CA2000 // Dispose objects before losing scope
         );
 
     [Test]

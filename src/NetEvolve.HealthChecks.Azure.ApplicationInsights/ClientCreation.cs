@@ -38,7 +38,9 @@ internal class ClientCreation
         {
             case ApplicationInsightsClientCreationMode.ConnectionString:
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                var config = TelemetryConfiguration.CreateDefault();
+                // `CreateDefault()` in Microsoft.ApplicationInsights 3.x hands back a shared, already-built
+                // configuration instance whose settings can no longer be changed; a fresh instance is required.
+                var config = new TelemetryConfiguration();
 #pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.ConnectionString))
                 {
@@ -49,13 +51,13 @@ internal class ClientCreation
                 return new TelemetryClient(config);
             case ApplicationInsightsClientCreationMode.InstrumentationKey:
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                var configWithKey = TelemetryConfiguration.CreateDefault();
+                var configWithKey = new TelemetryConfiguration();
 #pragma warning restore CA2000 // Dispose objects before losing scope
                 if (!string.IsNullOrEmpty(options.InstrumentationKey))
                 {
-#pragma warning disable CS0618 // Type or member is obsolete
-                    configWithKey.InstrumentationKey = options.InstrumentationKey;
-#pragma warning restore CS0618 // Type or member is obsolete
+                    // Application Insights 3.x dropped the dedicated key setter, so the key is passed
+                    // through the connection string instead.
+                    configWithKey.ConnectionString = $"InstrumentationKey={options.InstrumentationKey}";
                 }
 
                 options.ConfigureConfiguration?.Invoke(configWithKey);
