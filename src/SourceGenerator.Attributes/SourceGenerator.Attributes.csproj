@@ -5,4 +5,7 @@
     <IsXampleProject>true</IsXampleProject>
     <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Analyzer" PrivateAssets="all" />
+  </ItemGroup>
 </Project>
