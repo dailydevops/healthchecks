@@ -17,6 +17,8 @@ internal sealed partial class EventHubsHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientFactory = _serviceProvider.GetRequiredService<EventHubsClientFactory>();
         var client = clientFactory.GetClient(name, options, _serviceProvider);
 

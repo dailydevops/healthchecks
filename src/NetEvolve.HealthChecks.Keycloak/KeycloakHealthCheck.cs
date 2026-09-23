@@ -17,6 +17,8 @@ internal sealed partial class KeycloakHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientProvider = _serviceProvider.GetRequiredService<KeycloakClientProvider>();
         var client = clientProvider.GetClient(name, options, _serviceProvider);
 
@@ -36,6 +38,8 @@ internal sealed partial class KeycloakHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(KeycloakClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var serverInfo = await client.GetServerInfoAsync("master", cancellationToken).ConfigureAwait(false);
         return serverInfo is not null;
     }

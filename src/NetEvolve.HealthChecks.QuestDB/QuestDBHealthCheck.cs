@@ -18,6 +18,8 @@ internal sealed partial class QuestDBHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
 
         var httpClient = httpClientFactory.CreateClient(name);

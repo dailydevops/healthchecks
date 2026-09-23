@@ -22,6 +22,8 @@ internal sealed partial class NatsHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var connection = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IConnection>()
             : _serviceProvider.GetRequiredKeyedService<IConnection>(options.KeyedService);

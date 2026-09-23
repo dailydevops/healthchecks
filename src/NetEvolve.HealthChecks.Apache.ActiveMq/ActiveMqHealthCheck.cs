@@ -21,6 +21,8 @@ internal sealed partial class ActiveMqHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = await GetConnectionAsync(options, cancellationToken).ConfigureAwait(false);
 
         var isTimelyResponse = await client
@@ -43,6 +45,8 @@ internal sealed partial class ActiveMqHealthCheck
     {
         ArgumentNullException.ThrowIfNull(options);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.BrokerAddress);
+        cancellationToken.ThrowIfCancellationRequested();
+
 
         var factory = _factories.GetOrAdd(options.BrokerAddress, brokerAddress => new ConnectionFactory(brokerAddress));
 

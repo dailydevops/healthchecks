@@ -16,7 +16,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="NetEvolve.Analyzer" PrivateAssets="all" />
     <PackageReference Include="NetEvolve.CodeBuilder" GeneratePathProperty="true" PrivateAssets="all" />
   </ItemGroup>
   <PropertyGroup>

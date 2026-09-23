@@ -25,7 +25,12 @@ internal sealed class ApplicationReadyCheck : IHealthCheck
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (cancellationToken.IsCancellationRequested || !_applicationReady)
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationReady: Unhealthy"));
+        }
+
+        if (!_applicationReady)
         {
             return Task.FromResult(HealthCheckResult.Unhealthy("ApplicationReady: Unhealthy"));
         }

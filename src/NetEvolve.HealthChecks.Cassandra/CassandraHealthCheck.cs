@@ -17,6 +17,8 @@ internal sealed partial class CassandraHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var cluster = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<ICluster>()
             : _serviceProvider.GetRequiredKeyedService<ICluster>(options.KeyedService);
@@ -35,8 +37,10 @@ internal sealed partial class CassandraHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken _)
+    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var session = await cluster.ConnectAsync().ConfigureAwait(false);
 
         var result = await session

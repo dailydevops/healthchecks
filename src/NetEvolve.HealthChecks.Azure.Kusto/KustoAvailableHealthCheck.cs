@@ -19,6 +19,8 @@ internal sealed partial class KustoAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var connectionString = GetConnectionString(options);
         var kcsb = new KustoConnectionStringBuilder(connectionString);
         using var queryProvider = KustoClientFactory.CreateCslQueryProvider(kcsb);

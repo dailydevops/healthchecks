@@ -19,6 +19,8 @@ internal sealed partial class ElasticComputeCloudHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateClient(options);
 
         var request = new DescribeKeyPairsRequest { KeyNames = [options.KeyName] };

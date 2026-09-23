@@ -21,6 +21,8 @@ internal sealed partial class MeilisearchHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = GetClient(name, options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);

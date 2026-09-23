@@ -18,6 +18,8 @@ internal sealed partial class BigQueryHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<BigQueryClient>()
             : _serviceProvider.GetRequiredKeyedService<BigQueryClient>(options.KeyedService);

@@ -6,7 +6,7 @@
 public sealed record ServiceBusQueueOptions : ServiceBusOptionsBase
 {
     /// <summary>
-    /// Gets or sets a value indicating whether to enable peek mode. Default is <c>false</c>.
+    /// Gets or sets a value indicating whether to enable peek mode. Default is <see langword="false"/>.
     /// </summary>
     /// <remarks>
     /// To enable the peek mode, the executing user requires the Listen claim to work.

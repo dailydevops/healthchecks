@@ -11,6 +11,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23" />
+    <GlobalPackageReference Include="NetEvolve.Analyzer" Version="0.20.0" />
     <GlobalPackageReference Include="NetEvolve.Defaults" Version="2.8.51" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="5.0.0" />
     <GlobalPackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.0" />
@@ -95,7 +96,6 @@
     <PackageVersion Include="Net.IBM.Data.Db2" Version="10.0.0.200" />
     <PackageVersion Include="Net.IBM.Data.Db2-lnx" Version="10.0.0.200" />
     <PackageVersion Include="Net.IBM.Data.Db2-osx" Version="10.0.0.200" />
-    <PackageVersion Include="NetEvolve.Analyzer" Version="0.20.0" />
     <PackageVersion Include="NetEvolve.CodeBuilder" Version="1.2.147" />
     <PackageVersion Include="NetEvolve.Extensions.Tasks" Version="2.1.357" />
     <PackageVersion Include="NetEvolve.Extensions.TUnit" Version="3.5.484" />
