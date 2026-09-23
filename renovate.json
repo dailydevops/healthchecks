@@ -62,6 +62,16 @@
       "versioning": "loose"
     },
     {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["icr.io/ibm-messaging/mq"],
+      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+\\.\\d+-r\\d+$/"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["quay.io/minio/minio"],
+      "allowedVersions": "/^RELEASE\\.\\d{4}-\\d{2}-\\d{2}T\\d{2}-\\d{2}-\\d{2}Z$/"
+    },
+    {
       "groupName": "Testcontainers packages",
       "groupSlug": "testcontainers-packages",
       "matchManagers": ["nuget"],
