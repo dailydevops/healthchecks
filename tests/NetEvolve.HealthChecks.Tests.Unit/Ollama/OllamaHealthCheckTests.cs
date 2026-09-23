@@ -15,7 +15,9 @@ public sealed class OllamaHealthCheckTests
     private const string TestName = nameof(Ollama);
 
     [Test]
-    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -32,7 +34,9 @@ public sealed class OllamaHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -58,7 +62,9 @@ public sealed class OllamaHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

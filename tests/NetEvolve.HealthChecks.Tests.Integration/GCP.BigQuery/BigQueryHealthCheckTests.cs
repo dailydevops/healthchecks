@@ -26,12 +26,13 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
+        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddBigQuery("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(_ => client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => client),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -40,12 +41,13 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
+        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddBigQuery("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(_ => client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => client),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -54,7 +56,7 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
+        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId, cancellationToken);
 
         await RunAndVerify(
             healthChecks =>
@@ -69,7 +71,8 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddKeyedSingleton("bigquery", (_, _) => client)
+            serviceBuilder: services => _ = services.AddKeyedSingleton("bigquery", (_, _) => client),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -78,7 +81,7 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
+        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddBigQuery("TestContainerHealthy"),
@@ -91,7 +94,8 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => client),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -100,7 +104,7 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
+        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddBigQuery("TestContainerDegraded"),
@@ -113,16 +117,19 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddBigQuery_UseConfiguration_TimeoutMinusTwo_ThrowException(CancellationToken cancellationToken = default)
+    public async Task AddBigQuery_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId);
+        using var client = await CreateClientAsync(_database.Endpoint, BigQueryDatabase.ProjectId, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddBigQuery("TestNoValues"),
@@ -135,11 +142,16 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => client),
+            cancellationToken: cancellationToken
         );
     }
 
-    private static async Task<BigQueryClient> CreateClientAsync(string endpoint, string projectId, CancellationToken cancellationToken = default)
+    private static async Task<BigQueryClient> CreateClientAsync(
+        string endpoint,
+        string projectId,
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

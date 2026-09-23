@@ -16,7 +16,9 @@ using TUnit.Mocks;
 public sealed class ServiceBusQueueAdministrationTests
 {
     [Test]
-    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetQueueRuntimeProperties(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetQueueRuntimeProperties(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -49,7 +51,9 @@ public sealed class ServiceBusQueueAdministrationTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenQueueDoesNotExist_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenQueueDoesNotExist_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

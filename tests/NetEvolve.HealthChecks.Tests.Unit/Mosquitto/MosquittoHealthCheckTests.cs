@@ -53,7 +53,9 @@ public sealed class MosquittoHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -89,7 +91,9 @@ public sealed class MosquittoHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenClientNotConnected_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenClientNotConnected_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

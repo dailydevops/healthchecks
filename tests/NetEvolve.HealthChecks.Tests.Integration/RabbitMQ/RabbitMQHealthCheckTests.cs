@@ -30,7 +30,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -53,7 +54,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test", (_, _) => connection)
+            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test", (_, _) => connection),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -68,7 +70,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddRabbitMQ("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -91,12 +94,15 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
+    public async Task AddRabbitMQ_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -115,7 +121,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test-config", (_, _) => connection)
+            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test-config", (_, _) => connection),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -138,7 +145,8 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 }

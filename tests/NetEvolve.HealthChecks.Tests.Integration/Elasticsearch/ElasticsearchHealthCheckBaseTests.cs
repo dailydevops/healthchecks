@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
@@ -70,16 +71,19 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
     }
 
     [Test]
-    public async Task AddElasticsearch_UseOptions_Healthy() =>
+    public async Task AddElasticsearch_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestContainerHealthy", options => options.Timeout = 10000),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseOptionsWithKeyedService_Healthy()
+    public async Task AddElasticsearch_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "options-test-key";
 
         await RunAndVerify(
@@ -93,12 +97,15 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     }
                 ),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddElasticsearch_UseOptionsWithUsernameAndPasswordMode_Healthy() =>
+    public async Task AddElasticsearch_UseOptionsWithUsernameAndPasswordMode_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddElasticsearch(
@@ -116,7 +123,8 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                         }
                     }
                 ),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy
+            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -133,7 +141,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
         );
 
     [Test]
-    public async Task AddElasticsearch_UseOptions_Degraded() =>
+    public async Task AddElasticsearch_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddElasticsearch(
@@ -149,11 +157,12 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                     }
                 ),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseOptions_Unhealthy() =>
+    public async Task AddElasticsearch_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -163,11 +172,12 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 );
             },
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_Healthy() =>
+    public async Task AddElasticsearch_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestContainerHealthy"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
@@ -179,12 +189,17 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddElasticsearch_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "config-test-key";
 
         await RunAndVerify(
@@ -199,12 +214,13 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_Degraded() =>
+    public async Task AddElasticsearch_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestContainerDegraded"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
@@ -216,11 +232,14 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_TimeoutMinusTwo_Unhealthy() =>
+    public async Task AddElasticsearch_UseConfiguration_TimeoutMinusTwo_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestNoValues"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
@@ -232,11 +251,14 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_ConnectionStringsEmpty_ThrowsException() =>
+    public async Task AddElasticsearch_UseConfiguration_ConnectionStringsEmpty_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestNoValues"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
@@ -251,11 +273,14 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_ConnectionStringEmpty_ThrowsException() =>
+    public async Task AddElasticsearch_UseConfiguration_ConnectionStringEmpty_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestNoValues"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
@@ -271,11 +296,14 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_UsernameNull_ThrowsException() =>
+    public async Task AddElasticsearch_UseConfiguration_UsernameNull_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestNoValues"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
@@ -292,11 +320,14 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddElasticsearch_UseConfiguration_PasswordNull_ThrowsException() =>
+    public async Task AddElasticsearch_UseConfiguration_PasswordNull_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddElasticsearch("TestNoValues"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
@@ -313,6 +344,7 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 }

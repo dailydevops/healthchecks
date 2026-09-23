@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,7 +19,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
     public CouchDbHealthCheckTests(CouchDbDatabase database) => _database = database;
 
     [Test]
-    public async Task AddCouchDb_UseOptions_Healthy() =>
+    public async Task AddCouchDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCouchDb(
@@ -30,7 +31,8 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                         options.Timeout = 10000;
                     }
                 ),
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -45,7 +47,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddCouchDb_UseOptions_Degraded() =>
+    public async Task AddCouchDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCouchDb(
@@ -64,11 +66,12 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                         options.Timeout = 0;
                     }
                 ),
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCouchDb_UseOptions_Unhealthy() =>
+    public async Task AddCouchDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -83,11 +86,12 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                 );
 #pragma warning restore S5332 // Using clear-text protocols is insecure
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCouchDb_UseConfiguration_Healthy() =>
+    public async Task AddCouchDb_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -100,11 +104,12 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:CouchDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCouchDb_UseConfiguration_Degraded() =>
+    public async Task AddCouchDb_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -117,11 +122,14 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:CouchDb:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCouchDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddCouchDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -133,11 +141,14 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:CouchDb:TestNoValues:DatabaseName", "db" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCouchDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddCouchDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -149,6 +160,7 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:CouchDb:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

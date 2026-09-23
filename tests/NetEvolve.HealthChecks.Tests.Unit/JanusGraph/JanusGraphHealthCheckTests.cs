@@ -32,7 +32,9 @@ public sealed class JanusGraphHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -59,7 +61,9 @@ public sealed class JanusGraphHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -85,7 +89,9 @@ public sealed class JanusGraphHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -128,7 +134,9 @@ public sealed class JanusGraphHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -171,7 +179,9 @@ public sealed class JanusGraphHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

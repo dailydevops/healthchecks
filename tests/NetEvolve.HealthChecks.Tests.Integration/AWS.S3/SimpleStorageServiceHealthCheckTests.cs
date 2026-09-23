@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,7 +20,7 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
     public SimpleStorageServiceHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
-    public async Task AddAWSS3_UseOptionsCreate_Healthy() =>
+    public async Task AddAWSS3_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,11 +37,14 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSS3_UseOptionsCreate_WhenBucketInvalid_Unhealthy() =>
+    public async Task AddAWSS3_UseOptionsCreate_WhenBucketInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,11 +60,12 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSS3_UseOptionsCreate_Degraded() =>
+    public async Task AddAWSS3_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -77,13 +82,14 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddAWSS3_UseConfiguration_Healthy() =>
+    public async Task AddAWSS3_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSS3("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -100,11 +106,12 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSS3_UseConfiguration_Degraded() =>
+    public async Task AddAWSS3_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSS3("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -121,11 +128,14 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSS3_UseConfiguration_WhenBucketInvalid_Unhealthy() =>
+    public async Task AddAWSS3_UseConfiguration_WhenBucketInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSS3("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -141,12 +151,15 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSS3_UseConfiguration_WithAdditionalTags()
+    public async Task AddAWSS3_UseConfiguration_WithAdditionalTags(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         string[] tags = ["storage", "custom-tag"];
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSS3("TestContainerWithTags", tags: tags),
@@ -164,7 +177,8 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
     }
 }

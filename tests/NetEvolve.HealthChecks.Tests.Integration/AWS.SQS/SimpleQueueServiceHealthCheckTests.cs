@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,7 +19,7 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
     public SimpleQueueServiceHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
-    public async Task AddAWSSQS_UseOptionsCreate_Healthy() =>
+    public async Task AddAWSSQS_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -35,11 +36,14 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSSQS_UseOptionsCreate_WhenQueueInvalid_Unhealthy() =>
+    public async Task AddAWSSQS_UseOptionsCreate_WhenQueueInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -55,11 +59,12 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSSQS_UseOptionsCreate_Degraded() =>
+    public async Task AddAWSSQS_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -76,13 +81,14 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddAWSSQS_UseConfiguration_Healthy() =>
+    public async Task AddAWSSQS_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSSQS("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -98,11 +104,14 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSQS:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSSQS_UseConfiguration_WhenQueueInvalid_Unhealthy() =>
+    public async Task AddAWSSQS_UseConfiguration_WhenQueueInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSSQS("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -117,11 +126,12 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSQS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSSQS_UseConfiguration_Degraded() =>
+    public async Task AddAWSSQS_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSSQS("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -137,6 +147,7 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSQS:TestContainerDegraded:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

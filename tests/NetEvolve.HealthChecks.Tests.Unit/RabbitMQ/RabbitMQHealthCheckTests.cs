@@ -66,7 +66,9 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithoutKeyedService_UsesDefaultService(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -104,7 +106,9 @@ public sealed class RabbitMQHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenConnectionFails_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenConnectionFails_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -148,7 +152,9 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WithoutKeyedService_DisposesChannel(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithoutKeyedService_DisposesChannel(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -186,7 +192,9 @@ public sealed class RabbitMQHealthCheckTests
         "CA2025:Do not pass 'IDisposable' instances into unawaited tasks",
         Justification = "As designed."
     )]
-    public async Task CheckHealthAsync_WhenChannelNotOpen_ReturnsUnhealthyAndDisposesChannel(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenChannelNotOpen_ReturnsUnhealthyAndDisposesChannel(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -249,7 +257,9 @@ public sealed class RabbitMQHealthCheckTests
         var mockChannel = IChannel.Mock();
         _ = mockChannel.IsOpen.Returns(true);
         var mockConnection = IConnection.Mock();
-        _ = mockConnection.CreateChannelAsync(Any(), Any()).ReturnsAsync(() => DelayedChannelAsync(mockChannel, cancellationToken));
+        _ = mockConnection
+            .CreateChannelAsync(Any(), Any())
+            .ReturnsAsync(() => DelayedChannelAsync(mockChannel, cancellationToken));
 
         var serviceCollection = new ServiceCollection();
         _ = serviceCollection.AddSingleton<IConnection>(mockConnection);
@@ -274,7 +284,10 @@ public sealed class RabbitMQHealthCheckTests
 
     // Genuinely delays before completing, so the created channel task stays pending long
     // enough for the health check's timeout to elapse first.
-    private static async Task<IChannel> DelayedChannelAsync(IChannel channel, CancellationToken cancellationToken = default)
+    private static async Task<IChannel> DelayedChannelAsync(
+        IChannel channel,
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Garnet.client;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,7 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
     public GarnetHealthCheckTests(GarnetContainer database) => _database = database;
 
     [Test]
-    public async Task AddGarnet_UseOptionsCreate_Healthy() =>
+    public async Task AddGarnet_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,11 +37,12 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseOptionsServiceProvider_Healthy() =>
+    public async Task AddGarnet_UseOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -59,11 +61,12 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                 _ = builder.AddSingleton(_ => new GarnetClient(
                     new IPEndPoint(IPAddress.Parse(_database.Hostname), _database.Port)
                 ));
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseOptions_Degraded() =>
+    public async Task AddGarnet_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -78,11 +81,12 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseConfiguration_Healthy() =>
+    public async Task AddGarnet_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddGarnet("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -96,11 +100,12 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:GarnetDatabase:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseConfiguration_Degraded() =>
+    public async Task AddGarnet_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddGarnet("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -114,11 +119,12 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseConfigurationWithLocalhost_Degraded() =>
+    public async Task AddGarnet_UseConfigurationWithLocalhost_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddGarnet("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -132,11 +138,14 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:GarnetDatabase:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddGarnet_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddGarnet("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -148,11 +157,14 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:GarnetDatabase:TestNoValues:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddGarnet_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddGarnet_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddGarnet("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -169,6 +181,7 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:GarnetDatabase:TestNoValues:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

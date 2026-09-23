@@ -34,7 +34,8 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -61,7 +62,8 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient)
+            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -80,7 +82,8 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -107,12 +110,15 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddMosquitto_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
+    public async Task AddMosquitto_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -135,7 +141,8 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test-config", (_, _) => mqttClient)
+            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test-config", (_, _) => mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -162,7 +169,8 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 }

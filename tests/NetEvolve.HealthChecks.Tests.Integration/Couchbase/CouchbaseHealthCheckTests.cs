@@ -41,11 +41,12 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -54,7 +55,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCouchbase(
@@ -66,7 +67,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test", (_, _) => cluster)
+            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test", (_, _) => cluster),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -75,7 +77,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         _ = await Assert.ThrowsAsync<ArgumentException>(
             "name",
             async () =>
@@ -83,7 +85,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                     healthChecks =>
                         healthChecks.AddCouchbase("TestContainerHealthy").AddCouchbase("TestContainerHealthy"),
                     HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(cluster)
+                    serviceBuilder: services => services.AddSingleton(cluster),
+                    cancellationToken: cancellationToken
                 )
         );
     }
@@ -93,7 +96,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddCouchbase(
@@ -110,7 +113,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -119,7 +123,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks =>
             {
@@ -136,7 +140,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -145,7 +150,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -157,16 +162,19 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCouchbase_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
+    public async Task AddCouchbase_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -179,7 +187,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test-config", (_, _) => cluster)
+            serviceBuilder: services => services.AddKeyedSingleton("couchbase-test-config", (_, _) => cluster),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -188,7 +197,7 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -200,16 +209,19 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCouchbase_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(CancellationToken cancellationToken = default)
+    public async Task AddCouchbase_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -221,16 +233,19 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCouchbase_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(CancellationToken cancellationToken = default)
+    public async Task AddCouchbase_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var cluster = await CreateCluster().ConfigureAwait(false);
+        var cluster = await CreateCluster(cancellationToken).ConfigureAwait(false);
         await RunAndVerify(
             healthChecks => healthChecks.AddCouchbase("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -242,7 +257,8 @@ public class CouchbaseHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(cluster)
+            serviceBuilder: services => services.AddSingleton(cluster),
+            cancellationToken: cancellationToken
         );
     }
 }

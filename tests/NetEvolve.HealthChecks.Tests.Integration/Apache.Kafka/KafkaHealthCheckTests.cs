@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
     public KafkaHealthCheckTests(KafkaContainer database) => _database = database;
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_Healthy() =>
+    public async Task AddKafka_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -39,11 +40,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_Healthy() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,11 +68,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_Healthy() =>
+    public async Task AddKafka_UseConfigurationCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -88,11 +91,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationServiceProvider_Healthy() =>
+    public async Task AddKafka_UseConfigurationServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -118,11 +122,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy() =>
+    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -141,11 +148,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy() =>
+    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -163,11 +173,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Kafka:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_Degraded() =>
+    public async Task AddKafka_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -186,11 +197,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_Degraded() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -213,11 +225,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_Degraded() =>
+    public async Task AddKafka_UseConfigurationCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -235,11 +248,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Kafka:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationServiceProvider_Degraded() =>
+    public async Task AddKafka_UseConfigurationServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -265,11 +281,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded() =>
+    public async Task AddKafka_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -288,11 +307,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded() =>
+    public async Task AddKafka_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKafka("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -310,11 +332,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Kafka:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsCreate_Unhealthy() =>
+    public async Task AddKafka_UseOptionsCreate_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -332,11 +355,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptionsServiceProvider_Unhealthy() =>
+    public async Task AddKafka_UseOptionsServiceProvider_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -362,11 +386,12 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_ConfigurationNull_Unhealthy() =>
+    public async Task AddKafka_UseOptions_ConfigurationNull_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -380,11 +405,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_BootstrapAddressNull_Unhealthy() =>
+    public async Task AddKafka_UseOptions_BootstrapAddressNull_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -398,11 +426,14 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_Unhealthy() =>
+    public async Task AddKafka_UseOptions_BootstrapAddressWhiteSpace_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -416,6 +447,7 @@ public class KafkaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 }

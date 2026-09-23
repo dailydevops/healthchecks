@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -14,7 +15,9 @@ using NetEvolve.HealthChecks.Tests.Integration.Internals;
 public class SearchAvailableHealthCheckTests : HealthCheckTestBase
 {
     [Test]
-    public async Task AddSearchIndexAvailability_UseOptions_ModeServiceProvider_Unhealthy() =>
+    public async Task AddSearchIndexAvailability_UseOptions_ModeServiceProvider_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -29,10 +32,14 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy // No SearchClient registered
+            ,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSearchIndexAvailability_UseOptions_MissingIndexName_Unhealthy() =>
+    public async Task AddSearchIndexAvailability_UseOptions_MissingIndexName_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -48,10 +55,14 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy // Missing IndexName
+            ,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSearchIndexAvailability_UseConfiguration_ModeServiceProvider_Unhealthy() =>
+    public async Task AddSearchIndexAvailability_UseConfiguration_ModeServiceProvider_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureSearch("SearchIndexConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
@@ -67,6 +78,7 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureSearchIndex:SearchIndexConfigurationUnhealthy:Timeout", "100" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

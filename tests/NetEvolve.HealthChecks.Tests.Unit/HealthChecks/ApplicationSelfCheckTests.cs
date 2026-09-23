@@ -12,7 +12,9 @@ public sealed class ApplicationSelfCheckTests
     private const string TestName = nameof(HealthChecks);
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -27,7 +29,9 @@ public sealed class ApplicationSelfCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -44,7 +48,9 @@ public sealed class ApplicationSelfCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

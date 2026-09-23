@@ -47,7 +47,6 @@ internal sealed partial class ActiveMqHealthCheck
         ArgumentException.ThrowIfNullOrWhiteSpace(options.BrokerAddress);
         cancellationToken.ThrowIfCancellationRequested();
 
-
         var factory = _factories.GetOrAdd(options.BrokerAddress, brokerAddress => new ConnectionFactory(brokerAddress));
 
         var createConnectionTask =

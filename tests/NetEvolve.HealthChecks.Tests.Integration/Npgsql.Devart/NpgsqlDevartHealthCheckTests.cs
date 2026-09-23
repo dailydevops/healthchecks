@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -21,7 +22,7 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
     public NpgsqlDevartHealthCheckTests(NpgsqlDatabase database) => _database = database;
 
     [Test]
-    public async Task AddNpgsqlDevart_UseOptions_Healthy() =>
+    public async Task AddNpgsqlDevart_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,11 +35,12 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNpgsqlDevart_UseOptions_Degraded() =>
+    public async Task AddNpgsqlDevart_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -52,11 +54,12 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNpgsqlDevart_UseOptions_Unhealthy() =>
+    public async Task AddNpgsqlDevart_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -69,11 +72,12 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNpgsqlDevart_UseConfiguration_Healthy() =>
+    public async Task AddNpgsqlDevart_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNpgsqlDevart("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -85,11 +89,12 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Npgsql:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNpgsqlDevart_UseConfiguration_Degraded() =>
+    public async Task AddNpgsqlDevart_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNpgsqlDevart("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -101,11 +106,14 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Npgsql:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNpgsqlDevart_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddNpgsqlDevart_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNpgsqlDevart("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -116,11 +124,14 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Npgsql:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNpgsqlDevart_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddNpgsqlDevart_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNpgsqlDevart("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -132,6 +143,7 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Npgsql:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

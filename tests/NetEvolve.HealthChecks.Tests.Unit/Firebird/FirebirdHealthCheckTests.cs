@@ -28,7 +28,9 @@ public sealed class FirebirdHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -53,7 +55,9 @@ public sealed class FirebirdHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

@@ -12,7 +12,9 @@ using NetEvolve.Extensions.TUnit;
 public sealed class ApplicationReadinessCheckTests
 {
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenArgumentContextNull_ThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -28,7 +30,9 @@ public sealed class ApplicationReadinessCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenArgumentCancellationToken_ReturnsHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -47,7 +51,9 @@ public sealed class ApplicationReadinessCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenArgumentCancellationTokenIsCancelled_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -65,7 +71,9 @@ public sealed class ApplicationReadinessCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenApplicationStopped_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenApplicationStopped_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

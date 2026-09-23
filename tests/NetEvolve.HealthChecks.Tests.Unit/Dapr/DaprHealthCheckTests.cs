@@ -234,7 +234,9 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -271,7 +273,9 @@ public sealed class DaprHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_PrefersKeyedOverDefault(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WithKeyedService_PrefersKeyedOverDefault(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

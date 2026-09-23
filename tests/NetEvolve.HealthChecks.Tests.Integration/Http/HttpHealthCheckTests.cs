@@ -23,7 +23,7 @@ using NetEvolve.HealthChecks.Tests.Integration.Internals;
 public class HttpHealthCheckTests : HealthCheckTestBase
 {
     [Test]
-    public async Task AddHttp_UseOptions_WithInvalidUri_Unhealthy() =>
+    public async Task AddHttp_UseOptions_WithInvalidUri_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,7 +36,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -73,7 +74,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             {
                 // Register the test server's HttpClient to be used by the health check
                 _ = services.AddSingleton(testServer.CreateClient());
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
@@ -124,14 +126,17 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             {
                 // Register the test server's HttpClient to be used by the health check as a keyed service
                 _ = services.AddKeyedSingleton("http-test", testServer.CreateClient());
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithNon200StatusCode_ConfiguredToAccept_ReturnsHealthy(CancellationToken cancellationToken = default)
+    public async Task AddHttp_WithNon200StatusCode_ConfiguredToAccept_ReturnsHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -170,14 +175,17 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithNon200StatusCode_NotConfiguredToAccept_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task AddHttp_WithNon200StatusCode_NotConfiguredToAccept_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -216,7 +224,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
@@ -270,7 +279,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
@@ -331,7 +341,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
@@ -408,14 +419,17 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(client)
+            serviceBuilder: services => _ = services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithSlowEndpoint_TimeoutExceeded_ReturnsDegraded(CancellationToken cancellationToken = default)
+    public async Task AddHttp_WithSlowEndpoint_TimeoutExceeded_ReturnsDegraded(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -456,7 +470,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient())
+            serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
@@ -520,14 +535,17 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                 // Register a factory that creates HttpClient with the right settings
                 _ = services.AddHttpClient();
                 _ = services.AddSingleton(client);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_WithRedirect_DisallowRedirect_ReturnsUnhealthy(CancellationToken cancellationToken = default)
+    public async Task AddHttp_WithRedirect_DisallowRedirect_ReturnsUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -583,14 +601,17 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             {
                 _ = services.AddHttpClient();
                 _ = services.AddSingleton(client);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_UseConfiguration_WithInvalidUri_Unhealthy() =>
+    public async Task AddHttp_UseConfiguration_WithInvalidUri_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddHttp("TestInvalidUri"),
             HealthStatus.Unhealthy,
@@ -602,11 +623,14 @@ public class HttpHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Http:TestInvalidUri:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddHttp_UseConfiguration_WithLocalServer_ReturnsHealthy(CancellationToken cancellationToken = default)
+    public async Task AddHttp_UseConfiguration_WithLocalServer_ReturnsHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -648,14 +672,17 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             {
                 // Register the test server's HttpClient to be used by the health check
                 _ = services.AddSingleton(testServer.CreateClient());
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task AddHttp_UseConfiguration_WithKeyedLocalServer_ReturnsHealthy(CancellationToken cancellationToken = default)
+    public async Task AddHttp_UseConfiguration_WithKeyedLocalServer_ReturnsHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -698,7 +725,8 @@ public class HttpHealthCheckTests : HealthCheckTestBase
             {
                 // Register the test server's HttpClient to be used by the health check as a keyed service
                 _ = services.AddKeyedSingleton("http-test", testServer.CreateClient());
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
         await host.StopAsync(cancellationToken).ConfigureAwait(false);

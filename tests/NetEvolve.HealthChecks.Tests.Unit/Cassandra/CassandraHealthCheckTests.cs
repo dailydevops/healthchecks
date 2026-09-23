@@ -34,7 +34,9 @@ public class CassandraHealthCheckTests
     }
 
     [Test]
-    public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue(CancellationToken cancellationToken = default)
+    public async Task DefaultCommandAsync_WhenClusterAvailable_ReturnsTrue(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -93,7 +95,9 @@ public class CassandraHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -137,7 +141,9 @@ public class CassandraHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

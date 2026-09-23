@@ -17,7 +17,9 @@ public sealed class RedisHealthCheckTests
     private const string TestName = nameof(Redis);
 
     [Test]
-    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -34,7 +36,9 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -60,7 +64,9 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -85,7 +91,9 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCompleteSynchronously(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCompleteSynchronously(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -122,7 +130,9 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCacheFailedConnection(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCacheFailedConnection(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 

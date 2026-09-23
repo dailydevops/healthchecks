@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -16,7 +17,7 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
     protected abstract string GetConnectionString();
 
     [Test]
-    public async Task AddOdbc_UseOptions_Healthy() =>
+    public async Task AddOdbc_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -29,11 +30,12 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOdbc_UseOptions_Degraded() =>
+    public async Task AddOdbc_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -47,11 +49,12 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOdbc_UseOptions_Unhealthy() =>
+    public async Task AddOdbc_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -64,11 +67,12 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOdbc_UseConfiguration_Healthy() =>
+    public async Task AddOdbc_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOdbc("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -80,11 +84,12 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     { "HealthChecks:Odbc:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOdbc_UseConfiguration_Degraded() =>
+    public async Task AddOdbc_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOdbc("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -96,11 +101,14 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     { "HealthChecks:Odbc:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOdbc_UseConfigurationConnectionStringEmpty_ThrowException() =>
+    public async Task AddOdbc_UseConfigurationConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOdbc("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -111,11 +119,14 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     { "HealthChecks:Odbc:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOdbc_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddOdbc_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOdbc("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -127,6 +138,7 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
                     { "HealthChecks:Odbc:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

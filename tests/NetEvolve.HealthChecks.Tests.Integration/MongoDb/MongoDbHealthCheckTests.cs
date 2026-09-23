@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,15 +52,16 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
     }
 
     [Test]
-    public async Task AddMongoDb_UseOptions_Healthy() =>
+    public async Task AddMongoDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddMongoDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddMongoDb(
@@ -71,7 +73,8 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -87,7 +90,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
         );
 
     [Test]
-    public async Task AddMongoDb_UseOptions_Degraded() =>
+    public async Task AddMongoDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddMongoDb(
@@ -111,11 +114,12 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseOptions_Unhealthy() =>
+    public async Task AddMongoDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -138,11 +142,12 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfiguration_Healthy() =>
+    public async Task AddMongoDb_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -154,11 +159,14 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddMongoDb_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -171,11 +179,12 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfiguration_Degraded() =>
+    public async Task AddMongoDb_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -187,11 +196,14 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddMongoDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -203,11 +215,14 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMongoDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddMongoDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMongoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -219,6 +234,7 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 }

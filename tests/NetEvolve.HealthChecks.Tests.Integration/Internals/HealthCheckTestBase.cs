@@ -67,7 +67,7 @@ public abstract class HealthCheckTestBase
         var response = await client
             .GetAsync(new Uri(HealthCheckPath, UriKind.Relative), cancellationToken)
             .ConfigureAwait(false);
-        var resultContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        var resultContent = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
         var content = string.IsNullOrWhiteSpace(resultContent) ? null : Argon.JToken.Parse(resultContent);
 
         if (clearJToken is not null)

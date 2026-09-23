@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.HealthChecks;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -11,11 +12,15 @@ using NetEvolve.Extensions.TUnit;
 public class ApplicationReadyCheckTests : HealthCheckTestBase
 {
     [Test]
-    public async Task AddApplicationReady_Healthy() =>
-        await RunAndVerify(healthChecks => healthChecks.AddApplicationReady(), HealthStatus.Healthy);
+    public async Task AddApplicationReady_Healthy(CancellationToken cancellationToken = default) =>
+        await RunAndVerify(
+            healthChecks => healthChecks.AddApplicationReady(),
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
+        );
 
     [Test]
-    public async Task AddApplicationReady_WithCustomName_Unhealthy() =>
+    public async Task AddApplicationReady_WithCustomName_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddApplicationReady(),
             HealthStatus.Unhealthy,
@@ -23,6 +28,7 @@ public class ApplicationReadyCheckTests : HealthCheckTestBase
             {
                 var lifetime = server.Services.GetRequiredService<IHostApplicationLifetime>();
                 lifetime.StopApplication();
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

@@ -59,7 +59,11 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
             .ConfigureAwait(false);
     }
 
-    internal async Task<DisposableSubscription> CreateNumberOfSubscriptions(string topicName, int numberOfSubscriptions, CancellationToken cancellationToken = default)
+    internal async Task<DisposableSubscription> CreateNumberOfSubscriptions(
+        string topicName,
+        int numberOfSubscriptions,
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -70,7 +74,12 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
         );
         var topic = await client.CreateTopicAsync(topicName, cancellationToken).ConfigureAwait(false);
 
-        var subscription = await client.SubscribeAsync(topic.TopicArn, "email", $"Test{1:D6}@example.com", cancellationToken);
+        var subscription = await client.SubscribeAsync(
+            topic.TopicArn,
+            "email",
+            $"Test{1:D6}@example.com",
+            cancellationToken
+        );
 
         if (numberOfSubscriptions > 1)
         {

@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.EventHubs;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,9 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
     public EventHubsHealthCheckTests(EventHubsContainer container) => _container = container;
 
     [Test]
-    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,11 +37,14 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureEventHubs_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddAzureEventHubs_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,12 +62,17 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
                 services.AddAzureClients(clients =>
                     _ = clients.AddEventHubProducerClient(_container.ConnectionString, EventHubsContainer.EventHubName)
-                )
+                ),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureEventHubs_UseConfiguration_ModeConnectionString_Healthy()
+    public async Task AddAzureEventHubs_UseConfiguration_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var configValues = new Dictionary<string, string?>
         {
             ["HealthChecks:AzureEventHubs:EventHubsConfigHealthy:Mode"] = "ConnectionString",
@@ -73,12 +84,15 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddAzureEventHubs("EventHubsConfigHealthy"),
             HealthStatus.Healthy,
-            config: configBuilder => configBuilder.AddInMemoryCollection(configValues)
+            config: configBuilder => configBuilder.AddInMemoryCollection(configValues),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_Unhealthy() =>
+    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -93,11 +107,14 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_WithCustomTimeout_Degraded() =>
+    public async Task AddAzureEventHubs_UseOptions_ModeConnectionString_WithCustomTimeout_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -112,11 +129,12 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureEventHubs_UseOptions_WithTags_Healthy() =>
+    public async Task AddAzureEventHubs_UseOptions_WithTags_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -133,12 +151,17 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
                     "integration-test"
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureEventHubs_UseConfiguration_ModeServiceProvider_Healthy()
+    public async Task AddAzureEventHubs_UseConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var configValues = new Dictionary<string, string?>
         {
             ["HealthChecks:AzureEventHubs:EventHubsServiceProviderConfig:Mode"] = "ServiceProvider",
@@ -154,13 +177,18 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
                 services.AddAzureClients(clients =>
                     _ = clients.AddEventHubProducerClient(_container.ConnectionString, EventHubsContainer.EventHubName)
-                )
+                ),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddAzureEventHubs_UseConfiguration_InvalidEventHubName_Unhealthy()
+    public async Task AddAzureEventHubs_UseConfiguration_InvalidEventHubName_Unhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var configValues = new Dictionary<string, string?>
         {
             ["HealthChecks:AzureEventHubs:EventHubsInvalidName:Mode"] = "ConnectionString",
@@ -172,7 +200,8 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddAzureEventHubs("EventHubsInvalidName"),
             HealthStatus.Unhealthy,
-            config: configBuilder => configBuilder.AddInMemoryCollection(configValues)
+            config: configBuilder => configBuilder.AddInMemoryCollection(configValues),
+            cancellationToken: cancellationToken
         );
     }
 }

@@ -15,7 +15,9 @@ using TUnit.Mocks;
 public sealed class ServiceBusTopicAdministrationTests
 {
     [Test]
-    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetTopicRuntimeProperties(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetTopicRuntimeProperties(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -47,7 +49,9 @@ public sealed class ServiceBusTopicAdministrationTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenTopicDoesNotExist_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
+    public async Task CheckHealthAsync_WhenTopicDoesNotExist_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
         cancellationToken.ThrowIfCancellationRequested();
 
