@@ -120,6 +120,15 @@
       "groupSlug": "roslynator-packages",
       "matchManagers": ["nuget"],
       "matchPackageNames": ["/^Roslynator/"]
+    },
+    {
+      "groupName": "Microsoft.ApplicationInsights packages",
+      "groupSlug": "microsoft-applicationinsights-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": [
+        "Microsoft.ApplicationInsights",
+        "/^Microsoft\\.ApplicationInsights\\./"
+      ]
     }
   ]
 }
