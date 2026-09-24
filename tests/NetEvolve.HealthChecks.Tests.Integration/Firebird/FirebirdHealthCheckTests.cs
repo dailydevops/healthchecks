@@ -15,7 +15,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
     public FirebirdHealthCheckTests(FirebirdDatabase database) => _database = database;
 
     [Test]
-    public async Task AddFirebird_UseOptions_Healthy() =>
+    public async Task AddFirebird_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -28,11 +28,12 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirebird_UseOptions_Degraded() =>
+    public async Task AddFirebird_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -46,11 +47,12 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirebird_UseOptions_Unhealthy() =>
+    public async Task AddFirebird_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -63,11 +65,12 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirebird_UseConfiguration_Healthy() =>
+    public async Task AddFirebird_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -79,11 +82,12 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Firebird:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirebird_UseConfiguration_Degraded() =>
+    public async Task AddFirebird_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -95,11 +99,14 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Firebird:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirebird_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddFirebird_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -110,11 +117,14 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Firebird:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirebird_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddFirebird_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirebird("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -126,6 +136,7 @@ public sealed class FirebirdHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Firebird:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

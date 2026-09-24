@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Azure.KeyVault;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Core;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,9 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
     public KeyVaultSecretAvailableHealthCheckTests(LowkeyVaultAccess container) => _container = container;
 
     [Test]
-    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -33,11 +36,14 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeServiceProvider_Degraded() =>
+    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -51,11 +57,14 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeDefaultAzureCredentials_Healthy() =>
+    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeDefaultAzureCredentials_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -71,11 +80,14 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential)
+            serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeDefaultAzureCredentials_Degraded() =>
+    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeDefaultAzureCredentials_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -91,14 +103,17 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential)
+            serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential),
+            cancellationToken: cancellationToken
         );
 
     [Test]
     [Skip(
         "ClientSecretCredential mode requires Azure AD authentication, which is not supported in the LowkeyVault test setup."
     )]
-    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeClientSecretCredential_Healthy() =>
+    public async Task AddKeyVaultSecretAvailability_UseOptions_ModeClientSecretCredential_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -115,13 +130,16 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddKeyVaultSecretAvailability_UseConfiguration_ModeServiceProvider_Healthy() =>
+    public async Task AddKeyVaultSecretAvailability_UseConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeyVaultSecretAvailability("KeyVaultConfigurationHealthy"),
             HealthStatus.Healthy,
@@ -137,11 +155,14 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeyVaultSecretAvailability_UseConfiguration_ModeServiceProvider_Degraded() =>
+    public async Task AddKeyVaultSecretAvailability_UseConfiguration_ModeServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeyVaultSecretAvailability("KeyVaultConfigurationDegraded"),
             HealthStatus.Degraded,
@@ -157,6 +178,7 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient())
+            serviceBuilder: services => services.AddSingleton(_container.GetSecretClient()),
+            cancellationToken: cancellationToken
         );
 }

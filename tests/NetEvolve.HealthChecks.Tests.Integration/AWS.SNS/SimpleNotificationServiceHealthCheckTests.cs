@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,7 +19,9 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
     public SimpleNotificationServiceHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_Healthy() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,11 +39,14 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_Unhealthy() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenSubscriptionInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -57,11 +63,14 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_Unhealthy() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_WhenTopicInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -78,11 +87,14 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseOptionsCreate_Degraded() =>
+    public async Task AddSimpleNotificationService_UseOptionsCreate_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -100,14 +112,19 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_Run101Subscriptions_Healthy()
+    public async Task AddSimpleNotificationService_Run101Subscriptions_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string topicName = "MassOf101Subscriptions";
-        await using var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101);
+        await using var subcription = await _instance.CreateNumberOfSubscriptions(topicName, 101, cancellationToken);
 
         await RunAndVerify(
             healthChecks =>
@@ -126,14 +143,17 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
     }
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_Healthy() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -150,11 +170,14 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_Unhealthy() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_WhenSubscriptionInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -170,11 +193,14 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_Unhealthy() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_WhenTopicInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -190,11 +216,14 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSNS:TestContainerUnhealthy:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_Degraded() =>
+    public async Task AddSimpleNotificationService_UseConfiguration_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSimpleNotificationService("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -211,14 +240,19 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSSNS:TestContainerDegraded:Mode", nameof(CreationMode.BasicAuthentication) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_Healthy()
+    public async Task AddSimpleNotificationService_UseConfiguration_Run101Subscriptions_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string topicName = "MassOf101SubscriptionsConfig";
-        await using (var subscription = await _instance.CreateNumberOfSubscriptions(topicName, 101))
+        await using (var subscription = await _instance.CreateNumberOfSubscriptions(topicName, 101, cancellationToken))
         {
             await RunAndVerify(
                 healthChecks => healthChecks.AddSimpleNotificationService("TestContainerHealthy"),
@@ -236,7 +270,8 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:AWSSNS:TestContainerHealthy:Timeout", "60000" }, // Set a reasonable timeout
                     };
                     _ = config.AddInMemoryCollection(values);
-                }
+                },
+                cancellationToken: cancellationToken
             );
         }
     }

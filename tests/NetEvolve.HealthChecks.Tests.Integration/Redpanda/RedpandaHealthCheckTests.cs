@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
     public RedpandaHealthCheckTests(RedpandaDatabase database) => _database = database;
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_Healthy() =>
+    public async Task AddRedpanda_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -35,11 +36,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_Healthy() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -62,11 +64,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_Healthy() =>
+    public async Task AddRedpanda_UseConfigurationCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -83,11 +86,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationServiceProvider_Healthy() =>
+    public async Task AddRedpanda_UseConfigurationServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -113,11 +119,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy() =>
+    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -136,11 +145,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy() =>
+    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -158,11 +170,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedPanda:TestContainerHealthy:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_Degraded() =>
+    public async Task AddRedpanda_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -177,11 +190,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_Degraded() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -204,11 +218,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_Degraded() =>
+    public async Task AddRedpanda_UseConfigurationCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -225,11 +240,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationServiceProvider_Degraded() =>
+    public async Task AddRedpanda_UseConfigurationServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -255,11 +273,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded() =>
+    public async Task AddRedpanda_UseOptionsCreate_EnableDeliveryReportsFalse_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -278,11 +299,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded() =>
+    public async Task AddRedpanda_UseConfigurationCreate_EnableDeliveryReportsFalse_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedpanda("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -300,11 +324,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedPanda:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsCreate_Unhealthy() =>
+    public async Task AddRedpanda_UseOptionsCreate_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -322,11 +347,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptionsServiceProvider_Unhealthy() =>
+    public async Task AddRedpanda_UseOptionsServiceProvider_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -352,11 +378,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
 
                     return new ProducerBuilder<string, string>(config).Build();
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_ConfigurationNull_Unhealthy() =>
+    public async Task AddRedpanda_UseOptions_ConfigurationNull_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -370,11 +399,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_BootstrapAddressNull_Unhealthy() =>
+    public async Task AddRedpanda_UseOptions_BootstrapAddressNull_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -388,11 +420,14 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_Unhealthy() =>
+    public async Task AddRedpanda_UseOptions_BootstrapAddressWhiteSpace_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -406,6 +441,7 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 }

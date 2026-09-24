@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Qdrant.Client;
 using Microsoft.Extensions.Configuration;
@@ -20,23 +21,25 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
     public QdrantHealthCheckTests(QdrantDatabase database) => _database = database;
 
     [Test]
-    public async Task AddQdrant_UseOptions_Healthy() =>
+    public async Task AddQdrant_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQdrant_UseOptions_Degraded() =>
+    public async Task AddQdrant_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQdrant_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddQdrant_UseOptions_WithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,19 +59,21 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
                     "qdrant-test",
                     (_, _) => new QdrantClient(_database.GrpcConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQdrant_UseGrpcConnection_Healthy() =>
+    public async Task AddQdrant_UseGrpcConnection_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerGrpcHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQdrant_UseConfiguration_Healthy() =>
+    public async Task AddQdrant_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerConfigHealthy"),
             HealthStatus.Healthy,
@@ -80,11 +85,12 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQdrant_UseConfiguration_Degraded() =>
+    public async Task AddQdrant_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerConfigDegraded"),
             HealthStatus.Degraded,
@@ -96,11 +102,14 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new QdrantClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQdrant_UseConfiguration_WithKeyedService_Healthy() =>
+    public async Task AddQdrant_UseConfiguration_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQdrant("TestContainerConfigKeyedHealthy"),
             HealthStatus.Healthy,
@@ -119,6 +128,7 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
                     "qdrant-keyed-test",
                     (_, _) => new QdrantClient(_database.GrpcConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

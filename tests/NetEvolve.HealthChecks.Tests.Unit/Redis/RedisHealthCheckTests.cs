@@ -17,23 +17,31 @@ public sealed class RedisHealthCheckTests
     private const string TestName = nameof(Redis);
 
     [Test]
-    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
+    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<RedisOptions>.Mock();
         using var check = new RedisHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
-        async Task Act() => _ = await check.CheckHealthAsync(null!);
+        async Task Act() => _ = await check.CheckHealthAsync(null!, cancellationToken);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<RedisOptions>.Mock();
@@ -42,10 +50,10 @@ public sealed class RedisHealthCheckTests
         {
             Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
-        var cancellationToken = new CancellationToken(true);
+        var cancelledToken = new CancellationToken(true);
 
         // Act
-        var result = await check.CheckHealthAsync(context, cancellationToken);
+        var result = await check.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         using (Assert.Multiple())
@@ -56,8 +64,12 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<RedisOptions>.Mock();
@@ -68,7 +80,7 @@ public sealed class RedisHealthCheckTests
         };
 
         // Act
-        var result = await check.CheckHealthAsync(context);
+        var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -79,8 +91,12 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCompleteSynchronously()
+    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCompleteSynchronously(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         // 192.0.2.1 is a non-routable TEST-NET-1 address (RFC 5737), so the connection attempt
         // reliably fails without ever reaching a real server.
@@ -101,7 +117,7 @@ public sealed class RedisHealthCheckTests
         };
 
         // Act
-        var resultTask = check.CheckHealthAsync(context, CancellationToken.None);
+        var resultTask = check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         // The connection attempt must be asynchronous, so the returned task must not already be
@@ -114,8 +130,12 @@ public sealed class RedisHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCacheFailedConnection()
+    public async Task CheckHealthAsync_WhenModeCreateAndServerUnreachable_ShouldNotCacheFailedConnection(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         // A failed connection attempt must not be cached, otherwise every subsequent call would
         // immediately return the same failure, even after the server became reachable again.
@@ -136,7 +156,7 @@ public sealed class RedisHealthCheckTests
         };
 
         // Act
-        var firstResult = await check.CheckHealthAsync(context, CancellationToken.None);
+        var firstResult = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(firstResult.Status).IsEqualTo(HealthStatus.Unhealthy);
@@ -161,7 +181,7 @@ public sealed class RedisHealthCheckTests
                 break;
             }
 
-            await Task.Delay(25, CancellationToken.None);
+            await Task.Delay(25, cancellationToken);
         } while (DateTime.UtcNow < deadline);
 
         _ = await Assert.That(count).IsEqualTo(0);

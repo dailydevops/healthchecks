@@ -17,7 +17,7 @@ public sealed record BigQueryOptions
     /// Gets or sets the keyed service name for retrieving the <see cref="Google.Cloud.BigQuery.V2.BigQueryClient"/> instance.
     /// </summary>
     /// <value>
-    /// The keyed service name, or <c>null</c> if using the default service registration.
+    /// The keyed service name, or <see langword="null"/> if using the default service registration.
     /// </value>
     public string? KeyedService { get; set; }
 }

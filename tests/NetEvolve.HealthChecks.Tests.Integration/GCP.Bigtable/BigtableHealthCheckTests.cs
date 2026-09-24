@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
     public BigtableHealthCheckTests(BigtableDatabase database) => _database = database;
 
     [Test]
-    public async Task AddBigtable_UseOptions_Healthy() =>
+    public async Task AddBigtable_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddBigtable(
@@ -31,11 +32,12 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBigtable_UseOptions_Degraded() =>
+    public async Task AddBigtable_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddBigtable(
@@ -47,11 +49,12 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBigtable_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddBigtable_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,11 +69,12 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddKeyedSingleton("bigtable", (_, _) => _database.Client)
+            serviceBuilder: services => _ = services.AddKeyedSingleton("bigtable", (_, _) => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBigtable_UseConfiguration_Healthy() =>
+    public async Task AddBigtable_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddBigtable("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -83,11 +87,12 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBigtable_UseConfiguration_Degraded() =>
+    public async Task AddBigtable_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddBigtable("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -100,11 +105,14 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBigtable_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddBigtable_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddBigtable("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -117,6 +125,7 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
+            cancellationToken: cancellationToken
         );
 }

@@ -16,36 +16,46 @@ public class MinioHealthCheckTests
     private const string TestName = nameof(Minio);
 
     [Test]
-    public async Task DefaultCommandAsync_WhenBucketExists_ReturnsTrue()
+    public async Task DefaultCommandAsync_WhenBucketExists_ReturnsTrue(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var client = IMinioClient.Mock();
         _ = client.BucketExistsAsync(Any(), Any()).Returns(true);
 
         // Act
-        var result = await MinioHealthCheck.DefaultCommandAsync(client, "test-bucket", CancellationToken.None);
+        var result = await MinioHealthCheck.DefaultCommandAsync(client, "test-bucket", cancellationToken);
 
         // Assert
         _ = await Assert.That(result).IsTrue();
     }
 
     [Test]
-    public async Task DefaultCommandAsync_WhenBucketDoesNotExist_ReturnsFalse()
+    public async Task DefaultCommandAsync_WhenBucketDoesNotExist_ReturnsFalse(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var client = IMinioClient.Mock();
         _ = client.BucketExistsAsync(Any(), Any()).Returns(false);
 
         // Act
-        var result = await MinioHealthCheck.DefaultCommandAsync(client, "non-existing-bucket", CancellationToken.None);
+        var result = await MinioHealthCheck.DefaultCommandAsync(client, "non-existing-bucket", cancellationToken);
 
         // Assert
         _ = await Assert.That(result).IsFalse();
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage()
+    public async Task CheckHealthAsync_WhenCommandReturnsFalse_ShouldReturnUnhealthyWithMessage(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var client = IMinioClient.Mock();
         var options = new MinioOptions
@@ -74,7 +84,7 @@ public class MinioHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -87,8 +97,12 @@ public class MinioHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy()
+    public async Task CheckHealthAsync_WhenCommandReturnsTrue_ShouldReturnHealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var client = IMinioClient.Mock();
         var options = new MinioOptions
@@ -117,7 +131,7 @@ public class MinioHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

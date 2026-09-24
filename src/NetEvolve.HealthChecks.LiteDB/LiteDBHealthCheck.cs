@@ -19,6 +19,8 @@ internal sealed partial class LiteDBHealthCheck
 #pragma warning restore S1172 // Unused method parameters should be removed
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var (isTimelyResponse, collectionExists) = await Task.Run(
                 () =>
                 {

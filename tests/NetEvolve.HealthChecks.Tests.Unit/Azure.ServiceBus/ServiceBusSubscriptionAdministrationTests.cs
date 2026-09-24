@@ -16,8 +16,12 @@ using TUnit.Mocks;
 public sealed class ServiceBusSubscriptionAdministrationTests
 {
     [Test]
-    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetSubscriptionRuntimeProperties()
+    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetSubscriptionRuntimeProperties(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new ServiceBusSubscriptionOptions
         {
@@ -41,15 +45,19 @@ public sealed class ServiceBusSubscriptionAdministrationTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenSubscriptionDoesNotExist_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenSubscriptionDoesNotExist_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new ServiceBusSubscriptionOptions
         {
@@ -86,15 +94,17 @@ public sealed class ServiceBusSubscriptionAdministrationTests
             );
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new ServiceBusSubscriptionOptions
         {
@@ -126,7 +136,7 @@ public sealed class ServiceBusSubscriptionAdministrationTests
             .GetSubscriptionRuntimePropertiesAsync(Any<string>(), Any<string>(), Any<CancellationToken>())
             .ReturnsAsync(async () =>
             {
-                await Task.Delay(100); // Delay longer than the timeout
+                await Task.Delay(100, cancellationToken); // Delay longer than the timeout
                 return global::Azure.Response.FromValue(
                     global::Azure.Messaging.ServiceBus.ServiceBusModelFactory.SubscriptionRuntimeProperties(
                         "timeout-topic",
@@ -137,7 +147,7 @@ public sealed class ServiceBusSubscriptionAdministrationTests
             });
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);

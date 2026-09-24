@@ -18,6 +18,8 @@ internal sealed partial class DaprHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<DaprClient>()
             : _serviceProvider.GetRequiredKeyedService<DaprClient>(options.KeyedService);

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,7 +19,7 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
     public MariaDbHealthCheckTests(MariaDbDatabase database) => _database = database;
 
     [Test]
-    public async Task AddMariaDb_UseOptions_Healthy() =>
+    public async Task AddMariaDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,11 +32,12 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMariaDb_UseOptions_Degraded() =>
+    public async Task AddMariaDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -49,11 +51,12 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMariaDb_UseOptions_Unhealthy() =>
+    public async Task AddMariaDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,11 +69,12 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMariaDb_UseConfiguration_Healthy() =>
+    public async Task AddMariaDb_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMariaDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -82,11 +86,12 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MariaDb:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMariaDb_UseConfiguration_Degraded() =>
+    public async Task AddMariaDb_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMariaDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -98,11 +103,14 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MariaDb:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMariaDb_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddMariaDb_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMariaDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -113,11 +121,14 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MariaDb:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMariaDb_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddMariaDb_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMariaDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -129,6 +140,7 @@ public class MariaDbHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MariaDb:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

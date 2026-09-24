@@ -18,6 +18,8 @@ internal sealed partial class QdrantHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<QdrantClient>()
             : _serviceProvider.GetRequiredKeyedService<QdrantClient>(options.KeyedService);

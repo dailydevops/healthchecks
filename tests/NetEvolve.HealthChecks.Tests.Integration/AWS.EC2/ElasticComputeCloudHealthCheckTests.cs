@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,10 +20,11 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
     public ElasticComputeCloudHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Before(Test)]
-    public async Task SetupEC2InstanceAsync() => await _instance.CreateEC2InstanceAsync().ConfigureAwait(false);
+    public async Task SetupEC2InstanceAsync(CancellationToken cancellationToken = default) =>
+        await _instance.CreateEC2InstanceAsync(cancellationToken).ConfigureAwait(false);
 
     [Test]
-    public async Task AddAWSEC2_UseOptionsCreate_Healthy() =>
+    public async Task AddAWSEC2_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -39,11 +41,12 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSEC2_UseOptionsCreate_Degraded() =>
+    public async Task AddAWSEC2_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -60,13 +63,14 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddAWSEC2_UseConfiguration_Healthy() =>
+    public async Task AddAWSEC2_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSEC2("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -83,11 +87,12 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSEC2_UseConfiguration_Degraded() =>
+    public async Task AddAWSEC2_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSEC2("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -104,12 +109,15 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSEC2_UseConfiguration_WithAdditionalTags()
+    public async Task AddAWSEC2_UseConfiguration_WithAdditionalTags(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         string[] tags = ["compute", "custom"];
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSEC2("TestContainerWithTags", tags: tags),
@@ -127,7 +135,8 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
     }
 }

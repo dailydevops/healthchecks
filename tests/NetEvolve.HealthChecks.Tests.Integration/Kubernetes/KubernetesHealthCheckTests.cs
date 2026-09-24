@@ -1,6 +1,7 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Kubernetes;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using k8s;
 using Microsoft.Extensions.Configuration;
@@ -19,23 +20,27 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
     public KubernetesHealthCheckTests(K3sDatabase database) => _database = database;
 
     [Test]
-    public async Task AddKubernetes_UseOptions_Healthy() =>
+    public async Task AddKubernetes_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKubernetes_UseOptions_Degraded() =>
+    public async Task AddKubernetes_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKubernetes_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddKubernetes_UseOptions_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -50,11 +55,12 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                _ = services.AddKeyedSingleton("kubernetes-test", (_, _) => _database.CreateClient())
+                _ = services.AddKeyedSingleton("kubernetes-test", (_, _) => _database.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKubernetes_UseConfiguration_Healthy() =>
+    public async Task AddKubernetes_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerConfigHealthy"),
             HealthStatus.Healthy,
@@ -66,11 +72,12 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKubernetes_UseConfiguration_Degraded() =>
+    public async Task AddKubernetes_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerConfigDegraded"),
             HealthStatus.Degraded,
@@ -82,11 +89,14 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient())
+            serviceBuilder: services => services.AddSingleton(_ => _database.CreateClient()),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKubernetes_UseConfiguration_WithKeyedService_Healthy() =>
+    public async Task AddKubernetes_UseConfiguration_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKubernetes("TestContainerConfigKeyedHealthy"),
             HealthStatus.Healthy,
@@ -100,6 +110,7 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                _ = services.AddKeyedSingleton("kubernetes-keyed-test", (_, _) => _database.CreateClient())
+                _ = services.AddKeyedSingleton("kubernetes-keyed-test", (_, _) => _database.CreateClient()),
+            cancellationToken: cancellationToken
         );
 }

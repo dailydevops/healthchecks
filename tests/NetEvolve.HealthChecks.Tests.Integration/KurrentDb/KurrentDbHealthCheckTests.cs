@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using KurrentDB.Client;
 using Microsoft.Extensions.Configuration;
@@ -51,15 +52,16 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
     }
 
     [Test]
-    public async Task AddKurrentDb_UseOptions_Healthy() =>
+    public async Task AddKurrentDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKurrentDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKurrentDb_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddKurrentDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKurrentDb(
@@ -71,7 +73,8 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test", (_, _) => _client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -88,7 +91,7 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
         );
 
     [Test]
-    public async Task AddKurrentDb_UseOptions_Degraded() =>
+    public async Task AddKurrentDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKurrentDb(
@@ -105,11 +108,12 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKurrentDb_UseOptions_Unhealthy() =>
+    public async Task AddKurrentDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -120,11 +124,12 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKurrentDb_UseConfiguration_Healthy() =>
+    public async Task AddKurrentDb_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKurrentDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -136,11 +141,14 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKurrentDb_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddKurrentDb_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKurrentDb("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -153,11 +161,12 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test-config", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test-config", (_, _) => _client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKurrentDb_UseConfiguration_Degraded() =>
+    public async Task AddKurrentDb_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKurrentDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -169,11 +178,14 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKurrentDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddKurrentDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKurrentDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -185,6 +197,7 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 }

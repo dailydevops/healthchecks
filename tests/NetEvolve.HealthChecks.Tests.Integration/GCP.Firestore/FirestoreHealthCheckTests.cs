@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,23 +20,25 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
     public FirestoreHealthCheckTests(FirestoreDatabase database) => _database = database;
 
     [Test]
-    public async Task AddFirestore_UseOptions_Healthy() =>
+    public async Task AddFirestore_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirestore_UseOptions_Degraded() =>
+    public async Task AddFirestore_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirestore_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddFirestore_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -49,11 +52,12 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddKeyedSingleton("firestore", (_, _) => _database.Database)
+            serviceBuilder: services => _ = services.AddKeyedSingleton("firestore", (_, _) => _database.Database),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirestore_UseConfiguration_Healthy() =>
+    public async Task AddFirestore_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -65,11 +69,12 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirestore_UseConfiguration_Degraded() =>
+    public async Task AddFirestore_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -81,11 +86,14 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddFirestore_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddFirestore_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddFirestore("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -97,6 +105,7 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Database),
+            cancellationToken: cancellationToken
         );
 }

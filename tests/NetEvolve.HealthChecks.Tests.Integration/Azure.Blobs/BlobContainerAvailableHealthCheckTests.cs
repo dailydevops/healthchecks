@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Blobs;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -16,7 +17,9 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
     public BlobContainerAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -32,11 +35,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Degraded() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -52,11 +58,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Unhealthy() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeServiceProvider_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -72,11 +81,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy() =>
+    public async Task AddBlobContainerAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -93,11 +105,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddBlobServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -112,11 +127,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_Degraded() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeConnectionString_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -131,11 +149,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_Healthy() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -153,11 +174,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_Degraded() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeSharedKey_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -174,11 +198,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_Healthy() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -193,11 +220,14 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_Degraded() =>
+    public async Task AddBlobContainerAvailability_UseOptions_ModeAzureSasCredential_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -212,6 +242,7 @@ public class BlobContainerAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 }

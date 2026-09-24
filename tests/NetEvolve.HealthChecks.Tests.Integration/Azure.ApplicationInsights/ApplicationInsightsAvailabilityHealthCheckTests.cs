@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,9 @@ using NetEvolve.HealthChecks.Tests.Integration.Internals;
 public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBase
 {
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddApplicationInsightsAvailability_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -30,11 +33,14 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<TelemetryClient>()
+            serviceBuilder: services => services.AddSingleton<TelemetryClient>(),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseOptions_ModeServiceProvider_Unhealthy() =>
+    public async Task AddApplicationInsightsAvailability_UseOptions_ModeServiceProvider_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -48,10 +54,14 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                 );
             },
             HealthStatus.Unhealthy // No TelemetryClient registered
+            ,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddApplicationInsightsAvailability_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,11 +76,14 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseOptions_ModeInstrumentationKey_Healthy() =>
+    public async Task AddApplicationInsightsAvailability_UseOptions_ModeInstrumentationKey_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -84,12 +97,15 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseConfiguration_ConnectionString_Healthy() =>
+    public async Task AddApplicationInsightsAvailability_UseConfiguration_ConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddApplicationInsightsAvailability("ConfigurationHealthy"),
             HealthStatus.Healthy,
@@ -108,11 +124,14 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     { "HealthChecks:ApplicationInsightsAvailability:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseConfiguration_InstrumentationKey_Healthy() =>
+    public async Task AddApplicationInsightsAvailability_UseConfiguration_InstrumentationKey_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddApplicationInsightsAvailability("ConfigurationInstrumentationKey"),
             HealthStatus.Healthy,
@@ -131,11 +150,14 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     { "HealthChecks:ApplicationInsightsAvailability:ConfigurationInstrumentationKey:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddApplicationInsightsAvailability_UseConfiguration_Unhealthy() =>
+    public async Task AddApplicationInsightsAvailability_UseConfiguration_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddApplicationInsightsAvailability("ConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
@@ -154,6 +176,7 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
                     { "HealthChecks:ApplicationInsightsAvailability:ConfigurationUnhealthy:Timeout", "1" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

@@ -25,6 +25,8 @@ internal sealed partial class GarnetHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var connection = GetConnection(name, options, _serviceProvider);
 
         if (!connection.IsConnected)

@@ -20,6 +20,8 @@ internal sealed partial class ApplicationInsightsAvailabilityHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var telemetryClient = clientCreation.GetTelemetryClient(name, options, _serviceProvider);
 

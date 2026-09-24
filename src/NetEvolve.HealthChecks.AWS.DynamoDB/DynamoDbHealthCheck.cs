@@ -19,6 +19,8 @@ internal sealed partial class DynamoDbHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateClient(options);
 
         var (isTimelyResponse, response) = await client

@@ -17,6 +17,8 @@ internal sealed partial class KurrentDbHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<KurrentDBClient>()
             : _serviceProvider.GetRequiredKeyedService<KurrentDBClient>(options.KeyedService);
@@ -41,6 +43,8 @@ internal sealed partial class KurrentDbHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(KurrentDBClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             var result = client.ReadAllAsync(

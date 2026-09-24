@@ -15,23 +15,31 @@ public sealed class OllamaHealthCheckTests
     private const string TestName = nameof(Ollama);
 
     [Test]
-    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException()
+    public async Task CheckHealthAsync_WhenContextNull_ThrowArgumentNullException(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<OllamaOptions>.Mock();
         using var check = new OllamaHealthCheck(serviceProvider, optionsMonitor);
 
         // Act
-        async Task Act() => _ = await check.CheckHealthAsync(null!);
+        async Task Act() => _ = await check.CheckHealthAsync(null!, cancellationToken);
 
         // Assert
         _ = await Assert.ThrowsAsync<ArgumentNullException>("context", Act);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<OllamaOptions>.Mock();
@@ -40,10 +48,10 @@ public sealed class OllamaHealthCheckTests
         {
             Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
-        var cancellationToken = new CancellationToken(true);
+        var cancelledToken = new CancellationToken(true);
 
         // Act
-        var result = await check.CheckHealthAsync(context, cancellationToken);
+        var result = await check.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         using (Assert.Multiple())
@@ -54,8 +62,12 @@ public sealed class OllamaHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<OllamaOptions>.Mock();
@@ -66,7 +78,7 @@ public sealed class OllamaHealthCheckTests
         };
 
         // Act
-        var result = await check.CheckHealthAsync(context);
+        var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

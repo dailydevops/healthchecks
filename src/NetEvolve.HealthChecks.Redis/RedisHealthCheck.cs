@@ -26,7 +26,10 @@ internal sealed partial class RedisHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
-        var connection = await GetConnectionAsync(name, options, _serviceProvider).ConfigureAwait(false);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var connection = await GetConnectionAsync(name, options, _serviceProvider, cancellationToken)
+            .ConfigureAwait(false);
 
         var (isTimelyResponse, _) = await connection
             .GetDatabase()
@@ -40,9 +43,12 @@ internal sealed partial class RedisHealthCheck : IDisposable
     private Task<IConnectionMultiplexer> GetConnectionAsync(
         string name,
         RedisOptions options,
-        IServiceProvider serviceProvider
+        IServiceProvider serviceProvider,
+        CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (options.Mode == ConnectionHandleMode.ServiceProvider)
         {
             return Task.FromResult(serviceProvider.GetRequiredService<IConnectionMultiplexer>());

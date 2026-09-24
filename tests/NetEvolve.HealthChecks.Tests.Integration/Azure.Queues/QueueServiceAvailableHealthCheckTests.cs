@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Queues;
 
+using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Storage.Queues;
 using Microsoft.Extensions.Azure;
@@ -19,7 +20,9 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
     public QueueServiceAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,11 +37,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -60,11 +66,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     "azure-queue-service-test",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<QueueServiceClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -79,11 +88,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_Degraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -98,11 +110,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -116,11 +131,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_Degraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeConnectionString_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -134,11 +152,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -155,11 +176,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_Degraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeSharedKey_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -175,11 +199,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -193,11 +220,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_Degraded() =>
+    public async Task AddQueueServiceAvailability_UseOptions_ModeAzureSasCredential_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -211,11 +241,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseConfiguration_ModeServiceProvider_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQueueServiceAvailability("ServiceServiceProviderHealthy"),
             HealthStatus.Healthy,
@@ -232,11 +265,14 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddQueueServiceAvailability_UseConfiguration_WithKeyedService_Healthy() =>
+    public async Task AddQueueServiceAvailability_UseConfiguration_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddQueueServiceAvailability("KeyedServiceServiceProviderHealthy"),
             HealthStatus.Healthy,
@@ -263,6 +299,7 @@ public class QueueServiceAvailableHealthCheckTests : HealthCheckTestBase
                     "azure-queue-service-test",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<QueueServiceClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

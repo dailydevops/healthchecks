@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
 using Microsoft.Extensions.Azure;
@@ -21,7 +22,9 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
     public TableClientAvailableHealthCheckTests(AzuriteAccess container) => _container = container;
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -37,11 +40,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddTableClientAvailability_UseOptions_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -64,11 +70,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     "test-key",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_Degraded() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -84,11 +93,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_Unhealthy() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeServiceProvider_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -126,11 +138,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 }
 
                 return token;
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy() =>
+    public async Task AddTableClientAvailability_UseOptionsWithAdditionalConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -147,11 +162,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -166,11 +184,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_Degraded() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeConnectionString_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -185,11 +206,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_Healthy() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -207,11 +231,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_Degraded() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeSharedKey_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -228,12 +255,15 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
     [Skip("AzureSasCredential is not supported by Azurite.")]
-    public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_Healthy() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -248,12 +278,15 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
     [Skip("AzureSasCredential is not supported by Azurite.")]
-    public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_Degraded() =>
+    public async Task AddTableClientAvailability_UseOptions_ModeAzureSasCredential_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -268,13 +301,16 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Healthy() =>
+    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationHealthy"),
             HealthStatus.Healthy,
@@ -292,11 +328,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseConfiguration_WithKeyedService_Healthy() =>
+    public async Task AddTableClientAvailability_UseConfiguration_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationKeyedHealthy"),
             HealthStatus.Healthy,
@@ -321,11 +360,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                     "test-key",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Degraded() =>
+    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationDegraded"),
             HealthStatus.Degraded,
@@ -343,11 +385,14 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Unhealthy() =>
+    public async Task AddTableClientAvailability_UseConfiguration_ModeServiceProvider_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddTableClientAvailability("TableConfigurationNotExistsUnhealthy"),
             HealthStatus.Unhealthy,
@@ -387,6 +432,7 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
                 }
 
                 return token;
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

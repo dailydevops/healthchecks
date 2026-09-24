@@ -17,6 +17,8 @@ internal sealed partial class InfluxDBHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IInfluxDBClient>()
             : _serviceProvider.GetRequiredKeyedService<IInfluxDBClient>(options.KeyedService);

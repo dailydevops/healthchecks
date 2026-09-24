@@ -19,6 +19,8 @@ internal sealed partial class Neo4jHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var driver = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IDriver>()
             : _serviceProvider.GetRequiredKeyedService<IDriver>(options.KeyedService);
@@ -37,8 +39,10 @@ internal sealed partial class Neo4jHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(IDriver driver, CancellationToken _)
+    internal static async Task<bool> DefaultCommandAsync(IDriver driver, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var session = driver.AsyncSession();
 
         await using (session.ConfigureAwait(false))

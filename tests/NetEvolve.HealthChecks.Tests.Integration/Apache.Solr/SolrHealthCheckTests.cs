@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.Solr;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
@@ -16,7 +17,7 @@ public class SolrHealthCheckTests : HealthCheckTestBase
     public SolrHealthCheckTests(SolrContainer database) => _database = database;
 
     [Test]
-    public async Task AddSolr_WithOptionsServiceProvider_Healthy() =>
+    public async Task AddSolr_WithOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddSolr(
@@ -24,11 +25,12 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                     options => options.Timeout = 10000
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSolrNet<string>(_database.Url)
+            serviceBuilder: services => services.AddSolrNet<string>(_database.Url),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSolr_WithOptionsServiceProvider_Degraded() =>
+    public async Task AddSolr_WithOptionsServiceProvider_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddSolr(
@@ -36,11 +38,12 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                     options => options.Timeout = 0
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSolrNet(_database.Url)
+            serviceBuilder: services => services.AddSolrNet(_database.Url),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSolr_WithOptionsCreate_Healthy() =>
+    public async Task AddSolr_WithOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddSolr(
@@ -52,11 +55,12 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                         options.Timeout = 10000;
                     }
                 ),
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSolr_WithOptionsCreate_Degraded() =>
+    public async Task AddSolr_WithOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddSolr(
@@ -68,6 +72,7 @@ public class SolrHealthCheckTests : HealthCheckTestBase
                         options.Timeout = 0;
                     }
                 ),
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 }

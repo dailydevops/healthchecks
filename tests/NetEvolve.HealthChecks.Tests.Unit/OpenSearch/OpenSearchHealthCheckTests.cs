@@ -32,8 +32,12 @@ public sealed class OpenSearchHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenCancellationTokenIsCancelled_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
@@ -43,10 +47,10 @@ public sealed class OpenSearchHealthCheckTests
         {
             Registration = new HealthCheckRegistration(TestName, check, null, null),
         };
-        var cancellationToken = new CancellationToken(true);
+        var cancelledToken = new CancellationToken(true);
 
         // Act
-        var result = await check.CheckHealthAsync(context, cancellationToken);
+        var result = await check.CheckHealthAsync(context, cancelledToken);
 
         // Assert
         using (Assert.Multiple())
@@ -57,8 +61,12 @@ public sealed class OpenSearchHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenOptionsAreNull_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var serviceProvider = IServiceProvider.Mock();
         var optionsMonitor = IOptionsMonitor<OpenSearchOptions>.Mock();
@@ -70,7 +78,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         // Act
-        var result = await check.CheckHealthAsync(context);
+        var result = await check.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -81,8 +89,12 @@ public sealed class OpenSearchHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService()
+    public async Task CheckHealthAsync_WithKeyedService_ShouldUseKeyedService(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         const string serviceKey = "test-key";
 
@@ -116,7 +128,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -127,8 +139,12 @@ public sealed class OpenSearchHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService()
+    public async Task CheckHealthAsync_WithoutKeyedService_ShouldUseDefaultService(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
 
         var options = new OpenSearchOptions
@@ -161,7 +177,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -172,8 +188,12 @@ public sealed class OpenSearchHealthCheckTests
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenConnectionFails_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
 
         var options = new OpenSearchOptions
@@ -206,7 +226,7 @@ public sealed class OpenSearchHealthCheckTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context, CancellationToken.None);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         using (Assert.Multiple())

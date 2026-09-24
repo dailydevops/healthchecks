@@ -17,6 +17,8 @@ internal sealed partial class ServiceBusTopicHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientFactory = _serviceProvider.GetRequiredService<ServiceBusClientFactory>();
         var client = clientFactory.GetAdministrationClient(name, options, _serviceProvider);
 
