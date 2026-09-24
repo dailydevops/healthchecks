@@ -11,7 +11,7 @@ public sealed class MinioDatabase : IAsyncInitializer, IAsyncDisposable
     internal const string BucketName = "test-bucket";
 
     private readonly MinioContainer _container = new MinioBuilder(
-        /*dockerimage*/"minio/minio:RELEASE.2023-01-31T02-24-19Z"
+        /*dockerimage*/"quay.io/minio/minio:RELEASE.2023-01-31T02-24-19Z"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
