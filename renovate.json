@@ -62,6 +62,12 @@
       "versioning": "loose"
     },
     {
+      "description": "Track SQL Server CU/GDR releases on the ubuntu-22.04 base only; preview/RC/CTP tags never match. See microsoft/mssql-docker#974.",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["mcr.microsoft.com/mssql/server"],
+      "versioning": "regex:^(?<major>\\d+)-CU(?<minor>\\d+)(-GDR(?<patch>\\d+))?-ubuntu-(?<compatibility>\\d+\\.\\d+)$"
+    },
+    {
       "groupName": "Testcontainers packages",
       "groupSlug": "testcontainers-packages",
       "matchManagers": ["nuget"],
