@@ -23,30 +23,30 @@
   <ItemGroup>
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.2.0" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
-    <PackageVersion Include="AWSSDK.CloudWatch" Version="4.0.104.4" />
-    <PackageVersion Include="AWSSDK.Core" Version="4.0.102.6" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.104" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.124" />
-    <PackageVersion Include="AWSSDK.S3" Version="4.0.103.3" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.15" />
-    <PackageVersion Include="AWSSDK.SQS" Version="4.0.100.14" />
+    <PackageVersion Include="AWSSDK.CloudWatch" Version="4.0.105.1" />
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.102.8" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.107" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.126.2" />
+    <PackageVersion Include="AWSSDK.S3" Version="4.0.104.1" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.16" />
+    <PackageVersion Include="AWSSDK.SQS" Version="4.0.100.15" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.12.0" />
     <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.11.1" />
     <PackageVersion Include="AzureKeyVaultEmulator.TestContainers" Version="3.1.3" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
-    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.2" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.21.0" />
     <PackageVersion Include="Azure.Search.Documents" Version="12.0.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.29.2" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.27.1" />
-    <PackageVersion Include="CassandraCSharpDriver" Version="3.22.1" />
+    <PackageVersion Include="CassandraCSharpDriver" Version="3.23.0" />
     <PackageVersion Include="ClickHouse.Client" Version="7.14.0" />
     <PackageVersion Include="CliWrap" Version="3.10.5" />
     <PackageVersion Include="Confluent.Kafka" Version="2.15.1" />
     <PackageVersion Include="Consul" Version="1.8.0" />
     <PackageVersion Include="CouchbaseNetClient" Version="3.9.6" />
     <PackageVersion Include="Dapr.Client" Version="1.18.10" />
-    <PackageVersion Include="Devart.Data.MySql" Version="10.1.123" />
+    <PackageVersion Include="Devart.Data.MySql" Version="10.2.192" />
     <PackageVersion Include="Devart.Data.Oracle" Version="11.1.123" />
     <PackageVersion Include="Devart.Data.PostgreSql" Version="9.1.123" />
     <PackageVersion Include="Devart.Data.SQLite" Version="7.1.123" />
@@ -81,7 +81,7 @@
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.14.1" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.12" />
-    <PackageVersion Include="Microsoft.Garnet" Version="2.1.7" />
+    <PackageVersion Include="Microsoft.Garnet" Version="2.2.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
     <PackageVersion Include="Milvus.Client" Version="2.3.0-preview.1" />
     <PackageVersion Include="Minio" Version="7.0.0" />
@@ -122,7 +122,7 @@
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.1" />
     <PackageVersion Include="System.Data.SQLite" Version="2.0.4" />
     <PackageVersion Include="System.Drawing.Common" Version="9.0.20" />
-    <PackageVersion Include="System.Text.Json" Version="10.0.11" />
+    <PackageVersion Include="System.Text.Json" Version="10.0.12" />
     <PackageVersion Include="Testcontainers" Version="4.14.0" />
     <PackageVersion Include="Testcontainers.ActiveMq" Version="4.14.0" />
     <PackageVersion Include="Testcontainers.ArangoDb" Version="4.14.0" />
