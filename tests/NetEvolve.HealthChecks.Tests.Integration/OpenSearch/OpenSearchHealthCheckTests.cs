@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.OpenSearch;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::OpenSearch.Client;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
     public OpenSearchHealthCheckTests(OpenSearchContainer database) => _database = database;
 
     [Test]
-    public async Task AddOpenSearch_UseOptions_Healthy() =>
+    public async Task AddOpenSearch_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -35,11 +36,12 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOpenSearch_UseOptionsServiceProvider_Healthy() =>
+    public async Task AddOpenSearch_UseOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddOpenSearch("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
@@ -54,11 +56,12 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
 
                     return new OpenSearchClient(settings);
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOpenSearch_UseOptions_Degraded() =>
+    public async Task AddOpenSearch_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -74,11 +77,12 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOpenSearch_UseConfiguration_Healthy() =>
+    public async Task AddOpenSearch_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOpenSearch("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -96,11 +100,12 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:OpenSearch:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOpenSearch_UseConfiguration_Degraded() =>
+    public async Task AddOpenSearch_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOpenSearch("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -118,11 +123,14 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:OpenSearch:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOpenSearch_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddOpenSearch_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOpenSearch("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -136,11 +144,14 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:OpenSearch:TestNoValues:Password", "admin" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOpenSearch_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddOpenSearch_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOpenSearch("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -155,6 +166,7 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:OpenSearch:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

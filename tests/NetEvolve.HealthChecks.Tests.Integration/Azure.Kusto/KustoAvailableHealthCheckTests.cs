@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure.Kusto;
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NetEvolve.Extensions.TUnit;
@@ -16,7 +17,9 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
     public KustoAvailableHealthCheckTests(KustoAccess container) => _container = container;
 
     [Test]
-    public async Task AddKustoAvailability_UseOptions_ConnectionString_Healthy() =>
+    public async Task AddKustoAvailability_UseOptions_ConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -29,11 +32,14 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKustoAvailability_UseOptions_ConnectionString_Degraded() =>
+    public async Task AddKustoAvailability_UseOptions_ConnectionString_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -46,11 +52,14 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKustoAvailability_UseOptions_ClusterUri_Healthy() =>
+    public async Task AddKustoAvailability_UseOptions_ClusterUri_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -63,11 +72,14 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKustoAvailability_UseOptions_WithDatabaseName_Healthy() =>
+    public async Task AddKustoAvailability_UseOptions_WithDatabaseName_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -81,6 +93,7 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 }

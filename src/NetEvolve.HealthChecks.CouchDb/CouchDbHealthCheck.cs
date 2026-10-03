@@ -16,6 +16,8 @@ internal sealed partial class CouchDbHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var connectionInfo = new DbConnectionInfo(options.ConnectionString, options.DatabaseName);
         using var client = new MyCouchClient(connectionInfo);
 
@@ -34,6 +36,8 @@ internal sealed partial class CouchDbHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(MyCouchClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         _ = await client.Database.HeadAsync(cancellationToken).ConfigureAwait(false);
 
         return true;

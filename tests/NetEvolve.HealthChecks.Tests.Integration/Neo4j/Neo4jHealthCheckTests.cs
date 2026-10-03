@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Neo4j.Driver;
 using Microsoft.Extensions.Configuration;
@@ -50,15 +51,16 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
     }
 
     [Test]
-    public async Task AddNeo4j_UseOptions_Healthy() =>
+    public async Task AddNeo4j_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNeo4j("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddNeo4j_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddNeo4j(
@@ -70,7 +72,8 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("neo4j-test", (_, _) => _driver)
+            serviceBuilder: services => services.AddKeyedSingleton("neo4j-test", (_, _) => _driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -86,7 +89,7 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
         );
 
     [Test]
-    public async Task AddNeo4j_UseOptions_Degraded() =>
+    public async Task AddNeo4j_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddNeo4j(
@@ -105,11 +108,12 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseOptions_Unhealthy() =>
+    public async Task AddNeo4j_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -127,11 +131,12 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseConfiguration_Healthy() =>
+    public async Task AddNeo4j_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNeo4j("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -143,11 +148,14 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddNeo4j_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNeo4j("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -160,11 +168,12 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("neo4j-test-config", (_, _) => _driver)
+            serviceBuilder: services => services.AddKeyedSingleton("neo4j-test-config", (_, _) => _driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseConfiguration_Degraded() =>
+    public async Task AddNeo4j_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNeo4j("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -176,11 +185,14 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddNeo4j_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNeo4j("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -192,11 +204,14 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddNeo4j_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddNeo4j_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddNeo4j("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -208,6 +223,7 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_driver)
+            serviceBuilder: services => services.AddSingleton(_driver),
+            cancellationToken: cancellationToken
         );
 }

@@ -17,7 +17,7 @@ public sealed record PubSubOptions
     /// Gets or sets the keyed service name for retrieving the <see cref="Google.Cloud.PubSub.V1.PublisherServiceApiClient"/> instance.
     /// </summary>
     /// <value>
-    /// The keyed service name, or <c>null</c> if using the default service registration.
+    /// The keyed service name, or <see langword="null"/> if using the default service registration.
     /// </value>
     public string? KeyedService { get; set; }
 

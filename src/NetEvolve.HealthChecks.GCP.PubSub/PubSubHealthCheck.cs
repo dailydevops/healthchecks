@@ -19,6 +19,8 @@ internal sealed partial class PubSubHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<PublisherServiceApiClient>()
             : _serviceProvider.GetRequiredKeyedService<PublisherServiceApiClient>(options.KeyedService);

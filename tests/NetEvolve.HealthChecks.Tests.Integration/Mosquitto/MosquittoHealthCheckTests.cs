@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Mosquitto;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,31 +20,36 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
     public MosquittoHealthCheckTests(MosquittoContainer container) => _container = container;
 
     [Test]
-    public async Task AddMosquitto_UseOptions_Healthy()
+    public async Task AddMosquitto_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
-        _ = await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddMosquitto_UseOptionsWithKeyedService_Healthy()
+    public async Task AddMosquitto_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
-        _ = await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
         await RunAndVerify(
             healthChecks =>
@@ -56,36 +62,42 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient)
+            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddMosquitto_UseOptions_Degraded()
+    public async Task AddMosquitto_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
-        _ = await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddMosquitto_UseConfiguration_Healthy()
+    public async Task AddMosquitto_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
-        _ = await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerHealthy"),
@@ -98,19 +110,24 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddMosquitto_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddMosquitto_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
-        _ = await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerKeyedHealthy"),
@@ -124,19 +141,22 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test-config", (_, _) => mqttClient)
+            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test-config", (_, _) => mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddMosquitto_UseConfiguration_Degraded()
+    public async Task AddMosquitto_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var mqttFactory = new MqttClientFactory();
         using var mqttClient = mqttFactory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder().WithConnectionUri(_container.ConnectionString).Build();
 
-        _ = await mqttClient.ConnectAsync(options);
+        _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddMosquitto("TestContainerDegraded"),
@@ -149,7 +169,8 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(mqttClient)
+            serviceBuilder: services => services.AddSingleton(mqttClient),
+            cancellationToken: cancellationToken
         );
     }
 }

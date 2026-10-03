@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using global::LiteDB;
 using Microsoft.Extensions.Configuration;
@@ -33,8 +34,10 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseOptions_Healthy()
+    public async Task AddLiteDB_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabaseWithCollection("TestCollection");
         try
         {
@@ -51,7 +54,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         }
                     );
                 },
-                HealthStatus.Healthy
+                HealthStatus.Healthy,
+                cancellationToken: cancellationToken
             );
         }
         finally
@@ -64,8 +68,10 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseOptions_Degraded()
+    public async Task AddLiteDB_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabaseWithCollection("TestCollection");
         try
         {
@@ -82,7 +88,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         }
                     );
                 },
-                HealthStatus.Degraded
+                HealthStatus.Degraded,
+                cancellationToken: cancellationToken
             );
         }
         finally
@@ -95,8 +102,10 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseOptions_Unhealthy()
+    public async Task AddLiteDB_UseOptions_Unhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabase();
         try
         {
@@ -113,7 +122,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         }
                     );
                 },
-                HealthStatus.Unhealthy
+                HealthStatus.Unhealthy,
+                cancellationToken: cancellationToken
             );
         }
         finally
@@ -126,8 +136,10 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseConfiguration_Healthy()
+    public async Task AddLiteDB_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabaseWithCollection("TestCollection");
         try
         {
@@ -143,7 +155,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:LiteDB:TestContainerHealthy:Timeout", "10000" },
                     };
                     _ = config.AddInMemoryCollection(values);
-                }
+                },
+                cancellationToken: cancellationToken
             );
         }
         finally
@@ -156,8 +169,10 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseConfiguration_Degraded()
+    public async Task AddLiteDB_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabaseWithCollection("TestCollection");
         try
         {
@@ -173,7 +188,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:LiteDB:TestContainerDegraded:Timeout", "0" },
                     };
                     _ = config.AddInMemoryCollection(values);
-                }
+                },
+                cancellationToken: cancellationToken
             );
         }
         finally
@@ -186,7 +202,9 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddLiteDB_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddLiteDB("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -197,12 +215,17 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:LiteDB:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddLiteDB_UseConfiguration_TimeoutMinusTwo_ThrowException()
+    public async Task AddLiteDB_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabaseWithCollection("TestCollection");
         try
         {
@@ -218,7 +241,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:LiteDB:TestNoValues:Timeout", "-2" },
                     };
                     _ = config.AddInMemoryCollection(values);
-                }
+                },
+                cancellationToken: cancellationToken
             );
         }
         finally
@@ -231,8 +255,12 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddLiteDB_UseConfiguration_CollectionNameEmpty_ThrowException()
+    public async Task AddLiteDB_UseConfiguration_CollectionNameEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var dbPath = CreateTempDatabase();
         try
         {
@@ -247,7 +275,8 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:LiteDB:TestNoValues:CollectionName", "" },
                     };
                     _ = config.AddInMemoryCollection(values);
-                }
+                },
+                cancellationToken: cancellationToken
             );
         }
         finally

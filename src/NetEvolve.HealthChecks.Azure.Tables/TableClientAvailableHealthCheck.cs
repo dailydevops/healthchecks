@@ -17,6 +17,8 @@ internal sealed partial class TableClientAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var tableClient = clientCreation.GetTableServiceClient(name, options, _serviceProvider);
 

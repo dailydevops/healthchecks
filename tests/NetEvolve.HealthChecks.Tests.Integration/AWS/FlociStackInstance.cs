@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.AWS;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.CloudWatch;
 using Amazon.CloudWatch.Model;
@@ -58,22 +59,33 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
             .ConfigureAwait(false);
     }
 
-    internal async Task<DisposableSubscription> CreateNumberOfSubscriptions(string topicName, int numberOfSubscriptions)
+    internal async Task<DisposableSubscription> CreateNumberOfSubscriptions(
+        string topicName,
+        int numberOfSubscriptions,
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = new AmazonSimpleNotificationServiceClient(
             AccessKey,
             SecretKey,
             new AmazonSimpleNotificationServiceConfig { ServiceURL = ConnectionString }
         );
-        var topic = await client.CreateTopicAsync(topicName).ConfigureAwait(false);
+        var topic = await client.CreateTopicAsync(topicName, cancellationToken).ConfigureAwait(false);
 
-        var subscription = await client.SubscribeAsync(topic.TopicArn, "email", $"Test{1:D6}@example.com");
+        var subscription = await client.SubscribeAsync(
+            topic.TopicArn,
+            "email",
+            $"Test{1:D6}@example.com",
+            cancellationToken
+        );
 
         if (numberOfSubscriptions > 1)
         {
             for (var i = 2; i <= numberOfSubscriptions; i++)
             {
-                _ = await client.SubscribeAsync(topic.TopicArn, "email", $"Test{i:D6}@example.com");
+                _ = await client.SubscribeAsync(topic.TopicArn, "email", $"Test{i:D6}@example.com", cancellationToken);
             }
         }
 
@@ -82,6 +94,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateSNSDefaults(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Create SNS Topic & Subscription
         using var snsClient = new AmazonSimpleNotificationServiceClient(
             AccessKey,
@@ -103,6 +117,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateSQSDefaults(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             // Create SQS Queue
@@ -121,6 +137,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateS3Defaults(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             // Create S3 Bucket
@@ -141,6 +159,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     internal async Task CreateEC2InstanceAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var ec2Client = new AmazonEC2Client(
             AccessKey,
             SecretKey,
@@ -162,6 +182,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateEC2DEfaults(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             await CreateEC2InstanceAsync(cancellationToken).ConfigureAwait(false);
@@ -174,6 +196,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateDynamoDBDefaults(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             // Create DynamoDB Table
@@ -203,6 +227,8 @@ public sealed class FlociStackInstance : IAsyncInitializer, IAsyncDisposable
 
     private async Task CreateCloudWatchDefaults(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             // Create CloudWatch Alarm

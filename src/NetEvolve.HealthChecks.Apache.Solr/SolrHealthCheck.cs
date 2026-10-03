@@ -33,6 +33,8 @@ internal sealed partial class SolrHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = GetClient(name, options, _serviceProvider);
 
         var (isTimelyResponse, response) = await client

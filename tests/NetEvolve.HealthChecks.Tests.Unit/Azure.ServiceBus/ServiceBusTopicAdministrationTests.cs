@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Unit.Azure.ServiceBus;
 
+using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +15,12 @@ using TUnit.Mocks;
 public sealed class ServiceBusTopicAdministrationTests
 {
     [Test]
-    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetTopicRuntimeProperties()
+    public async Task CheckHealthAsync_WhenAdministrationClient_ShouldCallGetTopicRuntimeProperties(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new ServiceBusTopicOptions
         {
@@ -37,15 +42,19 @@ public sealed class ServiceBusTopicAdministrationTests
         };
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenTopicDoesNotExist_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenTopicDoesNotExist_ShouldReturnUnhealthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new ServiceBusTopicOptions
         {
@@ -81,15 +90,17 @@ public sealed class ServiceBusTopicAdministrationTests
             );
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);
     }
 
     [Test]
-    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnUnhealthy()
+    public async Task CheckHealthAsync_WhenTimeout_ShouldReturnUnhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Arrange
         var options = new ServiceBusTopicOptions
         {
@@ -120,7 +131,7 @@ public sealed class ServiceBusTopicAdministrationTests
             .GetTopicRuntimePropertiesAsync(Any(), Any())
             .ReturnsAsync(async () =>
             {
-                await Task.Delay(100); // Delay longer than the timeout
+                await Task.Delay(100, cancellationToken); // Delay longer than the timeout
                 return global::Azure.Response.FromValue(
                     global::Azure.Messaging.ServiceBus.ServiceBusModelFactory.TopicRuntimeProperties("timeout-topic"),
                     global::Azure.Response.Mock()
@@ -128,7 +139,7 @@ public sealed class ServiceBusTopicAdministrationTests
             });
 
         // Act
-        var result = await healthCheck.CheckHealthAsync(context);
+        var result = await healthCheck.CheckHealthAsync(context, cancellationToken);
 
         // Assert
         _ = await Assert.That(result.Status).IsEqualTo(HealthStatus.Unhealthy);

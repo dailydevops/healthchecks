@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,7 +20,7 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
     public DynamoDbHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
-    public async Task AddAWSDynamoDB_UseOptionsCreate_Healthy() =>
+    public async Task AddAWSDynamoDB_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,11 +37,14 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSDynamoDB_UseOptionsCreate_WhenTableInvalid_Unhealthy() =>
+    public async Task AddAWSDynamoDB_UseOptionsCreate_WhenTableInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,11 +60,12 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSDynamoDB_UseOptionsCreate_Degraded() =>
+    public async Task AddAWSDynamoDB_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -77,11 +82,12 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSDynamoDB_UseConfiguration_Healthy() =>
+    public async Task AddAWSDynamoDB_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSDynamoDB("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -98,11 +104,12 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSDynamoDB_UseConfiguration_Degraded() =>
+    public async Task AddAWSDynamoDB_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSDynamoDB("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -119,11 +126,14 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSDynamoDB_UseConfiguration_WhenTableInvalid_Unhealthy() =>
+    public async Task AddAWSDynamoDB_UseConfiguration_WhenTableInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSDynamoDB("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -139,6 +149,7 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
                 };
 
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

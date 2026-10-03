@@ -24,6 +24,8 @@ internal sealed partial class ElasticsearchHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = GetClient(name, options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
@@ -42,6 +44,8 @@ internal sealed partial class ElasticsearchHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         _ = await client.PingAsync(cancellationToken).ConfigureAwait(false);
 
         return true;

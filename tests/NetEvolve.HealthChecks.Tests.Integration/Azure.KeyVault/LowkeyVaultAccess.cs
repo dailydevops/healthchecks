@@ -100,6 +100,8 @@ public sealed class LowkeyVaultAccess : IAsyncInitializer, IAsyncDisposable
 #pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             using var response = _httpClient.GetAsync(_tokenUri, cancellationToken).GetAwaiter().GetResult();
             _ = response.EnsureSuccessStatusCode();
 
@@ -117,6 +119,8 @@ public sealed class LowkeyVaultAccess : IAsyncInitializer, IAsyncDisposable
             CancellationToken cancellationToken
         )
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             using var response = await _httpClient.GetAsync(_tokenUri, cancellationToken).ConfigureAwait(false);
             _ = response.EnsureSuccessStatusCode();
 

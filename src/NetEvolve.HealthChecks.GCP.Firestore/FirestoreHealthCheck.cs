@@ -18,6 +18,8 @@ internal sealed partial class FirestoreHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<FirestoreDb>()
             : _serviceProvider.GetRequiredKeyedService<FirestoreDb>(options.KeyedService);

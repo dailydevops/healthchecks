@@ -25,6 +25,8 @@ internal sealed partial class CosmosDbAvailableHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var cosmosClient = GetCosmosClient(name, options, _serviceProvider);
 
         var readTask = ReadAccountPropertiesAsync(cosmosClient, options, cancellationToken);
@@ -47,6 +49,8 @@ internal sealed partial class CosmosDbAvailableHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         _ = await client.ReadAccountAsync().ConfigureAwait(false);
 
         if (!string.IsNullOrWhiteSpace(options.DatabaseId))

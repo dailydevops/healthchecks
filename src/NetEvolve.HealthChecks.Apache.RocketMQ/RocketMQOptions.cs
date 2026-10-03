@@ -24,7 +24,7 @@ public sealed record RocketMQOptions
 
     /// <summary>
     /// Gets or sets the access key for authenticating with the RocketMQ broker.
-    /// Returns <c>null</c> if the value is null, empty, or whitespace.
+    /// Returns <see langword="null"/> if the value is null, empty, or whitespace.
     /// </summary>
     public string? AccessKey
     {
@@ -42,7 +42,7 @@ public sealed record RocketMQOptions
 
     /// <summary>
     /// Gets or sets the access secret for authenticating with the RocketMQ broker.
-    /// Returns <c>null</c> if the value is null, empty, or whitespace.
+    /// Returns <see langword="null"/> if the value is null, empty, or whitespace.
     /// </summary>
     public string? AccessSecret
     {
@@ -59,7 +59,7 @@ public sealed record RocketMQOptions
     }
 
     /// <summary>
-    /// Gets or sets whether to enable SSL/TLS for the broker connection. Default is <c>true</c>.
+    /// Gets or sets whether to enable SSL/TLS for the broker connection. Default is <see langword="true"/>.
     /// </summary>
     public bool EnableSsl { get; set; } = true;
 

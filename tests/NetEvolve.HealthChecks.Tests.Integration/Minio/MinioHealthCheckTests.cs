@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Minio;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
     public MinioHealthCheckTests(MinioDatabase database) => _database = database;
 
     [Test]
-    public async Task AddMinio_UseOptions_Healthy() =>
+    public async Task AddMinio_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddMinio(
@@ -32,11 +33,12 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddMinio_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddMinio(
@@ -49,11 +51,12 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("minio-test", (_, _) => _database.Client)
+            serviceBuilder: services => services.AddKeyedSingleton("minio-test", (_, _) => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseOptions_WhenBucketInvalid_Unhealthy() =>
+    public async Task AddMinio_UseOptions_WhenBucketInvalid_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -67,11 +70,12 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseOptions_Degraded() =>
+    public async Task AddMinio_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -96,7 +100,8 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -112,7 +117,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
         );
 
     [Test]
-    public async Task AddMinio_UseConfiguration_Healthy() =>
+    public async Task AddMinio_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMinio("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -125,11 +130,14 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddMinio_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMinio("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -143,11 +151,12 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("minio-test-config", (_, _) => _database.Client)
+            serviceBuilder: services => services.AddKeyedSingleton("minio-test-config", (_, _) => _database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseConfiguration_Degraded() =>
+    public async Task AddMinio_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMinio("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -160,11 +169,14 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddMinio_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMinio("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -176,11 +188,14 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMinio_UseOptions_CommandReturnsFalse_UnhealthyWithMessage() =>
+    public async Task AddMinio_UseOptions_CommandReturnsFalse_UnhealthyWithMessage(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -190,6 +205,7 @@ public class MinioHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_database.Client)
+            serviceBuilder: services => services.AddSingleton(_database.Client),
+            cancellationToken: cancellationToken
         );
 }

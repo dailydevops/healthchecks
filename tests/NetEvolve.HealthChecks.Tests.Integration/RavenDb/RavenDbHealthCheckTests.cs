@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,15 +54,16 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
     }
 
     [Test]
-    public async Task AddRavenDb_UseOptions_Healthy() =>
+    public async Task AddRavenDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddRavenDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddRavenDb(
@@ -73,7 +75,8 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _store)
+            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -89,7 +92,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
         );
 
     [Test]
-    public async Task AddRavenDb_UseOptions_Degraded() =>
+    public async Task AddRavenDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddRavenDb(
@@ -110,11 +113,12 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseOptions_Unhealthy() =>
+    public async Task AddRavenDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -134,11 +138,12 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfiguration_Healthy() =>
+    public async Task AddRavenDb_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -150,11 +155,14 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddRavenDb_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -167,11 +175,12 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _store)
+            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test-config", (_, _) => _store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfiguration_Degraded() =>
+    public async Task AddRavenDb_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -183,11 +192,14 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddRavenDb_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -199,11 +211,14 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRavenDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddRavenDb_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRavenDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -215,6 +230,7 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_store)
+            serviceBuilder: services => services.AddSingleton(_store),
+            cancellationToken: cancellationToken
         );
 }

@@ -119,6 +119,8 @@ public sealed class CosmosDbAccess : IAsyncInitializer, IAsyncDisposable
             CancellationToken cancellationToken
         )
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             request.RequestUri = new UriBuilder(
                 Uri.UriSchemeHttp,
                 _hostname,

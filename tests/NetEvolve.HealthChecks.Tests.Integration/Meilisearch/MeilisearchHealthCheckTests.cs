@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Meilisearch;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
     public MeilisearchHealthCheckTests(MeilisearchContainer database) => _database = database;
 
     [Test]
-    public async Task AddMeilisearch_UseOptionsInternal_Healthy() =>
+    public async Task AddMeilisearch_UseOptionsInternal_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -32,11 +33,12 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMeilisearch_UseOptionsServiceProvider_Healthy() =>
+    public async Task AddMeilisearch_UseOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -51,11 +53,12 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: builder =>
-                _ = builder.AddSingleton(_ => new global::Meilisearch.MeilisearchClient(_database.Host))
+                _ = builder.AddSingleton(_ => new global::Meilisearch.MeilisearchClient(_database.Host)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMeilisearch_UseOptions_Degraded() =>
+    public async Task AddMeilisearch_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -69,11 +72,12 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMeilisearch_UseConfiguration_Healthy() =>
+    public async Task AddMeilisearch_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => _ = healthChecks.AddMeilisearch("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -90,6 +94,7 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
                         { "HealthChecks:Meilisearch:TestContainerHealthy:Timeout", "10000" },
                     }
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

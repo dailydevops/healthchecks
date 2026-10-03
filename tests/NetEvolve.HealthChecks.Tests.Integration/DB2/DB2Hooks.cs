@@ -2,13 +2,16 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 public static class DB2Hooks
 {
     [Before(Assembly)]
-    public static async Task BeforeTestDiscovery(AssemblyHookContext _1)
+    public static async Task BeforeTestDiscovery(AssemblyHookContext _1, CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
             return;
@@ -18,7 +21,7 @@ public static class DB2Hooks
             .Cli.Wrap("sudo")
             .WithArguments(["apt", "install", "-y", "libxml2"])
             .WithValidation(CliWrap.CommandResultValidation.None)
-            .ExecuteAsync()
+            .ExecuteAsync(cancellationToken)
             .ConfigureAwait(false);
 
         var assemblyLocation = typeof(DB2HealthCheckTests).Assembly.Location;

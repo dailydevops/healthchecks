@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
     public PubSubHealthCheckTests(PubSubEmulator emulator) => _emulator = emulator;
 
     [Test]
-    public async Task AddPubSub_UseOptions_Healthy() =>
+    public async Task AddPubSub_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddPubSub(
@@ -31,11 +32,12 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPubSub_UseOptions_Degraded() =>
+    public async Task AddPubSub_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddPubSub(
@@ -47,11 +49,12 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPubSub_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddPubSub_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -66,11 +69,12 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddKeyedSingleton("pubsub", (_, _) => _emulator.Client)
+            serviceBuilder: services => _ = services.AddKeyedSingleton("pubsub", (_, _) => _emulator.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPubSub_UseConfiguration_Healthy() =>
+    public async Task AddPubSub_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPubSub("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -83,11 +87,12 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPubSub_UseConfiguration_Degraded() =>
+    public async Task AddPubSub_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPubSub("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -100,11 +105,14 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPubSub_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddPubSub_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPubSub("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -117,6 +125,7 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client)
+            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
+            cancellationToken: cancellationToken
         );
 }

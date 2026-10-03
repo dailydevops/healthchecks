@@ -11,7 +11,8 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23" />
-    <GlobalPackageReference Include="NetEvolve.Defaults" Version="2.6.95" />
+    <GlobalPackageReference Include="NetEvolve.Analyzer" Version="0.20.0" />
+    <GlobalPackageReference Include="NetEvolve.Defaults" Version="2.8.51" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="5.0.0" />
     <GlobalPackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.0" />
     <GlobalPackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.0" />
@@ -22,13 +23,13 @@
   <ItemGroup>
     <PackageVersion Include="Apache.NMS.ActiveMQ" Version="2.2.0" />
     <PackageVersion Include="ArangoDBNetStandard" Version="3.1.0" />
-    <PackageVersion Include="AWSSDK.CloudWatch" Version="4.0.104.3" />
-    <PackageVersion Include="AWSSDK.Core" Version="4.0.102.4" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.103.7" />
-    <PackageVersion Include="AWSSDK.EC2" Version="4.0.119" />
-    <PackageVersion Include="AWSSDK.S3" Version="4.0.103.1" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.13" />
-    <PackageVersion Include="AWSSDK.SQS" Version="4.0.100.13" />
+    <PackageVersion Include="AWSSDK.CloudWatch" Version="4.0.104.4" />
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.102.6" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.104" />
+    <PackageVersion Include="AWSSDK.EC2" Version="4.0.124" />
+    <PackageVersion Include="AWSSDK.S3" Version="4.0.103.3" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.15" />
+    <PackageVersion Include="AWSSDK.SQS" Version="4.0.100.14" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.12.0" />
     <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.11.1" />
@@ -44,7 +45,7 @@
     <PackageVersion Include="Confluent.Kafka" Version="2.15.1" />
     <PackageVersion Include="Consul" Version="1.8.0" />
     <PackageVersion Include="CouchbaseNetClient" Version="3.9.6" />
-    <PackageVersion Include="Dapr.Client" Version="1.18.5" />
+    <PackageVersion Include="Dapr.Client" Version="1.18.8" />
     <PackageVersion Include="Devart.Data.MySql" Version="10.1.123" />
     <PackageVersion Include="Devart.Data.Oracle" Version="11.1.123" />
     <PackageVersion Include="Devart.Data.PostgreSql" Version="9.1.123" />
@@ -63,7 +64,7 @@
     <PackageVersion Include="IBMMQDotnetClient" Version="9.4.5.1" />
     <PackageVersion Include="InfluxDB.Client" Version="5.1.0" />
     <PackageVersion Include="JanusGraph.Net" Version="1.1.0" />
-    <PackageVersion Include="Keycloak.Net.Core" Version="1.0.40" />
+    <PackageVersion Include="Keycloak.Net.Core" Version="1.0.41" />
     <PackageVersion Include="KubernetesClient" Version="19.0.2" />
     <PackageVersion Include="KurrentDB.Client" Version="1.4.1" />
     <PackageVersion Include="LiteDB" Version="5.0.21" />
@@ -76,22 +77,22 @@
     <PackageVersion Include="Microsoft.Bcl.Memory" Version="10.0.12" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
-    <PackageVersion Include="Microsoft.Data.SqlClient" Version="7.0.2" />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="7.1.0" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.14.1" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Garnet" Version="2.1.7" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.0" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
     <PackageVersion Include="Milvus.Client" Version="2.3.0-preview.1" />
     <PackageVersion Include="Minio" Version="7.0.0" />
-    <PackageVersion Include="MongoDB.Driver" Version="3.11.1" />
+    <PackageVersion Include="MongoDB.Driver" Version="3.12.0" />
     <PackageVersion Include="MQTTnet" Version="5.2.0.1603" />
     <PackageVersion Include="MyCouch" Version="7.6.0" />
     <PackageVersion Include="MySql.Data" Version="26.7.0" />
     <PackageVersion Include="MySqlConnector" Version="2.6.2" />
     <PackageVersion Include="NATS.Client" Version="1.1.8" />
     <PackageVersion Include="Neo4j.Driver" Version="6.1.2" />
-    <PackageVersion Include="net-questdb-client" Version="3.2.0" />
+    <PackageVersion Include="net-questdb-client" Version="4.0.0" />
     <PackageVersion Include="Net.IBM.Data.Db2" Version="10.0.0.200" />
     <PackageVersion Include="Net.IBM.Data.Db2-lnx" Version="10.0.0.200" />
     <PackageVersion Include="Net.IBM.Data.Db2-osx" Version="10.0.0.200" />
@@ -117,10 +118,10 @@
     <PackageVersion Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
     <PackageVersion Include="SSH.NET" Version="2026.0.0" />
     <PackageVersion Include="StackExchange.Redis" Version="3.1.31" />
-    <PackageVersion Include="System.Data.Odbc" Version="9.0.19" />
+    <PackageVersion Include="System.Data.Odbc" Version="9.0.20" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.1" />
     <PackageVersion Include="System.Data.SQLite" Version="2.0.4" />
-    <PackageVersion Include="System.Drawing.Common" Version="9.0.19" />
+    <PackageVersion Include="System.Drawing.Common" Version="9.0.20" />
     <PackageVersion Include="System.Text.Json" Version="10.0.11" />
     <PackageVersion Include="Testcontainers" Version="4.14.0" />
     <PackageVersion Include="Testcontainers.ActiveMq" Version="4.14.0" />

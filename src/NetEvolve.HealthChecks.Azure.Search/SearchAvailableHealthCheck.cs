@@ -26,6 +26,8 @@ internal sealed partial class SearchAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var searchClient = GetSearchClient(name, options, _serviceProvider);
 
         var (isTimelyResponse, response) = await searchClient

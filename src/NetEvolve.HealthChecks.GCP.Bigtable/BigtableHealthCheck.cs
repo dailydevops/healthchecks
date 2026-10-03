@@ -18,6 +18,8 @@ internal sealed partial class BigtableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<BigtableTableAdminClient>()
             : _serviceProvider.GetRequiredKeyedService<BigtableTableAdminClient>(options.KeyedService);

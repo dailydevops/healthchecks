@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ArangoDBNetStandard;
 using ArangoDBNetStandard.Transport.Http;
@@ -53,16 +54,19 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
     }
 
     [Test]
-    public async Task AddArangoDb_UseOptions_Healthy() =>
+    public async Task AddArangoDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseOptionsWithKeyedService_Healthy()
+    public async Task AddArangoDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "options-test-key";
 
         await RunAndVerify(
@@ -76,12 +80,13 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddArangoDb_UseOptionsWithInternalMode_Healthy() =>
+    public async Task AddArangoDb_UseOptionsWithInternalMode_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddArangoDb(
@@ -95,7 +100,8 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                         options.Password = container.Password;
                     }
                 ),
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -112,7 +118,7 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
         );
 
     [Test]
-    public async Task AddArangoDb_UseOptions_Degraded() =>
+    public async Task AddArangoDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddArangoDb(
@@ -131,11 +137,12 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseOptions_Unhealthy() =>
+    public async Task AddArangoDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -152,11 +159,12 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_Healthy() =>
+    public async Task AddArangoDb_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -168,12 +176,17 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddArangoDb_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "config-test-key";
 
         await RunAndVerify(
@@ -188,12 +201,13 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_Degraded() =>
+    public async Task AddArangoDb_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -205,11 +219,14 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_Unhealthy() =>
+    public async Task AddArangoDb_UseConfiguration_TimeoutMinusTwo_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -221,11 +238,14 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_TransportAddressEmpty_ThrowsException() =>
+    public async Task AddArangoDb_UseConfiguration_TransportAddressEmpty_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -238,11 +258,14 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_UsernameNullWithPassword_ThrowsException() =>
+    public async Task AddArangoDb_UseConfiguration_UsernameNullWithPassword_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -256,11 +279,14 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddArangoDb_UseConfiguration_PasswordNullWithUsername_ThrowsException() =>
+    public async Task AddArangoDb_UseConfiguration_PasswordNullWithUsername_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddArangoDb("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -274,6 +300,7 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 }

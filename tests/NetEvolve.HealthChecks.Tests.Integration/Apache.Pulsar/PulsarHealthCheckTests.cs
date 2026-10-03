@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.Pulsar;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DotPulsar;
 using Microsoft.Extensions.Configuration;
@@ -19,20 +20,25 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
     public PulsarHealthCheckTests(PulsarContainer container) => _container = container;
 
     [Test]
-    public async Task AddPulsar_UseOptions_Healthy()
+    public async Task AddPulsar_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddPulsar("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddPulsar_UseOptionsWithKeyedService_Healthy()
+    public async Task AddPulsar_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
         await RunAndVerify(
@@ -46,25 +52,31 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test", (_, _) => client)
+            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test", (_, _) => client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddPulsar_UseOptions_Degraded()
+    public async Task AddPulsar_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddPulsar("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddPulsar_UseConfiguration_Healthy()
+    public async Task AddPulsar_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
         await RunAndVerify(
@@ -78,13 +90,16 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddPulsar_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddPulsar_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
         await RunAndVerify(
@@ -99,13 +114,16 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test-config", (_, _) => client)
+            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test-config", (_, _) => client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddPulsar_UseConfiguration_Degraded()
+    public async Task AddPulsar_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
         await RunAndVerify(
@@ -119,7 +137,8 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 }

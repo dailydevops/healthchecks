@@ -17,6 +17,8 @@ internal sealed partial class BlobContainerAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var blobClient = clientCreation.GetBlobServiceClient(name, options, _serviceProvider);
 

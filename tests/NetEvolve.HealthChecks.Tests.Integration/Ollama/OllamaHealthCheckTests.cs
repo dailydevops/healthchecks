@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,7 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
     public OllamaHealthCheckTests(OllamaContainer container) => _container = container;
 
     [Test]
-    public async Task AddOllama_UseOptions_Healthy() =>
+    public async Task AddOllama_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,11 +35,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseOptions_Degraded() =>
+    public async Task AddOllama_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -52,11 +54,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseConfiguration_Healthy() =>
+    public async Task AddOllama_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOllama("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -69,11 +72,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Ollama:TestContainerHealthy:ClientMode", nameof(ClientMode.ServiceUrl) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseConfiguration_Degraded() =>
+    public async Task AddOllama_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOllama("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -86,11 +90,14 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Ollama:TestContainerDegraded:ClientMode", nameof(ClientMode.ServiceUrl) },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseConfiguration_UriEmpty_ThrowException() =>
+    public async Task AddOllama_UseConfiguration_UriEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOllama("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -98,11 +105,14 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
             {
                 var values = new Dictionary<string, string?> { { "HealthChecks:Ollama:TestNoValues:Uri", "" } };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddOllama_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOllama("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -114,11 +124,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:Ollama:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseOptionsWithServiceProvider_Healthy() =>
+    public async Task AddOllama_UseOptionsWithServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -133,12 +144,15 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress)))
+                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress))),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseOptionsWithKeyedService_Healthy()
+    public async Task AddOllama_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "ollama-test-key";
 
         await RunAndVerify(
@@ -156,12 +170,13 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddKeyedSingleton(serviceKey, (_, _) => new OllamaApiClient(new Uri(_container.BaseAddress)))
+                services.AddKeyedSingleton(serviceKey, (_, _) => new OllamaApiClient(new Uri(_container.BaseAddress))),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddOllama_UseOptionsWithServiceProvider_Degraded() =>
+    public async Task AddOllama_UseOptionsWithServiceProvider_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -176,11 +191,14 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
-                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress)))
+                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress))),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseConfigurationWithServiceProvider_Healthy() =>
+    public async Task AddOllama_UseConfigurationWithServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOllama("TestContainerServiceProviderHealthy"),
             HealthStatus.Healthy,
@@ -197,12 +215,15 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress)))
+                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress))),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddOllama_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddOllama_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "config-ollama-test-key";
 
         await RunAndVerify(
@@ -222,12 +243,15 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddKeyedSingleton(serviceKey, (_, _) => new OllamaApiClient(new Uri(_container.BaseAddress)))
+                services.AddKeyedSingleton(serviceKey, (_, _) => new OllamaApiClient(new Uri(_container.BaseAddress))),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddOllama_UseConfigurationWithServiceProvider_Degraded() =>
+    public async Task AddOllama_UseConfigurationWithServiceProvider_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddOllama("TestContainerServiceProviderDegraded"),
             HealthStatus.Degraded,
@@ -244,6 +268,7 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress)))
+                services.AddSingleton<OllamaApiClient>(_ => new OllamaApiClient(new Uri(_container.BaseAddress))),
+            cancellationToken: cancellationToken
         );
 }

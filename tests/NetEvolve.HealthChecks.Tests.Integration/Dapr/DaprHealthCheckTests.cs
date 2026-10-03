@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Dapr;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Dapr.Client;
 using Microsoft.Extensions.Configuration;
@@ -19,20 +20,25 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
     public DaprHealthCheckTests(DaprContainer container) => _container = container;
 
     [Test]
-    public async Task AddDapr_UseOptions_Healthy()
+    public async Task AddDapr_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddDapr_UseOptionsWithKeyedService_Healthy()
+    public async Task AddDapr_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateDaprClient();
 
         await RunAndVerify(
@@ -43,25 +49,31 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
                     options.Timeout = 10000;
                 }),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("dapr-test", (_, _) => client)
+            serviceBuilder: services => services.AddKeyedSingleton("dapr-test", (_, _) => client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddDapr_UseOptions_Degraded()
+    public async Task AddDapr_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateDaprClient();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddDapr(options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddDapr_UseConfiguration_Healthy()
+    public async Task AddDapr_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateDaprClient();
 
         await RunAndVerify(
@@ -72,13 +84,16 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?> { { "HealthChecks:DaprSidecar:Timeout", "10000" } };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddDapr_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddDapr_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateDaprClient();
 
         await RunAndVerify(
@@ -93,13 +108,16 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("dapr-test-config", (_, _) => client)
+            serviceBuilder: services => services.AddKeyedSingleton("dapr-test-config", (_, _) => client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddDapr_UseConfiguration_Degraded()
+    public async Task AddDapr_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateDaprClient();
 
         await RunAndVerify(
@@ -110,7 +128,8 @@ public sealed class DaprHealthCheckTests : HealthCheckTestBase
                 var values = new Dictionary<string, string?> { { "HealthChecks:DaprSidecar:Timeout", "0" } };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(client)
+            serviceBuilder: services => services.AddSingleton(client),
+            cancellationToken: cancellationToken
         );
     }
 

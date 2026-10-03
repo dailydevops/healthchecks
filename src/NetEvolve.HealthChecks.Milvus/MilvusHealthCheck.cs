@@ -18,6 +18,8 @@ internal sealed partial class MilvusHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<MilvusClient>()
             : _serviceProvider.GetRequiredKeyedService<MilvusClient>(options.KeyedService);

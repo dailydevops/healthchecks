@@ -1,5 +1,6 @@
 namespace NetEvolve.HealthChecks.Tests.Integration.Azure.CosmosDB;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -17,7 +18,9 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
     public CosmosDbAvailableHealthCheckTests(CosmosDbAccess container) => _container = container;
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,11 +34,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeConnectionString_WithDatabaseId_Healthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeConnectionString_WithDatabaseId_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -51,11 +57,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeConnectionString_Degraded() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeConnectionString_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -69,11 +78,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -87,11 +99,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_container.CosmosClient)
+            serviceBuilder: services => services.AddSingleton(_container.CosmosClient),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_WithDatabaseId_Healthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_WithDatabaseId_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -107,11 +122,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient)
+            serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_WithNonExistingDatabaseId_Unhealthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeServiceProvider_WithNonExistingDatabaseId_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -127,11 +145,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient)
+            serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_Healthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -147,11 +168,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_WithDatabaseId_Healthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_WithDatabaseId_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -168,11 +192,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_Degraded() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -187,11 +214,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_WithNonExistingDatabaseId_Unhealthy() =>
+    public async Task AddCosmosDbAvailability_UseOptions_ModeAccountKey_WithNonExistingDatabaseId_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -208,6 +238,7 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 }

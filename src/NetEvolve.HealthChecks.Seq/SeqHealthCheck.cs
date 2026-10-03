@@ -18,6 +18,8 @@ internal sealed partial class SeqHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientProvider = _serviceProvider.GetRequiredService<SeqClientProvider>();
         var client = clientProvider.GetClient(name, options, _serviceProvider);
 
@@ -37,6 +39,8 @@ internal sealed partial class SeqHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(SeqConnection client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var root = await client.Client.GetRootAsync(cancellationToken).ConfigureAwait(false);
         return root is not null;
     }

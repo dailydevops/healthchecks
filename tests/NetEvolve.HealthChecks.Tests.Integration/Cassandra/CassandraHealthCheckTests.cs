@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Cassandra;
 using Microsoft.Extensions.Configuration;
@@ -20,20 +21,25 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
     public CassandraHealthCheckTests(CassandraDatabase database) => _database = database;
 
     [Test]
-    public async Task AddCassandra_UseOptions_Healthy()
+    public async Task AddCassandra_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
             healthChecks => healthChecks.AddCassandra("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseOptionsWithKeyedService_Healthy()
+    public async Task AddCassandra_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -47,7 +53,8 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test", (_, _) => cluster)
+            serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test", (_, _) => cluster),
+            cancellationToken: cancellationToken
         );
     }
 
@@ -69,8 +76,10 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
     }
 
     [Test]
-    public async Task AddCassandra_UseOptions_Degraded()
+    public async Task AddCassandra_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -94,13 +103,16 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseOptions_Unhealthy()
+    public async Task AddCassandra_UseOptions_Unhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -123,13 +135,16 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseConfiguration_Healthy()
+    public async Task AddCassandra_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -143,13 +158,18 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddCassandra_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -164,13 +184,17 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test-config", (_, _) => cluster)
+            serviceBuilder: services =>
+                services.AddKeyedSingleton<ICluster>("cassandra-test-config", (_, _) => cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseConfiguration_Degraded()
+    public async Task AddCassandra_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -184,13 +208,18 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseConfiguration_TimeoutMinusTwo_ShouldThrowException()
+    public async Task AddCassandra_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -204,13 +233,18 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddCassandra_UseOptions_CommandReturnsFalse_UnhealthyWithMessage()
+    public async Task AddCassandra_UseOptions_CommandReturnsFalse_UnhealthyWithMessage(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
         await RunAndVerify(
@@ -222,7 +256,8 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
+            cancellationToken: cancellationToken
         );
     }
 }

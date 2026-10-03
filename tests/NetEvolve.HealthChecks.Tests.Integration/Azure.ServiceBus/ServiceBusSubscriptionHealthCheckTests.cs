@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Messaging.ServiceBus;
 using global::Azure.Messaging.ServiceBus.Administration;
@@ -23,7 +24,9 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
     public ServiceBusSubscriptionHealthCheckTests(ServiceBusContainer container) => _container = container;
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -44,11 +47,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -74,12 +80,15 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     "test-key",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
     [SkipOnFailure]
-    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeServiceProvider_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeServiceProvider_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -97,12 +106,15 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
     [SkipOnFailure]
-    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeKeyedService_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -126,11 +138,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     "test-key",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseOptions_ModeConnectionString_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_ModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -146,11 +161,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeConnectionString_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeConnectionString_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -167,11 +185,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_SubscriptionNotExists_Unhealthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_SubscriptionNotExists_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -191,11 +212,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_TopicNotExists_Unhealthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_TopicNotExists_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -215,11 +239,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeServiceProvider_TopicNotExists_Unhealthy() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeServiceProvider_TopicNotExists_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -236,11 +263,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_Timeout_Degraded() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_ModeServiceProvider_Timeout_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -261,11 +291,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeServiceProvider_Timeout_Degraded() =>
+    public async Task AddAzureServiceBusSubscription_UseOptions_EnablePeekModeServiceProvider_Timeout_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -283,13 +316,16 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
-                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString))
+                services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationHealthy"),
             HealthStatus.Healthy,
@@ -317,11 +353,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureServiceBusSubscription:ConfigurationHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekModeKeyedService_Healthy() =>
+    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekModeKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationKeyedHealthy"),
             HealthStatus.Healthy,
@@ -354,11 +393,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     "test-key",
                     (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_SubscriptionNotExists_Unhealthy() =>
+    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_SubscriptionNotExists_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
@@ -385,11 +427,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test, Skip("Unsupported Client. See https://github.com/Azure/azure-service-bus-emulator-installer/issues/17")]
-    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_TopicNotExists_Unhealthy() =>
+    public async Task AddAzureServiceBusSubscription_UseConfiguration_EnablePeekMode_TopicNotExists_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationUnhealthy"),
             HealthStatus.Unhealthy,
@@ -416,11 +461,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAzureServiceBusSubscription_UseConfiguration_Degraded() =>
+    public async Task AddAzureServiceBusSubscription_UseConfiguration_Degraded(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAzureServiceBusSubscription("ConfigurationDegraded"),
             HealthStatus.Degraded,
@@ -448,6 +496,7 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AzureServiceBusSubscription:ConfigurationDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

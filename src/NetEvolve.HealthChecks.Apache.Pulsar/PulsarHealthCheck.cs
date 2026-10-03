@@ -24,6 +24,8 @@ internal sealed partial class PulsarHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IPulsarClient>()
             : _serviceProvider.GetRequiredKeyedService<IPulsarClient>(options.KeyedService);

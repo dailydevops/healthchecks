@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Milvus.Client;
 using Microsoft.Extensions.Configuration;
@@ -20,23 +21,25 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
     public MilvusHealthCheckTests(MilvusDatabase database) => _database = database;
 
     [Test]
-    public async Task AddMilvus_UseOptions_Healthy() =>
+    public async Task AddMilvus_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMilvus("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMilvus_UseOptions_Degraded() =>
+    public async Task AddMilvus_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMilvus("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMilvus_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddMilvus_UseOptions_WithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,11 +59,12 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
                     "milvus-test",
                     (_, _) => new MilvusClient(_database.GrpcConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMilvus_UseConfiguration_Healthy() =>
+    public async Task AddMilvus_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMilvus("TestContainerConfigHealthy"),
             HealthStatus.Healthy,
@@ -72,11 +76,12 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMilvus_UseConfiguration_Degraded() =>
+    public async Task AddMilvus_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMilvus("TestContainerConfigDegraded"),
             HealthStatus.Degraded,
@@ -88,11 +93,14 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString))
+            serviceBuilder: services => services.AddSingleton(_ => new MilvusClient(_database.GrpcConnectionString)),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMilvus_UseConfiguration_WithKeyedService_Healthy() =>
+    public async Task AddMilvus_UseConfiguration_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMilvus("TestContainerConfigKeyedHealthy"),
             HealthStatus.Healthy,
@@ -111,6 +119,7 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
                     "milvus-keyed-test",
                     (_, _) => new MilvusClient(_database.GrpcConnectionString)
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

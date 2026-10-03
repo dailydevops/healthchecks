@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::InfluxDB.Client;
 using Microsoft.Extensions.Configuration;
@@ -50,15 +51,16 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
     }
 
     [Test]
-    public async Task AddInfluxDB_UseOptions_Healthy() =>
+    public async Task AddInfluxDB_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseOptionsWithKeyedService_Healthy() =>
+    public async Task AddInfluxDB_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddInfluxDB(
@@ -70,7 +72,8 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test", (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test", (_, _) => _client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -87,7 +90,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
         );
 
     [Test]
-    public async Task AddInfluxDB_UseOptions_Degraded() =>
+    public async Task AddInfluxDB_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddInfluxDB(
@@ -104,11 +107,12 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseOptions_Unhealthy() =>
+    public async Task AddInfluxDB_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -125,11 +129,12 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseConfiguration_Healthy() =>
+    public async Task AddInfluxDB_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -141,11 +146,14 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseConfigurationWithKeyedService_Healthy() =>
+    public async Task AddInfluxDB_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestContainerKeyedHealthy"),
             HealthStatus.Healthy,
@@ -159,11 +167,12 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 _ = config.AddInMemoryCollection(values);
             },
             serviceBuilder: services =>
-                services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test-config", (_, _) => _client)
+                services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test-config", (_, _) => _client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseConfiguration_Degraded() =>
+    public async Task AddInfluxDB_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -175,11 +184,14 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseConfiguration_ConnectionStringEmpty_ShouldThrowException() =>
+    public async Task AddInfluxDB_UseConfiguration_ConnectionStringEmpty_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -191,11 +203,14 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddInfluxDB_UseConfiguration_TimeoutMinusTwo_ShouldThrowException() =>
+    public async Task AddInfluxDB_UseConfiguration_TimeoutMinusTwo_ShouldThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddInfluxDB("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -207,6 +222,7 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
+            cancellationToken: cancellationToken
         );
 }

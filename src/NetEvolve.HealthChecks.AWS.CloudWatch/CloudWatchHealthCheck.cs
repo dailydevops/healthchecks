@@ -20,6 +20,8 @@ internal sealed partial class CloudWatchHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateClient(options);
 
         var request = new DescribeAlarmsRequest { AlarmNames = [options.AlarmName] };

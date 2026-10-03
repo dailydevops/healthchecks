@@ -26,6 +26,8 @@ internal sealed partial class RocketMQHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientConfig = _clientConfigs.GetOrAdd(name, _ => BuildClientConfig(options));
 
         var (isTimelyResponse, sendReceipt) = await BuildAndSendAsync(clientConfig, options.Topic!, cancellationToken)
@@ -67,6 +69,8 @@ internal sealed partial class RocketMQHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var producer = await new Producer.Builder()
             .SetClientConfig(clientConfig)
             .SetTopics(topic)

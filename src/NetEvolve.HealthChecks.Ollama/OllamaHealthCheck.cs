@@ -23,6 +23,8 @@ internal sealed partial class OllamaHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = GetClient(name, options);
 
         var (isTimelyResponse, isRunning) = await client

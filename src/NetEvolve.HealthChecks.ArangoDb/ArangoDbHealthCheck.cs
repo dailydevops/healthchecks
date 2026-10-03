@@ -23,6 +23,8 @@ internal sealed partial class ArangoDbHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = GetClient(name, options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
@@ -41,6 +43,8 @@ internal sealed partial class ArangoDbHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(ArangoDBClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var cursor = await client
             .Cursor.PostCursorAsync<int>(new PostCursorBody { Query = "RETURN 1" }, null, cancellationToken)
             .ConfigureAwait(false);

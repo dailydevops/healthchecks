@@ -2,6 +2,7 @@ namespace NetEvolve.HealthChecks.Tests.Integration.Apache.RocketMQ;
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -14,7 +15,7 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
     protected RocketMQHealthCheckBaseTests(IRocketMQAccessor accessor) => _accessor = accessor;
 
     [Test]
-    public async Task AddRocketMQ_UseOptions_Healthy() =>
+    public async Task AddRocketMQ_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,11 +32,12 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseOptions_Unhealthy() =>
+    public async Task AddRocketMQ_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -51,11 +53,12 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                 );
             },
             HealthStatus.Unhealthy,
-            clearJToken: ClearConnectionRefusedMessages
+            clearJToken: ClearConnectionRefusedMessages,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseOptions_Degraded() =>
+    public async Task AddRocketMQ_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -72,11 +75,12 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseConfiguration_Healthy() =>
+    public async Task AddRocketMQ_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRocketMQ("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -92,11 +96,12 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestContainerHealthy:Timeout", "30000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseConfiguration_Unhealthy() =>
+    public async Task AddRocketMQ_UseConfiguration_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRocketMQ("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -111,11 +116,12 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            clearJToken: ClearConnectionRefusedMessages
+            clearJToken: ClearConnectionRefusedMessages,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseConfiguration_Degraded() =>
+    public async Task AddRocketMQ_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRocketMQ("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -131,11 +137,14 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseConfiguration_EndpointNull_ThrowException() =>
+    public async Task AddRocketMQ_UseConfiguration_EndpointNull_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRocketMQ("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -147,11 +156,14 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestNoValues:Topic", _accessor.Topic },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRocketMQ_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddRocketMQ_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRocketMQ("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -165,7 +177,8 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:RocketMQ:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     // The connection-refused socket/HTTP error text is supplied by the OS and localized to its UI

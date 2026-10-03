@@ -17,6 +17,8 @@ internal sealed partial class JanusGraphHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IGremlinClient>()
             : _serviceProvider.GetRequiredKeyedService<IGremlinClient>(options.KeyedService);
@@ -37,6 +39,8 @@ internal sealed partial class JanusGraphHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(IGremlinClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         _ = await client
             .SubmitAsync<long>("g.V().limit(1).count()", cancellationToken: cancellationToken)
             .ConfigureAwait(false);

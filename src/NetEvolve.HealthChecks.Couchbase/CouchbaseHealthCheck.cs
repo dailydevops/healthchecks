@@ -18,6 +18,8 @@ internal sealed partial class CouchbaseHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var cluster = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<ICluster>()
             : _serviceProvider.GetRequiredKeyedService<ICluster>(options.KeyedService);
@@ -35,8 +37,10 @@ internal sealed partial class CouchbaseHealthCheck
         return HealthCheckState(isTimelyResponse, name);
     }
 
-    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken _)
+    internal static async Task<bool> DefaultCommandAsync(ICluster cluster, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var result = await cluster.PingAsync(_options).ConfigureAwait(false);
 
         return result?.Services.Values.SelectMany(service => service).All(endpoint => endpoint.State == ServiceState.Ok)

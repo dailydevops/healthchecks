@@ -20,6 +20,8 @@ internal sealed partial class MongoDbHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<MongoClient>()
             : _serviceProvider.GetRequiredKeyedService<MongoClient>(options.KeyedService);
@@ -40,6 +42,8 @@ internal sealed partial class MongoDbHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(MongoClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var database = client.GetDatabase("admin");
 
         _ = await database

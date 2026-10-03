@@ -30,6 +30,8 @@ internal sealed partial class KafkaHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var producer = GetProducer(name, options, _serviceProvider);
 
         var (isTimelyResponse, result) = await producer

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Consul;
 using Microsoft.Extensions.Configuration;
@@ -19,29 +20,31 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
     public ConsulHealthCheckTests(ConsulDatabase database) => _database = database;
 
     [Test]
-    public async Task AddConsul_UseOptions_Healthy() =>
+    public async Task AddConsul_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerHealthy", options => options.Timeout = 10000),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             serviceBuilder: services =>
                 services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
                     config.Address = new Uri(_database.HttpEndpoint)
-                ))
+                )),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddConsul_UseOptions_Degraded() =>
+    public async Task AddConsul_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerDegraded", options => options.Timeout = 0),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
             serviceBuilder: services =>
                 services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
                     config.Address = new Uri(_database.HttpEndpoint)
-                ))
+                )),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddConsul_UseOptions_WithKeyedService_Healthy() =>
+    public async Task AddConsul_UseOptions_WithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -61,11 +64,12 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
                     "consul-test",
                     (_, _) => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddConsul_UseConfiguration_Healthy() =>
+    public async Task AddConsul_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerConfigHealthy"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
@@ -80,11 +84,12 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
                 services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
                     config.Address = new Uri(_database.HttpEndpoint)
-                ))
+                )),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddConsul_UseConfiguration_Degraded() =>
+    public async Task AddConsul_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerConfigDegraded"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
@@ -99,11 +104,14 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
                 services.AddSingleton<IConsulClient>(_ => new ConsulClient(config =>
                     config.Address = new Uri(_database.HttpEndpoint)
-                ))
+                )),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddConsul_UseConfiguration_WithKeyedService_Healthy() =>
+    public async Task AddConsul_UseConfiguration_WithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddConsul("TestContainerConfigKeyedHealthy"),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
@@ -122,6 +130,7 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
                     "consul-keyed-test",
                     (_, _) => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
                 );
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,7 +20,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
     public MySqlConnectorHealthCheckTests(MySqlDatabase database) => _database = database;
 
     [Test]
-    public async Task AddMySql_UseOptions_Healthy() =>
+    public async Task AddMySql_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -32,11 +33,12 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMySql_UseOptions_Degraded() =>
+    public async Task AddMySql_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -50,11 +52,12 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMySql_UseOptions_Unhealthy() =>
+    public async Task AddMySql_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -67,11 +70,12 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMySql_UseConfiguration_Healthy() =>
+    public async Task AddMySql_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -83,11 +87,12 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MySql:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMySql_UseConfiguration_Degraded() =>
+    public async Task AddMySql_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -99,11 +104,14 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MySql:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMySql_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddMySql_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -114,11 +122,14 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MySql:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddMySql_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddMySql_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddMySql("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -130,6 +141,7 @@ public class MySqlConnectorHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:MySql:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

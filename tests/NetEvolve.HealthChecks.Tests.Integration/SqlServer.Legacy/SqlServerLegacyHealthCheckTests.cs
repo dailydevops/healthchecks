@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,7 +20,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
     public SqlServerLegacyHealthCheckTests(SqlServerDatabase database) => _database = database;
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_Healthy() =>
+    public async Task AddSqlServerLegacy_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -32,11 +33,14 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_InfiniteTimeout_Healthy() =>
+    public async Task AddSqlServerLegacy_UseOptions_InfiniteTimeout_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -49,11 +53,12 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_Degraded() =>
+    public async Task AddSqlServerLegacy_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -67,11 +72,12 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseOptions_Unhealthy() =>
+    public async Task AddSqlServerLegacy_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -84,11 +90,12 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfiguration_Healthy() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -100,11 +107,12 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:SqlServer:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfiguration_Degraded() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -116,11 +124,14 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:SqlServer:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -131,11 +142,14 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:SqlServer:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddSqlServerLegacy_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddSqlServerLegacy_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddSqlServerLegacy("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -147,6 +161,7 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:SqlServer:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

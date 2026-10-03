@@ -22,6 +22,8 @@ internal sealed partial class IbmMQHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var queueManager = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<MQQueueManager>()
             : _serviceProvider.GetRequiredKeyedService<MQQueueManager>(options.KeyedService);

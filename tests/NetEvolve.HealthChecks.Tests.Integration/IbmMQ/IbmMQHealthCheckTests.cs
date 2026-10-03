@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using IBM.WMQ;
 using Microsoft.Extensions.Configuration;
@@ -20,20 +21,25 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
     public IbmMQHealthCheckTests(IbmMQContainer container) => _container = container;
 
     [Test]
-    public async Task AddIbmMQ_UseOptions_Healthy()
+    public async Task AddIbmMQ_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(queueManager)
+            serviceBuilder: services => services.AddSingleton(queueManager),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddIbmMQ_UseOptions_AndDisconnected_Unhealthy()
+    public async Task AddIbmMQ_UseOptions_AndDisconnected_Unhealthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         queueManager.Disconnect();
@@ -41,13 +47,16 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(queueManager)
+            serviceBuilder: services => services.AddSingleton(queueManager),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddIbmMQ_UseOptionsWithKeyedService_Healthy()
+    public async Task AddIbmMQ_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
@@ -61,25 +70,31 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("ibmmq-test", (_, _) => queueManager)
+            serviceBuilder: services => services.AddKeyedSingleton("ibmmq-test", (_, _) => queueManager),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddIbmMQ_UseOptions_Degraded()
+    public async Task AddIbmMQ_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddIbmMQ("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(queueManager)
+            serviceBuilder: services => services.AddSingleton(queueManager),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddIbmMQ_UseConfiguration_Healthy()
+    public async Task AddIbmMQ_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
@@ -93,13 +108,16 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(queueManager)
+            serviceBuilder: services => services.AddSingleton(queueManager),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddIbmMQ_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddIbmMQ_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
@@ -114,13 +132,16 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("ibmmq-test-config", (_, _) => queueManager)
+            serviceBuilder: services => services.AddKeyedSingleton("ibmmq-test-config", (_, _) => queueManager),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddIbmMQ_UseConfiguration_Degraded()
+    public async Task AddIbmMQ_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var queueManager = CreateQueueManager(_container.Host);
 
         await RunAndVerify(
@@ -134,7 +155,8 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(queueManager)
+            serviceBuilder: services => services.AddSingleton(queueManager),
+            cancellationToken: cancellationToken
         );
     }
 

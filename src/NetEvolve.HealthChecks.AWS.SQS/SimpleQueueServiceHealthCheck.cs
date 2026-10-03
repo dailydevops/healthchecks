@@ -16,6 +16,8 @@ internal sealed partial class SimpleQueueServiceHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateClient(options);
         var (isTimelyResponse, response) = await client
             .GetQueueUrlAsync(options.QueueName, cancellationToken)

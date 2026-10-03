@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Apache.ActiveMq;
 
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -12,7 +13,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
     protected ActiveMqHealthCheckBaseTests(IActiveMQAccessor accessor) => _accessor = accessor;
 
     [Test]
-    public async Task AddActiveMq_UseOptions_Healthy() =>
+    public async Task AddActiveMq_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -27,11 +28,12 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseOptions_Unhealthy() =>
+    public async Task AddActiveMq_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -46,11 +48,12 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseOptions_Degraded() =>
+    public async Task AddActiveMq_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,11 +68,12 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_Healthy() =>
+    public async Task AddActiveMq_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -83,11 +87,12 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_Unhealthy() =>
+    public async Task AddActiveMq_UseConfiguration_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -101,11 +106,12 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestContainerUnhealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_Degraded() =>
+    public async Task AddActiveMq_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -119,11 +125,14 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_BrokerAddressStringEmpty_ThrowException() =>
+    public async Task AddActiveMq_UseConfiguration_BrokerAddressStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -134,11 +143,14 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestNoValues:BrokerAddress", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddActiveMq_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddActiveMq_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddActiveMq("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -152,6 +164,7 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
                     { "HealthChecks:ActiveMq:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

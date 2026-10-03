@@ -22,12 +22,12 @@ using System.Diagnostics.CodeAnalysis;
 /// </param>
 /// <param name="asyncImplementation">
 /// A value indicating whether the generated implementation should use asynchronous database operations.
-/// When <c>true</c>, the generated code uses <c>async</c>/<c>await</c> patterns with methods like
+/// When <see langword="true"/>, the generated code uses <see langword="async"/>/<see langword="await"/> patterns with methods like
 /// <c>OpenAsync</c>, <c>ExecuteNonQueryAsync</c>, and includes <c>await using</c> for resource disposal.
 /// It also integrates timeout handling via <c>WithTimeoutAsync</c>.
-/// When <c>false</c>, the generated code uses synchronous operations (<c>Open</c>, <c>ExecuteNonQuery</c>)
-/// with traditional <c>using</c> statements and <c>Stopwatch</c>-based timeout validation.
-/// Choose <c>true</c> for modern async database providers and better scalability, or <c>false</c>
+/// When <see langword="false"/>, the generated code uses synchronous operations (<c>Open</c>, <c>ExecuteNonQuery</c>)
+/// with traditional <see langword="using"/> statements and <c>Stopwatch</c>-based timeout validation.
+/// Choose <see langword="true"/> for modern async database providers and better scalability, or <see langword="false"/>
 /// for legacy providers or environments where async operations are not supported or necessary.
 /// </param>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]

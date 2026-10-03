@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Keycloak.Net;
 using Microsoft.Extensions.Configuration;
@@ -25,16 +26,19 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
     }
 
     [Test]
-    public async Task AddKeycloak_UseOptions_Healthy() =>
+    public async Task AddKeycloak_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseOptionsWithKeyedService_Healthy()
+    public async Task AddKeycloak_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "options-test-key";
 
         await RunAndVerify(
@@ -48,12 +52,15 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddKeycloak_UseOptionsWithUsernameAndPasswordMode_Healthy() =>
+    public async Task AddKeycloak_UseOptionsWithUsernameAndPasswordMode_Healthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKeycloak(
@@ -67,7 +74,8 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                         options.Password = _container.Password;
                     }
                 ),
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
@@ -84,7 +92,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
         );
 
     [Test]
-    public async Task AddKeycloak_UseOptions_Degraded() =>
+    public async Task AddKeycloak_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
                 healthChecks.AddKeycloak(
@@ -102,11 +110,12 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                     }
                 ),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseOptions_Unhealthy() =>
+    public async Task AddKeycloak_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -123,11 +132,12 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 );
             },
             HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_Healthy() =>
+    public async Task AddKeycloak_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -139,12 +149,17 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddKeycloak_UseConfigurationWithKeyedService_Healthy(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         const string serviceKey = "config-test-key";
 
         await RunAndVerify(
@@ -159,12 +174,13 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client)
+            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_Degraded() =>
+    public async Task AddKeycloak_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -176,11 +192,14 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_BaseAddressEmpty_ThrowsException() =>
+    public async Task AddKeycloak_UseConfiguration_BaseAddressEmpty_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -193,11 +212,14 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_UsernameNull_ThrowsException() =>
+    public async Task AddKeycloak_UseConfiguration_UsernameNull_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -210,11 +232,14 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_PasswordNull_ThrowsException() =>
+    public async Task AddKeycloak_UseConfiguration_PasswordNull_ThrowsException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -228,11 +253,14 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_Unhealthy() =>
+    public async Task AddKeycloak_UseConfiguration_TimeoutMinusTwo_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddKeycloak("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -244,6 +272,7 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(_client)
+            serviceBuilder: services => services.AddSingleton(_client),
+            cancellationToken: cancellationToken
         );
 }

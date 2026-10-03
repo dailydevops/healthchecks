@@ -22,6 +22,8 @@ internal sealed partial class MosquittoHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IMqttClient>()
             : _serviceProvider.GetRequiredKeyedService<IMqttClient>(options.KeyedService);

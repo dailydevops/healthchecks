@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Azure;
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using global::Azure.Data.Tables;
 using global::Azure.Data.Tables.Sas;
@@ -46,11 +47,13 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
             .ConfigureAwait(false);
     }
 
-    private async Task PrepareTableRequirements()
+    private async Task PrepareTableRequirements(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var tableServiceClient = new TableServiceClient(ConnectionString);
 
-        _ = await tableServiceClient.CreateTableIfNotExistsAsync("test").ConfigureAwait(false);
+        _ = await tableServiceClient.CreateTableIfNotExistsAsync("test", cancellationToken).ConfigureAwait(false);
 
         TableAccountSasUri = tableServiceClient.GenerateSasUri(
             TableAccountSasPermissions.All,
@@ -59,11 +62,15 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
         );
     }
 
-    private async Task PrepareQueueRequirements()
+    private async Task PrepareQueueRequirements(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var queueServiceClient = new QueueServiceClient(ConnectionString);
 
-        _ = await queueServiceClient.CreateQueueAsync("test").ConfigureAwait(false);
+        _ = await queueServiceClient
+            .CreateQueueAsync("test", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         QueueAccountSasUri = queueServiceClient.GenerateAccountSasUri(
             AccountSasPermissions.All,
@@ -72,11 +79,15 @@ public sealed class AzuriteAccess : IAsyncInitializer, IAsyncDisposable
         );
     }
 
-    private async Task PrepareBlobRequirements()
+    private async Task PrepareBlobRequirements(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var blobServiceClient = new BlobServiceClient(ConnectionString);
 
-        _ = await blobServiceClient.CreateBlobContainerAsync("test").ConfigureAwait(false);
+        _ = await blobServiceClient
+            .CreateBlobContainerAsync("test", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         BlobAccountSasUri = blobServiceClient.GenerateAccountSasUri(
             AccountSasPermissions.All,

@@ -2,6 +2,7 @@ namespace NetEvolve.HealthChecks.Tests.Integration.AWS.CloudWatch;
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,7 +20,7 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
     public CloudWatchHealthCheckTests(FlociStackInstance instance) => _instance = instance;
 
     [Test]
-    public async Task AddAWSCloudWatch_UseOptionsCreate_Healthy() =>
+    public async Task AddAWSCloudWatch_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -36,11 +37,14 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSCloudWatch_UseOptionsCreate_WhenAlarmInvalid_Unhealthy() =>
+    public async Task AddAWSCloudWatch_UseOptionsCreate_WhenAlarmInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,11 +60,12 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSCloudWatch_UseOptionsCreate_Degraded() =>
+    public async Task AddAWSCloudWatch_UseOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -77,13 +82,14 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     // Configuration-based tests
 
     [Test]
-    public async Task AddAWSCloudWatch_UseConfiguration_Healthy() =>
+    public async Task AddAWSCloudWatch_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSCloudWatch("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -102,11 +108,14 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:AWSCloudWatch:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSCloudWatch_UseConfiguration_WhenAlarmInvalid_Unhealthy() =>
+    public async Task AddAWSCloudWatch_UseConfiguration_WhenAlarmInvalid_Unhealthy(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSCloudWatch("TestContainerUnhealthy"),
             HealthStatus.Unhealthy,
@@ -124,11 +133,12 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
                     },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddAWSCloudWatch_UseConfiguration_Degraded() =>
+    public async Task AddAWSCloudWatch_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddAWSCloudWatch("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -147,6 +157,7 @@ public class CloudWatchHealthCheckTests : HealthCheckTestBase
                     },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

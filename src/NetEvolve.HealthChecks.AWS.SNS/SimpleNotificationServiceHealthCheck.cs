@@ -20,6 +20,8 @@ internal sealed partial class SimpleNotificationServiceHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var client = CreateClient(options);
 
         var (isTimelyResponse, topic) = await client
@@ -51,6 +53,8 @@ internal sealed partial class SimpleNotificationServiceHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var (isValid, response) = await client
             .ListSubscriptionsByTopicAsync(topic.TopicArn, cancellationToken)
             .WithTimeoutAsync(options.Timeout, cancellationToken)

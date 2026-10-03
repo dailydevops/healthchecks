@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.NATS;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using global::NATS.Client;
 using Microsoft.Extensions.Configuration;
@@ -19,21 +20,26 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
     public NATSHealthCheckTests(NatsContainer container) => _container = container;
 
     [Test]
-    public async Task AddNATS_UseOptions_Healthy()
+    public async Task AddNATS_UseOptions_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddNats("TestContainerHealthy", options => options.Timeout = 10000),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddNATS_UseOptionsWithKeyedService_Healthy()
+    public async Task AddNATS_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
@@ -48,26 +54,32 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
                     }
                 ),
             HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("nats-test", (_, _) => connection)
+            serviceBuilder: services => services.AddKeyedSingleton("nats-test", (_, _) => connection),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddNATS_UseOptions_Degraded()
+    public async Task AddNATS_UseOptions_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
         await RunAndVerify(
             healthChecks => healthChecks.AddNats("TestContainerDegraded", options => options.Timeout = 0),
             HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddNATS_UseConfiguration_Healthy()
+    public async Task AddNATS_UseConfiguration_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
@@ -82,13 +94,16 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddNATS_UseConfigurationWithKeyedService_Healthy()
+    public async Task AddNATS_UseConfigurationWithKeyedService_Healthy(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
@@ -104,13 +119,16 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddKeyedSingleton("nats-test-config", (_, _) => connection)
+            serviceBuilder: services => services.AddKeyedSingleton("nats-test-config", (_, _) => connection),
+            cancellationToken: cancellationToken
         );
     }
 
     [Test]
-    public async Task AddNATS_UseConfiguration_Degraded()
+    public async Task AddNATS_UseConfiguration_Degraded(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
@@ -125,7 +143,8 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
                 };
                 _ = config.AddInMemoryCollection(values);
             },
-            serviceBuilder: services => services.AddSingleton(connection)
+            serviceBuilder: services => services.AddSingleton(connection),
+            cancellationToken: cancellationToken
         );
     }
 }

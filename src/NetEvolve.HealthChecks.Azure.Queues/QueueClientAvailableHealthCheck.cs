@@ -17,6 +17,8 @@ internal sealed partial class QueueClientAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var clientCreation = _serviceProvider.GetRequiredService<ClientCreation>();
         var queueClient = clientCreation.GetQueueServiceClient(name, options, _serviceProvider);
 

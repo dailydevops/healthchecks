@@ -18,6 +18,8 @@ internal sealed partial class RavenDbHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var store = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IDocumentStore>()
             : _serviceProvider.GetRequiredKeyedService<IDocumentStore>(options.KeyedService);
@@ -38,6 +40,8 @@ internal sealed partial class RavenDbHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(IDocumentStore store, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var buildNumber = await store
             .Maintenance.Server.SendAsync(new GetBuildNumberOperation(), cancellationToken)
             .ConfigureAwait(false);

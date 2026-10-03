@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,7 +19,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
     public NpgsqlHealthCheckTests(NpgsqlDatabase database) => _database = database;
 
     [Test]
-    public async Task AddPostgreSql_UseOptions_Healthy() =>
+    public async Task AddPostgreSql_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -31,11 +32,12 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPostgreSql_UseOptions_Degraded() =>
+    public async Task AddPostgreSql_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -48,11 +50,12 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPostgreSql_UseOptions_Unhealthy() =>
+    public async Task AddPostgreSql_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -65,11 +68,12 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Unhealthy
+            HealthStatus.Unhealthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfiguration_Healthy() =>
+    public async Task AddPostgreSql_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -81,11 +85,12 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:PostgreSql:TestContainerHealthy:Timeout", "10000" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfiguration_Degraded() =>
+    public async Task AddPostgreSql_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -97,11 +102,14 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:PostgreSql:TestContainerDegraded:Timeout", "0" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddPostgreSql_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -112,11 +120,14 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:PostgreSql:TestNoValues:ConnectionString", "" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddPostgreSql_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddPostgreSql_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddPostgreSql("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -128,6 +139,7 @@ public class NpgsqlHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:PostgreSql:TestNoValues:Timeout", "-2" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

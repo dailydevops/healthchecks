@@ -30,6 +30,8 @@ internal sealed partial class RedpandaHealthCheck : IDisposable
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var producer = GetProducer(name, options, _serviceProvider);
 
         var (isHealthy, result) = await producer

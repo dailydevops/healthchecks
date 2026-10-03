@@ -44,7 +44,7 @@ public sealed record ElasticComputeCloudOptions
     /// <summary>
     /// Gets the AWS credentials based on the configured mode.
     /// </summary>
-    /// <returns>The AWS credentials or <c>null</c> if not configured.</returns>
+    /// <returns>The AWS credentials or <see langword="null"/> if not configured.</returns>
     internal AWSCredentials? GetCredentials() =>
         Mode switch
         {

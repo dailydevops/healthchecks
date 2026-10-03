@@ -18,6 +18,8 @@ internal sealed partial class ConsulHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IConsulClient>()
             : _serviceProvider.GetRequiredKeyedService<IConsulClient>(options.KeyedService);

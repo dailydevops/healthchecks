@@ -19,7 +19,7 @@ public sealed record ActiveMqOptions
 
     /// <summary>
     /// Gets or sets the username for authenticating with the ActiveMQ broker.
-    /// Returns <c>null</c> if the value is null, empty, or whitespace.
+    /// Returns <see langword="null"/> if the value is null, empty, or whitespace.
     /// </summary>
     public string? Username
     {
@@ -37,7 +37,7 @@ public sealed record ActiveMqOptions
 
     /// <summary>
     /// Gets or sets the password for authenticating with the ActiveMQ broker.
-    /// Returns <c>null</c> if the value is null, empty, or whitespace.
+    /// Returns <see langword="null"/> if the value is null, empty, or whitespace.
     /// </summary>
     public string? Password
     {

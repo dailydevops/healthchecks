@@ -21,6 +21,8 @@ internal sealed partial class OpenSearchHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = GetClient(name, options, _serviceProvider);
 
         var commandTask = options.CommandAsync.Invoke(client, cancellationToken);
@@ -36,6 +38,8 @@ internal sealed partial class OpenSearchHealthCheck
 
     internal static async Task<bool> DefaultCommandAsync(OpenSearchClient client, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         _ = await client.PingAsync(ct: cancellationToken).ConfigureAwait(false);
 
         return true;

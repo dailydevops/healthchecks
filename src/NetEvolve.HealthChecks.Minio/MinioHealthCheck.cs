@@ -18,6 +18,8 @@ internal sealed partial class MinioHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IMinioClient>()
             : _serviceProvider.GetRequiredKeyedService<IMinioClient>(options.KeyedService);
@@ -42,6 +44,8 @@ internal sealed partial class MinioHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var bucketExistsArgs = new BucketExistsArgs().WithBucket(bucketName);
         return await client.BucketExistsAsync(bucketExistsArgs, cancellationToken).ConfigureAwait(false);
     }

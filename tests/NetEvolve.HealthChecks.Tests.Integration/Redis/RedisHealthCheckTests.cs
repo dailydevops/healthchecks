@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.HealthChecks.Tests.Integration.Redis;
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
     public RedisHealthCheckTests(RedisContainer database) => _database = database;
 
     [Test]
-    public async Task AddRedis_UseOptionsCreate_Healthy() =>
+    public async Task AddRedis_UseOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -34,11 +35,12 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Healthy
+            HealthStatus.Healthy,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedis_UseOptionsServiceProvider_Healthy() =>
+    public async Task AddRedis_UseOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -56,11 +58,12 @@ public class RedisHealthCheckTests : HealthCheckTestBase
 
                     return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedis_UseOptions_Degraded() =>
+    public async Task AddRedis_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
@@ -74,11 +77,12 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                     }
                 );
             },
-            HealthStatus.Degraded
+            HealthStatus.Degraded,
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedis_UseConfiguration_Healthy() =>
+    public async Task AddRedis_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestContainerHealthy"),
             HealthStatus.Healthy,
@@ -102,11 +106,12 @@ public class RedisHealthCheckTests : HealthCheckTestBase
 
                     return ConnectionMultiplexer.Connect(options!.Get("TestContainerHealthy").ConnectionString);
                 });
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedis_UseConfiguration_Degraded() =>
+    public async Task AddRedis_UseConfiguration_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestContainerDegraded"),
             HealthStatus.Degraded,
@@ -122,11 +127,14 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedisDatabase:TestContainerDegraded:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedis_UseConfiguration_ConnectionStringEmpty_ThrowException() =>
+    public async Task AddRedis_UseConfiguration_ConnectionStringEmpty_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -138,11 +146,14 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 
     [Test]
-    public async Task AddRedis_UseConfiguration_TimeoutMinusTwo_ThrowException() =>
+    public async Task AddRedis_UseConfiguration_TimeoutMinusTwo_ThrowException(
+        CancellationToken cancellationToken = default
+    ) =>
         await RunAndVerify(
             healthChecks => healthChecks.AddRedis("TestNoValues"),
             HealthStatus.Unhealthy,
@@ -155,6 +166,7 @@ public class RedisHealthCheckTests : HealthCheckTestBase
                     { "HealthChecks:RedisDatabase:TestNoValues:Mode", "Create" },
                 };
                 _ = config.AddInMemoryCollection(values);
-            }
+            },
+            cancellationToken: cancellationToken
         );
 }

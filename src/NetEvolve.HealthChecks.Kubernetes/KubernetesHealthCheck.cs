@@ -18,6 +18,8 @@ internal sealed partial class KubernetesHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var client = string.IsNullOrWhiteSpace(options.KeyedService)
             ? _serviceProvider.GetRequiredService<IKubernetes>()
             : _serviceProvider.GetRequiredKeyedService<IKubernetes>(options.KeyedService);

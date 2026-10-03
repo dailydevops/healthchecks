@@ -25,6 +25,8 @@ internal sealed partial class KeyVaultSecretAvailableHealthCheck
         CancellationToken cancellationToken
     )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var secretClient = GetSecretClient(name, options, _serviceProvider);
 
         var (isTimelyResponse, result) = await secretClient
