@@ -12,7 +12,7 @@ public abstract class ContainerBase : IAsyncInitializer, IAsyncDisposable
     protected ContainerBase(string? password = null)
     {
         var builder = new ArangoDbBuilder(
-            /*dockerimage*/"arangodb:3.12.11"
+            /*dockerimage*/"arangodb:3.12.12"
         ).WithLogger(NullLogger.Instance);
 
         if (password is null)
