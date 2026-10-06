@@ -7,7 +7,7 @@ using Testcontainers.CockroachDb;
 public sealed class CockroachDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly CockroachDbContainer _database = new CockroachDbBuilder(
-        /*dockerimage*/"cockroachdb/cockroach:v26.3.1"
+        /*dockerimage*/"cockroachdb/cockroach:v26.3.2"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
