@@ -8,7 +8,7 @@ using TUnit.Core.Interfaces;
 public sealed class MilvusDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly MilvusContainer _database = new MilvusBuilder(
-        /*dockerimage*/"milvusdb/milvus:v3.0.1"
+        /*dockerimage*/"milvusdb/milvus:v3.0.2"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
