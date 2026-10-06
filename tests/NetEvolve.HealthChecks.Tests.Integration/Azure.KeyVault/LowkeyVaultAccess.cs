@@ -16,7 +16,7 @@ using TUnit.Core.Exceptions;
 public sealed class LowkeyVaultAccess : IAsyncInitializer, IAsyncDisposable
 {
     private readonly LowkeyVaultContainer _container = new LowkeyVaultBuilder(
-        /*dockerimage*/"nagyesta/lowkey-vault:7.3.74"
+        /*dockerimage*/"nagyesta/lowkey-vault:7.3.112"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
