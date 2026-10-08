@@ -8,7 +8,7 @@ using Testcontainers.JanusGraph;
 public sealed class JanusGraphDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly JanusGraphContainer _database = new JanusGraphBuilder(
-        /*dockerimage*/"janusgraph/janusgraph:1.2.0-20261007-135003.53938a0"
+        /*dockerimage*/"janusgraph/janusgraph:1.2.0-20261007-225859.e3fa27a"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
