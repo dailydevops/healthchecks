@@ -175,6 +175,6 @@
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.13.4" />
     <PackageVersion Include="TUnit" Version="1.73.19" />
     <PackageVersion Include="TUnit.Mocks" Version="1.73.19" />
-    <PackageVersion Include="Verify.TUnit" Version="31.28.0" />
+    <PackageVersion Include="Verify.TUnit" Version="33.3.2" />
   </ItemGroup>
 </Project>
