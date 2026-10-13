@@ -10,7 +10,7 @@
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="5.6.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" />
-    <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23" />
+    <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.12.1" />
     <GlobalPackageReference Include="NetEvolve.Analyzer" Version="0.20.0" />
     <GlobalPackageReference Include="NetEvolve.Defaults" Version="2.10.0" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="5.0.1" />
