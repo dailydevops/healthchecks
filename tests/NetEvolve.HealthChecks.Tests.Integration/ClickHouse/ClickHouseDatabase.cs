@@ -7,7 +7,7 @@ using Testcontainers.ClickHouse;
 public sealed class ClickHouseDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly ClickHouseContainer _database = new ClickHouseBuilder(
-        /*dockerimage*/"clickhouse/clickhouse-server:26.9.16.11"
+        /*dockerimage*/"clickhouse/clickhouse-server:26.9.18.11"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
