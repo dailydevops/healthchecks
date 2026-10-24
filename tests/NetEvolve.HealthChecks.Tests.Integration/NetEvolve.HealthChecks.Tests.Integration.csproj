@@ -4,6 +4,12 @@
     <NoWarn>$(NoWarn);CA1034;IDE1006;MSB3270</NoWarn>
     <OutputType>Exe</OutputType>
     <NeutralLanguage>en</NeutralLanguage>
+
+    <!-- Verify v33+ build-time license gate (SC021). HealthChecks is a non-revenue open source project, so the OpenSource exemption applies.
+         See https://github.com/VerifyTests/Verify/blob/main/docs/maintenance-fee.md
+         Renew yearly: the end month may be at most 12 months ahead of the build date; builds fail after 2027-09. -->
+    <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
+    <Verify_SponsorshipExemptionUntil>2027-09</Verify_SponsorshipExemptionUntil>
   </PropertyGroup>
   <ItemGroup Label="Transitive Version Workaround">
     <!-- Related to https://github.com/dependabot/dependabot-core/issues/12493 -->
