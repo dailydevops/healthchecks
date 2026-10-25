@@ -7,7 +7,7 @@ using Testcontainers.MongoDb;
 public sealed class MongoDbDatabase : IAsyncInitializer, IAsyncDisposable
 {
     private readonly MongoDbContainer _database = new MongoDbBuilder(
-        /*dockerimage*/"mongo:8.3.11"
+        /*dockerimage*/"mongo:9.0.4"
     )
         .WithLogger(NullLogger.Instance)
         .Build();
