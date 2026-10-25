@@ -135,6 +135,12 @@
         "Microsoft.ApplicationInsights",
         "/^Microsoft\\.ApplicationInsights\\./"
       ]
+    },
+    {
+      "groupName": "IBM Db2 packages",
+      "groupSlug": "ibm-db2-packages",
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["/^Net\\.IBM\\.Data\\.Db2/"]
     }
   ]
 }
