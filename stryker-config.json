@@ -1,0 +1,17 @@
+{
+  "stryker-config": {
+    "solution": "HealthChecks.slnx",
+    "mutation-level": "Advanced",
+    "reporters": ["html", "json", "dashboard", "progress"],
+    "project-info": { "name": "github.com/dailydevops/healthchecks" },
+    "thresholds": { "high": 80, "low": 60, "break": 0 },
+    "test-projects": [
+      "tests/NetEvolve.HealthChecks.Tests.Architecture/NetEvolve.HealthChecks.Tests.Architecture.csproj",
+      "tests/NetEvolve.HealthChecks.Tests.Integration/NetEvolve.HealthChecks.Tests.Integration.csproj",
+      "tests/NetEvolve.HealthChecks.Tests.Unit/NetEvolve.HealthChecks.Tests.Unit.csproj"
+    ],
+    "coverage-analysis": "perTest",
+    "mutate": ["**/*.cs", "!**/*.Designer.cs", "!**/*.g.cs", "!**/*.g.i.cs"],
+    "test-runner": "mtp"
+  }
+}
