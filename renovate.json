@@ -3,9 +3,9 @@
   "extends": [
     "config:best-practices",
     ":disableDependencyDashboard",
-    ":automergeMinor",
-    ":rebaseStalePrs"
+    ":automergeMinor"
   ],
+  "rebaseWhen": "conflicted",
   "ignorePresets": ["group:monorepos"],
   "automergeStrategy": "squash",
   "assignees": ["samtrion"],
