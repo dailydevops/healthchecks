@@ -35,7 +35,7 @@ permissions:
 jobs:
   all:
     name: Build & Tests
-    uses: dailydevops/pipelines/.github/workflows/build-dotnet-dynamic.yml@c33abb8b428b4c309a9facc01a66e328bc7cd129 # 2.5.158
+    uses: dailydevops/pipelines/.github/workflows/build-dotnet-dynamic.yml@2c31d49d417be256d3700a0d29fca0e50a8313cf # 2.5.335
     with:
       dotnetLogging: ${{ inputs.dotnet-logging }}
       dotnetVersion: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
