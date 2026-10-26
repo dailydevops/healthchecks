@@ -104,7 +104,7 @@
     <PackageVersion Include="OllamaSharp" Version="5.5.0" />
     <PackageVersion Include="OpenSearch.Client" Version="2.2.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.19.1" />
-    <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.301" />
+    <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.400" />
     <PackageVersion Include="PublicApiGenerator" Version="11.5.4" />
     <PackageVersion Include="Qdrant.Client" Version="1.19.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.2" />
