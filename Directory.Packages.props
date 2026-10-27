@@ -123,7 +123,7 @@
     <PackageVersion Include="System.Data.SQLite" Version="2.0.4" />
     <PackageVersion Include="System.Drawing.Common" Version="9.0.22" />
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
-    <PackageVersion Include="System.Text.Json" Version="10.0.12" />
+    <PackageVersion Include="System.Text.Json" Version="10.0.14" />
     <PackageVersion Include="Testcontainers" Version="4.16.0" />
     <PackageVersion Include="Testcontainers.ActiveMq" Version="4.16.0" />
     <PackageVersion Include="Testcontainers.ArangoDb" Version="4.16.0" />
