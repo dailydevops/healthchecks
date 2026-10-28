@@ -11,6 +11,7 @@
     ],
     "coverage-analysis": "perTest",
     "mutate": ["**/*.cs", "!**/*.Designer.cs", "!**/*.g.cs", "!**/*.g.i.cs"],
+    "configuration": "Mutation",
     "test-runner": "mtp"
   }
 }
