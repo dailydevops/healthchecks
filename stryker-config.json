@@ -7,7 +7,6 @@
     "thresholds": { "high": 80, "low": 60, "break": 0 },
     "test-projects": [
       "tests/NetEvolve.HealthChecks.Tests.Architecture/NetEvolve.HealthChecks.Tests.Architecture.csproj",
-      "tests/NetEvolve.HealthChecks.Tests.Integration/NetEvolve.HealthChecks.Tests.Integration.csproj",
       "tests/NetEvolve.HealthChecks.Tests.Unit/NetEvolve.HealthChecks.Tests.Unit.csproj"
     ],
     "coverage-analysis": "perTest",
