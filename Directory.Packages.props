@@ -45,7 +45,7 @@
     <PackageVersion Include="Confluent.Kafka" Version="2.16.0" />
     <PackageVersion Include="Consul" Version="1.8.0" />
     <PackageVersion Include="CouchbaseNetClient" Version="3.10.0" />
-    <PackageVersion Include="Dapr.Client" Version="1.18.10" />
+    <PackageVersion Include="Dapr.Client" Version="1.19.0" />
     <PackageVersion Include="Devart.Data.MySql" Version="10.2.223" />
     <PackageVersion Include="Devart.Data.Oracle" Version="11.2.223" />
     <PackageVersion Include="Devart.Data.PostgreSql" Version="9.2.223" />
