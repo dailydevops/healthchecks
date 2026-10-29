@@ -65,7 +65,7 @@
     <PackageVersion Include="InfluxDB.Client" Version="5.1.0" />
     <PackageVersion Include="JanusGraph.Net" Version="1.1.0" />
     <PackageVersion Include="Keycloak.Net.Core" Version="1.0.41" />
-    <PackageVersion Include="KubernetesClient" Version="19.0.2" />
+    <PackageVersion Include="KubernetesClient" Version="21.0.8" />
     <PackageVersion Include="KurrentDB.Client" Version="1.6.1" />
     <PackageVersion Include="LiteDB" Version="5.0.21" />
     <PackageVersion Include="MeiliSearch" Version="0.20.0" />
