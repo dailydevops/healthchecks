@@ -13,6 +13,12 @@ on:
         required: false
         default: 'stryker-config.json'
 
+permissions:
+  actions: read
+  contents: read
+  pull-requests: write
+  security-events: write
+
 jobs:
   all:
     if: github.run_id != 1
