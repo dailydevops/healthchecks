@@ -59,7 +59,7 @@
       "prPriority": -5,
       "labels": ["dependency:docker"],
       "semanticCommitScope": "docker",
-      "versioning": "loose"
+      "allowedVersions": "!/(^|[-_.])(arm|arm32v[0-9]|arm64|arm64v[0-9]|aarch64|riscv64|s390x|ppc64le)([-_.]|$)/"
     },
     {
       "description": "Track SQL Server CU/GDR releases on the ubuntu-22.04 base only; preview/RC/CTP tags never match. See microsoft/mssql-docker#974.",
