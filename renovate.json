@@ -3,7 +3,14 @@
   "extends": [
     "config:best-practices",
     ":disableDependencyDashboard",
-    ":automergeMinor"
+    ":automergeMinor",
+    "group:dotNetCore",
+    "monorepo:dotnet",
+    "monorepo:applicationinsights-dotnet",
+    "monorepo:opentelemetry-dotnet-contrib",
+    "monorepo:testcontainers-dotnet",
+    "monorepo:xunit-dotnet",
+    "monorepo:mstest"
   ],
   "rebaseWhen": "conflicted",
   "ignorePresets": ["group:monorepos"],
@@ -68,40 +75,16 @@
       "versioning": "regex:^(?<major>\\d+)-CU(?<minor>\\d+)(-GDR(?<patch>\\d+))?-ubuntu-(?<compatibility>\\d+\\.\\d+)$"
     },
     {
-      "groupName": "Testcontainers packages",
-      "groupSlug": "testcontainers-packages",
+      "groupName": "Verify packages",
+      "groupSlug": "verify-packages",
       "matchManagers": ["nuget"],
-      "matchPackageNames": ["Testcontainers", "Testcontainers.*"]
+      "matchPackageNames": ["Verify", "Verify.*"]
     },
     {
       "groupName": "TUnit packages",
       "groupSlug": "tunit-packages",
       "matchManagers": ["nuget"],
       "matchPackageNames": ["TUnit", "TUnit.*", "Verify.TUnit"]
-    },
-    {
-      "groupName": "XUnit.V3 packages",
-      "groupSlug": "xunit-v3-packages",
-      "matchManagers": ["nuget"],
-      "matchPackageNames": ["XUnit.V3", "XUnit.V3.*", "Verify.XunitV3"]
-    },
-    {
-      "groupName": "MSTest packages",
-      "groupSlug": "mstest-packages",
-      "matchManagers": ["nuget"],
-      "matchPackageNames": ["MSTest", "MSTest.*", "Verify.MSTest"]
-    },
-    {
-      "groupName": "Microsoft Entity Framework",
-      "groupSlug": "microsoft-entity-framework",
-      "matchManagers": ["nuget"],
-      "matchPackageNames": ["Microsoft.EntityFrameworkCore", "Microsoft.EntityFrameworkCore.*"]
-    },
-    {
-      "groupName": "OpenTelemetry Instrumentation packages",
-      "groupSlug": "opentelemetry-instrumentation-packages",
-      "matchManagers": ["nuget"],
-      "matchPackageNames": ["OpenTelemetry.Instrumentation.*"]
     },
     {
       "groupName": "AWS SDK packages",
@@ -116,25 +99,10 @@
       "matchPackageNames": ["NetEvolve.Http.Correlation", "NetEvolve.Http.Correlation.*"]
     },
     {
-      "groupName": "Microsoft.Extensions packages",
-      "groupSlug": "microsoft-extensions-packages",
-      "matchManagers": ["nuget"],
-      "matchPackageNames": ["/^Microsoft\\.Extensions\\./"]
-    },
-    {
       "groupName": "Roslynator packages",
       "groupSlug": "roslynator-packages",
       "matchManagers": ["nuget"],
       "matchPackageNames": ["/^Roslynator/"]
-    },
-    {
-      "groupName": "Microsoft.ApplicationInsights packages",
-      "groupSlug": "microsoft-applicationinsights-packages",
-      "matchManagers": ["nuget"],
-      "matchPackageNames": [
-        "Microsoft.ApplicationInsights",
-        "/^Microsoft\\.ApplicationInsights\\./"
-      ]
     },
     {
       "groupName": "IBM Db2 packages",
