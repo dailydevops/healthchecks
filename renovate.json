@@ -19,9 +19,6 @@
   "semanticCommits": "enabled",
   "semanticCommitType": "chore",
   "osvVulnerabilityAlerts": true,
-  "vulnerabilityAlerts": {
-    "prPriority": 20
-  },
   "enabledManagers": ["custom.regex", "dockerfile", "github-actions", "nuget"],
   "ignorePaths": [
     "**/node_modules/**",
