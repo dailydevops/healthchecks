@@ -26,16 +26,13 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddGarnet(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Hostname = _database.Hostname;
-                        options.Port = _database.Port;
-                        options.Mode = ConnectionHandleMode.Create;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddGarnet("TestContainerHealthy", options =>
+                {
+                    options.Hostname = _database.Hostname;
+                    options.Port = _database.Port;
+                    options.Mode = ConnectionHandleMode.Create;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -46,14 +43,11 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddGarnet(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Mode = ConnectionHandleMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddGarnet("TestContainerHealthy", options =>
+                {
+                    options.Mode = ConnectionHandleMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: builder =>
@@ -70,16 +64,13 @@ public class GarnetHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddGarnet(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Hostname = _database.Hostname;
-                        options.Port = _database.Port;
-                        options.Timeout = 0;
-                        options.Mode = ConnectionHandleMode.Create;
-                    }
-                );
+                _ = healthChecks.AddGarnet("TestContainerDegraded", options =>
+                {
+                    options.Hostname = _database.Hostname;
+                    options.Port = _database.Port;
+                    options.Timeout = 0;
+                    options.Mode = ConnectionHandleMode.Create;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

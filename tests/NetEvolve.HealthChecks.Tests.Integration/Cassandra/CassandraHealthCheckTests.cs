@@ -42,20 +42,11 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
 
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddCassandra(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "cassandra-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test", (_, _) => cluster),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddCassandra("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "cassandra-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton<ICluster>("cassandra-test", (_, _) => cluster), cancellationToken: cancellationToken);
     }
 
     [Test]
@@ -63,15 +54,12 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
     {
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddCassandra("TestContainerHealthy").AddCassandra("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
-                )
+        _ = await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddCassandra("TestContainerHealthy").AddCassandra("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton<ICluster>(cluster)
+            )
         );
     }
 
@@ -82,30 +70,21 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
 
         using var cluster = Cluster.Builder().WithConnectionString(_database.ConnectionString).Build();
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddCassandra(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddCassandra("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (cluster, cancellationToken) =>
                     {
-                        options.CommandAsync = async (cluster, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            using var session = await cluster.ConnectAsync().ConfigureAwait(false);
-                            var result = await session
-                                .ExecuteAsync(new SimpleStatement("SELECT release_version FROM system.local"))
-                                .ConfigureAwait(false);
+                        using var session = await cluster.ConnectAsync().ConfigureAwait(false);
+                        var result = await session
+                            .ExecuteAsync(new SimpleStatement("SELECT release_version FROM system.local"))
+                            .ConfigureAwait(false);
 
-                            return result?.Any() == true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
-            cancellationToken: cancellationToken
-        );
+                        return result?.Any() == true;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton<ICluster>(cluster), cancellationToken: cancellationToken);
     }
 
     [Test]
@@ -118,21 +97,18 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCassandra(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddCassandra("TestContainerUnhealthy", options =>
+                {
+                    options.CommandAsync = async (cluster, _) =>
                     {
-                        options.CommandAsync = async (cluster, _) =>
-                        {
-                            using var session = await cluster.ConnectAsync().ConfigureAwait(false);
-                            var result = await session
-                                .ExecuteAsync(new SimpleStatement("SELECT invalid FROM system.local"))
-                                .ConfigureAwait(false);
+                        using var session = await cluster.ConnectAsync().ConfigureAwait(false);
+                        var result = await session
+                            .ExecuteAsync(new SimpleStatement("SELECT invalid FROM system.local"))
+                            .ConfigureAwait(false);
 
-                            return result?.Any() == true;
-                        };
-                    }
-                );
+                        return result?.Any() == true;
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton<ICluster>(cluster),
@@ -250,9 +226,8 @@ public class CassandraHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCassandra(
-                    "TestContainerInvalidResult",
-                    options => options.CommandAsync = (_, _) => Task.FromResult(false)
+                _ = healthChecks.AddCassandra("TestContainerInvalidResult", options =>
+                    options.CommandAsync = (_, _) => Task.FromResult(false)
                 );
             },
             HealthStatus.Unhealthy,

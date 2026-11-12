@@ -58,17 +58,14 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusSubscription(
-                    "ServiceBusSubscriptionKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "test-key";
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.TopicName = ServiceBusContainer.TopicName;
-                        options.SubscriptionName = ServiceBusContainer.SubscriptionName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusSubscription("ServiceBusSubscriptionKeyedServiceHealthy", options =>
+                {
+                    options.KeyedService = "test-key";
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.TopicName = ServiceBusContainer.TopicName;
+                    options.SubscriptionName = ServiceBusContainer.SubscriptionName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -76,9 +73,8 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -134,9 +130,8 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -389,9 +384,8 @@ public class ServiceBusSubscriptionHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusClient>()
                 );
             },
             cancellationToken: cancellationToken

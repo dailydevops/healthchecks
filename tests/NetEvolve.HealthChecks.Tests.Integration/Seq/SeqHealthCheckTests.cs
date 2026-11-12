@@ -37,21 +37,11 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
 
         const string serviceKey = "seq-test";
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddSeq(
-                    "KeyedServiceProviderHealthy",
-                    options =>
-                    {
-                        options.KeyedService = serviceKey;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services =>
-                services.AddKeyedSingleton(serviceKey, (_, _) => new SeqConnection(_container.ServerUrl.ToString())),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddSeq("KeyedServiceProviderHealthy", options =>
+                {
+                    options.KeyedService = serviceKey;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => new SeqConnection(_container.ServerUrl.ToString())), cancellationToken: cancellationToken);
     }
 
     [Test]
@@ -65,68 +55,43 @@ public sealed class SeqHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddSeq_UseOptions_ModeServerUrl_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddSeq(
-                    "ServerUrlHealthy",
-                    options =>
-                    {
-                        options.Mode = SeqClientCreationMode.ServerUrl;
-                        options.ServerUrl = _container.ServerUrl;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddSeq("ServerUrlHealthy", options =>
+                {
+                    options.Mode = SeqClientCreationMode.ServerUrl;
+                    options.ServerUrl = _container.ServerUrl;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddSeq_UseOptions_ModeServerUrl_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddSeq(
-                    "ServerUrlDegraded",
-                    options =>
-                    {
-                        options.Mode = SeqClientCreationMode.ServerUrl;
-                        options.ServerUrl = _container.ServerUrl;
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddSeq("ServerUrlDegraded", options =>
+                {
+                    options.Mode = SeqClientCreationMode.ServerUrl;
+                    options.ServerUrl = _container.ServerUrl;
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddSeq_UseOptionsDoubleRegistered_ThrowsArgumentException() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddSeq("DoubleRegistered").AddSeq("DoubleRegistered"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services =>
-                        services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddSeq("DoubleRegistered").AddSeq("DoubleRegistered"),
+                HealthStatus.Healthy,
+                serviceBuilder: services =>
+                    services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString()))
+            )
         );
 
     [Test]
     public async Task AddSeq_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddSeq(
-                    "Unhealthy",
-                    options =>
-                        options.CommandAsync = async (_, _) =>
-                        {
-                            await Task.CompletedTask;
-                            throw new InvalidOperationException("Unhealthy test exception");
-                        }
-                ),
-            HealthStatus.Unhealthy,
-            serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString())),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddSeq("Unhealthy", options => options.CommandAsync = async (
+                        _,
+                        _
+                    ) =>
+                    {
+                        await Task.CompletedTask;
+                        throw new InvalidOperationException("Unhealthy test exception");
+                    }), HealthStatus.Unhealthy, serviceBuilder: services => services.AddSingleton(_ => new SeqConnection(_container.ServerUrl.ToString())), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddSeq_UseConfiguration_ModeServiceProvider_Healthy(

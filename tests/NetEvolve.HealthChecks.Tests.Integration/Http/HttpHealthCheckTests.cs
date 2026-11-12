@@ -27,14 +27,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestInvalidUri",
-                    options =>
-                    {
-                        options.Uri = "https://invalid-domain-that-does-not-exist-12345.com";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddHttp("TestInvalidUri", options =>
+                {
+                    options.Uri = "https://invalid-domain-that-does-not-exist-12345.com";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -111,15 +108,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestValidKeyedEndpoint",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.KeyedService = "http-test";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddHttp("TestValidKeyedEndpoint", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.KeyedService = "http-test";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -165,14 +159,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestCustomStatus",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.ExpectedHttpStatusCodes.Add(201);
-                    }
-                );
+                _ = healthChecks.AddHttp("TestCustomStatus", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.ExpectedHttpStatusCodes.Add(201);
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
@@ -214,14 +205,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestUnexpectedStatus",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        // Default ExpectedHttpStatusCodes is [200], so 201 should be unhealthy
-                    }
-                );
+                _ = healthChecks.AddHttp("TestUnexpectedStatus", options =>
+                {
+                    options.Uri = testServerUrl;
+                    // Default ExpectedHttpStatusCodes is [200], so 201 should be unhealthy
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
@@ -269,14 +257,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestPostMethod",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.HttpMethod = "POST";
-                    }
-                );
+                _ = healthChecks.AddHttp("TestPostMethod", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.HttpMethod = "POST";
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
@@ -331,14 +316,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestHeaders",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.Headers.Add(expectedHeader, expectedValue);
-                    }
-                );
+                _ = healthChecks.AddHttp("TestHeaders", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.Headers.Add(expectedHeader, expectedValue);
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
@@ -407,16 +389,13 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestRequestBody",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.HttpMethod = "POST";
-                        options.ContentType = expectedContentType;
-                        options.Content = expectedContent;
-                    }
-                );
+                _ = healthChecks.AddHttp("TestRequestBody", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.HttpMethod = "POST";
+                    options.ContentType = expectedContentType;
+                    options.Content = expectedContent;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddSingleton(client),
@@ -460,14 +439,11 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestTimeout",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.Timeout = 1;
-                    }
-                );
+                _ = healthChecks.AddHttp("TestTimeout", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.Timeout = 1;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services => _ = services.AddSingleton(testServer.CreateClient()),
@@ -518,16 +494,13 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestRedirect",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.AllowAutoRedirect = true;
-                        // Adding expected status codes for both the initial 302 and final 200 response
-                        options.ExpectedHttpStatusCodes.Add((int)HttpStatusCode.Redirect);
-                    }
-                );
+                _ = healthChecks.AddHttp("TestRedirect", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.AllowAutoRedirect = true;
+                    // Adding expected status codes for both the initial 302 and final 200 response
+                    options.ExpectedHttpStatusCodes.Add((int)HttpStatusCode.Redirect);
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -586,15 +559,12 @@ public class HttpHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddHttp(
-                    "TestNoRedirect",
-                    options =>
-                    {
-                        options.Uri = testServerUrl;
-                        options.AllowAutoRedirect = false;
-                        // Only expecting 200, not 302
-                    }
-                );
+                _ = healthChecks.AddHttp("TestNoRedirect", options =>
+                {
+                    options.Uri = testServerUrl;
+                    options.AllowAutoRedirect = false;
+                    // Only expecting 200, not 302
+                });
             },
             HealthStatus.Unhealthy, // Expected to be unhealthy since we get a 302 and expect a 200
             serviceBuilder: services =>

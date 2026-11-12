@@ -43,20 +43,11 @@ public sealed class NATSHealthCheckTests : HealthCheckTestBase
         var factory = new ConnectionFactory();
         var connection = factory.CreateConnection(_container.ConnectionString);
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddNats(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "nats-test";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("nats-test", (_, _) => connection),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddNats("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "nats-test";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("nats-test", (_, _) => connection), cancellationToken: cancellationToken);
     }
 
     [Test]

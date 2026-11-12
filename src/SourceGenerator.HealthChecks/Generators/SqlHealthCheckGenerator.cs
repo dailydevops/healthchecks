@@ -25,9 +25,8 @@ internal sealed class SqlHealthCheckGenerator : IIncrementalGenerator
 
     private static void Generate(SourceProductionContext context, Candidate candidate)
     {
-        var codeBuilder = CodeGenerator.ConfigurableHealthCheck(
-            candidate,
-            builder => GenerateSqlCode(builder, candidate)
+        var codeBuilder = CodeGenerator.ConfigurableHealthCheck(candidate, builder =>
+            GenerateSqlCode(builder, candidate)
         );
 
         context.AddSource($"{candidate.Name}.g.cs", SourceText.From(codeBuilder.ToString(), Encoding.UTF8));

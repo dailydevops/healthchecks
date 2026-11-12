@@ -20,55 +20,37 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddCouchDb_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddCouchDb(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.DatabaseName = "db";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddCouchDb("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.DatabaseName = "db";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddCouchDb_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddCouchDb("TestContainerHealthy").AddCouchDb("TestContainerHealthy"),
-                    HealthStatus.Healthy
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddCouchDb("TestContainerHealthy").AddCouchDb("TestContainerHealthy"),
+                HealthStatus.Healthy
+            )
         );
 
     [Test]
     public async Task AddCouchDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddCouchDb(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddCouchDb("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.DatabaseName = "db";
+                    options.CommandAsync = async (client, cancellationToken) =>
                     {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.DatabaseName = "db";
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
-                            _ = await client.Database.HeadAsync(cancellationToken).ConfigureAwait(false);
+                        await Task.Delay(1000, cancellationToken);
+                        _ = await client.Database.HeadAsync(cancellationToken).ConfigureAwait(false);
 
-                            return true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            cancellationToken: cancellationToken
-        );
+                        return true;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddCouchDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
@@ -76,14 +58,11 @@ public class CouchDbHealthCheckTests : HealthCheckTestBase
             healthChecks =>
             {
 #pragma warning disable S5332 // Using clear-text protocols is insecure
-                _ = healthChecks.AddCouchDb(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = "http://invalid:5984";
-                        options.Timeout = 100;
-                    }
-                );
+                _ = healthChecks.AddCouchDb("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = "http://invalid:5984";
+                    options.Timeout = 100;
+                });
 #pragma warning restore S5332 // Using clear-text protocols is insecure
             },
             HealthStatus.Unhealthy,

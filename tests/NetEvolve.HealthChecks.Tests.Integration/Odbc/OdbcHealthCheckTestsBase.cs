@@ -21,14 +21,11 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOdbc(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = GetConnectionString();
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddOdbc("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = GetConnectionString();
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -39,15 +36,12 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOdbc(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = GetConnectionString();
-                        options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddOdbc("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = GetConnectionString();
+                    options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -58,14 +52,11 @@ public abstract class OdbcHealthCheckTestsBase : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOdbc(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = GetConnectionString();
-                        options.Command = "RAISERROR('This is a test.',16,1)";
-                    }
-                );
+                _ = healthChecks.AddOdbc("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = GetConnectionString();
+                    options.Command = "RAISERROR('This is a test.',16,1)";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

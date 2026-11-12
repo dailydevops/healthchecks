@@ -101,18 +101,15 @@ internal sealed partial class RedisHealthCheck : IDisposable
         {
             if (disposing && _connections is not null)
             {
-                _ = Parallel.ForEach(
-                    _connections.Values,
-                    connectionTask =>
+                _ = Parallel.ForEach(_connections.Values, connectionTask =>
+                {
+                    if (connectionTask.Status == TaskStatus.RanToCompletion)
                     {
-                        if (connectionTask.Status == TaskStatus.RanToCompletion)
-                        {
 #pragma warning disable VSTHRD002 // Task is already completed, so accessing Result cannot block.
-                            connectionTask.Result.Dispose();
+                        connectionTask.Result.Dispose();
 #pragma warning restore VSTHRD002
-                        }
                     }
-                );
+                });
                 _connections.Clear();
             }
             _disposedValue = true;

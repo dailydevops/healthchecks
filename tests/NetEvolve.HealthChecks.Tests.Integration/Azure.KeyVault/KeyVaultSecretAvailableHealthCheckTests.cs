@@ -26,14 +26,11 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKeyVaultSecretAvailability(
-                    "KeyVaultServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = KeyVaultClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddKeyVaultSecretAvailability("KeyVaultServiceProviderHealthy", options =>
+                {
+                    options.Mode = KeyVaultClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_container.GetSecretClient()),
@@ -47,14 +44,11 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKeyVaultSecretAvailability(
-                    "KeyVaultServiceProviderDegraded",
-                    options =>
-                    {
-                        options.Mode = KeyVaultClientCreationMode.ServiceProvider;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddKeyVaultSecretAvailability("KeyVaultServiceProviderDegraded", options =>
+                {
+                    options.Mode = KeyVaultClientCreationMode.ServiceProvider;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services => services.AddSingleton(_container.GetSecretClient()),
@@ -68,16 +62,13 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKeyVaultSecretAvailability(
-                    "KeyVaultDefaultAzureCredentialsHealthy",
-                    options =>
-                    {
-                        options.VaultUri = _container.VaultUri;
-                        options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
-                        options.Timeout = 10000;
-                        options.ConfigureClientOptions = _container.ConfigureSecretClientOptions;
-                    }
-                );
+                _ = healthChecks.AddKeyVaultSecretAvailability("KeyVaultDefaultAzureCredentialsHealthy", options =>
+                {
+                    options.VaultUri = _container.VaultUri;
+                    options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
+                    options.Timeout = 10000;
+                    options.ConfigureClientOptions = _container.ConfigureSecretClientOptions;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential),
@@ -91,16 +82,13 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKeyVaultSecretAvailability(
-                    "KeyVaultDefaultAzureCredentialsDegraded",
-                    options =>
-                    {
-                        options.VaultUri = _container.VaultUri;
-                        options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
-                        options.Timeout = 0;
-                        options.ConfigureClientOptions = _container.ConfigureSecretClientOptions;
-                    }
-                );
+                _ = healthChecks.AddKeyVaultSecretAvailability("KeyVaultDefaultAzureCredentialsDegraded", options =>
+                {
+                    options.VaultUri = _container.VaultUri;
+                    options.Mode = KeyVaultClientCreationMode.DefaultAzureCredentials;
+                    options.Timeout = 0;
+                    options.ConfigureClientOptions = _container.ConfigureSecretClientOptions;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services => services.AddSingleton<TokenCredential>(_container.Credential),
@@ -117,18 +105,15 @@ public class KeyVaultSecretAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKeyVaultSecretAvailability(
-                    "KeyVaultClientSecretCredentialHealthy",
-                    options =>
-                    {
-                        options.VaultUri = _container.VaultUri;
-                        options.Mode = KeyVaultClientCreationMode.ClientSecretCredential;
-                        options.TenantId = "test-tenant";
-                        options.ClientId = "test-client";
-                        options.ClientSecret = "test-secret";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddKeyVaultSecretAvailability("KeyVaultClientSecretCredentialHealthy", options =>
+                {
+                    options.VaultUri = _container.VaultUri;
+                    options.Mode = KeyVaultClientCreationMode.ClientSecretCredential;
+                    options.TenantId = "test-tenant";
+                    options.ClientId = "test-client";
+                    options.ClientSecret = "test-secret";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken

@@ -92,14 +92,11 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        _ = builder.AddBigtable(
-            name,
-            options =>
-            {
-                options.Timeout = 10000;
-                options.KeyedService = "bigtable";
-            }
-        );
+        _ = builder.AddBigtable(name, options =>
+        {
+            options.Timeout = 10000;
+            options.KeyedService = "bigtable";
+        });
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();

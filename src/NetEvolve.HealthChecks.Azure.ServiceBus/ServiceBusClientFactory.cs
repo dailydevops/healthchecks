@@ -54,9 +54,8 @@ internal sealed class ServiceBusClientFactory
                 : serviceProvider.GetRequiredKeyedService<ServiceBusAdministrationClient>(options.KeyedService);
         }
 
-        return _serviceBusAdministrationClients.GetOrAdd(
-            name,
-            _ => CreateAdministrationClient(options, serviceProvider)
+        return _serviceBusAdministrationClients.GetOrAdd(name, _ =>
+            CreateAdministrationClient(options, serviceProvider)
         );
     }
 

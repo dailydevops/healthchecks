@@ -20,14 +20,11 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddDuckDB(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddDuckDB("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -38,14 +35,11 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddDuckDB(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddDuckDB("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = ConnectionString;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -56,14 +50,11 @@ public class DuckDBHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddDuckDB(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = ConnectionString;
-                        options.Command = "SELECT 1 = `1`";
-                    }
-                );
+                _ = healthChecks.AddDuckDB("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = ConnectionString;
+                    options.Command = "SELECT 1 = `1`";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

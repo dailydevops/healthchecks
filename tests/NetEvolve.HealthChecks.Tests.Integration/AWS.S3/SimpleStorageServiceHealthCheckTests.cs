@@ -24,18 +24,15 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSS3(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.BucketName = FlociStackInstance.BucketName;
-                        options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAWSS3("TestContainerHealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.BucketName = FlociStackInstance.BucketName;
+                    options.Mode = CreationMode.BasicAuthentication;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -48,17 +45,14 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSS3(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.BucketName = "invalid-bucket";
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSS3("TestContainerUnhealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.BucketName = "invalid-bucket";
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -69,18 +63,15 @@ public class SimpleStorageServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSS3(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.BucketName = FlociStackInstance.BucketName;
-                        options.Timeout = 0;
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSS3("TestContainerDegraded", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.BucketName = FlociStackInstance.BucketName;
+                    options.Timeout = 0;
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

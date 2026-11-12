@@ -25,16 +25,13 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Timeout = 10000;
-                        options.Topic = "TestContainerHealthy";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerHealthy", options =>
+                {
+                    options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Timeout = 10000;
+                    options.Topic = "TestContainerHealthy";
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -45,15 +42,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Timeout = 10000;
-                        options.Topic = "TestContainerHealthy";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerHealthy", options =>
+                {
+                    options.Mode = ProducerHandleMode.ServiceProvider;
+                    options.Timeout = 10000;
+                    options.Topic = "TestContainerHealthy";
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: builder =>
@@ -130,20 +124,17 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerHealthy",
-                    options =>
+                _ = healthChecks.AddRedpanda("TestContainerHealthy", options =>
+                {
+                    options.Configuration = new()
                     {
-                        options.Configuration = new()
-                        {
-                            BootstrapServers = _database.BootstrapAddress,
-                            EnableDeliveryReports = false,
-                        };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Timeout = 10000;
-                        options.Topic = "TestContainerHealthy";
-                    }
-                );
+                        BootstrapServers = _database.BootstrapAddress,
+                        EnableDeliveryReports = false,
+                    };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Timeout = 10000;
+                    options.Topic = "TestContainerHealthy";
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -179,16 +170,13 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Timeout = 0;
-                        options.Topic = "TestContainerDegraded";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerDegraded", options =>
+                {
+                    options.Configuration = new() { BootstrapServers = _database.BootstrapAddress };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Timeout = 0;
+                    options.Topic = "TestContainerDegraded";
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -199,15 +187,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Timeout = 0;
-                        options.Topic = "TestContainerDegraded";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerDegraded", options =>
+                {
+                    options.Mode = ProducerHandleMode.ServiceProvider;
+                    options.Timeout = 0;
+                    options.Topic = "TestContainerDegraded";
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: builder =>
@@ -284,20 +269,17 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerDegraded",
-                    options =>
+                _ = healthChecks.AddRedpanda("TestContainerDegraded", options =>
+                {
+                    options.Configuration = new()
                     {
-                        options.Configuration = new()
-                        {
-                            BootstrapServers = _database.BootstrapAddress,
-                            EnableDeliveryReports = false,
-                        };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Timeout = 0;
-                        options.Topic = "TestContainerDegraded";
-                    }
-                );
+                        BootstrapServers = _database.BootstrapAddress,
+                        EnableDeliveryReports = false,
+                    };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Timeout = 0;
+                    options.Topic = "TestContainerDegraded";
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -333,19 +315,16 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddRedpanda("TestContainerUnhealthy", options =>
+                {
+                    options.Configuration = new()
                     {
-                        options.Configuration = new()
-                        {
-                            BootstrapServers = _database.BootstrapAddress,
-                            SocketTimeoutMs = 0,
-                        };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealthy";
-                    }
-                );
+                        BootstrapServers = _database.BootstrapAddress,
+                        SocketTimeoutMs = 0,
+                    };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Topic = "TestContainerUnhealthy";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -356,14 +335,11 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ProducerHandleMode.ServiceProvider;
-                        options.Topic = "TestContainerUnhealthy";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerUnhealthy", options =>
+                {
+                    options.Mode = ProducerHandleMode.ServiceProvider;
+                    options.Topic = "TestContainerUnhealthy";
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: builder =>
@@ -389,15 +365,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.Configuration = null!;
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealthy";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerUnhealthy", options =>
+                {
+                    options.Configuration = null!;
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Topic = "TestContainerUnhealthy";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -410,15 +383,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.Configuration = new() { BootstrapServers = null! };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealthy";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerUnhealthy", options =>
+                {
+                    options.Configuration = new() { BootstrapServers = null! };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Topic = "TestContainerUnhealthy";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -431,15 +401,12 @@ public class RedpandaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedpanda(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.Configuration = new() { BootstrapServers = " " };
-                        options.Mode = ProducerHandleMode.Create;
-                        options.Topic = "TestContainerUnhealthy";
-                    }
-                );
+                _ = healthChecks.AddRedpanda("TestContainerUnhealthy", options =>
+                {
+                    options.Configuration = new() { BootstrapServers = " " };
+                    options.Mode = ProducerHandleMode.Create;
+                    options.Topic = "TestContainerUnhealthy";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

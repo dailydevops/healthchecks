@@ -48,20 +48,11 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
         cancellationToken.ThrowIfCancellationRequested();
 
         using var client = new GremlinClient(_database.Server, _serializer);
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddJanusGraph(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "janusgraph-test";
-                        options.Timeout = 25000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<IGremlinClient>("janusgraph-test", (_, _) => client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddJanusGraph("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "janusgraph-test";
+                    options.Timeout = 25000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton<IGremlinClient>("janusgraph-test", (_, _) => client), cancellationToken: cancellationToken);
     }
 
     [Test]
@@ -69,15 +60,13 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
     public async Task AddJanusGraph_UseOptionsDoubleRegistered_Healthy()
     {
         using var client = new GremlinClient(_database.Server, _serializer);
-        _ = await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddJanusGraph("TestContainerHealthy").AddJanusGraph("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
-                )
+        _ = await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks =>
+                    healthChecks.AddJanusGraph("TestContainerHealthy").AddJanusGraph("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton<IGremlinClient>(client)
+            )
         );
     }
 
@@ -87,24 +76,15 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
         cancellationToken.ThrowIfCancellationRequested();
 
         using var client = new GremlinClient(_database.Server, _serializer);
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddJanusGraph(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddJanusGraph("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (_, cancellationToken) =>
                     {
-                        options.CommandAsync = async (_, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
-                            return true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IGremlinClient>(client),
-            cancellationToken: cancellationToken
-        );
+                        await Task.Delay(1000, cancellationToken);
+                        return true;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton<IGremlinClient>(client), cancellationToken: cancellationToken);
     }
 
     [Test]
@@ -116,9 +96,8 @@ public class JanusGraphHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddJanusGraph(
-                    "TestContainerUnhealthy",
-                    options => options.CommandAsync = (_1, _2) => Task.FromResult(false)
+                _ = healthChecks.AddJanusGraph("TestContainerUnhealthy", options =>
+                    options.CommandAsync = (_1, _2) => Task.FromResult(false)
                 );
             },
             HealthStatus.Unhealthy,

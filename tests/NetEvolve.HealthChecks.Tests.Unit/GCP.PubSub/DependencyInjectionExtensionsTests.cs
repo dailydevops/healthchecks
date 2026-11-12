@@ -92,14 +92,11 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        _ = builder.AddPubSub(
-            name,
-            options =>
-            {
-                options.Timeout = 10000;
-                options.KeyedService = "pubsub";
-            }
-        );
+        _ = builder.AddPubSub(name, options =>
+        {
+            options.Timeout = 10000;
+            options.KeyedService = "pubsub";
+        });
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();

@@ -64,78 +64,55 @@ public class RavenDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
 
     [Test]
     public async Task AddRavenDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddRavenDb(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "mongodb-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _store),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddRavenDb("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "mongodb-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _store), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddRavenDb_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddRavenDb("TestContainerHealthy").AddRavenDb("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_store)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddRavenDb("TestContainerHealthy").AddRavenDb("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_store)
+            )
         );
 
     [Test]
     public async Task AddRavenDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddRavenDb(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddRavenDb("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (store, cancellationToken) =>
                     {
-                        options.CommandAsync = async (store, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            var buildNumber = await store
-                                .Maintenance.Server.SendAsync(new GetBuildNumberOperation(), cancellationToken)
-                                .ConfigureAwait(false);
+                        var buildNumber = await store
+                            .Maintenance.Server.SendAsync(new GetBuildNumberOperation(), cancellationToken)
+                            .ConfigureAwait(false);
 
-                            return buildNumber is not null;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_store),
-            cancellationToken: cancellationToken
-        );
+                        return buildNumber is not null;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_store), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddRavenDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRavenDb(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddRavenDb("TestContainerUnhealthy", options =>
+                {
+                    options.CommandAsync = async (store, cancellationToken) =>
                     {
-                        options.CommandAsync = async (store, cancellationToken) =>
-                        {
-                            var stats = await store
-                                .Maintenance.ForDatabase("nonexistent-db")
-                                .SendAsync(new GetStatisticsOperation(), cancellationToken);
+                        var stats = await store
+                            .Maintenance.ForDatabase("nonexistent-db")
+                            .SendAsync(new GetStatisticsOperation(), cancellationToken);
 
-                            return stats is not null;
-                        };
-                    }
-                );
+                        return stats is not null;
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton(_store),

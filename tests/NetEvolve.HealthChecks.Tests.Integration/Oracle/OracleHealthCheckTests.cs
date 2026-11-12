@@ -23,14 +23,11 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOracle(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddOracle("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -41,14 +38,11 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOracle(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddOracle("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -59,14 +53,11 @@ public class OracleHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOracle(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                        options.Command = "SELECT 1 = `1`;";
-                    }
-                );
+                _ = healthChecks.AddOracle("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Command = "SELECT 1 = `1`;";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

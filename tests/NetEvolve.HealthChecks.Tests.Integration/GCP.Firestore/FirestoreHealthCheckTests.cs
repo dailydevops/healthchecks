@@ -42,14 +42,11 @@ public sealed class FirestoreHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddFirestore(
-                    "TestContainerKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.KeyedService = "firestore";
-                    }
-                );
+                _ = healthChecks.AddFirestore("TestContainerKeyedServiceHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.KeyedService = "firestore";
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddKeyedSingleton("firestore", (_, _) => _database.Database),

@@ -25,14 +25,11 @@ public class SQLiteDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSQLiteDevart(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = $"Data Source={_databasePath}";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddSQLiteDevart("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = $"Data Source={_databasePath}";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -43,15 +40,12 @@ public class SQLiteDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSQLiteDevart(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = $"Data Source={_databasePath}";
-                        options.Command = "SELECT 1;";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddSQLiteDevart("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = $"Data Source={_databasePath}";
+                    options.Command = "SELECT 1;";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -62,14 +56,11 @@ public class SQLiteDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSQLiteDevart(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = $"Data Source={_databasePath}";
-                        options.Command = "SELECT * FROM NonExistentTable;";
-                    }
-                );
+                _ = healthChecks.AddSQLiteDevart("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = $"Data Source={_databasePath}";
+                    options.Command = "SELECT * FROM NonExistentTable;";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

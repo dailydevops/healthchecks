@@ -44,15 +44,12 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
             await RunAndVerify(
                 healthChecks =>
                 {
-                    _ = healthChecks.AddLiteDB(
-                        "TestContainerHealthy",
-                        options =>
-                        {
-                            options.ConnectionString = $"filename={dbPath}";
-                            options.CollectionName = "TestCollection";
-                            options.Timeout = 10000;
-                        }
-                    );
+                    _ = healthChecks.AddLiteDB("TestContainerHealthy", options =>
+                    {
+                        options.ConnectionString = $"filename={dbPath}";
+                        options.CollectionName = "TestCollection";
+                        options.Timeout = 10000;
+                    });
                 },
                 HealthStatus.Healthy,
                 cancellationToken: cancellationToken
@@ -78,15 +75,12 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
             await RunAndVerify(
                 healthChecks =>
                 {
-                    _ = healthChecks.AddLiteDB(
-                        "TestContainerDegraded",
-                        options =>
-                        {
-                            options.ConnectionString = $"filename={dbPath}";
-                            options.CollectionName = "TestCollection";
-                            options.Timeout = 0;
-                        }
-                    );
+                    _ = healthChecks.AddLiteDB("TestContainerDegraded", options =>
+                    {
+                        options.ConnectionString = $"filename={dbPath}";
+                        options.CollectionName = "TestCollection";
+                        options.Timeout = 0;
+                    });
                 },
                 HealthStatus.Degraded,
                 cancellationToken: cancellationToken
@@ -112,15 +106,12 @@ public class LiteDBHealthCheckTests : HealthCheckTestBase
             await RunAndVerify(
                 healthChecks =>
                 {
-                    _ = healthChecks.AddLiteDB(
-                        "TestContainerUnhealthy",
-                        options =>
-                        {
-                            options.ConnectionString = $"filename={dbPath}";
-                            options.CollectionName = "NonExistentCollection";
-                            options.Timeout = 10000;
-                        }
-                    );
+                    _ = healthChecks.AddLiteDB("TestContainerUnhealthy", options =>
+                    {
+                        options.ConnectionString = $"filename={dbPath}";
+                        options.CollectionName = "NonExistentCollection";
+                        options.Timeout = 10000;
+                    });
                 },
                 HealthStatus.Unhealthy,
                 cancellationToken: cancellationToken
