@@ -21,52 +21,31 @@ public sealed class BigtableHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddBigtable_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddBigtable(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.ProjectName = BigtableDatabase.ProjectId;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddBigtable("TestContainerHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.ProjectName = BigtableDatabase.ProjectId;
+                }), HealthStatus.Healthy, serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddBigtable_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddBigtable(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Timeout = 0;
-                        options.ProjectName = BigtableDatabase.ProjectId;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddBigtable("TestContainerDegraded", options =>
+                {
+                    options.Timeout = 0;
+                    options.ProjectName = BigtableDatabase.ProjectId;
+                }), HealthStatus.Degraded, serviceBuilder: services => _ = services.AddSingleton(_ => _database.Client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddBigtable_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBigtable(
-                    "TestContainerKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.KeyedService = "bigtable";
-                        options.ProjectName = BigtableDatabase.ProjectId;
-                    }
-                );
+                _ = healthChecks.AddBigtable("TestContainerKeyedServiceHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.KeyedService = "bigtable";
+                    options.ProjectName = BigtableDatabase.ProjectId;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddKeyedSingleton("bigtable", (_, _) => _database.Client),

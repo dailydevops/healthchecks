@@ -104,12 +104,10 @@ internal static class HealthCheckArchitecture
         ];
 
         return new ArchLoader()
-            .LoadAssembliesRecursively(
-                assemblies,
-                x =>
-                    x.Name.Name.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase)
-                        ? FilterResult.LoadAndContinue
-                        : FilterResult.SkipAndContinue
+            .LoadAssembliesRecursively(assemblies, x =>
+                x.Name.Name.StartsWith("NetEvolve.HealthChecks", StringComparison.OrdinalIgnoreCase)
+                    ? FilterResult.LoadAndContinue
+                    : FilterResult.SkipAndContinue
             )
             .Build();
     }

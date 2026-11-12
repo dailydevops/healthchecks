@@ -48,21 +48,17 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddConsul(
-                    "TestContainerHealthyKeyed",
-                    options =>
-                    {
-                        options.KeyedService = "consul-test";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddConsul("TestContainerHealthyKeyed", options =>
+                {
+                    options.KeyedService = "consul-test";
+                    options.Timeout = 10000;
+                });
             },
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton<IConsulClient>(
-                    "consul-test",
-                    (_, _) => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
+                _ = services.AddKeyedSingleton<IConsulClient>("consul-test", (_, _) =>
+                    new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
                 );
             },
             cancellationToken: cancellationToken
@@ -126,9 +122,8 @@ public sealed class ConsulHealthCheckTests : HealthCheckTestBase
             },
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton<IConsulClient>(
-                    "consul-keyed-test",
-                    (_, _) => new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
+                _ = services.AddKeyedSingleton<IConsulClient>("consul-keyed-test", (_, _) =>
+                    new ConsulClient(config => config.Address = new Uri(_database.HttpEndpoint))
                 );
             },
             cancellationToken: cancellationToken

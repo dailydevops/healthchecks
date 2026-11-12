@@ -61,72 +61,48 @@ public class InfluxDBHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, 
 
     [Test]
     public async Task AddInfluxDB_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddInfluxDB(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "influxdb-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test", (_, _) => _client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddInfluxDB("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "influxdb-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton<IInfluxDBClient>("influxdb-test", (_, _) => _client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddInfluxDB_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddInfluxDB("TestContainerHealthy").AddInfluxDB("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddInfluxDB("TestContainerHealthy").AddInfluxDB("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client)
+            )
         );
 
     [Test]
     public async Task AddInfluxDB_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddInfluxDB(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddInfluxDB("TestContainerDegraded", options =>
+                {
+                    options.PingAsync = async (client, cancellationToken) =>
                     {
-                        options.PingAsync = async (client, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            return await client.PingAsync().ConfigureAwait(false);
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),
-            cancellationToken: cancellationToken
-        );
+                        return await client.PingAsync().ConfigureAwait(false);
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddInfluxDB_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddInfluxDB(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddInfluxDB("TestContainerUnhealthy", options =>
+                {
+                    options.PingAsync = async (_, cancellationToken) =>
                     {
-                        options.PingAsync = async (_, cancellationToken) =>
-                        {
-                            await Task.Delay(0, cancellationToken);
-                            throw new InvalidOperationException("test");
-                        };
-                    }
-                );
+                        await Task.Delay(0, cancellationToken);
+                        throw new InvalidOperationException("test");
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton<IInfluxDBClient>(_client),

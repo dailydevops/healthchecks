@@ -106,9 +106,8 @@ public sealed class RocketMQContainer : IAsyncInitializer, IAsyncDisposable, IRo
             })
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilExternalTcpPortIsAvailable(
-                        grpcPort,
-                        strategy => strategy.WithRetries(60).WithInterval(TimeSpan.FromSeconds(2))
+                    .UntilExternalTcpPortIsAvailable(grpcPort, strategy =>
+                        strategy.WithRetries(60).WithInterval(TimeSpan.FromSeconds(2))
                     )
             )
             .WithLogger(NullLogger.Instance)

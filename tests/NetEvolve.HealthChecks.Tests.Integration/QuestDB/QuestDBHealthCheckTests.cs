@@ -21,51 +21,27 @@ public sealed class QuestDBHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddQuestDB_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddQuestDB(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.StatusUri = _database.StatusUri.ToString();
-                    }
-                ),
-            HealthStatus.Healthy,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddQuestDB("TestContainerHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.StatusUri = _database.StatusUri.ToString();
+                }), HealthStatus.Healthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddQuestDB_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddQuestDB(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Timeout = 0;
-                        options.StatusUri = _database.StatusUri.ToString();
-                    }
-                ),
-            HealthStatus.Degraded,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddQuestDB("TestContainerDegraded", options =>
+                {
+                    options.Timeout = 0;
+                    options.StatusUri = _database.StatusUri.ToString();
+                }), HealthStatus.Degraded, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddQuestDB_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddQuestDB(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.Timeout = 0;
-                        options.StatusUri = "invalid";
-                    }
-                ),
-            HealthStatus.Unhealthy,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddQuestDB("TestContainerUnhealthy", options =>
+                {
+                    options.Timeout = 0;
+                    options.StatusUri = "invalid";
+                }), HealthStatus.Unhealthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddQuestDB_UseConfiguration_Healthy(CancellationToken cancellationToken = default) =>

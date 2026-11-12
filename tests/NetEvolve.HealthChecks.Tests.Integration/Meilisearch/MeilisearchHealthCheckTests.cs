@@ -23,15 +23,12 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMeilisearch(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Host = _database.Host;
-                        options.Mode = MeilisearchClientCreationMode.Internal;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddMeilisearch("TestContainerHealthy", options =>
+                {
+                    options.Host = _database.Host;
+                    options.Mode = MeilisearchClientCreationMode.Internal;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -42,14 +39,11 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMeilisearch(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Mode = MeilisearchClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddMeilisearch("TestContainerHealthy", options =>
+                {
+                    options.Mode = MeilisearchClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: builder =>
@@ -62,15 +56,12 @@ public class MeilisearchHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMeilisearch(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Host = _database.Host;
-                        options.Timeout = 0;
-                        options.Mode = MeilisearchClientCreationMode.Internal;
-                    }
-                );
+                _ = healthChecks.AddMeilisearch("TestContainerDegraded", options =>
+                {
+                    options.Host = _database.Host;
+                    options.Timeout = 0;
+                    options.Mode = MeilisearchClientCreationMode.Internal;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

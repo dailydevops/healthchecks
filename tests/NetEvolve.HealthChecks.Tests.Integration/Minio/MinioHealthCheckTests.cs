@@ -22,52 +22,31 @@ public class MinioHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddMinio_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddMinio(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.BucketName = MinioDatabase.BucketName;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddSingleton(_database.Client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddMinio("TestContainerHealthy", options =>
+                {
+                    options.BucketName = MinioDatabase.BucketName;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddSingleton(_database.Client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddMinio_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddMinio(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "minio-test";
-                        options.BucketName = MinioDatabase.BucketName;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("minio-test", (_, _) => _database.Client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddMinio("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "minio-test";
+                    options.BucketName = MinioDatabase.BucketName;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("minio-test", (_, _) => _database.Client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddMinio_UseOptions_WhenBucketInvalid_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMinio(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.BucketName = "invalid-bucket";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddMinio("TestContainerUnhealthy", options =>
+                {
+                    options.BucketName = "invalid-bucket";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton(_database.Client),
@@ -79,25 +58,22 @@ public class MinioHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMinio(
-                    "TestContainerDegraded",
-                    options =>
+                _ = healthChecks.AddMinio("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (client, bucketName, cancellationToken) =>
                     {
-                        options.CommandAsync = async (client, bucketName, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            var bucketExistsArgs = new global::Minio.DataModel.Args.BucketExistsArgs().WithBucket(
-                                bucketName
-                            );
-                            return await client
-                                .BucketExistsAsync(bucketExistsArgs, cancellationToken)
-                                .ConfigureAwait(false);
-                        };
-                        options.BucketName = MinioDatabase.BucketName;
-                        options.Timeout = 0;
-                    }
-                );
+                        var bucketExistsArgs = new global::Minio.DataModel.Args.BucketExistsArgs().WithBucket(
+                            bucketName
+                        );
+                        return await client
+                            .BucketExistsAsync(bucketExistsArgs, cancellationToken)
+                            .ConfigureAwait(false);
+                    };
+                    options.BucketName = MinioDatabase.BucketName;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services => services.AddSingleton(_database.Client),
@@ -106,14 +82,12 @@ public class MinioHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddMinio_UseOptionsDoubleRegistered_ThrowsArgumentException() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddMinio("TestContainerHealthy").AddMinio("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_database.Client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddMinio("TestContainerHealthy").AddMinio("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_database.Client)
+            )
         );
 
     [Test]
@@ -199,9 +173,8 @@ public class MinioHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMinio(
-                    "TestContainerInvalidResult",
-                    options => options.CommandAsync = (_, _, _) => Task.FromResult(false)
+                _ = healthChecks.AddMinio("TestContainerInvalidResult", options =>
+                    options.CommandAsync = (_, _, _) => Task.FromResult(false)
                 );
             },
             HealthStatus.Unhealthy,

@@ -26,15 +26,12 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueServiceProviderHealthy",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.Mode = QueueClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueServiceProviderHealthy", options =>
+                {
+                    options.QueueName = "test";
+                    options.Mode = QueueClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -49,24 +46,20 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "KeyedQueueServiceProviderHealthy",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.Mode = QueueClientCreationMode.ServiceProvider;
-                        options.KeyedService = "azure-queue-client-test";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("KeyedQueueServiceProviderHealthy", options =>
+                {
+                    options.QueueName = "test";
+                    options.Mode = QueueClientCreationMode.ServiceProvider;
+                    options.KeyedService = "azure-queue-client-test";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "azure-queue-client-test",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<QueueServiceClient>()
+                _ = services.AddKeyedSingleton("azure-queue-client-test", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<QueueServiceClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -79,15 +72,12 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueServiceProviderDegraded",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.Mode = QueueClientCreationMode.ServiceProvider;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueServiceProviderDegraded", options =>
+                {
+                    options.QueueName = "test";
+                    options.Mode = QueueClientCreationMode.ServiceProvider;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
@@ -102,15 +92,12 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueServiceProviderNotExistsUnhealthy",
-                    options =>
-                    {
-                        options.QueueName = "notexists";
-                        options.Mode = QueueClientCreationMode.ServiceProvider;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueServiceProviderNotExistsUnhealthy", options =>
+                {
+                    options.QueueName = "notexists";
+                    options.Mode = QueueClientCreationMode.ServiceProvider;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
@@ -125,16 +112,13 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueServiceProviderWithConfigurationHealthy",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.Mode = QueueClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueServiceProviderWithConfigurationHealthy", options =>
+                {
+                    options.QueueName = "test";
+                    options.Mode = QueueClientCreationMode.ServiceProvider;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -149,16 +133,13 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueConnectionStringHealthy",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = QueueClientCreationMode.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueConnectionStringHealthy", options =>
+                {
+                    options.QueueName = "test";
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = QueueClientCreationMode.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -171,16 +152,13 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueConnectionStringDegraded",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = QueueClientCreationMode.ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueConnectionStringDegraded", options =>
+                {
+                    options.QueueName = "test";
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = QueueClientCreationMode.ConnectionString;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -193,19 +171,16 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueSharedKeyHealthy",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.AccountKey = AzuriteAccess.AccountKey;
-                        options.AccountName = AzuriteAccess.AccountName;
-                        options.Mode = QueueClientCreationMode.SharedKey;
-                        options.ServiceUri = _container.QueueServiceEndpoint;
-                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueSharedKeyHealthy", options =>
+                {
+                    options.QueueName = "test";
+                    options.AccountKey = AzuriteAccess.AccountKey;
+                    options.AccountName = AzuriteAccess.AccountName;
+                    options.Mode = QueueClientCreationMode.SharedKey;
+                    options.ServiceUri = _container.QueueServiceEndpoint;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -218,18 +193,15 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueSharedKeyDegraded",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.AccountKey = AzuriteAccess.AccountKey;
-                        options.AccountName = AzuriteAccess.AccountName;
-                        options.Mode = QueueClientCreationMode.SharedKey;
-                        options.Timeout = 0;
-                        options.ServiceUri = _container.QueueServiceEndpoint;
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueSharedKeyDegraded", options =>
+                {
+                    options.QueueName = "test";
+                    options.AccountKey = AzuriteAccess.AccountKey;
+                    options.AccountName = AzuriteAccess.AccountName;
+                    options.Mode = QueueClientCreationMode.SharedKey;
+                    options.Timeout = 0;
+                    options.ServiceUri = _container.QueueServiceEndpoint;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -242,16 +214,13 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueAzureSasCredentialHealthy",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.Mode = QueueClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _container.QueueAccountSasUri;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueAzureSasCredentialHealthy", options =>
+                {
+                    options.QueueName = "test";
+                    options.Mode = QueueClientCreationMode.AzureSasCredential;
+                    options.ServiceUri = _container.QueueAccountSasUri;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -264,16 +233,13 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQueueClientAvailability(
-                    "QueueAzureSasCredentialDegraded",
-                    options =>
-                    {
-                        options.QueueName = "test";
-                        options.Mode = QueueClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _container.QueueAccountSasUri;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddQueueClientAvailability("QueueAzureSasCredentialDegraded", options =>
+                {
+                    options.QueueName = "test";
+                    options.Mode = QueueClientCreationMode.AzureSasCredential;
+                    options.ServiceUri = _container.QueueAccountSasUri;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -331,9 +297,8 @@ public class QueueClientAvailableHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddQueueServiceClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "azure-queue-client-test",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<QueueServiceClient>()
+                _ = services.AddKeyedSingleton("azure-queue-client-test", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<QueueServiceClient>()
                 );
             },
             cancellationToken: cancellationToken

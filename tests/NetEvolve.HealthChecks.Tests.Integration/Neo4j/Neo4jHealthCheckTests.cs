@@ -61,74 +61,51 @@ public class Neo4jHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, IDi
 
     [Test]
     public async Task AddNeo4j_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddNeo4j(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "neo4j-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("neo4j-test", (_, _) => _driver),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddNeo4j("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "neo4j-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("neo4j-test", (_, _) => _driver), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddNeo4j_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddNeo4j("TestContainerHealthy").AddNeo4j("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_driver)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddNeo4j("TestContainerHealthy").AddNeo4j("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_driver)
+            )
         );
 
     [Test]
     public async Task AddNeo4j_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddNeo4j(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddNeo4j("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (driver, cancellationToken) =>
                     {
-                        options.CommandAsync = async (driver, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            await using var session = driver.AsyncSession();
-                            _ = await session.RunAsync("RETURN 1").ConfigureAwait(false);
-                            return true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_driver),
-            cancellationToken: cancellationToken
-        );
+                        await using var session = driver.AsyncSession();
+                        _ = await session.RunAsync("RETURN 1").ConfigureAwait(false);
+                        return true;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_driver), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddNeo4j_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddNeo4j(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddNeo4j("TestContainerUnhealthy", options =>
+                {
+                    options.CommandAsync = async (driver, cancellationToken) =>
                     {
-                        options.CommandAsync = async (driver, cancellationToken) =>
-                        {
-                            await using var session = driver.AsyncSession();
-                            _ = await session.RunAsync("INVALID QUERY", cancellationToken).ConfigureAwait(false);
-                            return true;
-                        };
-                    }
-                );
+                        await using var session = driver.AsyncSession();
+                        _ = await session.RunAsync("INVALID QUERY", cancellationToken).ConfigureAwait(false);
+                        return true;
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton(_driver),

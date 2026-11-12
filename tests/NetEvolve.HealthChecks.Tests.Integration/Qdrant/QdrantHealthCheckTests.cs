@@ -43,21 +43,17 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddQdrant(
-                    "TestContainerHealthyKeyed",
-                    options =>
-                    {
-                        options.KeyedService = "qdrant-test";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddQdrant("TestContainerHealthyKeyed", options =>
+                {
+                    options.KeyedService = "qdrant-test";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton(
-                    "qdrant-test",
-                    (_, _) => new QdrantClient(_database.GrpcConnectionString)
+                _ = services.AddKeyedSingleton("qdrant-test", (_, _) =>
+                    new QdrantClient(_database.GrpcConnectionString)
                 );
             },
             cancellationToken: cancellationToken
@@ -124,9 +120,8 @@ public sealed class QdrantHealthCheckTests : HealthCheckTestBase
             },
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton(
-                    "qdrant-keyed-test",
-                    (_, _) => new QdrantClient(_database.GrpcConnectionString)
+                _ = services.AddKeyedSingleton("qdrant-keyed-test", (_, _) =>
+                    new QdrantClient(_database.GrpcConnectionString)
                 );
             },
             cancellationToken: cancellationToken

@@ -17,16 +17,13 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddActiveMq(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.BrokerAddress = _accessor.BrokerAddress;
-                        options.Username = _accessor.Username;
-                        options.Password = _accessor.Password;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddActiveMq("TestContainerHealthy", options =>
+                {
+                    options.BrokerAddress = _accessor.BrokerAddress;
+                    options.Username = _accessor.Username;
+                    options.Password = _accessor.Password;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -37,16 +34,13 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddActiveMq(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.BrokerAddress = "invalid";
-                        options.Username = _accessor.Username;
-                        options.Password = _accessor.Password;
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddActiveMq("TestContainerUnhealthy", options =>
+                {
+                    options.BrokerAddress = "invalid";
+                    options.Username = _accessor.Username;
+                    options.Password = _accessor.Password;
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -57,16 +51,13 @@ public abstract class ActiveMqHealthCheckBaseTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddActiveMq(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.BrokerAddress = _accessor.BrokerAddress;
-                        options.Username = _accessor.Username;
-                        options.Password = _accessor.Password;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddActiveMq("TestContainerDegraded", options =>
+                {
+                    options.BrokerAddress = _accessor.BrokerAddress;
+                    options.Username = _accessor.Username;
+                    options.Password = _accessor.Password;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

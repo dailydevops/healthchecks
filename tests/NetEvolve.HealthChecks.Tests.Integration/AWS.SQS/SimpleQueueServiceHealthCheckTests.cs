@@ -23,18 +23,15 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSSQS(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.QueueName = FlociStackInstance.QueueName;
-                        options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAWSSQS("TestContainerHealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.QueueName = FlociStackInstance.QueueName;
+                    options.Mode = CreationMode.BasicAuthentication;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -47,17 +44,14 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSSQS(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.QueueName = "invalid";
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSSQS("TestContainerUnhealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.QueueName = "invalid";
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -68,18 +62,15 @@ public class SimpleQueueServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSSQS(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.QueueName = FlociStackInstance.QueueName;
-                        options.Timeout = 0;
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSSQS("TestContainerDegraded", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.QueueName = FlociStackInstance.QueueName;
+                    options.Timeout = 0;
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

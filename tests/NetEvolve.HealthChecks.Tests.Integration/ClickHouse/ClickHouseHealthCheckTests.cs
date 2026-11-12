@@ -23,14 +23,11 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddClickHouse(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddClickHouse("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -41,15 +38,12 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddClickHouse(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1;";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddClickHouse("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1;";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -60,14 +54,11 @@ public class ClickHouseHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddClickHouse(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = "Unreachable"; // Wrong connection string to simulate failure
-                        options.Command = "Error";
-                    }
-                );
+                _ = healthChecks.AddClickHouse("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = "Unreachable"; // Wrong connection string to simulate failure
+                    options.Command = "Error";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

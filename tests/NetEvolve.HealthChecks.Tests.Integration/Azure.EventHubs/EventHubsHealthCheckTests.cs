@@ -26,16 +26,13 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureEventHubs(
-                    "EventHubsConnectionStringHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.EventHubName = EventHubsContainer.EventHubName;
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddAzureEventHubs("EventHubsConnectionStringHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.EventHubName = EventHubsContainer.EventHubName;
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -48,15 +45,12 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureEventHubs(
-                    "EventHubsServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.EventHubName = EventHubsContainer.EventHubName;
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddAzureEventHubs("EventHubsServiceProviderHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.EventHubName = EventHubsContainer.EventHubName;
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -96,16 +90,13 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureEventHubs(
-                    "EventHubsConnectionStringUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.EventHubName = "invalid";
-                        options.Timeout = 1000;
-                    }
-                );
+                _ = healthChecks.AddAzureEventHubs("EventHubsConnectionStringUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.EventHubName = "invalid";
+                    options.Timeout = 1000;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -118,16 +109,13 @@ public class EventHubsHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureEventHubs(
-                    "EventHubsTimeoutDegraded",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.EventHubName = EventHubsContainer.EventHubName;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddAzureEventHubs("EventHubsTimeoutDegraded", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.EventHubName = EventHubsContainer.EventHubName;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

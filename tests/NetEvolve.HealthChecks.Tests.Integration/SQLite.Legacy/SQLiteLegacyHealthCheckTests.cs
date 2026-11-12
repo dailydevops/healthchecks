@@ -20,14 +20,11 @@ public class SQLiteLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSQLiteLegacy(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddSQLiteLegacy("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -38,15 +35,12 @@ public class SQLiteLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSQLiteLegacy(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = ConnectionString;
-                        options.Command = "SELECT 1;";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddSQLiteLegacy("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = ConnectionString;
+                    options.Command = "SELECT 1;";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -57,14 +51,11 @@ public class SQLiteLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSQLiteLegacy(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = ConnectionString;
-                        options.Command = "SELECT 1 = `1`";
-                    }
-                );
+                _ = healthChecks.AddSQLiteLegacy("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = ConnectionString;
+                    options.Command = "SELECT 1 = `1`";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

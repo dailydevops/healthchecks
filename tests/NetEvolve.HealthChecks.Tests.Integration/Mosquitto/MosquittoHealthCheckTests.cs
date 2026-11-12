@@ -51,20 +51,11 @@ public sealed class MosquittoHealthCheckTests : HealthCheckTestBase
 
         _ = await mqttClient.ConnectAsync(options, cancellationToken);
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddMosquitto(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "mosquitto-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddMosquitto("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "mosquitto-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("mosquitto-test", (_, _) => mqttClient), cancellationToken: cancellationToken);
     }
 
     [Test]

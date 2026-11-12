@@ -23,14 +23,11 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKustoAvailability(
-                    "KustoConnectionStringHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddKustoAvailability("KustoConnectionStringHealthy", options =>
+                {
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -43,14 +40,11 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKustoAvailability(
-                    "KustoConnectionStringDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddKustoAvailability("KustoConnectionStringDegraded", options =>
+                {
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -63,14 +57,11 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKustoAvailability(
-                    "KustoClusterUriHealthy",
-                    options =>
-                    {
-                        options.ClusterUri = new Uri(_container.ConnectionString);
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddKustoAvailability("KustoClusterUriHealthy", options =>
+                {
+                    options.ClusterUri = new Uri(_container.ConnectionString);
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -83,15 +74,12 @@ public class KustoAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKustoAvailability(
-                    "KustoWithDatabaseHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.DatabaseName = "NetDefaultDB";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddKustoAvailability("KustoWithDatabaseHealthy", options =>
+                {
+                    options.ConnectionString = _container.ConnectionString;
+                    options.DatabaseName = "NetDefaultDB";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken

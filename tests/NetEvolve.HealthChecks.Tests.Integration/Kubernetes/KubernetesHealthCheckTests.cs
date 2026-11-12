@@ -44,14 +44,11 @@ public sealed class KubernetesHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKubernetes(
-                    "TestContainerHealthyKeyed",
-                    options =>
-                    {
-                        options.KeyedService = "kubernetes-test";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddKubernetes("TestContainerHealthyKeyed", options =>
+                {
+                    options.KeyedService = "kubernetes-test";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>

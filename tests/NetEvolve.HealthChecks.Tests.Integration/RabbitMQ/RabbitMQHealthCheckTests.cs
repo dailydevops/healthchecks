@@ -43,20 +43,11 @@ public sealed class RabbitMQHealthCheckTests : HealthCheckTestBase
         var factory = new ConnectionFactory { Uri = _container.ConnectionString };
         var connection = await factory.CreateConnectionAsync(cancellationToken);
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddRabbitMQ(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "rabbitmq-test";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test", (_, _) => connection),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddRabbitMQ("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "rabbitmq-test";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("rabbitmq-test", (_, _) => connection), cancellationToken: cancellationToken);
     }
 
     [Test]

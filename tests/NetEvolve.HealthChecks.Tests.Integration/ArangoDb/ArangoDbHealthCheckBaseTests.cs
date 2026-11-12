@@ -69,94 +69,62 @@ public abstract class ArangoDbHealthCheckBaseTests(ContainerBase container)
 
         const string serviceKey = "options-test-key";
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddArangoDb(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = serviceKey;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddArangoDb("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = serviceKey;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client), cancellationToken: cancellationToken);
     }
 
     [Test]
     public async Task AddArangoDb_UseOptionsWithInternalMode_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddArangoDb(
-                    "TestContainerInternalHealthy",
-                    options =>
-                    {
-                        options.Mode = ArangoDbClientCreationMode.Internal;
-                        options.Timeout = 10000;
-                        options.TransportAddress = container.TransportAddress;
-                        options.Username = "root";
-                        options.Password = container.Password;
-                    }
-                ),
-            HealthStatus.Healthy,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddArangoDb("TestContainerInternalHealthy", options =>
+                {
+                    options.Mode = ArangoDbClientCreationMode.Internal;
+                    options.Timeout = 10000;
+                    options.TransportAddress = container.TransportAddress;
+                    options.Username = "root";
+                    options.Password = container.Password;
+                }), HealthStatus.Healthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddArangoDb_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddArangoDb("TestContainerHealthy").AddArangoDb("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddArangoDb("TestContainerHealthy").AddArangoDb("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_client)
+            )
         );
 
     [Test]
     public async Task AddArangoDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddArangoDb(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddArangoDb("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (client, cancellationToken) =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            return await ArangoDbHealthCheck
-                                .DefaultCommandAsync(client, cancellationToken)
-                                .ConfigureAwait(false);
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client),
-            cancellationToken: cancellationToken
-        );
+                        return await ArangoDbHealthCheck
+                            .DefaultCommandAsync(client, cancellationToken)
+                            .ConfigureAwait(false);
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddArangoDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddArangoDb(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddArangoDb("TestContainerUnhealthy", options =>
+                {
+                    options.CommandAsync = async (_, _) =>
                     {
-                        options.CommandAsync = async (_, _) =>
-                        {
-                            await Task.CompletedTask;
-                            throw new InvalidOperationException("test");
-                        };
-                    }
-                );
+                        await Task.CompletedTask;
+                        throw new InvalidOperationException("test");
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton(_client),

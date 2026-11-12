@@ -25,15 +25,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOllama(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Uri = new Uri(_container.BaseAddress);
-                        options.Timeout = 10000; // Set a reasonable timeout
-                        options.ClientMode = ClientMode.ServiceUrl;
-                    }
-                );
+                _ = healthChecks.AddOllama("TestContainerHealthy", options =>
+                {
+                    options.Uri = new Uri(_container.BaseAddress);
+                    options.Timeout = 10000; // Set a reasonable timeout
+                    options.ClientMode = ClientMode.ServiceUrl;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -44,15 +41,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOllama(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Uri = new Uri(_container.BaseAddress);
-                        options.Timeout = 0;
-                        options.ClientMode = ClientMode.ServiceUrl;
-                    }
-                );
+                _ = healthChecks.AddOllama("TestContainerDegraded", options =>
+                {
+                    options.Uri = new Uri(_container.BaseAddress);
+                    options.Timeout = 0;
+                    options.ClientMode = ClientMode.ServiceUrl;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -133,14 +127,11 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOllama(
-                    "TestContainerServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.ClientMode = ClientMode.ServiceProvider;
-                    }
-                );
+                _ = healthChecks.AddOllama("TestContainerServiceProviderHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.ClientMode = ClientMode.ServiceProvider;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -158,15 +149,12 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOllama(
-                    "TestContainerKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.KeyedService = serviceKey;
-                        options.Timeout = 10000;
-                        options.ClientMode = ClientMode.ServiceProvider;
-                    }
-                );
+                _ = healthChecks.AddOllama("TestContainerKeyedServiceHealthy", options =>
+                {
+                    options.KeyedService = serviceKey;
+                    options.Timeout = 10000;
+                    options.ClientMode = ClientMode.ServiceProvider;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -180,14 +168,11 @@ public class OllamaHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOllama(
-                    "TestContainerServiceProviderDegraded",
-                    options =>
-                    {
-                        options.Timeout = 0;
-                        options.ClientMode = ClientMode.ServiceProvider;
-                    }
-                );
+                _ = healthChecks.AddOllama("TestContainerServiceProviderDegraded", options =>
+                {
+                    options.Timeout = 0;
+                    options.ClientMode = ClientMode.ServiceProvider;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>

@@ -25,15 +25,12 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedis(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                        options.Mode = ConnectionHandleMode.Create;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddRedis("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Mode = ConnectionHandleMode.Create;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -44,9 +41,8 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedis(
-                    "TestContainerHealthy",
-                    options => options.ConnectionString = _database.GetConnectionString()
+                _ = healthChecks.AddRedis("TestContainerHealthy", options =>
+                    options.ConnectionString = _database.GetConnectionString()
                 );
             },
             HealthStatus.Healthy,
@@ -67,15 +63,12 @@ public class RedisHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRedis(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.GetConnectionString();
-                        options.Timeout = 0;
-                        options.Mode = ConnectionHandleMode.Create;
-                    }
-                );
+                _ = healthChecks.AddRedis("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.GetConnectionString();
+                    options.Timeout = 0;
+                    options.Mode = ConnectionHandleMode.Create;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

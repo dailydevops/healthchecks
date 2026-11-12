@@ -41,95 +41,62 @@ public abstract class KeycloakHealthCheckBaseTests : HealthCheckTestBase, IAsync
 
         const string serviceKey = "options-test-key";
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddKeycloak(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = serviceKey;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddKeycloak("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = serviceKey;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client), cancellationToken: cancellationToken);
     }
 
     [Test]
     public async Task AddKeycloak_UseOptionsWithUsernameAndPasswordMode_Healthy(
         CancellationToken cancellationToken = default
-    ) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddKeycloak(
-                    "TestContainerInternalHealthy",
-                    options =>
-                    {
-                        options.Mode = KeycloakClientCreationMode.UsernameAndPassword;
-                        options.Timeout = 10000;
-                        options.BaseAddress = _container.BaseAddress;
-                        options.Username = _container.Username;
-                        options.Password = _container.Password;
-                    }
-                ),
-            HealthStatus.Healthy,
-            cancellationToken: cancellationToken
-        );
+    ) => await RunAndVerify(healthChecks => healthChecks.AddKeycloak("TestContainerInternalHealthy", options =>
+                {
+                    options.Mode = KeycloakClientCreationMode.UsernameAndPassword;
+                    options.Timeout = 10000;
+                    options.BaseAddress = _container.BaseAddress;
+                    options.Username = _container.Username;
+                    options.Password = _container.Password;
+                }), HealthStatus.Healthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddKeycloak_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddKeycloak("TestContainerHealthy").AddKeycloak("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddKeycloak("TestContainerHealthy").AddKeycloak("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_client)
+            )
         );
 
     [Test]
     public async Task AddKeycloak_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddKeycloak(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddKeycloak("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (client, cancellationToken) =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
-                            return await KeycloakHealthCheck
-                                .DefaultCommandAsync(client, cancellationToken)
-                                .ConfigureAwait(false);
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client),
-            cancellationToken: cancellationToken
-        );
+                        await Task.Delay(1000, cancellationToken);
+                        return await KeycloakHealthCheck
+                            .DefaultCommandAsync(client, cancellationToken)
+                            .ConfigureAwait(false);
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddKeycloak_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKeycloak(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddKeycloak("TestContainerUnhealthy", options =>
+                {
+                    options.CommandAsync = async (_, _) =>
                     {
-                        options.CommandAsync = async (_, _) =>
-                        {
-                            await Task.CompletedTask;
-                            throw new InvalidOperationException("Unhealthy test exception");
-                        };
-                    }
-                );
+                        await Task.CompletedTask;
+                        throw new InvalidOperationException("Unhealthy test exception");
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton(_client),
