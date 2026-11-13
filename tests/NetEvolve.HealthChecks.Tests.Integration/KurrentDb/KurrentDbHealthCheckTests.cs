@@ -62,65 +62,42 @@ public class KurrentDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer,
 
     [Test]
     public async Task AddKurrentDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddKurrentDb(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "kurrentdb-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test", (_, _) => _client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddKurrentDb("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "kurrentdb-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("kurrentdb-test", (_, _) => _client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddKurrentDb_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddKurrentDb("TestContainerHealthy").AddKurrentDb("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddKurrentDb("TestContainerHealthy").AddKurrentDb("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_client)
+            )
         );
 
     [Test]
     public async Task AddKurrentDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddKurrentDb(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddKurrentDb("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (_, cancellationToken) =>
                     {
-                        options.CommandAsync = async (_, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            return true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client),
-            cancellationToken: cancellationToken
-        );
+                        return true;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddKurrentDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddKurrentDb(
-                    "TestContainerUnhealthy",
-                    options =>
-                        options.CommandAsync = async (_1, _2) => throw new InvalidOperationException("Test exception")
+                _ = healthChecks.AddKurrentDb("TestContainerUnhealthy", options =>
+                    options.CommandAsync = async (_1, _2) => throw new InvalidOperationException("Test exception")
                 );
             },
             HealthStatus.Unhealthy,

@@ -76,14 +76,11 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        _ = builder.AddHttp(
-            name,
-            options =>
-            {
-                options.Uri = "https://example.com";
-                options.Timeout = 10000;
-            }
-        );
+        _ = builder.AddHttp(name, options =>
+        {
+            options.Uri = "https://example.com";
+            options.Timeout = 10000;
+        });
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();

@@ -28,15 +28,12 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableServiceProviderHealthy",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableServiceProviderHealthy", options =>
+                {
+                    options.TableName = "test";
+                    options.Mode = TableClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -51,24 +48,20 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableServiceProviderKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "test-key";
-                        options.TableName = "test";
-                        options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableServiceProviderKeyedHealthy", options =>
+                {
+                    options.KeyedService = "test-key";
+                    options.TableName = "test";
+                    options.Mode = TableClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<TableServiceClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -81,15 +74,12 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableServiceProviderDegraded",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableServiceProviderDegraded", options =>
+                {
+                    options.TableName = "test";
+                    options.Mode = TableClientCreationMode.ServiceProvider;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
@@ -104,15 +94,12 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableServiceProviderNotExistsUnhealthy",
-                    options =>
-                    {
-                        options.TableName = "notexists";
-                        options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableServiceProviderNotExistsUnhealthy", options =>
+                {
+                    options.TableName = "notexists";
+                    options.Mode = TableClientCreationMode.ServiceProvider;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
@@ -149,16 +136,13 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableServiceProviderWithConfigurationHealthy",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.Mode = TableClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableServiceProviderWithConfigurationHealthy", options =>
+                {
+                    options.TableName = "test";
+                    options.Mode = TableClientCreationMode.ServiceProvider;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -173,16 +157,13 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableConnectionStringHealthy",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = TableClientCreationMode.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableConnectionStringHealthy", options =>
+                {
+                    options.TableName = "test";
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = TableClientCreationMode.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -195,16 +176,13 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableConnectionStringDegraded",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = TableClientCreationMode.ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableConnectionStringDegraded", options =>
+                {
+                    options.TableName = "test";
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = TableClientCreationMode.ConnectionString;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -217,19 +195,16 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableSharedKeyHealthy",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.AccountKey = AzuriteAccess.AccountKey;
-                        options.AccountName = AzuriteAccess.AccountName;
-                        options.Mode = TableClientCreationMode.SharedKey;
-                        options.ServiceUri = _container.TableServiceEndpoint;
-                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableSharedKeyHealthy", options =>
+                {
+                    options.TableName = "test";
+                    options.AccountKey = AzuriteAccess.AccountKey;
+                    options.AccountName = AzuriteAccess.AccountName;
+                    options.Mode = TableClientCreationMode.SharedKey;
+                    options.ServiceUri = _container.TableServiceEndpoint;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -242,18 +217,15 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableSharedKeyDegraded",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.AccountKey = AzuriteAccess.AccountKey;
-                        options.AccountName = AzuriteAccess.AccountName;
-                        options.Mode = TableClientCreationMode.SharedKey;
-                        options.Timeout = 0;
-                        options.ServiceUri = _container.TableServiceEndpoint;
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableSharedKeyDegraded", options =>
+                {
+                    options.TableName = "test";
+                    options.AccountKey = AzuriteAccess.AccountKey;
+                    options.AccountName = AzuriteAccess.AccountName;
+                    options.Mode = TableClientCreationMode.SharedKey;
+                    options.Timeout = 0;
+                    options.ServiceUri = _container.TableServiceEndpoint;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -267,16 +239,13 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableAzureSasCredentialHealthy",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.Mode = TableClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _container.TableAccountSasUri;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableAzureSasCredentialHealthy", options =>
+                {
+                    options.TableName = "test";
+                    options.Mode = TableClientCreationMode.AzureSasCredential;
+                    options.ServiceUri = _container.TableAccountSasUri;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -290,16 +259,13 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddTableClientAvailability(
-                    "TableAzureSasCredentialDegraded",
-                    options =>
-                    {
-                        options.TableName = "test";
-                        options.Mode = TableClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _container.TableAccountSasUri;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddTableClientAvailability("TableAzureSasCredentialDegraded", options =>
+                {
+                    options.TableName = "test";
+                    options.Mode = TableClientCreationMode.AzureSasCredential;
+                    options.ServiceUri = _container.TableAccountSasUri;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -356,9 +322,8 @@ public class TableClientAvailableHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddTableServiceClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<TableServiceClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<TableServiceClient>()
                 );
             },
             cancellationToken: cancellationToken

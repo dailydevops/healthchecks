@@ -92,14 +92,11 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        _ = builder.AddFirestore(
-            name,
-            options =>
-            {
-                options.Timeout = 10000;
-                options.KeyedService = "firestore";
-            }
-        );
+        _ = builder.AddFirestore(name, options =>
+        {
+            options.Timeout = 10000;
+            options.KeyedService = "firestore";
+        });
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();

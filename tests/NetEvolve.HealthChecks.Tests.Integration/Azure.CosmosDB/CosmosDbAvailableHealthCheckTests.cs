@@ -24,15 +24,12 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbConnectionStringHealthy",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbConnectionStringHealthy", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -45,17 +42,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbConnectionStringWithDatabaseHealthy",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.DatabaseId = "testdb";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                        options.ClientConfiguration = _container.ClientConfiguration;
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbConnectionStringWithDatabaseHealthy", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.DatabaseId = "testdb";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                    options.ClientConfiguration = _container.ClientConfiguration;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -68,15 +62,12 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbConnectionStringDegraded",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbConnectionStringDegraded", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -89,14 +80,11 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbServiceProviderHealthy", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton(_container.CosmosClient),
@@ -110,16 +98,13 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbServiceProviderWithDatabaseHealthy",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.ServiceProvider;
-                        options.DatabaseId = "testdb";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                        options.KeyedService = "test";
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbServiceProviderWithDatabaseHealthy", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.ServiceProvider;
+                    options.DatabaseId = "testdb";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                    options.KeyedService = "test";
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddKeyedSingleton("test", _container.CosmosClient),
@@ -156,17 +141,14 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbAccountKeyHealthy",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.AccountKey;
-                        options.AccountEndpoint = _container.AccountEndpoint;
-                        options.AccountKey = CosmosDbAccess.AccountKey;
-                        options.ClientConfiguration = _container.ClientConfiguration;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbAccountKeyHealthy", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.AccountKey;
+                    options.AccountEndpoint = _container.AccountEndpoint;
+                    options.AccountKey = CosmosDbAccess.AccountKey;
+                    options.ClientConfiguration = _container.ClientConfiguration;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -179,18 +161,15 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbAccountKeyWithDatabaseHealthy",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.AccountKey;
-                        options.AccountEndpoint = _container.AccountEndpoint;
-                        options.AccountKey = CosmosDbAccess.AccountKey;
-                        options.DatabaseId = "testdb";
-                        options.ClientConfiguration = _container.ClientConfiguration;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbAccountKeyWithDatabaseHealthy", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.AccountKey;
+                    options.AccountEndpoint = _container.AccountEndpoint;
+                    options.AccountKey = CosmosDbAccess.AccountKey;
+                    options.DatabaseId = "testdb";
+                    options.ClientConfiguration = _container.ClientConfiguration;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -203,16 +182,13 @@ public class CosmosDbAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddCosmosDbAvailability(
-                    "CosmosDbAccountKeyDegraded",
-                    options =>
-                    {
-                        options.Mode = CosmosDbClientCreationMode.AccountKey;
-                        options.AccountEndpoint = _container.AccountEndpoint;
-                        options.AccountKey = CosmosDbAccess.AccountKey;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddCosmosDbAvailability("CosmosDbAccountKeyDegraded", options =>
+                {
+                    options.Mode = CosmosDbClientCreationMode.AccountKey;
+                    options.AccountEndpoint = _container.AccountEndpoint;
+                    options.AccountKey = CosmosDbAccess.AccountKey;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

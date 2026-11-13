@@ -59,20 +59,11 @@ public sealed class IbmMQHealthCheckTests : HealthCheckTestBase
 
         using var queueManager = CreateQueueManager(_container.Host);
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddIbmMQ(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "ibmmq-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("ibmmq-test", (_, _) => queueManager),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddIbmMQ("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "ibmmq-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("ibmmq-test", (_, _) => queueManager), cancellationToken: cancellationToken);
     }
 
     [Test]

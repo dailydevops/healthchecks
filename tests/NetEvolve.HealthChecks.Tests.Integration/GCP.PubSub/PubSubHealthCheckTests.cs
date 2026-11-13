@@ -21,52 +21,31 @@ public sealed class PubSubHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddPubSub_UseOptions_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddPubSub(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.ProjectName = PubSubEmulator.ProjectId;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddPubSub("TestContainerHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.ProjectName = PubSubEmulator.ProjectId;
+                }), HealthStatus.Healthy, serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddPubSub_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddPubSub(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Timeout = 0;
-                        options.ProjectName = PubSubEmulator.ProjectId;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddPubSub("TestContainerDegraded", options =>
+                {
+                    options.Timeout = 0;
+                    options.ProjectName = PubSubEmulator.ProjectId;
+                }), HealthStatus.Degraded, serviceBuilder: services => _ = services.AddSingleton(_ => _emulator.Client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddPubSub_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddPubSub(
-                    "TestContainerKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.KeyedService = "pubsub";
-                        options.ProjectName = PubSubEmulator.ProjectId;
-                    }
-                );
+                _ = healthChecks.AddPubSub("TestContainerKeyedServiceHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.KeyedService = "pubsub";
+                    options.ProjectName = PubSubEmulator.ProjectId;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddKeyedSingleton("pubsub", (_, _) => _emulator.Client),

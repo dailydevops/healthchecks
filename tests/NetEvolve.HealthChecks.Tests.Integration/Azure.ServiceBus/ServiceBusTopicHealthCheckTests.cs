@@ -29,15 +29,12 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.TopicName = ServiceBusContainer.TopicName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicServiceProviderHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.TopicName = ServiceBusContainer.TopicName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -56,16 +53,13 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "test-key";
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.TopicName = ServiceBusContainer.TopicName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicKeyedServiceHealthy", options =>
+                {
+                    options.KeyedService = "test-key";
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.TopicName = ServiceBusContainer.TopicName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -73,9 +67,8 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -88,16 +81,13 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicConnectionStringHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.TopicName = ServiceBusContainer.TopicName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicConnectionStringHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.TopicName = ServiceBusContainer.TopicName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -110,14 +100,11 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicServiceProviderUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.TopicName = "nonexistent-topic";
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicServiceProviderUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.TopicName = "nonexistent-topic";
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
@@ -136,15 +123,12 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicConnectionStringUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.TopicName = "nonexistent-topic";
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicConnectionStringUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.TopicName = "nonexistent-topic";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -157,15 +141,12 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicServiceProviderDegraded",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.TopicName = ServiceBusContainer.TopicName;
-                        options.Timeout = 0; // Set timeout to 0 to force timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicServiceProviderDegraded", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.TopicName = ServiceBusContainer.TopicName;
+                    options.Timeout = 0; // Set timeout to 0 to force timeout
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
@@ -184,16 +165,13 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicConnectionStringDegraded",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.TopicName = ServiceBusContainer.TopicName;
-                        options.Timeout = 0; // Set timeout to 0 to force timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicConnectionStringDegraded", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.TopicName = ServiceBusContainer.TopicName;
+                    options.Timeout = 0; // Set timeout to 0 to force timeout
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -206,15 +184,12 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusTopic(
-                    "ServiceBusTopicDefaultAzureCredentialsUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.DefaultAzureCredentials;
-                        options.FullyQualifiedNamespace = "namespace.servicebus.windows.net";
-                        options.TopicName = ServiceBusContainer.TopicName;
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusTopic("ServiceBusTopicDefaultAzureCredentialsUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.DefaultAzureCredentials;
+                    options.FullyQualifiedNamespace = "namespace.servicebus.windows.net";
+                    options.TopicName = ServiceBusContainer.TopicName;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -279,9 +254,8 @@ public class ServiceBusTopicHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
                 );
             },
             cancellationToken: cancellationToken

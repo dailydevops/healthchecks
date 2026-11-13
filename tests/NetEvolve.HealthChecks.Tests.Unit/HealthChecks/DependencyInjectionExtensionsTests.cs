@@ -16,9 +16,8 @@ public class DependencyInjectionExtensionsTests
 {
     [Test]
     public void AddApplicationReadinessCheck_ParamBuilderNull_ArgumentNullException() =>
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => DependencyInjectionExtensions.AddApplicationReady(null!, tags: null!)
+        _ = Assert.Throws<ArgumentNullException>("builder", () =>
+            DependencyInjectionExtensions.AddApplicationReady(null!, tags: null!)
         );
 
     [Test]
@@ -56,9 +55,8 @@ public class DependencyInjectionExtensionsTests
 
     [Test]
     public void AddApplicationHealthy_ParamBuilderNull_ArgumentNullException() =>
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => DependencyInjectionExtensions.AddApplicationHealthy(null!, tags: null!)
+        _ = Assert.Throws<ArgumentNullException>("builder", () =>
+            DependencyInjectionExtensions.AddApplicationHealthy(null!, tags: null!)
         );
 
     [Test]

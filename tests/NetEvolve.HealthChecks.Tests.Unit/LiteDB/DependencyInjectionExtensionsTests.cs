@@ -115,25 +115,19 @@ public sealed class DependencyInjectionExtensionsTests
         var builder = services.AddHealthChecks();
 
         // Act
-        _ = builder.AddLiteDB(
-            "litedb-test1",
-            options =>
-            {
-                options.ConnectionString = "filename=:memory:";
-                options.CollectionName = "test1";
-                options.Timeout = 1000;
-            }
-        );
+        _ = builder.AddLiteDB("litedb-test1", options =>
+        {
+            options.ConnectionString = "filename=:memory:";
+            options.CollectionName = "test1";
+            options.Timeout = 1000;
+        });
 
-        _ = builder.AddLiteDB(
-            "litedb-test2",
-            options =>
-            {
-                options.ConnectionString = "filename=:memory:";
-                options.CollectionName = "test2";
-                options.Timeout = 1000;
-            }
-        );
+        _ = builder.AddLiteDB("litedb-test2", options =>
+        {
+            options.ConnectionString = "filename=:memory:";
+            options.CollectionName = "test2";
+            options.Timeout = 1000;
+        });
 
         var serviceProvider = services.BuildServiceProvider();
         var options = serviceProvider.GetService<IOptions<HealthCheckServiceOptions>>();

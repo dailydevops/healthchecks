@@ -43,21 +43,17 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMilvus(
-                    "TestContainerHealthyKeyed",
-                    options =>
-                    {
-                        options.KeyedService = "milvus-test";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddMilvus("TestContainerHealthyKeyed", options =>
+                {
+                    options.KeyedService = "milvus-test";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton(
-                    "milvus-test",
-                    (_, _) => new MilvusClient(_database.GrpcConnectionString)
+                _ = services.AddKeyedSingleton("milvus-test", (_, _) =>
+                    new MilvusClient(_database.GrpcConnectionString)
                 );
             },
             cancellationToken: cancellationToken
@@ -115,9 +111,8 @@ public sealed class MilvusHealthCheckTests : HealthCheckTestBase
             },
             serviceBuilder: services =>
             {
-                _ = services.AddKeyedSingleton(
-                    "milvus-keyed-test",
-                    (_, _) => new MilvusClient(_database.GrpcConnectionString)
+                _ = services.AddKeyedSingleton("milvus-keyed-test", (_, _) =>
+                    new MilvusClient(_database.GrpcConnectionString)
                 );
             },
             cancellationToken: cancellationToken

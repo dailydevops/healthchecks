@@ -23,14 +23,11 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = BlobClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceServiceProviderHealthy", options =>
+                {
+                    options.Mode = BlobClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -45,15 +42,12 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceServiceProviderWithConfigurationHealthy",
-                    options =>
-                    {
-                        options.Mode = BlobClientCreationMode.ServiceProvider;
-                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceServiceProviderWithConfigurationHealthy", options =>
+                {
+                    options.Mode = BlobClientCreationMode.ServiceProvider;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -68,14 +62,11 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceServiceProviderDegraded",
-                    options =>
-                    {
-                        options.Mode = BlobClientCreationMode.ServiceProvider;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceServiceProviderDegraded", options =>
+                {
+                    options.Mode = BlobClientCreationMode.ServiceProvider;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
@@ -90,15 +81,12 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceConnectionStringHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = BlobClientCreationMode.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceConnectionStringHealthy", options =>
+                {
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = BlobClientCreationMode.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -111,15 +99,12 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceConnectionStringDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _container.ConnectionString;
-                        options.Mode = BlobClientCreationMode.ConnectionString;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceConnectionStringDegraded", options =>
+                {
+                    options.ConnectionString = _container.ConnectionString;
+                    options.Mode = BlobClientCreationMode.ConnectionString;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -132,18 +117,15 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceSharedKeyHealthy",
-                    options =>
-                    {
-                        options.AccountKey = AzuriteAccess.AccountKey;
-                        options.AccountName = AzuriteAccess.AccountName;
-                        options.Mode = BlobClientCreationMode.SharedKey;
-                        options.ServiceUri = _container.BlobServiceEndpoint;
-                        options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceSharedKeyHealthy", options =>
+                {
+                    options.AccountKey = AzuriteAccess.AccountKey;
+                    options.AccountName = AzuriteAccess.AccountName;
+                    options.Mode = BlobClientCreationMode.SharedKey;
+                    options.ServiceUri = _container.BlobServiceEndpoint;
+                    options.ConfigureClientOptions = clientOptions => clientOptions.Retry.MaxRetries = 0;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -156,17 +138,14 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceSharedKeyDegraded",
-                    options =>
-                    {
-                        options.AccountKey = AzuriteAccess.AccountKey;
-                        options.AccountName = AzuriteAccess.AccountName;
-                        options.Mode = BlobClientCreationMode.SharedKey;
-                        options.Timeout = 0;
-                        options.ServiceUri = _container.BlobServiceEndpoint;
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceSharedKeyDegraded", options =>
+                {
+                    options.AccountKey = AzuriteAccess.AccountKey;
+                    options.AccountName = AzuriteAccess.AccountName;
+                    options.Mode = BlobClientCreationMode.SharedKey;
+                    options.Timeout = 0;
+                    options.ServiceUri = _container.BlobServiceEndpoint;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -179,15 +158,12 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceAzureSasCredentialHealthy",
-                    options =>
-                    {
-                        options.Mode = BlobClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _container.BlobAccountSasUri;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceAzureSasCredentialHealthy", options =>
+                {
+                    options.Mode = BlobClientCreationMode.AzureSasCredential;
+                    options.ServiceUri = _container.BlobAccountSasUri;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -200,15 +176,12 @@ public class BlobServiceAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBlobServiceAvailability(
-                    "ServiceAzureSasCredentialDegraded",
-                    options =>
-                    {
-                        options.Mode = BlobClientCreationMode.AzureSasCredential;
-                        options.ServiceUri = _container.BlobAccountSasUri;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddBlobServiceAvailability("ServiceAzureSasCredentialDegraded", options =>
+                {
+                    options.Mode = BlobClientCreationMode.AzureSasCredential;
+                    options.ServiceUri = _container.BlobAccountSasUri;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

@@ -25,9 +25,8 @@ public class DB2HealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddDB2(
-                    "TestContainerHealthy",
-                    options => options.ConnectionString = _database.ConnectionString
+                _ = healthChecks.AddDB2("TestContainerHealthy", options =>
+                    options.ConnectionString = _database.ConnectionString
                 );
             },
             HealthStatus.Healthy,
@@ -39,15 +38,12 @@ public class DB2HealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddDB2(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1 FROM SYSIBM.SYSDUMMY1;";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddDB2("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1 FROM SYSIBM.SYSDUMMY1;";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -58,14 +54,11 @@ public class DB2HealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddDB2(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "invalid";
-                    }
-                );
+                _ = healthChecks.AddDB2("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "invalid";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

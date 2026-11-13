@@ -24,14 +24,11 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServerLegacy(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddSqlServerLegacy("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -44,14 +41,11 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServerLegacy(
-                    "TestContainerHealthyInfiniteTimeout",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = Timeout.Infinite;
-                    }
-                );
+                _ = healthChecks.AddSqlServerLegacy("TestContainerHealthyInfiniteTimeout", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = Timeout.Infinite;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -62,15 +56,12 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServerLegacy(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddSqlServerLegacy("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -81,14 +72,11 @@ public class SqlServerLegacyHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServerLegacy(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "RAISERROR('This is a test.',16,1)";
-                    }
-                );
+                _ = healthChecks.AddSqlServerLegacy("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "RAISERROR('This is a test.',16,1)";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

@@ -60,17 +60,14 @@ internal sealed partial class GarnetHealthCheck : IDisposable
 
         _clients ??= new ConcurrentDictionary<string, GarnetClient>(StringComparer.OrdinalIgnoreCase);
 
-        return _clients.GetOrAdd(
-            name,
-            _ =>
-            {
-                EndPoint endpoint = IPAddress.TryParse(options.Hostname!, out var ipAddress)
-                    ? new IPEndPoint(ipAddress, options.Port)
-                    : new DnsEndPoint(options.Hostname!, options.Port);
+        return _clients.GetOrAdd(name, _ =>
+        {
+            EndPoint endpoint = IPAddress.TryParse(options.Hostname!, out var ipAddress)
+                ? new IPEndPoint(ipAddress, options.Port)
+                : new DnsEndPoint(options.Hostname!, options.Port);
 
-                return new GarnetClient(endpoint);
-            }
-        );
+            return new GarnetClient(endpoint);
+        });
     }
 
     [SuppressMessage(

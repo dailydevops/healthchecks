@@ -26,14 +26,11 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddNpgsqlDevart(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddNpgsqlDevart("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -44,15 +41,12 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddNpgsqlDevart(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1; SELECT pg_sleep(0.1);";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddNpgsqlDevart("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1; SELECT pg_sleep(0.1);";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -63,14 +57,11 @@ public class NpgsqlDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddNpgsqlDevart(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1/0;";
-                    }
-                );
+                _ = healthChecks.AddNpgsqlDevart("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1/0;";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

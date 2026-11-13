@@ -42,15 +42,12 @@ public sealed class SearchAvailableHealthCheckTests
                 clientOptions
             )
         );
-        _ = services.Configure<SearchAvailableOptions>(
-            TestName,
-            options =>
-            {
-                options.IndexName = "test-index";
-                options.Mode = ClientCreationMode.ServiceProvider;
-                options.Timeout = 10_000;
-            }
-        );
+        _ = services.Configure<SearchAvailableOptions>(TestName, options =>
+        {
+            options.IndexName = "test-index";
+            options.Mode = ClientCreationMode.ServiceProvider;
+            options.Timeout = 10_000;
+        });
         await using var serviceProvider = services.BuildServiceProvider();
 
         var check = new SearchAvailableHealthCheck(

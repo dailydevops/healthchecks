@@ -92,14 +92,11 @@ public sealed class DependencyInjectionExtensionsTests
         const string name = "Test";
 
         // Act
-        _ = builder.AddBigQuery(
-            name,
-            options =>
-            {
-                options.Timeout = 10000;
-                options.KeyedService = "bigquery";
-            }
-        );
+        _ = builder.AddBigQuery(name, options =>
+        {
+            options.Timeout = 10000;
+            options.KeyedService = "bigquery";
+        });
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();

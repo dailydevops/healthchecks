@@ -23,14 +23,11 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServer(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddSqlServer("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -41,15 +38,12 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServer(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddSqlServer("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -60,14 +54,11 @@ public class SqlServerHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSqlServer(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "RAISERROR('This is a test.',16,1)";
-                    }
-                );
+                _ = healthChecks.AddSqlServer("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "RAISERROR('This is a test.',16,1)";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

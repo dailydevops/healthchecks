@@ -19,18 +19,15 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRocketMQ(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.Endpoint = _accessor.Endpoint;
-                        options.Topic = _accessor.Topic;
-                        options.AccessKey = _accessor.AccessKey;
-                        options.AccessSecret = _accessor.AccessSecret;
-                        options.EnableSsl = true;
-                        options.Timeout = 30000;
-                    }
-                );
+                _ = healthChecks.AddRocketMQ("TestContainerHealthy", options =>
+                {
+                    options.Endpoint = _accessor.Endpoint;
+                    options.Topic = _accessor.Topic;
+                    options.AccessKey = _accessor.AccessKey;
+                    options.AccessSecret = _accessor.AccessSecret;
+                    options.EnableSsl = true;
+                    options.Timeout = 30000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -41,16 +38,13 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRocketMQ(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.Endpoint = "127.0.0.1:9999";
-                        options.Topic = _accessor.Topic;
-                        options.EnableSsl = false;
-                        options.Timeout = 5000;
-                    }
-                );
+                _ = healthChecks.AddRocketMQ("TestContainerUnhealthy", options =>
+                {
+                    options.Endpoint = "127.0.0.1:9999";
+                    options.Topic = _accessor.Topic;
+                    options.EnableSsl = false;
+                    options.Timeout = 5000;
+                });
             },
             HealthStatus.Unhealthy,
             clearJToken: ClearConnectionRefusedMessages,
@@ -62,18 +56,15 @@ public abstract class RocketMQHealthCheckBaseTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddRocketMQ(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.Endpoint = _accessor.Endpoint;
-                        options.Topic = _accessor.Topic;
-                        options.AccessKey = _accessor.AccessKey;
-                        options.AccessSecret = _accessor.AccessSecret;
-                        options.EnableSsl = true;
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddRocketMQ("TestContainerDegraded", options =>
+                {
+                    options.Endpoint = _accessor.Endpoint;
+                    options.Topic = _accessor.Topic;
+                    options.AccessKey = _accessor.AccessKey;
+                    options.AccessSecret = _accessor.AccessSecret;
+                    options.EnableSsl = true;
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

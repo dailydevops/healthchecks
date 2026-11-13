@@ -97,14 +97,11 @@ public class DependencyInjectionExtensionsTests
         const string expectedUri = "Test";
 
         // Act
-        _ = builder.AddQuestDB(
-            name,
-            options =>
-            {
-                options.Timeout = 10000;
-                options.StatusUri = expectedUri;
-            }
-        );
+        _ = builder.AddQuestDB(name, options =>
+        {
+            options.Timeout = 10000;
+            options.StatusUri = expectedUri;
+        });
         var provider = services.BuildServiceProvider();
         var options = provider
             .GetRequiredService<Microsoft.Extensions.Options.IOptionsMonitor<QuestDBOptions>>()

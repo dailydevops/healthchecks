@@ -28,18 +28,15 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSEC2(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.KeyName = "development";
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAWSEC2("TestContainerHealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.KeyName = "development";
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.Mode = CreationMode.BasicAuthentication;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -50,18 +47,15 @@ public class ElasticComputeCloudHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSEC2(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.KeyName = "development";
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.Timeout = 0;
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSEC2("TestContainerDegraded", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.KeyName = "development";
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.Timeout = 0;
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

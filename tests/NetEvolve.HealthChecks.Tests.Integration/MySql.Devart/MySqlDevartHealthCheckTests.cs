@@ -24,14 +24,11 @@ public class MySqlDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMySqlDevart(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddMySqlDevart("TestContainerHealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -42,15 +39,12 @@ public class MySqlDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMySqlDevart(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddMySqlDevart("TestContainerDegraded", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SELECT 1; WAITFOR DELAY '00:00:00.100';";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -61,14 +55,11 @@ public class MySqlDevartHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMySqlDevart(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.ConnectionString = _database.ConnectionString;
-                        options.Command = "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This is a test.';";
-                    }
-                );
+                _ = healthChecks.AddMySqlDevart("TestContainerUnhealthy", options =>
+                {
+                    options.ConnectionString = _database.ConnectionString;
+                    options.Command = "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This is a test.';";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken

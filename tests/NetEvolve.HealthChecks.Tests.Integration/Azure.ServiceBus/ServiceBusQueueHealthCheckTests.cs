@@ -30,15 +30,12 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueServiceProviderHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -57,16 +54,13 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "test-key";
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueKeyedServiceHealthy", options =>
+                {
+                    options.KeyedService = "test-key";
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -74,9 +68,8 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
                 services.AddAzureClients(clients =>
                     _ = clients.AddServiceBusAdministrationClient(_container.ConnectionString)
                 );
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusAdministrationClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -89,16 +82,13 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderPeekHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.EnablePeekMode = true;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueServiceProviderPeekHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.EnablePeekMode = true;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
@@ -113,25 +103,21 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueKeyedServicePeekHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "test-key";
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.EnablePeekMode = true;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueKeyedServicePeekHealthy", options =>
+                {
+                    options.KeyedService = "test-key";
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.EnablePeekMode = true;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusClient>()
                 );
             },
             cancellationToken: cancellationToken
@@ -144,16 +130,13 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueConnectionStringHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueConnectionStringHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -166,17 +149,14 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueConnectionStringPeekHealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.EnablePeekMode = true;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueConnectionStringPeekHealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.EnablePeekMode = true;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -189,14 +169,11 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.QueueName = "nonexistent-queue";
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueServiceProviderUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.QueueName = "nonexistent-queue";
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
@@ -215,15 +192,12 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderPeekUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.EnablePeekMode = true;
-                        options.QueueName = "nonexistent-queue";
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueServiceProviderPeekUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.EnablePeekMode = true;
+                    options.QueueName = "nonexistent-queue";
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services =>
@@ -238,15 +212,12 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueConnectionStringUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.QueueName = "nonexistent-queue";
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueConnectionStringUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.QueueName = "nonexistent-queue";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -259,16 +230,13 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueConnectionStringPeekUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ConnectionString;
-                        options.ConnectionString = _container.ConnectionString;
-                        options.EnablePeekMode = true;
-                        options.QueueName = "nonexistent-queue";
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueConnectionStringPeekUnhealthy", options =>
+                {
+                    options.Mode = ClientCreationMode.ConnectionString;
+                    options.ConnectionString = _container.ConnectionString;
+                    options.EnablePeekMode = true;
+                    options.QueueName = "nonexistent-queue";
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -281,15 +249,12 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderDegraded",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 0; // Set timeout to 0 to force timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueServiceProviderDegraded", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 0; // Set timeout to 0 to force timeout
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
@@ -308,16 +273,13 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureServiceBusQueue(
-                    "ServiceBusQueueServiceProviderPeekDegraded",
-                    options =>
-                    {
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.EnablePeekMode = true;
-                        options.QueueName = ServiceBusContainer.QueueName;
-                        options.Timeout = 0; // Set timeout to 0 to force timeout
-                    }
-                );
+                _ = healthChecks.AddAzureServiceBusQueue("ServiceBusQueueServiceProviderPeekDegraded", options =>
+                {
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.EnablePeekMode = true;
+                    options.QueueName = ServiceBusContainer.QueueName;
+                    options.Timeout = 0; // Set timeout to 0 to force timeout
+                });
             },
             HealthStatus.Degraded,
             serviceBuilder: services =>
@@ -386,9 +348,8 @@ public class ServiceBusQueueHealthCheckTests : HealthCheckTestBase
             serviceBuilder: services =>
             {
                 services.AddAzureClients(clients => _ = clients.AddServiceBusClient(_container.ConnectionString));
-                _ = services.AddKeyedSingleton(
-                    "test-key",
-                    (serviceProvider, _) => serviceProvider.GetRequiredService<ServiceBusClient>()
+                _ = services.AddKeyedSingleton("test-key", (serviceProvider, _) =>
+                    serviceProvider.GetRequiredService<ServiceBusClient>()
                 );
             },
             cancellationToken: cancellationToken
