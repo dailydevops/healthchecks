@@ -5,12 +5,12 @@
     ":disableDependencyDashboard",
     ":automergeMinor",
     "group:dotNetCore",
-    "monorepo:dotnet",
-    "monorepo:applicationinsights-dotnet",
-    "monorepo:opentelemetry-dotnet-contrib",
-    "monorepo:testcontainers-dotnet",
-    "monorepo:xunit-dotnet",
-    "monorepo:mstest"
+    "group:dotnetMonorepo",
+    "group:applicationinsights-dotnetMonorepo",
+    "group:opentelemetry-dotnet-contribMonorepo",
+    "group:testcontainers-dotnetMonorepo",
+    "group:xunit-dotnetMonorepo",
+    "group:mstestMonorepo"
   ],
   "rebaseWhen": "conflicted",
   "ignorePresets": ["group:monorepos"],
