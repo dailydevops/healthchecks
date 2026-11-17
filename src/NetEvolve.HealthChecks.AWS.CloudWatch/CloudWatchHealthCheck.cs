@@ -40,13 +40,13 @@ internal sealed partial class CloudWatchHealthCheck
             );
         }
 
-        var metricAlarmFound =
-            response.MetricAlarms?.Exists(x => string.Equals(x.AlarmName, options.AlarmName, StringComparison.Ordinal))
+        var metricAlarmFound = response.MetricAlarms?.Exists(x =>
+            string.Equals(x.AlarmName, options.AlarmName, StringComparison.Ordinal)
+        )
             ?? false;
-        var compositeAlarmFound =
-            response.CompositeAlarms?.Exists(x =>
-                string.Equals(x.AlarmName, options.AlarmName, StringComparison.Ordinal)
-            )
+        var compositeAlarmFound = response.CompositeAlarms?.Exists(x =>
+            string.Equals(x.AlarmName, options.AlarmName, StringComparison.Ordinal)
+        )
             ?? false;
         var found = metricAlarmFound || compositeAlarmFound;
 

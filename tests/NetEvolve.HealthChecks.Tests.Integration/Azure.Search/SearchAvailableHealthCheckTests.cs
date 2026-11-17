@@ -21,15 +21,12 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureSearch(
-                    "SearchIndexServiceProviderUnhealthy",
-                    options =>
-                    {
-                        options.IndexName = "test-index";
-                        options.Mode = ClientCreationMode.ServiceProvider;
-                        options.Timeout = 100;
-                    }
-                );
+                _ = healthChecks.AddAzureSearch("SearchIndexServiceProviderUnhealthy", options =>
+                {
+                    options.IndexName = "test-index";
+                    options.Mode = ClientCreationMode.ServiceProvider;
+                    options.Timeout = 100;
+                });
             },
             HealthStatus.Unhealthy // No SearchClient registered
             ,
@@ -43,16 +40,13 @@ public class SearchAvailableHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAzureSearch(
-                    "SearchIndexMissingIndexName",
-                    options =>
-                    {
-                        options.ServiceUri = new Uri("https://invalid-search-service.search.windows.net");
-                        options.ApiKey = "invalid-key";
-                        options.Mode = ClientCreationMode.AzureKeyCredential;
-                        options.Timeout = 100;
-                    }
-                );
+                _ = healthChecks.AddAzureSearch("SearchIndexMissingIndexName", options =>
+                {
+                    options.ServiceUri = new Uri("https://invalid-search-service.search.windows.net");
+                    options.ApiKey = "invalid-key";
+                    options.Mode = ClientCreationMode.AzureKeyCredential;
+                    options.Timeout = 100;
+                });
             },
             HealthStatus.Unhealthy // Missing IndexName
             ,

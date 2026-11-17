@@ -23,14 +23,11 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddApplicationInsightsAvailability(
-                    "AppInsightsServiceProviderHealthy",
-                    options =>
-                    {
-                        options.Mode = ApplicationInsightsClientCreationMode.ServiceProvider;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddApplicationInsightsAvailability("AppInsightsServiceProviderHealthy", options =>
+                {
+                    options.Mode = ApplicationInsightsClientCreationMode.ServiceProvider;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSingleton<TelemetryClient>(),
@@ -44,14 +41,11 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddApplicationInsightsAvailability(
-                    "AppInsightsServiceProviderUnhealthy",
-                    options =>
-                    {
-                        options.Mode = ApplicationInsightsClientCreationMode.ServiceProvider;
-                        options.Timeout = 1;
-                    }
-                );
+                _ = healthChecks.AddApplicationInsightsAvailability("AppInsightsServiceProviderUnhealthy", options =>
+                {
+                    options.Mode = ApplicationInsightsClientCreationMode.ServiceProvider;
+                    options.Timeout = 1;
+                });
             },
             HealthStatus.Unhealthy // No TelemetryClient registered
             ,
@@ -65,16 +59,13 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddApplicationInsightsAvailability(
-                    "AppInsightsConnectionStringHealthy",
-                    options =>
-                    {
-                        options.Mode = ApplicationInsightsClientCreationMode.ConnectionString;
-                        options.ConnectionString =
-                            "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddApplicationInsightsAvailability("AppInsightsConnectionStringHealthy", options =>
+                {
+                    options.Mode = ApplicationInsightsClientCreationMode.ConnectionString;
+                    options.ConnectionString =
+                        "InstrumentationKey=12345678-1234-1234-1234-123456789abc;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -87,15 +78,12 @@ public class ApplicationInsightsAvailabilityHealthCheckTests : HealthCheckTestBa
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddApplicationInsightsAvailability(
-                    "AppInsightsInstrumentationKeyHealthy",
-                    options =>
-                    {
-                        options.Mode = ApplicationInsightsClientCreationMode.InstrumentationKey;
-                        options.InstrumentationKey = "12345678-1234-1234-1234-123456789abc";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddApplicationInsightsAvailability("AppInsightsInstrumentationKeyHealthy", options =>
+                {
+                    options.Mode = ApplicationInsightsClientCreationMode.InstrumentationKey;
+                    options.InstrumentationKey = "12345678-1234-1234-1234-123456789abc";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken

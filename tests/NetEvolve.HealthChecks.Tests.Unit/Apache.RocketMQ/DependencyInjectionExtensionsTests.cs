@@ -120,15 +120,12 @@ public class DependencyInjectionExtensionsTests
         const int timeout = 200;
 
         // Act
-        _ = builder.AddRocketMQ(
-            name,
-            options =>
-            {
-                options.Endpoint = "localhost:8081";
-                options.Topic = "test-topic";
-                options.Timeout = timeout;
-            }
-        );
+        _ = builder.AddRocketMQ(name, options =>
+        {
+            options.Endpoint = "localhost:8081";
+            options.Topic = "test-topic";
+            options.Timeout = timeout;
+        });
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();

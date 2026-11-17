@@ -20,9 +20,8 @@ public class SolrHealthCheckTests : HealthCheckTestBase
     public async Task AddSolr_WithOptionsServiceProvider_Healthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
-                healthChecks.AddSolr(
-                    nameof(AddSolr_WithOptionsServiceProvider_Healthy),
-                    options => options.Timeout = 10000
+                healthChecks.AddSolr(nameof(AddSolr_WithOptionsServiceProvider_Healthy), options =>
+                    options.Timeout = 10000
                 ),
             HealthStatus.Healthy,
             serviceBuilder: services => services.AddSolrNet<string>(_database.Url),
@@ -33,9 +32,8 @@ public class SolrHealthCheckTests : HealthCheckTestBase
     public async Task AddSolr_WithOptionsServiceProvider_Degraded(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
-                healthChecks.AddSolr(
-                    nameof(AddSolr_WithOptionsServiceProvider_Degraded),
-                    options => options.Timeout = 0
+                healthChecks.AddSolr(nameof(AddSolr_WithOptionsServiceProvider_Degraded), options =>
+                    options.Timeout = 0
                 ),
             HealthStatus.Degraded,
             serviceBuilder: services => services.AddSolrNet(_database.Url),
@@ -44,35 +42,19 @@ public class SolrHealthCheckTests : HealthCheckTestBase
 
     [Test]
     public async Task AddSolr_WithOptionsCreate_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddSolr(
-                    nameof(AddSolr_WithOptionsCreate_Healthy),
-                    options =>
-                    {
-                        options.CreationMode = ClientCreationMode.Create;
-                        options.BaseUrl = _database.Url;
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddSolr(nameof(AddSolr_WithOptionsCreate_Healthy), options =>
+                {
+                    options.CreationMode = ClientCreationMode.Create;
+                    options.BaseUrl = _database.Url;
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddSolr_WithOptionsCreate_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddSolr(
-                    nameof(AddSolr_WithOptionsCreate_Degraded),
-                    options =>
-                    {
-                        options.CreationMode = ClientCreationMode.Create;
-                        options.BaseUrl = _database.Url;
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddSolr(nameof(AddSolr_WithOptionsCreate_Degraded), options =>
+                {
+                    options.CreationMode = ClientCreationMode.Create;
+                    options.BaseUrl = _database.Url;
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, cancellationToken: cancellationToken);
 }

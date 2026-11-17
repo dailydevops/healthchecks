@@ -24,18 +24,15 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSDynamoDB(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TableName = FlociStackInstance.TableName;
-                        options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddAWSDynamoDB("TestContainerHealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TableName = FlociStackInstance.TableName;
+                    options.Mode = CreationMode.BasicAuthentication;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -48,17 +45,14 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSDynamoDB(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TableName = "invalid-table";
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSDynamoDB("TestContainerUnhealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TableName = "invalid-table";
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -69,18 +63,15 @@ public class DynamoDbHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddAWSDynamoDB(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TableName = FlociStackInstance.TableName;
-                        options.Timeout = 0;
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddAWSDynamoDB("TestContainerDegraded", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TableName = FlociStackInstance.TableName;
+                    options.Timeout = 0;
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken

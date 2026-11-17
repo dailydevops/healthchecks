@@ -86,20 +86,11 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
 
         const string serviceKey = "options-test-key";
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddElasticsearch(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = serviceKey;
-                        options.Timeout = 10000;
-                    }
-                ),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddElasticsearch("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = serviceKey;
+                    options.Timeout = 10000;
+                }), Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton(serviceKey, (_, _) => _client), cancellationToken: cancellationToken);
     }
 
     [Test]
@@ -107,68 +98,52 @@ public abstract class ElasticsearchHealthCheckBaseTests : HealthCheckTestBase, I
         CancellationToken cancellationToken = default
     ) =>
         await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddElasticsearch(
-                    "TestContainerUsernameAndPasswordHealthy",
-                    options =>
-                    {
-                        options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
-                        options.Timeout = 10000;
-                        options.Password = _container.Password;
-                        options.Username = _container.Username;
+            healthChecks => healthChecks.AddElasticsearch("TestContainerUsernameAndPasswordHealthy", options =>
+                {
+                    options.Mode = ElasticsearchClientCreationMode.UsernameAndPassword;
+                    options.Timeout = 10000;
+                    options.Password = _container.Password;
+                    options.Username = _container.Username;
 
-                        foreach (var connectionString in GetClusterConnectionStrings())
-                        {
-                            options.ConnectionStrings.Add(connectionString.ToString());
-                        }
+                    foreach (var connectionString in GetClusterConnectionStrings())
+                    {
+                        options.ConnectionStrings.Add(connectionString.ToString());
                     }
-                ),
+                }),
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
             cancellationToken: cancellationToken
         );
 
     [Test]
     public async Task AddElasticsearch_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks =>
-                        healthChecks.AddElasticsearch("TestContainerHealthy").AddElasticsearch("TestContainerHealthy"),
-                    Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks =>
+                    healthChecks.AddElasticsearch("TestContainerHealthy").AddElasticsearch("TestContainerHealthy"),
+                Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_client)
+            )
         );
 
     [Test]
     public async Task AddElasticsearch_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddElasticsearch(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddElasticsearch("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (_, cancellationToken) =>
                     {
-                        options.CommandAsync = async (_, cancellationToken) =>
-                        {
-                            await Task.Delay(5000, cancellationToken);
-                            return true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client),
-            cancellationToken: cancellationToken
-        );
+                        await Task.Delay(5000, cancellationToken);
+                        return true;
+                    };
+                    options.Timeout = 0;
+                }), Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddElasticsearch_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddElasticsearch(
-                    "TestContainerUnhealthy",
-                    options => options.CommandAsync = (_, _) => throw new InvalidOperationException("test")
+                _ = healthChecks.AddElasticsearch("TestContainerUnhealthy", options =>
+                    options.CommandAsync = (_, _) => throw new InvalidOperationException("test")
                 );
             },
             Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,

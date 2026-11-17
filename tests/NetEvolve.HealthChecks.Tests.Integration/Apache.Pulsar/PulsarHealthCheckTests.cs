@@ -41,20 +41,11 @@ public sealed class PulsarHealthCheckTests : HealthCheckTestBase
 
         var client = PulsarClient.Builder().ServiceUrl(_container.ServiceUrl).Build();
 
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddPulsar(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "pulsar-test";
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("pulsar-test", (_, _) => client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddPulsar("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "pulsar-test";
+                    options.Timeout = 10000; // Set a reasonable timeout
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("pulsar-test", (_, _) => client), cancellationToken: cancellationToken);
     }
 
     [Test]

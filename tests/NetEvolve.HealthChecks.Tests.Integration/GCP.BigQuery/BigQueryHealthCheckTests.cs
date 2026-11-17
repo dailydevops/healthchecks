@@ -61,14 +61,11 @@ public sealed class BigQueryHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddBigQuery(
-                    "TestContainerKeyedServiceHealthy",
-                    options =>
-                    {
-                        options.Timeout = 10000;
-                        options.KeyedService = "bigquery";
-                    }
-                );
+                _ = healthChecks.AddBigQuery("TestContainerKeyedServiceHealthy", options =>
+                {
+                    options.Timeout = 10000;
+                    options.KeyedService = "bigquery";
+                });
             },
             HealthStatus.Healthy,
             serviceBuilder: services => _ = services.AddKeyedSingleton("bigquery", (_, _) => client),

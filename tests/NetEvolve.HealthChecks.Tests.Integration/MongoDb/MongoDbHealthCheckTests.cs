@@ -62,84 +62,61 @@ public class MongoDbHealthCheckTests : HealthCheckTestBase, IAsyncInitializer, I
 
     [Test]
     public async Task AddMongoDb_UseOptionsWithKeyedService_Healthy(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddMongoDb(
-                    "TestContainerKeyedHealthy",
-                    options =>
-                    {
-                        options.KeyedService = "mongodb-test";
-                        options.Timeout = 10000;
-                    }
-                ),
-            HealthStatus.Healthy,
-            serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client),
-            cancellationToken: cancellationToken
-        );
+        await RunAndVerify(healthChecks => healthChecks.AddMongoDb("TestContainerKeyedHealthy", options =>
+                {
+                    options.KeyedService = "mongodb-test";
+                    options.Timeout = 10000;
+                }), HealthStatus.Healthy, serviceBuilder: services => services.AddKeyedSingleton("mongodb-test", (_, _) => _client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddMongoDb_UseOptionsDoubleRegistered_Healthy() =>
-        await Assert.ThrowsAsync<ArgumentException>(
-            "name",
-            async () =>
-                await RunAndVerify(
-                    healthChecks => healthChecks.AddMongoDb("TestContainerHealthy").AddMongoDb("TestContainerHealthy"),
-                    HealthStatus.Healthy,
-                    serviceBuilder: services => services.AddSingleton(_client)
-                )
+        await Assert.ThrowsAsync<ArgumentException>("name", async () =>
+            await RunAndVerify(
+                healthChecks => healthChecks.AddMongoDb("TestContainerHealthy").AddMongoDb("TestContainerHealthy"),
+                HealthStatus.Healthy,
+                serviceBuilder: services => services.AddSingleton(_client)
+            )
         );
 
     [Test]
     public async Task AddMongoDb_UseOptions_Degraded(CancellationToken cancellationToken = default) =>
-        await RunAndVerify(
-            healthChecks =>
-                healthChecks.AddMongoDb(
-                    "TestContainerDegraded",
-                    options =>
+        await RunAndVerify(healthChecks => healthChecks.AddMongoDb("TestContainerDegraded", options =>
+                {
+                    options.CommandAsync = async (client, cancellationToken) =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-                            await Task.Delay(1000, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
 
-                            var database = client.GetDatabase("admin");
-                            var command = new BsonDocument("ping", 1);
+                        var database = client.GetDatabase("admin");
+                        var command = new BsonDocument("ping", 1);
 
-                            _ = await database
-                                .RunCommandAsync<BsonDocument>(command, null, cancellationToken)
-                                .ConfigureAwait(false);
+                        _ = await database
+                            .RunCommandAsync<BsonDocument>(command, null, cancellationToken)
+                            .ConfigureAwait(false);
 
-                            return true;
-                        };
-                        options.Timeout = 0;
-                    }
-                ),
-            HealthStatus.Degraded,
-            serviceBuilder: services => services.AddSingleton(_client),
-            cancellationToken: cancellationToken
-        );
+                        return true;
+                    };
+                    options.Timeout = 0;
+                }), HealthStatus.Degraded, serviceBuilder: services => services.AddSingleton(_client), cancellationToken: cancellationToken);
 
     [Test]
     public async Task AddMongoDb_UseOptions_Unhealthy(CancellationToken cancellationToken = default) =>
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddMongoDb(
-                    "TestContainerUnhealthy",
-                    options =>
+                _ = healthChecks.AddMongoDb("TestContainerUnhealthy", options =>
+                {
+                    options.CommandAsync = async (client, cancellationToken) =>
                     {
-                        options.CommandAsync = async (client, cancellationToken) =>
-                        {
-                            var database = client.GetDatabase("admin");
-                            var invalidCommand = new BsonDocument("invalid", 1);
+                        var database = client.GetDatabase("admin");
+                        var invalidCommand = new BsonDocument("invalid", 1);
 
-                            _ = await database
-                                .RunCommandAsync<BsonDocument>(invalidCommand, null, cancellationToken)
-                                .ConfigureAwait(false);
+                        _ = await database
+                            .RunCommandAsync<BsonDocument>(invalidCommand, null, cancellationToken)
+                            .ConfigureAwait(false);
 
-                            return true;
-                        };
-                    }
-                );
+                        return true;
+                    };
+                });
             },
             HealthStatus.Unhealthy,
             serviceBuilder: services => services.AddSingleton(_client),

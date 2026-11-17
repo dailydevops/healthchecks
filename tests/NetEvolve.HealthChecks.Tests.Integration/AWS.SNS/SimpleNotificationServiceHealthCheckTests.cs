@@ -25,19 +25,16 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSimpleNotificationService(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = FlociStackInstance.TopicName;
-                        options.Subscription = _instance.Subscription;
-                        options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 10000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddSimpleNotificationService("TestContainerHealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = FlociStackInstance.TopicName;
+                    options.Subscription = _instance.Subscription;
+                    options.Mode = CreationMode.BasicAuthentication;
+                    options.Timeout = 10000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -50,18 +47,15 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSimpleNotificationService(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = FlociStackInstance.TopicName;
-                        options.Subscription = "NotFound";
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddSimpleNotificationService("TestContainerUnhealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = FlociStackInstance.TopicName;
+                    options.Subscription = "NotFound";
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -74,18 +68,15 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSimpleNotificationService(
-                    "TestContainerUnhealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = "Invalid";
-                        options.Subscription = _instance.Subscription;
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddSimpleNotificationService("TestContainerUnhealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = "Invalid";
+                    options.Subscription = _instance.Subscription;
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Unhealthy,
             cancellationToken: cancellationToken
@@ -98,19 +89,16 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSimpleNotificationService(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = FlociStackInstance.TopicName;
-                        options.Subscription = _instance.Subscription;
-                        options.Timeout = 0;
-                        options.Mode = CreationMode.BasicAuthentication;
-                    }
-                );
+                _ = healthChecks.AddSimpleNotificationService("TestContainerDegraded", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = FlociStackInstance.TopicName;
+                    options.Subscription = _instance.Subscription;
+                    options.Timeout = 0;
+                    options.Mode = CreationMode.BasicAuthentication;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
@@ -129,19 +117,16 @@ public class SimpleNotificationServiceHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddSimpleNotificationService(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.AccessKey = FlociStackInstance.AccessKey;
-                        options.SecretKey = FlociStackInstance.SecretKey;
-                        options.ServiceUrl = _instance.ConnectionString;
-                        options.TopicName = topicName;
-                        options.Subscription = subcription.SubscriptionArn;
-                        options.Mode = CreationMode.BasicAuthentication;
-                        options.Timeout = 60000; // Set a reasonable timeout
-                    }
-                );
+                _ = healthChecks.AddSimpleNotificationService("TestContainerHealthy", options =>
+                {
+                    options.AccessKey = FlociStackInstance.AccessKey;
+                    options.SecretKey = FlociStackInstance.SecretKey;
+                    options.ServiceUrl = _instance.ConnectionString;
+                    options.TopicName = topicName;
+                    options.Subscription = subcription.SubscriptionArn;
+                    options.Mode = CreationMode.BasicAuthentication;
+                    options.Timeout = 60000; // Set a reasonable timeout
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken

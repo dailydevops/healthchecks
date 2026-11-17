@@ -24,17 +24,14 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOpenSearch(
-                    "TestContainerHealthy",
-                    options =>
-                    {
-                        options.ConnectionStrings.Add(_database.GetConnectionString());
-                        options.Mode = OpenSearchClientCreationMode.UsernameAndPassword;
-                        options.Username = "admin";
-                        options.Password = "admin";
-                        options.Timeout = 10000;
-                    }
-                );
+                _ = healthChecks.AddOpenSearch("TestContainerHealthy", options =>
+                {
+                    options.ConnectionStrings.Add(_database.GetConnectionString());
+                    options.Mode = OpenSearchClientCreationMode.UsernameAndPassword;
+                    options.Username = "admin";
+                    options.Password = "admin";
+                    options.Timeout = 10000;
+                });
             },
             HealthStatus.Healthy,
             cancellationToken: cancellationToken
@@ -65,17 +62,14 @@ public class OpenSearchHealthCheckTests : HealthCheckTestBase
         await RunAndVerify(
             healthChecks =>
             {
-                _ = healthChecks.AddOpenSearch(
-                    "TestContainerDegraded",
-                    options =>
-                    {
-                        options.ConnectionStrings.Add(_database.GetConnectionString());
-                        options.Mode = OpenSearchClientCreationMode.UsernameAndPassword;
-                        options.Username = "admin";
-                        options.Password = "admin";
-                        options.Timeout = 0;
-                    }
-                );
+                _ = healthChecks.AddOpenSearch("TestContainerDegraded", options =>
+                {
+                    options.ConnectionStrings.Add(_database.GetConnectionString());
+                    options.Mode = OpenSearchClientCreationMode.UsernameAndPassword;
+                    options.Username = "admin";
+                    options.Password = "admin";
+                    options.Timeout = 0;
+                });
             },
             HealthStatus.Degraded,
             cancellationToken: cancellationToken
