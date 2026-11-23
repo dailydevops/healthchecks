@@ -23,7 +23,7 @@ jobs:
   all:
     if: github.run_id != 1
     name: Run Stryker.NET Mutation Testing
-    uses: dailydevops/pipelines/.github/workflows/mutation-dotnet.yml@32432cc86c19a593e65e891f580902fa83e3028e # 2.7.11
+    uses: dailydevops/pipelines/.github/workflows/mutation-dotnet.yml@af84d782f5a62180a4fcce850f6b07bdef5d82da # 2.8.0
     with:
       configurationFile: ${{ inputs.configurationFile || 'stryker-config.json' }}
     secrets: inherit
